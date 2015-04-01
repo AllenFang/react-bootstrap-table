@@ -1,0 +1,34 @@
+{
+  "name": "react-bootstrap-table",
+  "version": "0.1.0",
+  "description": "It' a react table for bootstrap",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "bootstrap",
+    "table",
+    "grid"
+  ],
+  "files": [
+    "README.md",
+    "dist/",
+    "lib/"
+  ],
+  "author": "AllenFang",
+  "license": "ISC",
+  "devDependencies": {
+    "babelify": "^5.0.4",
+    "browserify": "^9.0.3",
+    "gulp": "^3.8.11",
+    "gulp-babel": "^4.0.1",
+    "react": "^0.13.1",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.0.0"
+  },
+  "dependencies": {
+    "classnames": "^1.2.0"
+  }
+}
