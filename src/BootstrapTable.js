@@ -5,7 +5,8 @@ import TableBody from './TableBody';
 
 class BootstrapTable extends React.Component{
   componentDidMount(){
-
+    this.refs.table.getDOMNode().childNodes[0].childNodes[0].style.width =
+      this.refs.table.getDOMNode().childNodes[1].childNodes[0].offsetWidth-1+"px";
   }
 
   render(){
@@ -18,7 +19,7 @@ class BootstrapTable extends React.Component{
     });
 
     return(
-      <div style={style}>
+      <div ref="table" style={style}>
         <TableHeader>
           {this.props.children}
         </TableHeader>

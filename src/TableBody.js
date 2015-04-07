@@ -13,7 +13,8 @@ class TableBody extends React.Component{
 
     var tableStyle = {
       marginTop: 0,
-      tableLayout:"fixed"
+      tableLayout:"fixed",
+      marginBottom: "0px"
     };
 
     var tableRows = this.props.data.map(function(data){

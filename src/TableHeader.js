@@ -6,13 +6,18 @@ class TableHeader extends React.Component{
   render(){
     var divStyle = {
       height: 37,
-      borderBottomWidth: 1,
-      borderBottomStyle: "solid",
-      borderBottomColor: "rgb(221, 221, 221)"
+      borderRightWidth: 1,
+      borderRightStyle: "solid",
+      borderRightColor: "rgb(221, 221, 221)",
+      borderTopWidth: 1,
+      borderTopStyle: "solid",
+      borderTopColor: "rgb(221, 221, 221)"
     };
 
     var tableStyle = {
-      tableLayout: "fixed"
+      tableLayout: "fixed",
+      borderRightStyle: "hidden",
+      borderTopStyle: "hidden"
     };
 
     return(

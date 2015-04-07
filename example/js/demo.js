@@ -19,13 +19,19 @@ var data = [
       id: 4,
       name: "Item name 4",
       price: 100
+  },{
+      id: 5,
+      name: "Item name 5",
+      price: 100
+  },{
+      id: 6,
+      name: "Item name 6",
+      price: 100
   }
-
-
 ];
 
 React.render(
-  <BootstrapTable data={data}>
+  <BootstrapTable data={data} height="120">
       <TableHeaderColumn dataField="id">Item ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Item Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Item Price</TableHeaderColumn>
