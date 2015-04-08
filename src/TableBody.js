@@ -28,7 +28,7 @@ class TableBody extends React.Component{
       var tableColumns = self.props.columns.map(function(column){
         var fieldValue = data[column.name];
         return(
-          <TableColumn>{fieldValue}</TableColumn>
+          <TableColumn dataAlign={column.align}>{fieldValue}</TableColumn>
         )
       });
 

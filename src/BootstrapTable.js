@@ -15,7 +15,11 @@ class BootstrapTable extends React.Component{
     };
 
     var columns = this.props.children.map(function(column, i){
-      return {name: column.props.dataField, index: i};
+      return {
+        name: column.props.dataField,
+        align: column.props.dataAlign,
+        index: i
+      };
     });
 
     return(
