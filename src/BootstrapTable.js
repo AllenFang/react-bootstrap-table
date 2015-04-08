@@ -23,17 +23,26 @@ class BootstrapTable extends React.Component{
         <TableHeader>
           {this.props.children}
         </TableHeader>
-        <TableBody data={this.props.data} columns={columns}/>
+        <TableBody data={this.props.data} columns={columns}
+          striped={this.props.striped}
+          hover={this.props.hover}
+          condensed={this.props.condensed}/>
       </div>
     )
   }
 }
 BootstrapTable.propTypes = {
   height: React.PropTypes.string,
-  data: React.PropTypes.array
+  data: React.PropTypes.array,
+  striped: React.PropTypes.bool,
+  hover: React.PropTypes.bool,
+  condensed: React.PropTypes.bool
 };
 BootstrapTable.defaultProps = {
-  height: "100%"
+  height: "100%",
+  striped: false,
+  hover: false,
+  condensed: false
 };
 
 export default BootstrapTable;

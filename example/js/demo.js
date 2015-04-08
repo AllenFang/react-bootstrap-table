@@ -31,7 +31,7 @@ var data = [
 ];
 
 React.render(
-  <BootstrapTable data={data} height="120">
+  <BootstrapTable data={data} height="500" striped="true">
       <TableHeaderColumn dataField="id">Item ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Item Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Item Price</TableHeaderColumn>
