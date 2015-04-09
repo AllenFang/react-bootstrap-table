@@ -6,19 +6,10 @@ import classSet from 'classnames';
 class TableBody extends React.Component{
   render(){
     var self = this;
-    var divStyle = {
-      overflowX: "auto",
-      overflowY: "auto",
-      height: "100%"
-    };
 
-    var tableStyle = {
-      marginTop: 0,
-      tableLayout:"fixed",
-      marginBottom: "0px"
-    };
+    var containerClasses = classSet("table-container");
 
-    var classes = classSet("table", "table-bordered", {
+    var tableClasses = classSet("table", "table-bordered", {
       'table-striped': this.props.striped,
       'table-hover': this.props.hover,
       'table-condensed': this.props.condensed
@@ -38,8 +29,8 @@ class TableBody extends React.Component{
     });
 
     return(
-      <div style={divStyle}>
-        <table className={classes} style={tableStyle}>
+      <div className={containerClasses}>
+        <table className={tableClasses}>
           {tableRows}
         </table>
       </div>

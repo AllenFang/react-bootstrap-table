@@ -3,6 +3,8 @@ var browserify = require('browserify');
 var watchify   = require('watchify');
 var source 		 = require("vinyl-source-stream");
 var babel      = require('gulp-babel');
+var cssmin     = require('gulp-cssmin');
+var rename     = require('gulp-rename');
 
 var watching = false;
 var demo     = false;
@@ -14,6 +16,10 @@ gulp.task("prod", function(){
 	gulp.src('./src/*.js')
 			.pipe(babel())
 			.pipe(gulp.dest('./lib'));
+	gulp.src('./css/react-bootstrap-table.css')
+        .pipe(cssmin())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest('./css'));
 	buildProdDist();
 });
 

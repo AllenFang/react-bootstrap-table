@@ -15,11 +15,13 @@ class TableHeaderColumn extends React.Component{
 }
 TableHeaderColumn.propTypes = {
   dataField: React.PropTypes.string,
-  dataAlign: React.PropTypes.string
+  dataAlign: React.PropTypes.string,
+  dataSort: React.PropTypes.bool
 };
 
 TableHeaderColumn.defaultProps = {
-  dataAlign: "left"
+  dataAlign: "left",
+  dataSort: false
 };
 
 export default TableHeaderColumn;

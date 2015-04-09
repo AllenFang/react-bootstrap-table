@@ -4,25 +4,11 @@ import classSet from 'classnames';
 class TableHeader extends React.Component{
 
   render(){
-    var divStyle = {
-      height: 37,
-      borderRightWidth: 1,
-      borderRightStyle: "solid",
-      borderRightColor: "rgb(221, 221, 221)",
-      borderTopWidth: 1,
-      borderTopStyle: "solid",
-      borderTopColor: "rgb(221, 221, 221)"
-    };
-
-    var tableStyle = {
-      tableLayout: "fixed",
-      borderRightStyle: "hidden",
-      borderTopStyle: "hidden"
-    };
+    var containerClasses = classSet("table-header");
 
     return(
-      <div style={divStyle}>
-        <table className="table table-hover table-bordered" style={tableStyle}>
+      <div className={containerClasses}>
+        <table className="table table-hover table-bordered">
           <thead>
             <tr>
               {this.props.children}

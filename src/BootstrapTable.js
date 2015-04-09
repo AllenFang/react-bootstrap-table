@@ -18,6 +18,7 @@ class BootstrapTable extends React.Component{
       return {
         name: column.props.dataField,
         align: column.props.dataAlign,
+        sort: column.props.dataSort,
         index: i
       };
     });

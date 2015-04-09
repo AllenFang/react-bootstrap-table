@@ -1,0 +1,27 @@
+.table-header{
+  height: 37px;
+  border-right-width: 1px;
+  border-right-style: solid;
+  border-right-color: rgb(221, 221, 221);
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: rgb(221, 221, 221);
+}
+
+.table-header > table{
+  table-layout: fixed;
+  border-right-style: hidden;
+  border-top-style: hidden;
+}
+
+.table-container{
+  overflow-x: auto;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.table-container > table{
+  margin-top: 0px;
+  table-layout: fixed;
+  margin-bottom: 0px;
+}

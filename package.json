@@ -24,6 +24,8 @@
     "browserify": "^9.0.3",
     "gulp": "^3.8.11",
     "gulp-babel": "^4.0.1",
+    "gulp-cssmin": "^0.1.6",
+    "gulp-rename": "^1.2.2",
     "react": "^0.13.1",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.0.0"
