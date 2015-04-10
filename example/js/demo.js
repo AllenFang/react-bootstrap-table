@@ -32,8 +32,8 @@ var data = [
 
 React.render(
   <BootstrapTable data={data} height="500" striped="true">
-      <TableHeaderColumn dataField="id" dataAlign="center">Item ID</TableHeaderColumn>
-      <TableHeaderColumn dataField="name">Item Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="id" dataAlign="center" dataSort="true">Item ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name" dataSort="true">Item Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Item Price</TableHeaderColumn>
   </BootstrapTable>,
 	document.getElementById("basic")

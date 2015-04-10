@@ -4,12 +4,33 @@ import TableHeader from './TableHeader';
 import TableBody from './TableBody';
 
 class BootstrapTable extends React.Component{
+
+  constructor(props) {
+		super(props);
+		this.state = {data: this.props.data};
+	}
+
   componentDidMount(){
     this.refs.table.getDOMNode().childNodes[0].childNodes[0].style.width =
       this.refs.table.getDOMNode().childNodes[1].childNodes[0].offsetWidth-1+"px";
   }
 
+  sort(order, sortField){
+    console.log(this.state.data);
+    var clone = this.state.data.slice(0);
+
+    this.state.data.sort(function(a,b){
+      if(order == "asc"){
+        return a[sortField] > b[sortField]?-1: 1;
+      }else{
+        return a[sortField] < b[sortField]?-1: 1;
+      }
+    });
+    this.setState({data: this.state.data});
+  }
+
   render(){
+    // this.setState({data: this.props.data});
     var style = {
       height: this.props.height
     };
@@ -25,10 +46,10 @@ class BootstrapTable extends React.Component{
 
     return(
       <div ref="table" style={style}>
-        <TableHeader>
+        <TableHeader onSort={this.sort.bind(this)}>
           {this.props.children}
         </TableHeader>
-        <TableBody data={this.props.data} columns={columns}
+        <TableBody data={this.state.data} columns={columns}
           striped={this.props.striped}
           hover={this.props.hover}
           condensed={this.props.condensed}/>

@@ -14,6 +14,14 @@
   border-top-style: hidden;
 }
 
+.table-header-column{
+  line-height: 25px
+}
+
+.sort-column{
+  cursor: pointer;
+}
+
 .table-container{
   overflow-x: auto;
   overflow-y: auto;
