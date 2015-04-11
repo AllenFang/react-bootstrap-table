@@ -97,17 +97,17 @@ React.render(
 );
 ```
 
-The reactbsTable setting
+The reactbsTable setting   
 
-The attributes in BootstrapTable:
-Use ```data``` to specify the data that you want to display on table.
-Use ```height``` to set the table height, default is 100%.
-Use ```striped``` to set table be a striped columns. Like bootstrap table class ```.table-striped```.
-Use ```hover``` to enable table hover. Like bootstrap table class ```.table-hover```.
-Use ```condensed``` to set a condensed table. Like bootstrap table class ```.table-condensed```.
+The attributes in BootstrapTable:   
+Use ```data``` to specify the data that you want to display on table.   
+Use ```height``` to set the table height, default is 100%.   
+Use ```striped``` to set table be a striped columns. Like bootstrap table class ```.table-striped```.   
+Use ```hover``` to enable table hover. Like bootstrap table class ```.table-hover```.   
+Use ```condensed``` to set a condensed table. Like bootstrap table class ```.table-condensed```.   
 
-The attributes in TableHeaderColumn:
-Use ```dataField``` to specidy which column you want to show on this column.
-Use ```dataAlign``` to set align in column. Available value is left, center, right, start and end.
-Use ```dataSort``` to enable the sorting in column. Default value is false(disabled).
-Use ```dataFormat``` to customize this column.Must give it as a function.      
+The attributes in TableHeaderColumn:   
+Use ```dataField``` to specidy which column you want to show on this column.   
+Use ```dataAlign``` to set align in column. Available value is left, center, right, start and end.   
+Use ```dataSort``` to enable the sorting in column. Default value is false(disabled).   
+Use ```dataFormat``` to customize this column.Must give it as a function.         
