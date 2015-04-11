@@ -30,11 +30,15 @@ var data = [
   }
 ];
 
+function priceFormatter(cell, row){
+  return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
+}
+
 React.render(
-  <BootstrapTable data={data} height="500" striped="true">
+  <BootstrapTable data={data} height="120" striped="true" hover="true">
       <TableHeaderColumn dataField="id" dataAlign="center" dataSort="true">Item ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name" dataSort="true">Item Name</TableHeaderColumn>
-      <TableHeaderColumn dataField="price">Item Price</TableHeaderColumn>
+      <TableHeaderColumn dataField="price" dataFormat={priceFormatter}>Item Price</TableHeaderColumn>
   </BootstrapTable>,
 	document.getElementById("basic")
 );

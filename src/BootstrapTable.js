@@ -1,5 +1,6 @@
 import React from 'react';
 import classSet from 'classnames';
+import Const from './Const';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
 
@@ -16,21 +17,19 @@ class BootstrapTable extends React.Component{
   }
 
   sort(order, sortField){
-    console.log(this.state.data);
     var clone = this.state.data.slice(0);
 
     this.state.data.sort(function(a,b){
-      if(order == "asc"){
-        return a[sortField] > b[sortField]?-1: 1;
+      if(order == Const.SORT_ASC){
+        return a[sortField] > b[sortField]?-1: ((a[sortField] < b[sortField]) ? 1 : 0);
       }else{
-        return a[sortField] < b[sortField]?-1: 1;
+        return a[sortField] < b[sortField]?-1: ((a[sortField] > b[sortField]) ? 1 : 0);
       }
     });
     this.setState({data: this.state.data});
   }
 
   render(){
-    // this.setState({data: this.props.data});
     var style = {
       height: this.props.height
     };
@@ -40,6 +39,7 @@ class BootstrapTable extends React.Component{
         name: column.props.dataField,
         align: column.props.dataAlign,
         sort: column.props.dataSort,
+        format: column.props.dataFormat, 
         index: i
       };
     });

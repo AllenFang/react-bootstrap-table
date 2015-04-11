@@ -5,8 +5,6 @@ import classSet from 'classnames';
 
 class TableBody extends React.Component{
   render(){
-    var self = this;
-
     var containerClasses = classSet("table-container");
 
     var tableClasses = classSet("table", "table-bordered", {
@@ -16,17 +14,26 @@ class TableBody extends React.Component{
     });
 
     var tableRows = this.props.data.map(function(data){
-      var tableColumns = self.props.columns.map(function(column){
+      var tableColumns = this.props.columns.map(function(column){
         var fieldValue = data[column.name];
-        return(
-          <TableColumn dataAlign={column.align}>{fieldValue}</TableColumn>
-        )
+        if(typeof column.format !== "undefined"){
+          fieldValue = column.format(fieldValue, data);
+          return(
+            <TableColumn dataAlign={column.align}>
+              <div dangerouslySetInnerHTML={{__html: fieldValue}}></div>
+            </TableColumn>
+          )
+        } else{
+          return(
+            <TableColumn dataAlign={column.align}>{fieldValue}</TableColumn>
+          )
+        }
       });
 
       return (
         <TableRow>{tableColumns}</TableRow>
       )
-    });
+    }, this);
 
     return(
       <div className={containerClasses}>
