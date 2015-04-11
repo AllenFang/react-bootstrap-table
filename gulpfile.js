@@ -36,7 +36,7 @@ function buildDemoCode(){
 
 function buildProdDist(){
 	demo = false;
-	browserifing("./src/index.js", "react-bootstrap-dropdown.min.js", "./dist");
+	browserifing("./src/index.js", "react-bootstrap-table.min.js", "./dist");
 }
 
 function browserifing(main, bundleName, dest){
