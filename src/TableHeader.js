@@ -2,6 +2,14 @@ import React from 'react';
 import classSet from 'classnames';
 
 class TableHeader extends React.Component{
+
+  constructor(props) {
+		super(props);
+    this.props.children.forEach(function(reactElm){
+      reactElm.props.clearSortCaret = this.clearSortCaret.bind(this);
+    }, this);
+	}
+
   clearSortCaret(order, sortField){
     var row = this.refs.header.getDOMNode();
     for(var i=0;i<row.childElementCount;i++){
@@ -15,14 +23,14 @@ class TableHeader extends React.Component{
 
   render(){
     var containerClasses = classSet("table-header");
-    this.props.children.forEach(function(reactElm){
-      reactElm.props.clearSortCaret = this.clearSortCaret.bind(this);
-    }, this);
+    var rowStyle = {
+      borderBottomStyle: "hidden"
+    };
     return(
       <div className={containerClasses}>
         <table className="table table-hover table-bordered">
           <thead>
-            <tr ref="header">
+            <tr ref="header" style={rowStyle}>
               {this.props.children}
             </tr>
           </thead>
