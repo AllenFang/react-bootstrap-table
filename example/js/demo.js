@@ -2,7 +2,7 @@ import React from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 // console.log(Table);
-var data = [
+var products = [
   {
       id: 1,
       name: "Item name 1",
@@ -35,10 +35,10 @@ function priceFormatter(cell, row){
 }
 
 React.render(
-  <BootstrapTable data={data} height="120" striped="true" hover="true">
-      <TableHeaderColumn dataField="id" dataAlign="center" dataSort="true">Item ID</TableHeaderColumn>
-      <TableHeaderColumn dataField="name" dataSort="true">Item Name</TableHeaderColumn>
-      <TableHeaderColumn dataField="price" dataFormat={priceFormatter}>Item Price</TableHeaderColumn>
+  <BootstrapTable data={products} height="120" striped="true" hover="true">
+      <TableHeaderColumn dataField="id" dataAlign="center" dataSort="true">Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name" dataSort="true">Product Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="price" dataFormat={priceFormatter}>Product Price</TableHeaderColumn>
   </BootstrapTable>,
 	document.getElementById("basic")
 );
