@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>React-bootstrap-table by AllenFang</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/react-bootstrap-table.min.css">
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar-default" style="background-color: #222;margin-bottom:0;border-style:hidden;border-radius:0px">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">ReactBsTable</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="start.html">Getting Start</a></li>
+        <li><a href="example.html">Example</a></li>
+        <li><a href="docs.html">Docs</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+    <section class="page-header" style="margin: 0 0 0 0;">
+      <h1 class="project-name" style="color:#61dafb;">React-bootstrap-table</h1>
+    </section>
+
+    <div class="row" style="padding-left: 90px">
+      <div class="col-xs-4 col-md-2" style="background-color: rgb(243, 243, 243);">
+        <ul class="nav bs-sidenav" style="margin-top: 15px;">
+          <li>
+            <a href="#basic-table">Basic Table</a>
+            <ul class="nav"></ul>
+          </li>
+          <li>
+            <a href="#table-style">Table Style</a>
+              <ul class="nav"></ul>
+          </li>
+          <li>
+            <a href="#table-scroll">Table Scroll</a>
+              <ul class="nav"></ul>
+          </li>
+          <li>
+            <a href="#column-align">Column Align</a>
+              <ul class="nav"></ul>
+          </li>
+          <li>
+            <a href="#column-sort">Column Sort</a>
+              <ul class="nav"></ul>
+          </li>
+          <li>
+            <a href="#column-format">Column Format</a>
+              <ul class="nav"></ul>
+          </li>
+        </ul>
+      </div>
+      <div class="col-xs-12 col-md-8">
+        <div>
+          <h1 id="basic-table">Basic Table</h1>
+          Use <code>&lt;BootstrapTable&gt;</code> to define table and <code>&lt;TableHeaderColumn&gt;</code> to defined column</br>
+          Use <code>data</code> to specify the data that you want to deiplay on table</br></br>
+          <div id="basic"></div>
+          <pre><code>
+&lt;BootstrapTable data={products}&gt;
+  &lt;TableHeaderColumn dataField="id"&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+          </code></pre>
+        </div></br>
+        <div>
+          <h1 id="table-style">Table Style</h1>
+          Like basic Bootstrap table classes, ex: .table-striped or .table-hover, reactBsTable support that all.</br>
+          Use <code>striped</code> to make a striped table </br>
+          Use <code>hover</code> to enable hover on table</br>
+          Use <code>condensed</code> to make a condensed table</br>
+          <div id="style"></div>
+          <pre><code>
+&lt;BootstrapTable data={products} striped="true" hover="true" condensed="true"&gt;
+  &lt;TableHeaderColumn dataField="id"&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+          </code></pre>
+        </div></br>
+        <div>
+          <h1 id="basic-scroll">Table Scroll</h1>
+          Use <code>height</code> to set the height on table, default is 100%<br/>
+          If table content overflow, reactBsTable will enable scrolling on table auto.<br/>
+          <div id="scroll"></div>
+          <pre style="margin-top: 38px;"><code>
+&lt;BootstrapTable data={products} height="120"&gt;
+  &lt;TableHeaderColumn dataField="id"&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+          </code></pre>
+        </div></br>
+        <div>
+          <h1 id="column-align">Column Align</h1>
+          Use <code>dataAlign</code> to set the column align, default is left. Available value is left, center, right, start and end.<br/>
+          <div id="align"></div>
+          <pre><code>
+&lt;BootstrapTable data={products}&gt;
+  &lt;TableHeaderColumn dataField="id" dataAlign="right"&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="name" dataAlign="center"&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+          </code></pre>
+        </div></br>
+        <div>
+          <h1 id="column-sort">Column Sort</h1>
+          Use <code>dataSort</code> to enable sort on column. You can click the column header to sort column.
+          <div id="sort"></div>
+          <pre><code>
+&lt;BootstrapTable data={products}&gt;
+  &lt;TableHeaderColumn dataField="id" dataSort="true"&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="name" dataSort="true"&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+          </code></pre>
+        </div></br>
+        <div>
+          <h1 id="column-format">Column Format</h1>
+          Use <code>dataFormat</code> to customize your column.
+          <div id="format"></div>
+          <pre><code>
+function priceFormatter(cell, row){
+  return '&lt;i class="glyphicon glyphicon-usd"&gt;&lt;/i&gt; ' + cell;
+}
+&lt;BootstrapTable data={products}&gt;
+  &lt;TableHeaderColumn dataField="id"&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="price" dataFormat={priceFormatter}&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+          </code></pre>
+        </div></br>
+      </div>
+    </div>
+
+    <section class="main-content">
+        <hr>
+        <span class="site-footer-owner"><a href="https://github.com/AllenFang/react-bootstrap-table">React-bootstrap-table</a> is maintained by <a href="https://github.com/AllenFang">AllenFang</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+
+
+    </section>
+    <script src="./bundle.js"></script>
+
+  </body>
+</html>

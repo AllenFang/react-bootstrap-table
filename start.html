@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>React-bootstrap-table by AllenFang</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar-default" style="background-color: #222;margin-bottom:0;border-style:hidden;border-radius:0px">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">ReactBsTable</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="start.html">Getting Start</a></li>
+        <li><a href="example.html">Example</a></li>
+        <li><a href="docs.html">Docs</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+    <section class="page-header" style="margin: 0 0 0 0;">
+      <h1 class="project-name" style="color:#61dafb;">React-bootstrap-table</h1>
+      <a href="https://github.com/AllenFang/react-bootstrap-table" class="btn">View on GitHub</a>
+      <a href="https://github.com/AllenFang/react-bootstrap-table/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/AllenFang/react-bootstrap-table/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h3>
+<a id="download-ReactBsTable-first" class="anchor" href="#ReactBsTable" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download ReactBsTable first.</h3>
+
+<pre><code>npm install react-bootstrap-table --save
+</code></pre>
+
+<h3>
+<a id="use-ReactBsTable-in-your-react-app-by-two-ways" class="anchor" href="#use-ReactBsTable-in-your-react-app-by-two-ways" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use ReactBsTable in your react app by two ways</h3>
+
+<ul>
+<li style="font-size:1.8rem">Import ReactBsTable in module(CommonJS/AMD)</li>
+</ul>
+
+<pre><code>import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';  // in ECMAScript 6
+// or
+var ReactBsTable = require("react-bootstrap-table");
+var BootstrapTable = ReactBsTable.BootstrapTable;
+var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+</code></pre>
+
+<ul>
+<li style="font-size:1.8rem">Or in browser(window object)</li>
+</ul>
+
+<pre><code>&lt;script src="path/to/react-bootstrap-table/react-bootstrap-table.min.js" /&gt;
+</code></pre>
+
+<p>the react-bootstrap-dropdown.min.js file you can find in the dist folder</p>
+
+<h3>
+<a id="add-css-file-to-your-html" class="anchor" href="#add-css-file-to-your-html" aria-hidden="true"><span class="octicon octicon-link"></span></a>Add CSS file to your HTML</h3>
+
+<pre><code>&lt;link rel="stylesheet" href="./css/react-bootstrap-table.min.css"&gt;
+</code></pre>
+
+<p>the react-bootstrap-table.min.css file you can find in the css folder</p>
+<h3>
+<a id="create-a-ReactBsTable-in-your-app" class="anchor" href="#create-a-ReactBsTable-in-your-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a ReactBsTable in your app</h3>
+
+<pre><code>
+var React = require('react');
+var ReactBsTable  = require('react-bootstrap-table');
+var BootstrapTable = ReactBsTable.BootstrapTable;
+var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+
+// products will be presented by ReactBsTable
+var products = [
+  {
+      id: 1,
+      name: "Product1",
+      price: 120
+  },{
+      id: 2,
+      name: "Product2",
+      price: 80
+  },{
+      id: 3,
+      name: "Product3",
+      price: 207
+  },{
+      id: 4,
+      name: "Product4",
+      price: 100
+  },{
+      id: 5,
+      name: "Product5",
+      price: 150
+  },{
+      id: 6,
+      name: "Product1",
+      price: 160
+  }
+];
+
+React.render(
+  &lt;BootstrapTable data={products} striped="true" hover="true"&gt;
+      &lt;TableHeaderColumn dataField="id"&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
+  &lt;/BootstrapTable&gt;,
+    document.getElementById("basic")
+);
+</code></pre>
+
+    <hr>
+    <span class="site-footer-owner"><a href="https://github.com/AllenFang/react-bootstrap-table">React-bootstrap-table</a> is maintained by <a href="https://github.com/AllenFang">AllenFang</a>.</span>
+
+    <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+
+
+    </section>
+
+
+  </body>
+</html>

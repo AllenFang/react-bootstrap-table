@@ -2,12 +2,12 @@
   box-sizing: border-box; }
 
 body {
-  padding: 0;
+  /*padding: 0;
   margin: 0;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  color: #606c71; }
+color: #606c71; */}
 
 a {
   color: #1e6bb8;
@@ -56,12 +56,12 @@ a {
 .page-header {
   color: #fff;
   text-align: center;
-  background-color: #159957;
-  background-image: linear-gradient(120deg, #155799, #159957); }
+  background-color: #2d2d2d;/*#159957;*/
+  background-image: #2d2d2d; }
 
 @media screen and (min-width: 64em) {
   .page-header {
-    padding: 5rem 6rem; } }
+    padding: 8rem 15rem; } }
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
   .page-header {
@@ -77,7 +77,7 @@ a {
 
 @media screen and (min-width: 64em) {
   .project-name {
-    font-size: 3.25rem; } }
+    font-size: 5.25rem; } }
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
   .project-name {
@@ -112,10 +112,10 @@ a {
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-weight: normal;
-  color: #159957; }
+  color: #23B2B3; }
 .main-content p {
   margin-bottom: 1em; }
-.main-content code {
+/*.main-content code {
   padding: 2px 4px;
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
   font-size: 0.9rem;
@@ -140,10 +140,10 @@ a {
     word-break: normal;
     white-space: pre;
     background: transparent;
-    border: 0; }
+    border: 0; }*/
 .main-content .highlight {
   margin-bottom: 1rem; }
-  .main-content .highlight pre {
+  /*.main-content .highlight pre {
     margin-bottom: 0;
     word-break: normal; }
 .main-content .highlight pre, .main-content pre {
@@ -163,7 +163,7 @@ a {
   background-color: transparent;
   border: 0; }
   .main-content pre code:before, .main-content pre code:after, .main-content pre tt:before, .main-content pre tt:after {
-    content: normal; }
+    content: normal; }*/
 .main-content ul, .main-content ol {
   margin-top: 0; }
 .main-content blockquote {
@@ -175,7 +175,7 @@ a {
     margin-top: 0; }
   .main-content blockquote > :last-child {
     margin-bottom: 0; }
-.main-content table {
+/*.main-content table {
   display: block;
   width: 100%;
   overflow: auto;
@@ -185,7 +185,7 @@ a {
     font-weight: bold; }
   .main-content table th, .main-content table td {
     padding: 0.5rem 1rem;
-    border: 1px solid #e9ebec; }
+    border: 1px solid #e9ebec; }*/
 .main-content dl {
   padding: 0; }
   .main-content dl dt {
@@ -205,10 +205,10 @@ a {
 
 @media screen and (min-width: 64em) {
   .main-content {
-    max-width: 64rem;
+    max-width: 100rem;
     padding: 2rem 6rem;
     margin: 0 auto;
-    font-size: 1.1rem; } }
+    /*font-size: 1.1rem;*/ } }
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
   .main-content {

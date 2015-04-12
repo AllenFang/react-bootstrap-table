@@ -4,153 +4,50 @@
     <meta charset="UTF-8">
     <title>React-bootstrap-table by AllenFang</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   </head>
   <body>
-    <section class="page-header">
-      <h1 class="project-name">React-bootstrap-table</h1>
-      <h2 class="project-tagline">It&#39; a react table for bootstrap</h2>
+    <nav class="navbar-default" style="background-color: #222;margin-bottom:0;border-style:hidden;border-radius:0px">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">ReactBsTable</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="start.html">Getting Start</a></li>
+        <li><a href="example.html">Example</a></li>
+        <li><a href="docs.html">Docs</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+    <section class="page-header" style="margin: 0 0 0 0;">
+      <h1 class="project-name" style="color:#61dafb;">React-bootstrap-table</h1>
+      <h2 class="project-tagline" style="font-size: 2rem">It&#39; a react table for bootstrap</h2>
       <a href="https://github.com/AllenFang/react-bootstrap-table" class="btn">View on GitHub</a>
       <a href="https://github.com/AllenFang/react-bootstrap-table/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/AllenFang/react-bootstrap-table/tarball/master" class="btn">Download .tar.gz</a>
     </section>
 
     <section class="main-content">
-      <h2>
-<a id="react-bootstrap-table" class="anchor" href="#react-bootstrap-table" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>React-bootstrap-table.</strong>
-</h2>
-
-<p>It's a react table for bootstrap, named reactBsTable.<br>
-As you know, the basic bootstrap table function like striped, bordered, hover and condensed are supported in reactBsTable. In addition, reactBsTable support data align, sorting, cell format and scrolling.   </p>
-
-<h2>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Usage</strong>
-</h2>
-
-<h3>
-<a id="download-reactbstable-first" class="anchor" href="#download-reactbstable-first" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download reactBsTable first.</h3>
-
-<pre><code>npm install react-bootstrap-table --save
-</code></pre>
-
-<h3>
-<a id="use-reactbstable-in-your-react-app-by-two-ways" class="anchor" href="#use-reactbstable-in-your-react-app-by-two-ways" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use reactBsTable in your react app by two ways</h3>
-
-<ul>
-<li>Import reactBsTable in module(CommonJS/AMD)</li>
-</ul>
-
-<pre><code>import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';  // in ECMAScript 6
-// or
-var ReactBSTable = require("react-bootstrap-table");  
-var BootstrapTable = ReactBSTable.BootstrapTable;
-var TableHeaderColumn = ReactBSTable.TableHeaderColumn;
-</code></pre>
-
-<ul>
-<li>browser(window object)</li>
-</ul>
-
-<pre><code>&lt;script src="path/to/react-bootstrap-table/react-bootstrap-table.min.js" /&gt;
-</code></pre>
-
-<p>the react-bootstrap-dropdown.min.js file you can find in the dist folder</p>
-
-<h3>
-<a id="add-css-file-to-your-html" class="anchor" href="#add-css-file-to-your-html" aria-hidden="true"><span class="octicon octicon-link"></span></a>Add CSS file to your HTML</h3>
-
-<pre><code>&lt;link rel="stylesheet" href="./css/react-bootstrap-table.min.css"&gt;
-</code></pre>
-
-<p>the react-bootstrap-table.min.css file you can find in the css folder</p>
-
-<h3>
-<a id="create-a-reactbstable-in-your-app" class="anchor" href="#create-a-reactbstable-in-your-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a reactBsTable in your app</h3>
-
-<pre><code>// products will be presented by reactBsTable 
-var products = [
-  {
-      id: 1,
-      name: "Item name 1",
-      price: 100
-  },{
-      id: 2,
-      name: "Item name 2",
-      price: 100
-  },{
-      id: 3,
-      name: "Item name 3",
-      price: 110
-  },{
-      id: 4,
-      name: "Item name 4",
-      price: 100
-  },{
-      id: 5,
-      name: "Item name 5",
-      price: 100
-  },{
-      id: 6,
-      name: "Item name 6",
-      price: 100
-  }
-];
-// It's a data format example.
-function priceFormatter(cell, row){
-  return '&lt;i class="glyphicon glyphicon-usd"&gt;&lt;/i&gt; ' + cell;
-}
-
-React.render(
-  &lt;BootstrapTable data={products} height="120" striped="true" hover="true"&gt;
-      &lt;TableHeaderColumn dataField="id" dataAlign="center" dataSort="true"&gt;Product ID&lt;/TableHeaderColumn&gt;
-      &lt;TableHeaderColumn dataField="name" dataSort="true"&gt;Product Name&lt;/TableHeaderColumn&gt;
-      &lt;TableHeaderColumn dataField="price" dataFormat={priceFormatter}&gt;Product Price&lt;/TableHeaderColumn&gt;
-  &lt;/BootstrapTable&gt;,
-    document.getElementById("basic")
-);
-</code></pre>
-
-<h2>
-<a id="api--attributes" class="anchor" href="#api--attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>API &amp; Attributes</strong>
-</h2>
-
-<h3>
-<a id="the-attributes-in-bootstraptable" class="anchor" href="#the-attributes-in-bootstraptable" aria-hidden="true"><span class="octicon octicon-link"></span></a>The attributes in BootstrapTable:</h3>
-
-<p>Use <code>data</code> to specify the data that you want to display on table.<br>
-Use <code>height</code> to set the table height, default is 100%.<br>
-Use <code>striped</code> to set table be a striped columns. Like bootstrap table class <code>.table-striped</code>.<br>
-Use <code>hover</code> to enable table hover. Like bootstrap table class <code>.table-hover</code>.<br>
-Use <code>condensed</code> to set a condensed table. Like bootstrap table class <code>.table-condensed</code>.   </p>
-
-<h3>
-<a id="the-attributes-in-tableheadercolumn" class="anchor" href="#the-attributes-in-tableheadercolumn" aria-hidden="true"><span class="octicon octicon-link"></span></a>The attributes in TableHeaderColumn:</h3>
-
-<p>Use <code>dataField</code> to specidy which column you want to show on this column.<br>
-Use <code>dataAlign</code> to set align in column. Available value is left, center, right, start and end.<br>
-Use <code>dataSort</code> to enable the sorting in column. Default value is false(disabled).<br>
-Use <code>dataFormat</code> to customize this column.Must give it as a function. </p>
-
-<h2>
-<a id="authors" class="anchor" href="#authors" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Authors</strong>
-</h2>
-
-<p>AllenFang (<a href="https://github.com/AllenFang" class="user-mention">@AllenFang</a>).<br>
-Allen is a research and development engineer on Hadoop/HBase in Taiwan.<br>
-In addition, he has a lot of experiences in J2EE and Web development.</p>
-
-      <footer class="site-footer">
+        <hr>
         <span class="site-footer-owner"><a href="https://github.com/AllenFang/react-bootstrap-table">React-bootstrap-table</a> is maintained by <a href="https://github.com/AllenFang">AllenFang</a>.</span>
 
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
+
 
     </section>
 
-  
+
   </body>
 </html>
-
