@@ -12,10 +12,12 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/react-bootstrap-table.min.css">
     <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   </head>
   <body>
+    <a href="https://github.com/AllenFang/react-bootstrap-table"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
     <nav class="navbar-default" style="background-color: #222;margin-bottom:0;border-style:hidden;border-radius:0px">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -41,7 +43,37 @@
       <a href="https://github.com/AllenFang/react-bootstrap-table/tarball/master" class="btn">Download .tar.gz</a>
     </section>
 
-    <section class="main-content">
+    <section class="main-content" style="margin-top:20px">
+      <div>
+        <h1 style="text-align: center;">Building Bootstrap Table more efficiency and easy</h1>
+        <div style="font-size:1.78rem;color:#2d2d2d;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif">
+        ReactBsTable is a Bootstrap table rebuilt for React.js and support the basic Bootstrap table function.</br>
+
+        ReactBsTable support some function for easy use : </br>
+        <ul>
+          <li>Column align</li>
+          <li>Scrolling</li>
+          <li>Sort Table</li>
+          <li>Column format</li>
+          <li>Pagination</li>
+        </ul>
+      </div>
+      </div>
+        <h1 style="text-align: center">A Quick Demo</h1>
+        <pre style="background-color:cornsilk;font-size:12px"><code>
+function format(cell, row){
+  return '&lt;i class="glyphicon glyphicon-usd"&gt;&lt;/i&gt; ' + cell;
+}
+&lt;BootstrapTable data={productLong} striped={true} hover={true} condensed={true} pagination={true}&gt;
+  &lt;TableHeaderColumn dataField="id" dataAlign="right" dataSort={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="name" dataSort={true}&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="price" dataAlign="center" dataFormat={format}&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+        </code></pre>
+        <div id="index"></div>
+
+        Reference more examples on <a href="example.html">here</a>
+      </div></br>
         <hr>
         <span class="site-footer-owner"><a href="https://github.com/AllenFang/react-bootstrap-table">React-bootstrap-table</a> is maintained by <a href="https://github.com/AllenFang">AllenFang</a>.</span>
 
@@ -49,7 +81,7 @@
 
 
     </section>
-
+    <script src="./indexbundle.js"></script>
 
   </body>
 </html>
