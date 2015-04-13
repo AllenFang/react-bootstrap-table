@@ -89,7 +89,7 @@
           Use <code>condensed</code> to make a condensed table</br>
           <div id="style"></div>
           <pre><code>
-&lt;BootstrapTable data={products} striped="true" hover="true" condensed="true"&gt;
+&lt;BootstrapTable data={products} striped={true} hover={true} condensed={true}&gt;
   &lt;TableHeaderColumn dataField="id"&gt;Product ID&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
@@ -127,8 +127,8 @@
           <div id="sort"></div>
           <pre><code>
 &lt;BootstrapTable data={products}&gt;
-  &lt;TableHeaderColumn dataField="id" dataSort="true"&gt;Product ID&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField="name" dataSort="true"&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="id" dataSort={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="name" dataSort={true}&gt;Product Name&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
 &lt;/BootstrapTable&gt;
           </code></pre>

@@ -45,7 +45,7 @@ React.render(
 );
 
 React.render(
-  <BootstrapTable data={products} striped="true" hover="true" condensed="true">
+  <BootstrapTable data={products} striped={true} hover={true} condensed={true}>
       <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
@@ -73,8 +73,8 @@ React.render(
 
 React.render(
   <BootstrapTable data={products} >
-      <TableHeaderColumn dataField="id" dataSort="true">Product ID</TableHeaderColumn>
-      <TableHeaderColumn dataField="name" dataSort="true">Product Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="id" dataSort={true}>Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
   </BootstrapTable>,
 	document.getElementById("sort")

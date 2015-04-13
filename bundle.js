@@ -46,7 +46,7 @@ React.render(
 );
 
 React.render(
-  React.createElement(BootstrapTable, {data: products, striped: "true", hover: "true", condensed: "true"}, 
+  React.createElement(BootstrapTable, {data: products, striped: true, hover: true, condensed: true}, 
       React.createElement(TableHeaderColumn, {dataField: "id"}, "Product ID"), 
       React.createElement(TableHeaderColumn, {dataField: "name"}, "Product Name"), 
       React.createElement(TableHeaderColumn, {dataField: "price"}, "Product Price")
@@ -74,8 +74,8 @@ React.render(
 
 React.render(
   React.createElement(BootstrapTable, {data: products}, 
-      React.createElement(TableHeaderColumn, {dataField: "id", dataSort: "true"}, "Product ID"), 
-      React.createElement(TableHeaderColumn, {dataField: "name", dataSort: "true"}, "Product Name"), 
+      React.createElement(TableHeaderColumn, {dataField: "id", dataSort: true}, "Product ID"), 
+      React.createElement(TableHeaderColumn, {dataField: "name", dataSort: true}, "Product Name"), 
       React.createElement(TableHeaderColumn, {dataField: "price"}, "Product Price")
   ),
 	document.getElementById("sort")
