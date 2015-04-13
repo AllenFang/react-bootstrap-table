@@ -13,7 +13,7 @@ var demo     = false;
 gulp.task("default", ["prod"]);
 
 gulp.task("prod", function(){
-	gulp.src('./src/*.js')
+	gulp.src('./src/**/*.js')
 			.pipe(babel())
 			.pipe(gulp.dest('./lib'));
 	gulp.src('./css/react-bootstrap-table.css')
