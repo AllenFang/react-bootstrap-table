@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-table",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "It' a react table for bootstrap",
   "main": "./lib/index.js",
   "repository": {
