@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-table",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "It' a react table for bootstrap",
   "main": "./lib/index.js",
   "repository": {
@@ -23,7 +23,7 @@
     "css/"
   ],
   "author": "AllenFang",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babelify": "^5.0.4",
     "browserify": "^9.0.3",

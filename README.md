@@ -3,7 +3,7 @@ It's a react table for bootstrap, named reactbsTable
 
 As you know, the basic bootstrap table function like striped, bordered, hover and condensed are supported.
 
-In addition, reactbsTable support data align, sorting and cell format.
+In addition, reactbsTable support data align, sorting, cell format and pagnation.
 
 You can see the [home page](http://allenfang.github.io/react-bootstrap-table/index.html).
 
@@ -92,9 +92,9 @@ function priceFormatter(cell, row){
 }
 
 React.render(
-  <BootstrapTable data={products} height="120" striped="true" hover="true">
-      <TableHeaderColumn dataField="id" dataAlign="center" dataSort="true">Product ID</TableHeaderColumn>
-      <TableHeaderColumn dataField="name" dataSort="true">Product Name</TableHeaderColumn>
+  <BootstrapTable data={products} height="120" striped={true} hover={true}>
+      <TableHeaderColumn dataField="id" dataAlign="center" dataSort={true}>Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price" dataFormat={priceFormatter}>Product Price</TableHeaderColumn>
   </BootstrapTable>,
 	document.getElementById("basic")
@@ -103,15 +103,16 @@ React.render(
 
 The reactbsTable setting
 
-The attributes in BootstrapTable:
-Use ```data``` to specify the data that you want to display on table.
-Use ```height``` to set the table height, default is 100%.
-Use ```striped``` to set table be a striped columns. Like bootstrap table class ```.table-striped```.
-Use ```hover``` to enable table hover. Like bootstrap table class ```.table-hover```.
-Use ```condensed``` to set a condensed table. Like bootstrap table class ```.table-condensed```.
+The attributes in BootstrapTable:</br>
+Use ```data``` to specify the data that you want to display on table.</br>
+Use ```height``` to set the table height, default is 100%.</br>
+Use ```striped``` to set table be a striped columns. Like bootstrap table class ```.table-striped```.</br>
+Use ```hover``` to enable table hover. Like bootstrap table class ```.table-hover```.</br>
+Use ```condensed``` to set a condensed table. Like bootstrap table class ```.table-condensed```.</br>
+Use ```pagination``` to enable the pagnation on table.</br>
 
-The attributes in TableHeaderColumn:
-Use ```dataField``` to specidy which column you want to show on this column.
-Use ```dataAlign``` to set align in column. Available value is left, center, right, start and end.
-Use ```dataSort``` to enable the sorting in column. Default value is false(disabled).
-Use ```dataFormat``` to customize this column.Must give it as a function.
+The attributes in TableHeaderColumn:</br>
+Use ```dataField``` to specidy which column you want to show on this column.</br>
+Use ```dataAlign``` to set align in column. Available value is left, center, right, start and end.</br>
+Use ```dataSort``` to enable the sorting in column. Default value is false(disabled).</br>
+Use ```dataFormat``` to customize this column.Must give it as a function.</br>

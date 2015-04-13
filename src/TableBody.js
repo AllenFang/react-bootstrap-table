@@ -38,7 +38,9 @@ class TableBody extends React.Component{
     return(
       <div className={containerClasses}>
         <table className={tableClasses}>
-          {tableRows}
+          <tbody>
+            {tableRows}
+          </tbody>
         </table>
       </div>
     )
