@@ -2,7 +2,7 @@ import React from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 var product = [];
-for(var i=0;i<30;i++){
+for(var i=0;i<80;i++){
   product.push({
     id: i,
     name: "Item name " + i,
