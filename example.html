@@ -65,6 +65,10 @@
             <a href="#column-format">Column Format</a>
               <ul class="nav"></ul>
           </li>
+          <li>
+            <a href="#table-pagination">Table Pagination</a>
+              <ul class="nav"></ul>
+          </li>
         </ul>
       </div>
       <div class="col-xs-12 col-md-8">
@@ -145,6 +149,18 @@ function priceFormatter(cell, row){
   &lt;TableHeaderColumn dataField="id"&gt;Product ID&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="price" dataFormat={priceFormatter}&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+          </code></pre>
+        </div></br>
+        <div>
+          <h1 id="table-pagination">Table Pagination</h1>
+          Use <code>pagination</code> to enable the pagination on your table.</br>
+          <div id="pagnation"></div>
+          <pre><code>
+&lt;BootstrapTable data={products} pagination={true}&gt;
+  &lt;TableHeaderColumn dataField="id"&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
 &lt;/BootstrapTable&gt;
           </code></pre>
         </div></br>

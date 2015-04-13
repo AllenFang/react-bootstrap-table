@@ -31,6 +31,15 @@ var products = [
 }
 ];
 
+var productLong = [];
+for(var i=0;i<60;i++){
+  productLong.push({
+    id: i,
+    name: "Item name " + i,
+    price: 100+i
+  });
+}
+
 function priceFormatter(cell, row){
   return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
 }
@@ -43,7 +52,7 @@ React.render(
   </BootstrapTable>,
 	document.getElementById("basic")
 );
-
+products
 React.render(
   <BootstrapTable data={products} striped={true} hover={true} condensed={true}>
       <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
@@ -87,4 +96,13 @@ React.render(
       <TableHeaderColumn dataField="price" dataFormat={priceFormatter}>Product Price</TableHeaderColumn>
   </BootstrapTable>,
 	document.getElementById("format")
+);
+
+React.render(
+  <BootstrapTable height="400" data={productLong} pagination={true}>
+      <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+  </BootstrapTable>,
+	document.getElementById("pagnation")
 );
