@@ -23,8 +23,11 @@ class BootstrapTable extends React.Component{
   }
 
   componentDidMount(){
-    this.refs.table.getDOMNode().childNodes[0].childNodes[0].style.width =
-      this.refs.table.getDOMNode().childNodes[1].childNodes[0].offsetWidth-1+"px";
+    this._adjustHeaderWidth();
+  }
+
+  componentDidUpdate(){
+    this._adjustHeaderWidth();
   }
 
   render(){
@@ -93,6 +96,11 @@ class BootstrapTable extends React.Component{
       }
     });
     return arr;
+  }
+
+  _adjustHeaderWidth(){
+    this.refs.table.getDOMNode().childNodes[0].childNodes[0].style.width =
+      this.refs.table.getDOMNode().childNodes[1].childNodes[0].offsetWidth-1+"px";
   }
 
   renderPagination(){

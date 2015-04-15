@@ -19,6 +19,10 @@ class PaginationList extends React.Component{
       page = this.state.currentPage-1 < 1?1:this.state.currentPage-1;
     }else if(page == Const.NEXT_PAGE){
       page = this.state.currentPage+1 > this.totalPages?this.totalPages:this.state.currentPage+1;
+    }else if(page == Const.LAST_PAGE){
+      page = this.totalPages;
+    }else if(page == Const.FIRST_PAGE){
+      page = 1;
     }else{
       page = parseInt(page);
     }
@@ -51,11 +55,6 @@ class PaginationList extends React.Component{
     }
     return (
       <div className="row">
-        <div className="col-md-4">
-          <ul className="pagination" style={pageListStyle}>
-            {pageBtns}
-          </ul>
-        </div>
         <div className="col-md-1">
           <div className="dropdown">
             <button className="btn btn-default dropdown-toggle" type="button" id="pageDropDown" data-toggle="dropdown" aria-expanded="true">
@@ -69,6 +68,11 @@ class PaginationList extends React.Component{
               <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>50</a></li>
             </ul>
           </div>
+        </div>
+        <div className="col-md-6">
+          <ul className="pagination" style={pageListStyle}>
+            {pageBtns}
+          </ul>
         </div>
       </div>
     )
@@ -95,11 +99,12 @@ class PaginationList extends React.Component{
       endPage   = this.totalPages;
       startPage = endPage - this.sizePerList + 1;
     }
-    var pages = [Const.PRE_PAGE];
+    var pages = [Const.FIRST_PAGE, Const.PRE_PAGE];
     for(var i=startPage;i<=endPage;i++){
       if(i>0)pages.push(i);
     }
     pages.push(Const.NEXT_PAGE);
+    pages.push(Const.LAST_PAGE);
     return pages;
   }
 }
