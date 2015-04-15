@@ -15,7 +15,7 @@ a {
   a:hover {
     text-decoration: underline; }
 
-.btn {
+a.btn {
   display: inline-block;
   margin-bottom: 1rem;
   color: rgba(255, 255, 255, 0.7);
@@ -28,7 +28,7 @@ a {
   .btn + .btn {
     margin-left: 1rem; }
 
-.btn:hover {
+a.btn:hover {
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
   background-color: rgba(255, 255, 255, 0.2);

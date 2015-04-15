@@ -72,19 +72,24 @@ var BootstrapTable = (function (_React$Component) {
   _createClass(BootstrapTable, {
     componentWillMount: {
       value: function componentWillMount() {
-        if (this.props.pagination) this.handlePaginationData(1);
+        if (this.props.pagination) this.handlePaginationData(1, Const.SIZE_PER_PAGE);
       }
     },
     componentDidMount: {
       value: function componentDidMount() {
-        this.refs.table.getDOMNode().childNodes[0].childNodes[0].style.width = this.refs.table.getDOMNode().childNodes[1].childNodes[0].offsetWidth - 1 + "px";
+        this._adjustHeaderWidth();
+      }
+    },
+    componentDidUpdate: {
+      value: function componentDidUpdate() {
+        this._adjustHeaderWidth();
       }
     },
     render: {
       value: function render() {
         var style = {
           height: this.props.height,
-          marginBottom: "20px"
+          marginBottom: "37px"
         };
 
         var columns = this.props.children.map(function (column, i) {
@@ -132,14 +137,16 @@ var BootstrapTable = (function (_React$Component) {
       }
     },
     handlePaginationData: {
-      value: function handlePaginationData(page) {
-        var end = page * Const.SIZE_PER_PAGE - 1;
-        var start = end - 9;
+      value: function handlePaginationData(page, sizePerPage) {
+        var end = page * sizePerPage - 1;
+        var start = end - (sizePerPage - 1);
         var arr = [];
         for (var i = start; i <= end; i++) {
           arr.push(this.props.data[i]);
+          if (i + 1 == this.props.data.length) break;
         }
-        if (this.sortTable) arr = this._sort(arr, this.order, this.sortField);
+
+        if (this.sortTable && null != this.sortField) arr = this._sort(arr, this.order, this.sortField);
         this.setState({ data: arr });
       }
     },
@@ -153,6 +160,11 @@ var BootstrapTable = (function (_React$Component) {
           }
         });
         return arr;
+      }
+    },
+    _adjustHeaderWidth: {
+      value: function _adjustHeaderWidth() {
+        this.refs.table.getDOMNode().childNodes[0].childNodes[0].style.width = this.refs.table.getDOMNode().childNodes[1].childNodes[0].offsetWidth - 1 + "px";
       }
     },
     renderPagination: {
@@ -195,7 +207,11 @@ module.exports = {
   SORT_DESC: "desc",
   SORT_ASC: "asc",
   SIZE_PER_PAGE: 10,
-  SIZE_PER_LIST: 5
+  SIZE_PER_LIST: 5,
+  NEXT_PAGE: ">",
+  LAST_PAGE: ">>",
+  PRE_PAGE: "<",
+  FIRST_PAGE: "<<"
 };
 },{}],4:[function(require,module,exports){
 "use strict";
@@ -590,7 +606,7 @@ var PageButton = (function (_React$Component) {
     pageBtnClick: {
       value: function pageBtnClick(e) {
         e.preventDefault();
-        this.props.changePage(parseInt(e.currentTarget.text));
+        this.props.changePage(e.currentTarget.text);
       }
     },
     render: {
@@ -644,7 +660,10 @@ var PaginationList = (function (_React$Component) {
     _get(Object.getPrototypeOf(PaginationList.prototype), "constructor", this).call(this, props);
     this.sizePerList = Const.SIZE_PER_LIST;
     this.totalPages = Math.ceil(this.props.dataSize / this.props.sizePerPage);
-    this.state = { currentPage: 1 };
+    this.state = {
+      currentPage: 1,
+      sizePerPage: this.props.sizePerPage
+    };
   }
 
   _inherits(PaginationList, _React$Component);
@@ -652,20 +671,111 @@ var PaginationList = (function (_React$Component) {
   _createClass(PaginationList, {
     changePage: {
       value: function changePage(page) {
+        if (page == Const.PRE_PAGE) {
+          page = this.state.currentPage - 1 < 1 ? 1 : this.state.currentPage - 1;
+        } else if (page == Const.NEXT_PAGE) {
+          page = this.state.currentPage + 1 > this.totalPages ? this.totalPages : this.state.currentPage + 1;
+        } else if (page == Const.LAST_PAGE) {
+          page = this.totalPages;
+        } else if (page == Const.FIRST_PAGE) {
+          page = 1;
+        } else {
+          page = parseInt(page);
+        }
+
         if (page != this.state.currentPage) {
           this.setState({ currentPage: page });
-          this.props.changePage(page);
+          this.props.changePage(page, this.state.sizePerPage);
+        }
+      }
+    },
+    changeSizePerPage: {
+      value: function changeSizePerPage(e) {
+        e.preventDefault();
+        var selectSize = parseInt(e.currentTarget.text);
+        if (selectSize != this.state.sizePerPage) {
+          this.totalPages = Math.ceil(this.props.dataSize / selectSize);
+          if (this.state.currentPage > this.totalPages) this.state.currentPage = this.totalPages;
+          this.setState({
+            sizePerPage: selectSize,
+            currentPage: this.state.currentPage
+          });
+          this.props.changePage(this.state.currentPage, selectSize);
         }
       }
     },
     render: {
       value: function render() {
         var pageBtns = this.makePage();
-
+        var pageListStyle = {
+          marginTop: "0px" //override the margin-top defined in .pagination class in bootstrap.
+        };
         return React.createElement(
-          "ul",
-          { className: "pagination" },
-          pageBtns
+          "div",
+          { className: "row" },
+          React.createElement(
+            "div",
+            { className: "col-md-1" },
+            React.createElement(
+              "div",
+              { className: "dropdown" },
+              React.createElement(
+                "button",
+                { className: "btn btn-default dropdown-toggle", type: "button", id: "pageDropDown", "data-toggle": "dropdown", "aria-expanded": "true" },
+                this.state.sizePerPage,
+                React.createElement("span", { className: "caret" })
+              ),
+              React.createElement(
+                "ul",
+                { className: "dropdown-menu", role: "menu", "aria-labelledby": "pageDropDown" },
+                React.createElement(
+                  "li",
+                  { role: "presentation" },
+                  React.createElement(
+                    "a",
+                    { role: "menuitem", tabindex: "-1", href: "#", onClick: this.changeSizePerPage.bind(this) },
+                    "10"
+                  )
+                ),
+                React.createElement(
+                  "li",
+                  { role: "presentation" },
+                  React.createElement(
+                    "a",
+                    { role: "menuitem", tabindex: "-1", href: "#", onClick: this.changeSizePerPage.bind(this) },
+                    "25"
+                  )
+                ),
+                React.createElement(
+                  "li",
+                  { role: "presentation" },
+                  React.createElement(
+                    "a",
+                    { role: "menuitem", tabindex: "-1", href: "#", onClick: this.changeSizePerPage.bind(this) },
+                    "30"
+                  )
+                ),
+                React.createElement(
+                  "li",
+                  { role: "presentation" },
+                  React.createElement(
+                    "a",
+                    { role: "menuitem", tabindex: "-1", href: "#", onClick: this.changeSizePerPage.bind(this) },
+                    "50"
+                  )
+                )
+              )
+            )
+          ),
+          React.createElement(
+            "div",
+            { className: "col-md-6" },
+            React.createElement(
+              "ul",
+              { className: "pagination", style: pageListStyle },
+              pageBtns
+            )
+          )
         );
       }
     },
@@ -681,7 +791,6 @@ var PaginationList = (function (_React$Component) {
             page
           );
         }, this);
-        return;
       }
     },
     getPages: {
@@ -696,10 +805,12 @@ var PaginationList = (function (_React$Component) {
           endPage = this.totalPages;
           startPage = endPage - this.sizePerList + 1;
         }
-        var pages = [];
+        var pages = [Const.FIRST_PAGE, Const.PRE_PAGE];
         for (var i = startPage; i <= endPage; i++) {
           if (i > 0) pages.push(i);
         }
+        pages.push(Const.NEXT_PAGE);
+        pages.push(Const.LAST_PAGE);
         return pages;
       }
     }
