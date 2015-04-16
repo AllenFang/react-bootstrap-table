@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-table",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "It' a react table for bootstrap",
   "main": "./lib/index.js",
   "repository": {
@@ -14,7 +14,8 @@
     "react",
     "bootstrap",
     "table",
-    "grid"
+    "grid",
+    "react-component"
   ],
   "files": [
     "README.md",
