@@ -6,5 +6,9 @@ export default {
   NEXT_PAGE: ">",
   LAST_PAGE: ">>",
   PRE_PAGE: "<",
-  FIRST_PAGE: "<<"
+  FIRST_PAGE: "<<",
+  ROW_SELECT_BG_COLOR: "blue",
+  ROW_SELECT_NONE: "none",
+  ROW_SELECT_SINGLE: "radio",
+  ROW_SELECT_MULTI: "checkbox",
 }

@@ -1,5 +1,7 @@
 import React from 'react';
+import Const from './Const';
 import classSet from 'classnames';
+import SelectRowHeaderColumn from './SelectRowHeaderColumn';
 
 class TableHeader extends React.Component{
 
@@ -26,11 +28,14 @@ class TableHeader extends React.Component{
     var rowStyle = {
       borderBottomStyle: "hidden"
     };
+    var selectRowHeaderCol = this.renderSelectRowHeader();
+
     return(
       <div className={containerClasses}>
         <table className="table table-hover table-bordered">
           <thead>
             <tr ref="header" style={rowStyle}>
+              {selectRowHeaderCol}
               {this.props.children}
             </tr>
           </thead>
@@ -38,6 +43,22 @@ class TableHeader extends React.Component{
       </div>
     )
   }
-}
 
+  renderSelectRowHeader(){
+    if(this.props.rowSelectType == Const.ROW_SELECT_SINGLE) {
+      return (<SelectRowHeaderColumn></SelectRowHeaderColumn>);
+    }else if(this.props.rowSelectType == Const.ROW_SELECT_MULTI){
+      return (<SelectRowHeaderColumn><input type="checkbox"/></SelectRowHeaderColumn>);
+    }else{
+      return null;
+    }
+  }
+}
+TableHeader.propTypes = {
+  rowSelectType: React.PropTypes.string,
+  onSort: React.PropTypes.func
+};
+
+TableHeader.defaultProps = {
+};
 export default TableHeader;
