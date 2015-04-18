@@ -5,7 +5,13 @@ import TableColumn from './TableColumn';
 import classSet from 'classnames';
 
 class TableBody extends React.Component{
+
+  onRowSelect(){
+    console.log("yaya");
+  }
+
   render(){
+    console.log("render body");
     var containerClasses = classSet("table-container");
 
     var tableClasses = classSet("table", "table-bordered", {
@@ -16,9 +22,10 @@ class TableBody extends React.Component{
     var tableStyle = {
       marginTop: -18
     };
+    var isSelectRowDefined = this._isSelectRowDefined();
 
-    var tableHeader = this.renderTableHeader();
-    var selectRowColumn = this.renderSelectRowColumn();
+    var tableHeader = this.renderTableHeader(isSelectRowDefined);
+    var selectRowColumn = isSelectRowDefined?this.renderSelectRowColumn():null;
 
     var tableRows = this.props.data.map(function(data){
       var tableColumns = this.props.columns.map(function(column){
@@ -38,7 +45,9 @@ class TableBody extends React.Component{
       });
 
       return (
-        <TableRow>{selectRowColumn}{tableColumns}</TableRow>
+        <TableRow selectRow={isSelectRowDefined?this.props.selectRow:undefined}>
+          {selectRowColumn}{tableColumns}
+        </TableRow>
       )
     }, this);
 
@@ -54,12 +63,11 @@ class TableBody extends React.Component{
     )
   }
 
-  renderTableHeader(){
+  renderTableHeader(isSelectRowDefined){
     var selectRowHeader = null;
 
-    if(this.props.selectRow.mode == Const.ROW_SELECT_SINGLE ||
-          this.props.selectRow.mode == Const.ROW_SELECT_MULTI){
-      var style = {
+    if(isSelectRowDefined){
+      let style = {
         width:35
       }
       selectRowHeader = (<th style={style}></th>);
@@ -78,11 +86,14 @@ class TableBody extends React.Component{
   renderSelectRowColumn(){
     if(this.props.selectRow.mode == Const.ROW_SELECT_SINGLE) {
       return (<TableColumn><input type="radio" name="selection"/></TableColumn>);
-    }else if(this.props.selectRow.mode == Const.ROW_SELECT_MULTI){
+    }else {
       return (<TableColumn><input type="checkbox"/></TableColumn>);
-    }else{
-      return null;
     }
+  }
+
+  _isSelectRowDefined(){
+    return this.props.selectRow.mode == Const.ROW_SELECT_SINGLE ||
+          this.props.selectRow.mode == Const.ROW_SELECT_MULTI;
   }
 }
 TableBody.propTypes = {
@@ -94,7 +105,8 @@ TableBody.propTypes = {
   selectRow: React.PropTypes.shape({
     mode: React.PropTypes.string,
     bgColor: React.PropTypes.string,
-    onSelect: React.PropTypes.func
+    onSelect: React.PropTypes.func,
+    clickToSelect: React.PropTypes.bool
   })
 };
 export default TableBody;

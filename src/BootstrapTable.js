@@ -126,7 +126,8 @@ BootstrapTable.propTypes = {
   selectRow: React.PropTypes.shape({
     mode: React.PropTypes.string,
     bgColor: React.PropTypes.string,
-    onSelect: React.PropTypes.func
+    onSelect: React.PropTypes.func,
+    clickToSelect: React.PropTypes.bool
   })
 };
 BootstrapTable.defaultProps = {
@@ -138,7 +139,8 @@ BootstrapTable.defaultProps = {
   selectRow: {
     mode: Const.ROW_SELECT_NONE,
     bgColor: Const.ROW_SELECT_BG_COLOR,
-    onSelect: null
+    onSelect: null,
+    clickToSelect: false
   }
 };
 

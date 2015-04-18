@@ -10,7 +10,9 @@ for(var i=0;i<80;i++){
   });
 }
 var selectRowProp = {
-  mode: "radio"
+  mode: "checkbox",
+  clickToSelect: true,
+  bgColor: "rgb(238, 193, 213)"
 };
 function priceFormatter(cell, row){
   return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
