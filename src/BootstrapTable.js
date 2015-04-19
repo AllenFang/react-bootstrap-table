@@ -9,9 +9,16 @@ class BootstrapTable extends React.Component{
 
   constructor(props) {
 		super(props);
+    this.props.data = this.props.data.map(function(row){
+      row.__selected__ = false;
+      return row;
+    });
 		this.state = {
       data: this.props.data
     };
+    if(this.props.selectRow){
+      this.props.selectRow.__onSelect__ = this.handleSelectRow.bind(this);
+    }
     this.sortTable = false;
     this.order = Const.SORT_DESC;
     this.sortField = null;
@@ -51,7 +58,9 @@ class BootstrapTable extends React.Component{
     return(
       <div>
         <div ref="table" style={style}>
-          <TableHeader rowSelectType={this.props.selectRow.mode} onSort={this.handleSort.bind(this)}>
+          <TableHeader rowSelectType={this.props.selectRow.mode}
+                       onSort={this.handleSort.bind(this)}
+                       onSelectAllRow={this.handleSelectAllRow.bind(this)}>
             {this.props.children}
           </TableHeader>
           <TableBody data={this.state.data} columns={columns}
@@ -86,6 +95,34 @@ class BootstrapTable extends React.Component{
     if(this.sortTable && null != this.sortField)
       arr = this._sort(arr, this.order, this.sortField);
     this.setState({data: arr});
+  }
+
+  handleSelectRow(rowIndex, isSelected){
+    if(this.props.selectRow.mode == Const.ROW_SELECT_SINGLE){
+      this.props.data = this.props.data.map(function(row){
+        row.__selected__ = false;
+        return row;
+      });
+    }
+    this.state.data.forEach(function(row, i){
+      if(i == rowIndex-1){
+        row.__selected__ = isSelected;
+      }
+    }, this);
+    this.setState({data: this.state.data});
+  }
+
+  handleSelectAllRow(e){
+    var isSelected = e.currentTarget.checked;
+    this.props.data = this.props.data.map(function(row){
+      row.__selected__ = isSelected;
+      return row;
+    });
+
+    this.state.data.forEach(function(row){
+      row.__selected__ = isSelected;
+    });
+    this.setState({data: this.state.data});
   }
 
   _sort(arr, order, sortField){

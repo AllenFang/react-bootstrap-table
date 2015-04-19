@@ -11,7 +11,6 @@ class TableBody extends React.Component{
   }
 
   render(){
-    console.log("render body");
     var containerClasses = classSet("table-container");
 
     var tableClasses = classSet("table", "table-bordered", {
@@ -25,7 +24,6 @@ class TableBody extends React.Component{
     var isSelectRowDefined = this._isSelectRowDefined();
 
     var tableHeader = this.renderTableHeader(isSelectRowDefined);
-    var selectRowColumn = isSelectRowDefined?this.renderSelectRowColumn():null;
 
     var tableRows = this.props.data.map(function(data){
       var tableColumns = this.props.columns.map(function(column){
@@ -43,9 +41,10 @@ class TableBody extends React.Component{
           )
         }
       });
-
+      var selectRowColumn = isSelectRowDefined?this.renderSelectRowColumn(data.__selected__):null;
       return (
-        <TableRow selectRow={isSelectRowDefined?this.props.selectRow:undefined}>
+        <TableRow isSelected={data.__selected__}
+          selectRow={isSelectRowDefined?this.props.selectRow:undefined}>
           {selectRowColumn}{tableColumns}
         </TableRow>
       )
@@ -83,11 +82,18 @@ class TableBody extends React.Component{
     )
   }
 
-  renderSelectRowColumn(){
+  handleSelectColum(e){
+    if(!this.props.selectRow.clickToSelect){
+      this.props.selectRow.__onSelect__(
+        e.currentTarget.parentElement.parentElement.rowIndex, e.currentTarget.checked);
+    }
+  }
+
+  renderSelectRowColumn(selected){
     if(this.props.selectRow.mode == Const.ROW_SELECT_SINGLE) {
-      return (<TableColumn><input type="radio" name="selection"/></TableColumn>);
+      return (<TableColumn><input type="radio" name="selection" checked={selected} onChange={this.handleSelectColum.bind(this)}/></TableColumn>);
     }else {
-      return (<TableColumn><input type="checkbox"/></TableColumn>);
+      return (<TableColumn><input type="checkbox" checked={selected} onChange={this.handleSelectColum.bind(this)}/></TableColumn>);
     }
   }
 
@@ -101,12 +107,6 @@ TableBody.propTypes = {
   columns: React.PropTypes.array,
   striped: React.PropTypes.bool,
   hover: React.PropTypes.bool,
-  condensed: React.PropTypes.bool,
-  selectRow: React.PropTypes.shape({
-    mode: React.PropTypes.string,
-    bgColor: React.PropTypes.string,
-    onSelect: React.PropTypes.func,
-    clickToSelect: React.PropTypes.bool
-  })
+  condensed: React.PropTypes.bool
 };
 export default TableBody;

@@ -48,7 +48,7 @@ class TableHeader extends React.Component{
     if(this.props.rowSelectType == Const.ROW_SELECT_SINGLE) {
       return (<SelectRowHeaderColumn></SelectRowHeaderColumn>);
     }else if(this.props.rowSelectType == Const.ROW_SELECT_MULTI){
-      return (<SelectRowHeaderColumn><input type="checkbox"/></SelectRowHeaderColumn>);
+      return (<SelectRowHeaderColumn><input type="checkbox" onChange={this.props.onSelectAllRow}/></SelectRowHeaderColumn>);
     }else{
       return null;
     }
@@ -56,7 +56,8 @@ class TableHeader extends React.Component{
 }
 TableHeader.propTypes = {
   rowSelectType: React.PropTypes.string,
-  onSort: React.PropTypes.func
+  onSort: React.PropTypes.func,
+  onSelectAllRow: React.PropTypes.func
 };
 
 TableHeader.defaultProps = {
