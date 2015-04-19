@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-table",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "It' a react table for bootstrap",
   "main": "./lib/index.js",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "https://github.com/AllenFang/react-bootstrap-table.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "Not yet implements."
   },
   "keywords": [
     "react",
@@ -26,17 +26,25 @@
   "author": "AllenFang",
   "license": "MIT",
   "devDependencies": {
+    "babel": "^5.1.10",
     "babelify": "^5.0.4",
     "browserify": "^9.0.3",
     "gulp": "^3.8.11",
     "gulp-babel": "^4.0.1",
     "gulp-cssmin": "^0.1.6",
     "gulp-rename": "^1.2.2",
-    "react": "^0.13.1",
+    "jest-cli": "^0.4.0",
+    "react": "^0.13.2",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.0.0"
   },
   "dependencies": {
     "classnames": "^1.2.0"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/preprocessor.js",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react"
+    ]
   }
 }
