@@ -106,3 +106,33 @@ React.render(
   </BootstrapTable>,
 	document.getElementById("pagnation")
 );
+
+var selectRowProp = {
+  mode: "radio",
+  clickToSelect: true,
+  bgColor: "rgb(238, 193, 213)"
+};
+
+React.render(
+  <BootstrapTable data={products} selectRow={selectRowProp}>
+      <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+  </BootstrapTable>,
+	document.getElementById("select-single")
+);
+
+var selectRowProp1 = {
+  mode: "checkbox",
+  clickToSelect: true,
+  bgColor: "rgb(238, 193, 213)"
+};
+
+React.render(
+  <BootstrapTable data={products} selectRow={selectRowProp1}>
+      <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+  </BootstrapTable>,
+	document.getElementById("select-multiple")
+);

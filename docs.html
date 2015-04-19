@@ -50,8 +50,14 @@
       Use <code>height</code> to set the table height, default is 100%.<br>
       Use <code>striped</code> to set table be a striped columns. Like bootstrap table class <code>.table-striped</code>.<br>
       Use <code>hover</code> to enable table hover. Like bootstrap table class <code>.table-hover</code>.<br>
-      Use <code>condensed</code> to set a condensed table. Like bootstrap table class <code>.table-condensed</code>.   </p>
-      Use <code>pagination</code> to enable pagination on table.   </p>
+      Use <code>condensed</code> to set a condensed table. Like bootstrap table class <code>.table-condensed</code>.
+      Use <code>pagination</code> to enable pagination on table.
+      Use <code>selectRow</code> to enable row selection on table. This attribute accept an object,<br>
+      This object may conatin these properties:</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>mode</code>: radio/checkbox<b>(required)</b>, to specify the single selection or multi selection in table.</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>clickToSelect</code>: true/false<b>(optional)</b>, if true, click the row will trigger selection on that row, default is false</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>bgColor</code>: css color<b>(optional)</b>, if assigned, this color will present on backgroud if row selection.</br>
+      </p>
 
       <h3>
       <a id="the-attributes-in-tableheadercolumn" class="anchor" href="#the-attributes-in-tableheadercolumn" aria-hidden="true"><span class="octicon octicon-link"></span></a>The attributes in &lt;TableHeaderColumn&gt;:</h3>

@@ -64,7 +64,14 @@
 function format(cell, row){
   return '&lt;i class="glyphicon glyphicon-usd"&gt;&lt;/i&gt; ' + cell;
 }
-&lt;BootstrapTable data={productLong} striped={true} hover={true} condensed={true} pagination={true}&gt;
+//Row select setting
+var selectRowProp = {
+  mode: "checkbox",  //checkbox for multi select, radio for single select.
+  clickToSelect: true,   //click row will trigger a selection on that row.
+  bgColor: "rgb(238, 193, 213)"   //selected row background color
+};
+
+&lt;BootstrapTable data={productLong} striped={true} hover={true} condensed={true} pagination={true} selectRow={selectRowProp}>&gt;
   &lt;TableHeaderColumn dataField="id" dataAlign="right" dataSort={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="name" dataSort={true}&gt;Product Name&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="price" dataAlign="center" dataFormat={format}&gt;Product Price&lt;/TableHeaderColumn&gt;
