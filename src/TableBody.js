@@ -6,10 +6,6 @@ import classSet from 'classnames';
 
 class TableBody extends React.Component{
 
-  onRowSelect(){
-    console.log("yaya");
-  }
-
   render(){
     var containerClasses = classSet("table-container");
 
@@ -18,9 +14,7 @@ class TableBody extends React.Component{
       'table-hover': this.props.hover,
       'table-condensed': this.props.condensed
     });
-    var tableStyle = {
-      marginTop: -18
-    };
+
     var isSelectRowDefined = this._isSelectRowDefined();
 
     var tableHeader = this.renderTableHeader(isSelectRowDefined);
@@ -52,7 +46,7 @@ class TableBody extends React.Component{
 
     return(
       <div className={containerClasses}>
-        <table style={tableStyle} className={tableClasses}>
+        <table className={tableClasses}>
           {tableHeader}
           <tbody>
             {tableRows}

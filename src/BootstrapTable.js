@@ -38,9 +38,9 @@ class BootstrapTable extends React.Component{
   }
 
   render(){
+    var tableClass = classSet("react-bs-table");
     var style = {
-      height: this.props.height,
-      marginBottom: "37px"
+      height: this.props.height
     };
 
     var columns = this.props.children.map(function(column, i){
@@ -57,7 +57,7 @@ class BootstrapTable extends React.Component{
     var pagination = this.renderPagination();
     return(
       <div>
-        <div ref="table" style={style}>
+        <div ref="table" style={style} className={tableClass}>
           <TableHeader rowSelectType={this.props.selectRow.mode}
                        onSort={this.handleSort.bind(this)}
                        onSelectAllRow={this.handleSelectAllRow.bind(this)}>

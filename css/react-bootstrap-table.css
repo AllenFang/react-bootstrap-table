@@ -1,4 +1,7 @@
-.table-header{
+.react-bs-table{
+  margin-bottom: 37px;
+}
+.react-bs-table .table-header{
   height: 37px;
   border-right-width: 1px;
   border-right-style: solid;
@@ -8,28 +11,32 @@
   border-top-color: rgb(221, 221, 221);
 }
 
-.table-header > table{
+.react-bs-table .table-header > table{
   table-layout: fixed;
   border-right-style: hidden;
   border-top-style: hidden;
 }
 
-.table-header-column{
+.react-bs-table .table-header > table > thead > tr{
+  border-bottom-style: hidden;
+}
+
+.react-bs-table .table-header > table > thead > tr > th .table-header-column{
   line-height: 25px
 }
 
-.sort-column{
+.react-bs-table .table-header > table > thead > tr > .sort-column{
   cursor: pointer;
 }
 
-.table-container{
+.react-bs-table .table-container{
   overflow-x: auto;
   overflow-y: auto;
   height: 100%;
 }
 
-.table-container > table{
-  margin-top: 0px;
+.react-bs-table .table-container > table{
+  margin-top: -18px;
   table-layout: fixed;
   margin-bottom: 0px;
 }

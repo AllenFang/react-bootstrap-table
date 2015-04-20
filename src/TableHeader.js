@@ -25,16 +25,13 @@ class TableHeader extends React.Component{
 
   render(){
     var containerClasses = classSet("table-header");
-    var rowStyle = {
-      borderBottomStyle: "hidden"
-    };
     var selectRowHeaderCol = this.renderSelectRowHeader();
 
     return(
       <div className={containerClasses}>
         <table className="table table-hover table-bordered">
           <thead>
-            <tr ref="header" style={rowStyle}>
+            <tr ref="header">
               {selectRowHeaderCol}
               {this.props.children}
             </tr>
