@@ -1,7 +1,13 @@
-// var ReactTools = require('react-tools');
 var babel = require("babel");
 module.exports = {
-    process: function(src) {
-        return babel.transform(src, { blacklist: ["react"] }).code;
+    process: function(src, filename) {
+        if (!babel.canCompile(filename)) {
+          return '';
+        }
+        // Ignore all files within node_modules
+        if (filename.indexOf('node_modules') === -1) {
+          return babel.transform(src, {filename: filename}).code;;
+        }
+        return src;
     }
 };

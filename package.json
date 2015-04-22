@@ -8,7 +8,7 @@
     "url": "https://github.com/AllenFang/react-bootstrap-table.git"
   },
   "scripts": {
-    "test": "Not yet implements."
+    "test": "jest"
   },
   "keywords": [
     "react",
@@ -43,8 +43,6 @@
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/preprocessor.js",
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react"
-    ]
+    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"]
   }
 }
