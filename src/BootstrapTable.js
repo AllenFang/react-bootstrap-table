@@ -98,6 +98,7 @@ class BootstrapTable extends React.Component{
   }
 
   handleSelectRow(rowIndex, isSelected){
+    var selectedRow = null;
     if(this.props.selectRow.mode == Const.ROW_SELECT_SINGLE){
       this.props.data = this.props.data.map(function(row){
         row.__selected__ = false;
@@ -107,8 +108,12 @@ class BootstrapTable extends React.Component{
     this.state.data.forEach(function(row, i){
       if(i == rowIndex-1){
         row.__selected__ = isSelected;
+        selectedRow = row;
       }
     }, this);
+    if(this.props.selectRow.onSelect){
+      this.props.selectRow.onSelect(selectedRow, isSelected);
+    }
     this.setState({data: this.state.data});
   }
 
@@ -122,6 +127,9 @@ class BootstrapTable extends React.Component{
     this.state.data.forEach(function(row){
       row.__selected__ = isSelected;
     });
+    if(this.props.selectRow.onSelectAll){
+      this.props.selectRow.onSelectAll(isSelected);
+    }
     this.setState({data: this.state.data});
   }
 
@@ -164,6 +172,7 @@ BootstrapTable.propTypes = {
     mode: React.PropTypes.string,
     bgColor: React.PropTypes.string,
     onSelect: React.PropTypes.func,
+    onSelectAll: React.PropTypes.func,
     clickToSelect: React.PropTypes.bool
   })
 };
@@ -176,7 +185,8 @@ BootstrapTable.defaultProps = {
   selectRow: {
     mode: Const.ROW_SELECT_NONE,
     bgColor: Const.ROW_SELECT_BG_COLOR,
-    onSelect: null,
+    onSelect: undefined,
+    onSelectAll: undefined,
     clickToSelect: false
   }
 };

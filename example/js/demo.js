@@ -9,11 +9,24 @@ for(var i=0;i<80;i++){
     price: 100+i
   });
 }
+function onRowSelect(row, isSelected){
+  console.log(row);
+  console.log("selected: " + isSelected)
+}
+
+function onSelectAll(isSelected){
+  console.log("is select all: " + isSelected);
+}
+
 var selectRowProp = {
   mode: "checkbox",
   clickToSelect: true,
-  bgColor: "rgb(238, 193, 213)"
+  bgColor: "rgb(238, 193, 213)",
+  onSelect: onRowSelect,
+  onSelectAll: onSelectAll
 };
+
+
 function priceFormatter(cell, row){
   return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
 }
