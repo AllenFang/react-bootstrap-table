@@ -18,6 +18,12 @@ function onSelectAll(isSelected){
   console.log("is select all: " + isSelected);
 }
 
+function onAfterSaveCell(row, cellName, cellValue){
+  console.log("Save cell '"+cellName+"' with value '"+cellValue+"'");
+  console.log("Thw whole row :");
+  console.log(row);
+}
+
 var selectRowProp = {
   mode: "checkbox",
   clickToSelect: true,
@@ -26,13 +32,19 @@ var selectRowProp = {
   onSelectAll: onSelectAll
 };
 
+var cellEditProp = {
+  mode: "click",
+  blurToSave: true,
+  afterSaveCell: onAfterSaveCell
+}
+
 
 function priceFormatter(cell, row){
   return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
 }
 
 React.render(
-  <BootstrapTable data={product} height="400" striped={true} hover={true} pagination={true} selectRow={selectRowProp}>
+  <BootstrapTable data={product} height="400" striped={true} hover={true} pagination={true} selectRow={selectRowProp} cellEdit={cellEditProp}>
       <TableHeaderColumn dataField="id" dataAlign="center" dataSort={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price" dataFormat={priceFormatter}>Product Price</TableHeaderColumn>

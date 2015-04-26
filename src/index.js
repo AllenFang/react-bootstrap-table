@@ -1,7 +1,5 @@
 import BootstrapTable from './BootstrapTable';
-import TableHeaderColumn from './TableHeaderColumn'
-window.BootstrapTable = BootstrapTable;
-window.TableHeaderColumn = TableHeaderColumn;
+import TableHeaderColumn from './TableHeaderColumn';
 export default {
   BootstrapTable,
   TableHeaderColumn

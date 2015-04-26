@@ -19,6 +19,11 @@ class BootstrapTable extends React.Component{
     if(this.props.selectRow){
       this.props.selectRow.__onSelect__ = this.handleSelectRow.bind(this);
     }
+    if(this.props.cellEdit){
+      this.props.cellEdit.__onCompleteEdit__ = this.handleEditCell.bind(this);
+      if(this.props.cellEdit.mode !== Const.CELL_EDIT_NONE)
+      this.props.selectRow.clickToSelect = false;
+    }
     this.sortTable = false;
     this.order = Const.SORT_DESC;
     this.sortField = null;
@@ -67,7 +72,9 @@ class BootstrapTable extends React.Component{
             striped={this.props.striped}
             hover={this.props.hover}
             condensed={this.props.condensed}
-            selectRow={this.props.selectRow}/>
+            selectRow={this.props.selectRow}
+            cellEdit={this.props.cellEdit}
+            parentRender={true}/>
         </div>
         <div>
           {pagination}
@@ -133,6 +140,22 @@ class BootstrapTable extends React.Component{
     this.setState({data: this.state.data});
   }
 
+  handleEditCell(newVal, rowIndex, colIndex){
+    var fieldName;
+    var row;
+    this.props.children.forEach(function(column, i){
+      if(i == colIndex){
+        fieldName = column.props.dataField;
+        return false;
+      }
+    });
+    this.state.data[rowIndex][fieldName] = newVal;
+    this.setState({data: this.state.data});
+    if(this.props.cellEdit.afterSaveCell){
+      this.props.cellEdit.afterSaveCell(this.state.data[rowIndex], fieldName, newVal);
+    }
+  }
+
   _sort(arr, order, sortField){
     arr.sort(function(a,b){
       if(order == Const.SORT_ASC){
@@ -174,6 +197,11 @@ BootstrapTable.propTypes = {
     onSelect: React.PropTypes.func,
     onSelectAll: React.PropTypes.func,
     clickToSelect: React.PropTypes.bool
+  }),
+  cellEdit: React.PropTypes.shape({
+    mode: React.PropTypes.string,
+    blurToSave: React.PropTypes.bool,
+    afterSaveCell: React.PropTypes.func
   })
 };
 BootstrapTable.defaultProps = {
@@ -188,6 +216,11 @@ BootstrapTable.defaultProps = {
     onSelect: undefined,
     onSelectAll: undefined,
     clickToSelect: false
+  },
+  cellEdit:{
+    mode: Const.CELL_EDIT_NONE,
+    blurToSave: false,
+    afterSaveCell: undefined
   }
 };
 

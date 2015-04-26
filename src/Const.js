@@ -11,4 +11,7 @@ export default {
   ROW_SELECT_NONE: "none",
   ROW_SELECT_SINGLE: "radio",
   ROW_SELECT_MULTI: "checkbox",
+  CELL_EDIT_NONE: "none",
+  CELL_EDIT_CLICK: "click",
+  CELL_EDIT_DBCLICK: "dbclick"
 }
