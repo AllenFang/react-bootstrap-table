@@ -111,9 +111,9 @@ class TableBody extends React.Component{
   handleEditCell(rowIndex, columnIndex){
     this.props.parentRender = false;
     if(this._isSelectRowDefined()){
-      rowIndex--;columnIndex--;
+      columnIndex--;
     }
-
+    rowIndex--;
     this.setState({currEditCell: {
       rid: rowIndex,
       cid: columnIndex
