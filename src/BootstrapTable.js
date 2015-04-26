@@ -116,6 +116,7 @@ class BootstrapTable extends React.Component{
       if(i == rowIndex-1){
         row.__selected__ = isSelected;
         selectedRow = row;
+        return false;
       }
     }, this);
     if(this.props.selectRow.onSelect){

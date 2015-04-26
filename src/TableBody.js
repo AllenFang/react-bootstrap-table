@@ -31,8 +31,8 @@ class TableBody extends React.Component{
         var fieldValue = data[column.name];
         if(!this.props.parentRender &&
           this.state.currEditCell != null &&
-          this.state.currEditCell.rid == r+1 &&
-          this.state.currEditCell.cid == i+1){
+          this.state.currEditCell.rid == r &&
+          this.state.currEditCell.cid == i){
             return(
               <TableEditColumn completeEdit={this.handleCompleteEditCell.bind(this)}
                                blurToSave={this.props.cellEdit.blurToSave}
@@ -110,6 +110,10 @@ class TableBody extends React.Component{
 
   handleEditCell(rowIndex, columnIndex){
     this.props.parentRender = false;
+    if(this._isSelectRowDefined()){
+      rowIndex--;columnIndex--;
+    }
+
     this.setState({currEditCell: {
       rid: rowIndex,
       cid: columnIndex
