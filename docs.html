@@ -55,9 +55,17 @@
       Use <code>pagination</code> to enable pagination on table.
       Use <code>selectRow</code> to enable row selection on table. This attribute accept an object,<br>
       This object may conatin these properties:</br>
-      &nbsp;&nbsp;&nbsp;&nbsp;<code>mode</code>: radio/checkbox<b>(required)</b>, to specify the single selection or multi selection in table.</br>
-      &nbsp;&nbsp;&nbsp;&nbsp;<code>clickToSelect</code>: true/false<b>(optional)</b>, if true, click the row will trigger selection on that row, default is false</br>
-      &nbsp;&nbsp;&nbsp;&nbsp;<code>bgColor</code>: css color<b>(optional)</b>, if assigned, this color will present on backgroud if row selection.</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>mode</code>: radio/checkbox<b> (required)</b>, to specify the single selection or multi selection in table.</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>clickToSelect</code>: true/false<b> (optional)</b>, if true, click the row will trigger selection on that row, default is false</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>bgColor</code>: css color<b> (optional)</b>, if assigned, this color will present on backgroud if row selection.</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>onSelect</code>: callback function<b> (optional)</b>, accept a callback function, if a row be selected, this function will be called.</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>onSelectAll</code> callback function<b> (optional)</b>, accept a callback function, if select all in checkbox mode, this function will be</br>
+      </br>
+      Use <code>cellEdit</code> to enable the cell editing on table</br>
+      cellEdit accept a object which contain these properties in blow:</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>mode(required)</code>: click/dbclick<b> (required)</b>, to spectify which condition will trigger cell editing.</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>blurToSave</code>: true/false<b> (optional)</b> if true, when mouse blur on input field will trigger a save on cell, default is false.</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>afterSaveCell</code>: callback function<b> (optional)</b>, accept a callback function, after save cell, this function will be called.</br>
       </p>
 
       <h3>

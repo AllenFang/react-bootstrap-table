@@ -52,7 +52,7 @@ React.render(
   </BootstrapTable>,
 	document.getElementById("basic")
 );
-products
+
 React.render(
   <BootstrapTable data={products} striped={true} hover={true} condensed={true}>
       <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
@@ -107,12 +107,20 @@ React.render(
 	document.getElementById("pagnation")
 );
 
+function onRowSelect(row, isSelected){
+  console.log(row);
+  console.log("selected: " + isSelected)
+}
+
+function onSelectAll(isSelected){
+  console.log("is select all: " + isSelected);
+}
 var selectRowProp = {
   mode: "radio",
   clickToSelect: true,
-  bgColor: "rgb(238, 193, 213)"
+  bgColor: "rgb(238, 193, 213)",
+  onSelect: onRowSelect
 };
-
 React.render(
   <BootstrapTable data={products} selectRow={selectRowProp}>
       <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
@@ -125,7 +133,9 @@ React.render(
 var selectRowProp1 = {
   mode: "checkbox",
   clickToSelect: true,
-  bgColor: "rgb(238, 193, 213)"
+  bgColor: "rgb(238, 193, 213)",
+  onSelect: onRowSelect,
+  onSelectAll: onSelectAll
 };
 
 React.render(
@@ -135,4 +145,23 @@ React.render(
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
   </BootstrapTable>,
 	document.getElementById("select-multiple")
+);
+function onAfterSaveCell(row, cellName, cellValue){
+  console.log("Save cell '"+cellName+"' with value '"+cellValue+"'");
+  console.log("Thw whole row :");
+  console.log(row);
+}
+var cellEditProp = {
+  mode: "click",
+  blurToSave: true,
+  afterSaveCell: onAfterSaveCell
+}
+
+React.render(
+  <BootstrapTable data={products} cellEdit={cellEditProp}>
+      <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+  </BootstrapTable>,
+	document.getElementById("cell-edit-div")
 );

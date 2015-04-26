@@ -79,6 +79,10 @@
             <a href="#select-checkbox">Row Selection(checkbox)</a>
               <ul class="nav"></ul>
           </li>
+          <li>
+            <a href="#cell-edit">Cell Edit</a>
+              <ul class="nav"></ul>
+          </li>
         </ul>
       </div>
       <div class="col-xs-12 col-md-8">
@@ -177,16 +181,23 @@ function priceFormatter(cell, row){
         <div>
           <h1 id="select-radio">Row selection(Single)</h1>
           Use <code>selectRow</code> to specify the row selection detail. In addition, selectRow accept a object</br>
-          This is object which you can give some attribute is:</br>
-          <code>mode</code>: radio/checkbox<b>(required)</b>, to specify the single selection or multi selection in table.</br>
-          <code>clickToSelect</code>: true/false<b>(optional)</b>, if true, click the row will trigger selection on that row, default is false</br>
-          <code>bgColor</code>: css color<b>(optional)</b>, if assigned, this color will present on backgroud if row selection.</br>
+          This is object contain these properties:</br>
+          <code>mode</code>: radio/checkbox <b>(required)</b>, to specify the single selection or multi selection in table.</br>
+          <code>clickToSelect</code>: true/false <b>(optional)</b>, if true, click the row will trigger selection on that row, default is false</br>
+          <code>bgColor</code>: css color <b>(optional)</b>, if assigned, this color will present on backgroud if row selection.</br>
+          <code>onSelect</code>: callback function <b>(optional)</b>, if a row be selected, this function will be called.</br>
           <div id="select-single"></div>
           <pre><code>
+function onRowSelect(row, isSelected){
+  console.log(row);
+  console.log("selected: " + isSelected)
+}
+
 var selectRowProp = {
   mode: "radio",
   clickToSelect: true,
-  bgColor: "rgb(238, 193, 213)"
+  bgColor: "rgb(238, 193, 213)",
+  onSelect: onRowSelect
 };
 &lt;BootstrapTable data={products} selectRow={selectRowProp}&gt;
   &lt;TableHeaderColumn dataField="id"&gt;Product ID&lt;/TableHeaderColumn&gt;
@@ -198,18 +209,59 @@ var selectRowProp = {
         <div>
           <h1 id="select-checkbox">Row selection(Multiple)</h1>
           Use <code>selectRow</code> to specify the row selection detail. In addition, selectRow accept a object</br>
-          This is object which you can give some attribute is:</br>
-          <code>mode</code>: radio/checkbox<b>(required)</b>, to specify the single selection or multi selection in table.</br>
-          <code>clickToSelect</code>: true/false<b>(optional)</b>, if true, click the row will trigger selection on that row, default is false</br>
-          <code>bgColor</code>: css color<b>(optional)</b>, if assigned, this color will present on backgroud if row selection.</br>
+          This is object contain these properties:</br>
+          <code>mode</code>: radio/checkbox <b>(required)</b>, to specify the single selection or multi selection in table.</br>
+          <code>clickToSelect</code>: true/false <b>(optional)</b>, if true, click the row will trigger selection on that row, default is false</br>
+          <code>bgColor</code>: css color <b>(optional)</b>, if assigned, this color will present on backgroud if row selection.</br>
+          <code>onSelect</code>: callback function <b>(optional)</b>, if a row be selected, this function will be called.</br>
+          <code>onSelectAll</code>: callback function <b>(optional)</b>, if select all in checkbox mode, this function will be called.</br>
           <div id="select-multiple"></div>
           <pre><code>
+function onRowSelect(row, isSelected){
+  console.log(row);
+  console.log("selected: " + isSelected)
+}
+
+function onSelectAll(isSelected){
+  console.log("is select all: " + isSelected);
+}
 var selectRowProp = {
   mode: "checkbox",
   clickToSelect: true,
-  bgColor: "rgb(238, 193, 213)"
+  bgColor: "rgb(238, 193, 213)",
+  onSelect: onRowSelect,
+  onSelectAll: onSelectAll
 };
 &lt;BootstrapTable data={products} selectRow={selectRowProp}&gt;
+  &lt;TableHeaderColumn dataField="id"&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+          </code></pre>
+        </div></br>
+        <div>
+          <h1 id="cell-edit">Cell Edit</h1>
+          Use <code>cellEdit</code> to enable cell editing on your table and this attribute accept a object.</br>
+          This is object contain these properties:</br>
+          <code>mode</code>: click/dbclick <b>(required)</b> to specify which condition will trigger cell editing.</br>
+          <code>blurToSave</code>: true/false <b>(optional)</b> if true, when mouse blur on input field will trigger a save on cell,</br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;default is false so you need to press ENTER for saving cell.</br>
+          <code>afterSaveCell</code>: callback function <b>(optional)</b> accept a callback function, after save cell, this function will be called.</br>
+          <div id="cell-edit-div"></div>
+          <pre><code>
+function onAfterSaveCell(row, cellName, cellValue){
+  console.log("Save cell '"+cellName+"' with value '"+cellValue+"'");
+  console.log("Thw whole row :");
+  console.log(row);
+}
+var cellEditProp = {
+  mode: "click",
+  blurToSave: true,
+  afterSaveCell: onAfterSaveCell
+}
+&lt;BootstrapTable data={products} cellEdit={cellEditProp}&gt;
   &lt;TableHeaderColumn dataField="id"&gt;Product ID&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
