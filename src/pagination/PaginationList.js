@@ -62,10 +62,10 @@ class PaginationList extends React.Component{
               <span className="caret"></span>
             </button>
             <ul className="dropdown-menu" role="menu" aria-labelledby="pageDropDown">
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>10</a></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>25</a></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>30</a></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>50</a></li>
+              <li role="presentation"><a role="menuitem" tabIndex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>10</a></li>
+              <li role="presentation"><a role="menuitem" tabIndex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>25</a></li>
+              <li role="presentation"><a role="menuitem" tabIndex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>30</a></li>
+              <li role="presentation"><a role="menuitem" tabIndex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>50</a></li>
             </ul>
           </div>
         </div>
@@ -109,8 +109,8 @@ class PaginationList extends React.Component{
   }
 }
 PaginationList.propTypes = {
-  sizePerPage: React.PropTypes.int,
-  dataSize: React.PropTypes.int,
+  sizePerPage: React.PropTypes.number,
+  dataSize: React.PropTypes.number,
   changePage: React.PropTypes.func
 };
 

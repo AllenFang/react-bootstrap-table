@@ -38,8 +38,8 @@ class TableEditColumn extends React.Component{
 }
 TableEditColumn.propTypes = {
   completeEdit: React.PropTypes.func,
-  rowIndex: React.PropTypes.int,
-  colIndex: React.PropTypes.int,
+  rowIndex: React.PropTypes.number,
+  colIndex: React.PropTypes.number,
   blurToSave: React.PropTypes.bool
 };
 
