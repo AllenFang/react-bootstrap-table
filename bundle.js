@@ -32,6 +32,39 @@ var products = [
 }
 ];
 
+var product1 = [], product2 = [],product3 = [],product4 = [],
+product5 = [],product6 = [],product7 = [],product8 = [],
+product9 = [],product10 = [],product11 = [];
+
+for(var i=1;i<=6;i++){
+  var p = {
+    id: i,
+    name: "Product"+i,
+    price: 100+i
+  }
+
+  product1.push(p);product2.push(p);product4.push(p);product5.push(p);
+  product6.push(p);
+  product10.push(p);product11.push(p);product3.push(p);
+
+
+  product7.push({
+    id: i,
+    name: "Product"+i,
+    price: 100+i
+  });
+  product8.push({
+    id: i,
+    name: "Product"+i,
+    price: 100+i
+  });
+  product9.push({
+    id: i,
+    name: "Product"+i,
+    price: 100+i
+  });
+}
+
 var productLong = [];
 for(var i=0;i<60;i++){
   productLong.push({
@@ -46,7 +79,7 @@ function priceFormatter(cell, row){
 }
 
 React.render(
-  React.createElement(BootstrapTable, {data: products}, 
+  React.createElement(BootstrapTable, {data: product1}, 
       React.createElement(TableHeaderColumn, {dataField: "id"}, "Product ID"), 
       React.createElement(TableHeaderColumn, {dataField: "name"}, "Product Name"), 
       React.createElement(TableHeaderColumn, {dataField: "price"}, "Product Price")
@@ -55,7 +88,7 @@ React.render(
 );
 
 React.render(
-  React.createElement(BootstrapTable, {data: products, striped: true, hover: true, condensed: true}, 
+  React.createElement(BootstrapTable, {data: product2, striped: true, hover: true, condensed: true}, 
       React.createElement(TableHeaderColumn, {dataField: "id"}, "Product ID"), 
       React.createElement(TableHeaderColumn, {dataField: "name"}, "Product Name"), 
       React.createElement(TableHeaderColumn, {dataField: "price"}, "Product Price")
@@ -64,7 +97,7 @@ React.render(
 );
 
 React.render(
-  React.createElement(BootstrapTable, {data: products, height: "120"}, 
+  React.createElement(BootstrapTable, {data: product3, height: "120"}, 
       React.createElement(TableHeaderColumn, {dataField: "id"}, "Product ID"), 
       React.createElement(TableHeaderColumn, {dataField: "name"}, "Product Name"), 
       React.createElement(TableHeaderColumn, {dataField: "price"}, "Product Price")
@@ -73,7 +106,7 @@ React.render(
 );
 
 React.render(
-  React.createElement(BootstrapTable, {data: products}, 
+  React.createElement(BootstrapTable, {data: product4}, 
       React.createElement(TableHeaderColumn, {dataField: "id", dataAlign: "right"}, "Product ID"), 
       React.createElement(TableHeaderColumn, {dataField: "name", dataAlign: "center"}, "Product Name"), 
       React.createElement(TableHeaderColumn, {dataField: "price"}, "Product Price")
@@ -82,7 +115,7 @@ React.render(
 );
 
 React.render(
-  React.createElement(BootstrapTable, {data: products}, 
+  React.createElement(BootstrapTable, {data: product5}, 
       React.createElement(TableHeaderColumn, {dataField: "id", dataSort: true}, "Product ID"), 
       React.createElement(TableHeaderColumn, {dataField: "name", dataSort: true}, "Product Name"), 
       React.createElement(TableHeaderColumn, {dataField: "price"}, "Product Price")
@@ -91,7 +124,7 @@ React.render(
 );
 
 React.render(
-  React.createElement(BootstrapTable, {data: products}, 
+  React.createElement(BootstrapTable, {data: product6}, 
       React.createElement(TableHeaderColumn, {dataField: "id"}, "Product ID"), 
       React.createElement(TableHeaderColumn, {dataField: "name"}, "Product Name"), 
       React.createElement(TableHeaderColumn, {dataField: "price", dataFormat: priceFormatter}, "Product Price")
@@ -123,7 +156,7 @@ var selectRowProp = {
   onSelect: onRowSelect
 };
 React.render(
-  React.createElement(BootstrapTable, {data: products, selectRow: selectRowProp}, 
+  React.createElement(BootstrapTable, {data: product7, selectRow: selectRowProp}, 
       React.createElement(TableHeaderColumn, {dataField: "id"}, "Product ID"), 
       React.createElement(TableHeaderColumn, {dataField: "name"}, "Product Name"), 
       React.createElement(TableHeaderColumn, {dataField: "price"}, "Product Price")
@@ -140,7 +173,7 @@ var selectRowProp1 = {
 };
 
 React.render(
-  React.createElement(BootstrapTable, {data: products, selectRow: selectRowProp1}, 
+  React.createElement(BootstrapTable, {data: product8, selectRow: selectRowProp1}, 
       React.createElement(TableHeaderColumn, {dataField: "id"}, "Product ID"), 
       React.createElement(TableHeaderColumn, {dataField: "name"}, "Product Name"), 
       React.createElement(TableHeaderColumn, {dataField: "price"}, "Product Price")
@@ -159,7 +192,7 @@ var cellEditProp = {
 }
 
 React.render(
-  React.createElement(BootstrapTable, {data: products, cellEdit: cellEditProp}, 
+  React.createElement(BootstrapTable, {data: product9, cellEdit: cellEditProp}, 
       React.createElement(TableHeaderColumn, {dataField: "id"}, "Product ID"), 
       React.createElement(TableHeaderColumn, {dataField: "name"}, "Product Name"), 
       React.createElement(TableHeaderColumn, {dataField: "price"}, "Product Price")

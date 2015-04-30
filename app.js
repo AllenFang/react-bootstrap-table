@@ -31,6 +31,39 @@ var products = [
 }
 ];
 
+var product1 = [], product2 = [],product3 = [],product4 = [],
+product5 = [],product6 = [],product7 = [],product8 = [],
+product9 = [],product10 = [],product11 = [];
+
+for(var i=1;i<=6;i++){
+  var p = {
+    id: i,
+    name: "Product"+i,
+    price: 100+i
+  }
+
+  product1.push(p);product2.push(p);product4.push(p);product5.push(p);
+  product6.push(p);
+  product10.push(p);product11.push(p);product3.push(p);
+
+
+  product7.push({
+    id: i,
+    name: "Product"+i,
+    price: 100+i
+  });
+  product8.push({
+    id: i,
+    name: "Product"+i,
+    price: 100+i
+  });
+  product9.push({
+    id: i,
+    name: "Product"+i,
+    price: 100+i
+  });
+}
+
 var productLong = [];
 for(var i=0;i<60;i++){
   productLong.push({
@@ -45,7 +78,7 @@ function priceFormatter(cell, row){
 }
 
 React.render(
-  <BootstrapTable data={products} >
+  <BootstrapTable data={product1} >
       <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
@@ -54,7 +87,7 @@ React.render(
 );
 
 React.render(
-  <BootstrapTable data={products} striped={true} hover={true} condensed={true}>
+  <BootstrapTable data={product2} striped={true} hover={true} condensed={true}>
       <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
@@ -63,7 +96,7 @@ React.render(
 );
 
 React.render(
-  <BootstrapTable data={products} height="120">
+  <BootstrapTable data={product3} height="120">
       <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
@@ -72,7 +105,7 @@ React.render(
 );
 
 React.render(
-  <BootstrapTable data={products} >
+  <BootstrapTable data={product4} >
       <TableHeaderColumn dataField="id" dataAlign="right">Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name" dataAlign="center">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
@@ -81,7 +114,7 @@ React.render(
 );
 
 React.render(
-  <BootstrapTable data={products} >
+  <BootstrapTable data={product5} >
       <TableHeaderColumn dataField="id" dataSort={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
@@ -90,7 +123,7 @@ React.render(
 );
 
 React.render(
-  <BootstrapTable data={products} >
+  <BootstrapTable data={product6} >
       <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price" dataFormat={priceFormatter}>Product Price</TableHeaderColumn>
@@ -122,7 +155,7 @@ var selectRowProp = {
   onSelect: onRowSelect
 };
 React.render(
-  <BootstrapTable data={products} selectRow={selectRowProp}>
+  <BootstrapTable data={product7} selectRow={selectRowProp}>
       <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
@@ -139,7 +172,7 @@ var selectRowProp1 = {
 };
 
 React.render(
-  <BootstrapTable data={products} selectRow={selectRowProp1}>
+  <BootstrapTable data={product8} selectRow={selectRowProp1}>
       <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
@@ -158,7 +191,7 @@ var cellEditProp = {
 }
 
 React.render(
-  <BootstrapTable data={products} cellEdit={cellEditProp}>
+  <BootstrapTable data={product9} cellEdit={cellEditProp}>
       <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
