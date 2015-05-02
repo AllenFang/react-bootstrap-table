@@ -9,16 +9,9 @@ class BootstrapTable extends React.Component{
 
   constructor(props) {
 		super(props);
-    this.props.data = this.props.data.map(function(row){
-      row.__selected__ = false;
-      return row;
-    });
 		this.state = {
       data: this.props.data
     };
-    if(this.props.selectRow){
-      this.props.selectRow.__onSelect__ = this.handleSelectRow.bind(this);
-    }
     if(this.props.cellEdit){
       this.props.cellEdit.__onCompleteEdit__ = this.handleEditCell.bind(this);
       if(this.props.cellEdit.mode !== Const.CELL_EDIT_NONE)
@@ -27,6 +20,16 @@ class BootstrapTable extends React.Component{
     this.sortTable = false;
     this.order = Const.SORT_DESC;
     this.sortField = null;
+    this.keyField = null;
+    this.props.children.forEach(function(column){
+      if(column.props.dataSort) this.sortTable = true;
+      if(column.props.isKey){
+        if(this.keyField != null) throw "Error. Multiple key column be detected in TableHeaderColumn.";
+        this.keyField = column.props.dataField;
+      }
+    }, this);
+    if(this.keyField == null)
+      throw "Error. No any key column defined in TableHeaderColumn. Use 'isKey={true}' to specify a unique column.";
 	}
 
   componentWillMount(){
@@ -47,9 +50,7 @@ class BootstrapTable extends React.Component{
     var style = {
       height: this.props.height
     };
-
     var columns = this.props.children.map(function(column, i){
-      if(column.props.dataSort) this.sortTable = true;
       return {
         name: column.props.dataField,
         align: column.props.dataAlign,
@@ -71,6 +72,7 @@ class BootstrapTable extends React.Component{
           <TableBody data={this.state.data} columns={columns}
             striped={this.props.striped}
             hover={this.props.hover}
+            keyField={this.keyField}
             condensed={this.props.condensed}
             selectRow={this.props.selectRow}
             cellEdit={this.props.cellEdit}
@@ -104,41 +106,16 @@ class BootstrapTable extends React.Component{
     this.setState({data: arr});
   }
 
-  handleSelectRow(rowIndex, isSelected){
-    var selectedRow = null;
-    if(this.props.selectRow.mode == Const.ROW_SELECT_SINGLE){
-      this.props.data = this.props.data.map(function(row){
-        row.__selected__ = false;
-        return row;
-      });
-    }
-    this.state.data.forEach(function(row, i){
-      if(i == rowIndex-1){
-        row.__selected__ = isSelected;
-        selectedRow = row;
-        return false;
-      }
-    }, this);
-    if(this.props.selectRow.onSelect){
-      this.props.selectRow.onSelect(selectedRow, isSelected);
-    }
-    this.setState({data: this.state.data});
-  }
-
   handleSelectAllRow(e){
     var isSelected = e.currentTarget.checked;
-    this.props.data = this.props.data.map(function(row){
-      row.__selected__ = isSelected;
-      return row;
-    });
-
-    this.state.data.forEach(function(row){
-      row.__selected__ = isSelected;
-    });
-    if(this.props.selectRow.onSelectAll){
-      this.props.selectRow.onSelectAll(isSelected);
+    if(isSelected){
+      var selectedKey = this.props.data.map(function(row){
+        return row[this.keyField];
+      }, this);
+      this.props.selectRow.__onSelectAll__(selectedKey);
+    }else{
+      this.props.selectRow.__onSelectAll__([]);
     }
-    this.setState({data: this.state.data});
   }
 
   handleEditCell(newVal, rowIndex, colIndex){

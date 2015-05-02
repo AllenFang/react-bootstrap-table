@@ -85,7 +85,7 @@ function priceFormatter(cell, row){
 
 React.render(
   <BootstrapTable data={products} height="120" striped={true} hover={true}>
-      <TableHeaderColumn dataField="id" dataAlign="center" dataSort={true}>Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="id" isKey={true} dataAlign="center" dataSort={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price" dataFormat={priceFormatter}>Product Price</TableHeaderColumn>
   </BootstrapTable>,
@@ -117,7 +117,8 @@ Use ```cellEdit``` to enable the cell editing on table</br>
         ```afterSaveCell```(optional): accept a callback function, after save cell, this function will be called.</br>
 
 The attributes in TableHeaderColumn:</br>
-Use ```dataField``` to specidy which column you want to show on this column.</br>
+Use ```isKey``` to specify which column is unique.</br>
+Use ```dataField``` to specify which column you want to show on this column.</br>
 Use ```dataAlign``` to set align in column. Available value is left, center, right, start and end.</br>
 Use ```dataSort``` to enable the sorting in column. Default value is false(disabled).</br>
 Use ```dataFormat``` to customize this column.Must give it as a function.</br>

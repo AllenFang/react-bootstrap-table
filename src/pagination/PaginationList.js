@@ -82,9 +82,8 @@ class PaginationList extends React.Component{
     var pages = this.getPages();
     return pages.map(function(page){
       var isActive = page == this.state.currentPage?true:false;
-
       return(
-        <PageButton changePage={this.changePage.bind(this)} active={isActive}>{page}</PageButton>
+        <PageButton changePage={this.changePage.bind(this)} active={isActive} key={page}>{page}</PageButton>
       )
     }, this);
   }

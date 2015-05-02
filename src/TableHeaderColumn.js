@@ -44,13 +44,15 @@ TableHeaderColumn.propTypes = {
   dataAlign: React.PropTypes.string,
   dataSort: React.PropTypes.bool,
   clearSortCaret: React.PropTypes.func,
-  dataFormat: React.PropTypes.func
+  dataFormat: React.PropTypes.func,
+  isKey: React.PropTypes.bool
 };
 
 TableHeaderColumn.defaultProps = {
   dataAlign: "left",
   dataSort: false,
-  dataFormat: undefined
+  dataFormat: undefined,
+  isKey: false
 };
 
 export default TableHeaderColumn;
