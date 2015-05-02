@@ -79,7 +79,7 @@ function priceFormatter(cell, row){
 
 React.render(
   <BootstrapTable data={product1} >
-      <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
   </BootstrapTable>,
@@ -88,7 +88,7 @@ React.render(
 
 React.render(
   <BootstrapTable data={product2} striped={true} hover={true} condensed={true}>
-      <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
   </BootstrapTable>,
@@ -97,7 +97,7 @@ React.render(
 
 React.render(
   <BootstrapTable data={product3} height="120">
-      <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
   </BootstrapTable>,
@@ -106,7 +106,7 @@ React.render(
 
 React.render(
   <BootstrapTable data={product4} >
-      <TableHeaderColumn dataField="id" dataAlign="right">Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="id" isKey={true} dataAlign="right">Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name" dataAlign="center">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
   </BootstrapTable>,
@@ -115,7 +115,7 @@ React.render(
 
 React.render(
   <BootstrapTable data={product5} >
-      <TableHeaderColumn dataField="id" dataSort={true}>Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="id" isKey={true} dataSort={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
   </BootstrapTable>,
@@ -124,7 +124,7 @@ React.render(
 
 React.render(
   <BootstrapTable data={product6} >
-      <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price" dataFormat={priceFormatter}>Product Price</TableHeaderColumn>
   </BootstrapTable>,
@@ -133,7 +133,7 @@ React.render(
 
 React.render(
   <BootstrapTable height="400" data={productLong} pagination={true}>
-      <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
   </BootstrapTable>,
@@ -156,7 +156,7 @@ var selectRowProp = {
 };
 React.render(
   <BootstrapTable data={product7} selectRow={selectRowProp}>
-      <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
   </BootstrapTable>,
@@ -173,7 +173,7 @@ var selectRowProp1 = {
 
 React.render(
   <BootstrapTable data={product8} selectRow={selectRowProp1}>
-      <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
   </BootstrapTable>,
@@ -192,7 +192,7 @@ var cellEditProp = {
 
 React.render(
   <BootstrapTable data={product9} cellEdit={cellEditProp}>
-      <TableHeaderColumn dataField="id">Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
   </BootstrapTable>,

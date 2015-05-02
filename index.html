@@ -80,7 +80,7 @@ var selectRowProp = {
 };
 
 &lt;BootstrapTable data={productLong} striped={true} hover={true} condensed={true} pagination={true} selectRow={selectRowProp}>&gt;
-  &lt;TableHeaderColumn dataField="id" dataAlign="right" dataSort={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="id" isKey={true} dataAlign="right" dataSort={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="name" dataSort={true}&gt;Product Name&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="price" dataAlign="center" dataFormat={format}&gt;Product Price&lt;/TableHeaderColumn&gt;
 &lt;/BootstrapTable&gt;
@@ -89,6 +89,16 @@ var selectRowProp = {
 
         Reference more examples on <a href="example.html">here</a>
       </div></br>
+      <h1 style="text-align: center">Release Notes</h1>
+      <div style="font-size:1.78rem;color:#2d2d2d;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif">
+        v0.5.4 : fix warning messages and refactoring row selection. After this version,
+        the <code>isKey</code> attribute is required by <code>TableHeaderColumn</code> for specifing which column is unique.</br>
+        </br>
+
+        v0.5.x : Cell Edit support on this version.</br></br>
+        v0.4.x : Row selection support on this version.</br></br>
+        v0.3.x : Pagination support on this version.</br></br>
+      </div>
         <hr>
         <span class="site-footer-owner"><a href="https://github.com/AllenFang/react-bootstrap-table">React-bootstrap-table</a> is maintained by <a href="https://github.com/AllenFang">AllenFang</a>.</span>
 

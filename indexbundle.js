@@ -26,7 +26,7 @@ function priceFormatter(cell, row){
 
 React.render(
   React.createElement(BootstrapTable, {data: productLong, striped: true, hover: true, condensed: false, pagination: true, selectRow: selectRowProp}, 
-      React.createElement(TableHeaderColumn, {dataField: "id", dataAlign: "right", dataSort: true}, "Product ID"), 
+      React.createElement(TableHeaderColumn, {dataField: "id", isKey: true, dataAlign: "right", dataSort: true}, "Product ID"), 
       React.createElement(TableHeaderColumn, {dataField: "name", dataSort: true}, "Product Name"), 
       React.createElement(TableHeaderColumn, {dataField: "price", dataAlign: "center", dataFormat: priceFormatter}, "Product Price")
   ),
@@ -65,16 +65,9 @@ var BootstrapTable = (function (_React$Component) {
     _classCallCheck(this, BootstrapTable);
 
     _get(Object.getPrototypeOf(BootstrapTable.prototype), "constructor", this).call(this, props);
-    this.props.data = this.props.data.map(function (row) {
-      row.__selected__ = false;
-      return row;
-    });
     this.state = {
       data: this.props.data
     };
-    if (this.props.selectRow) {
-      this.props.selectRow.__onSelect__ = this.handleSelectRow.bind(this);
-    }
     if (this.props.cellEdit) {
       this.props.cellEdit.__onCompleteEdit__ = this.handleEditCell.bind(this);
       if (this.props.cellEdit.mode !== Const.CELL_EDIT_NONE) this.props.selectRow.clickToSelect = false;
@@ -82,6 +75,15 @@ var BootstrapTable = (function (_React$Component) {
     this.sortTable = false;
     this.order = Const.SORT_DESC;
     this.sortField = null;
+    this.keyField = null;
+    this.props.children.forEach(function (column) {
+      if (column.props.dataSort) this.sortTable = true;
+      if (column.props.isKey) {
+        if (this.keyField != null) throw "Error. Multiple key column be detected in TableHeaderColumn.";
+        this.keyField = column.props.dataField;
+      }
+    }, this);
+    if (this.keyField == null) throw "Error. No any key column defined in TableHeaderColumn. Use 'isKey={true}' to specify a unique column.";
   }
 
   _inherits(BootstrapTable, _React$Component);
@@ -108,9 +110,7 @@ var BootstrapTable = (function (_React$Component) {
         var style = {
           height: this.props.height
         };
-
         var columns = this.props.children.map(function (column, i) {
-          if (column.props.dataSort) this.sortTable = true;
           return {
             name: column.props.dataField,
             align: column.props.dataAlign,
@@ -137,6 +137,7 @@ var BootstrapTable = (function (_React$Component) {
             React.createElement(TableBody, { data: this.state.data, columns: columns,
               striped: this.props.striped,
               hover: this.props.hover,
+              keyField: this.keyField,
               condensed: this.props.condensed,
               selectRow: this.props.selectRow,
               cellEdit: this.props.cellEdit,
@@ -172,42 +173,17 @@ var BootstrapTable = (function (_React$Component) {
         this.setState({ data: arr });
       }
     },
-    handleSelectRow: {
-      value: function handleSelectRow(rowIndex, isSelected) {
-        var selectedRow = null;
-        if (this.props.selectRow.mode == Const.ROW_SELECT_SINGLE) {
-          this.props.data = this.props.data.map(function (row) {
-            row.__selected__ = false;
-            return row;
-          });
-        }
-        this.state.data.forEach(function (row, i) {
-          if (i == rowIndex - 1) {
-            row.__selected__ = isSelected;
-            selectedRow = row;
-          }
-        }, this);
-        if (this.props.selectRow.onSelect) {
-          this.props.selectRow.onSelect(selectedRow, isSelected);
-        }
-        this.setState({ data: this.state.data });
-      }
-    },
     handleSelectAllRow: {
       value: function handleSelectAllRow(e) {
         var isSelected = e.currentTarget.checked;
-        this.props.data = this.props.data.map(function (row) {
-          row.__selected__ = isSelected;
-          return row;
-        });
-
-        this.state.data.forEach(function (row) {
-          row.__selected__ = isSelected;
-        });
-        if (this.props.selectRow.onSelectAll) {
-          this.props.selectRow.onSelectAll(isSelected);
+        if (isSelected) {
+          var selectedKey = this.props.data.map(function (row) {
+            return row[this.keyField];
+          }, this);
+          this.props.selectRow.__onSelectAll__(selectedKey);
+        } else {
+          this.props.selectRow.__onSelectAll__([]);
         }
-        this.setState({ data: this.state.data });
       }
     },
     handleEditCell: {
@@ -404,8 +380,13 @@ var TableBody = (function (_React$Component) {
 
     _get(Object.getPrototypeOf(TableBody.prototype), "constructor", this).call(this, props);
     this.state = {
-      currEditCell: null
+      currEditCell: null,
+      selectedRowKey: []
     };
+    if (this.props.selectRow) {
+      this.props.selectRow.__onSelect__ = this.handleSelectRow.bind(this);
+      this.props.selectRow.__onSelectAll__ = this.handleSelectAllRow.bind(this);
+    }
   }
 
   _inherits(TableBody, _React$Component);
@@ -427,10 +408,11 @@ var TableBody = (function (_React$Component) {
         var tableRows = this.props.data.map(function (data, r) {
           var tableColumns = this.props.columns.map(function (column, i) {
             var fieldValue = data[column.name];
-            if (!this.props.parentRender && this.state.currEditCell != null && this.state.currEditCell.rid == r + 1 && this.state.currEditCell.cid == i + 1) {
+            if (!this.props.parentRender && column.name !== this.props.keyField && this.state.currEditCell != null && this.state.currEditCell.rid == r && this.state.currEditCell.cid == i) {
               return React.createElement(
                 TableEditColumn,
                 { completeEdit: this.handleCompleteEditCell.bind(this),
+                  key: i,
                   blurToSave: this.props.cellEdit.blurToSave,
                   rowIndex: r,
                   colIndex: i },
@@ -442,6 +424,7 @@ var TableBody = (function (_React$Component) {
                 return React.createElement(
                   TableColumn,
                   { dataAlign: column.align,
+                    key: i,
                     cellEdit: this.props.cellEdit,
                     onEdit: this.handleEditCell.bind(this) },
                   React.createElement("div", { dangerouslySetInnerHTML: { __html: formattedValue } })
@@ -450,6 +433,7 @@ var TableBody = (function (_React$Component) {
                 return React.createElement(
                   TableColumn,
                   { dataAlign: column.align,
+                    key: i,
                     cellEdit: this.props.cellEdit,
                     onEdit: this.handleEditCell.bind(this) },
                   fieldValue
@@ -457,10 +441,11 @@ var TableBody = (function (_React$Component) {
               }
             }
           }, this);
-          var selectRowColumn = isSelectRowDefined ? this.renderSelectRowColumn(data.__selected__) : null;
+          var selected = this.state.selectedRowKey.indexOf(data[this.props.keyField]) != -1;
+          var selectRowColumn = isSelectRowDefined ? this.renderSelectRowColumn(selected) : null;
           return React.createElement(
             TableRow,
-            { isSelected: data.__selected__,
+            { isSelected: selected, key: r,
               selectRow: isSelectRowDefined ? this.props.selectRow : undefined },
             selectRowColumn,
             tableColumns
@@ -491,10 +476,10 @@ var TableBody = (function (_React$Component) {
           var style = {
             width: 35
           };
-          selectRowHeader = React.createElement("th", { style: style });
+          selectRowHeader = React.createElement("th", { style: style, key: -1 });
         }
-        var theader = this.props.columns.map(function (column) {
-          return React.createElement("th", null);
+        var theader = this.props.columns.map(function (column, i) {
+          return React.createElement("th", { key: i });
         });
 
         return React.createElement(
@@ -509,8 +494,45 @@ var TableBody = (function (_React$Component) {
         );
       }
     },
-    handleSelectColum: {
-      value: function handleSelectColum(e) {
+    handleSelectRow: {
+      value: function handleSelectRow(rowIndex, isSelected) {
+        var key, selectedRow;
+        this.props.data.forEach(function (row, i) {
+          if (i == rowIndex - 1) {
+            key = row[this.props.keyField];
+            selectedRow = row;
+          }
+        }, this);
+        if (this.props.selectRow.mode == Const.ROW_SELECT_SINGLE) {
+          this.state.selectedRowKey = [];
+        }
+        if (isSelected) {
+          this.state.selectedRowKey.push(key);
+        } else {
+          this.state.selectedRowKey = this.state.selectedRowKey.filter(function (element) {
+            return key !== element;
+          });
+        }
+        this.setState({
+          selectedRowKey: this.state.selectedRowKey
+        });
+        if (this.props.selectRow.onSelect) {
+          this.props.selectRow.onSelect(selectedRow, isSelected);
+        }
+      }
+    },
+    handleSelectAllRow: {
+      value: function handleSelectAllRow(rowKeys) {
+        this.setState({
+          selectedRowKey: rowKeys
+        });
+        if (this.props.selectRow.onSelectAll) {
+          this.props.selectRow.onSelectAll(rowKeys.length == 0 ? false : true);
+        }
+      }
+    },
+    handleSelectRowColumChange: {
+      value: function handleSelectRowColumChange(e) {
         if (!this.props.selectRow.clickToSelect) {
           this.props.selectRow.__onSelect__(e.currentTarget.parentElement.parentElement.rowIndex, e.currentTarget.checked);
         }
@@ -519,6 +541,10 @@ var TableBody = (function (_React$Component) {
     handleEditCell: {
       value: function handleEditCell(rowIndex, columnIndex) {
         this.props.parentRender = false;
+        if (this._isSelectRowDefined()) {
+          columnIndex--;
+        }
+        rowIndex--;
         this.setState({ currEditCell: {
             rid: rowIndex,
             cid: columnIndex
@@ -537,13 +563,13 @@ var TableBody = (function (_React$Component) {
           return React.createElement(
             TableColumn,
             null,
-            React.createElement("input", { type: "radio", name: "selection", checked: selected, onChange: this.handleSelectColum.bind(this) })
+            React.createElement("input", { type: "radio", name: "selection", checked: selected, onChange: this.handleSelectRowColumChange.bind(this) })
           );
         } else {
           return React.createElement(
             TableColumn,
             null,
-            React.createElement("input", { type: "checkbox", checked: selected, onChange: this.handleSelectColum.bind(this) })
+            React.createElement("input", { type: "checkbox", checked: selected, onChange: this.handleSelectRowColumChange.bind(this) })
           );
         }
       }
@@ -564,6 +590,7 @@ TableBody.propTypes = {
   striped: React.PropTypes.bool,
   hover: React.PropTypes.bool,
   condensed: React.PropTypes.bool,
+  keyField: React.PropTypes.string,
   // if render is from parent, I will discard the cell edit checking
   // because of a bug happened if user click to start a cell editing and then he/she do a sort or change page
   // that will cause a incorrent position of "input cell" on table.
@@ -714,8 +741,8 @@ var TableEditColumn = (function (_React$Component) {
 
 TableEditColumn.propTypes = {
   completeEdit: React.PropTypes.func,
-  rowIndex: React.PropTypes.int,
-  colIndex: React.PropTypes.int,
+  rowIndex: React.PropTypes.number,
+  colIndex: React.PropTypes.number,
   blurToSave: React.PropTypes.bool
 };
 
@@ -899,13 +926,15 @@ TableHeaderColumn.propTypes = {
   dataAlign: React.PropTypes.string,
   dataSort: React.PropTypes.bool,
   clearSortCaret: React.PropTypes.func,
-  dataFormat: React.PropTypes.func
+  dataFormat: React.PropTypes.func,
+  isKey: React.PropTypes.bool
 };
 
 TableHeaderColumn.defaultProps = {
   dataAlign: "left",
   dataSort: false,
-  dataFormat: undefined
+  dataFormat: undefined,
+  isKey: false
 };
 
 module.exports = TableHeaderColumn;
@@ -1142,7 +1171,7 @@ var PaginationList = (function (_React$Component) {
                   { role: "presentation" },
                   React.createElement(
                     "a",
-                    { role: "menuitem", tabindex: "-1", href: "#", onClick: this.changeSizePerPage.bind(this) },
+                    { role: "menuitem", tabIndex: "-1", href: "#", onClick: this.changeSizePerPage.bind(this) },
                     "10"
                   )
                 ),
@@ -1151,7 +1180,7 @@ var PaginationList = (function (_React$Component) {
                   { role: "presentation" },
                   React.createElement(
                     "a",
-                    { role: "menuitem", tabindex: "-1", href: "#", onClick: this.changeSizePerPage.bind(this) },
+                    { role: "menuitem", tabIndex: "-1", href: "#", onClick: this.changeSizePerPage.bind(this) },
                     "25"
                   )
                 ),
@@ -1160,7 +1189,7 @@ var PaginationList = (function (_React$Component) {
                   { role: "presentation" },
                   React.createElement(
                     "a",
-                    { role: "menuitem", tabindex: "-1", href: "#", onClick: this.changeSizePerPage.bind(this) },
+                    { role: "menuitem", tabIndex: "-1", href: "#", onClick: this.changeSizePerPage.bind(this) },
                     "30"
                   )
                 ),
@@ -1169,7 +1198,7 @@ var PaginationList = (function (_React$Component) {
                   { role: "presentation" },
                   React.createElement(
                     "a",
-                    { role: "menuitem", tabindex: "-1", href: "#", onClick: this.changeSizePerPage.bind(this) },
+                    { role: "menuitem", tabIndex: "-1", href: "#", onClick: this.changeSizePerPage.bind(this) },
                     "50"
                   )
                 )
@@ -1193,10 +1222,9 @@ var PaginationList = (function (_React$Component) {
         var pages = this.getPages();
         return pages.map(function (page) {
           var isActive = page == this.state.currentPage ? true : false;
-
           return React.createElement(
             PageButton,
-            { changePage: this.changePage.bind(this), active: isActive },
+            { changePage: this.changePage.bind(this), active: isActive, key: page },
             page
           );
         }, this);
@@ -1229,8 +1257,8 @@ var PaginationList = (function (_React$Component) {
 })(React.Component);
 
 PaginationList.propTypes = {
-  sizePerPage: React.PropTypes.int,
-  dataSize: React.PropTypes.int,
+  sizePerPage: React.PropTypes.number,
+  dataSize: React.PropTypes.number,
   changePage: React.PropTypes.func
 };
 
@@ -1239,11 +1267,10 @@ PaginationList.defaultProps = {
 };
 module.exports = PaginationList;
 },{"../Const":3,"./PageButton.js":12,"react":169}],14:[function(require,module,exports){
-/*
+/*!
   Copyright (c) 2015 Jed Watson.
-  
   Licensed under the MIT License (MIT), see
-  https://github.com/JedWatson/classnames/blob/master/LICENSE
+  http://jedwatson.github.io/classnames
 */
 
 function classNames() {
