@@ -3,9 +3,20 @@ It's a react table for bootstrap, named reactbsTable
 
 As you know, the basic bootstrap table function like striped, bordered, hover and condensed are supported.
 
-In addition, reactbsTable support data align, sorting, cell format, pagination, row selection and cell edit.
+In addition, reactbsTable support these features:
+
+* colum align
+* scrolling table
+* data sort
+* cell format
+* pagination
+* row selection
+* cell edit
 
 You can see the [home page](http://allenfang.github.io/react-bootstrap-table/index.html). and example is on [here](http://allenfang.github.io/react-bootstrap-table/example.html).
+
+### Release Notes
+After v0.5.4, the <code>isKey</code> attribute is required by <code>TableHeaderColumn</code> for specifying which column is unique. You can see the example in th Usage section or [here](http://allenfang.github.io/react-bootstrap-table/start.html)
 
 ### Development
 reactbsTable dependencies on react 0.13.x and Bootstrap 3
@@ -93,7 +104,9 @@ React.render(
 );
 ```
 
-The reactbsTable setting
+### API&Attribute
+
+You can reference [here](http://allenfang.github.io/react-bootstrap-table/docs.html) on web site
 
 The attributes in BootstrapTable:</br>
 Use ```data``` to specify the data that you want to display on table.</br>
@@ -102,19 +115,17 @@ Use ```striped``` to set table be a striped columns. Like bootstrap table class 
 Use ```hover``` to enable table hover. Like bootstrap table class ```.table-hover```.</br>
 Use ```condensed``` to set a condensed table. Like bootstrap table class ```.table-condensed```.</br>
 Use ```pagination``` to enable the pagnation on table.</br>
-Use ```selectRow``` to enable the row selection on table</br>
-    ```selectRow``` accept a object which conatin these properties for row selection: </br>
-        ```mode```(required): radio/checkbox, to specify the selection is single or multiple.</br>
-        ```clickToSelect```(optional): if true, click on row will trigger row selection, default is false.</br>
-        ```bgColor```(optional): You can assign background color if row be selected.</br>
-        ```onSelect```(optional): accept a callback function, if a row be selected, this function will be called.</br>
-        ```onSelectAll```(optional): accept a callback function, if select all in ```checkbox``` mode, this function will be called.</br>
+Use ```selectRow``` to enable the row selection on table, this attribute accept an object which contain these properties.</br>
+- ```mode```(required): radio/checkbox, to specify the selection is single or multiple.</br>
+- ```clickToSelect```(optional): if true, click on row will trigger row selection, default is false.</br>
+- ```bgColor```(optional): You can assign background color if row be selected.</br>
+- ```onSelect```(optional): accept a callback function, if a row be selected, this function will be called.</br>
+- ```onSelectAll```(optional): accept a callback function, if select all in ```checkbox``` mode, this function will be called.</br>
 
-Use ```cellEdit``` to enable the cell editing on table</br>
-    ```cellEdit``` accept a object which contain these properties in blow: </br>
-        ```mode```(required): click/dbclick, to spectify which condition will trigger cell editing.</br>
-        ```blurToSave```(optional): if true, when mouse blur on input field will trigger a save on cell, default is false.</br>
-        ```afterSaveCell```(optional): accept a callback function, after save cell, this function will be called.</br>
+Use ```cellEdit``` to enable the cell editing on table, it accept a object which contain these properties</br>
+- ```mode```(required): click/dbclick, to spectify which condition will trigger cell editing.</br>
+- ```blurToSave```(optional): if true, when mouse blur on input field will trigger a save on cell, default is false.</br>
+- ```afterSaveCell```(optional): accept a callback function, after save cell, this function will be called.</br>
 
 The attributes in TableHeaderColumn:</br>
 Use ```isKey``` to specify which column is unique.</br>

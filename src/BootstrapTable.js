@@ -29,7 +29,7 @@ class BootstrapTable extends React.Component{
       }
     }, this);
     if(this.keyField == null)
-      throw "Error. No any key column defined in TableHeaderColumn. Use 'isKey={true}' to specify a unique column.";
+      throw "Error. No any key column defined in TableHeaderColumn. Use 'isKey={true}' to specify an unique column after version 0.5.4.";
 	}
 
   componentWillMount(){
