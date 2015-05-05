@@ -195,7 +195,7 @@ React.render(
   React.createElement(BootstrapTable, {data: product9, cellEdit: cellEditProp}, 
       React.createElement(TableHeaderColumn, {dataField: "id", isKey: true}, "Product ID"), 
       React.createElement(TableHeaderColumn, {dataField: "name"}, "Product Name"), 
-      React.createElement(TableHeaderColumn, {dataField: "price"}, "Product Price")
+      React.createElement(TableHeaderColumn, {dataField: "price", editable: false}, "Product Price")
   ),
 	document.getElementById("cell-edit-div")
 );
@@ -250,7 +250,7 @@ var BootstrapTable = (function (_React$Component) {
         this.keyField = column.props.dataField;
       }
     }, this);
-    if (this.keyField == null) throw "Error. No any key column defined in TableHeaderColumn. Use 'isKey={true}' to specify a unique column.";
+    if (this.keyField == null) throw "Error. No any key column defined in TableHeaderColumn. Use 'isKey={true}' to specify an unique column after version 0.5.4.";
   }
 
   _inherits(BootstrapTable, _React$Component);
@@ -283,6 +283,7 @@ var BootstrapTable = (function (_React$Component) {
             align: column.props.dataAlign,
             sort: column.props.dataSort,
             format: column.props.dataFormat,
+            editable: column.props.editable,
             index: i
           };
         }, this);
@@ -575,7 +576,9 @@ var TableBody = (function (_React$Component) {
         var tableRows = this.props.data.map(function (data, r) {
           var tableColumns = this.props.columns.map(function (column, i) {
             var fieldValue = data[column.name];
-            if (!this.props.parentRender && column.name !== this.props.keyField && this.state.currEditCell != null && this.state.currEditCell.rid == r && this.state.currEditCell.cid == i) {
+            if (!this.props.parentRender && column.name !== this.props.keyField && // Key field can't be edit
+            column.editable && // column is editable? default is true, user can set it false
+            this.state.currEditCell != null && this.state.currEditCell.rid == r && this.state.currEditCell.cid == i) {
               return React.createElement(
                 TableEditColumn,
                 { completeEdit: this.handleCompleteEditCell.bind(this),
@@ -1094,14 +1097,16 @@ TableHeaderColumn.propTypes = {
   dataSort: React.PropTypes.bool,
   clearSortCaret: React.PropTypes.func,
   dataFormat: React.PropTypes.func,
-  isKey: React.PropTypes.bool
+  isKey: React.PropTypes.bool,
+  editable: React.PropTypes.bool
 };
 
 TableHeaderColumn.defaultProps = {
   dataAlign: "left",
   dataSort: false,
   dataFormat: undefined,
-  isKey: false
+  isKey: false,
+  editable: true
 };
 
 module.exports = TableHeaderColumn;

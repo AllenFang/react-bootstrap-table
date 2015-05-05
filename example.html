@@ -249,6 +249,9 @@ var selectRowProp = {
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp;default is false so you need to press ENTER for saving cell.</br>
           <code>afterSaveCell</code>: callback function <b>(optional)</b> accept a callback function, after save cell, this function will be called.</br>
+          <br/>
+          In default condition, all columns is editable except for <b>key column</b><code>isKey={true}</code></br>
+          If you want some column can't be edited, use <code>editable={false}</code> on <code>&lt;TableHeaderColumn&gt;</code></br>
           <div id="cell-edit-div"></div>
           <pre><code>
 function onAfterSaveCell(row, cellName, cellValue){
@@ -264,7 +267,7 @@ var cellEditProp = {
 &lt;BootstrapTable data={products} cellEdit={cellEditProp}&gt;
   &lt;TableHeaderColumn dataField="id" isKey={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="price" editable={false}&gt;Product Price&lt;/TableHeaderColumn&gt;
 &lt;/BootstrapTable&gt;
           </code></pre>
         </div></br>

@@ -194,7 +194,7 @@ React.render(
   <BootstrapTable data={product9} cellEdit={cellEditProp}>
       <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
-      <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+      <TableHeaderColumn dataField="price" editable={false}>Product Price</TableHeaderColumn>
   </BootstrapTable>,
 	document.getElementById("cell-edit-div")
 );
