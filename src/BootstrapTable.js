@@ -15,7 +15,7 @@ class BootstrapTable extends React.Component{
     if(this.props.cellEdit){
       this.props.cellEdit.__onCompleteEdit__ = this.handleEditCell.bind(this);
       if(this.props.cellEdit.mode !== Const.CELL_EDIT_NONE)
-      this.props.selectRow.clickToSelect = false;
+        this.props.selectRow.clickToSelect = false;
     }
     this.sortTable = false;
     this.order = Const.SORT_DESC;
@@ -56,6 +56,7 @@ class BootstrapTable extends React.Component{
         align: column.props.dataAlign,
         sort: column.props.dataSort,
         format: column.props.dataFormat,
+        editable: column.props.editable,
         index: i
       };
     }, this);
