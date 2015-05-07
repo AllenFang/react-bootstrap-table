@@ -40,3 +40,7 @@
   table-layout: fixed;
   margin-bottom: 0px;
 }
+
+.react-bs-container .tool-bar{
+  margin-bottom: 5px
+}

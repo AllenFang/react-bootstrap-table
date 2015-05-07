@@ -4,6 +4,7 @@ import Const from './Const';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
 import PaginationList from './pagination/PaginationList';
+import ToolBar from './toolbar/ToolBar';
 
 class BootstrapTable extends React.Component{
 
@@ -62,15 +63,17 @@ class BootstrapTable extends React.Component{
     }, this);
 
     var pagination = this.renderPagination();
+    var toolBar = this.renderToolBar();
     return(
-      <div>
+      <div className="react-bs-container">
+        {toolBar}
         <div ref="table" style={style} className={tableClass}>
           <TableHeader rowSelectType={this.props.selectRow.mode}
                        onSort={this.handleSort.bind(this)}
                        onSelectAllRow={this.handleSelectAllRow.bind(this)}>
             {this.props.children}
           </TableHeader>
-          <TableBody data={this.state.data} columns={columns}
+          <TableBody ref="body" data={this.state.data} columns={columns}
             striped={this.props.striped}
             hover={this.props.hover}
             keyField={this.keyField}
@@ -135,6 +138,15 @@ class BootstrapTable extends React.Component{
     }
   }
 
+  handleAddRow(rowKey){
+    var newObj = {};
+    this.props.children.forEach(function(column){
+      newObj[column.props.dataField] = "";
+    });
+    newObj[this.keyField] = rowKey;
+    // this.refs.body.
+  }
+
   _sort(arr, order, sortField){
     arr.sort(function(a,b){
       if(order == Const.SORT_ASC){
@@ -154,11 +166,28 @@ class BootstrapTable extends React.Component{
   renderPagination(){
     if(this.props.pagination){
       return(
-        <PaginationList changePage={this.handlePaginationData.bind(this)}
-                        sizePerPage={Const.SIZE_PER_PAGE}
-                        dataSize={this.props.data.length}/>
+        <div>
+          <PaginationList changePage={this.handlePaginationData.bind(this)}
+                          sizePerPage={Const.SIZE_PER_PAGE}
+                          dataSize={this.props.data.length}/>
+        </div>
       )
     }else {
+      return null;
+    }
+  }
+
+  renderToolBar(){
+    if(this.props.insertRow || this.props.deleteRow || this.props.search){
+      return(
+        <div className="tool-bar">
+          <ToolBar enableInsert={this.props.insertRow}
+                   enableDelete={this.props.deleteRow}
+                   enableSearch={this.props.search}
+                   onAddRow={this.handleAddRow.bind(this)}/>
+        </div>
+      )
+    }else{
       return null;
     }
   }
@@ -181,7 +210,10 @@ BootstrapTable.propTypes = {
     mode: React.PropTypes.string,
     blurToSave: React.PropTypes.bool,
     afterSaveCell: React.PropTypes.func
-  })
+  }),
+  insertRow: React.PropTypes.bool,
+  deleteRow: React.PropTypes.bool,
+  search: React.PropTypes.bool
 };
 BootstrapTable.defaultProps = {
   height: "100%",
@@ -200,7 +232,10 @@ BootstrapTable.defaultProps = {
     mode: Const.CELL_EDIT_NONE,
     blurToSave: false,
     afterSaveCell: undefined
-  }
+  },
+  insertRow: false,
+  deleteRow: false,
+  search: false
 };
 
 export default BootstrapTable;
