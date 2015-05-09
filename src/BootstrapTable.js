@@ -144,7 +144,20 @@ class BootstrapTable extends React.Component{
       newObj[column.props.dataField] = "";
     });
     newObj[this.keyField] = rowKey;
-    // this.refs.body.
+
+    this.props.data.push(newObj);
+
+    if(this.props.pagination){
+      //if pagination is true and insert row be trigger, change to last page
+      let currLastPage = Math.ceil(this.props.data.length/Const.SIZE_PER_PAGE);
+      this.handlePaginationData(currLastPage, Const.SIZE_PER_PAGE);
+      this.refs.pagination.changePage(currLastPage);
+    } else{
+      this.setState({data: this.props.data});
+    }
+
+
+    // this.refs.body.handleEditCell();
   }
 
   _sort(arr, order, sortField){
@@ -167,7 +180,8 @@ class BootstrapTable extends React.Component{
     if(this.props.pagination){
       return(
         <div>
-          <PaginationList changePage={this.handlePaginationData.bind(this)}
+          <PaginationList ref="pagination"
+                          changePage={this.handlePaginationData.bind(this)}
                           sizePerPage={Const.SIZE_PER_PAGE}
                           dataSize={this.props.data.length}/>
         </div>
