@@ -118,6 +118,8 @@ Use ```striped``` to set table be a striped columns. Like bootstrap table class 
 Use ```hover``` to enable table hover. Like bootstrap table class ```.table-hover```.</br>
 Use ```condensed``` to set a condensed table. Like bootstrap table class ```.table-condensed```.</br>
 Use ```pagination``` to enable the pagnation on table.</br>
+Use ```insertRow``` to enable the insert row on table.</br>
+Use ```deleteRow``` to enable the delete row on table.</br>
 Use ```selectRow``` to enable the row selection on table, this attribute accept an object which contain these properties.</br>
 - ```mode```(required): radio/checkbox, to specify the selection is single or multiple.</br>
 - ```clickToSelect```(optional): if true, click on row will trigger row selection, default is false.</br>
