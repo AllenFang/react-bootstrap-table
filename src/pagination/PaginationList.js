@@ -48,7 +48,7 @@ class PaginationList extends React.Component{
   }
 
   render(){
-    this.totalPages = Math.ceil(this.props.dataSize/this.props.sizePerPage);
+    this.totalPages = Math.ceil(this.props.dataSize/this.state.sizePerPage);
     var pageBtns = this.makePage();
     var pageListStyle = {
       marginTop: "0px"  //override the margin-top defined in .pagination class in bootstrap.
@@ -107,8 +107,12 @@ class PaginationList extends React.Component{
     return pages;
   }
 
-  getLastPage(){
-    return this.totalPages;
+  getCurrentPage(){
+    return this.state.currentPage;
+  }
+
+  getSizePerPage(){
+    return this.state.sizePerPage;
   }
 }
 PaginationList.propTypes = {

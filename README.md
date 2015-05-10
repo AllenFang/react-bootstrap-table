@@ -12,10 +12,13 @@ In addition, reactbsTable support these features:
 * pagination
 * row selection
 * cell edit
+* Insert & Delete Row
 
 You can see the [home page](http://allenfang.github.io/react-bootstrap-table/index.html). and example is on [here](http://allenfang.github.io/react-bootstrap-table/example.html).
 
 ### Release Notes
+v0.6.0, react-bootstrap-table supported insert and delete row on table.
+
 After v0.5.4, the <code>isKey</code> attribute is required by <code>TableHeaderColumn</code> for specifying which column is unique. You can see the example in th Usage section or [here](http://allenfang.github.io/react-bootstrap-table/start.html)
 
 ### Development

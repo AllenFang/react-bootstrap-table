@@ -184,6 +184,10 @@ class TableBody extends React.Component{
     return this.props.selectRow.mode == Const.ROW_SELECT_SINGLE ||
           this.props.selectRow.mode == Const.ROW_SELECT_MULTI;
   }
+
+  getSelectedRowKeys(){
+    return this.state.selectedRowKey;
+  }
 }
 TableBody.propTypes = {
   data: React.PropTypes.array,

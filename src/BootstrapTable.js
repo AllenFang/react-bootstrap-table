@@ -113,7 +113,7 @@ class BootstrapTable extends React.Component{
   handleSelectAllRow(e){
     var isSelected = e.currentTarget.checked;
     if(isSelected){
-      var selectedKey = this.props.data.map(function(row){
+      let selectedKey = this.props.data.map(function(row){
         return row[this.keyField];
       }, this);
       this.props.selectRow.__onSelectAll__(selectedKey);
@@ -138,26 +138,54 @@ class BootstrapTable extends React.Component{
     }
   }
 
-  handleAddRow(rowKey){
-    var newObj = {};
-    this.props.children.forEach(function(column){
-      newObj[column.props.dataField] = "";
-    });
-    newObj[this.keyField] = rowKey;
+  handleAddRow(newObj){
+    var msg = null;
+    if(newObj[this.keyField].trim() === ""){
+      msg = this.keyField + " can't be empty value.";
+      return msg;
+    }
+
+    this.props.data.forEach(function(row){
+      if(row[this.keyField].toString() === newObj[this.keyField]){
+        msg = this.keyField + " " + newObj[this.keyField] + " already exists";
+        return false;
+      }
+    }, this);
+
+    if(msg !== null)return msg;
 
     this.props.data.push(newObj);
 
     if(this.props.pagination){
-      //if pagination is true and insert row be trigger, change to last page
-      let currLastPage = Math.ceil(this.props.data.length/Const.SIZE_PER_PAGE);
-      this.handlePaginationData(currLastPage, Const.SIZE_PER_PAGE);
+      //if pagination is enabled and insert row be trigger, change to last page
+      let sizePerPage = this.refs.pagination.getSizePerPage();
+      let currLastPage = Math.ceil(this.props.data.length/sizePerPage);
+      this.handlePaginationData(currLastPage, sizePerPage);
       this.refs.pagination.changePage(currLastPage);
     } else{
       this.setState({data: this.props.data});
     }
+  }
 
+  handleDropRow(){
+    var selectedRowKey = this.refs.body.getSelectedRowKeys();
+    this.props.data = this.props.data.filter(function(row){
+      return selectedRowKey.indexOf(row[this.keyField]) == -1;
+    }, this);
 
-    // this.refs.body.handleEditCell();
+    if(this.props.pagination){
+      let sizePerPage = this.refs.pagination.getSizePerPage();
+      let currLastPage = Math.ceil(this.props.data.length/sizePerPage);
+      let currentPage = this.refs.pagination.getCurrentPage();
+
+      if(currentPage > currLastPage)
+        currentPage = currLastPage;
+
+      this.handlePaginationData(currentPage,sizePerPage);
+      this.refs.pagination.changePage(currentPage);
+    }else{
+      this.setState({data: this.props.data});
+    }
   }
 
   _sort(arr, order, sortField){
@@ -192,13 +220,21 @@ class BootstrapTable extends React.Component{
   }
 
   renderToolBar(){
+    let columns = this.props.children.map(function(column){
+      return {
+        name: column.props.children,
+        field: column.props.dataField
+      };
+    });
     if(this.props.insertRow || this.props.deleteRow || this.props.search){
       return(
         <div className="tool-bar">
           <ToolBar enableInsert={this.props.insertRow}
                    enableDelete={this.props.deleteRow}
                    enableSearch={this.props.search}
-                   onAddRow={this.handleAddRow.bind(this)}/>
+                   columns={columns}
+                   onAddRow={this.handleAddRow.bind(this)}
+                   onDropRow={this.handleDropRow.bind(this)}/>
         </div>
       )
     }else{
