@@ -83,6 +83,10 @@
             <a href="#cell-edit">Cell Edit</a>
               <ul class="nav"></ul>
           </li>
+          <li>
+            <a href="#insert-delete">Insert & Delete Row</a>
+              <ul class="nav"></ul>
+          </li>
         </ul>
       </div>
       <div class="col-xs-12 col-md-8">
@@ -268,6 +272,24 @@ var cellEditProp = {
   &lt;TableHeaderColumn dataField="id" isKey={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="price" editable={false}&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+          </code></pre>
+        </div></br>
+        <div>
+          <h1 id="insert-delete">Insert & Delete Row</h1>
+          Use <code>insertRow</code> to enable the insert row on table.</br>
+          Use <code>deleteRow</code> to enable the delete row on table. If true, you must use <code>selectRow</code> to enable row selection.</br>
+          </br>
+          <div id="insert-delete-div"></div>
+          <pre><code>
+var selectRowProp = {
+  mode: "radio", // or checkbox
+  clickToSelect: true
+};
+&lt;BootstrapTable data={products} insertRow={true} deleteRow={true} selectRow={selectRowProp}&gt;
+  &lt;TableHeaderColumn dataField="id" isKey={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
 &lt;/BootstrapTable&gt;
           </code></pre>
         </div></br>

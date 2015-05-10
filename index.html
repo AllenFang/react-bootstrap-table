@@ -64,6 +64,7 @@
             <li>Row selection</li>
             <li>Cell Edit</li>
             <li>Events</li>
+            <li>Insert & Delete row</li>
           </ul>
         </div>
       </div>
@@ -79,7 +80,9 @@ var selectRowProp = {
   bgColor: "rgb(238, 193, 213)"   //selected row background color
 };
 
-&lt;BootstrapTable data={productLong} striped={true} hover={true} condensed={true} pagination={true} selectRow={selectRowProp}>&gt;
+&lt;BootstrapTable data={productLong} striped={true} hover={true} condensed={true} pagination={true}
+                selectRow={selectRowProp} insertRow={true} deleteRow={true}&gt;
+
   &lt;TableHeaderColumn dataField="id" isKey={true} dataAlign="right" dataSort={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="name" dataSort={true}&gt;Product Name&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="price" dataAlign="center" dataFormat={format}&gt;Product Price&lt;/TableHeaderColumn&gt;

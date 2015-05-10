@@ -198,3 +198,12 @@ React.render(
   </BootstrapTable>,
 	document.getElementById("cell-edit-div")
 );
+
+React.render(
+  <BootstrapTable data={product10} insertRow={true} deleteRow={true} selectRow={selectRowProp}>
+      <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="price" editable={false}>Product Price</TableHeaderColumn>
+  </BootstrapTable>,
+	document.getElementById("insert-delete-div")
+);
