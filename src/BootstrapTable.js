@@ -79,12 +79,9 @@ class BootstrapTable extends React.Component{
             keyField={this.keyField}
             condensed={this.props.condensed}
             selectRow={this.props.selectRow}
-            cellEdit={this.props.cellEdit}
-            parentRender={true}/>
+            cellEdit={this.props.cellEdit}/>
         </div>
-        <div>
-          {pagination}
-        </div>
+        {pagination}
       </div>
     )
   }
@@ -211,7 +208,7 @@ class BootstrapTable extends React.Component{
           <PaginationList ref="pagination"
                           changePage={this.handlePaginationData.bind(this)}
                           sizePerPage={Const.SIZE_PER_PAGE}
-                          dataSize={this.props.data.length}/>
+                          dataSize={this.props.data.length} />
         </div>
       )
     }else {

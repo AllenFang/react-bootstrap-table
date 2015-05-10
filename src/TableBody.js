@@ -17,6 +17,7 @@ class TableBody extends React.Component{
       this.props.selectRow.__onSelect__ = this.handleSelectRow.bind(this);
       this.props.selectRow.__onSelectAll__ = this.handleSelectAllRow.bind(this);
     }
+    this.editing = false;
   }
 
   render(){
@@ -34,7 +35,7 @@ class TableBody extends React.Component{
     var tableRows = this.props.data.map(function(data, r){
       var tableColumns = this.props.columns.map(function(column, i){
         var fieldValue = data[column.name];
-        if(!this.props.parentRender &&
+        if(this.editing &&
           column.name !== this.props.keyField && // Key field can't be edit
           column.editable && // column is editable? default is true, user can set it false
           this.state.currEditCell != null &&
@@ -79,7 +80,7 @@ class TableBody extends React.Component{
         </TableRow>
       )
     }, this);
-
+    this.editing = false;
     return(
       <div className={containerClasses}>
         <table className={tableClasses}>
@@ -155,7 +156,7 @@ class TableBody extends React.Component{
   }
 
   handleEditCell(rowIndex, columnIndex){
-    this.props.parentRender = false;
+    this.editing = true;
     if(this._isSelectRowDefined()){
       columnIndex--;
     }
@@ -195,10 +196,6 @@ TableBody.propTypes = {
   striped: React.PropTypes.bool,
   hover: React.PropTypes.bool,
   condensed: React.PropTypes.bool,
-  keyField: React.PropTypes.string,
-  // if render is from parent, I will discard the cell edit checking
-  // because of a bug happened if user click to start a cell editing and then he/she do a sort or change page
-  // that will cause a incorrent position of "input cell" on table.
-  parentRender: React.PropTypes.bool
+  keyField: React.PropTypes.string
 };
 export default TableBody;

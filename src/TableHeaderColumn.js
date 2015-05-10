@@ -54,7 +54,8 @@ TableHeaderColumn.defaultProps = {
   dataSort: false,
   dataFormat: undefined,
   isKey: false,
-  editable: true
+  editable: true,
+  clearSortCaret: undefined
 };
 
 export default TableHeaderColumn;
