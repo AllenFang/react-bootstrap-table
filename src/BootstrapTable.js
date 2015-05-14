@@ -10,6 +10,7 @@ class BootstrapTable extends React.Component{
 
   constructor(props) {
 		super(props);
+
 		this.state = {
       data: this.props.data
     };
@@ -90,10 +91,19 @@ class BootstrapTable extends React.Component{
     this.order = order;
     this.sortField = sortField;
 
-    this.setState({data: this._sort(this.state.data, order, sortField)});
+    if(this.props.pagination){
+      let sizePerPage = this.refs.pagination.getSizePerPage();
+      let currentPage = this.refs.pagination.getCurrentPage();
+      this.handlePaginationData(currentPage,sizePerPage);
+    }else{
+      this.props.data = this._sort(this.props.data, this.order, this.sortField);
+      this.setState({data: this.props.data});
+    }
   }
 
   handlePaginationData(page, sizePerPage){
+    if(this.sortTable && null != this.sortField)
+      this.props.data = this._sort(this.props.data, this.order, this.sortField);
     var end = page*sizePerPage-1;
     var start = end - (sizePerPage - 1);
     var arr = [];
@@ -101,9 +111,6 @@ class BootstrapTable extends React.Component{
       arr.push(this.props.data[i]);
       if(i+1 == this.props.data.length)break;
     }
-
-    if(this.sortTable && null != this.sortField)
-      arr = this._sort(arr, this.order, this.sortField);
     this.setState({data: arr});
   }
 
