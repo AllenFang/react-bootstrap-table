@@ -190,7 +190,12 @@ var cellEditProp = {
   blurToSave: true,
   afterSaveCell: onAfterSaveCell
 }
-
+var selectRowProp2 = {
+  mode: "radio",
+  clickToSelect: true,
+  bgColor: "rgb(238, 193, 213)",
+  onSelect: onRowSelect
+};
 React.render(
   React.createElement(BootstrapTable, {data: product9, cellEdit: cellEditProp}, 
       React.createElement(TableHeaderColumn, {dataField: "id", isKey: true}, "Product ID"), 
@@ -201,7 +206,7 @@ React.render(
 );
 
 React.render(
-  React.createElement(BootstrapTable, {data: product10, insertRow: true, deleteRow: true, selectRow: selectRowProp}, 
+  React.createElement(BootstrapTable, {data: product10, insertRow: true, deleteRow: true, selectRow: selectRowProp2}, 
       React.createElement(TableHeaderColumn, {dataField: "id", isKey: true}, "Product ID"), 
       React.createElement(TableHeaderColumn, {dataField: "name"}, "Product Name"), 
       React.createElement(TableHeaderColumn, {dataField: "price", editable: false}, "Product Price")
@@ -243,6 +248,7 @@ var BootstrapTable = (function (_React$Component) {
     _classCallCheck(this, BootstrapTable);
 
     _get(Object.getPrototypeOf(BootstrapTable.prototype), "constructor", this).call(this, props);
+
     this.state = {
       data: this.props.data
     };
@@ -321,14 +327,9 @@ var BootstrapTable = (function (_React$Component) {
               keyField: this.keyField,
               condensed: this.props.condensed,
               selectRow: this.props.selectRow,
-              cellEdit: this.props.cellEdit,
-              parentRender: true })
+              cellEdit: this.props.cellEdit })
           ),
-          React.createElement(
-            "div",
-            null,
-            pagination
-          )
+          pagination
         );
       }
     },
@@ -337,11 +338,19 @@ var BootstrapTable = (function (_React$Component) {
         this.order = order;
         this.sortField = sortField;
 
-        this.setState({ data: this._sort(this.state.data, order, sortField) });
+        if (this.props.pagination) {
+          var sizePerPage = this.refs.pagination.getSizePerPage();
+          var currentPage = this.refs.pagination.getCurrentPage();
+          this.handlePaginationData(currentPage, sizePerPage);
+        } else {
+          this.props.data = this._sort(this.props.data, this.order, this.sortField);
+          this.setState({ data: this.props.data });
+        }
       }
     },
     handlePaginationData: {
       value: function handlePaginationData(page, sizePerPage) {
+        if (this.sortTable && null != this.sortField) this.props.data = this._sort(this.props.data, this.order, this.sortField);
         var end = page * sizePerPage - 1;
         var start = end - (sizePerPage - 1);
         var arr = [];
@@ -349,8 +358,6 @@ var BootstrapTable = (function (_React$Component) {
           arr.push(this.props.data[i]);
           if (i + 1 == this.props.data.length) break;
         }
-
-        if (this.sortTable && null != this.sortField) arr = this._sort(arr, this.order, this.sortField);
         this.setState({ data: arr });
       }
     },
@@ -654,6 +661,7 @@ var TableBody = (function (_React$Component) {
       this.props.selectRow.__onSelect__ = this.handleSelectRow.bind(this);
       this.props.selectRow.__onSelectAll__ = this.handleSelectAllRow.bind(this);
     }
+    this.editing = false;
   }
 
   _inherits(TableBody, _React$Component);
@@ -675,7 +683,7 @@ var TableBody = (function (_React$Component) {
         var tableRows = this.props.data.map(function (data, r) {
           var tableColumns = this.props.columns.map(function (column, i) {
             var fieldValue = data[column.name];
-            if (!this.props.parentRender && column.name !== this.props.keyField && // Key field can't be edit
+            if (this.editing && column.name !== this.props.keyField && // Key field can't be edit
             column.editable && // column is editable? default is true, user can set it false
             this.state.currEditCell != null && this.state.currEditCell.rid == r && this.state.currEditCell.cid == i) {
               return React.createElement(
@@ -720,7 +728,7 @@ var TableBody = (function (_React$Component) {
             tableColumns
           );
         }, this);
-
+        this.editing = false;
         return React.createElement(
           "div",
           { className: containerClasses },
@@ -809,7 +817,7 @@ var TableBody = (function (_React$Component) {
     },
     handleEditCell: {
       value: function handleEditCell(rowIndex, columnIndex) {
-        this.props.parentRender = false;
+        this.editing = true;
         if (this._isSelectRowDefined()) {
           columnIndex--;
         }
@@ -864,11 +872,7 @@ TableBody.propTypes = {
   striped: React.PropTypes.bool,
   hover: React.PropTypes.bool,
   condensed: React.PropTypes.bool,
-  keyField: React.PropTypes.string,
-  // if render is from parent, I will discard the cell edit checking
-  // because of a bug happened if user click to start a cell editing and then he/she do a sort or change page
-  // that will cause a incorrent position of "input cell" on table.
-  parentRender: React.PropTypes.bool
+  keyField: React.PropTypes.string
 };
 module.exports = TableBody;
 },{"./Const":3,"./TableColumn":6,"./TableEditColumn":7,"./TableRow":10,"classnames":15,"react":170}],6:[function(require,module,exports){
@@ -1210,7 +1214,8 @@ TableHeaderColumn.defaultProps = {
   dataSort: false,
   dataFormat: undefined,
   isKey: false,
-  editable: true
+  editable: true,
+  clearSortCaret: undefined
 };
 
 module.exports = TableHeaderColumn;

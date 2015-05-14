@@ -189,7 +189,12 @@ var cellEditProp = {
   blurToSave: true,
   afterSaveCell: onAfterSaveCell
 }
-
+var selectRowProp2 = {
+  mode: "radio",
+  clickToSelect: true,
+  bgColor: "rgb(238, 193, 213)",
+  onSelect: onRowSelect
+};
 React.render(
   <BootstrapTable data={product9} cellEdit={cellEditProp}>
       <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
@@ -200,7 +205,7 @@ React.render(
 );
 
 React.render(
-  <BootstrapTable data={product10} insertRow={true} deleteRow={true} selectRow={selectRowProp}>
+  <BootstrapTable data={product10} insertRow={true} deleteRow={true} selectRow={selectRowProp2}>
       <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price" editable={false}>Product Price</TableHeaderColumn>
