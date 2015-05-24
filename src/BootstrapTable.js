@@ -5,6 +5,7 @@ import TableHeader from './TableHeader';
 import TableBody from './TableBody';
 import PaginationList from './pagination/PaginationList';
 import ToolBar from './toolbar/ToolBar';
+import TableFilter from './TableFilter';
 
 class BootstrapTable extends React.Component{
 
@@ -80,7 +81,11 @@ class BootstrapTable extends React.Component{
             keyField={this.keyField}
             condensed={this.props.condensed}
             selectRow={this.props.selectRow}
-            cellEdit={this.props.cellEdit}/>
+            cellEdit={this.props.cellEdit}
+            enableFilter={this.props.columnFilter}/>
+          <TableFilter columns={columns}
+                       rowSelectType={this.props.selectRow.mode}
+                       onFilter={this.handleFilterData.bind(this)}/>
         </div>
         {pagination}
       </div>
@@ -192,6 +197,10 @@ class BootstrapTable extends React.Component{
     }
   }
 
+  handleFilterData(filterList){
+
+  }
+
   _sort(arr, order, sortField){
     arr.sort(function(a,b){
       if(order == Const.SORT_ASC){
@@ -267,7 +276,8 @@ BootstrapTable.propTypes = {
   }),
   insertRow: React.PropTypes.bool,
   deleteRow: React.PropTypes.bool,
-  search: React.PropTypes.bool
+  search: React.PropTypes.bool,
+  columnFilter: React.PropTypes.bool
 };
 BootstrapTable.defaultProps = {
   height: "100%",
@@ -289,7 +299,8 @@ BootstrapTable.defaultProps = {
   },
   insertRow: false,
   deleteRow: false,
-  search: false
+  search: false,
+  columnFilter: false
 };
 
 export default BootstrapTable;
