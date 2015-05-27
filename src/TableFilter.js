@@ -10,7 +10,6 @@ class TableFilter extends React.Component{
 
   handleKeyUp(e){
     this.filterObj[e.currentTarget.name] = e.currentTarget.value;
-    console.log(this.filterObj);
     this.props.onFilter(this.filterObj);
   }
 

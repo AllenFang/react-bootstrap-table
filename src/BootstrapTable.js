@@ -6,15 +6,13 @@ import TableBody from './TableBody';
 import PaginationList from './pagination/PaginationList';
 import ToolBar from './toolbar/ToolBar';
 import TableFilter from './TableFilter';
+import TableDataStore from './store/TableDataStore';
 
 class BootstrapTable extends React.Component{
 
   constructor(props) {
 		super(props);
 
-		this.state = {
-      data: this.props.data
-    };
     if(this.props.cellEdit){
       this.props.cellEdit.__onCompleteEdit__ = this.handleEditCell.bind(this);
       if(this.props.cellEdit.mode !== Const.CELL_EDIT_NONE)
@@ -23,22 +21,37 @@ class BootstrapTable extends React.Component{
     this.sortTable = false;
     this.order = Const.SORT_DESC;
     this.sortField = null;
-    this.keyField = null;
+    let keyField = null;
     this.props.children.forEach(function(column){
       if(column.props.dataSort) this.sortTable = true;
       if(column.props.isKey){
-        if(this.keyField != null) throw "Error. Multiple key column be detected in TableHeaderColumn.";
-        this.keyField = column.props.dataField;
+        if(keyField != null) throw "Error. Multiple key column be detected in TableHeaderColumn.";
+        keyField = column.props.dataField;
       }
     }, this);
-    if(this.keyField == null)
+    if(keyField == null)
       throw "Error. No any key column defined in TableHeaderColumn. Use 'isKey={true}' to specify an unique column after version 0.5.4.";
+
+    this.store = new TableDataStore(this.props.data, this.props.pagination, keyField);
+    let result = [];
+    if(this.props.pagination){
+      result = this.store.page(1, Const.SIZE_PER_PAGE).get();
+    } else{
+      result = this.store.get();
+    }
+    this.state = {
+      data: result
+    };
 	}
 
-  componentWillMount(){
-    if(this.props.pagination)
-      this.handlePaginationData(1, Const.SIZE_PER_PAGE);
-  }
+  // componentWillMount(){
+  //   // if(this.props.pagination){
+  //   //   // this.handlePaginationData(1, Const.SIZE_PER_PAGE);
+  //   //   this.store.page(1, Const.SIZE_PER_PAGE).get();
+  //   // } else{
+  //   //   this.store.get();
+  //   // }
+  // }
 
   componentDidMount(){
     this._adjustHeaderWidth();
@@ -78,7 +91,7 @@ class BootstrapTable extends React.Component{
           <TableBody ref="body" data={this.state.data} columns={columns}
             striped={this.props.striped}
             hover={this.props.hover}
-            keyField={this.keyField}
+            keyField={this.store.getKeyField()}
             condensed={this.props.condensed}
             selectRow={this.props.selectRow}
             cellEdit={this.props.cellEdit}
@@ -93,17 +106,22 @@ class BootstrapTable extends React.Component{
   }
 
   handleSort(order, sortField){
-    this.order = order;
-    this.sortField = sortField;
+    // this.order = order;
+    // this.sortField = sortField;
+    //
+    // if(this.props.pagination){
+    //   let sizePerPage = this.refs.pagination.getSizePerPage();
+    //   let currentPage = this.refs.pagination.getCurrentPage();
+    //   this.handlePaginationData(currentPage,sizePerPage);
+    // }else{
+    //   this.props.data = this._sort(this.props.data, this.order, this.sortField);
+    //   this.setState({data: this.props.data});
+    // }
 
-    if(this.props.pagination){
-      let sizePerPage = this.refs.pagination.getSizePerPage();
-      let currentPage = this.refs.pagination.getCurrentPage();
-      this.handlePaginationData(currentPage,sizePerPage);
-    }else{
-      this.props.data = this._sort(this.props.data, this.order, this.sortField);
-      this.setState({data: this.props.data});
-    }
+    let result = this.store.sort(order, sortField).get();
+    this.setState({
+      data: result
+    });
   }
 
   handlePaginationData(page, sizePerPage){
@@ -123,7 +141,7 @@ class BootstrapTable extends React.Component{
     var isSelected = e.currentTarget.checked;
     if(isSelected){
       let selectedKey = this.props.data.map(function(row){
-        return row[this.keyField];
+        return row[this.store.getKeyField()];
       }, this);
       this.props.selectRow.__onSelectAll__(selectedKey);
     }else{
@@ -132,47 +150,47 @@ class BootstrapTable extends React.Component{
   }
 
   handleEditCell(newVal, rowIndex, colIndex){
-    var fieldName;
-    var row;
+    let fieldName;
     this.props.children.forEach(function(column, i){
       if(i == colIndex){
         fieldName = column.props.dataField;
         return false;
       }
     });
-    this.state.data[rowIndex][fieldName] = newVal;
-    this.setState({data: this.state.data});
+
+    let result = this.store.edit(newVal, rowIndex, fieldName).get();
+    this.setState({
+      data: result
+    });
+
     if(this.props.cellEdit.afterSaveCell){
       this.props.cellEdit.afterSaveCell(this.state.data[rowIndex], fieldName, newVal);
     }
   }
 
   handleAddRow(newObj){
-    var msg = null;
-    if(newObj[this.keyField].trim() === ""){
-      msg = this.keyField + " can't be empty value.";
-      return msg;
+    let msg = null, result;
+    try {
+      this.store.add(newObj);
+    } catch(e){
+      return e;
     }
-
-    this.props.data.forEach(function(row){
-      if(row[this.keyField].toString() === newObj[this.keyField]){
-        msg = this.keyField + " " + newObj[this.keyField] + " already exists";
-        return false;
-      }
-    }, this);
-
-    if(msg !== null)return msg;
-
-    this.props.data.push(newObj);
 
     if(this.props.pagination){
       //if pagination is enabled and insert row be trigger, change to last page
       let sizePerPage = this.refs.pagination.getSizePerPage();
-      let currLastPage = Math.ceil(this.props.data.length/sizePerPage);
-      this.handlePaginationData(currLastPage, sizePerPage);
+      let currLastPage = Math.ceil(this.store.getDataNum()/sizePerPage);
+      console.log(currLastPage +"," + sizePerPage);
+      result = this.store.page(currLastPage, sizePerPage).get();
+      this.setState({
+        data: result
+      });
       this.refs.pagination.changePage(currLastPage);
     } else{
-      this.setState({data: this.props.data});
+      result = this.store.get();
+      this.setState({
+        data: result
+      });
     }
   }
 
@@ -197,8 +215,25 @@ class BootstrapTable extends React.Component{
     }
   }
 
-  handleFilterData(filterList){
-
+  handleFilterData(filterObj){
+    console.log(filterObj);
+    // TODO: not yet impoements
+    var filteredResult = this.props.data.filter(function(row){
+      let valid = true;
+      for(var key in filterObj){
+        if(row[key].indexOf(filterObj[key]) == -1){
+          valid = false;
+          break;
+        }
+      }
+      return valid;
+    });
+    if(this.props.pagination){
+      let sizePerPage = this.refs.pagination.getSizePerPage();
+      let currLastPage = Math.ceil(filteredResult.length/sizePerPage);
+      this.handlePaginationData(1, sizePerPage);
+      this.refs.pagination.changePage(1);
+    }
   }
 
   _sort(arr, order, sortField){
