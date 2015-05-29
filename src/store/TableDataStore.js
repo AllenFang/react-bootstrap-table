@@ -46,7 +46,11 @@ export default class TableDataStore{
   }
 
   edit(newVal, rowIndex, fieldName){
-    this.data[rowIndex][fieldName] = newVal;
+    if(!this.enablePagination){
+      this.data[rowIndex][fieldName] = newVal;
+    }else{
+      this.data[this.pageObj.start+rowIndex][fieldName] = newVal;
+    }
     return this;
   }
 
@@ -62,6 +66,12 @@ export default class TableDataStore{
     }, this);
 
     this.data.push(newObj);
+  }
+
+  remove(rowKey){
+    this.data = this.data.filter(function(row){
+      return rowKey.indexOf(row[this.keyField]) == -1;
+    }, this);
   }
 
   get(data){
@@ -80,6 +90,7 @@ export default class TableDataStore{
         result.push(_data[i]);
         if(i+1 == _data.length)break;
       }
+      console.log(result);
       return result;
     }
   }

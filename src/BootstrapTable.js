@@ -106,18 +106,6 @@ class BootstrapTable extends React.Component{
   }
 
   handleSort(order, sortField){
-    // this.order = order;
-    // this.sortField = sortField;
-    //
-    // if(this.props.pagination){
-    //   let sizePerPage = this.refs.pagination.getSizePerPage();
-    //   let currentPage = this.refs.pagination.getCurrentPage();
-    //   this.handlePaginationData(currentPage,sizePerPage);
-    // }else{
-    //   this.props.data = this._sort(this.props.data, this.order, this.sortField);
-    //   this.setState({data: this.props.data});
-    // }
-
     let result = this.store.sort(order, sortField).get();
     this.setState({
       data: result
@@ -125,16 +113,10 @@ class BootstrapTable extends React.Component{
   }
 
   handlePaginationData(page, sizePerPage){
-    if(this.sortTable && null != this.sortField)
-      this.props.data = this._sort(this.props.data, this.order, this.sortField);
-    var end = page*sizePerPage-1;
-    var start = end - (sizePerPage - 1);
-    var arr = [];
-    for(var i=start;i<=end;i++){
-      arr.push(this.props.data[i]);
-      if(i+1 == this.props.data.length)break;
-    }
-    this.setState({data: arr});
+    let result = this.store.page(page, sizePerPage).get();
+    this.setState({
+      data: result
+    });
   }
 
   handleSelectAllRow(e){
@@ -180,7 +162,6 @@ class BootstrapTable extends React.Component{
       //if pagination is enabled and insert row be trigger, change to last page
       let sizePerPage = this.refs.pagination.getSizePerPage();
       let currLastPage = Math.ceil(this.store.getDataNum()/sizePerPage);
-      console.log(currLastPage +"," + sizePerPage);
       result = this.store.page(currLastPage, sizePerPage).get();
       this.setState({
         data: result
@@ -195,23 +176,27 @@ class BootstrapTable extends React.Component{
   }
 
   handleDropRow(){
-    var selectedRowKey = this.refs.body.getSelectedRowKeys();
-    this.props.data = this.props.data.filter(function(row){
-      return selectedRowKey.indexOf(row[this.keyField]) == -1;
-    }, this);
+    let result;
+    this.store.remove(this.refs.body.getSelectedRowKeys());
 
     if(this.props.pagination){
       let sizePerPage = this.refs.pagination.getSizePerPage();
-      let currLastPage = Math.ceil(this.props.data.length/sizePerPage);
+      let currLastPage = Math.ceil(this.store.getDataNum()/sizePerPage);
       let currentPage = this.refs.pagination.getCurrentPage();
 
       if(currentPage > currLastPage)
         currentPage = currLastPage;
 
-      this.handlePaginationData(currentPage,sizePerPage);
+      result = this.store.page(currLastPage, sizePerPage).get();
+      this.setState({
+        data: result
+      });
       this.refs.pagination.changePage(currentPage);
     }else{
-      this.setState({data: this.props.data});
+      result = this.store.get();
+      this.setState({
+        data: result
+      });
     }
   }
 
