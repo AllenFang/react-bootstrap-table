@@ -11,12 +11,15 @@ In addition, reactbsTable support these features:
 * cell format
 * pagination
 * row selection
+* column filter
 * cell edit
 * Insert & Delete Row
 
 You can see the [home page](http://allenfang.github.io/react-bootstrap-table/index.html). and example is on [here](http://allenfang.github.io/react-bootstrap-table/example.html).
 
 ### Release Notes
+v0.7.0 react-bootstrap-table supported column filter on table.
+
 v0.6.0, react-bootstrap-table supported insert and delete row on table.
 
 After v0.5.4, the <code>isKey</code> attribute is required by <code>TableHeaderColumn</code> for specifying which column is unique. You can see the example in th Usage section or [here](http://allenfang.github.io/react-bootstrap-table/start.html)
@@ -120,6 +123,7 @@ Use ```condensed``` to set a condensed table. Like bootstrap table class ```.tab
 Use ```pagination``` to enable the pagnation on table.</br>
 Use ```insertRow``` to enable the insert row on table.</br>
 Use ```deleteRow``` to enable the delete row on table.</br>
+Use ```columnFilter``` to enable the column filter on table.</br>
 Use ```selectRow``` to enable the row selection on table, this attribute accept an object which contain these properties.</br>
 - ```mode```(required): radio/checkbox, to specify the selection is single or multiple.</br>
 - ```clickToSelect```(optional): if true, click on row will trigger row selection, default is false.</br>

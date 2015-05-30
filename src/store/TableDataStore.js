@@ -126,6 +126,8 @@ export default class TableDataStore{
   get(){
     let _data = this.getCurrentDisplayData();
 
+    if(_data.length == 0) return _data;
+
     if(!this.enablePagination){
       return _data;
     }else{
