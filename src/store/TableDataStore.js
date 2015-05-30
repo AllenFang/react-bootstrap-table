@@ -19,6 +19,8 @@ export default class TableDataStore{
 
   constructor(data, isPagination, keyField){
     this.data = data;
+    this.filteredData = null;
+    this.isOnFilter = false;
     this.keyField = keyField;
     this.enablePagination = isPagination;
 
@@ -26,30 +28,45 @@ export default class TableDataStore{
     this.pageObj = {};
   }
 
-  sort(order, sortField, data){
+  getCurrentDisplayData(){
+    if(this.isOnFilter) return this.filteredData;
+    else return this.data;
+  }
+
+  sort(order, sortField){
     this.sortObj = {
       order: order,
       sortField: sortField
     };
-    if(typeof data === "undefined"){
-      this.data = _sort(this.data, sortField, order);;
-    }else{
-      data = _sort(data, sortField, order);
-    }
+
+    let currentDisplayData = this.getCurrentDisplayData();
+    currentDisplayData = _sort(currentDisplayData, sortField, order);;
+
     return this;
   }
 
   page(page, sizePerPage){
-    this.pageObj.end = page*sizePerPage-1,
-    this.pageObj.start = this.pageObj.end - (sizePerPage - 1)
+    this.pageObj.end = page*sizePerPage-1;
+    this.pageObj.start = this.pageObj.end - (sizePerPage - 1);
     return this;
   }
 
   edit(newVal, rowIndex, fieldName){
+    let currentDisplayData = this.getCurrentDisplayData();
+    let rowKeyCache;
     if(!this.enablePagination){
-      this.data[rowIndex][fieldName] = newVal;
+      currentDisplayData[rowIndex][fieldName] = newVal;
+      rowKeyCache = currentDisplayData[rowIndex][this.keyField];
     }else{
-      this.data[this.pageObj.start+rowIndex][fieldName] = newVal;
+      currentDisplayData[this.pageObj.start+rowIndex][fieldName] = newVal;
+      rowKeyCache = currentDisplayData[this.pageObj.start+rowIndex][this.keyField];
+    }
+    if(this.isOnFilter){
+      this.data.forEach(function(row){
+        if(row[this.keyField] === rowKeyCache){
+          row[this.keyField][fieldName] = newVal;
+        }
+      }, this);
     }
     return this;
   }
@@ -58,29 +75,56 @@ export default class TableDataStore{
     if(newObj[this.keyField].trim() === ""){
       throw this.keyField + " can't be empty value.";
     }
-
-    this.data.forEach(function(row){
+    let currentDisplayData = this.getCurrentDisplayData();
+    currentDisplayData.forEach(function(row){
       if(row[this.keyField].toString() === newObj[this.keyField]){
         throw this.keyField + " " + newObj[this.keyField] + " already exists";
       }
     }, this);
 
-    this.data.push(newObj);
+    currentDisplayData.push(newObj);
+    if(this.isOnFilter){
+      this.data.push(newObj);
+    }
   }
 
   remove(rowKey){
-    this.data = this.data.filter(function(row){
+    let currentDisplayData = this.getCurrentDisplayData();
+    let result = currentDisplayData.filter(function(row){
       return rowKey.indexOf(row[this.keyField]) == -1;
     }, this);
+
+    if(this.isOnFilter){
+      this.data = this.data.filter(function(row){
+        return rowKey.indexOf(row[this.keyField]) == -1;
+      }, this);
+      this.filteredData = result;
+    }else{
+      this.data = result;
+    }
   }
 
-  get(data){
-    let _data;
-    if(typeof data === "undefined"){
-      _data = this.data;
-    }else{
-      _data = data;
+  filter(filterObj){
+    if(Object.keys(filterObj).length == 0){
+      this.filteredData = null;
+      this.isOnFilter = false;
+    } else{
+      this.filteredData = this.data.filter(function(row){
+        let valid = true;
+        for(var key in filterObj){
+          if(row[key].toString().indexOf(filterObj[key]) == -1){
+            valid = false;
+            break;
+          }
+        }
+        return valid;
+      });
+      this.isOnFilter = true;
     }
+  }
+
+  get(){
+    let _data = this.getCurrentDisplayData();
 
     if(!this.enablePagination){
       return _data;
@@ -90,7 +134,6 @@ export default class TableDataStore{
         result.push(_data[i]);
         if(i+1 == _data.length)break;
       }
-      console.log(result);
       return result;
     }
   }
@@ -100,7 +143,13 @@ export default class TableDataStore{
   }
 
   getDataNum(){
-    return this.data.length;
+    return this.getCurrentDisplayData().length;
+  }
+
+  getAllRowkey(){
+    return this.data.map(function(row){
+      return row[this.keyField];
+    }, this);
   }
 
 };

@@ -122,9 +122,7 @@ class BootstrapTable extends React.Component{
   handleSelectAllRow(e){
     var isSelected = e.currentTarget.checked;
     if(isSelected){
-      let selectedKey = this.props.data.map(function(row){
-        return row[this.store.getKeyField()];
-      }, this);
+      let selectedKey = this.store.getAllRowkey();
       this.props.selectRow.__onSelectAll__(selectedKey);
     }else{
       this.props.selectRow.__onSelectAll__([]);
@@ -183,11 +181,9 @@ class BootstrapTable extends React.Component{
       let sizePerPage = this.refs.pagination.getSizePerPage();
       let currLastPage = Math.ceil(this.store.getDataNum()/sizePerPage);
       let currentPage = this.refs.pagination.getCurrentPage();
-
       if(currentPage > currLastPage)
         currentPage = currLastPage;
-
-      result = this.store.page(currLastPage, sizePerPage).get();
+      result = this.store.page(currentPage, sizePerPage).get();
       this.setState({
         data: result
       });
@@ -201,24 +197,18 @@ class BootstrapTable extends React.Component{
   }
 
   handleFilterData(filterObj){
-    console.log(filterObj);
-    // TODO: not yet impoements
-    var filteredResult = this.props.data.filter(function(row){
-      let valid = true;
-      for(var key in filterObj){
-        if(row[key].indexOf(filterObj[key]) == -1){
-          valid = false;
-          break;
-        }
-      }
-      return valid;
-    });
+    this.store.filter(filterObj);
+    let result;
     if(this.props.pagination){
       let sizePerPage = this.refs.pagination.getSizePerPage();
-      let currLastPage = Math.ceil(filteredResult.length/sizePerPage);
-      this.handlePaginationData(1, sizePerPage);
+      result = this.store.page(1, sizePerPage).get();
       this.refs.pagination.changePage(1);
+    }else{
+      result = this.store.get();
     }
+    this.setState({
+      data: result
+    });
   }
 
   _sort(arr, order, sortField){
@@ -244,7 +234,7 @@ class BootstrapTable extends React.Component{
           <PaginationList ref="pagination"
                           changePage={this.handlePaginationData.bind(this)}
                           sizePerPage={Const.SIZE_PER_PAGE}
-                          dataSize={this.props.data.length} />
+                          dataSize={this.store.getDataNum()} />
         </div>
       )
     }else {

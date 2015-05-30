@@ -9,7 +9,11 @@ class TableFilter extends React.Component{
   }
 
   handleKeyUp(e){
-    this.filterObj[e.currentTarget.name] = e.currentTarget.value;
+    if(e.currentTarget.value.trim() === "")
+      delete this.filterObj[e.currentTarget.name];
+    else
+      this.filterObj[e.currentTarget.name] = e.currentTarget.value;
+
     this.props.onFilter(this.filterObj);
   }
 
