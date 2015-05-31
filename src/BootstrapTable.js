@@ -79,6 +79,7 @@ class BootstrapTable extends React.Component{
 
     var pagination = this.renderPagination();
     var toolBar = this.renderToolBar();
+    var tableFilter = this.renderTableFilter(columns);
     return(
       <div className="react-bs-container">
         {toolBar}
@@ -94,11 +95,8 @@ class BootstrapTable extends React.Component{
             keyField={this.store.getKeyField()}
             condensed={this.props.condensed}
             selectRow={this.props.selectRow}
-            cellEdit={this.props.cellEdit}
-            enableFilter={this.props.columnFilter}/>
-          <TableFilter columns={columns}
-                       rowSelectType={this.props.selectRow.mode}
-                       onFilter={this.handleFilterData.bind(this)}/>
+            cellEdit={this.props.cellEdit}/>
+          {tableFilter}
         </div>
         {pagination}
       </div>
@@ -260,6 +258,18 @@ class BootstrapTable extends React.Component{
                    onDropRow={this.handleDropRow.bind(this)}/>
         </div>
       )
+    }else{
+      return null;
+    }
+  }
+
+  renderTableFilter(columns){
+    if(this.props.columnFilter){
+      return (
+        <TableFilter columns={columns}
+                     rowSelectType={this.props.selectRow.mode}
+                     onFilter={this.handleFilterData.bind(this)}/>
+      );
     }else{
       return null;
     }
