@@ -25,7 +25,7 @@ function priceFormatter(cell, row){
 
 React.render(
   <BootstrapTable data={productLong} striped={true} hover={true} condensed={false} pagination={true} selectRow={selectRowProp}
-    insertRow={true} deleteRow={true}>
+    insertRow={true} deleteRow={true} columnFilter={true}>
       <TableHeaderColumn dataField="id" isKey={true} dataAlign="right" dataSort={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price" dataAlign="center" dataFormat={priceFormatter}>Product Price</TableHeaderColumn>

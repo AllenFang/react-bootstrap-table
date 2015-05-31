@@ -212,3 +212,12 @@ React.render(
   </BootstrapTable>,
 	document.getElementById("insert-delete-div")
 );
+
+React.render(
+  <BootstrapTable data={product11} columnFilter={true}>
+      <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="price" editable={false}>Product Price</TableHeaderColumn>
+  </BootstrapTable>,
+	document.getElementById("column-filter-div")
+);
