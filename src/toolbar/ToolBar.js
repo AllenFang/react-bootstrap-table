@@ -29,6 +29,10 @@ class ToolBar extends React.Component{
     this.props.onDropRow();
   }
 
+  handleCloseBtn(e){
+    this.refs.warning.getDOMNode().style.display = "none";
+  }
+
   render(){
     var insertBtn = this.props.enableInsert?
           <button type="button" className="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-sm">
@@ -41,15 +45,16 @@ class ToolBar extends React.Component{
           </button>:null;
     var modal = this.renderInsertRowModal();
     var warningStyle = {
-      display: "none"
+      display: "none",
+      marginBottom: 0
     };
     return(
       <div>
         <div className="btn-group btn-group-sm" role="group" aria-label="...">
           {insertBtn}{deleteBtn}
         </div>
-        <div ref="warning" className="alert alert-warning alert-dismissible" style={warningStyle}>
-          <button type="button" className="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div ref="warning" className="alert alert-warning" style={warningStyle}>
+          <button type="button" className="close" aria-label="Close" onClick={this.handleCloseBtn.bind(this)}><span aria-hidden="true">&times;</span></button>
           <strong>Warning! </strong><font ref="warningText"></font>
         </div>
         {modal}

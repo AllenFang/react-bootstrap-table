@@ -209,17 +209,6 @@ class BootstrapTable extends React.Component{
     });
   }
 
-  _sort(arr, order, sortField){
-    arr.sort(function(a,b){
-      if(order == Const.SORT_ASC){
-        return a[sortField] > b[sortField]?-1: ((a[sortField] < b[sortField]) ? 1 : 0);
-      }else{
-        return a[sortField] < b[sortField]?-1: ((a[sortField] > b[sortField]) ? 1 : 0);
-      }
-    });
-    return arr;
-  }
-
   _adjustHeaderWidth(){
     this.refs.table.getDOMNode().childNodes[0].childNodes[0].style.width =
       this.refs.table.getDOMNode().childNodes[1].childNodes[0].offsetWidth-1+"px";
