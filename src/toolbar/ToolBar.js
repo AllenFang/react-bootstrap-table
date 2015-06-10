@@ -43,6 +43,7 @@ class ToolBar extends React.Component{
             onClick={this.handleDropRowBtnClick.bind(this)}>
             Delete
           </button>:null;
+    var searchTextInput = this.props.enableSearch?:<input type='text' placeholder='Search' />:null;
     var modal = this.renderInsertRowModal();
     var warningStyle = {
       display: "none",
@@ -53,6 +54,7 @@ class ToolBar extends React.Component{
         <div className="btn-group btn-group-sm" role="group" aria-label="...">
           {insertBtn}{deleteBtn}
         </div>
+        {searchTextInput}
         <div ref="warning" className="alert alert-warning" style={warningStyle}>
           <button type="button" className="close" aria-label="Close" onClick={this.handleCloseBtn.bind(this)}><span aria-hidden="true">&times;</span></button>
           <strong>Warning! </strong><font ref="warningText"></font>
