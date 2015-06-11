@@ -33,6 +33,10 @@ class ToolBar extends React.Component{
     this.refs.warning.getDOMNode().style.display = "none";
   }
 
+  handleKeyUp(e){
+    this.props.onSearch(e.currentTarget.value);
+  }
+
   render(){
     var insertBtn = this.props.enableInsert?
           <button type="button" className="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-sm">
@@ -43,7 +47,7 @@ class ToolBar extends React.Component{
             onClick={this.handleDropRowBtnClick.bind(this)}>
             Delete
           </button>:null;
-    var searchTextInput = this.props.enableSearch?:<input type='text' placeholder='Search' />:null;
+    var searchTextInput = this.props.enableSearch?<input type='text' placeholder='Search' onKeyUp={this.handleKeyUp.bind(this)}/>:null;
     var modal = this.renderInsertRowModal();
     var warningStyle = {
       display: "none",

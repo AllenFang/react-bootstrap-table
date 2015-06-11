@@ -209,6 +209,22 @@ class BootstrapTable extends React.Component{
     });
   }
 
+  handleSearch(searchText){
+    console.log(searchText);
+    this.store.search(searchText);
+    let result;
+    if(this.props.pagination){
+      let sizePerPage = this.refs.pagination.getSizePerPage();
+      result = this.store.page(1, sizePerPage).get();
+      this.refs.pagination.changePage(1);
+    }else{
+      result = this.store.get();
+    }
+    this.setState({
+      data: result
+    });
+  }
+
   _adjustHeaderWidth(){
     this.refs.table.getDOMNode().childNodes[0].childNodes[0].style.width =
       this.refs.table.getDOMNode().childNodes[1].childNodes[0].offsetWidth-1+"px";
@@ -244,7 +260,8 @@ class BootstrapTable extends React.Component{
                    enableSearch={this.props.search}
                    columns={columns}
                    onAddRow={this.handleAddRow.bind(this)}
-                   onDropRow={this.handleDropRow.bind(this)}/>
+                   onDropRow={this.handleDropRow.bind(this)}
+                   onSearch={this.handleSearch.bind(this)}/>
         </div>
       )
     }else{

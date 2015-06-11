@@ -123,6 +123,25 @@ export default class TableDataStore{
     }
   }
 
+  search(searchText){
+    if(searchText.trim() === ""){
+      this.filteredData = null;
+      this.isOnFilter = false;
+    }else{
+      this.filteredData = this.data.filter(function(row){
+        let valid = false;
+        for(var key in row){
+          if(row[key].toString().indexOf(searchText) !== -1){
+            valid = true;
+            break;
+          }
+        }
+        return valid;
+      });
+      this.isOnFilter = true;
+    }
+  }
+
   get(){
     let _data = this.getCurrentDisplayData();
 
