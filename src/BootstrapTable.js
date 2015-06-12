@@ -32,17 +32,26 @@ class BootstrapTable extends React.Component{
     if(keyField == null)
       throw "Error. No any key column defined in TableHeaderColumn. Use 'isKey={true}' to specify an unique column after version 0.5.4.";
 
-    this.store = new TableDataStore(this.props.data, this.props.pagination, keyField);
+    this.store = (this.props.store ? this.props.store : new TableDataStore(this.props.data, this.props.pagination, keyField));
+    this.state = {
+      data: this.getTableData()
+    };
+    this.store.on('change', function () {
+      this.setState({
+        data: this.getTableData()
+      })
+    }.bind(this));
+  }
+
+  getTableData() {
     let result = [];
     if(this.props.pagination){
       result = this.store.page(1, Const.SIZE_PER_PAGE).get();
     } else{
       result = this.store.get();
     }
-    this.state = {
-      data: result
-    };
-	}
+    return result;
+  }
 
   // componentWillMount(){
   //   // if(this.props.pagination){
