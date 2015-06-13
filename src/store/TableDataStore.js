@@ -14,15 +14,17 @@ function _sort(arr, sortField, order){
 
 export default class TableDataStore extends EventEmitter {
 
-  constructor(data, isPagination, keyField){
+  constructor(data){
     this.data = data;
     this.filteredData = null;
     this.isOnFilter = false;
-    this.keyField = keyField;
-    this.enablePagination = isPagination;
-
     this.sortObj = {};
     this.pageObj = {};
+  }
+
+  setProps(isPagination, keyField){
+    this.keyField = keyField;
+    this.enablePagination = isPagination;
   }
 
   setData(data) {
@@ -116,6 +118,25 @@ export default class TableDataStore extends EventEmitter {
         for(var key in filterObj){
           if(row[key].toString().indexOf(filterObj[key]) == -1){
             valid = false;
+            break;
+          }
+        }
+        return valid;
+      });
+      this.isOnFilter = true;
+    }
+  }
+
+  search(searchText){
+    if(searchText.trim() === ""){
+      this.filteredData = null;
+      this.isOnFilter = false;
+    }else{
+      this.filteredData = this.data.filter(function(row){
+        let valid = false;
+        for(var key in row){
+          if(row[key].toString().indexOf(searchText) !== -1){
+            valid = true;
             break;
           }
         }

@@ -17,7 +17,7 @@ function addProducts(quantity) {
   store.setData(products);
 }
 
-addProducts(10);
+addProducts(20);
 
 function onRowSelect(row, isSelected){
   console.log(row);
@@ -54,13 +54,13 @@ function priceFormatter(cell, row){
 }
 
 window.setTimeout(function () {
-  //adding 10 products to reactifity
-  addProducts(10);
-}, 1000);
+  console.log("adding 10 products to reactifity");
+  addProducts(50);
+}, 5000);
 
 React.render(
   <BootstrapTable store={store} striped={true} hover={true} pagination={true} selectRow={selectRowProp} cellEdit={cellEditProp}
-                  insertRow={true} deleteRow={true} columnFilter={true}>
+                  insertRow={true} deleteRow={true} search={true} columnFilter={true}>
       <TableHeaderColumn dataField="id" dataAlign="center" dataSort={true} isKey={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price" dataFormat={priceFormatter} editable={false}>Product Price</TableHeaderColumn>

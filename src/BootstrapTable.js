@@ -32,7 +32,8 @@ class BootstrapTable extends React.Component{
     if(keyField == null)
       throw "Error. No any key column defined in TableHeaderColumn. Use 'isKey={true}' to specify an unique column after version 0.5.4.";
 
-    this.store = (this.props.store ? this.props.store : new TableDataStore(this.props.data, this.props.pagination, keyField));
+    this.store = this.props.store;
+    this.store.setProps(this.props.pagination, keyField);
     this.state = {
       data: this.getTableData()
     };
@@ -218,6 +219,22 @@ class BootstrapTable extends React.Component{
     });
   }
 
+  handleSearch(searchText){
+    console.log(searchText);
+    this.store.search(searchText);
+    let result;
+    if(this.props.pagination){
+      let sizePerPage = this.refs.pagination.getSizePerPage();
+      result = this.store.page(1, sizePerPage).get();
+      this.refs.pagination.changePage(1);
+    }else{
+      result = this.store.get();
+    }
+    this.setState({
+      data: result
+    });
+  }
+
   _adjustHeaderWidth(){
     this.refs.table.getDOMNode().childNodes[0].childNodes[0].style.width =
       this.refs.table.getDOMNode().childNodes[1].childNodes[0].offsetWidth-1+"px";
@@ -253,7 +270,8 @@ class BootstrapTable extends React.Component{
                    enableSearch={this.props.search}
                    columns={columns}
                    onAddRow={this.handleAddRow.bind(this)}
-                   onDropRow={this.handleDropRow.bind(this)}/>
+                   onDropRow={this.handleDropRow.bind(this)}
+                   onSearch={this.handleSearch.bind(this)}/>
         </div>
       )
     }else{
@@ -275,7 +293,7 @@ class BootstrapTable extends React.Component{
 }
 BootstrapTable.propTypes = {
   height: React.PropTypes.string,
-  data: React.PropTypes.array,
+  store: React.PropTypes.object,
   striped: React.PropTypes.bool,
   hover: React.PropTypes.bool,
   condensed: React.PropTypes.bool,
