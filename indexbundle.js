@@ -26,7 +26,7 @@ function priceFormatter(cell, row){
 
 React.render(
   React.createElement(BootstrapTable, {data: productLong, striped: true, hover: true, condensed: false, pagination: true, selectRow: selectRowProp, 
-    insertRow: true, deleteRow: true, columnFilter: true}, 
+    insertRow: true, deleteRow: true, columnFilter: true, search: true}, 
       React.createElement(TableHeaderColumn, {dataField: "id", isKey: true, dataAlign: "right", dataSort: true}, "Product ID"), 
       React.createElement(TableHeaderColumn, {dataField: "name", dataSort: true}, "Product Name"), 
       React.createElement(TableHeaderColumn, {dataField: "price", dataAlign: "center", dataFormat: priceFormatter}, "Product Price")
@@ -285,16 +285,21 @@ var BootstrapTable = (function (_React$Component) {
         });
       }
     },
-    _sort: {
-      value: function _sort(arr, order, sortField) {
-        arr.sort(function (a, b) {
-          if (order == Const.SORT_ASC) {
-            return a[sortField] > b[sortField] ? -1 : a[sortField] < b[sortField] ? 1 : 0;
-          } else {
-            return a[sortField] < b[sortField] ? -1 : a[sortField] > b[sortField] ? 1 : 0;
-          }
+    handleSearch: {
+      value: function handleSearch(searchText) {
+        console.log(searchText);
+        this.store.search(searchText);
+        var result = undefined;
+        if (this.props.pagination) {
+          var sizePerPage = this.refs.pagination.getSizePerPage();
+          result = this.store.page(1, sizePerPage).get();
+          this.refs.pagination.changePage(1);
+        } else {
+          result = this.store.get();
+        }
+        this.setState({
+          data: result
         });
-        return arr;
       }
     },
     _adjustHeaderWidth: {
@@ -335,7 +340,8 @@ var BootstrapTable = (function (_React$Component) {
               enableSearch: this.props.search,
               columns: columns,
               onAddRow: this.handleAddRow.bind(this),
-              onDropRow: this.handleDropRow.bind(this) })
+              onDropRow: this.handleDropRow.bind(this),
+              onSearch: this.handleSearch.bind(this) })
           );
         } else {
           return null;
@@ -1657,6 +1663,26 @@ var TableDataStore = (function () {
         }
       }
     },
+    search: {
+      value: function search(searchText) {
+        if (searchText.trim() === "") {
+          this.filteredData = null;
+          this.isOnFilter = false;
+        } else {
+          this.filteredData = this.data.filter(function (row) {
+            var valid = false;
+            for (var key in row) {
+              if (row[key].toString().indexOf(searchText) !== -1) {
+                valid = true;
+                break;
+              }
+            }
+            return valid;
+          });
+          this.isOnFilter = true;
+        }
+      }
+    },
     get: {
       value: function get() {
         var _data = this.getCurrentDisplayData();
@@ -1750,6 +1776,16 @@ var ToolBar = (function (_React$Component) {
         this.props.onDropRow();
       }
     },
+    handleCloseBtn: {
+      value: function handleCloseBtn(e) {
+        this.refs.warning.getDOMNode().style.display = "none";
+      }
+    },
+    handleKeyUp: {
+      value: function handleKeyUp(e) {
+        this.props.onSearch(e.currentTarget.value);
+      }
+    },
     render: {
       value: function render() {
         var insertBtn = this.props.enableInsert ? React.createElement(
@@ -1764,9 +1800,11 @@ var ToolBar = (function (_React$Component) {
             onClick: this.handleDropRowBtnClick.bind(this) },
           "Delete"
         ) : null;
+        var searchTextInput = this.props.enableSearch ? React.createElement("input", { type: "text", placeholder: "Search", onKeyUp: this.handleKeyUp.bind(this) }) : null;
         var modal = this.renderInsertRowModal();
         var warningStyle = {
-          display: "none"
+          display: "none",
+          marginBottom: 0
         };
         return React.createElement(
           "div",
@@ -1777,12 +1815,13 @@ var ToolBar = (function (_React$Component) {
             insertBtn,
             deleteBtn
           ),
+          searchTextInput,
           React.createElement(
             "div",
-            { ref: "warning", className: "alert alert-warning alert-dismissible", style: warningStyle },
+            { ref: "warning", className: "alert alert-warning", style: warningStyle },
             React.createElement(
               "button",
-              { type: "button", className: "close", "data-dismiss": "alert", "aria-label": "Close" },
+              { type: "button", className: "close", "aria-label": "Close", onClick: this.handleCloseBtn.bind(this) },
               React.createElement(
                 "span",
                 { "aria-hidden": "true" },

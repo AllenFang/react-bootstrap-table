@@ -34,7 +34,7 @@ var products = [
 
 var product1 = [], product2 = [],product3 = [],product4 = [],
 product5 = [],product6 = [],product7 = [],product8 = [],
-product9 = [],product10 = [],product11 = [];
+product9 = [],product10 = [],product11 = [],product12 = [];
 
 for(var i=1;i<=6;i++){
   var p = {
@@ -45,7 +45,7 @@ for(var i=1;i<=6;i++){
 
   product1.push(p);product2.push(p);product4.push(p);product5.push(p);
   product6.push(p);
-  product10.push(p);product11.push(p);product3.push(p);
+  product10.push(p);product11.push(p);product3.push(p);product12.push(p);
 
 
   product7.push({
@@ -221,6 +221,15 @@ React.render(
       React.createElement(TableHeaderColumn, {dataField: "price", editable: false}, "Product Price")
   ),
 	document.getElementById("column-filter-div")
+);
+
+React.render(
+  React.createElement(BootstrapTable, {data: product12, search: true}, 
+      React.createElement(TableHeaderColumn, {dataField: "id", isKey: true}, "Product ID"), 
+      React.createElement(TableHeaderColumn, {dataField: "name"}, "Product Name"), 
+      React.createElement(TableHeaderColumn, {dataField: "price", editable: false}, "Product Price")
+  ),
+	document.getElementById("search-div")
 );
 
 
@@ -474,16 +483,21 @@ var BootstrapTable = (function (_React$Component) {
         });
       }
     },
-    _sort: {
-      value: function _sort(arr, order, sortField) {
-        arr.sort(function (a, b) {
-          if (order == Const.SORT_ASC) {
-            return a[sortField] > b[sortField] ? -1 : a[sortField] < b[sortField] ? 1 : 0;
-          } else {
-            return a[sortField] < b[sortField] ? -1 : a[sortField] > b[sortField] ? 1 : 0;
-          }
+    handleSearch: {
+      value: function handleSearch(searchText) {
+        console.log(searchText);
+        this.store.search(searchText);
+        var result = undefined;
+        if (this.props.pagination) {
+          var sizePerPage = this.refs.pagination.getSizePerPage();
+          result = this.store.page(1, sizePerPage).get();
+          this.refs.pagination.changePage(1);
+        } else {
+          result = this.store.get();
+        }
+        this.setState({
+          data: result
         });
-        return arr;
       }
     },
     _adjustHeaderWidth: {
@@ -524,7 +538,8 @@ var BootstrapTable = (function (_React$Component) {
               enableSearch: this.props.search,
               columns: columns,
               onAddRow: this.handleAddRow.bind(this),
-              onDropRow: this.handleDropRow.bind(this) })
+              onDropRow: this.handleDropRow.bind(this),
+              onSearch: this.handleSearch.bind(this) })
           );
         } else {
           return null;
@@ -1846,6 +1861,26 @@ var TableDataStore = (function () {
         }
       }
     },
+    search: {
+      value: function search(searchText) {
+        if (searchText.trim() === "") {
+          this.filteredData = null;
+          this.isOnFilter = false;
+        } else {
+          this.filteredData = this.data.filter(function (row) {
+            var valid = false;
+            for (var key in row) {
+              if (row[key].toString().indexOf(searchText) !== -1) {
+                valid = true;
+                break;
+              }
+            }
+            return valid;
+          });
+          this.isOnFilter = true;
+        }
+      }
+    },
     get: {
       value: function get() {
         var _data = this.getCurrentDisplayData();
@@ -1939,6 +1974,16 @@ var ToolBar = (function (_React$Component) {
         this.props.onDropRow();
       }
     },
+    handleCloseBtn: {
+      value: function handleCloseBtn(e) {
+        this.refs.warning.getDOMNode().style.display = "none";
+      }
+    },
+    handleKeyUp: {
+      value: function handleKeyUp(e) {
+        this.props.onSearch(e.currentTarget.value);
+      }
+    },
     render: {
       value: function render() {
         var insertBtn = this.props.enableInsert ? React.createElement(
@@ -1953,9 +1998,11 @@ var ToolBar = (function (_React$Component) {
             onClick: this.handleDropRowBtnClick.bind(this) },
           "Delete"
         ) : null;
+        var searchTextInput = this.props.enableSearch ? React.createElement("input", { type: "text", placeholder: "Search", onKeyUp: this.handleKeyUp.bind(this) }) : null;
         var modal = this.renderInsertRowModal();
         var warningStyle = {
-          display: "none"
+          display: "none",
+          marginBottom: 0
         };
         return React.createElement(
           "div",
@@ -1966,12 +2013,13 @@ var ToolBar = (function (_React$Component) {
             insertBtn,
             deleteBtn
           ),
+          searchTextInput,
           React.createElement(
             "div",
-            { ref: "warning", className: "alert alert-warning alert-dismissible", style: warningStyle },
+            { ref: "warning", className: "alert alert-warning", style: warningStyle },
             React.createElement(
               "button",
-              { type: "button", className: "close", "data-dismiss": "alert", "aria-label": "Close" },
+              { type: "button", className: "close", "aria-label": "Close", onClick: this.handleCloseBtn.bind(this) },
               React.createElement(
                 "span",
                 { "aria-hidden": "true" },

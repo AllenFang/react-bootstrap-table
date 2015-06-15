@@ -33,7 +33,7 @@ var products = [
 
 var product1 = [], product2 = [],product3 = [],product4 = [],
 product5 = [],product6 = [],product7 = [],product8 = [],
-product9 = [],product10 = [],product11 = [];
+product9 = [],product10 = [],product11 = [],product12 = [];
 
 for(var i=1;i<=6;i++){
   var p = {
@@ -44,7 +44,7 @@ for(var i=1;i<=6;i++){
 
   product1.push(p);product2.push(p);product4.push(p);product5.push(p);
   product6.push(p);
-  product10.push(p);product11.push(p);product3.push(p);
+  product10.push(p);product11.push(p);product3.push(p);product12.push(p);
 
 
   product7.push({
@@ -220,4 +220,13 @@ React.render(
       <TableHeaderColumn dataField="price" editable={false}>Product Price</TableHeaderColumn>
   </BootstrapTable>,
 	document.getElementById("column-filter-div")
+);
+
+React.render(
+  <BootstrapTable data={product12} search={true}>
+      <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="price" editable={false}>Product Price</TableHeaderColumn>
+  </BootstrapTable>,
+	document.getElementById("search-div")
 );

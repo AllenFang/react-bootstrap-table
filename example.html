@@ -91,6 +91,10 @@
             <a href="#filter">Column Filter</a>
               <ul class="nav"></ul>
           </li>
+          <li>
+            <a href="#search">Table Search</a>
+              <ul class="nav"></ul>
+          </li>
         </ul>
       </div>
       <div class="col-xs-12 col-md-8">
@@ -304,6 +308,19 @@ var selectRowProp = {
           <div id="column-filter-div"></div>
           <pre><code>
 &lt;BootstrapTable data={products} columnFilter={true}&gt;
+  &lt;TableHeaderColumn dataField="id" isKey={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+          </code></pre>
+        </div></br>
+        <div>
+          <h1 id="search">Table Search</h1>
+          Use <code>search</code> to enable the column filter on table.</br>
+          </br>
+          <div id="search-div"></div>
+          <pre><code>
+&lt;BootstrapTable data={products} search={true}&gt;
   &lt;TableHeaderColumn dataField="id" isKey={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
