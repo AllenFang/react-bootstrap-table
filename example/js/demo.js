@@ -1,8 +1,7 @@
 import React from 'react';
-import {BootstrapTable, TableHeaderColumn, TableDataStore} from 'react-bootstrap-table';
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 var products = [];
-var store = new TableDataStore(products);
 
 function addProducts(quantity) {
   var startId = products.length;
@@ -14,7 +13,6 @@ function addProducts(quantity) {
       price: 100 + i
     });
   }
-  store.setData(products);
 }
 
 addProducts(20);
@@ -53,13 +51,8 @@ function priceFormatter(cell, row){
   return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
 }
 
-window.setTimeout(function () {
-  console.log("adding 10 products to reactifity");
-  addProducts(50);
-}, 5000);
-
-React.render(
-  <BootstrapTable store={store} striped={true} hover={true} pagination={true} selectRow={selectRowProp} cellEdit={cellEditProp}
+React.render(   //data={dataSet}
+  <BootstrapTable data={products} striped={true} hover={true} pagination={true} selectRow={selectRowProp} cellEdit={cellEditProp}
                   insertRow={true} deleteRow={true} search={true} columnFilter={true}>
       <TableHeaderColumn dataField="id" dataAlign="center" dataSort={true} isKey={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>

@@ -12,7 +12,25 @@ function _sort(arr, sortField, order){
   return arr;
 }
 
-export default class TableDataStore extends EventEmitter {
+export class TableDataSet extends EventEmitter{
+  constructor(data){
+    this.data = data;
+  }
+
+  setData(data) {
+    this.emit('change', data);
+  }
+
+  clear(){
+    this.data = null;
+  }
+
+  getData(){
+    return this.data;
+  }
+}
+
+export class TableDataStore{
 
   constructor(data){
     this.data = data;
@@ -29,7 +47,6 @@ export default class TableDataStore extends EventEmitter {
 
   setData(data) {
     this.data = data;
-    this.emit('change')
   }
 
   getCurrentDisplayData(){

@@ -6,7 +6,7 @@ import TableBody from './TableBody';
 import PaginationList from './pagination/PaginationList';
 import ToolBar from './toolbar/ToolBar';
 import TableFilter from './TableFilter';
-import TableDataStore from './store/TableDataStore';
+import {TableDataStore} from './store/TableDataStore';
 
 class BootstrapTable extends React.Component{
 
@@ -32,16 +32,22 @@ class BootstrapTable extends React.Component{
     if(keyField == null)
       throw "Error. No any key column defined in TableHeaderColumn. Use 'isKey={true}' to specify an unique column after version 0.5.4.";
 
-    this.store = this.props.store;
+    if(!Array.isArray(this.props.data)){
+      this.store = new TableDataStore(this.props.data.getData());
+      this.props.data.clear();
+      this.props.data.on('change', (data) => {
+        this.store.setData(data);
+        this.setState({
+          data: this.getTableData()
+        })
+      }.bind(this));
+    } else{
+      this.store = new TableDataStore(this.props.data);
+    }
     this.store.setProps(this.props.pagination, keyField);
     this.state = {
       data: this.getTableData()
     };
-    this.store.on('change', function () {
-      this.setState({
-        data: this.getTableData()
-      })
-    }.bind(this));
   }
 
   getTableData() {
@@ -293,7 +299,7 @@ class BootstrapTable extends React.Component{
 }
 BootstrapTable.propTypes = {
   height: React.PropTypes.string,
-  store: React.PropTypes.object,
+  data: React.PropTypes.array,
   striped: React.PropTypes.bool,
   hover: React.PropTypes.bool,
   condensed: React.PropTypes.bool,
