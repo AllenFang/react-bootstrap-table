@@ -1,14 +1,22 @@
 import React from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
-var product = [];
-for(var i=0;i<80;i++){
-  product.push({
-    id: i,
-    name: "Item name " + i,
-    price: 100+i
-  });
+var products = [];
+
+function addProducts(quantity) {
+  var startId = products.length;
+  for (var i = 0; i < quantity; i++) {
+    var id = startId + i;
+    products.push({
+      id: id,
+      name: "Item name " + id,
+      price: 100 + i
+    });
+  }
 }
+
+addProducts(70);
+
 function onRowSelect(row, isSelected){
   console.log(row);
   console.log("selected: " + isSelected)
@@ -43,8 +51,8 @@ function priceFormatter(cell, row){
   return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
 }
 
-React.render(
-  <BootstrapTable data={product} striped={true} hover={true} pagination={true} selectRow={selectRowProp} cellEdit={cellEditProp}
+React.render(   //data={dataSet}
+  <BootstrapTable data={products} striped={true} hover={true} pagination={true} selectRow={selectRowProp} cellEdit={cellEditProp}
                   insertRow={true} deleteRow={true} search={true} columnFilter={true}>
       <TableHeaderColumn dataField="id" dataAlign="center" dataSort={true} isKey={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>

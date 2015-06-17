@@ -1,5 +1,5 @@
 import Const from "../Const";
-
+var EventEmitter = require('events').EventEmitter;
 
 function _sort(arr, sortField, order){
   arr.sort(function(a,b){
@@ -12,20 +12,41 @@ function _sort(arr, sortField, order){
   return arr;
 }
 
+export class TableDataSet extends EventEmitter{
+  constructor(data){
+    this.data = data;
+  }
 
+  setData(data) {
+    this.emit('change', data);
+  }
 
+  clear(){
+    this.data = null;
+  }
 
-export default class TableDataStore{
+  getData(){
+    return this.data;
+  }
+}
 
-  constructor(data, isPagination, keyField){
+export class TableDataStore{
+
+  constructor(data){
     this.data = data;
     this.filteredData = null;
     this.isOnFilter = false;
-    this.keyField = keyField;
-    this.enablePagination = isPagination;
-
     this.sortObj = {};
     this.pageObj = {};
+  }
+
+  setProps(isPagination, keyField){
+    this.keyField = keyField;
+    this.enablePagination = isPagination;
+  }
+
+  setData(data) {
+    this.data = data;
   }
 
   getCurrentDisplayData(){

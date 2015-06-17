@@ -66,11 +66,9 @@ function bundle(b, bundleName, dest){
 	b.bundle()
 	.on('error', function(err){
 		console.log(err.message);
-		this.end();
   })
 	.on('end', function(){
 		console.log("building success.");
-		this.end();
 	})
 	.pipe(source(bundleName))
 	.pipe(gulp.dest(dest));

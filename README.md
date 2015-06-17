@@ -19,6 +19,8 @@ In addition, reactbsTable support these features:
 You can see the [home page](http://allenfang.github.io/react-bootstrap-table/index.html). and example is on [here](http://allenfang.github.io/react-bootstrap-table/example.html).
 
 ### Release Notes
+v0.8.0 Update data on the fly.
+
 v0.7.2 react-bootstrap-table supported search on table.
 
 v0.7.1 react-bootstrap-table supported column filter on table.
