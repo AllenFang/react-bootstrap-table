@@ -83,6 +83,29 @@
       Use <code>dataFormat</code> to customize this column.Must give it as a function. </br>
       Use <code>editable</code> to specify column editable, default is true. This attribute only works on <code>cellEdit</code> be setted in <code>&lt;BootstrapTable&gt;</code> certainly.</br></p>
 
+      <h3>
+      <a id="about-tabledataset" class="anchor" href="#about-tabledataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+      About TableDataSet</h3>
+
+      After v0.8.0, rect-bootstrap-table provide the ability of updating table data on fly. How to do it?</br></br>
+      1. Import TableDataSet</br>
+      <pre>
+var ReactBsTable  = require('react-bootstrap-table');
+var TableDataSet = ReactBsTable.TableDataSet; //import TableDataSet</pre>
+
+      2. Create a TableDataSet object with you data.
+      <pre>
+var dataSet = new TableDataSet(products);</pre>
+
+      3. Pass this object to <code>data</code>
+      <pre>
+&lt;BootstrapTable data={dataSet}&gt;
+   ...
+&lt;/BootstrapTable&gt;</pre>
+
+      4. If you want to reset or update table data in any time, you can:
+      <pre>
+dataSet.setData(newproducts);</pre>
       <hr>
       <span class="site-footer-owner"><a href="https://github.com/AllenFang/react-bootstrap-table">React-bootstrap-table</a> is maintained by <a href="https://github.com/AllenFang">AllenFang</a>.</span>
 

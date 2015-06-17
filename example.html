@@ -95,6 +95,10 @@
             <a href="#search">Table Search</a>
               <ul class="nav"></ul>
           </li>
+          <li>
+            <a href="#fly">Update Table</a>
+              <ul class="nav"></ul>
+          </li>
         </ul>
       </div>
       <div class="col-xs-12 col-md-8">
@@ -325,6 +329,33 @@ var selectRowProp = {
   &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
 &lt;/BootstrapTable&gt;
+          </code></pre>
+        </div></br>
+        <div>
+          <h1 id="fly">Update table data on fly</h1>
+          react-bootstrap-table support the client can update data on fly through a TableDataSet object.</br>
+          See the example in the following or reference <a href="./docs.html#about-tabledataset">About TableDataSet</a>.</br>
+          </br>
+          <div>
+            <button id="clickme">Click me!</button>
+          </div>
+          <div id="fly-div"></div>
+          <pre><code>
+var ReactBsTable  = require('react-bootstrap-table');
+var BootstrapTable = ReactBsTable.BootstrapTable;
+var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+var TableDataSet = ReactBsTable.TableDataSet; //import TableDataSet
+
+var dataSet = new TableDataSet(products);
+&lt;BootstrapTable data={dataSet}&gt;
+  &lt;TableHeaderColumn dataField="id" isKey={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+// ...
+// in any time, you want to update or reset data on table, you can:
+dataSet.setData(newProdcuts);
+// the table data will be updated auto.
           </code></pre>
         </div></br>
       </div>

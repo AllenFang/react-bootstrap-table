@@ -2,6 +2,7 @@ var React = require('react');
 var ReactBsTable  = require('react-bootstrap-table');
 var BootstrapTable = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+var TableDataSet = ReactBsTable.TableDataSet;
 
 var products = [
 {
@@ -33,7 +34,7 @@ var products = [
 
 var product1 = [], product2 = [],product3 = [],product4 = [],
 product5 = [],product6 = [],product7 = [],product8 = [],
-product9 = [],product10 = [],product11 = [],product12 = [];
+product9 = [],product10 = [],product11 = [],product12 = [],product13 = [];
 
 for(var i=1;i<=6;i++){
   var p = {
@@ -44,7 +45,7 @@ for(var i=1;i<=6;i++){
 
   product1.push(p);product2.push(p);product4.push(p);product5.push(p);
   product6.push(p);
-  product10.push(p);product11.push(p);product3.push(p);product12.push(p);
+  product10.push(p);product11.push(p);product3.push(p);product12.push(p);product13.push(p);
 
 
   product7.push({
@@ -230,3 +231,28 @@ React.render(
   </BootstrapTable>,
 	document.getElementById("search-div")
 );
+
+var dataSet = new TableDataSet(product13);
+
+React.render(
+  <BootstrapTable data={dataSet}>
+      <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="price" editable={false}>Product Price</TableHeaderColumn>
+  </BootstrapTable>,
+	document.getElementById("fly-div")
+);
+
+var btn = document.getElementById('clickme');
+btn.onclick = function(){
+  var newproducts = [];
+  for(var i=1;i<=12;i++){
+    var p = {
+      id: i,
+      name: "Product"+i,
+      price: 100+i
+    };
+    newproducts.push(p);
+    dataSet.setData(newproducts);
+  }
+};
