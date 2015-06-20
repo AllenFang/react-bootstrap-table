@@ -2080,9 +2080,10 @@ var ToolBar = (function (_React$Component) {
     },
     render: {
       value: function render() {
+        var modalClassName = "bs-table-modal-sm" + new Date().getTime();
         var insertBtn = this.props.enableInsert ? React.createElement(
           "button",
-          { type: "button", className: "btn btn-default", "data-toggle": "modal", "data-target": ".bs-example-modal-sm" },
+          { type: "button", className: "btn btn-default", "data-toggle": "modal", "data-target": "." + modalClassName },
           "New"
         ) : null;
 
@@ -2093,7 +2094,7 @@ var ToolBar = (function (_React$Component) {
           "Delete"
         ) : null;
         var searchTextInput = this.props.enableSearch ? React.createElement("input", { type: "text", placeholder: "Search", onKeyUp: this.handleKeyUp.bind(this) }) : null;
-        var modal = this.renderInsertRowModal();
+        var modal = this.props.enableInsert ? this.renderInsertRowModal(modalClassName) : null;
         var warningStyle = {
           display: "none",
           marginBottom: 0
@@ -2132,7 +2133,7 @@ var ToolBar = (function (_React$Component) {
       }
     },
     renderInsertRowModal: {
-      value: function renderInsertRowModal() {
+      value: function renderInsertRowModal(modalClassName) {
 
         var inputField = this.props.columns.map(function (column, i) {
           return React.createElement(
@@ -2146,10 +2147,10 @@ var ToolBar = (function (_React$Component) {
             React.createElement("input", { ref: column.field + i, type: "text", className: "form-control", placeholder: column.name })
           );
         });
-
+        var modalClass = classSet("modal", "fade", modalClassName);
         return React.createElement(
           "div",
-          { className: "modal fade bs-example-modal-sm", tabIndex: "-1", role: "dialog", "aria-hidden": "true" },
+          { className: modalClass, tabIndex: "-1", role: "dialog", "aria-hidden": "true" },
           React.createElement(
             "div",
             { className: "modal-dialog modal-sm" },
