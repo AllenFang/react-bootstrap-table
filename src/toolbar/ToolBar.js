@@ -38,8 +38,9 @@ class ToolBar extends React.Component{
   }
 
   render(){
+    var modalClassName = "bs-table-modal-sm"+new Date().getTime();
     var insertBtn = this.props.enableInsert?
-          <button type="button" className="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-sm">
+          <button type="button" className="btn btn-default" data-toggle="modal" data-target={'.'+modalClassName}>
             New</button>:null;
 
     var deleteBtn = this.props.enableDelete?
@@ -48,7 +49,7 @@ class ToolBar extends React.Component{
             Delete
           </button>:null;
     var searchTextInput = this.props.enableSearch?<input type='text' placeholder='Search' onKeyUp={this.handleKeyUp.bind(this)}/>:null;
-    var modal = this.renderInsertRowModal();
+    var modal = this.props.enableInsert?this.renderInsertRowModal(modalClassName):null;
     var warningStyle = {
       display: "none",
       marginBottom: 0
@@ -68,7 +69,7 @@ class ToolBar extends React.Component{
     )
   }
 
-  renderInsertRowModal(){
+  renderInsertRowModal(modalClassName){
 
     var inputField = this.props.columns.map(function(column, i){
       return(
@@ -78,9 +79,9 @@ class ToolBar extends React.Component{
         </div>
       );
     });
-
+    var modalClass = classSet("modal", "fade", modalClassName);
     return (
-      <div className="modal fade bs-example-modal-sm" tabIndex="-1" role="dialog" aria-hidden="true">
+      <div className={modalClass} tabIndex="-1" role="dialog" aria-hidden="true">
         <div className="modal-dialog modal-sm">
           <div className="modal-content">
             <div className="modal-header">
