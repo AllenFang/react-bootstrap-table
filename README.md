@@ -119,7 +119,7 @@ React.render(
 
 You can reference [here](http://allenfang.github.io/react-bootstrap-table/docs.html) on web site
 
-The attributes in BootstrapTable:</br>
+####The attributes in &lt;BootstrapTable&gt;:</br>
 Use ```data``` to specify the data that you want to display on table.</br>
 Use ```height``` to set the table height, default is 100%.</br>
 Use ```striped``` to set table be a striped columns. Like bootstrap table class ```.table-striped```.</br>
@@ -142,9 +142,32 @@ Use ```cellEdit``` to enable the cell editing on table, it accept a object which
 - ```blurToSave```(optional): if true, when mouse blur on input field will trigger a save on cell, default is false.</br>
 - ```afterSaveCell```(optional): accept a callback function, after save cell, this function will be called.</br>
 
-The attributes in TableHeaderColumn:</br>
+####The attributes in &lt;TableHeaderColumn&gt;:</br>
 Use ```isKey``` to specify which column is unique.</br>
 Use ```dataField``` to specify which column you want to show on this column.</br>
 Use ```dataAlign``` to set align in column. Available value is left, center, right, start and end.</br>
 Use ```dataSort``` to enable the sorting in column. Default value is false(disabled).</br>
 Use ```dataFormat``` to customize this column.Must give it as a function.</br>
+
+#### About TableDataSet
+After v0.8.0, rect-bootstrap-table provide the ability of updating table data on fly. How to do it?
+
+1. Import TableDataSet
+```
+var ReactBsTable  = require('react-bootstrap-table');
+var TableDataSet = ReactBsTable.TableDataSet; //import TableDataSet
+```
+2. Create a TableDataSet object with you data.
+```
+var dataSet = new TableDataSet(products);
+```
+3. Pass this object to data
+```
+<BootstrapTable data={dataSet}>
+   ...
+</BootstrapTable>
+```
+4. If you want to reset or update table data in any time, you can:
+```
+dataSet.setData(newproducts);
+```
