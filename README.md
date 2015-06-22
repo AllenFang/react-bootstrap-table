@@ -152,22 +152,22 @@ Use ```dataFormat``` to customize this column.Must give it as a function.</br>
 #### About TableDataSet
 After v0.8.0, rect-bootstrap-table provide the ability of updating table data on fly. How to do it?
 
-1. Import TableDataSet
+- Import TableDataSet
 ```
 var ReactBsTable  = require('react-bootstrap-table');
 var TableDataSet = ReactBsTable.TableDataSet; //import TableDataSet
 ```
-2. Create a TableDataSet object with you data.
+- Create a TableDataSet object with you data.
 ```
 var dataSet = new TableDataSet(products);
 ```
-3. Pass this object to data
+- Pass this object to data
 ```
 <BootstrapTable data={dataSet}>
    ...
 </BootstrapTable>
 ```
-4. If you want to reset or update table data in any time, you can:
+- If you want to reset or update table data in any time, you can:
 ```
 dataSet.setData(newproducts);
 ```
