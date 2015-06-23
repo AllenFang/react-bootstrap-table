@@ -61,7 +61,7 @@ class TableBody extends React.Component{
                            key={i}
                            cellEdit={this.props.cellEdit}
                            onEdit={this.handleEditCell.bind(this)}>
-                formattedValue
+                {formattedValue}
               </TableColumn>
             )
           } else{
