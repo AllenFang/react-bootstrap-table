@@ -53,12 +53,15 @@ class TableBody extends React.Component{
         } else{
           if(typeof column.format !== "undefined"){
             var formattedValue = column.format(fieldValue, data);
+            if (!React.addons.TestUtils.isElement(formattedValue)) {
+              formattedValue = <div dangerouslySetInnerHTML={{__html: formattedValue}}></div>;
+            }
             return(
               <TableColumn dataAlign={column.align}
                            key={i}
                            cellEdit={this.props.cellEdit}
                            onEdit={this.handleEditCell.bind(this)}>
-                <div dangerouslySetInnerHTML={{__html: formattedValue}}></div>
+                {formattedValue}
               </TableColumn>
             )
           } else{
