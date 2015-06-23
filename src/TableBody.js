@@ -57,7 +57,8 @@ class TableBody extends React.Component{
               <TableColumn dataAlign={column.align}
                            key={i}
                            cellEdit={this.props.cellEdit}
-                           onEdit={this.handleEditCell.bind(this)}>
+                           onEdit={this.handleEditCell.bind(this)}
+                           hidden={column.hidden}>
                 <div dangerouslySetInnerHTML={{__html: formattedValue}}></div>
               </TableColumn>
             )
@@ -66,6 +67,7 @@ class TableBody extends React.Component{
               <TableColumn dataAlign={column.align}
                            key={i}
                            cellEdit={this.props.cellEdit}
+                           hidden={column.hidden}
                            onEdit={this.handleEditCell.bind(this)}>{fieldValue}</TableColumn>
             )
           }
@@ -103,7 +105,8 @@ class TableBody extends React.Component{
       selectRowHeader = (<th style={style} key={-1}></th>);
     }
     var theader = this.props.columns.map(function(column, i){
-      return (<th key={i}></th>);
+      let style={display: column.hidden?"none":null};
+      return (<th style={style} key={i}></th>);
     });
 
     return(
