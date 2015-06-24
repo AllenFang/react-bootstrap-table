@@ -99,6 +99,10 @@
             <a href="#fly">Update Table</a>
               <ul class="nav"></ul>
           </li>
+          <li>
+            <a href="#hidden">Column Hidden</a>
+              <ul class="nav"></ul>
+          </li>
         </ul>
       </div>
       <div class="col-xs-12 col-md-8">
@@ -356,6 +360,19 @@ var dataSet = new TableDataSet(products);
 // in any time, you want to update or reset data on table, you can:
 dataSet.setData(newProdcuts);
 // the table data will be updated auto.
+          </code></pre>
+        </div></br>
+        <div>
+          <h1 id="hidden">Column Hidden</h1>
+          Use <code>hideen</code> as attribute in <code>TableHeaderColumn</code> to enable the column hidden.</br>
+          </br>
+          <div id="hidden-div"></div>
+          <pre><code>
+&lt;BootstrapTable data={products}&gt;
+  &lt;TableHeaderColumn dataField="id" isKey={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="name" hidden={true}&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
           </code></pre>
         </div></br>
       </div>

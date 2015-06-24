@@ -35,7 +35,7 @@ var products = [
 
 var product1 = [], product2 = [],product3 = [],product4 = [],
 product5 = [],product6 = [],product7 = [],product8 = [],
-product9 = [],product10 = [],product11 = [],product12 = [],product13 = [];
+product9 = [],product10 = [],product11 = [],product12 = [],product13 = [],product14 = [];
 
 for(var i=1;i<=6;i++){
   var p = {
@@ -47,7 +47,7 @@ for(var i=1;i<=6;i++){
   product1.push(p);product2.push(p);product4.push(p);product5.push(p);
   product6.push(p);
   product10.push(p);product11.push(p);product3.push(p);product12.push(p);product13.push(p);
-
+  product14.push(p)
 
   product7.push({
     id: i,
@@ -259,6 +259,16 @@ btn.onclick = function(){
 };
 
 
+React.render(
+  React.createElement(BootstrapTable, {data: product14}, 
+      React.createElement(TableHeaderColumn, {dataField: "id", isKey: true}, "Product ID"), 
+      React.createElement(TableHeaderColumn, {dataField: "name", hidden: true}, "Product Name"), 
+      React.createElement(TableHeaderColumn, {dataField: "price"}, "Product Price")
+  ),
+	document.getElementById("hidden-div")
+);
+
+
 
 },{"react":172,"react-bootstrap-table":12}],2:[function(require,module,exports){
 "use strict";
@@ -381,6 +391,7 @@ var BootstrapTable = (function (_React$Component) {
             sort: column.props.dataSort,
             format: column.props.dataFormat,
             editable: column.props.editable,
+            hidden: column.props.hidden,
             index: i
           };
         }, this);
@@ -808,7 +819,8 @@ var TableBody = (function (_React$Component) {
                   { dataAlign: column.align,
                     key: i,
                     cellEdit: this.props.cellEdit,
-                    onEdit: this.handleEditCell.bind(this) },
+                    onEdit: this.handleEditCell.bind(this),
+                    hidden: column.hidden },
                   React.createElement("div", { dangerouslySetInnerHTML: { __html: formattedValue } })
                 );
               } else {
@@ -817,6 +829,7 @@ var TableBody = (function (_React$Component) {
                   { dataAlign: column.align,
                     key: i,
                     cellEdit: this.props.cellEdit,
+                    hidden: column.hidden,
                     onEdit: this.handleEditCell.bind(this) },
                   fieldValue
                 );
@@ -861,7 +874,8 @@ var TableBody = (function (_React$Component) {
           selectRowHeader = React.createElement("th", { style: style, key: -1 });
         }
         var theader = this.props.columns.map(function (column, i) {
-          return React.createElement("th", { key: i });
+          var style = { display: column.hidden ? "none" : null };
+          return React.createElement("th", { style: style, key: i });
         });
 
         return React.createElement(
@@ -1025,7 +1039,8 @@ var TableColumn = (function (_React$Component) {
     render: {
       value: function render() {
         var tdStyle = {
-          textAlign: this.props.dataAlign
+          textAlign: this.props.dataAlign,
+          display: this.props.hidden ? "none" : null
         };
 
         var opts = {};
@@ -1049,10 +1064,13 @@ var TableColumn = (function (_React$Component) {
 })(React.Component);
 
 TableColumn.propTypes = {
-  dataAlign: React.PropTypes.string };
+  dataAlign: React.PropTypes.string,
+  hidden: React.PropTypes.bool
+};
 
 TableColumn.defaultProps = {
-  dataAlign: "left"
+  dataAlign: "left",
+  hidden: false
 };
 module.exports = TableColumn;
 },{"./Const":3,"react":172}],7:[function(require,module,exports){
@@ -1185,9 +1203,12 @@ var TableFilter = (function (_React$Component) {
           );
         }
         var filterField = this.props.columns.map(function (column) {
+          var thStyle = {
+            display: column.hidden ? "none" : null
+          };
           return React.createElement(
             "th",
-            null,
+            { style: thStyle },
             React.createElement(
               "div",
               { className: "th-inner table-header-column" },
@@ -1362,7 +1383,8 @@ var TableHeaderColumn = (function (_React$Component) {
     render: {
       value: function render() {
         var thStyle = {
-          textAlign: this.props.dataAlign
+          textAlign: this.props.dataAlign,
+          display: this.props.hidden ? "none" : null
         };
 
         var classes = classSet(this.props.dataSort ? "sort-column" : "");
@@ -1403,7 +1425,8 @@ TableHeaderColumn.propTypes = {
   clearSortCaret: React.PropTypes.func,
   dataFormat: React.PropTypes.func,
   isKey: React.PropTypes.bool,
-  editable: React.PropTypes.bool
+  editable: React.PropTypes.bool,
+  hidden: React.PropTypes.bool
 };
 
 TableHeaderColumn.defaultProps = {
@@ -1412,7 +1435,8 @@ TableHeaderColumn.defaultProps = {
   dataFormat: undefined,
   isKey: false,
   editable: true,
-  clearSortCaret: undefined
+  clearSortCaret: undefined,
+  hidden: false
 };
 
 module.exports = TableHeaderColumn;

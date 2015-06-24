@@ -157,6 +157,7 @@ var BootstrapTable = (function (_React$Component) {
             sort: column.props.dataSort,
             format: column.props.dataFormat,
             editable: column.props.editable,
+            hidden: column.props.hidden,
             index: i
           };
         }, this);
@@ -584,7 +585,8 @@ var TableBody = (function (_React$Component) {
                   { dataAlign: column.align,
                     key: i,
                     cellEdit: this.props.cellEdit,
-                    onEdit: this.handleEditCell.bind(this) },
+                    onEdit: this.handleEditCell.bind(this),
+                    hidden: column.hidden },
                   React.createElement("div", { dangerouslySetInnerHTML: { __html: formattedValue } })
                 );
               } else {
@@ -593,6 +595,7 @@ var TableBody = (function (_React$Component) {
                   { dataAlign: column.align,
                     key: i,
                     cellEdit: this.props.cellEdit,
+                    hidden: column.hidden,
                     onEdit: this.handleEditCell.bind(this) },
                   fieldValue
                 );
@@ -637,7 +640,8 @@ var TableBody = (function (_React$Component) {
           selectRowHeader = React.createElement("th", { style: style, key: -1 });
         }
         var theader = this.props.columns.map(function (column, i) {
-          return React.createElement("th", { key: i });
+          var style = { display: column.hidden ? "none" : null };
+          return React.createElement("th", { style: style, key: i });
         });
 
         return React.createElement(
@@ -801,7 +805,8 @@ var TableColumn = (function (_React$Component) {
     render: {
       value: function render() {
         var tdStyle = {
-          textAlign: this.props.dataAlign
+          textAlign: this.props.dataAlign,
+          display: this.props.hidden ? "none" : null
         };
 
         var opts = {};
@@ -825,10 +830,13 @@ var TableColumn = (function (_React$Component) {
 })(React.Component);
 
 TableColumn.propTypes = {
-  dataAlign: React.PropTypes.string };
+  dataAlign: React.PropTypes.string,
+  hidden: React.PropTypes.bool
+};
 
 TableColumn.defaultProps = {
-  dataAlign: "left"
+  dataAlign: "left",
+  hidden: false
 };
 module.exports = TableColumn;
 },{"./Const":3,"react":172}],7:[function(require,module,exports){
@@ -961,9 +969,12 @@ var TableFilter = (function (_React$Component) {
           );
         }
         var filterField = this.props.columns.map(function (column) {
+          var thStyle = {
+            display: column.hidden ? "none" : null
+          };
           return React.createElement(
             "th",
-            null,
+            { style: thStyle },
             React.createElement(
               "div",
               { className: "th-inner table-header-column" },
@@ -1138,7 +1149,8 @@ var TableHeaderColumn = (function (_React$Component) {
     render: {
       value: function render() {
         var thStyle = {
-          textAlign: this.props.dataAlign
+          textAlign: this.props.dataAlign,
+          display: this.props.hidden ? "none" : null
         };
 
         var classes = classSet(this.props.dataSort ? "sort-column" : "");
@@ -1179,7 +1191,8 @@ TableHeaderColumn.propTypes = {
   clearSortCaret: React.PropTypes.func,
   dataFormat: React.PropTypes.func,
   isKey: React.PropTypes.bool,
-  editable: React.PropTypes.bool
+  editable: React.PropTypes.bool,
+  hidden: React.PropTypes.bool
 };
 
 TableHeaderColumn.defaultProps = {
@@ -1188,7 +1201,8 @@ TableHeaderColumn.defaultProps = {
   dataFormat: undefined,
   isKey: false,
   editable: true,
-  clearSortCaret: undefined
+  clearSortCaret: undefined,
+  hidden: false
 };
 
 module.exports = TableHeaderColumn;
@@ -1856,9 +1870,10 @@ var ToolBar = (function (_React$Component) {
     },
     render: {
       value: function render() {
+        var modalClassName = "bs-table-modal-sm" + new Date().getTime();
         var insertBtn = this.props.enableInsert ? React.createElement(
           "button",
-          { type: "button", className: "btn btn-default", "data-toggle": "modal", "data-target": ".bs-example-modal-sm" },
+          { type: "button", className: "btn btn-default", "data-toggle": "modal", "data-target": "." + modalClassName },
           "New"
         ) : null;
 
@@ -1869,7 +1884,7 @@ var ToolBar = (function (_React$Component) {
           "Delete"
         ) : null;
         var searchTextInput = this.props.enableSearch ? React.createElement("input", { type: "text", placeholder: "Search", onKeyUp: this.handleKeyUp.bind(this) }) : null;
-        var modal = this.renderInsertRowModal();
+        var modal = this.props.enableInsert ? this.renderInsertRowModal(modalClassName) : null;
         var warningStyle = {
           display: "none",
           marginBottom: 0
@@ -1908,7 +1923,7 @@ var ToolBar = (function (_React$Component) {
       }
     },
     renderInsertRowModal: {
-      value: function renderInsertRowModal() {
+      value: function renderInsertRowModal(modalClassName) {
 
         var inputField = this.props.columns.map(function (column, i) {
           return React.createElement(
@@ -1922,10 +1937,10 @@ var ToolBar = (function (_React$Component) {
             React.createElement("input", { ref: column.field + i, type: "text", className: "form-control", placeholder: column.name })
           );
         });
-
+        var modalClass = classSet("modal", "fade", modalClassName);
         return React.createElement(
           "div",
-          { className: "modal fade bs-example-modal-sm", tabIndex: "-1", role: "dialog", "aria-hidden": "true" },
+          { className: modalClass, tabIndex: "-1", role: "dialog", "aria-hidden": "true" },
           React.createElement(
             "div",
             { className: "modal-dialog modal-sm" },
