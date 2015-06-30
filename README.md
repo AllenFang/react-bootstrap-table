@@ -5,7 +5,8 @@ As you know, the basic bootstrap table function like striped, bordered, hover an
 
 In addition, reactbsTable support these features:
 
-* colum align
+* column align
+* column hidden
 * scrolling table
 * data sort
 * cell format
@@ -19,6 +20,8 @@ In addition, reactbsTable support these features:
 You can see the [home page](http://allenfang.github.io/react-bootstrap-table/index.html). and example is on [here](http://allenfang.github.io/react-bootstrap-table/example.html).
 
 ### Release Notes
+v0.8.2 support hidden column.
+
 v0.8.0 Update data on the fly.
 
 v0.7.2 react-bootstrap-table supported search on table.
@@ -148,6 +151,7 @@ Use ```dataField``` to specify which column you want to show on this column.</br
 Use ```dataAlign``` to set align in column. Available value is left, center, right, start and end.</br>
 Use ```dataSort``` to enable the sorting in column. Default value is false(disabled).</br>
 Use ```dataFormat``` to customize this column.Must give it as a function.</br>
+Use ```hidden``` to enable hidden column.</br>
 
 #### About TableDataSet
 After v0.8.0, rect-bootstrap-table provide the ability of updating table data on fly. How to do it?

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react/addons';
 import Const from './Const';
 import TableRow from './TableRow';
 import TableColumn from './TableColumn';
@@ -53,6 +53,7 @@ class TableBody extends React.Component{
         } else{
           if(typeof column.format !== "undefined"){
             var formattedValue = column.format(fieldValue, data);
+            console.log("@@");
             if (!React.addons.TestUtils.isElement(formattedValue)) {
               formattedValue = <div dangerouslySetInnerHTML={{__html: formattedValue}}></div>;
             }
@@ -69,6 +70,7 @@ class TableBody extends React.Component{
               <TableColumn dataAlign={column.align}
                            key={i}
                            cellEdit={this.props.cellEdit}
+                           hidden={column.hidden}
                            onEdit={this.handleEditCell.bind(this)}>{fieldValue}</TableColumn>
             )
           }
@@ -106,7 +108,8 @@ class TableBody extends React.Component{
       selectRowHeader = (<th style={style} key={-1}></th>);
     }
     var theader = this.props.columns.map(function(column, i){
-      return (<th key={i}></th>);
+      let style={display: column.hidden?"none":null};
+      return (<th style={style} key={i}></th>);
     });
 
     return(

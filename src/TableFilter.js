@@ -34,8 +34,11 @@ class TableFilter extends React.Component{
       selectRowHeader = (<th style={style} key={-1}>Filter</th>);
     }
     var filterField = this.props.columns.map(function(column){
+      var thStyle = {
+        display: column.hidden?"none":null
+      };
       return(
-        <th>
+        <th style={thStyle}>
           <div className="th-inner table-header-column">
             <input type="text" placeholder={column.name} name={column.name} onKeyUp={this.handleKeyUp.bind(this)}/>
           </div>
