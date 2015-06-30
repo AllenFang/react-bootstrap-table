@@ -53,7 +53,6 @@ class TableBody extends React.Component{
         } else{
           if(typeof column.format !== "undefined"){
             var formattedValue = column.format(fieldValue, data);
-            console.log("@@");
             if (!React.addons.TestUtils.isElement(formattedValue)) {
               formattedValue = <div dangerouslySetInnerHTML={{__html: formattedValue}}></div>;
             }
