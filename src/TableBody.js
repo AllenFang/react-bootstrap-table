@@ -13,11 +13,19 @@ class TableBody extends React.Component{
       currEditCell: null,
       selectedRowKey: []
     };
+    this._attachRowSelectFunc();
+    this.editing = false;
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    this._attachRowSelectFunc();
+  }
+
+  _attachRowSelectFunc(){
     if(this.props.selectRow){
       this.props.selectRow.__onSelect__ = this.handleSelectRow.bind(this);
       this.props.selectRow.__onSelectAll__ = this.handleSelectAllRow.bind(this);
     }
-    this.editing = false;
   }
 
   render(){
