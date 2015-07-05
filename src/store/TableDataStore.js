@@ -133,7 +133,7 @@ export class TableDataStore{
       this.filteredData = this.data.filter(function(row){
         let valid = true;
         for(var key in filterObj){
-          if(row[key].toString().indexOf(filterObj[key]) == -1){
+          if(row[key].toString().toLowerCase().indexOf(filterObj[key].toLowerCase()) == -1){
             valid = false;
             break;
           }
@@ -152,7 +152,7 @@ export class TableDataStore{
       this.filteredData = this.data.filter(function(row){
         let valid = false;
         for(var key in row){
-          if(row[key].toString().indexOf(searchText) !== -1){
+          if(row[key].toString().toLowerCase().indexOf(searchText.toLowerCase()) !== -1){
             valid = true;
             break;
           }

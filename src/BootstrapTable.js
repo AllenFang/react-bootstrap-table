@@ -227,7 +227,6 @@ class BootstrapTable extends React.Component{
   }
 
   handleSearch(searchText){
-    console.log(searchText);
     this.store.search(searchText);
     let result;
     if(this.props.pagination){

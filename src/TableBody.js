@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react/addons';
 import Const from './Const';
 import TableRow from './TableRow';
 import TableColumn from './TableColumn';
@@ -61,13 +61,15 @@ class TableBody extends React.Component{
         } else{
           if(typeof column.format !== "undefined"){
             var formattedValue = column.format(fieldValue, data);
+            if (!React.addons.TestUtils.isElement(formattedValue)) {
+              formattedValue = <div dangerouslySetInnerHTML={{__html: formattedValue}}></div>;
+            }
             return(
               <TableColumn dataAlign={column.align}
                            key={i}
                            cellEdit={this.props.cellEdit}
-                           onEdit={this.handleEditCell.bind(this)}
-                           hidden={column.hidden}>
-                <div dangerouslySetInnerHTML={{__html: formattedValue}}></div>
+                           onEdit={this.handleEditCell.bind(this)}>
+                {formattedValue}
               </TableColumn>
             )
           } else{
