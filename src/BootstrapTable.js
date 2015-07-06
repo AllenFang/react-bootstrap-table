@@ -60,17 +60,13 @@ class BootstrapTable extends React.Component{
     return result;
   }
 
-  // componentWillMount(){
-  //   // if(this.props.pagination){
-  //   //   // this.handlePaginationData(1, Const.SIZE_PER_PAGE);
-  //   //   this.store.page(1, Const.SIZE_PER_PAGE).get();
-  //   // } else{
-  //   //   this.store.get();
-  //   // }
-  // }
-
   componentDidMount(){
     this._adjustHeaderWidth();
+    window.addEventListener('resize', this._adjustHeaderWidth.bind(this));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._adjustHeaderWidth.bind(this));
   }
 
   componentDidUpdate(){
