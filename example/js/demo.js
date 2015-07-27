@@ -33,13 +33,14 @@ function onAfterSaveCell(row, cellName, cellValue){
 }
 
 var selectRowProp = {
-  mode: "checkbox",
+  mode: "radio",
   clickToSelect: true,
+  selected: [],
   bgColor: "rgb(238, 193, 213)",
   onSelect: onRowSelect,
   onSelectAll: onSelectAll
 };
-
+``
 var cellEditProp = {
   mode: "click",
   blurToSave: true,

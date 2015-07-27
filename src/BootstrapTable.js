@@ -108,7 +108,6 @@ class BootstrapTable extends React.Component{
             keyField={this.store.getKeyField()}
             condensed={this.props.condensed}
             selectRow={this.props.selectRow}
-            selected={this.props.selected}
             cellEdit={this.props.cellEdit}/>
           {tableFilter}
         </div>
@@ -304,6 +303,7 @@ BootstrapTable.propTypes = {
   selectRow: React.PropTypes.shape({
     mode: React.PropTypes.string,
     bgColor: React.PropTypes.string,
+    selected: React.PropTypes.array,
     onSelect: React.PropTypes.func,
     onSelectAll: React.PropTypes.func,
     clickToSelect: React.PropTypes.bool
@@ -316,8 +316,7 @@ BootstrapTable.propTypes = {
   insertRow: React.PropTypes.bool,
   deleteRow: React.PropTypes.bool,
   search: React.PropTypes.bool,
-  columnFilter: React.PropTypes.bool,
-  selected: React.PropTypes.array
+  columnFilter: React.PropTypes.bool
 };
 BootstrapTable.defaultProps = {
   height: "100%",
@@ -328,6 +327,7 @@ BootstrapTable.defaultProps = {
   selectRow: {
     mode: Const.ROW_SELECT_NONE,
     bgColor: Const.ROW_SELECT_BG_COLOR,
+    selected: [],
     onSelect: undefined,
     onSelectAll: undefined,
     clickToSelect: false

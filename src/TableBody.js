@@ -9,9 +9,14 @@ class TableBody extends React.Component{
 
   constructor(props) {
 		super(props);
+    var selected = props.selectRow.selected;
+    if(props.selectRow.mode === Const.ROW_SELECT_SINGLE){
+      //if row selection is single, just pick the first item in 'selected'
+      selected = props.selectRow.selected.length > 0?[props.selectRow.selected[0]]:[];
+    }
     this.state = {
       currEditCell: null,
-      selectedRowKey: props.selected || []
+      selectedRowKey: selected
     };
     this._attachRowSelectFunc();
     this.editing = false;
@@ -209,7 +214,6 @@ TableBody.propTypes = {
   striped: React.PropTypes.bool,
   hover: React.PropTypes.bool,
   condensed: React.PropTypes.bool,
-  keyField: React.PropTypes.string,
-  selected: React.PropTypes.array
+  keyField: React.PropTypes.string
 };
 export default TableBody;
