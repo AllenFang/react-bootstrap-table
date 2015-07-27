@@ -5,6 +5,7 @@ import classSet from 'classnames';
 class TableFilter extends React.Component{
 
   constructor(props) {
+    super(props);
     this.filterObj = {};
   }
 

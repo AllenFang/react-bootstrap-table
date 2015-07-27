@@ -14,6 +14,7 @@ function _sort(arr, sortField, order){
 
 export class TableDataSet extends EventEmitter{
   constructor(data){
+    super(data);
     this.data = data;
   }
 

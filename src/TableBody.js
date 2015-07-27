@@ -11,7 +11,7 @@ class TableBody extends React.Component{
 		super(props);
     this.state = {
       currEditCell: null,
-      selectedRowKey: []
+      selectedRowKey: props.selected || []
     };
     this._attachRowSelectFunc();
     this.editing = false;
@@ -209,6 +209,7 @@ TableBody.propTypes = {
   striped: React.PropTypes.bool,
   hover: React.PropTypes.bool,
   condensed: React.PropTypes.bool,
-  keyField: React.PropTypes.string
+  keyField: React.PropTypes.string,
+  selected: React.PropTypes.array
 };
 export default TableBody;
