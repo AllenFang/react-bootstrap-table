@@ -145,6 +145,11 @@ Use ```cellEdit``` to enable the cell editing on table, it accept a object which
 - ```blurToSave```(optional): if true, when mouse blur on input field will trigger a save on cell, default is false.</br>
 - ```afterSaveCell```(optional): accept a callback function, after save cell, this function will be called.</br>
 
+Use ```options``` to set other settings for react-bootstrap-table, this prop accept an object which include these properties:<br/>
+- ```sortName```: Assign a default sort field by this property</br>
+- ```sortOrder```(asc/desc): Assign a default sort order</br>
+
+
 ####The attributes in &lt;TableHeaderColumn&gt;:</br>
 Use ```isKey``` to specify which column is unique.</br>
 Use ```dataField``` to specify which column you want to show on this column.</br>

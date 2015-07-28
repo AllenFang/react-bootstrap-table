@@ -2,6 +2,7 @@ import Const from "../Const";
 var EventEmitter = require('events').EventEmitter;
 
 function _sort(arr, sortField, order){
+  order = order.toLowerCase();
   arr.sort(function(a,b){
     if(order == Const.SORT_ASC){
       return a[sortField] > b[sortField]?-1: ((a[sortField] < b[sortField]) ? 1 : 0);

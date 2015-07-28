@@ -1,5 +1,6 @@
 import React from 'react';
 import Const from './Const';
+import Util from './util';
 import classSet from 'classnames';
 import SelectRowHeaderColumn from './SelectRowHeaderColumn';
 
@@ -19,6 +20,21 @@ class TableHeader extends React.Component{
       }
     }
     this.props.onSort(order, sortField);
+  }
+
+  componentDidMount(){
+    if(this.props.sortName !== null){
+      //default sorting
+      this.clearSortCaret(this.props.sortOrder, this.props.sortName);
+      var row = this.refs.header.getDOMNode();
+      for(var i=0;i<row.childElementCount;i++){
+        var column = row.childNodes[i].childNodes[0];
+        if(column.getAttribute('data-field') === this.props.sortName){
+          column.appendChild(Util.renderSortCaret(this.props.sortOrder));
+          break;
+        }
+      }
+    }
   }
 
   componentDidUpdate(prevProps, prevState){
@@ -62,7 +78,9 @@ class TableHeader extends React.Component{
 TableHeader.propTypes = {
   rowSelectType: React.PropTypes.string,
   onSort: React.PropTypes.func,
-  onSelectAllRow: React.PropTypes.func
+  onSelectAllRow: React.PropTypes.func,
+  sortName: React.PropTypes.string,
+  sortOrder: React.PropTypes.string
 };
 
 TableHeader.defaultProps = {

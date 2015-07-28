@@ -1,6 +1,7 @@
 import React from 'react';
 import classSet from 'classnames';
 import Const from './Const';
+import Util from './util';
 
 class TableHeaderColumn extends React.Component{
 
@@ -8,9 +9,14 @@ class TableHeaderColumn extends React.Component{
 
   handleColumnClick(e){
     if(!this.props.dataSort)return;
+    var dom = this.refs.innerDiv.getDOMNode();
     this.order = this.order == Const.SORT_DESC?Const.SORT_ASC:Const.SORT_DESC;
     this.props.clearSortCaret(this.order, this.props.dataField);
-    this.refs.innerDiv.getDOMNode().appendChild(this.renderSortCaret());
+    dom.appendChild(Util.renderSortCaret(this.order));
+  }
+
+  componentDidMount(){
+    this.refs.innerDiv.getDOMNode().setAttribute("data-field", this.props.dataField);
   }
 
   render(){
@@ -27,17 +33,6 @@ class TableHeaderColumn extends React.Component{
           onClick={this.handleColumnClick.bind(this)}>{this.props.children}</div>
       </th>
     )
-  }
-
-  renderSortCaret(){
-    var wrap = document.createElement("span");
-    wrap.className = "order";
-    if(this.order == Const.SORT_ASC) wrap.className += " dropup";
-    var inner = document.createElement("span");
-    inner.className = "caret";
-    inner.style.margin = "10px 5px";
-    wrap.appendChild(inner);
-    return wrap;
   }
 }
 TableHeaderColumn.propTypes = {

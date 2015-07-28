@@ -35,7 +35,7 @@ function onAfterSaveCell(row, cellName, cellValue){
 var selectRowProp = {
   mode: "radio",
   clickToSelect: true,
-  selected: [],
+  selected: [], //default select
   bgColor: "rgb(238, 193, 213)",
   onSelect: onRowSelect,
   onSelectAll: onSelectAll
@@ -45,16 +45,21 @@ var cellEditProp = {
   mode: "click",
   blurToSave: true,
   afterSaveCell: onAfterSaveCell
-}
+};
+
+var options = {
+  sortName: "name",  //default sort column name
+  sortOrder: "desc"  //default sort order
+};
 
 
 function priceFormatter(cell, row){
   return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
 }
 
-React.render(   //data={dataSet}
+React.render(
   <BootstrapTable data={products} striped={true} hover={true} pagination={true} selectRow={selectRowProp} cellEdit={cellEditProp}
-                  insertRow={true} deleteRow={true} search={true} columnFilter={true}>
+                  insertRow={true} deleteRow={true} search={true} columnFilter={true} options={options}>
       <TableHeaderColumn dataField="id" dataAlign="center" dataSort={true} isKey={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price" dataFormat={priceFormatter} editable={false}>Product Price</TableHeaderColumn>
