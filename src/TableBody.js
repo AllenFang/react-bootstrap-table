@@ -10,7 +10,7 @@ class TableBody extends React.Component{
   constructor(props) {
 		super(props);
     var selected = props.selectRow.selected || [];
-    if(props.selectRow.mode === Const.ROW_SELECT_SINGLE){
+    if(props.selectRow.mode === Const.ROW_SELECT_SINGLE && props.selectRow.selected){
       //if row selection is single, just pick the first item in 'selected'
       selected = props.selectRow.selected.length > 0?[props.selectRow.selected[0]]:[];
     }
