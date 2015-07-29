@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-table",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "It' a react table for bootstrap",
   "main": "./lib/index.js",
   "repository": {
@@ -43,6 +43,8 @@
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/preprocessor.js",
-    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"]
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react"
+    ]
   }
 }
