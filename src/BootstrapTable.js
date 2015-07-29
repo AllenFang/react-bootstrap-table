@@ -71,6 +71,8 @@ class BootstrapTable extends React.Component{
 
   componentDidUpdate(){
     this._adjustHeaderWidth();
+    if(this.props.options.afterTableComplete)
+      this.props.options.afterTableComplete();
   }
 
   render(){
@@ -321,7 +323,8 @@ BootstrapTable.propTypes = {
   columnFilter: React.PropTypes.bool,
   options: React.PropTypes.shape({
     sortName: React.PropTypes.string,
-    sortOrder: React.PropTypes.string
+    sortOrder: React.PropTypes.string,
+    afterTableComplete: React.PropTypes.func
   })
 };
 BootstrapTable.defaultProps = {
@@ -341,7 +344,7 @@ BootstrapTable.defaultProps = {
   cellEdit:{
     mode: Const.CELL_EDIT_NONE,
     blurToSave: false,
-    afterSaveCell: undefined
+    afterTableComplete: undefined
   },
   insertRow: false,
   deleteRow: false,

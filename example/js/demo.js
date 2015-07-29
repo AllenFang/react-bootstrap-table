@@ -32,8 +32,12 @@ function onAfterSaveCell(row, cellName, cellValue){
   console.log(row);
 }
 
+function onAfterTableComplete(){
+  console.log('Table render complete.');
+}
+
 var selectRowProp = {
-  mode: "radio",
+  mode: "checkbox",
   clickToSelect: true,
   selected: [], //default select
   bgColor: "rgb(238, 193, 213)",
@@ -49,7 +53,8 @@ var cellEditProp = {
 
 var options = {
   sortName: "name",  //default sort column name
-  sortOrder: "desc"  //default sort order
+  sortOrder: "desc",  //default sort order
+  afterTableComplete: onAfterTableComplete // A hook for after table render complete.
 };
 
 
