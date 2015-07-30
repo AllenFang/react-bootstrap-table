@@ -36,7 +36,7 @@ class TableColumn extends React.Component{
       }
     }
     return (
-      <td style={tdStyle} {...opts}>
+      <td style={tdStyle} className={this.props.className} {...opts}>
         {this.props.children}
       </td>
     )
@@ -44,11 +44,13 @@ class TableColumn extends React.Component{
 }
 TableColumn.propTypes = {
   dataAlign: React.PropTypes.string,
-  hidden: React.PropTypes.bool
+  hidden: React.PropTypes.bool,
+  className:React.PropTypes.string
 };
 
 TableColumn.defaultProps = {
   dataAlign: "left",
-  hidden: false
+  hidden: false,
+  className:""
 }
 export default TableColumn;
