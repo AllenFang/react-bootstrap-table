@@ -157,7 +157,7 @@ Use ```dataAlign``` to set align in column. Available value is left, center, rig
 Use ```dataSort``` to enable the sorting in column. Default value is false(disabled).</br>
 Use ```dataFormat``` to customize this column.Must give it as a function.</br>
 Use ```hidden``` to enable hidden column.</br>
-Use ```className``` to add custom css class for table data</br>
+Use ```className``` to add custom css class for table column</br>
 
 #### About TableDataSet
 After v0.8.0, rect-bootstrap-table provide the ability of updating table data on fly. How to do it?

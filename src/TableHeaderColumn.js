@@ -43,7 +43,8 @@ TableHeaderColumn.propTypes = {
   dataFormat: React.PropTypes.func,
   isKey: React.PropTypes.bool,
   editable: React.PropTypes.bool,
-  hidden: React.PropTypes.bool
+  hidden: React.PropTypes.bool,
+  className:React.PropTypes.string
 };
 
 TableHeaderColumn.defaultProps = {
@@ -53,7 +54,8 @@ TableHeaderColumn.defaultProps = {
   isKey: false,
   editable: true,
   clearSortCaret: undefined,
-  hidden: false
+  hidden: false,
+  className: ""
 };
 
 export default TableHeaderColumn;
