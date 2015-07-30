@@ -72,6 +72,7 @@ class TableBody extends React.Component{
             return(
               <TableColumn dataAlign={column.align}
                            key={i}
+                           className={column.className}
                            cellEdit={this.props.cellEdit}
                            onEdit={this.handleEditCell.bind(this)}>
                 {formattedValue}
@@ -81,6 +82,7 @@ class TableBody extends React.Component{
             return(
               <TableColumn dataAlign={column.align}
                            key={i}
+                           className={column.className}
                            cellEdit={this.props.cellEdit}
                            hidden={column.hidden}
                            onEdit={this.handleEditCell.bind(this)}>{fieldValue}</TableColumn>
