@@ -9,14 +9,9 @@ class TableBody extends React.Component{
 
   constructor(props) {
 		super(props);
-    var selected = props.selectRow.selected || [];
-    if(props.selectRow.mode === Const.ROW_SELECT_SINGLE && props.selectRow.selected){
-      //if row selection is single, just pick the first item in 'selected'
-      selected = props.selectRow.selected.length > 0?[props.selectRow.selected[0]]:[];
-    }
     this.state = {
       currEditCell: null,
-      selectedRowKey: selected
+      selectedRowKey: this._getSelectedKeyFromProp(props)
     };
     this._attachRowSelectFunc();
     this.editing = false;
@@ -24,6 +19,21 @@ class TableBody extends React.Component{
 
   componentDidUpdate(prevProps, prevState){
     this._attachRowSelectFunc();
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      selectedRowKey: this._getSelectedKeyFromProp(nextProps)
+    });
+  }
+
+  _getSelectedKeyFromProp(prop){
+    var selected = prop.selectRow.selected || [];
+    if(prop.selectRow.mode === Const.ROW_SELECT_SINGLE && prop.selectRow.selected){
+      //if row selection is single, just pick the first item in 'selected'
+      selected = prop.selectRow.selected.length > 0?[prop.selectRow.selected[0]]:[];
+    }
+    return selected;
   }
 
   _attachRowSelectFunc(){
