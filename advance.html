@@ -41,19 +41,56 @@
     </section>
 
     <section class="main-content">
-      <h2>
+      <h2 style="text-align: center">
       <a id="api--attributes" class="anchor" href="#api--attributes" aria-hidden="true">
         <span class="octicon octicon-link"></span>
       </a>
-      <strong>Contributor</strong>
+      <strong>Advance Programming</strong>
       </h2>
-      <img  height="80" width="100" src="images/allenfang.jpg"/><br/>I am Allen, a full stack developer from Taiwan.
-Have over 6 years experience in application development. In the past, I'am familiar with J2EE, web development and object-oriented design. Currently, I work on Hadoop/HBase ecosystem(like Hive, Solr, Spark etc.) and development a distributed query engine on HBase for our product. And I have a lot of interesting on front-end development,
-like AngularJS, Backbone.js and React.js and so on.</br></br>
 
-      <p>My Blogger: <a href="http://programer-learn.blogspot.tw/">Blogger</a></p>
-      <p>My Github: <a href="https://github.com/AllenFang">Github</a></p>
-      <p>react-bootstrap-table Github: <a href="https://github.com/AllenFang/react-bootstrap-table">react-bootstrap-table</a></p>
+      <h3 style="text-align: center">Update data on fly</h3>
+      <code>react-bootstrap-table</code> support developer can reset the table data without a react render,
+      <a href="http://allenfang.github.io/react-bootstrap-table/example.html#fly">See Example</a></br></br>
+      Follow below steps to accomplish this feature: </br></br>
+      <b>1. Import TableDataSet</b></br>
+      <pre>
+var ReactBsTable  = require('react-bootstrap-table');
+var TableDataSet = ReactBsTable.TableDataSet; //import TableDataSet</pre>
+
+      <b>2. Create a TableDataSet object with you data.</b>
+      <pre>
+var dataSet = new TableDataSet(products);</pre>
+
+      <b>3. Pass this object to <code>data</code> prop</b>
+      <pre>
+&lt;BootstrapTable data={dataSet}&gt;
+   ...
+&lt;/BootstrapTable&gt;</pre>
+
+      <b>4. If you want to reset or update table data in any time, you can:</b>
+      <pre>
+dataSet.setData(newproducts);</pre>
+      <h3 style="text-align: center">Cell Format with a React Component</h3>
+      <code>react-bootstrap-table</code> allow you to customize your column through a function which return a HTML string.
+      <a href="http://allenfang.github.io/react-bootstrap-table/example.html#column-format">Here</a> is an example.</br></br>
+      But also allow you return a "React Component". For Example: </br>
+
+      <pre>
+function priceFormatter(cell, row){
+  return &lt;ReactComponent price={cell} format="USD"/&gt;;
+}
+&lt;BootstrapTable data={products}&gt;
+  &lt;TableHeaderColumn dataField="id" isKey={true}>Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="name">Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="price" dataFormat={priceFormatter}>Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+      </pre>
+
+      <h1 style="text-align: center">Dynamic Select Row</h1>
+      <code>react-bootstrap-table</code> support the default selected row on table
+      and also use the same way to allow user to set select row <b>programmatically</b></br></br>
+      You can reference an exmaple on <a href="https://gist.github.com/AllenFang/e6440666329ac5b27a60">gist</a> as below
+      <script src="https://gist.github.com/AllenFang/e6440666329ac5b27a60.js"></script>
     </section>
 
 
