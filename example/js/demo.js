@@ -71,7 +71,3 @@ React.render(
   </BootstrapTable>,
 	document.getElementById("basic")
 );
-
-
-BootstrapTable.staticmethod();
-BootstrapTable.setSelectRow();
