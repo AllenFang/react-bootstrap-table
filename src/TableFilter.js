@@ -36,7 +36,8 @@ class TableFilter extends React.Component{
     }
     var filterField = this.props.columns.map(function(column){
       var thStyle = {
-        display: column.hidden?"none":null
+        display: column.hidden?"none":null,
+        width: column.width
       };
       return(
         <th style={thStyle}>

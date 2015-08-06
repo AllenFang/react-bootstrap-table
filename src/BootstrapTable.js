@@ -89,6 +89,7 @@ class BootstrapTable extends React.Component{
         editable: column.props.editable,
         hidden: column.props.hidden,
         className:column.props.className,
+        width: column.props.width,
         index: i
       };
     }, this);

@@ -22,7 +22,8 @@ class TableHeaderColumn extends React.Component{
   render(){
     var thStyle = {
       textAlign: this.props.dataAlign,
-      display: this.props.hidden?"none":null
+      display: this.props.hidden?"none":null,
+      width: this.props.width
     };
 
     var classes = classSet(this.props.dataSort?"sort-column":"");
@@ -44,7 +45,8 @@ TableHeaderColumn.propTypes = {
   isKey: React.PropTypes.bool,
   editable: React.PropTypes.bool,
   hidden: React.PropTypes.bool,
-  className:React.PropTypes.string
+  className:React.PropTypes.string,
+  width: React.PropTypes.string
 };
 
 TableHeaderColumn.defaultProps = {
@@ -55,7 +57,8 @@ TableHeaderColumn.defaultProps = {
   editable: true,
   clearSortCaret: undefined,
   hidden: false,
-  className: ""
+  className: "",
+  width: null
 };
 
 export default TableHeaderColumn;

@@ -84,7 +84,8 @@ class TableBody extends React.Component{
                            key={i}
                            className={column.className}
                            cellEdit={this.props.cellEdit}
-                           onEdit={this.handleEditCell.bind(this)}>
+                           onEdit={this.handleEditCell.bind(this)}
+                           width={column.width}>
                 {formattedValue}
               </TableColumn>
             )
@@ -95,7 +96,10 @@ class TableBody extends React.Component{
                            className={column.className}
                            cellEdit={this.props.cellEdit}
                            hidden={column.hidden}
-                           onEdit={this.handleEditCell.bind(this)}>{fieldValue}</TableColumn>
+                           onEdit={this.handleEditCell.bind(this)}
+                           width={column.width}>
+                {fieldValue}
+              </TableColumn>
             )
           }
         }
@@ -132,7 +136,10 @@ class TableBody extends React.Component{
       selectRowHeader = (<th style={style} key={-1}></th>);
     }
     var theader = this.props.columns.map(function(column, i){
-      let style={display: column.hidden?"none":null};
+      let style={
+        display: column.hidden?"none":null,
+        width: column.width
+      };
       return (<th style={style} key={i}></th>);
     });
 
