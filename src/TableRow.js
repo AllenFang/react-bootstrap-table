@@ -13,7 +13,8 @@ class TableRow extends React.Component{
       backgroundColor: this.props.isSelected?this.props.selectRow.bgColor:null
     };
 
-    if(this.props.selectRow && this.props.selectRow.clickToSelect){
+    if(this.props.selectRow && !this.props.enableCellEdit &&
+      (this.props.selectRow.clickToSelect || this.props.selectRow.clickToSelectAndEditCell)){
       return(
         <tr style={rowStyle} onClick={this.rowClick.bind(this)}>{this.props.children}</tr>
       )
@@ -25,6 +26,7 @@ class TableRow extends React.Component{
   }
 }
 TableRow.propTypes = {
-  isSelected: React.PropTypes.bool
+  isSelected: React.PropTypes.bool,
+  enableCellEdit: React.PropTypes.bool
 };
 export default TableRow;

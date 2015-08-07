@@ -22,9 +22,21 @@ class TableBody extends React.Component{
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({
-      selectedRowKey: this._getSelectedKeyFromProp(nextProps)
-    });
+    var diff = nextProps.selectRow.selected?false:true;
+    if(!diff){
+      for(let i=0;i<nextProps.selectRow.selected.length;i++){
+        if(this.state.selectedRowKey.indexOf(nextProps.selectRow.selected[i]) == -1){
+          diff = true;
+          break;
+        }
+      }
+    }
+    if(diff){
+      console.log('diff');
+      this.setState({
+        selectedRowKey: this._getSelectedKeyFromProp(nextProps)
+      });
+    }
   }
 
   _getSelectedKeyFromProp(prop){
@@ -108,7 +120,8 @@ class TableBody extends React.Component{
       var selectRowColumn = isSelectRowDefined?this.renderSelectRowColumn(selected):null;
       return (
         <TableRow isSelected={selected} key={r}
-          selectRow={isSelectRowDefined?this.props.selectRow:undefined}>
+          selectRow={isSelectRowDefined?this.props.selectRow:undefined}
+          enableCellEdit={this.props.cellEdit.mode !== Const.CELL_EDIT_NONE}>
           {selectRowColumn}{tableColumns}
         </TableRow>
       )
@@ -151,6 +164,7 @@ class TableBody extends React.Component{
   }
 
   handleSelectRow(rowIndex, isSelected){
+    // console.log("handleRow!!!");
     var key, selectedRow;
     this.props.data.forEach(function(row, i){
       if(i == rowIndex-1){
@@ -186,7 +200,7 @@ class TableBody extends React.Component{
   }
 
   handleSelectRowColumChange(e){
-    if(!this.props.selectRow.clickToSelect){
+    if(!this.props.selectRow.clickToSelect || !this.props.selectRow.clickToSelectAndEditCell){
       this.props.selectRow.__onSelect__(
         e.currentTarget.parentElement.parentElement.rowIndex, e.currentTarget.checked);
     }
@@ -198,10 +212,19 @@ class TableBody extends React.Component{
       columnIndex--;
     }
     rowIndex--;
-    this.setState({currEditCell: {
-      rid: rowIndex,
-      cid: columnIndex
-    }});
+    var stateObj = {
+      currEditCell: {
+        rid: rowIndex,
+        cid: columnIndex
+      }
+    };
+
+    if(this.props.selectRow.clickToSelectAndEditCell){
+      //if edit cell, also trigger row selections
+      let selected = this.state.selectedRowKey.indexOf(this.props.data[rowIndex][this.props.keyField]) != -1;
+      this.handleSelectRow(rowIndex+1, !selected);
+    }
+    this.setState(stateObj);
   }
 
   handleCompleteEditCell(newVal, rowIndex, columnIndex){

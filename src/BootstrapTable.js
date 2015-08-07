@@ -312,7 +312,8 @@ BootstrapTable.propTypes = {
     selected: React.PropTypes.array,
     onSelect: React.PropTypes.func,
     onSelectAll: React.PropTypes.func,
-    clickToSelect: React.PropTypes.bool
+    clickToSelect: React.PropTypes.bool,
+    clickToSelectAndEditCell: React.PropTypes.bool
   }),
   cellEdit: React.PropTypes.shape({
     mode: React.PropTypes.string,
@@ -341,7 +342,8 @@ BootstrapTable.defaultProps = {
     selected: [],
     onSelect: undefined,
     onSelectAll: undefined,
-    clickToSelect: false
+    clickToSelect: false,
+    clickToSelectAndEditCell: false
   },
   cellEdit:{
     mode: Const.CELL_EDIT_NONE,
