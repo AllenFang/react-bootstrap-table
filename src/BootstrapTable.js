@@ -13,11 +13,7 @@ class BootstrapTable extends React.Component{
   constructor(props) {
 		super(props);
 
-    if(this.props.cellEdit){
-      this.props.cellEdit.__onCompleteEdit__ = this.handleEditCell.bind(this);
-      if(this.props.cellEdit.mode !== Const.CELL_EDIT_NONE)
-        this.props.selectRow.clickToSelect = false;
-    }
+    this._attachCellEditFunc();
     this.sortTable = false;
     this.order = Const.SORT_DESC;
     this.sortField = null;
@@ -71,8 +67,17 @@ class BootstrapTable extends React.Component{
 
   componentDidUpdate(){
     this._adjustHeaderWidth();
+    this._attachCellEditFunc();
     if(this.props.options.afterTableComplete)
       this.props.options.afterTableComplete();
+  }
+
+  _attachCellEditFunc(){
+    if(this.props.cellEdit){
+      this.props.cellEdit.__onCompleteEdit__ = this.handleEditCell.bind(this);
+      if(this.props.cellEdit.mode !== Const.CELL_EDIT_NONE)
+        this.props.selectRow.clickToSelect = false;
+    }
   }
 
   render(){
