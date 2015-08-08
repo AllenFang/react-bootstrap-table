@@ -44,7 +44,7 @@ var selectRowProp = {
   onSelect: onRowSelect,
   onSelectAll: onSelectAll
 };
-``
+
 var cellEditProp = {
   mode: "click",
   blurToSave: true,
