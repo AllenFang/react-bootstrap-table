@@ -38,8 +38,8 @@ function onAfterTableComplete(){
 
 var selectRowProp = {
   mode: "checkbox",
-  clickToSelect: true,
-  selected: [], //default select
+  clickToSelectAnd: true,
+  // selected: [], //default select on table
   bgColor: "rgb(238, 193, 213)",
   onSelect: onRowSelect,
   onSelectAll: onSelectAll

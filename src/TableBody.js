@@ -23,6 +23,7 @@ class TableBody extends React.Component{
   }
 
   componentWillReceiveProps(nextProps){
+    if(typeof nextProps.selectRow.selected === 'undefined') return;
     var diff = nextProps.selectRow.selected?false:true;
     diff = nextProps.selectRow.selected.length != this.state.selectedRowKey.length;
     if(!diff){
