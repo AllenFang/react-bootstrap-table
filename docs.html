@@ -62,7 +62,9 @@
       This object may contain these properties:</br>
       &nbsp;&nbsp;&nbsp;&nbsp;<code>mode</code>: radio/checkbox<b> (required)</b>, to specify the single selection or multi selection in table.</br>
       &nbsp;&nbsp;&nbsp;&nbsp;<code>clickToSelect</code>: true/false<b> (optional)</b>, if true, click the row will trigger selection on that row, default is false</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>clickToSelectAndEditCell</code>: true/false<b> (optional)</b>, if true, click the row will trigger selection on that row, and also trigger cell editing if you enabled cell edit.</br>
       &nbsp;&nbsp;&nbsp;&nbsp;<code>bgColor</code>: css color<b> (optional)</b>, if assigned, this color will present on backgroud if row selection.</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>selected</code>: an array object<b> (optional)</b>, it's for default selected row on table, give an array object which contain selected row keys.</br>
       &nbsp;&nbsp;&nbsp;&nbsp;<code>onSelect</code>: callback function<b> (optional)</b>, accept a callback function, if a row be selected, this function will be called.</br>
       &nbsp;&nbsp;&nbsp;&nbsp;<code>onSelectAll</code> callback function<b> (optional)</b>, accept a callback function, if select all in checkbox mode, this function will be</br>
       </br>
@@ -71,6 +73,12 @@
       &nbsp;&nbsp;&nbsp;&nbsp;<code>mode</code>: click/dbclick<b> (required)</b>, to spectify which condition will trigger cell editing.</br>
       &nbsp;&nbsp;&nbsp;&nbsp;<code>blurToSave</code>: true/false<b> (optional)</b> if true, when mouse blur on input field will trigger a save on cell, default is false.</br>
       &nbsp;&nbsp;&nbsp;&nbsp;<code>afterSaveCell</code>: callback function<b> (optional)</b>, accept a callback function, after save cell, this function will be called.</br>
+      </br>
+      Use <code>options</code> to set other options setting for table</br>
+      In newest version, the options accept a object and include these properties as follow:</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>sortName</code>: column name<b> (optional)</b>, to spectify which column should be the default sorting column.</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>sortOrder</code>: asc/desc<b> (optional)</b>, to spectify the order of default sorting column.</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>afterTableComplete</code>: callback function<b> (optional)</b>, A hook for after table render complete.</br>
       </p>
 
       <h3>
@@ -78,6 +86,7 @@
 
       <p>
       Use <code>isKey</code><b> (required)</b> to specidy which column is unique.<br>
+      Use <code>width</code> to set the width on column.</br>
       Use <code>dataField</code><b> (required)</b> to specidy which column you want to show on this column.<br>
       Use <code>dataAlign</code> to set align in column. Available value is left, center, right, start and end.<br>
       Use <code>dataSort</code> to enable the sorting in column. Default value is false(disabled).<br>

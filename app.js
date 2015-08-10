@@ -34,7 +34,8 @@ var products = [
 
 var product1 = [], product2 = [],product3 = [],product4 = [],
 product5 = [],product6 = [],product7 = [],product8 = [],
-product9 = [],product10 = [],product11 = [],product12 = [],product13 = [],product14 = [];
+product9 = [],product10 = [],product11 = [],product12 = [],product13 = [],product14 = [],
+product15 = [];
 
 for(var i=1;i<=6;i++){
   var p = {
@@ -47,6 +48,7 @@ for(var i=1;i<=6;i++){
   product6.push(p);
   product10.push(p);product11.push(p);product3.push(p);product12.push(p);product13.push(p);
   product14.push(p)
+  product15.push(p);
 
   product7.push({
     id: i,
@@ -265,4 +267,13 @@ React.render(
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
   </BootstrapTable>,
 	document.getElementById("hidden-div")
+);
+
+React.render(
+  <BootstrapTable data={product15}>
+      <TableHeaderColumn dataField="id" isKey={true} width="15%">Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name" width="150px">Product Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+  </BootstrapTable>,
+	document.getElementById("width")
 );

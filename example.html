@@ -57,6 +57,10 @@
               <ul class="nav"></ul>
           </li>
           <li>
+            <a href="#column-width">Column Width</a>
+              <ul class="nav"></ul>
+          </li>
+          <li>
             <a href="#column-align">Column Align</a>
               <ul class="nav"></ul>
           </li>
@@ -144,6 +148,18 @@
 &lt;BootstrapTable data={products} height="120"&gt;
   &lt;TableHeaderColumn dataField="id" isKey={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+          </code></pre>
+        </div></br>
+        <div>
+          <h1 id="column-width">Column Width</h1>
+          Use <code>width</code> to set the column width.<br/>
+          <div id="width"></div>
+          <pre><code>
+&lt;BootstrapTable data={products}&gt;
+  &lt;TableHeaderColumn dataField="id" isKey={true} width="15%"&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField="name" width="150px"&gt;Product Name&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
 &lt;/BootstrapTable&gt;
           </code></pre>
