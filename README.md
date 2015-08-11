@@ -136,7 +136,9 @@ Use ```search``` to enable the search on table.</br>
 Use ```selectRow``` to enable the row selection on table, this attribute accept an object which contain these properties.</br>
 - ```mode```(required): radio/checkbox, to specify the selection is single or multiple.</br>
 - ```clickToSelect```(optional): if true, click on row will trigger row selection, default is false.</br>
+- ```clickToSelectAndEditCell```(optional): if true, click the row will trigger selection on that row, and also trigger cell editing if you enabled cell edit.</br>
 - ```bgColor```(optional): You can assign background color if row be selected.</br>
+- ```selected```(optional): it's for default selected row on table, give an array object which contain selected row keys.</br>
 - ```onSelect```(optional): accept a callback function, if a row be selected, this function will be called.</br>
 - ```onSelectAll```(optional): accept a callback function, if select all in ```checkbox``` mode, this function will be called.</br>
 
@@ -153,6 +155,7 @@ Use ```options``` to set other settings for react-bootstrap-table, this prop acc
 
 ####The attributes in &lt;TableHeaderColumn&gt;:</br>
 Use ```isKey``` to specify which column is unique.</br>
+Use ```width``` to set the width on column</br>
 Use ```dataField``` to specify which column you want to show on this column.</br>
 Use ```dataAlign``` to set align in column. Available value is left, center, right, start and end.</br>
 Use ```dataSort``` to enable the sorting in column. Default value is false(disabled).</br>
