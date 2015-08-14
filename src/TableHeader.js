@@ -8,7 +8,6 @@ class TableHeader extends React.Component{
 
   constructor(props) {
 		super(props);
-    this._attachClearSortCaretFunc();
 	}
 
   clearSortCaret(order, sortField){
@@ -23,6 +22,7 @@ class TableHeader extends React.Component{
   }
 
   componentDidMount(){
+    this._attachClearSortCaretFunc();
     if(this.props.sortName !== null){
       //default sorting
       this.clearSortCaret(this.props.sortOrder, this.props.sortName);
@@ -70,9 +70,10 @@ class TableHeader extends React.Component{
   }
 
   _attachClearSortCaretFunc(){
-    this.props.children.forEach(function(reactElm){
-      reactElm.props.clearSortCaret = this.clearSortCaret.bind(this);
-    }, this);
+    for(let i=0;i<this.props.children.length;i++){
+      this.props.children[i] =
+        React.cloneElement(this.props.children[i], {clearSortCaret: this.clearSortCaret.bind(this)});
+    }
   }
 }
 TableHeader.propTypes = {
