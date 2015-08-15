@@ -22,7 +22,6 @@ class TableHeader extends React.Component{
   }
 
   componentDidMount(){
-    this._attachClearSortCaretFunc();
     if(this.props.sortName !== null){
       //default sorting
       this.clearSortCaret(this.props.sortOrder, this.props.sortName);
@@ -37,14 +36,11 @@ class TableHeader extends React.Component{
     }
   }
 
-  componentDidUpdate(prevProps, prevState){
-    this._attachClearSortCaretFunc();
-  }
-
   render(){
     var containerClasses = classSet("table-header");
     var selectRowHeaderCol = this.renderSelectRowHeader();
-
+    this._attachClearSortCaretFunc();
+    
     return(
       <div className={containerClasses}>
         <table className="table table-hover table-bordered">
