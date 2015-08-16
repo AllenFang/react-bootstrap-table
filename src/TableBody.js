@@ -128,6 +128,13 @@ class TableBody extends React.Component{
         </TableRow>
       )
     }, this);
+
+    if(tableRows.length === 0){
+      tableRows.push(<TableRow key="##table-empty##">
+        <td colSpan={this.props.columns.length} style={{ textAlign: "center" }}>There is no data to display</td>
+      </TableRow>)
+    }
+
     this.editing = false;
     return(
       <div className={containerClasses}>
