@@ -56,6 +56,15 @@ class BootstrapTable extends React.Component{
     return result;
   }
 
+  componentWillReceiveProps(nextProps){
+    if(Array.isArray(nextProps.data)){
+      this.store.setData(nextProps.data);
+      this.setState({
+        data: this.getTableData()
+      });
+    }
+  }
+
   componentDidMount(){
     this._adjustHeaderWidth();
     window.addEventListener('resize', this._adjustHeaderWidth.bind(this));
