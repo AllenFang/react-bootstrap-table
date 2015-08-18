@@ -130,9 +130,13 @@ class TableBody extends React.Component{
     }, this);
 
     if(tableRows.length === 0){
-      tableRows.push(<TableRow key="##table-empty##">
-        <td colSpan={this.props.columns.length} style={{ textAlign: "center" }}>There is no data to display</td>
-      </TableRow>)
+      tableRows.push(
+      <TableRow key="##table-empty##">
+        <td colSpan={this.props.columns.length+(isSelectRowDefined?1:0)}
+            style={{ textAlign: "center" }}>
+            There is no data to display
+        </td>
+      </TableRow>);
     }
 
     this.editing = false;
