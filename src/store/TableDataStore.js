@@ -48,6 +48,7 @@ export class TableDataStore{
   }
 
   setData(data) {
+    this.isOnFilter = false;
     this.data = data;
   }
 
