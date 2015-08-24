@@ -38,6 +38,8 @@ export class TableDataStore{
     this.data = data;
     this.filteredData = null;
     this.isOnFilter = false;
+    this.filterObj = null;
+    this.searchText = null;
     this.sortObj = {};
     this.pageObj = {};
   }
@@ -48,8 +50,11 @@ export class TableDataStore{
   }
 
   setData(data) {
-    this.isOnFilter = false;
     this.data = data;
+    if(this.isOnFilter) {
+      if(null !== this.filterObj) this.filter(this.filterObj);
+      if(null !== this.searchText) this.search(this.searchText);
+    }
   }
 
   getCurrentDisplayData(){
@@ -132,7 +137,9 @@ export class TableDataStore{
     if(Object.keys(filterObj).length == 0){
       this.filteredData = null;
       this.isOnFilter = false;
+      this.filterObj = null;
     } else{
+      this.filterObj = filterObj;
       this.filteredData = this.data.filter(function(row){
         let valid = true;
         for(var key in filterObj){
@@ -151,7 +158,9 @@ export class TableDataStore{
     if(searchText.trim() === ""){
       this.filteredData = null;
       this.isOnFilter = false;
+      this.searchText = null;
     }else{
+      this.searchText = searchText;
       this.filteredData = this.data.filter(function(row){
         let valid = false;
         for(var key in row){
