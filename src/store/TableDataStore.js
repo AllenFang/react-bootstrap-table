@@ -164,7 +164,8 @@ export class TableDataStore{
       this.filteredData = this.data.filter(function(row){
         let valid = false;
         for(var key in row){
-          if(row[key].toString().toLowerCase().indexOf(searchText.toLowerCase()) !== -1){
+          if(row[key] &&
+             row[key].toString().toLowerCase().indexOf(searchText.toLowerCase()) !== -1){
             valid = true;
             break;
           }
