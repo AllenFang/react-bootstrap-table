@@ -190,7 +190,8 @@ class TableBody extends React.Component{
       currSelectedRorKey = [];
     }
     if(isSelected){
-      currSelectedRorKey.push(key);
+      if(currSelectedRorKey.indexOf(key) == -1)
+        currSelectedRorKey.push(key);
     }else{
       currSelectedRorKey = currSelectedRorKey.filter(function(element){
         return key !== element;
