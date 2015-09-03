@@ -4,7 +4,8 @@ import Const from './Const';
 class TableRow extends React.Component{
 
   rowClick(e){
-    this.props.selectRow.__onSelect__(e.currentTarget.rowIndex, !this.props.isSelected);
+    if(e.target.tagName !== "INPUT")
+      this.props.selectRow.__onSelect__(e.currentTarget.rowIndex, !this.props.isSelected);
   }
 
   render(){

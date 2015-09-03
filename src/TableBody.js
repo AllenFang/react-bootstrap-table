@@ -177,7 +177,6 @@ class TableBody extends React.Component{
   }
 
   handleSelectRow(rowIndex, isSelected){
-    // console.log("handleRow!!!");
     var key, selectedRow;
     this.props.data.forEach(function(row, i){
       if(i == rowIndex-1){
