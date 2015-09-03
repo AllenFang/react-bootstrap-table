@@ -276,6 +276,7 @@ class BootstrapTable extends React.Component{
                    enableDelete={this.props.deleteRow}
                    enableSearch={this.props.search}
                    columns={columns}
+                   searchPlaceholder={this.props.searchPlaceholder}
                    onAddRow={this.handleAddRow.bind(this)}
                    onDropRow={this.handleDropRow.bind(this)}
                    onSearch={this.handleSearch.bind(this)}/>
@@ -305,6 +306,7 @@ BootstrapTable.propTypes = {
   hover: React.PropTypes.bool,
   condensed: React.PropTypes.bool,
   pagination: React.PropTypes.bool,
+  searchPlaceholder: React.PropTypes.string,
   selectRow: React.PropTypes.shape({
     mode: React.PropTypes.string,
     bgColor: React.PropTypes.string,
@@ -335,6 +337,7 @@ BootstrapTable.defaultProps = {
   hover: false,
   condensed: false,
   pagination: false,
+  searchPlaceholder: undefined,
   selectRow: {
     mode: Const.ROW_SELECT_NONE,
     bgColor: Const.ROW_SELECT_BG_COLOR,

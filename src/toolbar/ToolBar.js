@@ -48,7 +48,8 @@ class ToolBar extends React.Component{
             onClick={this.handleDropRowBtnClick.bind(this)}>
             Delete
           </button>:null;
-    var searchTextInput = this.props.enableSearch?<input type='text' placeholder='Search' onKeyUp={this.handleKeyUp.bind(this)}/>:null;
+    var searchTextInput = this.props.enableSearch?
+      <input type='text' placeholder={this.props.searchPlaceholder?this.props.searchPlaceholder:'Search'} onKeyUp={this.handleKeyUp.bind(this)}/>:null;
     var modal = this.props.enableInsert?this.renderInsertRowModal(modalClassName):null;
     var warningStyle = {
       display: "none",
@@ -107,7 +108,8 @@ ToolBar.propTypes = {
   enableInsert: React.PropTypes.bool,
   enableDelete: React.PropTypes.bool,
   enableSearch: React.PropTypes.bool,
-  columns: React.PropTypes.array
+  columns: React.PropTypes.array,
+  searchPlaceholder: React.PropTypes.string
 };
 
 ToolBar.defaultProps = {
