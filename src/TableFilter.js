@@ -40,7 +40,7 @@ class TableFilter extends React.Component{
         width: column.width
       };
       return(
-        <th style={thStyle}>
+        <th key={column.name} style={thStyle}>
           <div className="th-inner table-header-column">
             <input type="text" placeholder={column.name} name={column.name} onKeyUp={this.handleKeyUp.bind(this)}/>
           </div>
