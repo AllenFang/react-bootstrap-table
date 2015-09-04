@@ -7,8 +7,8 @@ import SelectRowHeaderColumn from './SelectRowHeaderColumn';
 class TableHeader extends React.Component{
 
   constructor(props) {
-		super(props);
-	}
+    super(props);
+  }
 
   clearSortCaret(order, sortField){
     var row = this.refs.header.getDOMNode();
@@ -40,7 +40,7 @@ class TableHeader extends React.Component{
     var containerClasses = classSet("table-header");
     var selectRowHeaderCol = this.renderSelectRowHeader();
     this._attachClearSortCaretFunc();
-    
+
     return(
       <div className={containerClasses}>
         <table className="table table-hover table-bordered">
@@ -68,7 +68,7 @@ class TableHeader extends React.Component{
   _attachClearSortCaretFunc(){
     for(let i=0;i<this.props.children.length;i++){
       this.props.children[i] =
-        React.cloneElement(this.props.children[i], {clearSortCaret: this.clearSortCaret.bind(this)});
+        React.cloneElement(this.props.children[i], {key: i, clearSortCaret: this.clearSortCaret.bind(this)});
     }
   }
 }
