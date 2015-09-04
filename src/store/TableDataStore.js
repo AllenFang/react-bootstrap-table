@@ -1,15 +1,20 @@
 import Const from "../Const";
 var EventEmitter = require('events').EventEmitter;
 
-function _sort(arr, sortField, order){
+function _sort(arr, sortField, order, sortFunc){
   order = order.toLowerCase();
-  arr.sort(function(a,b){
-    if(order == Const.SORT_DESC){
-      return a[sortField] > b[sortField]?-1: ((a[sortField] < b[sortField]) ? 1 : 0);
-    }else{
-      return a[sortField] < b[sortField]?-1: ((a[sortField] > b[sortField]) ? 1 : 0);
+  arr.sort((a,b) => {
+    if(sortFunc){
+      return sortFunc(a, b, order);
+    } else {
+      if(order == Const.SORT_DESC){
+        return a[sortField] > b[sortField]?-1: ((a[sortField] < b[sortField]) ? 1 : 0);
+      }else{
+        return a[sortField] < b[sortField]?-1: ((a[sortField] > b[sortField]) ? 1 : 0);
+      }
     }
   });
+
   return arr;
 }
 
@@ -69,7 +74,7 @@ export class TableDataStore{
     };
 
     let currentDisplayData = this.getCurrentDisplayData();
-    currentDisplayData = _sort(currentDisplayData, sortField, order);;
+    currentDisplayData = _sort(currentDisplayData, sortField, order, sortFunc);
 
     return this;
   }

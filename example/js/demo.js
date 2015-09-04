@@ -36,19 +36,6 @@ function onAfterTableComplete(){
   console.log('Table render complete.');
 }
 
-function customeSort(arr, sortField, order){
-  order = order.toLowerCase();
-  console.log("customeSort");
-  arr.sort(function(a,b){
-    if(order == "desc"){
-      return a[sortField] > b[sortField]?-1: ((a[sortField] < b[sortField]) ? 1 : 0);
-    }else{
-      return a[sortField] < b[sortField]?-1: ((a[sortField] > b[sortField]) ? 1 : 0);
-    }
-  });
-  return arr;
-}
-
 var selectRowProp = {
   mode: "checkbox",
   clickToSelect: true,
@@ -79,7 +66,7 @@ React.render(
   <BootstrapTable data={products} striped={true} hover={true} pagination={true} selectRow={selectRowProp} cellEdit={cellEditProp}
                   insertRow={true} deleteRow={true} search={true} columnFilter={true} options={options}>
       <TableHeaderColumn dataField="id" dataAlign="center" dataSort={true} isKey={true}>Product ID</TableHeaderColumn>
-      <TableHeaderColumn dataField="name" dataSort={true} sortFunc={customeSort}>Product Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price" dataFormat={priceFormatter} editable={false}>Product Price</TableHeaderColumn>
   </BootstrapTable>,
 	document.getElementById("basic")
