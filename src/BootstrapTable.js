@@ -89,6 +89,7 @@ class BootstrapTable extends React.Component{
         name: column.props.dataField,
         align: column.props.dataAlign,
         sort: column.props.dataSort,
+        sortFunc: column.props.sortFunc,
         format: column.props.dataFormat,
         editable: column.props.editable,
         hidden: column.props.hidden,
@@ -126,8 +127,8 @@ class BootstrapTable extends React.Component{
     )
   }
 
-  handleSort(order, sortField){
-    let result = this.store.sort(order, sortField).get();
+  handleSort(order, sortField, sortFunc){
+    let result = this.store.sort(order, sortField, sortFunc).get();
     this.setState({
       data: result
     });

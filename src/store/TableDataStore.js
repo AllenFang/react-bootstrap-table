@@ -62,7 +62,7 @@ export class TableDataStore{
     else return this.data;
   }
 
-  sort(order, sortField){
+  sort(order, sortField, sortFunc){
     this.sortObj = {
       order: order,
       sortField: sortField

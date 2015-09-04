@@ -10,7 +10,7 @@ class TableHeader extends React.Component{
     super(props);
   }
 
-  clearSortCaret(order, sortField){
+  clearSortCaret(order, sortField, sortFunc){
     var row = this.refs.header.getDOMNode();
     for(var i=0;i<row.childElementCount;i++){
       var column = row.childNodes[i].childNodes[0];
@@ -18,13 +18,22 @@ class TableHeader extends React.Component{
         column.removeChild(column.getElementsByClassName("order")[0]);
       }
     }
-    this.props.onSort(order, sortField);
+    this.props.onSort(order, sortField, sortFunc);
   }
 
   componentDidMount(){
+    //default sorting
     if(this.props.sortName !== null){
-      //default sorting
-      this.clearSortCaret(this.props.sortOrder, this.props.sortName);
+      // get customize sorting function from childrens
+      var sortFunc = undefined;
+      this.props.children.forEach(function(headerCol){
+        if(headerCol.props.dataField === this.props.sortName){
+          sortFunc = headerCol.props.sortFunc;
+          return false;
+        }
+      }, this);
+
+      this.clearSortCaret(this.props.sortOrder, this.props.sortName, sortFunc);
       var row = this.refs.header.getDOMNode();
       for(var i=0;i<row.childElementCount;i++){
         var column = row.childNodes[i].childNodes[0];
