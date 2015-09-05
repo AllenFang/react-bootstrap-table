@@ -86,7 +86,27 @@ function priceFormatter(cell, row){
 &lt;/BootstrapTable&gt;
       </pre>
 
-      <h1 style="text-align: center">Dynamic Select Row</h1>
+
+      <h3 id="customSort" style="text-align: center">Custom Sort</h3>
+      In <code>react-bootstrap-table</code>, you can assign a custom sort by <code>sortFunc</code> in <code>&lt;TableHeaderColumn&gt;</code>. A simple example in the below: </br>
+      <pre>
+var data = [
+    {name: "test1", count: 1},
+    {name: "test2", count: 6},
+    {name: "test5", count: 0}
+];
+function mySortFunc(a, b, order){   //order is desc or asc
+    return a.count - b.count;
+}
+//...
+&lt;BootstrapTable data={data} &gt;
+      &lt;TableHeaderColumn dataField="name" isKey={true}&gt;Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField="count" dataSort={true} sortFunc={mySortFunc}&gt;Count&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</pre>
+
+
+      <h3 style="text-align: center">Dynamic Select Row</h3>
       <code>react-bootstrap-table</code> support the default selected row on table
       and also use the same way to allow user to set select row <b>programmatically</b></br></br>
       You can reference an exmaple on <a href="https://gist.github.com/AllenFang/e6440666329ac5b27a60">gist</a> as below

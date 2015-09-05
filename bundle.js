@@ -774,20 +774,18 @@ var BootstrapTable = (function (_React$Component) {
         return result;
       }
     },
-    componentDidMount: {
-      value: function componentDidMount() {
-        this._adjustHeaderWidth();
-        window.addEventListener("resize", this._adjustHeaderWidth.bind(this));
-      }
-    },
-    componentWillUnmount: {
-      value: function componentWillUnmount() {
-        window.removeEventListener("resize", this._adjustHeaderWidth.bind(this));
+    componentWillReceiveProps: {
+      value: function componentWillReceiveProps(nextProps) {
+        if (Array.isArray(nextProps.data)) {
+          this.store.setData(nextProps.data);
+          this.setState({
+            data: this.getTableData()
+          });
+        }
       }
     },
     componentDidUpdate: {
       value: function componentDidUpdate() {
-        this._adjustHeaderWidth();
         this._attachCellEditFunc();
         if (this.props.options.afterTableComplete) this.props.options.afterTableComplete();
       }
@@ -811,6 +809,7 @@ var BootstrapTable = (function (_React$Component) {
             name: column.props.dataField,
             align: column.props.dataAlign,
             sort: column.props.dataSort,
+            sortFunc: column.props.sortFunc,
             format: column.props.dataFormat,
             editable: column.props.editable,
             hidden: column.props.hidden,
@@ -853,8 +852,8 @@ var BootstrapTable = (function (_React$Component) {
       }
     },
     handleSort: {
-      value: function handleSort(order, sortField) {
-        var result = this.store.sort(order, sortField).get();
+      value: function handleSort(order, sortField, sortFunc) {
+        var result = this.store.sort(order, sortField, sortFunc).get();
         this.setState({
           data: result
         });
@@ -981,11 +980,6 @@ var BootstrapTable = (function (_React$Component) {
         });
       }
     },
-    _adjustHeaderWidth: {
-      value: function _adjustHeaderWidth() {
-        this.refs.table.getDOMNode().childNodes[0].childNodes[0].style.width = this.refs.table.getDOMNode().childNodes[1].childNodes[0].offsetWidth - 1 + "px";
-      }
-    },
     renderPagination: {
       value: function renderPagination() {
         if (this.props.pagination) {
@@ -1018,6 +1012,7 @@ var BootstrapTable = (function (_React$Component) {
               enableDelete: this.props.deleteRow,
               enableSearch: this.props.search,
               columns: columns,
+              searchPlaceholder: this.props.searchPlaceholder,
               onAddRow: this.handleAddRow.bind(this),
               onDropRow: this.handleDropRow.bind(this),
               onSearch: this.handleSearch.bind(this) })
@@ -1050,6 +1045,7 @@ BootstrapTable.propTypes = {
   hover: React.PropTypes.bool,
   condensed: React.PropTypes.bool,
   pagination: React.PropTypes.bool,
+  searchPlaceholder: React.PropTypes.string,
   selectRow: React.PropTypes.shape({
     mode: React.PropTypes.string,
     bgColor: React.PropTypes.string,
@@ -1080,6 +1076,7 @@ BootstrapTable.defaultProps = {
   hover: false,
   condensed: false,
   pagination: false,
+  searchPlaceholder: undefined,
   selectRow: {
     mode: Const.ROW_SELECT_NONE,
     bgColor: Const.ROW_SELECT_BG_COLOR,
@@ -1333,6 +1330,20 @@ var TableBody = (function (_React$Component) {
             tableColumns
           );
         }, this);
+
+        if (tableRows.length === 0) {
+          tableRows.push(React.createElement(
+            TableRow,
+            { key: "##table-empty##" },
+            React.createElement(
+              "td",
+              { colSpan: this.props.columns.length + (isSelectRowDefined ? 1 : 0),
+                style: { textAlign: "center" } },
+              "There is no data to display"
+            )
+          ));
+        }
+
         this.editing = false;
         return React.createElement(
           "div",
@@ -1382,7 +1393,6 @@ var TableBody = (function (_React$Component) {
     },
     handleSelectRow: {
       value: function handleSelectRow(rowIndex, isSelected) {
-        // console.log("handleRow!!!");
         var key, selectedRow;
         this.props.data.forEach(function (row, i) {
           if (i == rowIndex - 1) {
@@ -1395,7 +1405,7 @@ var TableBody = (function (_React$Component) {
           currSelectedRorKey = [];
         }
         if (isSelected) {
-          currSelectedRorKey.push(key);
+          if (currSelectedRorKey.indexOf(key) == -1) currSelectedRorKey.push(key);
         } else {
           currSelectedRorKey = currSelectedRorKey.filter(function (element) {
             return key !== element;
@@ -1715,7 +1725,7 @@ var TableFilter = (function (_React$Component) {
           };
           return React.createElement(
             "th",
-            { style: thStyle },
+            { key: column.name, style: thStyle },
             React.createElement(
               "div",
               { className: "th-inner table-header-column" },
@@ -1778,14 +1788,13 @@ var TableHeader = (function (_React$Component) {
     _classCallCheck(this, TableHeader);
 
     _get(Object.getPrototypeOf(TableHeader.prototype), "constructor", this).call(this, props);
-    this._attachClearSortCaretFunc();
   }
 
   _inherits(TableHeader, _React$Component);
 
   _createClass(TableHeader, {
     clearSortCaret: {
-      value: function clearSortCaret(order, sortField) {
+      value: function clearSortCaret(order, sortField, sortFunc) {
         var row = this.refs.header.getDOMNode();
         for (var i = 0; i < row.childElementCount; i++) {
           var column = row.childNodes[i].childNodes[0];
@@ -1793,14 +1802,23 @@ var TableHeader = (function (_React$Component) {
             column.removeChild(column.getElementsByClassName("order")[0]);
           }
         }
-        this.props.onSort(order, sortField);
+        this.props.onSort(order, sortField, sortFunc);
       }
     },
     componentDidMount: {
       value: function componentDidMount() {
+        //default sorting
         if (this.props.sortName !== null) {
-          //default sorting
-          this.clearSortCaret(this.props.sortOrder, this.props.sortName);
+          // get customize sorting function from childrens
+          var sortFunc = undefined;
+          this.props.children.forEach(function (headerCol) {
+            if (headerCol.props.dataField === this.props.sortName) {
+              sortFunc = headerCol.props.sortFunc;
+              return false;
+            }
+          }, this);
+
+          this.clearSortCaret(this.props.sortOrder, this.props.sortName, sortFunc);
           var row = this.refs.header.getDOMNode();
           for (var i = 0; i < row.childElementCount; i++) {
             var column = row.childNodes[i].childNodes[0];
@@ -1812,15 +1830,11 @@ var TableHeader = (function (_React$Component) {
         }
       }
     },
-    componentDidUpdate: {
-      value: function componentDidUpdate(prevProps, prevState) {
-        this._attachClearSortCaretFunc();
-      }
-    },
     render: {
       value: function render() {
         var containerClasses = classSet("table-header");
         var selectRowHeaderCol = this.renderSelectRowHeader();
+        this._attachClearSortCaretFunc();
 
         return React.createElement(
           "div",
@@ -1859,9 +1873,9 @@ var TableHeader = (function (_React$Component) {
     },
     _attachClearSortCaretFunc: {
       value: function _attachClearSortCaretFunc() {
-        this.props.children.forEach(function (reactElm) {
-          reactElm.props.clearSortCaret = this.clearSortCaret.bind(this);
-        }, this);
+        for (var i = 0; i < this.props.children.length; i++) {
+          this.props.children[i] = React.cloneElement(this.props.children[i], { key: i, clearSortCaret: this.clearSortCaret.bind(this) });
+        }
       }
     }
   });
@@ -1916,7 +1930,7 @@ var TableHeaderColumn = (function (_React$Component) {
           return;
         }var dom = this.refs.innerDiv.getDOMNode();
         this.order = this.order == Const.SORT_DESC ? Const.SORT_ASC : Const.SORT_DESC;
-        this.props.clearSortCaret(this.order, this.props.dataField);
+        this.props.clearSortCaret(this.order, this.props.dataField, this.props.sortFunc);
         dom.appendChild(Util.renderSortCaret(this.order));
       }
     },
@@ -1962,7 +1976,8 @@ TableHeaderColumn.propTypes = {
   editable: React.PropTypes.bool,
   hidden: React.PropTypes.bool,
   className: React.PropTypes.string,
-  width: React.PropTypes.string
+  width: React.PropTypes.string,
+  sortFunc: React.PropTypes.func
 };
 
 TableHeaderColumn.defaultProps = {
@@ -1974,7 +1989,8 @@ TableHeaderColumn.defaultProps = {
   clearSortCaret: undefined,
   hidden: false,
   className: "",
-  width: null
+  width: null,
+  sortFunc: undefined
 };
 
 module.exports = TableHeaderColumn;
@@ -2007,7 +2023,7 @@ var TableRow = (function (_React$Component) {
   _createClass(TableRow, {
     rowClick: {
       value: function rowClick(e) {
-        this.props.selectRow.__onSelect__(e.currentTarget.rowIndex, !this.props.isSelected);
+        if (e.target.tagName !== "INPUT") this.props.selectRow.__onSelect__(e.currentTarget.rowIndex, !this.props.isSelected);
       }
     },
     render: {
@@ -2341,15 +2357,20 @@ var Const = _interopRequire(require("../Const"));
 
 var EventEmitter = require("events").EventEmitter;
 
-function _sort(arr, sortField, order) {
+function _sort(arr, sortField, order, sortFunc) {
   order = order.toLowerCase();
   arr.sort(function (a, b) {
-    if (order == Const.SORT_DESC) {
-      return a[sortField] > b[sortField] ? -1 : a[sortField] < b[sortField] ? 1 : 0;
+    if (sortFunc) {
+      return sortFunc(a, b, order);
     } else {
-      return a[sortField] < b[sortField] ? -1 : a[sortField] > b[sortField] ? 1 : 0;
+      if (order == Const.SORT_DESC) {
+        return a[sortField] > b[sortField] ? -1 : a[sortField] < b[sortField] ? 1 : 0;
+      } else {
+        return a[sortField] < b[sortField] ? -1 : a[sortField] > b[sortField] ? 1 : 0;
+      }
     }
   });
+
   return arr;
 }
 
@@ -2391,6 +2412,8 @@ var TableDataStore = exports.TableDataStore = (function () {
     this.data = data;
     this.filteredData = null;
     this.isOnFilter = false;
+    this.filterObj = null;
+    this.searchText = null;
     this.sortObj = {};
     this.pageObj = {};
   }
@@ -2405,6 +2428,10 @@ var TableDataStore = exports.TableDataStore = (function () {
     setData: {
       value: function setData(data) {
         this.data = data;
+        if (this.isOnFilter) {
+          if (null !== this.filterObj) this.filter(this.filterObj);
+          if (null !== this.searchText) this.search(this.searchText);
+        }
       }
     },
     getCurrentDisplayData: {
@@ -2417,14 +2444,14 @@ var TableDataStore = exports.TableDataStore = (function () {
       }
     },
     sort: {
-      value: function sort(order, sortField) {
+      value: function sort(order, sortField, sortFunc) {
         this.sortObj = {
           order: order,
           sortField: sortField
         };
 
         var currentDisplayData = this.getCurrentDisplayData();
-        currentDisplayData = _sort(currentDisplayData, sortField, order);;
+        currentDisplayData = _sort(currentDisplayData, sortField, order, sortFunc);
 
         return this;
       }
@@ -2507,7 +2534,9 @@ var TableDataStore = exports.TableDataStore = (function () {
         if (Object.keys(filterObj).length == 0) {
           this.filteredData = null;
           this.isOnFilter = false;
+          this.filterObj = null;
         } else {
+          this.filterObj = filterObj;
           this.filteredData = this.data.filter(function (row) {
             var valid = true;
             for (var key in filterObj) {
@@ -2527,11 +2556,13 @@ var TableDataStore = exports.TableDataStore = (function () {
         if (searchText.trim() === "") {
           this.filteredData = null;
           this.isOnFilter = false;
+          this.searchText = null;
         } else {
+          this.searchText = searchText;
           this.filteredData = this.data.filter(function (row) {
             var valid = false;
             for (var key in row) {
-              if (row[key].toString().toLowerCase().indexOf(searchText.toLowerCase()) !== -1) {
+              if (row[key] && row[key].toString().toLowerCase().indexOf(searchText.toLowerCase()) !== -1) {
                 valid = true;
                 break;
               }
@@ -2660,7 +2691,7 @@ var ToolBar = (function (_React$Component) {
             onClick: this.handleDropRowBtnClick.bind(this) },
           "Delete"
         ) : null;
-        var searchTextInput = this.props.enableSearch ? React.createElement("input", { type: "text", placeholder: "Search", onKeyUp: this.handleKeyUp.bind(this) }) : null;
+        var searchTextInput = this.props.enableSearch ? React.createElement("input", { type: "text", placeholder: this.props.searchPlaceholder ? this.props.searchPlaceholder : "Search", onKeyUp: this.handleKeyUp.bind(this) }) : null;
         var modal = this.props.enableInsert ? this.renderInsertRowModal(modalClassName) : null;
         var warningStyle = {
           display: "none",
@@ -2777,7 +2808,8 @@ ToolBar.propTypes = {
   enableInsert: React.PropTypes.bool,
   enableDelete: React.PropTypes.bool,
   enableSearch: React.PropTypes.bool,
-  columns: React.PropTypes.array
+  columns: React.PropTypes.array,
+  searchPlaceholder: React.PropTypes.string
 };
 
 ToolBar.defaultProps = {
