@@ -14,15 +14,16 @@ class BootstrapTable extends React.Component{
 		super(props);
 
     this._attachCellEditFunc();
-    this.sortTable = false;
-    this.order = Const.SORT_DESC;
-    this.sortField = null;
     let keyField = null;
+    let customSortFuncMap = {};
     this.props.children.forEach(function(column){
-      if(column.props.dataSort) this.sortTable = true;
       if(column.props.isKey){
         if(keyField != null) throw "Error. Multiple key column be detected in TableHeaderColumn.";
         keyField = column.props.dataField;
+      }
+
+      if(column.props.sortFunc){
+        customSortFuncMap[column.props.dataField] = column.props.sortFunc;
       }
     }, this);
     if(keyField == null)
@@ -40,7 +41,7 @@ class BootstrapTable extends React.Component{
     } else{
       this.store = new TableDataStore(this.props.data);
     }
-    this.store.setProps(this.props.pagination, keyField);
+    this.store.setProps(this.props.pagination, keyField, customSortFuncMap);
     this.state = {
       data: this.getTableData()
     };
@@ -89,7 +90,6 @@ class BootstrapTable extends React.Component{
         name: column.props.dataField,
         align: column.props.dataAlign,
         sort: column.props.dataSort,
-        sortFunc: column.props.sortFunc,
         format: column.props.dataFormat,
         editable: column.props.editable,
         hidden: column.props.hidden,
@@ -127,8 +127,8 @@ class BootstrapTable extends React.Component{
     )
   }
 
-  handleSort(order, sortField, sortFunc){
-    let result = this.store.sort(order, sortField, sortFunc).get();
+  handleSort(order, sortField){
+    let result = this.store.sort(order, sortField).get();
     this.setState({
       data: result
     });

@@ -11,7 +11,7 @@ class TableHeaderColumn extends React.Component{
     if(!this.props.dataSort)return;
     var dom = this.refs.innerDiv.getDOMNode();
     this.order = this.order == Const.SORT_DESC?Const.SORT_ASC:Const.SORT_DESC;
-    this.props.clearSortCaret(this.order, this.props.dataField, this.props.sortFunc);
+    this.props.clearSortCaret(this.order, this.props.dataField);
     dom.appendChild(Util.renderSortCaret(this.order));
   }
 

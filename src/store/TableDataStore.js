@@ -41,17 +41,19 @@ export class TableDataStore{
 
   constructor(data){
     this.data = data;
+    this.customSortFuncMap = null;
     this.filteredData = null;
     this.isOnFilter = false;
     this.filterObj = null;
     this.searchText = null;
-    this.sortObj = {};
+    this.sortObj = null;
     this.pageObj = {};
   }
 
-  setProps(isPagination, keyField){
+  setProps(isPagination, keyField, customSortFuncMap){
     this.keyField = keyField;
     this.enablePagination = isPagination;
+    this.customSortFuncMap = customSortFuncMap;
   }
 
   setData(data) {
@@ -60,6 +62,9 @@ export class TableDataStore{
       if(null !== this.filterObj) this.filter(this.filterObj);
       if(null !== this.searchText) this.search(this.searchText);
     }
+    if(this.sortObj){
+      this.sort(this.sortObj.order, this.sortObj.sortField);
+    }
   }
 
   getCurrentDisplayData(){
@@ -67,13 +72,14 @@ export class TableDataStore{
     else return this.data;
   }
 
-  sort(order, sortField, sortFunc){
+  sort(order, sortField){
     this.sortObj = {
       order: order,
       sortField: sortField
     };
 
     let currentDisplayData = this.getCurrentDisplayData();
+    let sortFunc = this.customSortFuncMap[sortField];
     currentDisplayData = _sort(currentDisplayData, sortField, order, sortFunc);
 
     return this;
