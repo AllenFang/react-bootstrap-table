@@ -16,7 +16,8 @@ class BootstrapTable extends React.Component{
     this._attachCellEditFunc();
     let keyField = null;
     let customSortFuncMap = {};
-    this.props.children.forEach(function(column){
+
+    React.Children.forEach(this.props.children, function(column){
       if(column.props.isKey){
         if(keyField != null) throw "Error. Multiple key column be detected in TableHeaderColumn.";
         keyField = column.props.dataField;
@@ -26,6 +27,7 @@ class BootstrapTable extends React.Component{
         customSortFuncMap[column.props.dataField] = column.props.sortFunc;
       }
     }, this);
+
     if(keyField == null)
       throw "Error. No any key column defined in TableHeaderColumn. Use 'isKey={true}' to specify an unique column after version 0.5.4.";
 
@@ -82,10 +84,14 @@ class BootstrapTable extends React.Component{
 
   render(){
     var tableClass = classSet("react-bs-table");
+    var childrens = this.props.children;
     var style = {
       height: this.props.height
     };
-    var columns = this.props.children.map(function(column, i){
+    if(!Array.isArray(this.props.children)){
+      childrens = [this.props.children];
+    }
+    var columns = childrens.map(function(column, i){
       return {
         name: column.props.dataField,
         align: column.props.dataAlign,
@@ -153,7 +159,7 @@ class BootstrapTable extends React.Component{
 
   handleEditCell(newVal, rowIndex, colIndex){
     let fieldName;
-    this.props.children.forEach(function(column, i){
+    React.Children.forEach(this.props.children, function(column, i){
       if(i == colIndex){
         fieldName = column.props.dataField;
         return false;
@@ -264,12 +270,20 @@ class BootstrapTable extends React.Component{
   }
 
   renderToolBar(){
-    let columns = this.props.children.map(function(column){
-      return {
-        name: column.props.children,
-        field: column.props.dataField
-      };
-    });
+    let columns;
+    if(Array.isArray(this.props.children)){
+      columns = this.props.children.map(function(column){
+        return {
+          name: column.props.children,
+          field: column.props.dataField
+        };
+      });
+    } else {
+      columns = [{
+        name: this.props.children.props.children,
+        field: this.props.children.props.dataField
+      }];
+    }
     if(this.props.insertRow || this.props.deleteRow || this.props.search){
       return(
         <div className="tool-bar">

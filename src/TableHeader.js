@@ -66,9 +66,14 @@ class TableHeader extends React.Component{
   }
 
   _attachClearSortCaretFunc(){
-    for(let i=0;i<this.props.children.length;i++){
-      this.props.children[i] =
-        React.cloneElement(this.props.children[i], {key: i, clearSortCaret: this.clearSortCaret.bind(this)});
+    if(Array.isArray(this.props.children)){
+      for(let i=0;i<this.props.children.length;i++){
+        this.props.children[i] =
+          React.cloneElement(this.props.children[i], {key: i, clearSortCaret: this.clearSortCaret.bind(this)});
+      }
+    } else {
+      this.props.children =
+        React.cloneElement(this.props.children, {key: 0, clearSortCaret: this.clearSortCaret.bind(this)});
     }
   }
 }
