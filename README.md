@@ -133,6 +133,7 @@ Use ```insertRow``` to enable the insert row on table.</br>
 Use ```deleteRow``` to enable the delete row on table.</br>
 Use ```columnFilter``` to enable the column filter on table.</br>
 Use ```search``` to enable the search on table.</br>
+Use ```searchPlaceholder``` to change the placeholder text in the search field.</br>
 Use ```selectRow``` to enable the row selection on table, this attribute accept an object which contain these properties.</br>
 - ```mode```(required): radio/checkbox, to specify the selection is single or multiple.</br>
 - ```clickToSelect```(optional): if true, click on row will trigger row selection, default is false.</br>
@@ -162,6 +163,7 @@ Use ```dataSort``` to enable the sorting in column. Default value is false(disab
 Use ```dataFormat``` to customize this column.Must give it as a function.</br>
 Use ```hidden``` to enable hidden column.</br>
 Use ```className``` to add custom css class for table column</br>
+Use ```sortFunc``` to customize your sort function.</br>
 
 #### About TableDataSet
 After v0.8.0, rect-bootstrap-table provide the ability of updating table data on fly. How to do it?
