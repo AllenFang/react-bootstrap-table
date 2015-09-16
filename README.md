@@ -166,7 +166,7 @@ Use ```className``` to add custom css class for table column</br>
 Use ```sortFunc``` to customize your sort function.</br>
 
 #### About TableDataSet
-After v0.8.0, rect-bootstrap-table provide the ability of updating table data on fly. How to do it?
+After v0.8.0, react-bootstrap-table provide the ability of updating table data on fly. How to do it?
 
 - Import TableDataSet
 ```
