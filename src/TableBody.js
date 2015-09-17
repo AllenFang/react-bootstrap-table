@@ -166,7 +166,7 @@ class TableBody extends React.Component{
         display: column.hidden?"none":null,
         width: column.width
       };
-      return (<th style={style} key={i}></th>);
+      return (<th style={style} key={i} className={column.className}></th>);
     });
 
     return(

@@ -26,8 +26,7 @@ class TableHeaderColumn extends React.Component{
       width: this.props.width
     };
 
-    var classes = classSet(this.props.dataSort?"sort-column":"");
-
+    var classes = this.props.className+" "+(this.props.dataSort?"sort-column":"");
     return(
       <th className={classes} style={thStyle}>
         <div ref="innerDiv" className="th-inner table-header-column"
