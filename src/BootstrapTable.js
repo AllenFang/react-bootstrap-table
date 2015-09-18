@@ -222,6 +222,9 @@ class BootstrapTable extends React.Component{
         data: result
       });
     }
+    if(this.props.options.afterDeleteRow){
+      this.props.options.afterDeleteRow(this.refs.body.getSelectedRowKeys());
+    }
   }
 
   handleFilterData(filterObj){
@@ -343,7 +346,8 @@ BootstrapTable.propTypes = {
   options: React.PropTypes.shape({
     sortName: React.PropTypes.string,
     sortOrder: React.PropTypes.string,
-    afterTableComplete: React.PropTypes.func
+    afterTableComplete: React.PropTypes.func,
+    afterDeleteRow: React.PropTypes.func
   })
 };
 BootstrapTable.defaultProps = {

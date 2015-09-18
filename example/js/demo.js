@@ -36,6 +36,11 @@ function onAfterTableComplete(){
   console.log('Table render complete.');
 }
 
+function onAfterDeleteRow(rowKeys){
+  console.log("onAfterDeleteRow");
+  console.log(rowKeys);
+}
+
 var selectRowProp = {
   mode: "checkbox",
   clickToSelect: true,
@@ -54,7 +59,8 @@ var cellEditProp = {
 var options = {
   sortName: "name",  //default sort column name
   sortOrder: "desc",  //default sort order
-  afterTableComplete: onAfterTableComplete // A hook for after table render complete.
+  afterTableComplete: onAfterTableComplete, // A hook for after table render complete.
+  afterDeleteRow: onAfterDeleteRow
 };
 
 
