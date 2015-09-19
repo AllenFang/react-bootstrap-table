@@ -64,12 +64,7 @@ class BootstrapTable extends React.Component{
     return result;
   }
 
-  componentWillUpdate(nextProps, nextState){
-    console.log('will update');
-  }
-
   componentWillReceiveProps(nextProps){
-    console.log('will receieve props');
     if(Array.isArray(nextProps.data)){
       this.store.setData(nextProps.data);
       this.setState({
@@ -249,6 +244,10 @@ class BootstrapTable extends React.Component{
         data: result
       });
     }
+
+    if(this.props.options.afterInsertRow){
+      this.props.options.afterInsertRow(newObj);
+    }
   }
 
   handleDropRow(){
@@ -402,7 +401,8 @@ BootstrapTable.propTypes = {
     sortName: React.PropTypes.string,
     sortOrder: React.PropTypes.string,
     afterTableComplete: React.PropTypes.func,
-    afterDeleteRow: React.PropTypes.func
+    afterDeleteRow: React.PropTypes.func,
+    afterInsertRow: React.PropTypes.func
   })
 };
 BootstrapTable.defaultProps = {
