@@ -41,6 +41,11 @@ function onAfterDeleteRow(rowKeys){
   console.log(rowKeys);
 }
 
+function onAfterInsertRow(row){
+  console.log("onAfterInsertRow");
+  console.log(row);
+}
+
 var selectRowProp = {
   mode: "checkbox",
   clickToSelect: true,
@@ -60,7 +65,8 @@ var options = {
   sortName: "name",  //default sort column name
   sortOrder: "desc",  //default sort order
   afterTableComplete: onAfterTableComplete, // A hook for after table render complete.
-  afterDeleteRow: onAfterDeleteRow
+  afterDeleteRow: onAfterDeleteRow,  // A hook for after droping rows.
+  afterInsertRow: onAfterInsertRow   // A hook for after insert rows
 };
 
 
