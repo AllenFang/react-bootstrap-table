@@ -5,7 +5,7 @@ class TableRow extends React.Component{
 
   rowClick(e){
     if(e.target.tagName !== "INPUT")
-      this.props.selectRow.__onSelect__(e.currentTarget.rowIndex, !this.props.isSelected);
+      this.props.onSelectRow(e.currentTarget.rowIndex, !this.props.isSelected);
   }
 
   render(){
@@ -28,6 +28,7 @@ class TableRow extends React.Component{
 }
 TableRow.propTypes = {
   isSelected: React.PropTypes.bool,
-  enableCellEdit: React.PropTypes.bool
+  enableCellEdit: React.PropTypes.bool,
+  onSelectRow: React.PropTypes.func
 };
 export default TableRow;

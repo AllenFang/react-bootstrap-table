@@ -48,6 +48,7 @@ export class TableDataStore{
     this.searchText = null;
     this.sortObj = null;
     this.pageObj = {};
+    this.selected = [];
   }
 
   setProps(isPagination, keyField, customSortFuncMap){
@@ -65,6 +66,14 @@ export class TableDataStore{
     if(this.sortObj){
       this.sort(this.sortObj.order, this.sortObj.sortField);
     }
+  }
+
+  setSelectedRowKey(selectedRowKeys){
+    this.selected = selectedRowKeys;
+  }
+
+  getSelectedRowKeys(){
+    return this.selected;
   }
 
   getCurrentDisplayData(){

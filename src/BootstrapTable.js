@@ -22,7 +22,6 @@ class BootstrapTable extends React.Component{
         if(keyField != null) throw "Error. Multiple key column be detected in TableHeaderColumn.";
         keyField = column.props.dataField;
       }
-
       if(column.props.sortFunc){
         customSortFuncMap[column.props.dataField] = column.props.sortFunc;
       }
@@ -44,8 +43,14 @@ class BootstrapTable extends React.Component{
       this.store = new TableDataStore(this.props.data);
     }
     this.store.setProps(this.props.pagination, keyField, customSortFuncMap);
+
+    if(this.props.selectRow && this.props.selectRow.selected){
+      this.store.setSelectedRowKey(this.props.selectRow.selected);
+    }
+
     this.state = {
-      data: this.getTableData()
+      data: this.getTableData(),
+      selectedRowKeys: this.store.getSelectedRowKeys()
     };
   }
 
@@ -59,11 +64,23 @@ class BootstrapTable extends React.Component{
     return result;
   }
 
+  componentWillUpdate(nextProps, nextState){
+    console.log('will update');
+  }
+
   componentWillReceiveProps(nextProps){
+    console.log('will receieve props');
     if(Array.isArray(nextProps.data)){
       this.store.setData(nextProps.data);
       this.setState({
         data: this.getTableData()
+      });
+    }
+    if(nextProps.selectRow && nextProps.selectRow.selected){
+      //set default select rows to store.
+      this.store.setSelectedRowKey(nextProps.selectRow.selected);
+      this.setState({
+        selectedRowKeys: nextProps.selectRow.selected
       });
     }
   }
@@ -125,7 +142,9 @@ class BootstrapTable extends React.Component{
             keyField={this.store.getKeyField()}
             condensed={this.props.condensed}
             selectRow={this.props.selectRow}
-            cellEdit={this.props.cellEdit}/>
+            cellEdit={this.props.cellEdit}
+            selectedRowKeys={this.state.selectedRowKeys}
+            onSelectRow={this.handleSelectRow.bind(this)}/>
           {tableFilter}
         </div>
         {pagination}
@@ -149,11 +168,42 @@ class BootstrapTable extends React.Component{
 
   handleSelectAllRow(e){
     var isSelected = e.currentTarget.checked;
+    let selectedRowKeys = [];
     if(isSelected){
-      let selectedKey = this.store.getAllRowkey();
-      this.props.selectRow.__onSelectAll__(selectedKey);
-    }else{
-      this.props.selectRow.__onSelectAll__([]);
+      selectedRowKeys = this.store.getAllRowkey();
+    }
+
+    this.store.setSelectedRowKey(selectedRowKeys);
+    this.setState({
+      selectedRowKeys: selectedRowKeys
+    });
+    if(this.props.selectRow.onSelectAll){
+      this.props.selectRow.onSelectAll(isSelected);
+    }
+  }
+
+  handleSelectRow(row, isSelected){
+    let currSelected = this.store.getSelectedRowKeys();
+    let rowKey = row[this.store.getKeyField()];
+    if(this.props.selectRow.mode === Const.ROW_SELECT_SINGLE){
+      this.store.setSelectedRowKey(isSelected?[rowKey]:[]);
+    } else {
+      if(isSelected) {
+        currSelected.push(rowKey);
+      } else {
+        currSelected = currSelected.filter(function(key){
+          return rowKey !== key;
+        });
+      }
+    }
+
+    this.store.setSelectedRowKey(currSelected);
+    this.setState({
+      selectedRowKeys: currSelected
+    });
+
+    if(this.props.selectRow.onSelect){
+      this.props.selectRow.onSelect(row, isSelected);
     }
   }
 
@@ -203,7 +253,10 @@ class BootstrapTable extends React.Component{
 
   handleDropRow(){
     let result;
-    this.store.remove(this.refs.body.getSelectedRowKeys());
+    let dropRowKeys = this.store.getSelectedRowKeys();
+
+    this.store.remove(dropRowKeys);  //remove selected Row
+    this.store.setSelectedRowKey([]);  //clear selected row key
 
     if(this.props.pagination){
       let sizePerPage = this.refs.pagination.getSizePerPage();
@@ -213,17 +266,19 @@ class BootstrapTable extends React.Component{
         currentPage = currLastPage;
       result = this.store.page(currentPage, sizePerPage).get();
       this.setState({
-        data: result
+        data: result,
+        selectedRowKeys: this.store.getSelectedRowKeys()
       });
       this.refs.pagination.changePage(currentPage);
     }else{
       result = this.store.get();
       this.setState({
-        data: result
+        data: result,
+        selectedRowKeys: this.store.getSelectedRowKeys()
       });
     }
     if(this.props.options.afterDeleteRow){
-      this.props.options.afterDeleteRow(this.refs.body.getSelectedRowKeys());
+      this.props.options.afterDeleteRow(dropRowKeys);
     }
   }
 

@@ -10,51 +10,9 @@ class TableBody extends React.Component{
   constructor(props) {
 		super(props);
     this.state = {
-      currEditCell: null,
-      selectedRowKey: this._getSelectedKeyFromProp(props)
+      currEditCell: null
     };
-    this._attachRowSelectFunc();
     this.editing = false;
-  }
-
-  componentDidUpdate(prevProps, prevState){
-    this.props.selectRow.selected = this.state.selectedRowKey;
-    this._attachRowSelectFunc();
-  }
-
-  componentWillReceiveProps(nextProps){
-    if(typeof nextProps.selectRow.selected === 'undefined') return;
-    var diff = nextProps.selectRow.selected?false:true;
-    diff = nextProps.selectRow.selected.length != this.state.selectedRowKey.length;
-    if(!diff){
-      for(let i=0;i<nextProps.selectRow.selected.length;i++){
-        if(this.state.selectedRowKey.indexOf(nextProps.selectRow.selected[i]) == -1){
-          diff = true;
-          break;
-        }
-      }
-    }
-    if(diff){
-      this.setState({
-        selectedRowKey: this._getSelectedKeyFromProp(nextProps)
-      });
-    }
-  }
-
-  _getSelectedKeyFromProp(prop){
-    var selected = prop.selectRow.selected || [];
-    if(prop.selectRow.mode === Const.ROW_SELECT_SINGLE && prop.selectRow.selected){
-      //if row selection is single, just pick the first item in 'selected'
-      selected = prop.selectRow.selected.length > 0?[prop.selectRow.selected[0]]:[];
-    }
-    return selected;
-  }
-
-  _attachRowSelectFunc(){
-    if(this.props.selectRow){
-      this.props.selectRow.__onSelect__ = this.handleSelectRow.bind(this);
-      this.props.selectRow.__onSelectAll__ = this.handleSelectAllRow.bind(this);
-    }
   }
 
   render(){
@@ -118,12 +76,13 @@ class TableBody extends React.Component{
           }
         }
       }, this);
-      var selected = this.state.selectedRowKey.indexOf(data[this.props.keyField]) != -1;
+      var selected = this.props.selectedRowKeys.indexOf(data[this.props.keyField]) != -1;
       var selectRowColumn = isSelectRowDefined?this.renderSelectRowColumn(selected):null;
       return (
         <TableRow isSelected={selected} key={r}
           selectRow={isSelectRowDefined?this.props.selectRow:undefined}
-          enableCellEdit={this.props.cellEdit.mode !== Const.CELL_EDIT_NONE}>
+          enableCellEdit={this.props.cellEdit.mode !== Const.CELL_EDIT_NONE}
+          onSelectRow={this.handleSelectRow.bind(this)}>
           {selectRowColumn}{tableColumns}
         </TableRow>
       )
@@ -184,38 +143,12 @@ class TableBody extends React.Component{
         selectedRow = row;
       }
     }, this);
-    var currSelectedRorKey = this.state.selectedRowKey;
-    if(this.props.selectRow.mode == Const.ROW_SELECT_SINGLE){
-      currSelectedRorKey = [];
-    }
-    if(isSelected){
-      if(currSelectedRorKey.indexOf(key) == -1)
-        currSelectedRorKey.push(key);
-    }else{
-      currSelectedRorKey = currSelectedRorKey.filter(function(element){
-        return key !== element;
-      });
-    }
-    this.setState({
-      selectedRowKey: currSelectedRorKey
-    });
-    if(this.props.selectRow.onSelect){
-      this.props.selectRow.onSelect(selectedRow, isSelected);
-    }
-  }
-
-  handleSelectAllRow(rowKeys){
-    this.setState({
-      selectedRowKey: rowKeys
-    });
-    if(this.props.selectRow.onSelectAll){
-      this.props.selectRow.onSelectAll(rowKeys.length==0?false:true);
-    }
+    this.props.onSelectRow(selectedRow, isSelected);
   }
 
   handleSelectRowColumChange(e){
     if(!this.props.selectRow.clickToSelect || !this.props.selectRow.clickToSelectAndEditCell){
-      this.props.selectRow.__onSelect__(
+      this.handleSelectRow(
         e.currentTarget.parentElement.parentElement.rowIndex, e.currentTarget.checked);
     }
   }
@@ -235,7 +168,7 @@ class TableBody extends React.Component{
 
     if(this.props.selectRow.clickToSelectAndEditCell){
       //if edit cell, trigger row selections also
-      let selected = this.state.selectedRowKey.indexOf(this.props.data[rowIndex][this.props.keyField]) != -1;
+      let selected = this.props.selectedRowKeys.indexOf(this.props.data[rowIndex][this.props.keyField]) != -1;
       this.handleSelectRow(rowIndex+1, !selected);
     }
     this.setState(stateObj);
@@ -259,10 +192,6 @@ class TableBody extends React.Component{
     return this.props.selectRow.mode == Const.ROW_SELECT_SINGLE ||
           this.props.selectRow.mode == Const.ROW_SELECT_MULTI;
   }
-
-  getSelectedRowKeys(){
-    return this.state.selectedRowKey;
-  }
 }
 TableBody.propTypes = {
   data: React.PropTypes.array,
@@ -270,6 +199,8 @@ TableBody.propTypes = {
   striped: React.PropTypes.bool,
   hover: React.PropTypes.bool,
   condensed: React.PropTypes.bool,
-  keyField: React.PropTypes.string
+  keyField: React.PropTypes.string,
+  selectedRowKeys: React.PropTypes.array,
+  onSelectRow: React.PropTypes.func
 };
 export default TableBody;
