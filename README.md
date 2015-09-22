@@ -152,6 +152,8 @@ Use ```options``` to set other settings for react-bootstrap-table, this prop acc
 - ```sortName```: Assign a default sort field by this property</br>
 - ```sortOrder```(asc/desc): Assign a default sort order</br>
 - ```afterTableComplete```: Assign a callback function which will be called after table update</br>
+- ```afterDeleteRow```: Assign a callback function which will be called after row delete</br>
+- ```afterInsertRow```: Assign a callback function which will be called after row insert</br>
 
 
 ####The attributes in &lt;TableHeaderColumn&gt;:</br>
