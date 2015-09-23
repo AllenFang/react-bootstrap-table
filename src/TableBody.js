@@ -77,7 +77,8 @@ class TableBody extends React.Component{
         }
       }, this);
       var selected = this.props.selectedRowKeys.indexOf(data[this.props.keyField]) != -1;
-      var selectRowColumn = isSelectRowDefined?this.renderSelectRowColumn(selected):null;
+      var selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn?
+                              this.renderSelectRowColumn(selected):null;
       return (
         <TableRow isSelected={selected} key={r}
           selectRow={isSelectRowDefined?this.props.selectRow:undefined}
@@ -118,7 +119,7 @@ class TableBody extends React.Component{
       let style = {
         width:35
       }
-      selectRowHeader = (<th style={style} key={-1}></th>);
+      selectRowHeader = this.props.selectRow.hideSelectColumn?null:(<th style={style} key={-1}></th>);
     }
     var theader = this.props.columns.map(function(column, i){
       let style={
@@ -157,6 +158,8 @@ class TableBody extends React.Component{
     this.editing = true;
     if(this._isSelectRowDefined()){
       columnIndex--;
+      if(this.props.selectRow.hideSelectColumn)
+        columnIndex++;
     }
     rowIndex--;
     var stateObj = {

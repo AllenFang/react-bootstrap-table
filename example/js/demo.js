@@ -49,6 +49,7 @@ function onAfterInsertRow(row){
 var selectRowProp = {
   mode: "checkbox",
   clickToSelect: true,
+  // hideSelectColumn: true, //you can hide select column, if you enable clickToSelect
   selected: [], //default select on table
   bgColor: "rgb(238, 193, 213)",
   onSelect: onRowSelect,

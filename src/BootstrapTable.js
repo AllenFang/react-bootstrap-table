@@ -125,6 +125,7 @@ class BootstrapTable extends React.Component{
         {toolBar}
         <div ref="table" style={style} className={tableClass}>
           <TableHeader rowSelectType={this.props.selectRow.mode}
+                       hideSelectColumn={this.props.selectRow.hideSelectColumn}
                        sortName={this.props.options.sortName}
                        sortOrder={this.props.options.sortOrder}
                        onSort={this.handleSort.bind(this)}
@@ -386,6 +387,7 @@ BootstrapTable.propTypes = {
     onSelect: React.PropTypes.func,
     onSelectAll: React.PropTypes.func,
     clickToSelect: React.PropTypes.bool,
+    hideSelectColumn: React.PropTypes.bool,
     clickToSelectAndEditCell: React.PropTypes.bool
   }),
   cellEdit: React.PropTypes.shape({
@@ -419,6 +421,7 @@ BootstrapTable.defaultProps = {
     onSelect: undefined,
     onSelectAll: undefined,
     clickToSelect: false,
+    hideSelectColumn: false,
     clickToSelectAndEditCell: false
   },
   cellEdit:{
