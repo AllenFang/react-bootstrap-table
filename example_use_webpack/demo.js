@@ -1,5 +1,4 @@
 'use strict';
-require('bootstrap');
 require('../css/react-bootstrap-table.css');
 import React from 'react';
 import {BootstrapTable, TableHeaderColumn} from '../src/';
