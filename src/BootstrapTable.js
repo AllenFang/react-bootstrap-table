@@ -182,7 +182,7 @@ class BootstrapTable extends React.Component{
     let currSelected = this.store.getSelectedRowKeys();
     let rowKey = row[this.store.getKeyField()];
     if(this.props.selectRow.mode === Const.ROW_SELECT_SINGLE){
-      this.store.setSelectedRowKey(isSelected?[rowKey]:[]);
+      currSelected = isSelected?[rowKey]:[]
     } else {
       if(isSelected) {
         currSelected.push(rowKey);
