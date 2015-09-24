@@ -1,3 +1,4 @@
+
 import React from 'react';
 import classSet from 'classnames';
 import Const from './Const';
@@ -132,6 +133,7 @@ class BootstrapTable extends React.Component{
             {this.props.children}
           </TableHeader>
           <TableBody ref="body" data={this.state.data} columns={columns}
+            trClassName={this.props.trClassName}
             striped={this.props.striped}
             hover={this.props.hover}
             keyField={this.store.getKeyField()}
@@ -253,7 +255,10 @@ class BootstrapTable extends React.Component{
   handleDropRow(){
     let result;
     let dropRowKeys = this.store.getSelectedRowKeys();
-
+    //add confirm befor the delete action
+    if(dropRowKeys&&dropRowKeys.length>0){
+      if(!confirm('Are you sure want delete?')){return}
+    }
     this.store.remove(dropRowKeys);  //remove selected Row
     this.store.setSelectedRowKey([]);  //clear selected row key
 
@@ -330,9 +335,13 @@ class BootstrapTable extends React.Component{
     let columns;
     if(Array.isArray(this.props.children)){
       columns = this.props.children.map(function(column){
+        var props=column.props;
         return {
-          name: column.props.children,
-          field: column.props.dataField
+          name: props.children,
+          field: props.dataField,
+          //for create eidtor, no params for column.editable() indicate that editor for new row
+          editable:props.editable&&(typeof props.editable==="function")?props.editable():props.editable,
+          format:props.format?format:false
         };
       });
     } else {

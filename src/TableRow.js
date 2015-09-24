@@ -10,18 +10,21 @@ class TableRow extends React.Component{
 
   render(){
 
-    var rowStyle = {
-      backgroundColor: this.props.isSelected?this.props.selectRow.bgColor:null
+    var trCss={
+      style:{
+        backgroundColor: this.props.isSelected?this.props.selectRow.bgColor:null
+      },
+      className:this.props.className||''
     };
 
     if(this.props.selectRow && !this.props.enableCellEdit &&
       (this.props.selectRow.clickToSelect || this.props.selectRow.clickToSelectAndEditCell)){
       return(
-        <tr style={rowStyle} onClick={this.rowClick.bind(this)}>{this.props.children}</tr>
+        <tr {...trCss} onClick={this.rowClick.bind(this)}>{this.props.children}</tr>
       )
     }else{
       return(
-        <tr style={rowStyle}>{this.props.children}</tr>
+        <tr {...trCss}>{this.props.children}</tr>
       )
     }
   }

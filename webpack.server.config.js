@@ -5,16 +5,20 @@ module.exports = {
     entry: [
         'webpack-dev-server/client?http://localhost:3004', // WebpackDevServer host and port
         'webpack/hot/only-dev-server',
-        "./example/js/demo.js"
+        "./example_use_webpack/demo.js"
     ],
     devtool: 'eval',
     output: {
-        path: path.join(__dirname, 'example/js'),
-        publicPath: 'http://localhost:3004/',
+        path: path.join(__dirname, 'example_use_webpack'),
         filename: 'demo.bundle.js'
     },
+    serverConfig:{
+        port:'3004',//server port
+        publicPath:'/',//js path
+        contentBase:'example_use_webpack/'//web root path
+    },
     resolve: {
-        extensions: ['', '.js', '.jsx', '.css', '.less']
+        extensions: ['', '.js', '.jsx']
     },
     module: {
         loaders: [
@@ -32,6 +36,7 @@ module.exports = {
     },
 
     plugins: [
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin()
     ]
 }

@@ -44,3 +44,11 @@
 .react-bs-container .tool-bar{
   margin-bottom: 5px
 }
+
+.react-bs-table .form-control.editor{
+  width:100%;
+  top:0;
+  left:0;
+  height: 100%;
+  position: absolute;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import Const from './Const';
+import Editor from './Editor'
 
 class TableEditColumn extends React.Component{
 
@@ -21,20 +22,31 @@ class TableEditColumn extends React.Component{
   }
 
   componentDidMount(){
-    var input = this.refs.inputRef.getDOMNode();
-    input.value = this.props.children;
-    input.focus();
+      var input = this.refs.inputRef.getDOMNode();
+      input.value = this.props.children||'';
+      input.focus();
   }
 
   render(){
-    return (
-      <td>
-        <input ref="inputRef" type="text"
-          onKeyDown={this.handleKeyPress.bind(this)}
-          onBlur={this.handleBlur.bind(this)}/>
-      </td>
+    var editable=this.props.editable,
+        format=this.props.format,
+        attr={
+            ref:"inputRef",
+            onKeyDown:this.handleKeyPress.bind(this),
+            onBlur:this.handleBlur.bind(this)
+        };
+        //put placeholder if exist
+        editable.placeholder&&(attr.placeholder=editable.placeholder);
+
+
+    return(
+        <td ref="td" style={{position:'relative'}}>
+            {Editor(editable,attr,format)}
+        </td>
     )
   }
+
+
 }
 TableEditColumn.propTypes = {
   completeEdit: React.PropTypes.func,
@@ -42,5 +54,6 @@ TableEditColumn.propTypes = {
   colIndex: React.PropTypes.number,
   blurToSave: React.PropTypes.bool
 };
+
 
 export default TableEditColumn;

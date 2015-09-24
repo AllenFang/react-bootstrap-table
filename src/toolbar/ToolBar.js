@@ -1,6 +1,7 @@
 import React from 'react';
 import classSet from 'classnames';
 import Const from '../Const';
+import Editor from '../Editor';
 
 class ToolBar extends React.Component{
 
@@ -73,10 +74,13 @@ class ToolBar extends React.Component{
   renderInsertRowModal(modalClassName){
 
     var inputField = this.props.columns.map(function(column, i){
+      var editable=column.editable,
+          format=column.format,
+          attr={ref:column.field+i,placeholder:editable.placeholder?editable.placeholder:column.name};
       return(
         <div className="form-group" key={column.field}>
           <label>{column.name}</label>
-          <input ref={column.field+i} type="text" className="form-control" placeholder={column.name}></input>
+          {Editor(editable,attr,format)}
         </div>
       );
     });
