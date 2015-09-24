@@ -729,17 +729,19 @@ var BootstrapTable = (function (_React$Component) {
     _get(Object.getPrototypeOf(BootstrapTable.prototype), "constructor", this).call(this, props);
 
     this._attachCellEditFunc();
-    this.sortTable = false;
-    this.order = Const.SORT_DESC;
-    this.sortField = null;
     var keyField = null;
-    this.props.children.forEach(function (column) {
-      if (column.props.dataSort) this.sortTable = true;
+    var customSortFuncMap = {};
+
+    React.Children.forEach(this.props.children, function (column) {
       if (column.props.isKey) {
         if (keyField != null) throw "Error. Multiple key column be detected in TableHeaderColumn.";
         keyField = column.props.dataField;
       }
+      if (column.props.sortFunc) {
+        customSortFuncMap[column.props.dataField] = column.props.sortFunc;
+      }
     }, this);
+
     if (keyField == null) throw "Error. No any key column defined in TableHeaderColumn. Use 'isKey={true}' to specify an unique column after version 0.5.4.";
 
     if (!Array.isArray(this.props.data)) {
@@ -754,9 +756,15 @@ var BootstrapTable = (function (_React$Component) {
     } else {
       this.store = new TableDataStore(this.props.data);
     }
-    this.store.setProps(this.props.pagination, keyField);
+    this.store.setProps(this.props.pagination, keyField, customSortFuncMap);
+
+    if (this.props.selectRow && this.props.selectRow.selected) {
+      this.store.setSelectedRowKey(this.props.selectRow.selected);
+    }
+
     this.state = {
-      data: this.getTableData()
+      data: this.getTableData(),
+      selectedRowKeys: this.store.getSelectedRowKeys()
     };
   }
 
@@ -782,6 +790,13 @@ var BootstrapTable = (function (_React$Component) {
             data: this.getTableData()
           });
         }
+        if (nextProps.selectRow && nextProps.selectRow.selected) {
+          //set default select rows to store.
+          this.store.setSelectedRowKey(nextProps.selectRow.selected);
+          this.setState({
+            selectedRowKeys: nextProps.selectRow.selected
+          });
+        }
       }
     },
     componentDidUpdate: {
@@ -801,15 +816,18 @@ var BootstrapTable = (function (_React$Component) {
     render: {
       value: function render() {
         var tableClass = classSet("react-bs-table");
+        var childrens = this.props.children;
         var style = {
           height: this.props.height
         };
-        var columns = this.props.children.map(function (column, i) {
+        if (!Array.isArray(this.props.children)) {
+          childrens = [this.props.children];
+        }
+        var columns = childrens.map(function (column, i) {
           return {
             name: column.props.dataField,
             align: column.props.dataAlign,
             sort: column.props.dataSort,
-            sortFunc: column.props.sortFunc,
             format: column.props.dataFormat,
             editable: column.props.editable,
             hidden: column.props.hidden,
@@ -844,7 +862,9 @@ var BootstrapTable = (function (_React$Component) {
               keyField: this.store.getKeyField(),
               condensed: this.props.condensed,
               selectRow: this.props.selectRow,
-              cellEdit: this.props.cellEdit }),
+              cellEdit: this.props.cellEdit,
+              selectedRowKeys: this.state.selectedRowKeys,
+              onSelectRow: this.handleSelectRow.bind(this) }),
             tableFilter
           ),
           pagination
@@ -852,8 +872,8 @@ var BootstrapTable = (function (_React$Component) {
       }
     },
     handleSort: {
-      value: function handleSort(order, sortField, sortFunc) {
-        var result = this.store.sort(order, sortField, sortFunc).get();
+      value: function handleSort(order, sortField) {
+        var result = this.store.sort(order, sortField).get();
         this.setState({
           data: result
         });
@@ -870,18 +890,50 @@ var BootstrapTable = (function (_React$Component) {
     handleSelectAllRow: {
       value: function handleSelectAllRow(e) {
         var isSelected = e.currentTarget.checked;
+        var selectedRowKeys = [];
         if (isSelected) {
-          var selectedKey = this.store.getAllRowkey();
-          this.props.selectRow.__onSelectAll__(selectedKey);
+          selectedRowKeys = this.store.getAllRowkey();
+        }
+
+        this.store.setSelectedRowKey(selectedRowKeys);
+        this.setState({
+          selectedRowKeys: selectedRowKeys
+        });
+        if (this.props.selectRow.onSelectAll) {
+          this.props.selectRow.onSelectAll(isSelected);
+        }
+      }
+    },
+    handleSelectRow: {
+      value: function handleSelectRow(row, isSelected) {
+        var currSelected = this.store.getSelectedRowKeys();
+        var rowKey = row[this.store.getKeyField()];
+        if (this.props.selectRow.mode === Const.ROW_SELECT_SINGLE) {
+          this.store.setSelectedRowKey(isSelected ? [rowKey] : []);
         } else {
-          this.props.selectRow.__onSelectAll__([]);
+          if (isSelected) {
+            currSelected.push(rowKey);
+          } else {
+            currSelected = currSelected.filter(function (key) {
+              return rowKey !== key;
+            });
+          }
+        }
+
+        this.store.setSelectedRowKey(currSelected);
+        this.setState({
+          selectedRowKeys: currSelected
+        });
+
+        if (this.props.selectRow.onSelect) {
+          this.props.selectRow.onSelect(row, isSelected);
         }
       }
     },
     handleEditCell: {
       value: function handleEditCell(newVal, rowIndex, colIndex) {
         var fieldName = undefined;
-        this.props.children.forEach(function (column, i) {
+        React.Children.forEach(this.props.children, function (column, i) {
           if (i == colIndex) {
             fieldName = column.props.dataField;
             return false;
@@ -923,12 +975,19 @@ var BootstrapTable = (function (_React$Component) {
             data: result
           });
         }
+
+        if (this.props.options.afterInsertRow) {
+          this.props.options.afterInsertRow(newObj);
+        }
       }
     },
     handleDropRow: {
       value: function handleDropRow() {
         var result = undefined;
-        this.store.remove(this.refs.body.getSelectedRowKeys());
+        var dropRowKeys = this.store.getSelectedRowKeys();
+
+        this.store.remove(dropRowKeys); //remove selected Row
+        this.store.setSelectedRowKey([]); //clear selected row key
 
         if (this.props.pagination) {
           var sizePerPage = this.refs.pagination.getSizePerPage();
@@ -937,14 +996,19 @@ var BootstrapTable = (function (_React$Component) {
           if (currentPage > currLastPage) currentPage = currLastPage;
           result = this.store.page(currentPage, sizePerPage).get();
           this.setState({
-            data: result
+            data: result,
+            selectedRowKeys: this.store.getSelectedRowKeys()
           });
           this.refs.pagination.changePage(currentPage);
         } else {
           result = this.store.get();
           this.setState({
-            data: result
+            data: result,
+            selectedRowKeys: this.store.getSelectedRowKeys()
           });
+        }
+        if (this.props.options.afterDeleteRow) {
+          this.props.options.afterDeleteRow(dropRowKeys);
         }
       }
     },
@@ -998,12 +1062,20 @@ var BootstrapTable = (function (_React$Component) {
     },
     renderToolBar: {
       value: function renderToolBar() {
-        var columns = this.props.children.map(function (column) {
-          return {
-            name: column.props.children,
-            field: column.props.dataField
-          };
-        });
+        var columns = undefined;
+        if (Array.isArray(this.props.children)) {
+          columns = this.props.children.map(function (column) {
+            return {
+              name: column.props.children,
+              field: column.props.dataField
+            };
+          });
+        } else {
+          columns = [{
+            name: this.props.children.props.children,
+            field: this.props.children.props.dataField
+          }];
+        }
         if (this.props.insertRow || this.props.deleteRow || this.props.search) {
           return React.createElement(
             "div",
@@ -1067,7 +1139,9 @@ BootstrapTable.propTypes = {
   options: React.PropTypes.shape({
     sortName: React.PropTypes.string,
     sortOrder: React.PropTypes.string,
-    afterTableComplete: React.PropTypes.func
+    afterTableComplete: React.PropTypes.func,
+    afterDeleteRow: React.PropTypes.func,
+    afterInsertRow: React.PropTypes.func
   })
 };
 BootstrapTable.defaultProps = {
@@ -1205,61 +1279,14 @@ var TableBody = (function (_React$Component) {
 
     _get(Object.getPrototypeOf(TableBody.prototype), "constructor", this).call(this, props);
     this.state = {
-      currEditCell: null,
-      selectedRowKey: this._getSelectedKeyFromProp(props)
+      currEditCell: null
     };
-    this._attachRowSelectFunc();
     this.editing = false;
   }
 
   _inherits(TableBody, _React$Component);
 
   _createClass(TableBody, {
-    componentDidUpdate: {
-      value: function componentDidUpdate(prevProps, prevState) {
-        this.props.selectRow.selected = this.state.selectedRowKey;
-        this._attachRowSelectFunc();
-      }
-    },
-    componentWillReceiveProps: {
-      value: function componentWillReceiveProps(nextProps) {
-        if (typeof nextProps.selectRow.selected === "undefined") {
-          return;
-        }var diff = nextProps.selectRow.selected ? false : true;
-        diff = nextProps.selectRow.selected.length != this.state.selectedRowKey.length;
-        if (!diff) {
-          for (var i = 0; i < nextProps.selectRow.selected.length; i++) {
-            if (this.state.selectedRowKey.indexOf(nextProps.selectRow.selected[i]) == -1) {
-              diff = true;
-              break;
-            }
-          }
-        }
-        if (diff) {
-          this.setState({
-            selectedRowKey: this._getSelectedKeyFromProp(nextProps)
-          });
-        }
-      }
-    },
-    _getSelectedKeyFromProp: {
-      value: function _getSelectedKeyFromProp(prop) {
-        var selected = prop.selectRow.selected || [];
-        if (prop.selectRow.mode === Const.ROW_SELECT_SINGLE && prop.selectRow.selected) {
-          //if row selection is single, just pick the first item in 'selected'
-          selected = prop.selectRow.selected.length > 0 ? [prop.selectRow.selected[0]] : [];
-        }
-        return selected;
-      }
-    },
-    _attachRowSelectFunc: {
-      value: function _attachRowSelectFunc() {
-        if (this.props.selectRow) {
-          this.props.selectRow.__onSelect__ = this.handleSelectRow.bind(this);
-          this.props.selectRow.__onSelectAll__ = this.handleSelectAllRow.bind(this);
-        }
-      }
-    },
     render: {
       value: function render() {
         var containerClasses = classSet("table-container");
@@ -1319,13 +1346,14 @@ var TableBody = (function (_React$Component) {
               }
             }
           }, this);
-          var selected = this.state.selectedRowKey.indexOf(data[this.props.keyField]) != -1;
+          var selected = this.props.selectedRowKeys.indexOf(data[this.props.keyField]) != -1;
           var selectRowColumn = isSelectRowDefined ? this.renderSelectRowColumn(selected) : null;
           return React.createElement(
             TableRow,
             { isSelected: selected, key: r,
               selectRow: isSelectRowDefined ? this.props.selectRow : undefined,
-              enableCellEdit: this.props.cellEdit.mode !== Const.CELL_EDIT_NONE },
+              enableCellEdit: this.props.cellEdit.mode !== Const.CELL_EDIT_NONE,
+              onSelectRow: this.handleSelectRow.bind(this) },
             selectRowColumn,
             tableColumns
           );
@@ -1376,7 +1404,7 @@ var TableBody = (function (_React$Component) {
             display: column.hidden ? "none" : null,
             width: column.width
           };
-          return React.createElement("th", { style: style, key: i });
+          return React.createElement("th", { style: style, key: i, className: column.className });
         });
 
         return React.createElement(
@@ -1400,39 +1428,13 @@ var TableBody = (function (_React$Component) {
             selectedRow = row;
           }
         }, this);
-        var currSelectedRorKey = this.state.selectedRowKey;
-        if (this.props.selectRow.mode == Const.ROW_SELECT_SINGLE) {
-          currSelectedRorKey = [];
-        }
-        if (isSelected) {
-          if (currSelectedRorKey.indexOf(key) == -1) currSelectedRorKey.push(key);
-        } else {
-          currSelectedRorKey = currSelectedRorKey.filter(function (element) {
-            return key !== element;
-          });
-        }
-        this.setState({
-          selectedRowKey: currSelectedRorKey
-        });
-        if (this.props.selectRow.onSelect) {
-          this.props.selectRow.onSelect(selectedRow, isSelected);
-        }
-      }
-    },
-    handleSelectAllRow: {
-      value: function handleSelectAllRow(rowKeys) {
-        this.setState({
-          selectedRowKey: rowKeys
-        });
-        if (this.props.selectRow.onSelectAll) {
-          this.props.selectRow.onSelectAll(rowKeys.length == 0 ? false : true);
-        }
+        this.props.onSelectRow(selectedRow, isSelected);
       }
     },
     handleSelectRowColumChange: {
       value: function handleSelectRowColumChange(e) {
         if (!this.props.selectRow.clickToSelect || !this.props.selectRow.clickToSelectAndEditCell) {
-          this.props.selectRow.__onSelect__(e.currentTarget.parentElement.parentElement.rowIndex, e.currentTarget.checked);
+          this.handleSelectRow(e.currentTarget.parentElement.parentElement.rowIndex, e.currentTarget.checked);
         }
       }
     },
@@ -1452,7 +1454,7 @@ var TableBody = (function (_React$Component) {
 
         if (this.props.selectRow.clickToSelectAndEditCell) {
           //if edit cell, trigger row selections also
-          var selected = this.state.selectedRowKey.indexOf(this.props.data[rowIndex][this.props.keyField]) != -1;
+          var selected = this.props.selectedRowKeys.indexOf(this.props.data[rowIndex][this.props.keyField]) != -1;
           this.handleSelectRow(rowIndex + 1, !selected);
         }
         this.setState(stateObj);
@@ -1485,11 +1487,6 @@ var TableBody = (function (_React$Component) {
       value: function _isSelectRowDefined() {
         return this.props.selectRow.mode == Const.ROW_SELECT_SINGLE || this.props.selectRow.mode == Const.ROW_SELECT_MULTI;
       }
-    },
-    getSelectedRowKeys: {
-      value: function getSelectedRowKeys() {
-        return this.state.selectedRowKey;
-      }
     }
   });
 
@@ -1502,7 +1499,9 @@ TableBody.propTypes = {
   striped: React.PropTypes.bool,
   hover: React.PropTypes.bool,
   condensed: React.PropTypes.bool,
-  keyField: React.PropTypes.string
+  keyField: React.PropTypes.string,
+  selectedRowKeys: React.PropTypes.array,
+  onSelectRow: React.PropTypes.func
 };
 module.exports = TableBody;
 },{"./Const":6,"./TableColumn":9,"./TableEditColumn":10,"./TableRow":14,"classnames":4,"react":175}],9:[function(require,module,exports){
@@ -1794,7 +1793,7 @@ var TableHeader = (function (_React$Component) {
 
   _createClass(TableHeader, {
     clearSortCaret: {
-      value: function clearSortCaret(order, sortField, sortFunc) {
+      value: function clearSortCaret(order, sortField) {
         var row = this.refs.header.getDOMNode();
         for (var i = 0; i < row.childElementCount; i++) {
           var column = row.childNodes[i].childNodes[0];
@@ -1802,23 +1801,14 @@ var TableHeader = (function (_React$Component) {
             column.removeChild(column.getElementsByClassName("order")[0]);
           }
         }
-        this.props.onSort(order, sortField, sortFunc);
+        this.props.onSort(order, sortField);
       }
     },
     componentDidMount: {
       value: function componentDidMount() {
         //default sorting
         if (this.props.sortName !== null) {
-          // get customize sorting function from childrens
-          var sortFunc = undefined;
-          this.props.children.forEach(function (headerCol) {
-            if (headerCol.props.dataField === this.props.sortName) {
-              sortFunc = headerCol.props.sortFunc;
-              return false;
-            }
-          }, this);
-
-          this.clearSortCaret(this.props.sortOrder, this.props.sortName, sortFunc);
+          this.clearSortCaret(this.props.sortOrder, this.props.sortName);
           var row = this.refs.header.getDOMNode();
           for (var i = 0; i < row.childElementCount; i++) {
             var column = row.childNodes[i].childNodes[0];
@@ -1873,8 +1863,12 @@ var TableHeader = (function (_React$Component) {
     },
     _attachClearSortCaretFunc: {
       value: function _attachClearSortCaretFunc() {
-        for (var i = 0; i < this.props.children.length; i++) {
-          this.props.children[i] = React.cloneElement(this.props.children[i], { key: i, clearSortCaret: this.clearSortCaret.bind(this) });
+        if (Array.isArray(this.props.children)) {
+          for (var i = 0; i < this.props.children.length; i++) {
+            this.props.children[i] = React.cloneElement(this.props.children[i], { key: i, clearSortCaret: this.clearSortCaret.bind(this) });
+          }
+        } else {
+          this.props.children = React.cloneElement(this.props.children, { key: 0, clearSortCaret: this.clearSortCaret.bind(this) });
         }
       }
     }
@@ -1930,7 +1924,7 @@ var TableHeaderColumn = (function (_React$Component) {
           return;
         }var dom = this.refs.innerDiv.getDOMNode();
         this.order = this.order == Const.SORT_DESC ? Const.SORT_ASC : Const.SORT_DESC;
-        this.props.clearSortCaret(this.order, this.props.dataField, this.props.sortFunc);
+        this.props.clearSortCaret(this.order, this.props.dataField);
         dom.appendChild(Util.renderSortCaret(this.order));
       }
     },
@@ -1947,8 +1941,7 @@ var TableHeaderColumn = (function (_React$Component) {
           width: this.props.width
         };
 
-        var classes = classSet(this.props.dataSort ? "sort-column" : "");
-
+        var classes = this.props.className + " " + (this.props.dataSort ? "sort-column" : "");
         return React.createElement(
           "th",
           { className: classes, style: thStyle },
@@ -2023,7 +2016,7 @@ var TableRow = (function (_React$Component) {
   _createClass(TableRow, {
     rowClick: {
       value: function rowClick(e) {
-        if (e.target.tagName !== "INPUT") this.props.selectRow.__onSelect__(e.currentTarget.rowIndex, !this.props.isSelected);
+        if (e.target.tagName !== "INPUT") this.props.onSelectRow(e.currentTarget.rowIndex, !this.props.isSelected);
       }
     },
     render: {
@@ -2055,7 +2048,8 @@ var TableRow = (function (_React$Component) {
 
 TableRow.propTypes = {
   isSelected: React.PropTypes.bool,
-  enableCellEdit: React.PropTypes.bool
+  enableCellEdit: React.PropTypes.bool,
+  onSelectRow: React.PropTypes.func
 };
 module.exports = TableRow;
 },{"./Const":6,"react":175}],15:[function(require,module,exports){
@@ -2069,6 +2063,10 @@ var TableHeaderColumn = _interopRequire(require("./TableHeaderColumn"));
 
 var TableDataSet = require("./store/TableDataStore").TableDataSet;
 
+if (window) {
+  window.BootstrapTable = BootstrapTable;
+  window.TableHeaderColumn = TableHeaderColumn;
+}
 module.exports = {
   BootstrapTable: BootstrapTable,
   TableHeaderColumn: TableHeaderColumn,
@@ -2410,19 +2408,22 @@ var TableDataStore = exports.TableDataStore = (function () {
     _classCallCheck(this, TableDataStore);
 
     this.data = data;
+    this.customSortFuncMap = null;
     this.filteredData = null;
     this.isOnFilter = false;
     this.filterObj = null;
     this.searchText = null;
-    this.sortObj = {};
+    this.sortObj = null;
     this.pageObj = {};
+    this.selected = [];
   }
 
   _createClass(TableDataStore, {
     setProps: {
-      value: function setProps(isPagination, keyField) {
+      value: function setProps(isPagination, keyField, customSortFuncMap) {
         this.keyField = keyField;
         this.enablePagination = isPagination;
+        this.customSortFuncMap = customSortFuncMap;
       }
     },
     setData: {
@@ -2432,6 +2433,19 @@ var TableDataStore = exports.TableDataStore = (function () {
           if (null !== this.filterObj) this.filter(this.filterObj);
           if (null !== this.searchText) this.search(this.searchText);
         }
+        if (this.sortObj) {
+          this.sort(this.sortObj.order, this.sortObj.sortField);
+        }
+      }
+    },
+    setSelectedRowKey: {
+      value: function setSelectedRowKey(selectedRowKeys) {
+        this.selected = selectedRowKeys;
+      }
+    },
+    getSelectedRowKeys: {
+      value: function getSelectedRowKeys() {
+        return this.selected;
       }
     },
     getCurrentDisplayData: {
@@ -2444,13 +2458,14 @@ var TableDataStore = exports.TableDataStore = (function () {
       }
     },
     sort: {
-      value: function sort(order, sortField, sortFunc) {
+      value: function sort(order, sortField) {
         this.sortObj = {
           order: order,
           sortField: sortField
         };
 
         var currentDisplayData = this.getCurrentDisplayData();
+        var sortFunc = this.customSortFuncMap[sortField];
         currentDisplayData = _sort(currentDisplayData, sortField, order, sortFunc);
 
         return this;
