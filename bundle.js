@@ -850,6 +850,7 @@ var BootstrapTable = (function (_React$Component) {
             React.createElement(
               TableHeader,
               { rowSelectType: this.props.selectRow.mode,
+                hideSelectColumn: this.props.selectRow.hideSelectColumn,
                 sortName: this.props.options.sortName,
                 sortOrder: this.props.options.sortOrder,
                 onSort: this.handleSort.bind(this),
@@ -909,7 +910,7 @@ var BootstrapTable = (function (_React$Component) {
         var currSelected = this.store.getSelectedRowKeys();
         var rowKey = row[this.store.getKeyField()];
         if (this.props.selectRow.mode === Const.ROW_SELECT_SINGLE) {
-          this.store.setSelectedRowKey(isSelected ? [rowKey] : []);
+          currSelected = isSelected ? [rowKey] : [];
         } else {
           if (isSelected) {
             currSelected.push(rowKey);
@@ -1125,6 +1126,7 @@ BootstrapTable.propTypes = {
     onSelect: React.PropTypes.func,
     onSelectAll: React.PropTypes.func,
     clickToSelect: React.PropTypes.bool,
+    hideSelectColumn: React.PropTypes.bool,
     clickToSelectAndEditCell: React.PropTypes.bool
   }),
   cellEdit: React.PropTypes.shape({
@@ -1158,6 +1160,7 @@ BootstrapTable.defaultProps = {
     onSelect: undefined,
     onSelectAll: undefined,
     clickToSelect: false,
+    hideSelectColumn: false,
     clickToSelectAndEditCell: false
   },
   cellEdit: {
@@ -1347,7 +1350,7 @@ var TableBody = (function (_React$Component) {
             }
           }, this);
           var selected = this.props.selectedRowKeys.indexOf(data[this.props.keyField]) != -1;
-          var selectRowColumn = isSelectRowDefined ? this.renderSelectRowColumn(selected) : null;
+          var selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ? this.renderSelectRowColumn(selected) : null;
           return React.createElement(
             TableRow,
             { isSelected: selected, key: r,
@@ -1397,7 +1400,7 @@ var TableBody = (function (_React$Component) {
           var style = {
             width: 35
           };
-          selectRowHeader = React.createElement("th", { style: style, key: -1 });
+          selectRowHeader = this.props.selectRow.hideSelectColumn ? null : React.createElement("th", { style: style, key: -1 });
         }
         var theader = this.props.columns.map(function (column, i) {
           var style = {
@@ -1443,6 +1446,7 @@ var TableBody = (function (_React$Component) {
         this.editing = true;
         if (this._isSelectRowDefined()) {
           columnIndex--;
+          if (this.props.selectRow.hideSelectColumn) columnIndex++;
         }
         rowIndex--;
         var stateObj = {
@@ -1823,7 +1827,7 @@ var TableHeader = (function (_React$Component) {
     render: {
       value: function render() {
         var containerClasses = classSet("table-header");
-        var selectRowHeaderCol = this.renderSelectRowHeader();
+        var selectRowHeaderCol = this.props.hideSelectColumn ? null : this.renderSelectRowHeader();
         this._attachClearSortCaretFunc();
 
         return React.createElement(
@@ -1882,7 +1886,8 @@ TableHeader.propTypes = {
   onSort: React.PropTypes.func,
   onSelectAllRow: React.PropTypes.func,
   sortName: React.PropTypes.string,
-  sortOrder: React.PropTypes.string
+  sortOrder: React.PropTypes.string,
+  hideSelectColumn: React.PropTypes.bool
 };
 
 TableHeader.defaultProps = {};
