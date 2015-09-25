@@ -99,7 +99,8 @@ class TableBody extends React.Component{
           selectRow={isSelectRowDefined?this.props.selectRow:undefined}
           enableCellEdit={this.props.cellEdit.mode !== Const.CELL_EDIT_NONE}
           onSelectRow={this.handleSelectRow.bind(this)}>
-          {selectRowColumn}{tableColumns}
+          {selectRowColumn}
+          {tableColumns}
         </TableRow>
       )
     }, this);
@@ -188,6 +189,13 @@ class TableBody extends React.Component{
       this.handleSelectRow(rowIndex+1, !selected);
     }
     this.setState(stateObj);
+  }
+
+  cancelEdit(){
+    var currEditCell=this.state.currEditCell;
+    if(currEditCell){
+      this.handleCompleteEditCell(null,currEditCell.rid,currEditCell.cid);
+    }
   }
 
   handleCompleteEditCell(newVal, rowIndex, columnIndex){

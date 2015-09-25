@@ -223,6 +223,12 @@ class BootstrapTable extends React.Component{
     }
   }
 
+  handleAddRowBegin(){
+    if(this.refs.body){
+      this.refs.body.cancelEdit();
+    }
+  }
+
   handleAddRow(newObj){
     let msg = null, result;
     try {
@@ -339,6 +345,8 @@ class BootstrapTable extends React.Component{
         return {
           name: props.children,
           field: props.dataField,
+          //when you want same auto generate value and not allow edit, example ID field
+          autoValue:props.autoValue||false,
           //for create eidtor, no params for column.editable() indicate that editor for new row
           editable:props.editable&&(typeof props.editable==="function")?props.editable():props.editable,
           format:props.format?format:false
@@ -359,6 +367,7 @@ class BootstrapTable extends React.Component{
                    columns={columns}
                    searchPlaceholder={this.props.searchPlaceholder}
                    onAddRow={this.handleAddRow.bind(this)}
+                   onAddRowBegin={this.handleAddRowBegin.bind(this)}
                    onDropRow={this.handleDropRow.bind(this)}
                    onSearch={this.handleSearch.bind(this)}/>
         </div>

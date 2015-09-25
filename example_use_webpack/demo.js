@@ -80,13 +80,28 @@ function priceFormatter(cell, row){
 function trClassNameFormat(rowData,rIndex){
   return rIndex%3==0?"haha":"";
 }
+function nameValidator(value){
+  if(!value){
+    return 'Product Name is required!'
+  }else if(value.length<3){
+    return 'Product Name length must great 3 char'
+  }
+  return true;
+}
+function priceValidator(value){
+  console.info('####',value)
+  if(!value){
+    return 'Price is required!'
+  }
+  return true;
+}
 
 React.render(
   <BootstrapTable data={products} trClassName={trClassNameFormat} striped={true} hover={true} pagination={true} selectRow={selectRowProp} cellEdit={cellEditProp}
                   insertRow={true} deleteRow={true} search={true} columnFilter={true} options={options}>
-      <TableHeaderColumn dataField="id" dataAlign="center" dataSort={true} isKey={true}>Product ID</TableHeaderColumn>
-      <TableHeaderColumn dataField="name" className="good" dataSort={true} editable={{type:'textarea'}}>Product Name</TableHeaderColumn>
-      <TableHeaderColumn dataField="price" dataFormat={priceFormatter} editable={{type:'select',datas:[1,2,3,4,5]}}>Product Price</TableHeaderColumn>
+      <TableHeaderColumn dataField="id" dataAlign="center" dataSort={true} isKey={true} hidden={true} autoValue={true}>Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name" className="good" dataSort={true} editable={{type:'textarea',validator:nameValidator}}>Product Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="price" dataFormat={priceFormatter} editable={{type:'select',datas:[1,2,3,4,5],validator:priceValidator}}>Product Price</TableHeaderColumn>
   </BootstrapTable>,
 	document.getElementById("basic")
 );
