@@ -6,7 +6,6 @@ class PaginationList extends React.Component{
 
   constructor(props) {
 		super(props);
-    this.sizePerList = Const.SIZE_PER_LIST;
 		this.state = {
       currentPage: this.props.currPage,
       sizePerPage: this.props.sizePerPage
@@ -97,12 +96,12 @@ class PaginationList extends React.Component{
   getPages(){
     var startPage = 1, endPage = this.totalPages;
 
-    startPage = Math.max(this.state.currentPage - Math.floor(this.sizePerList/2), 1);
-    endPage   = startPage + this.sizePerList - 1;
+    startPage = Math.max(this.state.currentPage - Math.floor(this.props.paginationSize/2), 1);
+    endPage   = startPage + this.props.paginationSize - 1;
 
     if (endPage > this.totalPages) {
       endPage   = this.totalPages;
-      startPage = endPage - this.sizePerList + 1;
+      startPage = endPage - this.props.paginationSize + 1;
     }
     var pages = [Const.FIRST_PAGE, Const.PRE_PAGE];
     for(var i=startPage;i<=endPage;i++){
@@ -126,7 +125,8 @@ PaginationList.propTypes = {
   sizePerPage: React.PropTypes.number,
   dataSize: React.PropTypes.number,
   changePage: React.PropTypes.func,
-  sizePerPageList: React.PropTypes.array
+  sizePerPageList: React.PropTypes.array,
+  paginationSize: React.PropTypes.number
 };
 
 PaginationList.defaultProps = {
