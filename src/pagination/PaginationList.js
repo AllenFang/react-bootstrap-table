@@ -8,7 +8,7 @@ class PaginationList extends React.Component{
 		super(props);
     this.sizePerList = Const.SIZE_PER_LIST;
 		this.state = {
-      currentPage: 1,
+      currentPage: this.props.currPage,
       sizePerPage: this.props.sizePerPage
     };
 	}
@@ -116,6 +116,7 @@ class PaginationList extends React.Component{
   }
 }
 PaginationList.propTypes = {
+  currPage: React.PropTypes.number,
   sizePerPage: React.PropTypes.number,
   dataSize: React.PropTypes.number,
   changePage: React.PropTypes.func
