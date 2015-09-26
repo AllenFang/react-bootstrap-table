@@ -57,7 +57,8 @@ class BootstrapTable extends React.Component{
   getTableData() {
     let result = [];
     if(this.props.pagination){
-      result = this.store.page(this.props.options.page, Const.SIZE_PER_PAGE).get();
+      result = this.store.page(this.props.options.page,
+                  this.props.options.sizePerPageList[0]).get();
     } else{
       result = this.store.get();
     }
@@ -317,9 +318,10 @@ class BootstrapTable extends React.Component{
       return(
         <div>
           <PaginationList ref="pagination"
-                          currPage={this.props.options.page} 
+                          currPage={this.props.options.page}
                           changePage={this.handlePaginationData.bind(this)}
-                          sizePerPage={Const.SIZE_PER_PAGE}
+                          sizePerPage={this.props.options.sizePerPageList[0]}
+                          sizePerPageList={this.props.options.sizePerPageList}
                           dataSize={this.store.getDataNum()} />
         </div>
       )
@@ -406,7 +408,8 @@ BootstrapTable.propTypes = {
     afterTableComplete: React.PropTypes.func,
     afterDeleteRow: React.PropTypes.func,
     afterInsertRow: React.PropTypes.func,
-    page: React.PropTypes.number
+    page: React.PropTypes.number,
+    sizePerPageList: React.PropTypes.array
   })
 };
 BootstrapTable.defaultProps = {
@@ -441,7 +444,8 @@ BootstrapTable.defaultProps = {
     afterTableComplete: undefined,
     afterDeleteRow: undefined,
     afterInsertRow: undefined,
-    page: 1
+    page: 1,
+    sizePerPageList: Const.SIZE_PER_PAGE_LIST
   }
 };
 

@@ -53,6 +53,15 @@ class PaginationList extends React.Component{
     var pageListStyle = {
       marginTop: "0px"  //override the margin-top defined in .pagination class in bootstrap.
     }
+
+    var sizePerPageList = this.props.sizePerPageList.map((sizePerPage) => {
+      return (
+        <li role="presentation">
+          <a role="menuitem" tabIndex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>{sizePerPage}</a>
+        </li>
+      );
+    });
+
     return (
       <div className="row">
         <div className="col-md-1">
@@ -62,10 +71,7 @@ class PaginationList extends React.Component{
               <span className="caret"></span>
             </button>
             <ul className="dropdown-menu" role="menu" aria-labelledby="pageDropDown">
-              <li role="presentation"><a role="menuitem" tabIndex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>10</a></li>
-              <li role="presentation"><a role="menuitem" tabIndex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>25</a></li>
-              <li role="presentation"><a role="menuitem" tabIndex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>30</a></li>
-              <li role="presentation"><a role="menuitem" tabIndex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>50</a></li>
+              {sizePerPageList}
             </ul>
           </div>
         </div>
@@ -119,7 +125,8 @@ PaginationList.propTypes = {
   currPage: React.PropTypes.number,
   sizePerPage: React.PropTypes.number,
   dataSize: React.PropTypes.number,
-  changePage: React.PropTypes.func
+  changePage: React.PropTypes.func,
+  sizePerPageList: React.PropTypes.array
 };
 
 PaginationList.defaultProps = {

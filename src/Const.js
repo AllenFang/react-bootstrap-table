@@ -13,5 +13,6 @@ export default {
   ROW_SELECT_MULTI: "checkbox",
   CELL_EDIT_NONE: "none",
   CELL_EDIT_CLICK: "click",
-  CELL_EDIT_DBCLICK: "dbclick"
+  CELL_EDIT_DBCLICK: "dbclick",
+  SIZE_PER_PAGE_LIST: [10, 25, 30, 50]
 }
