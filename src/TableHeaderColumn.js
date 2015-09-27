@@ -42,7 +42,7 @@ TableHeaderColumn.propTypes = {
   clearSortCaret: React.PropTypes.func,
   dataFormat: React.PropTypes.func,
   isKey: React.PropTypes.bool,
-  editable: React.PropTypes.bool,
+  editable: React.PropTypes.any,
   hidden: React.PropTypes.bool,
   className:React.PropTypes.string,
   width: React.PropTypes.string,
