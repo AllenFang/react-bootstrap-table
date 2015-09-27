@@ -73,10 +73,13 @@ class ToolBar extends React.Component{
   renderInsertRowModal(modalClassName){
 
     var inputField = this.props.columns.map(function(column, i){
+      let disabled = column.editable?false:'disabled';
       return(
         <div className="form-group" key={column.field}>
           <label>{column.name}</label>
-          <input ref={column.field+i} type="text" className="form-control" placeholder={column.name}></input>
+          <input ref={column.field+i} type="text"
+                 className="form-control" placeholder={column.name}
+                 disabled={disabled}></input>
         </div>
       );
     });

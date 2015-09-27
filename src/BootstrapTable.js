@@ -338,13 +338,15 @@ class BootstrapTable extends React.Component{
       columns = this.props.children.map(function(column){
         return {
           name: column.props.children,
-          field: column.props.dataField
+          field: column.props.dataField,
+          editable: column.props.editable
         };
       });
     } else {
       columns = [{
         name: this.props.children.props.children,
-        field: this.props.children.props.dataField
+        field: this.props.children.props.dataField,
+        editable: this.props.children.props.editable
       }];
     }
     if(this.props.insertRow || this.props.deleteRow || this.props.search){
