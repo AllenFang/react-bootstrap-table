@@ -7,7 +7,12 @@ var Editor=function(editable,attr,format,editorClass){
         return (
             <input {...attr} type={type} className={(editorClass||"")+" form-control editor edit-text"}/>
         )
-    }else if(editable.type){//standard declare
+    } else if(!editable){
+      var type=editable===true?'text':editable;
+      return (
+          <input {...attr} type={type} className={(editorClass||"")+" form-control editor edit-text"} disabled='disabled'/>
+      )
+    } else if(editable.type){//standard declare
         //put style if exist
         editable.style&&(attr.style=editable.style);
 
