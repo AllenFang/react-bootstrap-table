@@ -9,24 +9,24 @@ module.exports = {
     // ],
 
     entry: {
-      basic: './example_use_webpack/js/basic/demo.js',
-      column: './example_use_webpack/js/column/demo.js',
-      columnFormat: './example_use_webpack/js/column-format/demo.js',
-      sort: './example_use_webpack/js/sort/demo.js',
-      pagination: './example_use_webpack/js/pagination/demo.js',
-      selection: './example_use_webpack/js/selection/demo.js',
-      manipulation: './example_use_webpack/js/manipulation/demo.js',
+      basic: './examples/js/basic/demo.js',
+      column: './examples/js/column/demo.js',
+      columnFormat: './examples/js/column-format/demo.js',
+      sort: './examples/js/sort/demo.js',
+      pagination: './examples/js/pagination/demo.js',
+      selection: './examples/js/selection/demo.js',
+      manipulation: './examples/js/manipulation/demo.js',
       vendors: ['webpack-dev-server/client?http://localhost:3004', 'webpack/hot/only-dev-server']
     },
     devtool: 'eval',
     output: {
-        path: path.join(__dirname, 'example_use_webpack'),
+        path: path.join(__dirname, 'examples'),
         filename: '[name].bundle.js'
     },
     serverConfig:{
         port:'3004',//server port
         publicPath:'/',//js path
-        contentBase:'example_use_webpack/'//web root path
+        contentBase:'examples/'//web root path
     },
     resolve: {
         extensions: ['', '.js', '.jsx'],
