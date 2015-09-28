@@ -14,6 +14,8 @@ module.exports = {
       columnFormat: './example_use_webpack/js/column-format/demo.js',
       sort: './example_use_webpack/js/sort/demo.js',
       pagination: './example_use_webpack/js/pagination/demo.js',
+      selection: './example_use_webpack/js/selection/demo.js',
+      manipulation: './example_use_webpack/js/manipulation/demo.js',
       vendors: ['webpack-dev-server/client?http://localhost:3004', 'webpack/hot/only-dev-server']
     },
     devtool: 'eval',

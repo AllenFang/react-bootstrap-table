@@ -1,7 +1,7 @@
 'use strict';
 require('../css/react-bootstrap-table.css');
 import React from 'react';
-import {BootstrapTable, TableHeaderColumn} from '../src/';
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 
 var products = [];
@@ -96,12 +96,15 @@ function priceValidator(value){
   return true;
 }
 
-React.render(
-  <BootstrapTable data={products} trClassName={trClassNameFormat} striped={true} hover={true} pagination={true} selectRow={selectRowProp} cellEdit={cellEditProp}
-                  insertRow={true} deleteRow={true} search={true} columnFilter={true} options={options}>
-      <TableHeaderColumn dataField="id" dataAlign="center" dataSort={true} isKey={true} hidden={true} autoValue={true}>Product ID</TableHeaderColumn>
-      <TableHeaderColumn dataField="name" className="good" dataSort={true} editable={{type:'textarea',validator:nameValidator}}>Product Name</TableHeaderColumn>
-      <TableHeaderColumn dataField="price" dataFormat={priceFormatter} editable={{type:'select',datas:[1,2,3,4,5],validator:priceValidator}}>Product Price</TableHeaderColumn>
-  </BootstrapTable>,
-	document.getElementById("basic")
-);
+export default class App extends React.Component{
+  render(){
+    return (
+      <BootstrapTable data={products} trClassName={trClassNameFormat} striped={true} hover={true} pagination={true} selectRow={selectRowProp} cellEdit={cellEditProp}
+                      insertRow={true} deleteRow={true} search={true} columnFilter={true} options={options}>
+          <TableHeaderColumn dataField="id" dataAlign="center" dataSort={true} isKey={true} autoValue={true}>Product ID</TableHeaderColumn>
+          <TableHeaderColumn dataField="name" className="good" dataSort={true} editable={{type:'textarea',validator:nameValidator}}>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField="price" dataFormat={priceFormatter} editable={{type:'select',datas:[1,2,3,4,5],validator:priceValidator}}>Product Price</TableHeaderColumn>
+      </BootstrapTable>
+    );
+  }
+}
