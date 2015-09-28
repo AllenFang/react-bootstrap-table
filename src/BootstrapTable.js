@@ -468,7 +468,7 @@ BootstrapTable.defaultProps = {
   search: false,
   columnFilter: false,
   options: {
-    sortName: null,
+    sortName: undefined,
     sortOrder: Const.SORT_DESC,
     afterTableComplete: undefined,
     afterDeleteRow: undefined,
