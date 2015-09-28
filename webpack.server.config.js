@@ -27,7 +27,10 @@ module.exports = {
         contentBase:'example_use_webpack/'//web root path
     },
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js', '.jsx'],
+        alias:{
+          'react-bootstrap-table': '../../../src/index.js'
+        }
     },
     module: {
         loaders: [
