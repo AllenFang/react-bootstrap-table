@@ -6,6 +6,7 @@ import ClickToSelectTable from './click-to-select-table';
 import DefaultSelectTable from './default-select-table';
 import SelectBgColorTable from './select-bgcolor-table';
 import SelectHookTable from './select-hook-table';
+import HideSelectionColumnTable from './hide-selection-col-table';
 
 React.render(
   <SingleSelectTable />,
@@ -35,4 +36,9 @@ React.render(
 React.render(
   <SelectHookTable />,
   document.getElementById('hook')
+);
+
+React.render(
+  <HideSelectionColumnTable />,
+  document.getElementById('hide')
 );

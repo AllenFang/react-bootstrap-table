@@ -16,6 +16,7 @@ module.exports = {
       pagination: './examples/js/pagination/demo.js',
       selection: './examples/js/selection/demo.js',
       manipulation: './examples/js/manipulation/demo.js',
+      cellEdit: './examples/js/cell-edit/demo.js',
       vendors: ['webpack-dev-server/client?http://localhost:3004', 'webpack/hot/only-dev-server']
     },
     devtool: 'eval',
