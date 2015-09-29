@@ -31,7 +31,14 @@ class ToolBar extends React.Component{
       if(column.autoValue){//when you want same auto generate value and not allow edit, example ID field
         tempValue=typeof column.autoValue=='function'?column.autoValue():('autovalue-'+new Date().getTime());
       }else{
-        tempValue= this.refs[column.field+i].getDOMNode().value;
+        let dom = this.refs[column.field+i].getDOMNode();
+        tempValue = dom.value;
+
+        if(column.editable && column.editable.type == 'checkbox'){
+          let values = dom.value.split(':');
+          tempValue = dom.checked? values[0]:values[1];
+        }
+
         if(column.editable&&column.editable.validator){//process validate
           tempMsg= column.editable.validator(tempValue)
           if(tempMsg!==true){
@@ -142,10 +149,13 @@ class ToolBar extends React.Component{
       }
       var error=validateState[column.field]?(<span className="help-block bg-danger">{validateState[column.field]}</span>):null;
 // >>>>>>> 99cd459deffd5262d88691e8b075977bc0a2811f
+
+      // let editor = Editor(editable,attr,format);
+      // if(editor.props.type && editor.props.type == 'checkbox'){
       return(
-        <div  className="form-group" key={column.field}>
+        <div className="form-group" key={column.field}>
           <label>{column.name}</label>
-          {Editor(editable,attr,format)}
+          {Editor(editable,attr,format,'')}
           {error}
         </div>
       );

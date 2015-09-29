@@ -15,11 +15,14 @@ class TableEditColumn extends React.Component{
 
   handleKeyPress(e){
     if (e.keyCode == 13) { //Pressed ENTER
-        if(!this.validator(e)){
-            return;
-        }
+      let value = e.currentTarget.type == 'checkbox'?
+                    this._getCheckBoxValue(e):e.currentTarget.value;
+
+      if(!this.validator(value)){
+          return;
+      }
       this.props.completeEdit(
-        e.currentTarget.value, this.props.rowIndex, this.props.colIndex);
+        value, this.props.rowIndex, this.props.colIndex);
     }else if(e.keyCode == 27){
       this.props.completeEdit(
         null, this.props.rowIndex, this.props.colIndex);
@@ -28,17 +31,19 @@ class TableEditColumn extends React.Component{
 
   handleBlur(e){
     if(this.props.blurToSave){
-        if(!this.validator(e)){
-            return;
-        }
+      let value = e.currentTarget.type == 'checkbox'?
+                    this._getCheckBoxValue(e):e.currentTarget.value;
+      if(!this.validator(value)){
+          return;
+      }
       this.props.completeEdit(
-          e.currentTarget.value, this.props.rowIndex, this.props.colIndex);
+          value, this.props.rowIndex, this.props.colIndex);
+    }
   }
-}
-  validator(e){
+  validator(value){
       var ts=this;
       if(ts.props.editable.validator){
-          var valid=ts.props.editable.validator(e.currentTarget.value);
+          var valid=ts.props.editable.validator(value);
           if(valid!==true){
               ts.refs.notifier.notice('error',valid,"Pressed ESC can cancel");
               var input = ts.refs.inputRef.getDOMNode();
@@ -53,20 +58,21 @@ class TableEditColumn extends React.Component{
       return true;
 
   }
-    clearTimeout(){
-        if(this.timeouteClear!=0){
-            clearTimeout(this.timeouteClear);
-            this.timeouteClear=0;
-        }
-    }
+  clearTimeout(){
+      if(this.timeouteClear!=0){
+          clearTimeout(this.timeouteClear);
+          this.timeouteClear=0;
+      }
+  }
   componentDidMount(){
       var input = this.refs.inputRef.getDOMNode();
-      input.value = this.props.children||'';
+      // input.value = this.props.children||'';
       input.focus();
   }
-    componentWillUnmount() {
-      this.clearTimeout();
-    }
+
+  componentWillUnmount() {
+    this.clearTimeout();
+  }
 
   render(){
     var editable=this.props.editable,
@@ -82,12 +88,18 @@ class TableEditColumn extends React.Component{
     var editorClass=classSet({'animated':this.state.shakeEditor,'shake':this.state.shakeEditor});
     return(
         <td ref="td" style={{position:'relative'}}>
-            {Editor(editable,attr,format,editorClass)}
+            {Editor(editable,attr,format,editorClass,this.props.children||'')}
             <Notifier ref="notifier"></Notifier>
         </td>
     )
   }
 
+  _getCheckBoxValue(e){
+    let value = '';
+    let values = e.currentTarget.value.split(':');
+    value = e.currentTarget.checked?values[0]:values[1];
+    return value;
+  }
 
 }
 TableEditColumn.propTypes = {
