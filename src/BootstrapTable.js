@@ -429,6 +429,7 @@ BootstrapTable.propTypes = {
   deleteRow: React.PropTypes.bool,
   search: React.PropTypes.bool,
   columnFilter: React.PropTypes.bool,
+  trClassName: React.PropTypes.any,
   options: React.PropTypes.shape({
     sortName: React.PropTypes.string,
     sortOrder: React.PropTypes.string,
@@ -467,6 +468,7 @@ BootstrapTable.defaultProps = {
   deleteRow: false,
   search: false,
   columnFilter: false,
+  trClassName: '',
   options: {
     sortName: undefined,
     sortOrder: Const.SORT_DESC,
