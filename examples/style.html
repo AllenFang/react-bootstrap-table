@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>A basic react-bootstrap-table demo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <style media="screen">
+      .tr-string-example{
+        font-style: oblique;
+        color: red;
+        background-color: aquamarine;
+      }
+
+      .tr-function-example{
+        font-weight: bold;
+        background-color: aquamarine;
+      }
+
+      .td-header-string-example{
+        font-style: oblique;
+        color: red;
+        background-color: aquamarine;
+      }
+
+      .td-column-string-example{
+        color: blue;
+        background-color: antiquewhite;
+      }
+
+      .td-column-function-odd-example{
+        color: blue;
+        background-color: antiquewhite;
+      }
+
+      .td-column-function-even-example{
+        color: red;
+        background-color: yellowgreen;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="col-md-offset-1 col-md-8">
+      <div class="panel panel-default">
+				<div class="panel-heading">Set String as <code>classname</code> on &lt;tr&gt;</div>
+				<div class="panel-body">
+          <div id="tr-string-simple"></div>
+				</div>
+			</div>
+    </div>
+    <div class="col-md-offset-1 col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">Set Function as <code>classname</code> on &lt;tr&gt;(more easy to customize)</div>
+        <div class="panel-body">
+          <div id="tr-function-simple"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-offset-1 col-md-8">
+      <div class="panel panel-default">
+				<div class="panel-heading">Set String as <code>classname</code> on &lt;td&gt;(header & column)</div>
+				<div class="panel-body">
+          <div id="td-string-simple"></div>
+				</div>
+			</div>
+    </div>
+    <div class="col-md-offset-1 col-md-8">
+      <div class="panel panel-default">
+				<div class="panel-heading">Set Function as <code>classname</code> on &lt;td&gt;(more easy to customize column)</div>
+				<div class="panel-body">
+          <div id="td-function-simple"></div>
+				</div>
+			</div>
+    </div>
+    <script src="../vendors.js"></script>
+    <script src="../style.bundle.js"></script>
+
+  </body>
+</html>

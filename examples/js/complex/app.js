@@ -1,24 +1,28 @@
 'use strict';
-require('../css/react-bootstrap-table.css');
 import React from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 
-var products = [];
+var jobs = [];
 
-function addProducts(quantity) {
-  var startId = products.length;
+function addJobs(quantity) {
+  var startId = jobs.length;
   for (var i = 0; i < quantity; i++) {
     var id = startId + i;
-    products.push({
+    var priority = 'D';
+    if(i % 2 == 0) priority = 'C';
+    if(i % 5 == 0) priority = 'B';
+    if(i % 7 == 0) priority = 'A';
+    jobs.push({
       id: id,
       name: "Item name " + id,
-      price: 100 + i
+      priority: priority,
+      active: i%2==0?'Y':'N'
     });
   }
 }
 
-addProducts(70);
+addJobs(70);
 
 function onRowSelect(row, isSelected){
   console.log(row);
@@ -73,25 +77,26 @@ var options = {
 };
 
 
-function priceFormatter(cell, row){
-  return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
+function priorityFormatter(cell, row){
+  if(cell == 'A') return '<font color="red">'+cell+'</font>';
+  else if(cell == 'B') return '<font color="orange">'+cell+'</font>';
+  else return cell;
 }
 
 function trClassNameFormat(rowData,rIndex){
-  return rIndex%3==0?"haha":"";
+  return rIndex%3==0?"third-tr":"";
 }
 function nameValidator(value){
   if(!value){
-    return 'Product Name is required!'
+    return 'Job Name is required!'
   }else if(value.length<3){
-    return 'Product Name length must great 3 char'
+    return 'Job Name length must great 3 char'
   }
   return true;
 }
-function priceValidator(value){
-  console.info('####',value)
+function priorityValidator(value){
   if(!value){
-    return 'Price is required!'
+    return 'Priority is required!'
   }
   return true;
 }
@@ -99,11 +104,12 @@ function priceValidator(value){
 export default class App extends React.Component{
   render(){
     return (
-      <BootstrapTable data={products} trClassName={trClassNameFormat} striped={true} hover={true} pagination={true} selectRow={selectRowProp} cellEdit={cellEditProp}
+      <BootstrapTable data={jobs} trClassName={trClassNameFormat} hover={true} pagination={true} selectRow={selectRowProp} cellEdit={cellEditProp}
                       insertRow={true} deleteRow={true} search={true} columnFilter={true} options={options}>
-          <TableHeaderColumn dataField="id" dataAlign="center" dataSort={true} isKey={true} autoValue={true}>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField="name" className="good" dataSort={true} editable={{type:'textarea',validator:nameValidator}}>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField="price" dataFormat={priceFormatter} editable={{type:'select',datas:[1,2,3,4,5],validator:priceValidator}}>Product Price</TableHeaderColumn>
+          <TableHeaderColumn dataField="id" dataAlign="center" dataSort={true} isKey={true} autoValue={true}>Job ID</TableHeaderColumn>
+          <TableHeaderColumn dataField="name" className="good" dataSort={true} editable={{type:'textarea',validator:nameValidator}}>Job Name</TableHeaderColumn>
+          <TableHeaderColumn dataField="priority" dataSort={true} dataFormat={priorityFormatter} editable={{type:'select',options:{values:['A','B','C','D']},validator:priorityValidator}}>Job Priority</TableHeaderColumn>
+          <TableHeaderColumn dataField="active" editable={{type:'checkbox', options:{values:'Y:N'}}}>Active</TableHeaderColumn>
       </BootstrapTable>
     );
   }
