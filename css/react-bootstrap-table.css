@@ -5,7 +5,7 @@
   margin-bottom: 37px;
 }
 .react-bs-table .table-header{
-  height: 37px;
+  height: 42px;
   border-right-width: 1px;
   border-right-style: solid;
   border-right-color: rgb(221, 221, 221);
@@ -147,4 +147,3 @@
 .bounceOut {
   animation-name: bounceOut;
 }
-
