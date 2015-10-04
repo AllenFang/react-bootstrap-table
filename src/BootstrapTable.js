@@ -1,3 +1,4 @@
+
 import React from 'react';
 import classSet from 'classnames';
 import Const from './Const';
@@ -57,7 +58,9 @@ class BootstrapTable extends React.Component{
   getTableData() {
     let result = [];
     if(this.props.pagination){
-      result = this.store.page(1, Const.SIZE_PER_PAGE).get();
+      result = this.store.page(this.props.options.page || 1,
+                  this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0])
+                  .get();
     } else{
       result = this.store.get();
     }
@@ -111,7 +114,7 @@ class BootstrapTable extends React.Component{
         format: column.props.dataFormat,
         editable: column.props.editable,
         hidden: column.props.hidden,
-        className:column.props.className,
+        className:column.props.columnClassName,
         width: column.props.width,
         index: i
       };
@@ -133,6 +136,7 @@ class BootstrapTable extends React.Component{
             {this.props.children}
           </TableHeader>
           <TableBody ref="body" data={this.state.data} columns={columns}
+            trClassName={this.props.trClassName}
             striped={this.props.striped}
             hover={this.props.hover}
             keyField={this.store.getKeyField()}
@@ -222,6 +226,12 @@ class BootstrapTable extends React.Component{
     }
   }
 
+  handleAddRowBegin(){
+    if(this.refs.body){
+      // this.refs.body.cancelEdit();
+    }
+  }
+
   handleAddRow(newObj){
     let msg = null, result;
     try {
@@ -254,7 +264,10 @@ class BootstrapTable extends React.Component{
   handleDropRow(){
     let result;
     let dropRowKeys = this.store.getSelectedRowKeys();
-
+    //add confirm befor the delete action
+    if(dropRowKeys&&dropRowKeys.length>0){
+      if(!confirm('Are you sure want delete?')){return}
+    }
     this.store.remove(dropRowKeys);  //remove selected Row
     this.store.setSelectedRowKey([]);  //clear selected row key
 
@@ -317,8 +330,11 @@ class BootstrapTable extends React.Component{
       return(
         <div>
           <PaginationList ref="pagination"
+                          currPage={this.props.options.page || 1}
                           changePage={this.handlePaginationData.bind(this)}
-                          sizePerPage={Const.SIZE_PER_PAGE}
+                          sizePerPage={this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0]}
+                          sizePerPageList={this.props.options.sizePerPageList || Const.SIZE_PER_PAGE_LIST}
+                          paginationSize={this.props.options.paginationSize || Const.PAGINATION_SIZE}
                           dataSize={this.store.getDataNum()} />
         </div>
       )
@@ -331,15 +347,28 @@ class BootstrapTable extends React.Component{
     let columns;
     if(Array.isArray(this.props.children)){
       columns = this.props.children.map(function(column){
+        var props=column.props;
         return {
-          name: column.props.children,
-          field: column.props.dataField
+// <<<<<<< HEAD
+//           name: column.props.children,
+//           field: column.props.dataField,
+//           editable: column.props.editable
+// =======
+          name: props.children,
+          field: props.dataField,
+          //when you want same auto generate value and not allow edit, example ID field
+          autoValue:props.autoValue||false,
+          //for create eidtor, no params for column.editable() indicate that editor for new row
+          editable:props.editable&&(typeof props.editable==="function")?props.editable():props.editable,
+          format:props.format?format:false
+// >>>>>>> 99cd459deffd5262d88691e8b075977bc0a2811f
         };
       });
     } else {
       columns = [{
         name: this.props.children.props.children,
-        field: this.props.children.props.dataField
+        field: this.props.children.props.dataField,
+        editable: this.props.children.props.editable
       }];
     }
     if(this.props.insertRow || this.props.deleteRow || this.props.search){
@@ -351,6 +380,7 @@ class BootstrapTable extends React.Component{
                    columns={columns}
                    searchPlaceholder={this.props.searchPlaceholder}
                    onAddRow={this.handleAddRow.bind(this)}
+                   onAddRowBegin={this.handleAddRowBegin.bind(this)}
                    onDropRow={this.handleDropRow.bind(this)}
                    onSearch={this.handleSearch.bind(this)}/>
         </div>
@@ -399,12 +429,17 @@ BootstrapTable.propTypes = {
   deleteRow: React.PropTypes.bool,
   search: React.PropTypes.bool,
   columnFilter: React.PropTypes.bool,
+  trClassName: React.PropTypes.any,
   options: React.PropTypes.shape({
     sortName: React.PropTypes.string,
     sortOrder: React.PropTypes.string,
     afterTableComplete: React.PropTypes.func,
     afterDeleteRow: React.PropTypes.func,
-    afterInsertRow: React.PropTypes.func
+    afterInsertRow: React.PropTypes.func,
+    page: React.PropTypes.number,
+    sizePerPageList: React.PropTypes.array,
+    sizePerPage: React.PropTypes.number,
+    paginationSize: React.PropTypes.number
   })
 };
 BootstrapTable.defaultProps = {
@@ -427,15 +462,23 @@ BootstrapTable.defaultProps = {
   cellEdit:{
     mode: Const.CELL_EDIT_NONE,
     blurToSave: false,
-    afterTableComplete: undefined
+    afterSaveCell: undefined
   },
   insertRow: false,
   deleteRow: false,
   search: false,
   columnFilter: false,
+  trClassName: '',
   options: {
-    sortName: null,
-    sortOrder: Const.SORT_DESC
+    sortName: undefined,
+    sortOrder: Const.SORT_DESC,
+    afterTableComplete: undefined,
+    afterDeleteRow: undefined,
+    afterInsertRow: undefined,
+    page: 1,
+    sizePerPageList: Const.SIZE_PER_PAGE_LIST,
+    sizePerPage: Const.SIZE_PER_PAGE_LIST[0],
+    paginationSize: Const.PAGINATION_SIZE
   }
 };
 

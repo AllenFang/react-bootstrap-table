@@ -6,9 +6,8 @@ class PaginationList extends React.Component{
 
   constructor(props) {
 		super(props);
-    this.sizePerList = Const.SIZE_PER_LIST;
 		this.state = {
-      currentPage: 1,
+      currentPage: this.props.currPage,
       sizePerPage: this.props.sizePerPage
     };
 	}
@@ -53,6 +52,15 @@ class PaginationList extends React.Component{
     var pageListStyle = {
       marginTop: "0px"  //override the margin-top defined in .pagination class in bootstrap.
     }
+
+    var sizePerPageList = this.props.sizePerPageList.map((sizePerPage) => {
+      return (
+        <li key={sizePerPage} role="presentation">
+          <a role="menuitem" tabIndex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>{sizePerPage}</a>
+        </li>
+      );
+    });
+
     return (
       <div className="row">
         <div className="col-md-1">
@@ -62,10 +70,7 @@ class PaginationList extends React.Component{
               <span className="caret"></span>
             </button>
             <ul className="dropdown-menu" role="menu" aria-labelledby="pageDropDown">
-              <li role="presentation"><a role="menuitem" tabIndex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>10</a></li>
-              <li role="presentation"><a role="menuitem" tabIndex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>25</a></li>
-              <li role="presentation"><a role="menuitem" tabIndex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>30</a></li>
-              <li role="presentation"><a role="menuitem" tabIndex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>50</a></li>
+              {sizePerPageList}
             </ul>
           </div>
         </div>
@@ -91,12 +96,12 @@ class PaginationList extends React.Component{
   getPages(){
     var startPage = 1, endPage = this.totalPages;
 
-    startPage = Math.max(this.state.currentPage - Math.floor(this.sizePerList/2), 1);
-    endPage   = startPage + this.sizePerList - 1;
+    startPage = Math.max(this.state.currentPage - Math.floor(this.props.paginationSize/2), 1);
+    endPage   = startPage + this.props.paginationSize - 1;
 
     if (endPage > this.totalPages) {
       endPage   = this.totalPages;
-      startPage = endPage - this.sizePerList + 1;
+      startPage = endPage - this.props.paginationSize + 1;
     }
     var pages = [Const.FIRST_PAGE, Const.PRE_PAGE];
     for(var i=startPage;i<=endPage;i++){
@@ -116,9 +121,12 @@ class PaginationList extends React.Component{
   }
 }
 PaginationList.propTypes = {
+  currPage: React.PropTypes.number,
   sizePerPage: React.PropTypes.number,
   dataSize: React.PropTypes.number,
-  changePage: React.PropTypes.func
+  changePage: React.PropTypes.func,
+  sizePerPageList: React.PropTypes.array,
+  paginationSize: React.PropTypes.number
 };
 
 PaginationList.defaultProps = {

@@ -42,11 +42,12 @@ TableHeaderColumn.propTypes = {
   clearSortCaret: React.PropTypes.func,
   dataFormat: React.PropTypes.func,
   isKey: React.PropTypes.bool,
-  editable: React.PropTypes.bool,
+  editable: React.PropTypes.any,
   hidden: React.PropTypes.bool,
   className:React.PropTypes.string,
   width: React.PropTypes.string,
-  sortFunc: React.PropTypes.func
+  sortFunc: React.PropTypes.func,
+  columnClassName: React.PropTypes.any
 };
 
 TableHeaderColumn.defaultProps = {
@@ -59,7 +60,8 @@ TableHeaderColumn.defaultProps = {
   hidden: false,
   className: "",
   width: null,
-  sortFunc: undefined
+  sortFunc: undefined,
+  columnClassName: ''
 };
 
 export default TableHeaderColumn;
