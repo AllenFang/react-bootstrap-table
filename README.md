@@ -20,7 +20,13 @@ In addition, reactbsTable support these features:
 
 You can see the [home page](http://allenfang.github.io/react-bootstrap-table/index.html). and example is on [here](http://allenfang.github.io/react-bootstrap-table/example.html).
 
-
+### See react-bootstrap-table examples
+```
+$ git clone https://github.com/AllenFang/react-bootstrap-table.git
+$ cd react-bootstrap-table
+$ npm install
+$ gulp example-server #after start, open browser and go to http://localhost:3004/example-list.html
+```
 
 ### Development
 react-bootstrap-table dependencies on react 0.13.x and Bootstrap 3 written by ES6 and use gulp and browserify to build
