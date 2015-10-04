@@ -55,7 +55,7 @@ class PaginationList extends React.Component{
 
     var sizePerPageList = this.props.sizePerPageList.map((sizePerPage) => {
       return (
-        <li role="presentation">
+        <li key={sizePerPage} role="presentation">
           <a role="menuitem" tabIndex="-1" href="#" onClick={this.changeSizePerPage.bind(this)}>{sizePerPage}</a>
         </li>
       );
