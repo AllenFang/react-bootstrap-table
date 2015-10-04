@@ -31,7 +31,7 @@ gulp.task("dev", function(){
 
 function buildDemoCode(){
 	demo = true;
-	browserifing("./example/js/demo.js", "demo.bundle.js", "./example/js");
+	browserifing("./demo/js/demo.js", "demo.bundle.js", "./demo/js");
 }
 
 function buildProdDist(){
@@ -74,15 +74,13 @@ function bundle(b, bundleName, dest){
 	.pipe(gulp.dest(dest));
 }
 
-var browserSync = require('browser-sync').create();
-
 // Static server
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
-var config = require('./webpack.server.config');
+var config = require('./webpack.example.config');
 
 
-gulp.task('serve',function(){
+gulp.task('example-server',function(){
 
 	new WebpackDevServer(webpack(config), {
 		publicPath: config.serverConfig.publicPath,

@@ -2,11 +2,6 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-    // entry: [
-    //     'webpack-dev-server/client?http://localhost:3004', // WebpackDevServer host and port
-    //     'webpack/hot/only-dev-server',
-    //     "./example_use_webpack/demo.js"
-    // ],
 
     entry: {
       basic: './examples/js/basic/demo.js',
