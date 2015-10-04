@@ -23,7 +23,7 @@ class TableHeader extends React.Component{
 
   componentDidMount(){
     //default sorting
-    if(this.props.sortName !== null){
+    if(this.props.sortName){
       this.clearSortCaret(this.props.sortOrder, this.props.sortName);
       var row = this.refs.header.getDOMNode();
       for(var i=0;i<row.childElementCount;i++){

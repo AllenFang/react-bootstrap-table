@@ -2,7 +2,7 @@ import BootstrapTable from './BootstrapTable';
 import TableHeaderColumn from './TableHeaderColumn';
 import {TableDataSet} from './store/TableDataStore';
 
-if(window){
+if(typeof window !== 'undefined'){
   window.BootstrapTable = BootstrapTable;
   window.TableHeaderColumn = TableHeaderColumn;
 }
