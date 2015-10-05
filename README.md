@@ -20,14 +20,6 @@ In addition, reactbsTable support these features:
 
 You can see the [home page](http://allenfang.github.io/react-bootstrap-table/index.html). and example is on [here](http://allenfang.github.io/react-bootstrap-table/example.html).
 
-### See react-bootstrap-table examples
-```
-$ git clone https://github.com/AllenFang/react-bootstrap-table.git
-$ cd react-bootstrap-table
-$ npm install
-$ gulp example-server #after start, open browser and go to http://localhost:3004/example-list.html
-```
-
 ### Development
 react-bootstrap-table dependencies on react 0.13.x and Bootstrap 3 written by ES6 and use gulp and browserify to build
 
@@ -120,6 +112,13 @@ React.render(
 	document.getElementById("basic")
 );
 ```
+### See react-bootstrap-table examples
+```
+$ git clone https://github.com/AllenFang/react-bootstrap-table.git
+$ cd react-bootstrap-table
+$ npm install
+$ gulp example-server #after start, open browser and go to http://localhost:3004/example-list.html
+```
 
 ### API&Attribute
 
@@ -159,6 +158,10 @@ Use ```options``` to set other settings for react-bootstrap-table, this prop acc
 - ```afterTableComplete```: Assign a callback function which will be called after table update</br>
 - ```afterDeleteRow```: Assign a callback function which will be called after row delete</br>
 - ```afterInsertRow```: Assign a callback function which will be called after row insert</br>
+- ```page```: accept a number, which means the page you want to show as default</br>
+- ```sizePerPageList```: you can change the dropdown list for size per page, accept an array object.</br>
+- ```sizePerPage```: means size per page you want to locate as default, accept a number.</br>
+- ```paginationSize```: define the pagination bar size, accept a number.</br>
 
 
 ####The attributes in &lt;TableHeaderColumn&gt;:</br>
