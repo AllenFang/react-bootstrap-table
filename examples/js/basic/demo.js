@@ -1,4 +1,4 @@
-require('../../../css/react-bootstrap-table.css');
+require('../../../css/react-bootstrap-table.min.css');
 import React from 'react';
 import BasicTable from './basic-table';
 import HoverStripedTable from './hover-striped-table';

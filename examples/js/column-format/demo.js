@@ -1,4 +1,4 @@
-require('../../../css/react-bootstrap-table.css');
+require('../../../css/react-bootstrap-table.min.css');
 import React from 'react';
 import HtmlColumnFormatTable from './html-column-format-table';
 import ReactColumnFormatTable from './react-column-format-table';

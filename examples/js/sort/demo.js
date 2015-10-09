@@ -1,4 +1,4 @@
-require('../../../css/react-bootstrap-table.css');
+require('../../../css/react-bootstrap-table.min.css');
 import React from 'react';
 import SortTable from './sort-table';
 import DefaultSortTable from './default-sort-table';

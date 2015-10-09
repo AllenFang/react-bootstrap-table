@@ -1,4 +1,4 @@
-require('../../../css/react-bootstrap-table.css');
+require('../../../css/react-bootstrap-table.min.css');
 import React from 'react';
 import TrClassStringTable from './tr-class-string-table';
 import TrClassFunctionTable from './tr-class-function-table';

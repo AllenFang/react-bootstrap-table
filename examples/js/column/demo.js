@@ -1,4 +1,4 @@
-require('../../../css/react-bootstrap-table.css');
+require('../../../css/react-bootstrap-table.min.css');
 import React from 'react';
 import ColumnAlignTable from './column-align-table';
 import ColumnWidthTable from './column-width-table';
