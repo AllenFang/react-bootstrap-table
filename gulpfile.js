@@ -3,8 +3,8 @@ var browserify = require('browserify');
 var watchify   = require('watchify');
 var source 		 = require("vinyl-source-stream");
 var babel      = require('gulp-babel');
+var concatCss  = require('gulp-concat-css');
 var cssmin     = require('gulp-cssmin');
-var rename     = require('gulp-rename');
 
 var watching = false;
 var demo     = false;
@@ -17,9 +17,9 @@ gulp.task("prod", function(){
 			.pipe(babel())
 			.pipe(gulp.dest('./lib'));
 	gulp.src('./css/react-bootstrap-table.css')
+				.pipe(concatCss("./react-bootstrap-table.min.css"))
         .pipe(cssmin())
-        .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest('./css'));
+				.pipe(gulp.dest('./css'));
 	buildProdDist();
 });
 
@@ -96,4 +96,4 @@ gulp.task('example-server',function(){
 			console.log('Listening at localhost:3004');
 		});
 
-})
+});
