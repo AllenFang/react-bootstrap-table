@@ -132,12 +132,14 @@ class BootstrapTable extends React.Component{
                        sortName={this.props.options.sortName}
                        sortOrder={this.props.options.sortOrder}
                        onSort={this.handleSort.bind(this)}
-                       onSelectAllRow={this.handleSelectAllRow.bind(this)}>
+                       onSelectAllRow={this.handleSelectAllRow.bind(this)}
+                       bordered={this.props.bordered}>
             {this.props.children}
           </TableHeader>
           <TableBody ref="body" data={this.state.data} columns={columns}
             trClassName={this.props.trClassName}
             striped={this.props.striped}
+            bordered={this.props.bordered}
             hover={this.props.hover}
             keyField={this.store.getKeyField()}
             condensed={this.props.condensed}
@@ -406,6 +408,7 @@ BootstrapTable.propTypes = {
   height: React.PropTypes.string,
   data: React.PropTypes.array,
   striped: React.PropTypes.bool,
+  bordered: React.PropTypes.bool,
   hover: React.PropTypes.bool,
   condensed: React.PropTypes.bool,
   pagination: React.PropTypes.bool,
@@ -445,6 +448,7 @@ BootstrapTable.propTypes = {
 BootstrapTable.defaultProps = {
   height: "100%",
   striped: false,
+  bordered: true,
   hover: false,
   condensed: false,
   pagination: false,

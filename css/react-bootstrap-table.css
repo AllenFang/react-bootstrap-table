@@ -6,17 +6,16 @@
 }
 .react-bs-table .table-header{
   height: 42px;
-  border-right-width: 1px;
-  border-right-style: solid;
-  border-right-color: rgb(221, 221, 221);
   border-top-width: 1px;
   border-top-style: solid;
   border-top-color: rgb(221, 221, 221);
+  border-bottom-width: 0px;
+  border-bottom-style: solid;
+  border-bottom-color: rgb(221, 221, 221);
 }
 
 .react-bs-table .table-header > table{
   table-layout: fixed;
-  border-right-style: hidden;
   border-top-style: hidden;
 }
 
