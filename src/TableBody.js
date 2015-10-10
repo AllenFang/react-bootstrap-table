@@ -22,8 +22,9 @@ class TableBody extends React.Component{
   render(){
     var containerClasses = classSet("table-container");
 
-    var tableClasses = classSet("table", "table-bordered", {
+    var tableClasses = classSet("table", {
       'table-striped': this.props.striped,
+      'table-bordered': this.props.bordered,
       'table-hover': this.props.hover,
       'table-condensed': this.props.condensed
     });
@@ -228,6 +229,7 @@ TableBody.propTypes = {
   data: React.PropTypes.array,
   columns: React.PropTypes.array,
   striped: React.PropTypes.bool,
+  bordered: React.PropTypes.bool,
   hover: React.PropTypes.bool,
   condensed: React.PropTypes.bool,
   keyField: React.PropTypes.string,
