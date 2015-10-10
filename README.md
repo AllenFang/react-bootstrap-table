@@ -127,6 +127,7 @@ You can reference [here](http://allenfang.github.io/react-bootstrap-table/docs.h
 ####The attributes in &lt;BootstrapTable&gt;:</br>
 Use ```data``` to specify the data that you want to display on table.</br>
 Use ```height``` to set the table height, default is 100%.</br>
+Use ```bordered``` to set the table border, default is true.</br>
 Use ```striped``` to set table be a striped columns. Like bootstrap table class ```.table-striped```.</br>
 Use ```hover``` to enable table hover. Like bootstrap table class ```.table-hover```.</br>
 Use ```condensed``` to set a condensed table. Like bootstrap table class ```.table-condensed```.</br>
