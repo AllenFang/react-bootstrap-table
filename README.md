@@ -1,29 +1,25 @@
 # react-bootstrap-table
-It's a react table for bootstrap, named reactbsTable
+It's a react.js table for bootstrap, named reactbsTable. It's a configurable, functional table component and make you build a Bootstrap Table more efficiency and easy in your React application, However ```react-bootstrap-table``` support these features:
 
-As you know, the basic bootstrap table function like striped, bordered, hover and condensed are supported.
+- column align
+- column hidden
+- scrolling table
+- data sort
+- cell format
+- pagination
+- row selection
+- column filter
+- cell edit with multi type editor
+- Insert & Delete Row
+- row and column style customize
+- Search
 
-In addition, reactbsTable support these features:
+You can see more about this component on [here](http://allenfang.github.io/react-bootstrap-table/index.html). and example is on [here](http://allenfang.github.io/react-bootstrap-table/example.html).
 
-* column align
-* column hidden
-* scrolling table
-* data sort
-* cell format
-* pagination
-* row selection
-* column filter
-* cell edit with multi type editor
-* Insert & Delete Row
-* row and column style customize
-* Search
+## Development
+```react-bootstrap-table``` dependencies on react 0.13.x and Bootstrap 3 written by ES6 and use gulp and browserify for building and bundling.
 
-You can see the [home page](http://allenfang.github.io/react-bootstrap-table/index.html). and example is on [here](http://allenfang.github.io/react-bootstrap-table/example.html).
-
-### Development
-react-bootstrap-table dependencies on react 0.13.x and Bootstrap 3 written by ES6 and use gulp and browserify to build
-
-Use following command to prepare development
+You can use the following commands to prepare development
 ```
 $ git clone https://github.com/AllenFang/react-bootstrap-table.git
 $ cd react-bootstrap-table
@@ -32,21 +28,20 @@ $ npm install
 Use gulp to build the react-bootstrap-table
 ```
 $ gulp dev  #for development
+$ gulp example-server #see all examples, go to localhost:3004/example-list.html
 $ gulp prod #for production
 ```
 
-### Usage
+## Usage
 Download react-bootstrap-table first.
 ```
 npm install react-bootstrap-table --save
 ```
-Use react-bootstrap-table in your react app
-
-You can import react-bootstrap-table in two way, as following:
-#### module(CommonJS/AMD)
+Use ```react-bootstrap-table``` in your react app, you should import ```react-bootstrap-table``` as first. About importing this component, there'r two way in the following you can choose:
+#### Module(CommonJS/AMD)
 ```
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';  // in ECMAScript 6
-// or
+// or in ECMAScript 5
 var ReactBSTable = require("react-bootstrap-table");  
 var BootstrapTable = ReactBSTable.BootstrapTable;
 var TableHeaderColumn = ReactBSTable.TableHeaderColumn;
@@ -56,23 +51,19 @@ var TableHeaderColumn = ReactBSTable.TableHeaderColumn;
 <script src="path/to/react-bootstrap-table/dist/react-bootstrap-table.min.js" />
 <script>
   var ReactBsTable = window.BootstrapTable;
+  //...
 <script/>
 ```
 
-Finally, you need import the css file to your app
+Finally, you need to import the css file to your app
 ```
 <link rel="stylesheet" href="./css/react-bootstrap-table.min.css">
 ```
-the react-bootstrap-table.min.css file you can find in the css folder
-
-After import reactbsTable, use it in your react app
-
-You can find more detail example code in example folder
+The ```react-bootstrap-table.min.css``` file you can find in the css folder.After import css file, you can start to write your react application with ```react-bootstrap-table```. In the below, it's a simple demo for using ```react-bootstrap-table```:
 
 ```
-// products will be presented by reactbsTable
-var products = [
-  {
+// products will be presented by react-bootstrap-table
+var products = [{
       id: 1,
       name: "Item name 1",
       price: 100
@@ -92,24 +83,19 @@ var products = [
       id: 5,
       name: "Item name 5",
       price: 100
-  },{
-      id: 6,
-      name: "Item name 6",
-      price: 100
-  }
-];
+}];
 // It's a data format example.
 function priceFormatter(cell, row){
   return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
 }
 
 React.render(
-  <BootstrapTable data={products} height="120" striped={true} hover={true}>
+  <BootstrapTable data={products} striped={true} hover={true}>
       <TableHeaderColumn dataField="id" isKey={true} dataAlign="center" dataSort={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price" dataFormat={priceFormatter}>Product Price</TableHeaderColumn>
   </BootstrapTable>,
-	document.getElementById("basic")
+	document.getElementById("app")
 );
 ```
 ### See react-bootstrap-table examples
