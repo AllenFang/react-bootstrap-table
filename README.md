@@ -130,27 +130,20 @@ You can reference [here](http://allenfang.github.io/react-bootstrap-table/docs.h
 | cellEdit | Object | Use cellEdit and assign an object to enable cell edit on table, this object contain these properties:</br>```mode```(required): click/dbclick, to spectify which condition will trigger cell editing.</br>```blurToSave```(optional): if true, when mouse blur on input field will trigger a save on cell, default is false.</br>```afterSaveCell```(optional): accept a callback function, after save cell, this function will be called and pass ```row```, ```cellName``` and ```cellValue``` as params.</br> |
 | options | Object | For some options setting on react-bootstrap-table, you can set the options attribute and give an object which contain the following properties</br>```sortName```: Assign a default sort field by this property</br>```sortOrder```(asc/desc): Assign a default sort order</br>```afterTableComplete```: Assign a callback function which will be called after table update</br>```afterDeleteRow```: Assign a callback function which will be called after row delete</br>```afterInsertRow```: Assign a callback function which will be called after row insert</br>```page```: accept a number, which means the page you want to show as default</br>```sizePerPageList```: you can change the dropdown list for size per page, accept an array object.</br>```sizePerPage```: means size per page you want to locate as default, accept a number.</br>```paginationSize```: define the pagination bar size, accept a number.</br>
 
-
-####The attributes in &lt;TableHeaderColumn&gt;:</br>
-Use ```isKey``` to specify which column is unique.</br>
-Use ```width``` to set the width on column</br>
-Use ```dataField``` to specify which column you want to show on this column.</br>
-Use ```dataAlign``` to set align in column. Available value is left, center, right, start and end.</br>
-Use ```dataSort``` to enable the sorting in column. Default value is false(disabled).</br>
-Use ```dataFormat``` to customize this column.Must give it as a function.</br>
-Use ```hidden``` to enable hidden column.</br>
-Use ```className``` to add custom css class for table header column,accept string or function. if use function,will pass cellData,rowData,rowIndex,columnIndex for params</br>
-Use ```columnClassName``` to add custom css class for table body column, accept string or function. If use function will pass fieldValue,row,rowIdx,colIdx</br>
-Use  ```editable ``` to specify column editable,accept boolean or input type string or config object or function, default is true. This attribute only works on cellEdit be setted in <BootstrapTable> certainly. if use function,will pass cellData,rowData,rowIndex,columnIndex for params, and expect return the config object or input type string</br>
-editable config object include these properties:</br>
-- ```type ```(required): indicate input type. support type is:select,textarea,text and password...
-- ```style ```(optional):input style,react foramt
-- ```className ```(optional):input class
-- ```datas ```(required): only required on type is select, array of data for option in select
--  ```cols ```(optional):only use on type is textarea, number for textarea cols
--   ```rows ```(optional):only use on type is textarea, number for textarea rows
-
-Use ```sortFunc``` to customize your sort function.</br>
+#### The attributes in &lt;TableHeaderColumn&gt;:
+| Attr         | Type   | Description                                            |
+| ------------ | ------ | -------------------------------------------------------|
+| isKey        | Bool   | To specify which column is unique, it's required.      |
+| width        | String | Set the column width, ex: 70%, 150px.                  |
+| dataField    | String | Means which field of data you want to show on column.  |
+| dataAlign    | String | Set align in column,  value is left, center, right, start and end. |
+| dataSort     | Bool   | True to enable table sorting.                          |
+| dataFormat   | Function | To customize the column. Must give it as a function and pass ```cell```, ```row``` as params. This function should return a String or a React Component |
+| hidden       | Bool   | True to hide column.                                   |
+| className    | String or Function | Add custom css class on **table header** column, this attribute accept String or Function. If Function, will pass following data as parameters: ```cellData```,```rowData```,```rowIndex```,```columnIndex```. And this function should return a String which means the class you want to add.|
+| columnClassName | String or Function | Add custom css class for **table body column**, this attribute accept string or function. If Function, will pass following data as parameters: ```fieldValue```,```row```,```rowIdx```,```colIdx```. And this function should return a String which means the class you want to add.|
+| editable     | Bool or Object| True to set column editable, false is non-editable. If give Object, you can get more customization when editing cell, which object contain these properties:</br>{</br>&nbsp;&nbsp;type: //edit type, avaiable value is textarea, select, checkbox</br>&nbsp;&nbsp;validator: //give function for validation and pass cell value as param. This function should return Bool.</br>&nbsp;&nbsp;options:{</br>&nbsp;&nbsp;&nbsp;&nbsp;values:</br>&nbsp;&nbsp;&nbsp;&nbsp;//values means data in select or checkbox</br>&nbsp;&nbsp;&nbsp;&nbsp;//if checkbox, use : to separate value, ex: Y:N</br>&nbsp;&nbsp;}</br>}</br> |
+| sortFunc | Function | Give a customize function for data sorting |
 
 #### About TableDataSet
 After v0.8.0, react-bootstrap-table provide the ability of updating table data on fly. How to do it?
