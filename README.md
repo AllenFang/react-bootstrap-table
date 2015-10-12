@@ -106,49 +106,29 @@ $ npm install
 $ gulp example-server #after start, open browser and go to http://localhost:3004/example-list.html
 ```
 
-### API&Attribute
+### Documents
 
 You can reference [here](http://allenfang.github.io/react-bootstrap-table/docs.html) on web site
 
-####The attributes in &lt;BootstrapTable&gt;:</br>
-Use ```data``` to specify the data that you want to display on table.</br>
-Use ```height``` to set the table height, default is 100%.</br>
-Use ```bordered``` to set the table border, default is true.</br>
-Use ```striped``` to set table be a striped columns. Like bootstrap table class ```.table-striped```.</br>
-Use ```hover``` to enable table hover. Like bootstrap table class ```.table-hover```.</br>
-Use ```condensed``` to set a condensed table. Like bootstrap table class ```.table-condensed```.</br>
-Use ```pagination``` to enable the pagnation on table.</br>
-Use ```insertRow``` to enable the insert row on table.</br>
-Use ```deleteRow``` to enable the delete row on table.</br>
-Use ```columnFilter``` to enable the column filter on table.</br>
-Use ```search``` to enable the search on table.</br>
-Use ```searchPlaceholder``` to change the placeholder text in the search field.</br>
-Use  ```trClassName``` to set tr row class,accept string or function. if use function,will pass rowData and rowIndex params.</br>
-Use ```selectRow``` to enable the row selection on table, this attribute accept an object which contain these properties.</br>
-- ```mode```(required): radio/checkbox, to specify the selection is single or multiple.</br>
-- ```clickToSelect```(optional): if true, click on row will trigger row selection, default is false.</br>
-- ```hideSelectColumn```(optional): if true, the radio/checkbox column will be hidden, if you enable clickToSelect.</br>
-- ```clickToSelectAndEditCell```(optional): if true, click the row will trigger selection on that row, and also trigger cell editing if you enabled cell edit.</br>
-- ```bgColor```(optional): You can assign background color if row be selected.</br>
-- ```selected```(optional): it's for default selected row on table, give an array object which contain selected row keys.</br>
-- ```onSelect```(optional): accept a callback function, if a row be selected, this function will be called.</br>
-- ```onSelectAll```(optional): accept a callback function, if select all in ```checkbox``` mode, this function will be called.</br>
-
-Use ```cellEdit``` to enable the cell editing on table, it accept a object which contain these properties</br>
-- ```mode```(required): click/dbclick, to spectify which condition will trigger cell editing.</br>
-- ```blurToSave```(optional): if true, when mouse blur on input field will trigger a save on cell, default is false.</br>
-- ```afterSaveCell```(optional): accept a callback function, after save cell, this function will be called.</br>
-
-Use ```options``` to set other settings for react-bootstrap-table, this prop accept an object which include these properties:<br/>
-- ```sortName```: Assign a default sort field by this property</br>
-- ```sortOrder```(asc/desc): Assign a default sort order</br>
-- ```afterTableComplete```: Assign a callback function which will be called after table update</br>
-- ```afterDeleteRow```: Assign a callback function which will be called after row delete</br>
-- ```afterInsertRow```: Assign a callback function which will be called after row insert</br>
-- ```page```: accept a number, which means the page you want to show as default</br>
-- ```sizePerPageList```: you can change the dropdown list for size per page, accept an array object.</br>
-- ```sizePerPage```: means size per page you want to locate as default, accept a number.</br>
-- ```paginationSize```: define the pagination bar size, accept a number.</br>
+#### The attributes on &lt;BootstrapTable&gt;:
+| Attr         | Type   | Description                                            |
+| -------------| ------ | -------------------------------------------------------|
+| data         | Array  | Assign the data you want to display on table.          |
+| height       | String | Set the height of table, default is 100%.              |
+| bordered     | Bool   | Default is true, if false, become a borderless table   |
+| striped      | Bool   | Same as Bootstrap table class ```.table-striped```, default is false. |
+| hover        | Bool   | Same as Bootstrap table class ```.table-hover```, default is false. |
+| condensed    | Bool   | Same as Bootstrap table class ```.table-condensed```, default is false. |
+| columnFilter | Bool   | Set true to enable the column filter on table.         |
+| pagination   | Bool   | Set true to enable pagination on table .               |
+| insertRow    | Bool   | Set true to enable row insertion on table.             |
+| deleteRow    | Bool   | Set true to enable row deletion on table.              |
+| search       | Bool   | Set true to enable search function on table.           |
+| searchPlaceholder | String   | The place holder on search text fields          |
+| trClassName  | String or Function | Assign the row(tr) class, accept string or function, if use function, will pass ```rowData``` and ```rowIndex``` params and should return string presented class. for examples:</br>**function trClassFormat(rowData,rowIndex){**</br>&nbsp;&nbsp;&nbsp;**return rowIndex%2==0?"tr-odd":"tr-even";**</br>**}**      |
+| selectRow | Object | Assign an object which have these properties as follow:</br>```mode```(required): radio/checkbox, to specify the selection is single or multiple.</br>```clickToSelect```(optional): if true, click on row will trigger row selection, default is false.</br>```clickToSelectAndEditCell```(optional): if true, click the row will trigger selection on that row, and also trigger cell editing if you enabled cell edit.</br>```bgColor```(optional): You can assign background color if row be selected.</br>```selected```(optional): it's for default selected row on table, give an array object which contain selected row keys.</br>```onSelect```(optional): accept a callback function, if a row be selected, this function will be called and pass the ```row``` and ```isSelected``` as params.</br>```onSelectAll```(optional): accept a callback function, if select all in ```checkbox``` mode, this function will be called and pass ```isSelected``` as params.</br>```hideSelectColumn```(optional): if true, the radio/checkbox column will be hidden, if you enable clickToSelect.</br> |
+| cellEdit | Object | Use cellEdit and assign an object to enable cell edit on table, this object contain these properties:</br>```mode```(required): click/dbclick, to spectify which condition will trigger cell editing.</br>```blurToSave```(optional): if true, when mouse blur on input field will trigger a save on cell, default is false.</br>```afterSaveCell```(optional): accept a callback function, after save cell, this function will be called and pass ```row```, ```cellName``` and ```cellValue``` as params.</br> |
+| options | Object | For some options setting on react-bootstrap-table, you can set the options attribute and give an object which contain the following properties</br>```sortName```: Assign a default sort field by this property</br>```sortOrder```(asc/desc): Assign a default sort order</br>```afterTableComplete```: Assign a callback function which will be called after table update</br>```afterDeleteRow```: Assign a callback function which will be called after row delete</br>```afterInsertRow```: Assign a callback function which will be called after row insert</br>```page```: accept a number, which means the page you want to show as default</br>```sizePerPageList```: you can change the dropdown list for size per page, accept an array object.</br>```sizePerPage```: means size per page you want to locate as default, accept a number.</br>```paginationSize```: define the pagination bar size, accept a number.</br>
 
 
 ####The attributes in &lt;TableHeaderColumn&gt;:</br>
