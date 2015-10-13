@@ -46,7 +46,7 @@ class TableEditColumn extends React.Component{
           var valid=ts.props.editable.validator(value);
           if(valid!==true){
               ts.refs.notifier.notice('error',valid,"Pressed ESC can cancel");
-              var input = ts.refs.inputRef.getDOMNode();
+              var input = ts.refs.inputRef;
               //animate input
               ts.clearTimeout();
               ts.setState({shakeEditor:true});
@@ -65,7 +65,7 @@ class TableEditColumn extends React.Component{
       }
   }
   componentDidMount(){
-      var input = this.refs.inputRef.getDOMNode();
+      var input = this.refs.inputRef;
       // input.value = this.props.children||'';
       input.focus();
   }
