@@ -48,8 +48,7 @@
   },
   "dependencies": {
     "react-toastr": "^1.5.1",
-    "classnames": "^2.1.2",
-    "toastr": "^2.1.2"
+    "classnames": "^2.1.2"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/preprocessor.js",

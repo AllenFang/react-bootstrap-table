@@ -1,5 +1,6 @@
 /*editor error animate*/
-@import "../node_modules/toastr/build/toastr.min.css";
+/*@import "../node_modules/toastr/build/toastr.min.css";*/
+@import "https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css";
 
 .react-bs-table{
   margin-bottom: 37px;
