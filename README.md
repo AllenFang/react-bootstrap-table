@@ -17,7 +17,7 @@ It's a react.js table for bootstrap, named reactbsTable. It's a configurable, fu
 You can see more about this component on [here](http://allenfang.github.io/react-bootstrap-table/index.html). and example is on [here](http://allenfang.github.io/react-bootstrap-table/example.html).
 
 ## Development
-```react-bootstrap-table``` dependencies on react 0.13.x and Bootstrap 3 written by ES6 and use gulp and browserify for building and bundling.
+```react-bootstrap-table``` dependencies on react 0.14.x and Bootstrap 3 written by ES6 and use gulp and browserify for building and bundling.
 
 You can use the following commands to prepare development
 ```
