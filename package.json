@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-table",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "It' a react table for bootstrap",
   "main": "./lib/index.js",
   "repository": {
@@ -38,8 +38,7 @@
     "gulp-cssmin": "^0.1.6",
     "jest-cli": "^0.4.0",
     "jsx-loader": "^0.13.2",
-    "react": "^0.14.0",
-    "react-dom": "^0.14.0",
+    "react": "^0.13.3",
     "react-hot-loader": "^1.3.0",
     "react-router": "^1.0.0-rc1",
     "style-loader": "^0.12.4",
@@ -48,7 +47,7 @@
     "webpack-dev-server": "^1.12.0"
   },
   "dependencies": {
-    "react-toastr": "^2.1.0",
+    "react-toastr": "^1.5.2",
     "classnames": "^2.1.2"
   },
   "jest": {
