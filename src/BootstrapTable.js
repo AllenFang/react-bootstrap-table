@@ -37,7 +37,7 @@ class BootstrapTable extends React.Component{
 	  this.props.oldDataLength = _data.length;
 	  this.props.data.clear();
       this.props.data.on('change', (data) => {
-		  //TODO: Allen to Review. Is this the right way of doing things? Or modify set state method to take in add/edit/delete additional param to know what has changed in the data?
+		//TODO: Allen to Review. Is this the right way of doing things? Or modify set state method to take in add/edit/delete additional param to know what has changed in the data?
 		var dataAdded = false;
 		var dataRemoved = false;	
 		if(_this.props.oldDataLength < data.length) //add 
