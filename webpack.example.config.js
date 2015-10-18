@@ -15,6 +15,7 @@ module.exports = {
       complex: './examples/js/complex/demo.js',
       style: './examples/js/style/demo.js',
       advance: './examples/js/advance/demo.js',
+      tableDataSet: './examples/js/tableDataSet/demo.js',
       vendors: ['webpack-dev-server/client?http://localhost:3004', 'webpack/hot/only-dev-server']
     },
     devtool: 'eval',
