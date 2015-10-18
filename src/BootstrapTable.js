@@ -58,9 +58,15 @@ class BootstrapTable extends React.Component{
   getTableData() {
     let result = [];
     if(this.props.pagination){
-      result = this.store.page(this.props.options.page || 1,
-                  this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0])
-                  .get();
+      let page, sizePerPage;
+      if(this.store.isChangedPage()){
+        sizePerPage = this.refs.pagination.getSizePerPage();
+        page = this.refs.pagination.getCurrentPage();
+      } else {
+        sizePerPage = this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0];
+        page = this.props.options.page || 1;
+      }
+      result = this.store.page(page, sizePerPage).get();
     } else{
       result = this.store.get();
     }
