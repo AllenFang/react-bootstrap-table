@@ -32,13 +32,73 @@ class BootstrapTable extends React.Component{
       throw "Error. No any key column defined in TableHeaderColumn. Use 'isKey={true}' to specify an unique column after version 0.5.4.";
 
     if(!Array.isArray(this.props.data)){
-      this.store = new TableDataStore(this.props.data.getData());
-      this.props.data.clear();
+      var _data = this.props.data.getData();
+      this.store = new TableDataStore(_data);	  
+	  this.props.oldDataLength = _data.length;
+	  this.props.data.clear();
       this.props.data.on('change', (data) => {
-        this.store.setData(data);
-        this.setState({
-          data: this.getTableData()
-        })
+		//TODO: Allen to Review. Is this the right way of doing things? Or modify set state method to take in add/edit/delete additional param to know what has changed in the data?
+		var dataAdded = false;
+		var dataRemoved = false;	
+		if(_this.props.oldDataLength < data.length) //add 
+		{
+			dataAdded = true;
+			_this.props.oldDataLength = data.length;
+		}
+		else if(_this.props.oldDataLength > data.length) //delete 
+		{
+			dataRemoved = true;
+			_this.props.oldDataLength = data.length;
+		}
+		
+		_this.store.setData(data);		
+		var result = undefined;
+		if(dataAdded)
+		{
+			  if (_this.props.pagination) {
+			  //if pagination is enabled and insert row be trigger, change to last page
+			  var sizePerPage = _this.refs.pagination.getSizePerPage();
+			  var currLastPage = Math.ceil(_this.store.getDataNum() / sizePerPage);
+			  result = _this.store.page(currLastPage, sizePerPage).get();
+			  _this.setState({
+				data: result
+			  });
+			  _this.refs.pagination.changePage(currLastPage);
+			} else {
+			  result = _this.store.get();
+			  _this.setState({
+				data: result
+			  });
+			}	
+		}
+		else if(dataRemoved)
+		{
+		 if (this.props.pagination) {
+          var sizePerPage = this.refs.pagination.getSizePerPage();
+          var currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
+          var currentPage = this.refs.pagination.getCurrentPage();
+          if (currentPage > currLastPage) currentPage = currLastPage;
+          result = this.store.page(currentPage, sizePerPage).get();
+          this.setState({
+            data: result
+          });
+          this.refs.pagination.changePage(currentPage);
+        } else {
+          result = this.store.get();
+          this.setState({
+            data: result
+          });
+        }
+		}
+		else
+		{
+		   var sizePerPage = this.refs.pagination.getSizePerPage();
+		   var currentPage = this.refs.pagination.getCurrentPage();
+		   result = this.store.page(currentPage, sizePerPage).get();
+		  _this.setState({
+           data: result
+			});
+		}
       }.bind(this));
     } else{
       this.store = new TableDataStore(this.props.data);
