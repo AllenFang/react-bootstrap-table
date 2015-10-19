@@ -6,27 +6,20 @@ export default class TableDataSetTable extends React.Component{
 
   constructor(props){
     super(props);
-    this.dataSet = new TableDataSet(this._addProducts(30));
-    // this.state = {
-    //   products: this._addProducts(5)
-    // };
+    this.dataSet = new TableDataSet(this._addProducts(5));
   }
 
   handleChangeData(){
-    console.log('@');
-    // this.setState({
-    //   products: this._addProducts(10)
-    // });
-    this.dataSet.setData(this._addProducts(60));
+    this.dataSet.setData(this._addProducts(10));
   }
 
   render(){
     return (
       <div>
         <button onClick={this.handleChangeData.bind(this)}>Click to Change data</button>
-        <BootstrapTable data={this.dataSet} pagination={true}>
+        <BootstrapTable data={this.dataSet}>
             <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
-            <TableHeaderColumn dataSort={true} dataField="name">Product Name</TableHeaderColumn>
+            <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
             <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
         </BootstrapTable>
       </div>
