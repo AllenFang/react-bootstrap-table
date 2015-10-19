@@ -186,7 +186,8 @@ class BootstrapTable extends React.Component{
       selectedRowKeys: selectedRowKeys
     });
     if(this.props.selectRow.onSelectAll){
-      this.props.selectRow.onSelectAll(isSelected);
+      this.props.selectRow.onSelectAll(isSelected,
+        isSelected?this.store.get():[]);
     }
   }
 
