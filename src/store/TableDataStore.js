@@ -221,6 +221,10 @@ export class TableDataStore{
     return this.getCurrentDisplayData().length;
   }
 
+  isChangedPage(){
+    return this.pageObj.start && this.pageObj.end ? true: false;
+  }
+
   getAllRowkey(){
     return this.data.map(function(row){
       return row[this.keyField];
