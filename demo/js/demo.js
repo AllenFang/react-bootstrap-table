@@ -22,8 +22,10 @@ function onRowSelect(row, isSelected){
   console.log("selected: " + isSelected)
 }
 
-function onSelectAll(isSelected){
+function onSelectAll(isSelected, currentDisplayAndSelectedData){
   console.log("is select all: " + isSelected);
+  console.log("Current select and display data: ");
+  console.log(currentDisplayAndSelectedData);
 }
 
 function onAfterSaveCell(row, cellName, cellValue){
