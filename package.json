@@ -10,7 +10,7 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "react": "^0.14.0",
-    "react-bootstrap-table": "^1.2.1"
+    "react-bootstrap-table": "^1.2.2"
   },
   "devDependencies": {
     "babelify": "^5.0.4",
