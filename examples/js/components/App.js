@@ -1,4 +1,5 @@
 import React from 'react';
+import {LinkContainer} from 'react-router-bootstrap';
 
 // import 'bootstrap/dist/css/bootstrap.css';
 // import 'jquery';
@@ -69,19 +70,26 @@ class App extends React.Component {
       text: 'TableDataSet demo',
       href: 'tableDataSet',
     }];
-    const exampleMenuItems = examples.map((e, i)=>{
-      return <MenuItem eventKey={i} href={'#examples/' + e.href}>{e.text}</MenuItem>;
+
+    const exampleMenuItems = examples.map((item, idx)=> {
+      return (
+        <LinkContainer key={idx} to={'/examples/' + item.href}>
+          <MenuItem key={idx}>{item.text}</MenuItem>
+        </LinkContainer>
+      );
     });
     return (
       <div>
         <Navbar inverse toggleNavKey={0}>
           <NavBrand><a href="#">react-bootstrap-table</a></NavBrand>
-          <Nav eventKey={1}>
-            <NavItem eventKey={1} href="#getting-started">Getting started</NavItem>
+          <Nav>
+            <LinkContainer to="/getting-started">
+              <NavItem>Getting started</NavItem>
+            </LinkContainer>
             <NavDropdown title="Examples" id="collapsible-navbar-dropdown">
               {exampleMenuItems}
             </NavDropdown>
-            <NavItem eventKey={2} href="https://github.com/luqin/react-bootstrap-table" target="_blank">GitHub</NavItem>
+            <NavItem href="https://github.com/luqin/react-bootstrap-table" target="_blank">GitHub</NavItem>
           </Nav>
         </Navbar>
         <Grid fluid>
