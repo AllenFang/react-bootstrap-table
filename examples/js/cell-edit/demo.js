@@ -30,3 +30,27 @@ React.render(
   <CellEditHookTable />,
   document.getElementById('hook')
 );
+
+
+class Demo extends React.Component {
+	render() {
+		return (
+				<Col md={8} mdOffset={1}>
+					<Panel header={"A basic react-bootstrap-table"}>
+						<h5>Source in /examples/js/basic/basic-table.js</h5>
+						<BasicTable/>
+					</Panel>
+					<Panel header={"A basic react-bootstrap-table"}>
+						<h5>Source in /examples/js/basic/basic-table.js</h5>
+						<HoverStripedTable/>
+					</Panel>
+					<Panel header={"A basic react-bootstrap-table"}>
+						<h5>Source in /examples/js/basic/basic-table.js</h5>
+						<ScrollTable/>
+					</Panel>
+				</Col>
+		);
+	}
+}
+
+export default Demo;

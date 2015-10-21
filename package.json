@@ -44,7 +44,6 @@
     "gulp-cssmin": "^0.1.6",
     "history": "1.12.3",
     "jquery": "^2.1.4",
-    "jest-cli": "^0.4.0",
     "jsx-loader": "^0.13.2",
     "react": "^0.14.0",
     "react-bootstrap": "^0.27.2",
