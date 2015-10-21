@@ -1,5 +1,12 @@
 # react-bootstrap-table
-It's a react.js table for bootstrap, named reactbsTable. It's a configurable, functional table component and make you build a Bootstrap Table more efficiency and easy in your React application, However ```react-bootstrap-table``` support these features:
+
+[![NPM version][npm-badge]][npm] [![Build Status][travis-ci-image]][travis-ci-url]
+
+[![Dependency Status][deps-badge]][deps]
+[![devDependency Status][dev-deps-badge]][dev-deps]
+[![peerDependency Status][peer-deps-badge]][peer-deps]
+
+It's a [react.js](http://facebook.github.io/react/) table for bootstrap, named reactbsTable. It's a configurable, functional table component and make you build a Bootstrap Table more efficiency and easy in your React application, However ```react-bootstrap-table``` support these features:
 
 - column align
 - column hidden
@@ -167,3 +174,18 @@ var dataSet = new TableDataSet(products);
 ```
 dataSet.setData(newproducts);
 ```
+
+[npm-badge]: http://badge.fury.io/js/react-bootstrap-table.svg
+[npm]: http://badge.fury.io/js/react-bootstrap-table
+
+[deps-badge]: https://david-dm.org/AllenFang/react-bootstrap-table.svg
+[deps]: https://david-dm.org/AllenFang/react-bootstrap-table
+
+[dev-deps-badge]: https://david-dm.org/AllenFang/react-bootstrap-table/dev-status.svg
+[dev-deps]: https://david-dm.org/AllenFang/react-bootstrap-table#info=devDependencies
+
+[peer-deps-badge]: https://david-dm.org/AllenFang/react-bootstrap-table/peer-status.svg
+[peer-deps]: https://david-dm.org/AllenFang/react-bootstrap-table#info=peerDependencies 
+
+[travis-ci-image]: https://travis-ci.org/AllenFang/react-bootstrap-table.svg
+[travis-ci-url]: https://travis-ci.org/AllenFang/react-bootstrap-table
