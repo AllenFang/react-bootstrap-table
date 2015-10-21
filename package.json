@@ -8,7 +8,8 @@
     "url": "https://github.com/AllenFang/react-bootstrap-table.git"
   },
   "scripts": {
-    "test": "jest"
+    "lint": "eslint src",
+    "test": "eslint src && jest"
   },
   "keywords": [
     "react",
