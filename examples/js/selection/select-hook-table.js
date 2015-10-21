@@ -27,8 +27,12 @@ function onRowSelect(row, isSelected){
   alert("is selected: " + isSelected + ", " + rowStr);
 }
 
-function onSelectAll(isSelected){
+function onSelectAll(isSelected, currentDisplayAndSelectedData){
   alert("is select all: " + isSelected);
+  alert("Current display and selected data: ");
+  for(let i=0;i<currentDisplayAndSelectedData.length;i++){
+    alert(currentDisplayAndSelectedData[i]);
+  }
 }
 
 var selectRowProp = {
