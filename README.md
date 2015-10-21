@@ -35,7 +35,7 @@ $ npm install
 Use gulp to build the react-bootstrap-table
 ```
 $ gulp dev  #for development
-$ gulp example-server #see all examples, go to localhost:3004/example-list.html
+$ gulp example-server #see all examples, go to localhost:3004
 $ gulp prod #for production
 ```
 

@@ -14,12 +14,12 @@ class Demo extends React.Component {
           <h5>Source in /examples/js/basic/basic-table.js</h5>
           <BasicTable/>
         </Panel>
-        <Panel header={"A basic react-bootstrap-table"}>
-          <h5>Source in /examples/js/basic/basic-table.js</h5>
+        <Panel header={"Table hover, striped and condensed Example"}>
+          <h5>Source in /examples/js/basic/hover-striped-table.js</h5>
           <HoverStripedTable/>
         </Panel>
-        <Panel header={"A basic react-bootstrap-table"}>
-          <h5>Source in /examples/js/basic/basic-table.js</h5>
+        <Panel header={"Table Scroll Example"}>
+          <h5>Source in /examples/js/basic/scroll-table.js</h5>
           <ScrollTable/>
         </Panel>
       </Col>
