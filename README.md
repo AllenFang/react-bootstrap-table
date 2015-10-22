@@ -185,7 +185,12 @@ dataSet.setData(newproducts);
 [dev-deps]: https://david-dm.org/AllenFang/react-bootstrap-table#info=devDependencies
 
 [peer-deps-badge]: https://david-dm.org/AllenFang/react-bootstrap-table/peer-status.svg
-[peer-deps]: https://david-dm.org/AllenFang/react-bootstrap-table#info=peerDependencies 
+[peer-deps]: https://david-dm.org/AllenFang/react-bootstrap-table#info=peerDependencies
 
 [travis-ci-image]: https://travis-ci.org/AllenFang/react-bootstrap-table.svg
 [travis-ci-url]: https://travis-ci.org/AllenFang/react-bootstrap-table
+
+#### Todo List
+1. Testing
+2. Nested data
+3. CSS tunning

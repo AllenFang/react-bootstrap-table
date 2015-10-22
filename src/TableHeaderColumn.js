@@ -9,14 +9,14 @@ class TableHeaderColumn extends React.Component{
 
   handleColumnClick(e){
     if(!this.props.dataSort)return;
-    var dom = this.refs.innerDiv.getDOMNode();
+    var dom = this.refs.innerDiv;
     this.order = this.order == Const.SORT_DESC?Const.SORT_ASC:Const.SORT_DESC;
     this.props.clearSortCaret(this.order, this.props.dataField);
     dom.appendChild(Util.renderSortCaret(this.order));
   }
 
   componentDidMount(){
-    this.refs.innerDiv.getDOMNode().setAttribute("data-field", this.props.dataField);
+    this.refs.innerDiv.setAttribute("data-field", this.props.dataField);
   }
 
   render(){
