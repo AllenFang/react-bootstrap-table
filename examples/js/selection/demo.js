@@ -8,37 +8,76 @@ import SelectBgColorTable from './select-bgcolor-table';
 import SelectHookTable from './select-hook-table';
 import HideSelectionColumnTable from './hide-selection-col-table';
 
-React.render(
-  <SingleSelectTable />,
-	document.getElementById("single")
-);
+class Demo extends React.Component {
+  render() {
+    return (
+      <div>
+        <div className="col-md-offset-1 col-md-8">
+          <div className="panel panel-default">
+            <div className="panel-heading">Single Select Example</div>
+            <div className="panel-body">
+              <h5>Source in /examples/js/selection/single-select-table.js</h5>
+              <SingleSelectTable />
+            </div>
+          </div>
+        </div>
+        <div className="col-md-offset-1 col-md-8">
+          <div className="panel panel-default">
+            <div className="panel-heading">Multi Select Example</div>
+            <div className="panel-body">
+              <h5>Source in /examples/js/selection/multi-select-table.js</h5>
+              <MultiSelectTable />
+            </div>
+          </div>
+        </div>
+        <div className="col-md-offset-1 col-md-8">
+          <div className="panel panel-default">
+            <div className="panel-heading">Click to Select Row Example</div>
+            <div className="panel-body">
+              <h5>Source in /examples/js/selection/click-to-select-table.js</h5>
+              <ClickToSelectTable />
+            </div>
+          </div>
+        </div>
+        <div className="col-md-offset-1 col-md-8">
+          <div className="panel panel-default">
+            <div className="panel-heading">Default Select Example</div>
+            <div className="panel-body">
+              <h5>Source in /examples/js/selection/default-select-table.js</h5>
+              <DefaultSelectTable />
+            </div>
+          </div>
+        </div>
+        <div className="col-md-offset-1 col-md-8">
+          <div className="panel panel-default">
+            <div className="panel-heading">Selected Row Bgcolor Example</div>
+            <div className="panel-body">
+              <h5>Source in /examples/js/selection/select-bgcolor-table.js</h5>
+              <SelectBgColorTable />
+            </div>
+          </div>
+        </div>
+        <div className="col-md-offset-1 col-md-8">
+          <div className="panel panel-default">
+            <div className="panel-heading">Selection Hook Example</div>
+            <div className="panel-body">
+              <h5>Source in /examples/js/selection/select-hook-table.js</h5>
+              <SelectHookTable />
+            </div>
+          </div>
+        </div>
+        <div className="col-md-offset-1 col-md-8">
+          <div className="panel panel-default">
+            <div className="panel-heading">Hide Selection Column Example</div>
+            <div className="panel-body">
+              <h5>Source in /examples/js/selection/hide-selection-col-table.js</h5>
+              <HideSelectionColumnTable />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
 
-React.render(
-  <MultiSelectTable />,
-  document.getElementById('multi')
-);
-
-React.render(
-  <ClickToSelectTable />,
-  document.getElementById('click')
-);
-
-React.render(
-  <DefaultSelectTable />,
-  document.getElementById('default-select')
-);
-
-React.render(
-  <SelectBgColorTable />,
-  document.getElementById('bgcolor')
-);
-
-React.render(
-  <SelectHookTable />,
-  document.getElementById('hook')
-);
-
-React.render(
-  <HideSelectionColumnTable />,
-  document.getElementById('hide')
-);
+export default Demo;

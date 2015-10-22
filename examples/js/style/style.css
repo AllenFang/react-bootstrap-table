@@ -1,0 +1,31 @@
+.tr-string-example{
+    font-style: oblique;
+    color: red;
+    background-color: aquamarine;
+}
+
+.tr-function-example{
+    font-weight: bold;
+    background-color: aquamarine;
+}
+
+.td-header-string-example{
+    font-style: oblique;
+    color: red;
+    background-color: aquamarine;
+}
+
+.td-column-string-example{
+    color: blue;
+    background-color: antiquewhite;
+}
+
+.td-column-function-odd-example{
+    color: blue;
+    background-color: antiquewhite;
+}
+
+.td-column-function-even-example{
+    color: red;
+    background-color: yellowgreen;
+}
