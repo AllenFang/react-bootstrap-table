@@ -11,7 +11,7 @@ class TableHeader extends React.Component{
   }
 
   clearSortCaret(order, sortField){
-    var row = this.refs.header.getDOMNode();
+    var row = this.refs.header;
     for(var i=0;i<row.childElementCount;i++){
       var column = row.childNodes[i].childNodes[0];
       if(column.getElementsByClassName("order").length > 0){
@@ -25,7 +25,7 @@ class TableHeader extends React.Component{
     //default sorting
     if(this.props.sortName){
       this.clearSortCaret(this.props.sortOrder, this.props.sortName);
-      var row = this.refs.header.getDOMNode();
+      var row = this.refs.header;
       for(var i=0;i<row.childElementCount;i++){
         var column = row.childNodes[i].childNodes[0];
         if(column.getAttribute('data-field') === this.props.sortName){

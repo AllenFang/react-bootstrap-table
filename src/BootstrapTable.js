@@ -422,8 +422,8 @@ class BootstrapTable extends React.Component{
   }
 
   _adjustHeaderWidth(){
-    this.refs.table.getDOMNode().childNodes[0].childNodes[0].style.width =
-      this.refs.table.getDOMNode().childNodes[1].childNodes[0].offsetWidth-1+"px";
+    this.refs.table.childNodes[0].childNodes[0].style.width =
+      this.refs.table.childNodes[1].childNodes[0].offsetWidth-1+"px";
   }
 }
 BootstrapTable.propTypes = {
