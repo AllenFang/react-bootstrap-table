@@ -31,7 +31,7 @@ class ToolBar extends React.Component{
       if(column.autoValue){//when you want same auto generate value and not allow edit, example ID field
         tempValue=typeof column.autoValue=='function'?column.autoValue():('autovalue-'+new Date().getTime());
       }else{
-        let dom = this.refs[column.field+i].getDOMNode();
+        let dom = this.refs[column.field+i];
         tempValue = dom.value;
 
         if(column.editable && column.editable.type == 'checkbox'){
@@ -86,7 +86,7 @@ class ToolBar extends React.Component{
         shakeEditor:false
       });
       //reset form
-      this.refs.form.getDOMNode().reset();
+      this.refs.form.reset();
 
     }
   }
@@ -96,7 +96,7 @@ class ToolBar extends React.Component{
   }
 
   handleCloseBtn(e){
-    this.refs.warning.getDOMNode().style.display = "none";
+    this.refs.warning.style.display = "none";
   }
 
   handleKeyUp(e){
