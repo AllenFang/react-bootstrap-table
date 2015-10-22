@@ -20,7 +20,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
-      'react-bootstrap-table': '../../../src/index.js'
+      'react-bootstrap-table': path.resolve(__dirname, './src')
     }
   },
   module: {
