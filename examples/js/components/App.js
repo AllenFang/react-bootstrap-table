@@ -89,7 +89,7 @@ class App extends React.Component {
             <NavDropdown title="Examples" id="collapsible-navbar-dropdown">
               {exampleMenuItems}
             </NavDropdown>
-            <NavItem href="https://github.com/luqin/react-bootstrap-table" target="_blank">GitHub</NavItem>
+            <NavItem href="https://github.com/AllenFang/react-bootstrap-table" target="_blank">GitHub</NavItem>
           </Nav>
         </Navbar>
         <Grid fluid>
