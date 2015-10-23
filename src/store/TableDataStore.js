@@ -1,16 +1,16 @@
 import Const from "../Const";
 var EventEmitter = require('events').EventEmitter;
 
-function _sort(arr, sortField, order, sortFunc){
+function _sort(arr, sortField, order, sortFunc) {
   order = order.toLowerCase();
-  arr.sort((a,b) => {
-    if(sortFunc){
+  arr.sort((a, b) => {
+    if (sortFunc) {
       return sortFunc(a, b, order);
     } else {
-      if(order == Const.SORT_DESC){
-        return a[sortField] > b[sortField]?-1: ((a[sortField] < b[sortField]) ? 1 : 0);
-      }else{
-        return a[sortField] < b[sortField]?-1: ((a[sortField] > b[sortField]) ? 1 : 0);
+      if (order == Const.SORT_DESC) {
+        return a[sortField] > b[sortField] ? -1 : ((a[sortField] < b[sortField]) ? 1 : 0);
+      } else {
+        return a[sortField] < b[sortField] ? -1 : ((a[sortField] > b[sortField]) ? 1 : 0);
       }
     }
   });
@@ -18,8 +18,8 @@ function _sort(arr, sortField, order, sortFunc){
   return arr;
 }
 
-export class TableDataSet extends EventEmitter{
-  constructor(data){
+export class TableDataSet extends EventEmitter {
+  constructor(data) {
     super(data);
     this.data = data;
   }
@@ -28,18 +28,18 @@ export class TableDataSet extends EventEmitter{
     this.emit('change', data);
   }
 
-  clear(){
+  clear() {
     this.data = null;
   }
 
-  getData(){
+  getData() {
     return this.data;
   }
 }
 
-export class TableDataStore{
+export class TableDataStore {
 
-  constructor(data){
+  constructor(data) {
     this.data = data;
     this.customSortFuncMap = null;
     this.filteredData = null;
@@ -49,39 +49,41 @@ export class TableDataStore{
     this.sortObj = null;
     this.pageObj = {};
     this.selected = [];
+    this.remote = false; // remote data
   }
 
-  setProps(isPagination, keyField, customSortFuncMap){
+  setProps(isPagination, keyField, customSortFuncMap, remote) {
     this.keyField = keyField;
     this.enablePagination = isPagination;
     this.customSortFuncMap = customSortFuncMap;
+    this.remote = remote;
   }
 
   setData(data) {
     this.data = data;
-    if(this.isOnFilter) {
-      if(null !== this.filterObj) this.filter(this.filterObj);
-      if(null !== this.searchText) this.search(this.searchText);
+    if (this.isOnFilter) {
+      if (null !== this.filterObj) this.filter(this.filterObj);
+      if (null !== this.searchText) this.search(this.searchText);
     }
-    if(this.sortObj){
+    if (this.sortObj) {
       this.sort(this.sortObj.order, this.sortObj.sortField);
     }
   }
 
-  setSelectedRowKey(selectedRowKeys){
+  setSelectedRowKey(selectedRowKeys) {
     this.selected = selectedRowKeys;
   }
 
-  getSelectedRowKeys(){
+  getSelectedRowKeys() {
     return this.selected;
   }
 
-  getCurrentDisplayData(){
-    if(this.isOnFilter) return this.filteredData;
+  getCurrentDisplayData() {
+    if (this.isOnFilter) return this.filteredData;
     else return this.data;
   }
 
-  sort(order, sortField){
+  sort(order, sortField) {
     this.sortObj = {
       order: order,
       sortField: sortField
@@ -94,25 +96,25 @@ export class TableDataStore{
     return this;
   }
 
-  page(page, sizePerPage){
-    this.pageObj.end = page*sizePerPage-1;
+  page(page, sizePerPage) {
+    this.pageObj.end = page * sizePerPage - 1;
     this.pageObj.start = this.pageObj.end - (sizePerPage - 1);
     return this;
   }
 
-  edit(newVal, rowIndex, fieldName){
+  edit(newVal, rowIndex, fieldName) {
     let currentDisplayData = this.getCurrentDisplayData();
     let rowKeyCache;
-    if(!this.enablePagination){
+    if (!this.enablePagination) {
       currentDisplayData[rowIndex][fieldName] = newVal;
       rowKeyCache = currentDisplayData[rowIndex][this.keyField];
-    }else{
-      currentDisplayData[this.pageObj.start+rowIndex][fieldName] = newVal;
-      rowKeyCache = currentDisplayData[this.pageObj.start+rowIndex][this.keyField];
+    } else {
+      currentDisplayData[this.pageObj.start + rowIndex][fieldName] = newVal;
+      rowKeyCache = currentDisplayData[this.pageObj.start + rowIndex][this.keyField];
     }
-    if(this.isOnFilter){
-      this.data.forEach(function(row){
-        if(row[this.keyField] === rowKeyCache){
+    if (this.isOnFilter) {
+      this.data.forEach(function (row) {
+        if (row[this.keyField] === rowKeyCache) {
           row[this.keyField][fieldName] = newVal;
         }
       }, this);
@@ -120,50 +122,50 @@ export class TableDataStore{
     return this;
   }
 
-  add(newObj){
-    if(newObj[this.keyField].trim() === ""){
+  add(newObj) {
+    if (newObj[this.keyField].trim() === "") {
       throw this.keyField + " can't be empty value.";
     }
     let currentDisplayData = this.getCurrentDisplayData();
-    currentDisplayData.forEach(function(row){
-      if(row[this.keyField].toString() === newObj[this.keyField]){
+    currentDisplayData.forEach(function (row) {
+      if (row[this.keyField].toString() === newObj[this.keyField]) {
         throw this.keyField + " " + newObj[this.keyField] + " already exists";
       }
     }, this);
 
     currentDisplayData.push(newObj);
-    if(this.isOnFilter){
+    if (this.isOnFilter) {
       this.data.push(newObj);
     }
   }
 
-  remove(rowKey){
+  remove(rowKey) {
     let currentDisplayData = this.getCurrentDisplayData();
-    let result = currentDisplayData.filter(function(row){
+    let result = currentDisplayData.filter(function (row) {
       return rowKey.indexOf(row[this.keyField]) == -1;
     }, this);
 
-    if(this.isOnFilter){
-      this.data = this.data.filter(function(row){
+    if (this.isOnFilter) {
+      this.data = this.data.filter(function (row) {
         return rowKey.indexOf(row[this.keyField]) == -1;
       }, this);
       this.filteredData = result;
-    }else{
+    } else {
       this.data = result;
     }
   }
 
-  filter(filterObj){
-    if(Object.keys(filterObj).length == 0){
+  filter(filterObj) {
+    if (Object.keys(filterObj).length == 0) {
       this.filteredData = null;
       this.isOnFilter = false;
       this.filterObj = null;
-    } else{
+    } else {
       this.filterObj = filterObj;
-      this.filteredData = this.data.filter(function(row){
+      this.filteredData = this.data.filter(function (row) {
         let valid = true;
-        for(var key in filterObj){
-          if(row[key].toString().toLowerCase().indexOf(filterObj[key].toLowerCase()) == -1){
+        for (var key in filterObj) {
+          if (row[key].toString().toLowerCase().indexOf(filterObj[key].toLowerCase()) == -1) {
             valid = false;
             break;
           }
@@ -174,18 +176,18 @@ export class TableDataStore{
     }
   }
 
-  search(searchText){
-    if(searchText.trim() === ""){
+  search(searchText) {
+    if (searchText.trim() === "") {
       this.filteredData = null;
       this.isOnFilter = false;
       this.searchText = null;
-    }else{
+    } else {
       this.searchText = searchText;
-      this.filteredData = this.data.filter(function(row){
+      this.filteredData = this.data.filter(function (row) {
         let valid = false;
-        for(var key in row){
-          if(row[key] &&
-             row[key].toString().toLowerCase().indexOf(searchText.toLowerCase()) !== -1){
+        for (var key in row) {
+          if (row[key] &&
+            row[key].toString().toLowerCase().indexOf(searchText.toLowerCase()) !== -1) {
             valid = true;
             break;
           }
@@ -196,39 +198,40 @@ export class TableDataStore{
     }
   }
 
-  get(){
+  get() {
     let _data = this.getCurrentDisplayData();
 
-    if(_data.length == 0) return _data;
+    if (_data.length == 0) return _data;
 
-    if(!this.enablePagination){
+    if (this.remote || !this.enablePagination) {
       return _data;
-    }else{
+    } else {
       var result = [];
-      for(var i=this.pageObj.start;i<=this.pageObj.end;i++){
+      for (var i = this.pageObj.start; i <= this.pageObj.end; i++) {
         result.push(_data[i]);
-        if(i+1 == _data.length)break;
+        if (i + 1 == _data.length)break;
       }
       return result;
     }
   }
 
-  getKeyField(){
+  getKeyField() {
     return this.keyField;
   }
 
-  getDataNum(){
+  getDataNum() {
     return this.getCurrentDisplayData().length;
   }
 
-  isChangedPage(){
-    return this.pageObj.start && this.pageObj.end ? true: false;
+  isChangedPage() {
+    return this.pageObj.start && this.pageObj.end ? true : false;
   }
 
-  getAllRowkey(){
-    return this.data.map(function(row){
+  getAllRowkey() {
+    return this.data.map(function (row) {
       return row[this.keyField];
     }, this);
   }
 
-};
+}
+;
