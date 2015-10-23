@@ -448,15 +448,17 @@ class BootstrapTable extends React.Component {
     if (this.props.insertRow || this.props.deleteRow || this.props.search) {
       return (
         <div className="tool-bar">
-          <ToolBar enableInsert={this.props.insertRow}
-                   enableDelete={this.props.deleteRow}
-                   enableSearch={this.props.search}
-                   columns={columns}
-                   searchPlaceholder={this.props.searchPlaceholder}
-                   onAddRow={this.handleAddRow.bind(this)}
-                   onAddRowBegin={this.handleAddRowBegin.bind(this)}
-                   onDropRow={this.handleDropRow.bind(this)}
-                   onSearch={this.handleSearch.bind(this)}/>
+          <ToolBar
+            enableInsert={this.props.insertRow}
+            enableDelete={this.props.deleteRow}
+            enableSearch={this.props.search}
+            columns={columns}
+            searchPlaceholder={this.props.searchPlaceholder}
+            onAddRow={this.handleAddRow.bind(this)}
+            onAddRowBegin={this.handleAddRowBegin.bind(this)}
+            onDropRow={this.handleDropRow.bind(this)}
+            onSearch={this.handleSearch.bind(this)}
+          />
         </div>
       )
     } else {
