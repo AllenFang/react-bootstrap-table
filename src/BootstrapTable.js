@@ -187,7 +187,7 @@ class BootstrapTable extends React.Component {
 
   handleSort(order, sortField) {
     if (this.props.options.onSortChange) {
-      this.props.options.onSortChange(order, sortField, this.props);
+      this.props.options.onSortChange(sortField, order, this.props);
     }
 
     if (this.isRemoteDataSource()) {
