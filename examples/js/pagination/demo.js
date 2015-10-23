@@ -1,4 +1,3 @@
-require('../../../css/react-bootstrap-table.min.css');
 import React from 'react';
 import DefaultPaginationTable from './default-pagination-table';
 import CustomPaginationTable from './custom-pagination-table';
