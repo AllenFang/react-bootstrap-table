@@ -14,14 +14,21 @@ class BootstrapTable extends React.Component {
     super(props);
 
     this._attachCellEditFunc();
-    let keyField = null;
+    let {keyField} = props;
     let customSortFuncMap = {};
 
-    React.Children.forEach(this.props.children, function (column) {
-      if (column.props.isKey) {
-        if (keyField != null) throw "Error. Multiple key column be detected in TableHeaderColumn.";
-        keyField = column.props.dataField;
-      }
+    if (!(typeof keyField === 'string' && keyField.length)) {
+      React.Children.forEach(this.props.children, column=> {
+        if (column.props.isKey) {
+          if (keyField != null) {
+            throw "Error. Multiple key column be detected in TableHeaderColumn.";
+          }
+          keyField = column.props.dataField;
+        }
+      }, this);
+    }
+
+    React.Children.forEach(this.props.children, column=> {
       if (column.props.sortFunc) {
         customSortFuncMap[column.props.dataField] = column.props.sortFunc;
       }
@@ -485,6 +492,7 @@ class BootstrapTable extends React.Component {
 }
 
 BootstrapTable.propTypes = {
+  keyField: React.PropTypes.string,
   height: React.PropTypes.string,
   data: React.PropTypes.array,
   remote: React.PropTypes.bool, // remote data, default is false
