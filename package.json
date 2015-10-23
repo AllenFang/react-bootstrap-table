@@ -9,6 +9,7 @@
   },
   "scripts": {
     "lint": "eslint src",
+    "start": "gulp example-server",
     "test": "eslint src && jest"
   },
   "keywords": [
