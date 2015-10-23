@@ -19,14 +19,42 @@ function addProducts(quantity) {
 
 addProducts(70);
 
-export default class DefaultPaginationTable extends React.Component{
-  render(){
+export default class DefaultPaginationTable extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      page: undefined,
+      sizePerPage: undefined,
+    };
+
+    this.options = {
+      onPageChange: this.onPageChange.bind(this),
+    };
+  }
+
+  onPageChange(page, sizePerPage) {
+    console.info('onPageChange', arguments);
+    this.setState({
+      page,
+      sizePerPage,
+    });
+  }
+
+  render() {
     return (
-      <BootstrapTable data={products} pagination={true}>
+      <div>
+        <BootstrapTable
+          data={products}
+          pagination
+          options={this.options}
+        >
           <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
-      </BootstrapTable>
+        </BootstrapTable>
+        pagination: page={this.state.page}, sizePerPage={this.state.sizePerPage}
+      </div>
     );
   }
 };
