@@ -368,11 +368,6 @@ class BootstrapTable extends React.Component{
       columns = this.props.children.map(function(column){
         var props=column.props;
         return {
-// <<<<<<< HEAD
-//           name: column.props.children,
-//           field: column.props.dataField,
-//           editable: column.props.editable
-// =======
           name: props.children,
           field: props.dataField,
           //when you want same auto generate value and not allow edit, example ID field
@@ -380,7 +375,6 @@ class BootstrapTable extends React.Component{
           //for create eidtor, no params for column.editable() indicate that editor for new row
           editable:props.editable&&(typeof props.editable==="function")?props.editable():props.editable,
           format:props.format?format:false
-// >>>>>>> 99cd459deffd5262d88691e8b075977bc0a2811f
         };
       });
     } else {

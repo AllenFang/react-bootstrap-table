@@ -137,9 +137,6 @@ class ToolBar extends React.Component{
   renderInsertRowModal(modalClassName){
     var validateState=this.state.validateState||{};
     var inputField = this.props.columns.map(function(column, i){
-// <<<<<<< HEAD
-//       let disabled = column.editable?false:'disabled';
-// =======
       var editable=column.editable,
           format=column.format,
           attr={ref:column.field+i,placeholder:editable.placeholder?editable.placeholder:column.name};
@@ -148,7 +145,6 @@ class ToolBar extends React.Component{
         return null;
       }
       var error=validateState[column.field]?(<span className="help-block bg-danger">{validateState[column.field]}</span>):null;
-// >>>>>>> 99cd459deffd5262d88691e8b075977bc0a2811f
 
       // let editor = Editor(editable,attr,format);
       // if(editor.props.type && editor.props.type == 'checkbox'){
