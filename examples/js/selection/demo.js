@@ -1,4 +1,3 @@
-require('../../../css/react-bootstrap-table.min.css');
 import React from 'react';
 import SingleSelectTable from './single-select-table';
 import MultiSelectTable from './multi-select-table';

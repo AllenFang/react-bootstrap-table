@@ -1,4 +1,3 @@
-require('../../../css/react-bootstrap-table.min.css');
 import React from 'react';
 import EditTypeTable from './edit-type-table';
 import DataInsertTypeTable from './insert-type-table';
