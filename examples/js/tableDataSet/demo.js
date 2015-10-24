@@ -1,4 +1,3 @@
-require('../../../css/react-bootstrap-table.min.css');
 import React from 'react';
 import TableDataSetTable from './table-data-set';
 

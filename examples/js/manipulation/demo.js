@@ -1,4 +1,3 @@
-require('../../../css/react-bootstrap-table.min.css');
 import React from 'react';
 import InsertRowTable from './insert-row-table';
 import DeleteRowTable from './delete-row-table';
