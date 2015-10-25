@@ -19,7 +19,7 @@ function addProducts(quantity) {
 
 addProducts(70);
 
-export default class DefaultPaginationTable extends React.Component {
+export default class PaginationHookTable extends React.Component {
   constructor(props) {
     super(props);
 
