@@ -22,14 +22,32 @@ addProducts(70);
 export default class DefaultPaginationTable extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      page: undefined,
+      sizePerPage: undefined,
+    };
+
+    this.options = {
+      onPageChange: this.onPageChange.bind(this),
+    };
+  }
+
+  onPageChange(page, sizePerPage) {
+    this.setState({
+      page,
+      sizePerPage,
+    });
   }
 
   render() {
     return (
       <div>
+      <p style={{color: 'red'}}>pagination: page={this.state.page}, sizePerPage={this.state.sizePerPage}</p>
         <BootstrapTable
           data={products}
           pagination
+          options={this.options}
         >
           <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
