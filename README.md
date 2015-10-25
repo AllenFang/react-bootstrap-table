@@ -40,12 +40,14 @@ $ gulp prod #for production
 ```
 
 ## Usage
-Download react-bootstrap-table first.
+### Install
 ```
 npm install react-bootstrap-table --save
 ```
-Use ```react-bootstrap-table``` in your react app, you should import ```react-bootstrap-table``` as first. About importing this component, there'r two way in the following you can choose:
-#### Module(CommonJS/AMD)
+
+### Import Module
+Use react-bootstrap-table in your react app, you should import this component as first. About importing this component, there'r two way in the following you can choose:
+##### Module(CommonJS/AMD)
 ```
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';  // in ECMAScript 6
 // or in ECMAScript 5
@@ -53,7 +55,7 @@ var ReactBSTable = require("react-bootstrap-table");
 var BootstrapTable = ReactBSTable.BootstrapTable;
 var TableHeaderColumn = ReactBSTable.TableHeaderColumn;
 ```
-#### Browser global(window object)
+##### Browser global(window object)
 ```
 <script src="path/to/react-bootstrap-table/dist/react-bootstrap-table.min.js" />
 <script>
@@ -62,12 +64,16 @@ var TableHeaderColumn = ReactBSTable.TableHeaderColumn;
 <script/>
 ```
 
-Finally, you need to import the css file to your app
+### Import CSS
+Finally, you need to import the css file to your app, there are two css file you can choose.</br>
+```react-bootstrap-table-all.min.css``` include toastr.</br>```react-bootstrap-table.min.css``` doesn't include toastr.</br>
+**Notes: react-bootstrap-table use toastr to alarm some message to user.**
 ```
-<link rel="stylesheet" href="./css/react-bootstrap-table.min.css">
+<link rel="stylesheet" href="./css/react-bootstrap-table-all.min.css">
 ```
-The ```react-bootstrap-table.min.css``` file you can find in the css folder.After import css file, you can start to write your react application with ```react-bootstrap-table```. In the below, it's a simple demo for using ```react-bootstrap-table```:
+CSS files you can find in the css folder.
 
+### Quick Demo
 ```
 // products will be presented by react-bootstrap-table
 var products = [{
@@ -78,19 +84,7 @@ var products = [{
       id: 2,
       name: "Item name 2",
       price: 100
-  },{
-      id: 3,
-      name: "Item name 3",
-      price: 110
-  },{
-      id: 4,
-      name: "Item name 4",
-      price: 100
-  },{
-      id: 5,
-      name: "Item name 5",
-      price: 100
-}];
+  },........];
 // It's a data format example.
 function priceFormatter(cell, row){
   return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
