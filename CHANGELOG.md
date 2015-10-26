@@ -1,3 +1,46 @@
+<a name="v1.2.4"></a>
+# [v1.2.4](https://github.com/AllenFang/react-bootstrap-table/compare/v1.2.3...v1.2.4) (2015-10-26)
+### Enhancement
+* The gap between table and pagination([c1a886b](https://github.com/AllenFang/react-bootstrap-table/commit/c1a886bc3817f38466938bf9f8e78112b97bc656))
+* Ensure default checkbox in editor is String([0ef45d0](https://github.com/AllenFang/react-bootstrap-table/commit/0ef45d0ed16d0bb09f277708c0315378bf78869e))
+
+### Features
+* Add ```onPageChange``` hooks
+```javascript
+
+	function onPageChange(page, sizePerPage){
+		...
+	}
+
+	var options = {
+		onPageChange: onPageChange
+	}
+
+	<BootstrapTable
+          data={products}
+          pagination={true}
+          options={options}
+        >...
+}
+```
+* Add ```onSortChange``` hooks
+```javascript
+
+	function onSortChange(sortName, sortOrder){
+		...
+	}
+
+	var options = {
+		onSortChange: onSortChange
+	}
+
+	<BootstrapTable
+          data={products}
+          options={options}
+        >...
+}
+```
+
 <a name="v1.2.3"></a>
 # [v1.2.3](https://github.com/AllenFang/react-bootstrap-table/compare/v1.2.2...v1.2.3) (2015-10-24)
 
