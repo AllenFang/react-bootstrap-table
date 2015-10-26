@@ -186,8 +186,8 @@ class BootstrapTable extends React.Component {
             selectedRowKeys={this.state.selectedRowKeys}
             onSelectRow={this.handleSelectRow.bind(this)}/>
           {tableFilter}
+          {pagination}
         </div>
-        {pagination}
       </div>
     )
   }
