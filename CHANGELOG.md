@@ -6,8 +6,9 @@
 * Support ```keyField```([2fab4d8](https://github.com/AllenFang/react-bootstrap-table/commit/2fab4d8fd37cb2c3df548342d6d9568646a6bfaa))
 	* Set ```keyField``` in ```<BootstrapTable>``` to specify which column is key.
 	* Actually, this attribute is as same as the ```isKey``` in ```<TableHeaderColumn>```. So you can choose on to assign which column is key.
+
 ### Features
-* Add ```onPageChange``` hooks
+* Add ```onPageChange``` hook
 ```javascript
 
 	function onPageChange(page, sizePerPage){
@@ -25,7 +26,7 @@
         >...
 }
 ```
-* Add ```onSortChange``` hooks
+* Add ```onSortChange``` hook
 ```javascript
 
 	function onSortChange(sortName, sortOrder){
@@ -74,11 +75,11 @@
 
 ### Features
 * Get selected Data only show in table when onSelectAll be called([9d391ee](https://github.com/AllenFang/react-bootstrap-table/commit/9d391ee10a06b4ff53b5b19684b2cfedb23331ea))
-  ```javascript
-    function onSelectAll(isSelected, currentDisplayAndSelectedData){
-       //..
-  }
-  ```
+```javascript
+  function onSelectAll(isSelected, currentDisplayAndSelectedData){
+     //..
+}
+```
 
 <a name="v1.2.0"></a>
 # [v1.2.0](https://github.com/AllenFang/react-bootstrap-table/compare/v1.0.3...v1.2.0) (2015-10-13)
