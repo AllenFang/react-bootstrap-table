@@ -1,5 +1,6 @@
 /*editor error animate*/
 /*@import "~toastr/build/toastr.min.css";*/
+@import "https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css";
 
 .react-bs-table .table-header{
   height: 42px;

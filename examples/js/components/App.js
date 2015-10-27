@@ -2,6 +2,8 @@ import React from 'react';
 import {LinkContainer} from 'react-router-bootstrap';
 
 // import 'bootstrap/dist/css/bootstrap.css';
+import 'toastr/build/toastr.min.css';
+import '../../../css/react-bootstrap-table.css';
 // import 'jquery';
 // import 'bootstrap';
 import {

@@ -40,12 +40,14 @@ $ gulp prod #for production
 ```
 
 ## Usage
-Download react-bootstrap-table first.
+### Install
 ```
 npm install react-bootstrap-table --save
 ```
-Use ```react-bootstrap-table``` in your react app, you should import ```react-bootstrap-table``` as first. About importing this component, there'r two way in the following you can choose:
-#### Module(CommonJS/AMD)
+
+### Import Module
+Use react-bootstrap-table in your react app, you should import this component as first. About importing this component, there'r two way in the following you can choose:
+##### Module(CommonJS/AMD)
 ```
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';  // in ECMAScript 6
 // or in ECMAScript 5
@@ -53,7 +55,7 @@ var ReactBSTable = require("react-bootstrap-table");
 var BootstrapTable = ReactBSTable.BootstrapTable;
 var TableHeaderColumn = ReactBSTable.TableHeaderColumn;
 ```
-#### Browser global(window object)
+##### Browser global(window object)
 ```
 <script src="path/to/react-bootstrap-table/dist/react-bootstrap-table.min.js" />
 <script>
@@ -62,12 +64,16 @@ var TableHeaderColumn = ReactBSTable.TableHeaderColumn;
 <script/>
 ```
 
-Finally, you need to import the css file to your app
+### Import CSS
+Finally, you need to import the css file to your app, there are two css file you can choose.</br>
+```react-bootstrap-table-all.min.css``` include toastr.</br>```react-bootstrap-table.min.css``` doesn't include toastr.</br>
+**Notes: react-bootstrap-table use toastr to alarm some message to user.**
 ```
-<link rel="stylesheet" href="./css/react-bootstrap-table.min.css">
+<link rel="stylesheet" href="./css/react-bootstrap-table-all.min.css">
 ```
-The ```react-bootstrap-table.min.css``` file you can find in the css folder.After import css file, you can start to write your react application with ```react-bootstrap-table```. In the below, it's a simple demo for using ```react-bootstrap-table```:
+CSS files you can find in the css folder.
 
+### Quick Demo
 ```
 // products will be presented by react-bootstrap-table
 var products = [{
@@ -78,19 +84,7 @@ var products = [{
       id: 2,
       name: "Item name 2",
       price: 100
-  },{
-      id: 3,
-      name: "Item name 3",
-      price: 110
-  },{
-      id: 4,
-      name: "Item name 4",
-      price: 100
-  },{
-      id: 5,
-      name: "Item name 5",
-      price: 100
-}];
+  },........];
 // It's a data format example.
 function priceFormatter(cell, row){
   return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
@@ -132,10 +126,11 @@ You can reference [here](http://allenfang.github.io/react-bootstrap-table/docs.h
 | deleteRow    | Bool   | Set true to enable row deletion on table.              |
 | search       | Bool   | Set true to enable search function on table.           |
 | searchPlaceholder | String   | The place holder on search text fields          |
+| keyField     | String | Same as ```isKey``` in &lt;TableHeaderColumn&gt;       |
 | trClassName  | String or Function | Assign the row(tr) class, accept string or function, if use function, will pass ```rowData``` and ```rowIndex``` params and should return string presented class. for examples:</br>**function trClassFormat(rowData,rowIndex){**</br>&nbsp;&nbsp;&nbsp;**return rowIndex%2==0?"tr-odd":"tr-even";**</br>**}**      |
 | selectRow | Object | Assign an object which have these properties as follow:</br>**```mode```**(required): radio/checkbox, to specify the selection is single or multiple.</br>**```clickToSelect```**(optional): if true, click on row will trigger row selection, default is false.</br>**```clickToSelectAndEditCell```**(optional): if true, click the row will trigger selection on that row, and also trigger cell editing if you enabled cell edit.</br>**```bgColor```**(optional): You can assign background color if row be selected.</br>**```selected```**(optional): it's for default selected row on table, give an array object which contain selected row keys.</br>**```onSelect```**(optional): accept a callback function, if a row be selected, this function will be called and pass the ```row``` and ```isSelected``` as params.</br>**```onSelectAll```**(optional): accept a callback function, if select all in ```checkbox``` mode, this function will be called and pass ```isSelected``` and ```currentSelectedAndDisplayData``` as params.</br>**```hideSelectColumn```**(optional): if true, the radio/checkbox column will be hidden, if you enable clickToSelect.</br> |
 | cellEdit | Object | Use cellEdit and assign an object to enable cell edit on table, this object contain these properties:</br>**```mode```**(required): click/dbclick, to spectify which condition will trigger cell editing.</br>**```blurToSave```**(optional): if true, when mouse blur on input field will trigger a save on cell, default is false.</br>**```afterSaveCell```**(optional): accept a callback function, after save cell, this function will be called and pass ```row```, ```cellName``` and ```cellValue``` as params.</br> |
-| options | Object | For some options setting on react-bootstrap-table, you can set the options attribute and give an object which contain the following properties</br>**```sortName```**: Assign a default sort field by this property</br>**```sortOrder```**(asc/desc): Assign a default sort order</br>**```afterTableComplete```**: Assign a callback function which will be called after table update</br>**```afterDeleteRow```**: Assign a callback function which will be called after row delete</br>**```afterInsertRow```**: Assign a callback function which will be called after row insert</br>**```page```**: accept a number, which means the page you want to show as default</br>**```sizePerPageList```**: you can change the dropdown list for size per page, accept an array object.</br>**```sizePerPage```**: means size per page you want to locate as default, accept a number.</br>**```paginationSize```**: define the pagination bar size, accept a number.</br>
+| options | Object | For some options setting on react-bootstrap-table, you can set the options attribute and give an object which contain the following properties</br>**```sortName```**: Assign a default sort field by this property</br>**```sortOrder```**(asc/desc): Assign a default sort order</br>**```afterTableComplete```**: Assign a callback function which will be called after table update</br>**```afterDeleteRow```**: Assign a callback function which will be called after row delete</br>**```afterInsertRow```**: Assign a callback function which will be called after row insert</br>**```page```**: accept a number, which means the page you want to show as default</br>**```sizePerPageList```**: you can change the dropdown list for size per page, accept an array object.</br>**```sizePerPage```**: means size per page you want to locate as default, accept a number.</br>**```paginationSize```**: define the pagination bar size, accept a number.</br>**```onPageChange```**: Assign a callback function which will be called after page changed and pass the ```page``` and ```sizePerPage``` as params.</br>**```onSortChange```**: Assigna a callback function which will be called after trigger sorting and pass the ```sortName`` and ```sortOrder``` as params.</br>
 
 #### The attributes in &lt;TableHeaderColumn&gt;:
 | Attr         | Type   | Description                                            |
