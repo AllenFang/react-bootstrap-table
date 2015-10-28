@@ -104,7 +104,7 @@ React.render(
 $ git clone https://github.com/AllenFang/react-bootstrap-table.git
 $ cd react-bootstrap-table
 $ npm install
-$ gulp example-server #after start, open browser and go to http://localhost:3004/example-list.html
+$ gulp example-server #after start, open browser and go to http://localhost:3004
 ```
 
 ### Documents
