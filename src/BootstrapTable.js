@@ -491,7 +491,7 @@ class BootstrapTable extends React.Component {
 BootstrapTable.propTypes = {
   keyField: React.PropTypes.string,
   height: React.PropTypes.string,
-  data: React.PropTypes.array,
+  data: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.object]),
   remote: React.PropTypes.bool, // remote data, default is false
   striped: React.PropTypes.bool,
   bordered: React.PropTypes.bool,
