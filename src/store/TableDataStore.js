@@ -176,20 +176,38 @@ export class TableDataStore {
     }
   }
 
-  search(searchText) {
+  search(searchText, multisearch) {
     if (searchText.trim() === "") {
       this.filteredData = null;
       this.isOnFilter = false;
       this.searchText = null;
     } else {
       this.searchText = searchText;
+      var searchTextArray = [];
+
       this.filteredData = this.data.filter(function (row) {
         let valid = false;
+
+        // splits search terms by ' ' and collect into array
+        if (multisearch) {
+          searchTextArray = searchText.split(' ');
+        } else {
+          // normal one term search
+          searchTextArray.push(searchText);
+        }
+
         for (var key in row) {
-          if (row[key] &&
-            row[key].toString().toLowerCase().indexOf(searchText.toLowerCase()) !== -1) {
-            valid = true;
-            break;
+          if (row[key]) {
+            
+            searchTextArray.forEach(function(text) {
+              if (row[key].toString().toLowerCase().indexOf(text.toLowerCase()) !== -1) {
+                valid = true;
+              }
+            });
+
+            if (valid) {
+              break;
+            }
           }
         }
         return valid;
