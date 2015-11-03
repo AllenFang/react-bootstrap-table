@@ -141,6 +141,7 @@ class BootstrapTable extends React.Component {
       childrens = [this.props.children];
     }
     var columns = childrens.map(function (column, i) {
+      console.log(column);
       return {
         name: column.props.dataField,
         align: column.props.dataAlign,
@@ -150,6 +151,7 @@ class BootstrapTable extends React.Component {
         hidden: column.props.hidden,
         className: column.props.columnClassName,
         width: column.props.width,
+        text: column.props.children,
         index: i
       };
     }, this);
@@ -158,9 +160,8 @@ class BootstrapTable extends React.Component {
     var toolBar = this.renderToolBar();
     var tableFilter = this.renderTableFilter(columns);
     return (
-      <div className="react-bs-container">
+      <div className="react-bs-container" ref="table" style={style}>
         {toolBar}
-        <div ref="table" style={style} className={tableClass}>
           <TableHeader
             rowSelectType={this.props.selectRow.mode}
             hideSelectColumn={this.props.selectRow.hideSelectColumn}
@@ -187,7 +188,6 @@ class BootstrapTable extends React.Component {
             onSelectRow={this.handleSelectRow.bind(this)}/>
           {tableFilter}
           {pagination}
-        </div>
       </div>
     )
   }
@@ -485,6 +485,7 @@ class BootstrapTable extends React.Component {
     if(tableHeaderDom.offsetWidth !== tableBodyDom.offsetWidth){
       tableHeaderDom.style.width = tableBodyDom.offsetWidth + "px";
     }
+    this.refs.table.childNodes[0].childNodes[0].style.width = this.refs.table.childNodes[1].childNodes[0].offsetWidth+"px";
   }
 }
 
