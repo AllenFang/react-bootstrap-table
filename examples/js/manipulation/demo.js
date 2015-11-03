@@ -3,6 +3,7 @@ import InsertRowTable from './insert-row-table';
 import DeleteRowTable from './delete-row-table';
 import SearchTable from './search-table';
 import ColumnFilterTable from './filter-table';
+import MultiSearchTable from './multi-search-table';
 
 class Demo extends React.Component {
   render() {
@@ -32,6 +33,15 @@ class Demo extends React.Component {
             <div className="panel-body">
               <h5>Source in /examples/js/manipulation/search-table.js</h5>
               <SearchTable />
+            </div>
+          </div>
+        </div>
+        <div className="col-md-offset-1 col-md-8">
+          <div className="panel panel-default">
+            <div className="panel-heading">Table Multi Search Example(Use space to delimited search text, ex:3 4)</div>
+            <div className="panel-body">
+              <h5>Source in /examples/js/manipulation/multi-search-table.js</h5>
+              <MultiSearchTable />
             </div>
           </div>
         </div>
