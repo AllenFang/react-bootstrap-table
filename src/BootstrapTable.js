@@ -384,7 +384,7 @@ class BootstrapTable extends React.Component {
   }
 
   handleSearch(searchText) {
-    this.store.search(searchText);
+    this.store.search(searchText, this.props.multiColumnSearch);
     let result;
     if (this.props.pagination) {
       let sizePerPage = this.refs.pagination.getSizePerPage();
@@ -562,6 +562,7 @@ BootstrapTable.defaultProps = {
   insertRow: false,
   deleteRow: false,
   search: false,
+  multiColumnSearch: false,
   columnFilter: false,
   trClassName: '',
   options: {
