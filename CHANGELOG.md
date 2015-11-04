@@ -1,3 +1,14 @@
+<a name="v1.2.6"></a>
+# [v1.2.6](https://github.com/AllenFang/react-bootstrap-table/compare/v1.2.5...v1.2.6) (2015-11-03)
+### Features
+* Support multi search([4874169](https://github.com/AllenFang/react-bootstrap-table/commit/487416991a4bcb15336c5c0871ce7281b4c095d7))
+	* Add ```multiColumnSearch={true}``` on ```<BootstrapTable>```
+	* In search input text, you can use space to split search text, for example: **"usa france japan"** to search table which contain usa or feance or japan.
+
+### Bug fixes
+* Upgrade to **react-toastr@2.2.2**([2459c24](https://github.com/AllenFang/react-bootstrap-table/commit/2459c24e6dc4dd659b415cae0b039d05d116337e))
+
+
 <a name="v1.2.5"></a>
 # [v1.2.5](https://github.com/AllenFang/react-bootstrap-table/compare/v1.2.4...v1.2.5) (2015-10-27)
 ### Bug fixes
