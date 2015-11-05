@@ -104,6 +104,7 @@ class TableBody extends React.Component{
         <TableRow isSelected={selected} key={r} className={trClassName}
           selectRow={isSelectRowDefined?this.props.selectRow:undefined}
           enableCellEdit={this.props.cellEdit.mode !== Const.CELL_EDIT_NONE}
+          onRowClick={this.handleRowClick.bind(this)}
           onSelectRow={this.handleSelectRow.bind(this)}>
           {selectRowColumn}
           {tableColumns}
@@ -156,6 +157,17 @@ class TableBody extends React.Component{
         <tr>{selectRowHeader}{theader}</tr>
       </thead>
     )
+  }
+
+  handleRowClick(rowIndex){
+    var key, selectedRow;
+    this.props.data.forEach(function(row, i){
+      if(i == rowIndex-1){
+        key = row[this.props.keyField];
+        selectedRow = row;
+      }
+    }, this);
+    this.props.onRowClick(selectedRow);
   }
 
   handleSelectRow(rowIndex, isSelected){
@@ -234,6 +246,7 @@ TableBody.propTypes = {
   condensed: React.PropTypes.bool,
   keyField: React.PropTypes.string,
   selectedRowKeys: React.PropTypes.array,
+  onRowClick: React.PropTypes.func,
   onSelectRow: React.PropTypes.func
 };
 export default TableBody;

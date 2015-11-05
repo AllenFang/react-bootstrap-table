@@ -167,6 +167,7 @@ class BootstrapTable extends React.Component {
             sortName={this.props.options.sortName}
             sortOrder={this.props.options.sortOrder}
             onSort={this.handleSort.bind(this)}
+            onRowClick={this.handleRowClick.bind(this)}
             onSelectAllRow={this.handleSelectAllRow.bind(this)}
             bordered={this.props.bordered}>
             {this.props.children}
@@ -184,7 +185,9 @@ class BootstrapTable extends React.Component {
             selectRow={this.props.selectRow}
             cellEdit={this.props.cellEdit}
             selectedRowKeys={this.state.selectedRowKeys}
-            onSelectRow={this.handleSelectRow.bind(this)}/>
+            onRowClick={this.handleRowClick.bind(this)}
+            onSelectRow={this.handleSelectRow.bind(this)}
+          />
           {tableFilter}
           {pagination}
         </div>
@@ -221,6 +224,12 @@ class BootstrapTable extends React.Component {
     this.setState({
       data: result
     });
+  }
+
+  handleRowClick(row) {
+    if (this.props.selectRow.onRowClick) {
+      this.props.selectRow.onRowClick(row);
+    }
   }
 
   handleSelectAllRow(e) {
@@ -503,6 +512,7 @@ BootstrapTable.propTypes = {
     mode: React.PropTypes.string,
     bgColor: React.PropTypes.string,
     selected: React.PropTypes.array,
+    onRowClick: React.PropTypes.func,
     onSelect: React.PropTypes.func,
     onSelectAll: React.PropTypes.func,
     clickToSelect: React.PropTypes.bool,
@@ -548,6 +558,7 @@ BootstrapTable.defaultProps = {
     mode: Const.ROW_SELECT_NONE,
     bgColor: Const.ROW_SELECT_BG_COLOR,
     selected: [],
+    onRowClick: undefined,
     onSelect: undefined,
     onSelectAll: undefined,
     clickToSelect: false,
