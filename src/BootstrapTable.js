@@ -184,7 +184,9 @@ class BootstrapTable extends React.Component {
             selectRow={this.props.selectRow}
             cellEdit={this.props.cellEdit}
             selectedRowKeys={this.state.selectedRowKeys}
-            onSelectRow={this.handleSelectRow.bind(this)}/>
+            onRowClick={this.handleRowClick.bind(this)}
+            onSelectRow={this.handleSelectRow.bind(this)}
+          />
           {tableFilter}
           {pagination}
         </div>
@@ -221,6 +223,12 @@ class BootstrapTable extends React.Component {
     this.setState({
       data: result
     });
+  }
+
+  handleRowClick(row) {
+    if (this.props.options.onRowClick) {
+      this.props.options.onRowClick(row);
+    }
   }
 
   handleSelectAllRow(e) {
@@ -525,6 +533,7 @@ BootstrapTable.propTypes = {
     afterTableComplete: React.PropTypes.func,
     afterDeleteRow: React.PropTypes.func,
     afterInsertRow: React.PropTypes.func,
+    onRowClick: React.PropTypes.func,
     page: React.PropTypes.number,
     sizePerPageList: React.PropTypes.array,
     sizePerPage: React.PropTypes.number,
@@ -571,6 +580,7 @@ BootstrapTable.defaultProps = {
     afterTableComplete: undefined,
     afterDeleteRow: undefined,
     afterInsertRow: undefined,
+    onRowClick: undefined,
     page: 1,
     sizePerPageList: Const.SIZE_PER_PAGE_LIST,
     sizePerPage: Const.SIZE_PER_PAGE_LIST[0],
