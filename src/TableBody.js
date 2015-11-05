@@ -123,7 +123,7 @@ class TableBody extends React.Component{
 
     this.editing = false;
     return(
-      <div className={containerClasses}>
+      <div ref="container" className={containerClasses}>
         <table className={tableClasses}>
           {tableHeader}
           <tbody>
@@ -152,7 +152,7 @@ class TableBody extends React.Component{
     });
 
     return(
-      <thead>
+      <thead ref="header">
         <tr>{selectRowHeader}{theader}</tr>
       </thead>
     )
@@ -218,6 +218,17 @@ class TableBody extends React.Component{
     }else {
       return (<TableColumn ><input type="checkbox" checked={selected} onChange={this.handleSelectRowColumChange.bind(this)}/></TableColumn>);
     }
+  }
+
+  getBodyHeaderDomProp(){
+    var headers = this.refs.header.childNodes[0].childNodes;
+    var headerDomProps = [];
+    for(let i=0;i<headers.length;i++){
+      headerDomProps.push({
+        width:headers[i].offsetWidth
+      });
+    }
+    return headerDomProps;
   }
 
   _isSelectRowDefined(){

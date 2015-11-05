@@ -39,13 +39,14 @@ class TableHeader extends React.Component{
   render(){
     var containerClasses = classSet("table-header");
     var tableClasses = classSet("table", "table-hover", {
-        "table-bordered": this.props.bordered
+        "table-bordered": this.props.bordered,
+        "table-condensed": this.props.condensed
     });
     var selectRowHeaderCol = this.props.hideSelectColumn?null:this.renderSelectRowHeader();
     this._attachClearSortCaretFunc();
 
     return(
-      <div className={containerClasses}>
+      <div ref="container" className={containerClasses}>
         <table className={tableClasses}>
           <thead>
             <tr ref="header">
@@ -87,7 +88,8 @@ TableHeader.propTypes = {
   sortName: React.PropTypes.string,
   sortOrder: React.PropTypes.string,
   hideSelectColumn: React.PropTypes.bool,
-  bordered: React.PropTypes.bool
+  bordered: React.PropTypes.bool,
+  condensed: React.PropTypes.bool
 };
 
 TableHeader.defaultProps = {

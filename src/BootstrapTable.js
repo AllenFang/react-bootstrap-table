@@ -99,6 +99,11 @@ class BootstrapTable extends React.Component {
   componentDidMount() {
     this._adjustHeaderWidth();
     window.addEventListener('resize', this._adjustHeaderWidth.bind(this));
+    const headerProps = this.refs.body.getBodyHeaderDomProp();
+    //start from here
+    this.refs.body.refs.container.addEventListener('scroll', (e) => {
+      this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
+    });
   }
 
   componentWillUnmount() {
@@ -141,7 +146,6 @@ class BootstrapTable extends React.Component {
       childrens = [this.props.children];
     }
     var columns = childrens.map(function (column, i) {
-      console.log(column);
       return {
         name: column.props.dataField,
         align: column.props.dataAlign,
@@ -163,13 +167,15 @@ class BootstrapTable extends React.Component {
       <div className="react-bs-container" ref="table" style={style}>
         {toolBar}
           <TableHeader
+            ref="header"
             rowSelectType={this.props.selectRow.mode}
             hideSelectColumn={this.props.selectRow.hideSelectColumn}
             sortName={this.props.options.sortName}
             sortOrder={this.props.options.sortOrder}
             onSort={this.handleSort.bind(this)}
             onSelectAllRow={this.handleSelectAllRow.bind(this)}
-            bordered={this.props.bordered}>
+            bordered={this.props.bordered}
+            condensed={this.props.condensed}>
             {this.props.children}
           </TableHeader>
           <TableBody
@@ -480,12 +486,11 @@ class BootstrapTable extends React.Component {
   }
 
   _adjustHeaderWidth() {
-    var tableHeaderDom = this.refs.table.childNodes[0].childNodes[0];
-    var tableBodyDom = this.refs.table.childNodes[1].childNodes[0];
+    var tableHeaderDom = this.refs.header.refs.container.childNodes[0];
+    var tableBodyDom = this.refs.body.refs.container.childNodes[0];
     if(tableHeaderDom.offsetWidth !== tableBodyDom.offsetWidth){
       tableHeaderDom.style.width = tableBodyDom.offsetWidth + "px";
     }
-    this.refs.table.childNodes[0].childNodes[0].style.width = this.refs.table.childNodes[1].childNodes[0].offsetWidth+"px";
   }
 }
 
