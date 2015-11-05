@@ -18,13 +18,13 @@ class Demo extends React.Component {
           <h5>Source in /examples/js/basic/hover-striped-table.js</h5>
           <HoverStripedTable/>
         </Panel>
-        <Panel header={"Table Scroll Example"}>
-          <h5>Source in /examples/js/basic/scroll-table.js</h5>
-          <ScrollTable/>
-        </Panel>
         <Panel header={"A Large Column Table Demo"}>
           <h5>Source in /examples/js/basic/large-column-table.js</h5>
           <LargeColumnTable/>
+        </Panel>
+        <Panel header={"Table Scroll Example"}>
+          <h5>Source in /examples/js/basic/scroll-table.js</h5>
+          <ScrollTable/>
         </Panel>
       </Col>
     );

@@ -11,7 +11,7 @@ function addProducts(quantity) {
     var id = startId + i;
     products.push({
       id: id,
-      name: "Item name " + id,
+      name: "Item name 12345678" + id,
       price: 2100 + i
     });
   }
