@@ -100,7 +100,8 @@ class BootstrapTable extends React.Component {
     this._adjustHeaderWidth();
     window.addEventListener('resize', this._adjustHeaderWidth.bind(this));
     const headerProps = this.refs.body.getBodyHeaderDomProp();
-    //start from here
+    this.refs.header.updateChildrens(headerProps);
+
     this.refs.body.refs.container.addEventListener('scroll', (e) => {
       this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
     });

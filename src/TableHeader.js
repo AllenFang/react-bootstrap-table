@@ -80,6 +80,20 @@ class TableHeader extends React.Component{
         React.cloneElement(this.props.children, {key: 0, clearSortCaret: this.clearSortCaret.bind(this)});
     }
   }
+
+  updateChildrens(headerProps){
+    if(Array.isArray(this.props.children)){
+      for(let i=0;i<this.props.children.length;i++){
+        // console.log(headerProps[i]);
+        this.props.children[i] =
+          React.cloneElement(this.props.children[i], {width: headerProps[i].width+"px"});
+      }
+    } else {
+      this.props.children =
+        React.cloneElement(this.props.children, {width: headerProps[0].width+"px"});
+    }
+    this.forceUpdate();
+  }
 }
 TableHeader.propTypes = {
   rowSelectType: React.PropTypes.string,
