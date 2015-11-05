@@ -167,7 +167,6 @@ class BootstrapTable extends React.Component {
             sortName={this.props.options.sortName}
             sortOrder={this.props.options.sortOrder}
             onSort={this.handleSort.bind(this)}
-            onRowClick={this.handleRowClick.bind(this)}
             onSelectAllRow={this.handleSelectAllRow.bind(this)}
             bordered={this.props.bordered}>
             {this.props.children}
@@ -227,8 +226,8 @@ class BootstrapTable extends React.Component {
   }
 
   handleRowClick(row) {
-    if (this.props.selectRow.onRowClick) {
-      this.props.selectRow.onRowClick(row);
+    if (this.props.options.onRowClick) {
+      this.props.options.onRowClick(row);
     }
   }
 
@@ -512,7 +511,6 @@ BootstrapTable.propTypes = {
     mode: React.PropTypes.string,
     bgColor: React.PropTypes.string,
     selected: React.PropTypes.array,
-    onRowClick: React.PropTypes.func,
     onSelect: React.PropTypes.func,
     onSelectAll: React.PropTypes.func,
     clickToSelect: React.PropTypes.bool,
@@ -535,6 +533,7 @@ BootstrapTable.propTypes = {
     afterTableComplete: React.PropTypes.func,
     afterDeleteRow: React.PropTypes.func,
     afterInsertRow: React.PropTypes.func,
+    onRowClick: React.PropTypes.func,
     page: React.PropTypes.number,
     sizePerPageList: React.PropTypes.array,
     sizePerPage: React.PropTypes.number,
@@ -558,7 +557,6 @@ BootstrapTable.defaultProps = {
     mode: Const.ROW_SELECT_NONE,
     bgColor: Const.ROW_SELECT_BG_COLOR,
     selected: [],
-    onRowClick: undefined,
     onSelect: undefined,
     onSelectAll: undefined,
     clickToSelect: false,
@@ -582,6 +580,7 @@ BootstrapTable.defaultProps = {
     afterTableComplete: undefined,
     afterDeleteRow: undefined,
     afterInsertRow: undefined,
+    onRowClick: undefined,
     page: 1,
     sizePerPageList: Const.SIZE_PER_PAGE_LIST,
     sizePerPage: Const.SIZE_PER_PAGE_LIST[0],

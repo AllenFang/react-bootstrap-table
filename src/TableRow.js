@@ -5,8 +5,9 @@ class TableRow extends React.Component{
 
   rowClick(e){
     if(e.target.tagName !== "INPUT")
-      if (this.props.selectRow.clickToSelect) this.props.onSelectRow(e.currentTarget.rowIndex, !this.props.isSelected);
-      if (this.props.selectRow.onRowClick) this.props.onRowClick(e.currentTarget.rowIndex);
+      if (this.props.selectRow &&
+        this.props.selectRow.clickToSelect) this.props.onSelectRow(e.currentTarget.rowIndex, !this.props.isSelected);
+      if (this.props.onRowClick) this.props.onRowClick(e.currentTarget.rowIndex);
   }
 
   render(){
@@ -19,7 +20,7 @@ class TableRow extends React.Component{
     };
 
     if(this.props.selectRow && !this.props.enableCellEdit &&
-      (this.props.selectRow.clickToSelect || this.props.selectRow.clickToSelectAndEditCell) || this.props.selectRow.onRowClick){
+      (this.props.selectRow.clickToSelect || this.props.selectRow.clickToSelectAndEditCell) || this.props.onRowClick){
       return(
         <tr {...trCss} onClick={this.rowClick.bind(this)}>{this.props.children}</tr>
       )
@@ -36,4 +37,7 @@ TableRow.propTypes = {
   onRowClick: React.PropTypes.func,
   onSelectRow: React.PropTypes.func
 };
+TableRow.defaultProps = {
+  onRowClick: undefined
+}
 export default TableRow;
