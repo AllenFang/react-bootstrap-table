@@ -4,6 +4,7 @@ import DeleteRowTable from './delete-row-table';
 import SearchTable from './search-table';
 import ColumnFilterTable from './filter-table';
 import MultiSearchTable from './multi-search-table';
+import ExportCSVTable from './export-csv-table';
 
 class Demo extends React.Component {
   render() {
@@ -51,6 +52,15 @@ class Demo extends React.Component {
             <div className="panel-body">
               <h5>Source in /examples/js/manipulation/filter-table.js</h5>
               <ColumnFilterTable />
+            </div>
+          </div>
+        </div>
+        <div className="col-md-offset-1 col-md-8">
+          <div className="panel panel-default">
+            <div className="panel-heading">Export CSV Example</div>
+            <div className="panel-body">
+              <h5>Source in /examples/js/manipulation/export-csv-table.js</h5>
+              <ExportCSVTable />
             </div>
           </div>
         </div>
