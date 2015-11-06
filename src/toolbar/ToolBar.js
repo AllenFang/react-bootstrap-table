@@ -126,15 +126,17 @@ class ToolBar extends React.Component{
       marginBottom: 0
     };
 
-    var exportCSV = this.props.enableExportCSV ? <a className='export-csv' onClick={this.handleExportCSV.bind(this)}>Export to CSV</a> : null;
+    var exportCSV = this.props.enableExportCSV ?
+          <button type="button" className="btn btn-success" onClick={this.handleExportCSV.bind(this)}>
+              <i className="glyphicon glyphicon-export"></i> Export to CSV</button> : null;
 
     return(
       <div>
         <div className="btn-group btn-group-xs" role="group" aria-label="...">
+          {exportCSV}
           {insertBtn}
           {deleteBtn}
         </div>
-        {exportCSV}
         {searchTextInput}
         <Notifier ref="notifier"></Notifier>
         {modal}
