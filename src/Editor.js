@@ -68,7 +68,7 @@ var Editor=function(editable, attr, format, editorClass, defaultValue){
           attr.className = attr.className.replace('form-control','');
           attr.className += ' checkbox pull-right';
 
-          let checked = defaultValue.toString() == values.split(':')[0]?true:false;
+          let checked = defaultValue && defaultValue.toString() == values.split(':')[0]?true:false;
 
           return (
             <input {...attr} type='checkbox' value={values} defaultChecked={checked}/>
