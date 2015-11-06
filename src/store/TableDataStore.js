@@ -209,6 +209,23 @@ export class TableDataStore {
     }
   }
 
+  getIgnoringPagination() {
+    let _data = this.getCurrentDisplayData();
+
+    if (_data.length == 0) return _data;
+
+    if (this.remote || this.enablePagination) {
+      return _data;
+    } else {
+      var result = [];
+      for (var i = this.pageObj.start; i <= this.pageObj.end; i++) {
+        result.push(_data[i]);
+        if (i + 1 == _data.length)break;
+      }
+      return result;
+    }
+  }
+
   get() {
     let _data = this.getCurrentDisplayData();
 
