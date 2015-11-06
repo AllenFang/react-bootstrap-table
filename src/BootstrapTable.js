@@ -398,7 +398,7 @@ class BootstrapTable extends React.Component {
     this.props.children.map(function(column) {
       keys.push(column.props.dataField);
     });
-    exportCSV(result, keys, this.props.csvFilename);
+    exportCSV(result, keys, this.props.csvFileName);
   }
 
   handleSearch(searchText) {
@@ -556,6 +556,8 @@ BootstrapTable.propTypes = {
   fetchInfo: React.PropTypes.shape({
     dataTotalSize: React.PropTypes.number,
   }),
+  exportCSV: React.PropTypes.bool,
+  csvFileName: React.PropTypes.string
 };
 BootstrapTable.defaultProps = {
   height: "100%",
@@ -602,6 +604,7 @@ BootstrapTable.defaultProps = {
     dataTotalSize: 0,
   },
   exportCSV: false,
+  csvFileName: undefined
 };
 
 export default BootstrapTable;
