@@ -126,6 +126,8 @@ You can reference [here](http://allenfang.github.io/react-bootstrap-table/docs.h
 | deleteRow    | Bool   | Set true to enable row deletion on table.              |
 | search       | Bool   | Set true to enable search function on table.           |
 | multiColumnSearch | Bool | Set true to enable words search on multiple column function on table from a search box. |
+| exportCSV | Bool | Set true to enable download to CSV (tab delimited). |
+| csvFileName | Bool | Set CSV filename (e.g. items.csv). Default is spreadsheet.csv. |
 | searchPlaceholder | String   | The place holder on search text fields          |
 | keyField     | String | Same as ```isKey``` in &lt;TableHeaderColumn&gt;       |
 | trClassName  | String or Function | Assign the row(tr) class, accept string or function, if use function, will pass ```rowData``` and ```rowIndex``` params and should return string presented class. for examples:</br>**function trClassFormat(rowData,rowIndex){**</br>&nbsp;&nbsp;&nbsp;**return rowIndex%2==0?"tr-odd":"tr-even";**</br>**}**      |

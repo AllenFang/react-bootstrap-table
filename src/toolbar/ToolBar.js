@@ -103,6 +103,10 @@ class ToolBar extends React.Component{
     this.props.onSearch(e.currentTarget.value);
   }
 
+  handleExportCSV() {
+    this.props.onExportCSV();
+  }
+
   render(){
     var modalClassName = "bs-table-modal-sm"+new Date().getTime();
     var insertBtn = this.props.enableInsert?
@@ -121,9 +125,15 @@ class ToolBar extends React.Component{
       display: "none",
       marginBottom: 0
     };
+
+    var exportCSV = this.props.enableExportCSV ?
+          <button type="button" className="btn btn-success" onClick={this.handleExportCSV.bind(this)}>
+              <i className="glyphicon glyphicon-export"></i> Export to CSV</button> : null;
+
     return(
       <div>
         <div className="btn-group btn-group-xs" role="group" aria-label="...">
+          {exportCSV}
           {insertBtn}
           {deleteBtn}
         </div>

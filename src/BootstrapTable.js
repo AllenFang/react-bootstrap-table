@@ -7,6 +7,7 @@ import PaginationList from './pagination/PaginationList';
 import ToolBar from './toolbar/ToolBar';
 import TableFilter from './TableFilter';
 import {TableDataStore} from './store/TableDataStore';
+import exportCSV from './csv_export_util';
 
 class BootstrapTable extends React.Component {
 
@@ -391,6 +392,15 @@ class BootstrapTable extends React.Component {
     });
   }
 
+  handleExportCSV() {
+    var result = this.store.get();
+    var keys = [];
+    this.props.children.map(function(column) {
+      keys.push(column.props.dataField);
+    });
+    exportCSV(result, keys, this.props.csvFileName);
+  }
+
   handleSearch(searchText) {
     this.store.search(searchText, this.props.multiColumnSearch);
     let result;
@@ -454,19 +464,21 @@ class BootstrapTable extends React.Component {
         editable: this.props.children.props.editable
       }];
     }
-    if (this.props.insertRow || this.props.deleteRow || this.props.search) {
+    if (this.props.insertRow || this.props.deleteRow || this.props.search || this.props.exportCSV) {
       return (
         <div className="tool-bar">
           <ToolBar
             enableInsert={this.props.insertRow}
             enableDelete={this.props.deleteRow}
             enableSearch={this.props.search}
+            enableExportCSV={this.props.exportCSV}
             columns={columns}
             searchPlaceholder={this.props.searchPlaceholder}
             onAddRow={this.handleAddRow.bind(this)}
             onAddRowBegin={this.handleAddRowBegin.bind(this)}
             onDropRow={this.handleDropRow.bind(this)}
             onSearch={this.handleSearch.bind(this)}
+            onExportCSV={this.handleExportCSV.bind(this)}
           />
         </div>
       )
@@ -544,6 +556,8 @@ BootstrapTable.propTypes = {
   fetchInfo: React.PropTypes.shape({
     dataTotalSize: React.PropTypes.number,
   }),
+  exportCSV: React.PropTypes.bool,
+  csvFileName: React.PropTypes.string
 };
 BootstrapTable.defaultProps = {
   height: "100%",
@@ -589,6 +603,8 @@ BootstrapTable.defaultProps = {
   fetchInfo: {
     dataTotalSize: 0,
   },
+  exportCSV: false,
+  csvFileName: undefined
 };
 
 export default BootstrapTable;
