@@ -111,6 +111,8 @@ class BootstrapTable extends React.Component {
     this._attachCellEditFunc();
     if (this.props.options.afterTableComplete)
       this.props.options.afterTableComplete();
+    if (this.props.options.afterSearchOrFilter)
+      this.props.options.afterSearchOrFilter(this.store.getDataIgnoringPagination());
   }
 
   _attachCellEditFunc() {
