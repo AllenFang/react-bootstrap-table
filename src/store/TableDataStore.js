@@ -209,6 +209,11 @@ export class TableDataStore {
     }
   }
 
+  getDataIgnoringPagination() {
+    let _data = this.getCurrentDisplayData();
+    return _data;
+  }
+
   get() {
     let _data = this.getCurrentDisplayData();
 
