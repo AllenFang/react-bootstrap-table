@@ -389,6 +389,9 @@ class BootstrapTable extends React.Component {
     } else {
       result = this.store.get();
     }
+    if(this.props.options.afterColumnFilter)
+      this.props.options.afterColumnFilter(filterObj,
+        this.store.getDataIgnoringPagination());
     this.setState({
       data: result
     });
@@ -413,6 +416,8 @@ class BootstrapTable extends React.Component {
     } else {
       result = this.store.get();
     }
+    if(this.props.options.afterSearch)
+      this.props.options.afterSearch(searchText, this.store.getDataIgnoringPagination());
     this.setState({
       data: result
     });
@@ -547,6 +552,8 @@ BootstrapTable.propTypes = {
     afterTableComplete: React.PropTypes.func,
     afterDeleteRow: React.PropTypes.func,
     afterInsertRow: React.PropTypes.func,
+    afterSearch: React.PropTypes.func,
+    afterColumnFilter: React.PropTypes.func,
     onRowClick: React.PropTypes.func,
     page: React.PropTypes.number,
     sizePerPageList: React.PropTypes.array,
@@ -596,6 +603,8 @@ BootstrapTable.defaultProps = {
     afterTableComplete: undefined,
     afterDeleteRow: undefined,
     afterInsertRow: undefined,
+    afterSearch: undefined,
+    afterColumnFilter: undefined,
     onRowClick: undefined,
     page: 1,
     sizePerPageList: Const.SIZE_PER_PAGE_LIST,
