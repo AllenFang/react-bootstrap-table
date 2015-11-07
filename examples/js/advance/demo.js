@@ -3,7 +3,6 @@ import EditTypeTable from './edit-type-table';
 import DataInsertTypeTable from './insert-type-table';
 import AutoRowKeyTable from './auto-rowkey-table';
 import ValidatorTable from './validator-table';
-import ExternalHookTable from './external-hook-table.js';
 
 import {Col, Panel} from 'react-bootstrap';
 
@@ -26,10 +25,6 @@ class Demo extends React.Component {
         <Panel header={"Data Validator Example(Job Name length must great 10 char)"}>
           <h5>Source in /examples/js/advance/validator-table.js</h5>
           <ValidatorTable/>
-        </Panel>
-        <Panel header={"External Component Hook Example"}>
-          <h5>Source in /examples/js/advance/external-hook-table.js</h5>
-          <ExternalHookTable/>
         </Panel>
       </Col>
     );
