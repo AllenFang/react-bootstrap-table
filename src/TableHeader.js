@@ -83,10 +83,11 @@ class TableHeader extends React.Component{
 
   updateChildrens(headerProps){
     if(Array.isArray(this.props.children)){
+      let startPosition = (this.props.rowSelectType == Const.ROW_SELECT_SINGLE ||
+                              this.props.rowSelectType == Const.ROW_SELECT_MULTI) && !this.props.hideSelectColumn ? 1:0;
       for(let i=0;i<this.props.children.length;i++){
-        // console.log(headerProps[i]);
         this.props.children[i] =
-          React.cloneElement(this.props.children[i], {width: headerProps[i].width+"px"});
+          React.cloneElement(this.props.children[i], {width: headerProps[i+startPosition].width+"px"});
       }
     } else {
       this.props.children =
