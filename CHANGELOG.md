@@ -1,3 +1,45 @@
+<a name="v1.2.7"></a>
+# [v1.2.7](https://github.com/AllenFang/react-bootstrap-table/compare/v1.2.6...v1.2.7) (2015-11-07)
+### Features
+* Support Export CSV
+	* Set ```exportCSV``` to true on ```<BootstrapTable>```, ```csvFileName``` is alternative property for csv file name.
+* Support ```onRowClick``` for after clicking a row([b442d95](https://github.com/AllenFang/react-bootstrap-table/commit/b442d9526438a50fe10e56e436426e6086752308))
+	* Add ```onRowClick``` in options properties on ```<BootstrapTable>```
+	```javascript
+	var options = {
+		onRowClick: function(row){
+
+		}
+	}
+
+	<BootstrapTable
+          data={products}
+          options={options}
+        >...
+	```
+* Support ```afterSearch``` and ```afterColumnFilter``` for after searching or column filtering([eccb61d](https://github.com/AllenFang/react-bootstrap-table/commit/eccb61d7c578117342ab812347592f6a99f6747f))
+	* Add ```afterSearch``` or ```afterColumnFilter``` in options properties on ```<BootstrapTable>```
+	```javascript
+	var options = {
+		afterSearch: function(searchText, result){
+
+		},
+		afterColumnFilter: function(filterConds, result){
+
+		}
+	}
+
+	<BootstrapTable
+          data={products}
+					search={true}
+					columnFilter={true}
+          options={options}
+        >...
+	```
+
+### Bug fixes
+* fix checkbox default toString() bug([f8ad7a2](https://github.com/AllenFang/react-bootstrap-table/commit/f8ad7a2e7c1e053554a532fcbcfe092e3bb27b24))
+
 <a name="v1.2.6"></a>
 # [v1.2.6](https://github.com/AllenFang/react-bootstrap-table/compare/v1.2.5...v1.2.6) (2015-11-03)
 ### Features

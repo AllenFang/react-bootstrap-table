@@ -7,6 +7,7 @@ import PaginationList from './pagination/PaginationList';
 import ToolBar from './toolbar/ToolBar';
 import TableFilter from './TableFilter';
 import {TableDataStore} from './store/TableDataStore';
+import exportCSV from './csv_export_util';
 
 class BootstrapTable extends React.Component {
 
@@ -116,6 +117,8 @@ class BootstrapTable extends React.Component {
     this._attachCellEditFunc();
     if (this.props.options.afterTableComplete)
       this.props.options.afterTableComplete();
+    if (this.props.options.afterSearchOrFilter)
+      this.props.options.afterSearchOrFilter(this.store.getDataIgnoringPagination());
   }
 
   _attachCellEditFunc() {
@@ -393,9 +396,21 @@ class BootstrapTable extends React.Component {
     } else {
       result = this.store.get();
     }
+    if(this.props.options.afterColumnFilter)
+      this.props.options.afterColumnFilter(filterObj,
+        this.store.getDataIgnoringPagination());
     this.setState({
       data: result
     });
+  }
+
+  handleExportCSV() {
+    var result = this.store.get();
+    var keys = [];
+    this.props.children.map(function(column) {
+      keys.push(column.props.dataField);
+    });
+    exportCSV(result, keys, this.props.csvFileName);
   }
 
   handleSearch(searchText) {
@@ -408,6 +423,8 @@ class BootstrapTable extends React.Component {
     } else {
       result = this.store.get();
     }
+    if(this.props.options.afterSearch)
+      this.props.options.afterSearch(searchText, this.store.getDataIgnoringPagination());
     this.setState({
       data: result
     });
@@ -461,19 +478,21 @@ class BootstrapTable extends React.Component {
         editable: this.props.children.props.editable
       }];
     }
-    if (this.props.insertRow || this.props.deleteRow || this.props.search) {
+    if (this.props.insertRow || this.props.deleteRow || this.props.search || this.props.exportCSV) {
       return (
         <div className="tool-bar">
           <ToolBar
             enableInsert={this.props.insertRow}
             enableDelete={this.props.deleteRow}
             enableSearch={this.props.search}
+            enableExportCSV={this.props.exportCSV}
             columns={columns}
             searchPlaceholder={this.props.searchPlaceholder}
             onAddRow={this.handleAddRow.bind(this)}
             onAddRowBegin={this.handleAddRowBegin.bind(this)}
             onDropRow={this.handleDropRow.bind(this)}
             onSearch={this.handleSearch.bind(this)}
+            onExportCSV={this.handleExportCSV.bind(this)}
           />
         </div>
       )
@@ -540,6 +559,8 @@ BootstrapTable.propTypes = {
     afterTableComplete: React.PropTypes.func,
     afterDeleteRow: React.PropTypes.func,
     afterInsertRow: React.PropTypes.func,
+    afterSearch: React.PropTypes.func,
+    afterColumnFilter: React.PropTypes.func,
     onRowClick: React.PropTypes.func,
     page: React.PropTypes.number,
     sizePerPageList: React.PropTypes.array,
@@ -551,6 +572,8 @@ BootstrapTable.propTypes = {
   fetchInfo: React.PropTypes.shape({
     dataTotalSize: React.PropTypes.number,
   }),
+  exportCSV: React.PropTypes.bool,
+  csvFileName: React.PropTypes.string
 };
 BootstrapTable.defaultProps = {
   height: "100%",
@@ -587,6 +610,8 @@ BootstrapTable.defaultProps = {
     afterTableComplete: undefined,
     afterDeleteRow: undefined,
     afterInsertRow: undefined,
+    afterSearch: undefined,
+    afterColumnFilter: undefined,
     onRowClick: undefined,
     page: 1,
     sizePerPageList: Const.SIZE_PER_PAGE_LIST,
@@ -596,6 +621,8 @@ BootstrapTable.defaultProps = {
   fetchInfo: {
     dataTotalSize: 0,
   },
+  exportCSV: false,
+  csvFileName: undefined
 };
 
 export default BootstrapTable;
