@@ -30,9 +30,10 @@ class Demo extends React.Component {
         </div>
         <div className="col-md-offset-1 col-md-8">
           <div className="panel panel-default">
-            <div className="panel-heading">Table Search Example</div>
+            <div className="panel-heading">Table Search Example(Include after search hook)</div>
             <div className="panel-body">
               <h5>Source in /examples/js/manipulation/search-table.js</h5>
+              <h5>See your console to watch information of after searching.</h5>
               <SearchTable />
             </div>
           </div>
@@ -51,6 +52,7 @@ class Demo extends React.Component {
             <div className="panel-heading">Column Filter Example</div>
             <div className="panel-body">
               <h5>Source in /examples/js/manipulation/filter-table.js</h5>
+              <h5>See your console to watch information of after column filtering.</h5>
               <ColumnFilterTable />
             </div>
           </div>
