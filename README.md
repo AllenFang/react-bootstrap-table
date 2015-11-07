@@ -20,8 +20,11 @@ It's a [react.js](http://facebook.github.io/react/) table for bootstrap, named r
 - Insert & Delete Row
 - row and column style customize
 - Search
+- Export CSV file
+- Rich function hooks
 
 You can see more about this component on [here](http://allenfang.github.io/react-bootstrap-table/index.html). and example is on [here](http://allenfang.github.io/react-bootstrap-table/example.html).
+See <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/CHANGELOG.md'>CHANGELOG</a> for more detail release notes.
 
 ## Development
 ```react-bootstrap-table``` dependencies on react 0.14.x and Bootstrap 3 written by ES6 and use gulp and browserify for building and bundling.
@@ -127,7 +130,7 @@ You can reference [here](http://allenfang.github.io/react-bootstrap-table/docs.h
 | search       | Bool   | Set true to enable search function on table.           |
 | multiColumnSearch | Bool | Set true to enable words search on multiple column function on table from a search box. |
 | exportCSV | Bool | Set true to enable download to CSV (tab delimited). |
-| csvFileName | Bool | Set CSV filename (e.g. items.csv). Default is spreadsheet.csv. |
+| csvFileName | String | Set CSV filename (e.g. items.csv). Default is spreadsheet.csv. |
 | searchPlaceholder | String   | The place holder on search text fields          |
 | keyField     | String | Same as ```isKey``` in &lt;TableHeaderColumn&gt;       |
 | trClassName  | String or Function | Assign the row(tr) class, accept string or function, if use function, will pass ```rowData``` and ```rowIndex``` params and should return string presented class. for examples:</br>**function trClassFormat(rowData,rowIndex){**</br>&nbsp;&nbsp;&nbsp;**return rowIndex%2==0?"tr-odd":"tr-even";**</br>**}**      |
