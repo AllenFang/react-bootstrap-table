@@ -518,7 +518,8 @@ class BootstrapTable extends React.Component {
       tableHeaderDom.style.width = tableBodyDom.offsetWidth + "px";
     }
     const headerProps = this.refs.body.getBodyHeaderDomProp();
-    this.refs.header.fitHeader(headerProps);
+    this.refs.header.fitHeader(headerProps,
+      this.refs.body.refs.container.scrollWidth > this.refs.body.refs.container.clientWidth);
   }
 }
 

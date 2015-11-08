@@ -81,7 +81,7 @@ class TableHeader extends React.Component{
     }
   }
 
-  fitHeader(headerProps){
+  fitHeader(headerProps, isVerticalScrollBar){
     if(Array.isArray(this.props.children)){
       let startPosition = (this.props.rowSelectType == Const.ROW_SELECT_SINGLE ||
                               this.props.rowSelectType == Const.ROW_SELECT_MULTI) && !this.props.hideSelectColumn ? 1:0;
@@ -94,6 +94,8 @@ class TableHeader extends React.Component{
         React.cloneElement(this.props.children, {width: headerProps[0].width+"px"});
     }
     this.forceUpdate();
+    if(isVerticalScrollBar)
+      this.refs.container.style.marginRight = Util.getScrollBarWidth() + "px";
   }
 }
 TableHeader.propTypes = {
