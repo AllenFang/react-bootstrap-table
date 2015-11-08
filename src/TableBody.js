@@ -1,5 +1,6 @@
 import React from 'react';
 import Const from './Const';
+import Util from './util';
 import TableRow from './TableRow';
 import TableColumn from './TableColumn';
 import TableEditColumn from './TableEditColumn';
@@ -148,7 +149,8 @@ class TableBody extends React.Component{
 
     if(isSelectRowDefined){
       let style = {
-        width:35
+        width:35,
+        minWidth:35
       }
       selectRowHeader = this.props.selectRow.hideSelectColumn?null:(<th style={style} key={-1}></th>);
     }
@@ -157,8 +159,10 @@ class TableBody extends React.Component{
         display: column.hidden?"none":null,
         width: column.width,
         minWidth: column.width
+        /** add min-wdth to fix user assign column width not eq offsetWidth in large column table **/
       };
-      return (<th style={style} key={i} className={column.className}>{column.text}</th>);
+      let sortCaert = column.sort?(Util.renderReactSortCaret(Const.SORT_DESC)):null;
+      return (<th style={style} key={i} className={column.className}>{column.text}{sortCaert}</th>);
     });
 
     return(
