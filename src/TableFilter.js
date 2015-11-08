@@ -42,7 +42,7 @@ class TableFilter extends React.Component{
       return(
         <th key={column.name} style={thStyle}>
           <div className="th-inner table-header-column">
-            <input type="text" placeholder={column.name} name={column.name} onKeyUp={this.handleKeyUp.bind(this)}/>
+            <input size="10" type="text" placeholder={column.name} name={column.name} onKeyUp={this.handleKeyUp.bind(this)}/>
           </div>
         </th>
       )
