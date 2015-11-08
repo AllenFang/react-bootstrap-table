@@ -19,6 +19,14 @@ class TableBody extends React.Component{
     this.editing = false;
   }
 
+  componentDidMount(){
+    this.hardFixHeaderWidth();
+  }
+
+  componentDidUpdate(){
+    this.hardFixHeaderWidth();
+  }
+
   render(){
     var containerClasses = classSet("table-container");
 
@@ -241,6 +249,13 @@ class TableBody extends React.Component{
       });
     }
     return headerDomProps;
+  }
+
+  hardFixHeaderWidth(){
+    var headers = this.refs.header.childNodes[0].childNodes;
+    for(let i=0;i<headers.length;i++){
+      headers[i].style.width = headers[i].offsetWidth + "px";
+    }
   }
 
   _isSelectRowDefined(){

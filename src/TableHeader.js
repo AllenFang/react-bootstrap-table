@@ -81,7 +81,7 @@ class TableHeader extends React.Component{
     }
   }
 
-  updateChildrens(headerProps){
+  fitHeader(headerProps){
     if(Array.isArray(this.props.children)){
       let startPosition = (this.props.rowSelectType == Const.ROW_SELECT_SINGLE ||
                               this.props.rowSelectType == Const.ROW_SELECT_MULTI) && !this.props.hideSelectColumn ? 1:0;
