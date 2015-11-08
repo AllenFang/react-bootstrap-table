@@ -155,7 +155,8 @@ class TableBody extends React.Component{
     var theader = this.props.columns.map(function(column, i){
       let style={
         display: column.hidden?"none":null,
-        width: column.width
+        width: column.width,
+        minWidth: column.width
       };
       return (<th style={style} key={i} className={column.className}>{column.text}</th>);
     });
