@@ -62,11 +62,11 @@
 }
 /*inline editor default style*/
 .react-bs-container .form-control.editor{
-  width:100%;
+  /*width:100%;
   top:0;
-  left:0;
-  height: 100%;
-  position: absolute;
+  left:0;*/
+  /*height: 100%;
+  position: absolute;*/
 }
 
 .react-bs-container  .textarea-save-btn{
