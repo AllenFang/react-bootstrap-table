@@ -146,7 +146,7 @@ class ToolBar extends React.Component{
 
     var inputErrorMessage = null;
     if (this.state.searchInputError) {
-      inputErrorMessage = <p style={{color: "red", fontSize: "12px"}}>cannot have both 'and' and 'or'</p>;
+      inputErrorMessage = <p className="custom-alert">cannot have both 'and' and 'or'</p>;
     }
 
     return(
