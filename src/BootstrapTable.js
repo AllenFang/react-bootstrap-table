@@ -398,7 +398,7 @@ class BootstrapTable extends React.Component {
   }
 
   handleExportCSV() {
-    var result = this.store.getAllPaginatedData();
+    var result = this.store.getDataIgnoringPagination();
     var keys = [];
     this.props.children.map(function(column) {
       keys.push(column.props.dataField);
