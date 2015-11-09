@@ -1,67 +1,70 @@
 /*editor error animate*/
 /*@import "~toastr/build/toastr.min.css";*/
 
-.react-bs-table .table-header{
-  height: 42px;
-  border-top-width: 1px;
-  border-top-style: solid;
-  border-top-color: rgb(221, 221, 221);
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: rgb(221, 221, 221);
-  border-right-width: 1px;
-  border-right-style: inset;
-  border-right-color: rgb(221, 221, 221);
+.react-bs-container .react-bs-table-container {
+  border: 1px solid #dddddd;
 }
 
-.react-bs-table .table-header > table{
-  table-layout: fixed;
+.react-bs-container .table-header{
+  height: 42px;
+  border: hidden;
+  overflow: hidden;
+}
+
+.react-bs-container .table-header > table{
+  /*table-layout: fixed;*/
   border-top-style: hidden;
   border-right-style: hidden;
+  border-left-style: hidden;
+  width: 100%;
 }
 
-.react-bs-table .table-header > table > thead > tr{
+.react-bs-container .table-header > table > thead > tr{
   border-bottom-style: hidden;
 }
 
-.react-bs-table .table-header > table > thead > tr > th .table-header-column{
-  line-height: 25px
+.react-bs-container .table-container > table > tbody > tr > td,
+.react-bs-container .table-container > table > thead > tr > th,
+.react-bs-container .table-header > table > thead > tr > th .table-header-column{
+  line-height: 25px;
+  vertical-align: top;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.react-bs-table .table-header > table > thead > tr > .sort-column{
+.react-bs-container .table-header > table > thead > tr > .sort-column{
   cursor: pointer;
 }
 
-.react-bs-table .table-container{
-  overflow-x: auto;
-  overflow-y: auto;
+.react-bs-container .table-container{
+  overflow: auto;
   height: 100%;
-  border-right-style: solid;
-  border-right-width: 1px;
-  border-right-color: rgb(221, 221, 221);
 }
 
-.react-bs-table .table-container > table{
-  margin-top: -18px;
-  table-layout: fixed;
+.react-bs-container .table-container > table{
+  margin-top: -42px;
+  /*table-layout: fixed;*/
   margin-bottom: 0px;
+  border-left-style: hidden;
   border-right-style: hidden;
   border-top-width: 0px;
+  width: 100%;
 }
 
 .react-bs-container .tool-bar{
   margin-bottom: 5px
 }
 /*inline editor default style*/
-.react-bs-table .form-control.editor{
-  width:100%;
+.react-bs-container .form-control.editor{
+  /*width:100%;
   top:0;
-  left:0;
-  height: 100%;
-  position: absolute;
+  left:0;*/
+  /*height: 100%;
+  position: absolute;*/
 }
 
-.react-bs-table  .textarea-save-btn{
+.react-bs-container  .textarea-save-btn{
   position: absolute;
   z-index: 100;
   right: 0;
