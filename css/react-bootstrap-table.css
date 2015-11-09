@@ -1,17 +1,13 @@
 /*editor error animate*/
 /*@import "~toastr/build/toastr.min.css";*/
 
+.react-bs-container .react-bs-table-container {
+  border: 1px solid #dddddd;
+}
+
 .react-bs-container .table-header{
   height: 42px;
-  border-top-width: 1px;
-  border-top-style: solid;
-  border-top-color: rgb(221, 221, 221);
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: rgb(221, 221, 221);
-  border-right-width: 1px;
-  border-right-style: inset;
-  border-right-color: rgb(221, 221, 221);
+  border: hidden;
   overflow: hidden;
 }
 
@@ -19,6 +15,7 @@
   /*table-layout: fixed;*/
   border-top-style: hidden;
   border-right-style: hidden;
+  border-left-style: hidden;
   width: 100%;
 }
 
@@ -43,15 +40,13 @@
 .react-bs-container .table-container{
   overflow: auto;
   height: 100%;
-  border-right-style: solid;
-  border-right-width: 1px;
-  border-right-color: rgb(221, 221, 221);
 }
 
 .react-bs-container .table-container > table{
   margin-top: -42px;
   /*table-layout: fixed;*/
   margin-bottom: 0px;
+  border-left-style: hidden;
   border-right-style: hidden;
   border-top-width: 0px;
   width: 100%;

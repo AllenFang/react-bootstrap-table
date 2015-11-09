@@ -164,6 +164,7 @@ class BootstrapTable extends React.Component {
     return (
       <div className="react-bs-container" ref="table" style={style}>
         {toolBar}
+        <div className="react-bs-table-container">
           <TableHeader
             ref="header"
             rowSelectType={this.props.selectRow.mode}
@@ -192,8 +193,9 @@ class BootstrapTable extends React.Component {
             onRowClick={this.handleRowClick.bind(this)}
             onSelectRow={this.handleSelectRow.bind(this)}
           />
-          {tableFilter}
-          {pagination}
+        </div>
+        {tableFilter}
+        {pagination}
       </div>
     )
   }
