@@ -401,7 +401,9 @@ class BootstrapTable extends React.Component {
     var result = this.store.getDataIgnoringPagination();
     var keys = [];
     this.props.children.map(function(column) {
-      keys.push(column.props.dataField);
+      if (column.props.hidden === false) {
+        keys.push(column.props.dataField);
+      }
     });
     exportCSV(result, keys, this.props.csvFileName);
   }
