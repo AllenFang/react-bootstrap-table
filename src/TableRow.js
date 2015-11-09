@@ -4,10 +4,10 @@ import Const from './Const';
 class TableRow extends React.Component{
 
   rowClick(e){
-    if(e.target.tagName !== "INPUT")
-      if (this.props.selectRow &&
-        this.props.selectRow.clickToSelect) this.props.onSelectRow(e.currentTarget.rowIndex, !this.props.isSelected);
+    if(e.target.tagName !== "INPUT") {
+      if (this.props.selectRow && this.props.selectRow.clickToSelect) this.props.onSelectRow(e.currentTarget.rowIndex, !this.props.isSelected);
       if (this.props.onRowClick) this.props.onRowClick(e.currentTarget.rowIndex);
+    }
   }
 
   render(){
