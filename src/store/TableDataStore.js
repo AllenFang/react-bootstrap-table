@@ -176,6 +176,50 @@ export class TableDataStore {
     }
   }
 
+  orModeSearch(searchTextArray) {
+    this.filteredData = this.data.filter(function (row) {
+      let valid = false;
+      var validArray = [];
+      
+      for (var key in row) {
+        if (row[key]) {
+          searchTextArray.forEach(function (text) {
+            if (row[key].toString().toLowerCase().indexOf(text.toLowerCase()) !== -1) {
+              valid = true;
+            }
+          });
+          if (valid) break;
+        }
+      }
+      return valid;
+    });
+  }
+
+  andModeSearch(searchTextArray) {
+    this.filteredData = this.data.filter(function (row) {
+      var validArray = [];
+      for (var key in row) {
+        if (row[key]) {
+          searchTextArray.forEach(function (text) {
+            if (row[key].toString().toLowerCase().indexOf(text.toLowerCase()) !== -1) {
+              validArray.push(text);
+            }
+          });
+        }
+      }
+
+      var valid = true;
+      for (var i = 0; i < searchTextArray.length; i++) {
+        if (validArray.indexOf(searchTextArray[i]) === -1 ) {
+          valid = false;
+          break;
+        }
+      }
+
+      return valid;
+    });
+  }
+
   search(searchText, multiColumnSearch) {
     if (searchText.trim() === "") {
       this.filteredData = null;
@@ -184,31 +228,29 @@ export class TableDataStore {
     } else {
       this.searchText = searchText;
       var searchTextArray = [];
-      this.filteredData = this.data.filter(function (row) {
-        let valid = false;
+      var mode = ( searchText.indexOf(' and ') !== -1 ) ? 'and' : 'or';
 
-        if (multiColumnSearch) {
-          searchTextArray = searchText.split(' ');
+      if (multiColumnSearch) {
+        if (mode === 'and') {
+          searchTextArray = searchText.split(' and ').filter(function(el) {return el.length != 0});;
+          if ( searchTextArray.length <= 1 ) mode = 'or';
         } else {
-          searchTextArray.push(searchText);
+          searchTextArray = searchText.split(' or ');
         }
+      } else {
+        searchTextArray.push(searchText);
+      }
 
-        for (var key in row) {
-          if (row[key]) {
-            searchTextArray.forEach(function(text) {
-              if (row[key].toString().toLowerCase().indexOf(text.toLowerCase()) !== -1) {
-                valid = true;
-              }
-            });
-            if (valid) break;
-          }
-        }
-        return valid;
-      });
+      if (mode === 'and') {
+        this.andModeSearch(searchTextArray);
+      } else {
+        this.orModeSearch(searchTextArray);
+      }
+
       this.isOnFilter = true;
     }
   }
-
+  
   getDataIgnoringPagination() {
     let _data = this.getCurrentDisplayData();
     return _data;

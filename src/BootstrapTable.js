@@ -398,7 +398,7 @@ class BootstrapTable extends React.Component {
   }
 
   handleExportCSV() {
-    var result = this.store.get();
+    var result = this.store.getAllPaginatedData();
     var keys = [];
     this.props.children.map(function(column) {
       keys.push(column.props.dataField);
@@ -471,7 +471,7 @@ class BootstrapTable extends React.Component {
         editable: this.props.children.props.editable
       }];
     }
-    if (this.props.insertRow || this.props.deleteRow || this.props.search || this.props.exportCSV) {
+    if (this.props.insertRow || this.props.deleteRow || this.props.search || this.props.multiColumnSearch || this.props.exportCSV) {
       return (
         <div className="tool-bar">
           <ToolBar
@@ -480,6 +480,7 @@ class BootstrapTable extends React.Component {
             enableSearch={this.props.search}
             enableExportCSV={this.props.exportCSV}
             columns={columns}
+            onMultiColumnSearch={this.props.multiColumnSearch}
             searchPlaceholder={this.props.searchPlaceholder}
             onAddRow={this.handleAddRow.bind(this)}
             onAddRowBegin={this.handleAddRowBegin.bind(this)}

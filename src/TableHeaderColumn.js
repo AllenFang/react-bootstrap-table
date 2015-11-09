@@ -19,6 +19,12 @@ class TableHeaderColumn extends React.Component{
     this.refs.innerDiv.setAttribute("data-field", this.props.dataField);
   }
 
+  renderSortDefaultEl(){
+    return (
+      <i className="fa fa-sort custom-fa"></i>
+    );
+  }
+
   render(){
     var thStyle = {
       textAlign: this.props.dataAlign,
@@ -27,10 +33,15 @@ class TableHeaderColumn extends React.Component{
     };
 
     var classes = this.props.className+" "+(this.props.dataSort?"sort-column":"");
+    var defaultSortEl = this.props.dataSort ? this.renderSortDefaultEl() : null;
+
     return(
       <th className={classes} style={thStyle}>
         <div ref="innerDiv" className="th-inner table-header-column"
-          onClick={this.handleColumnClick.bind(this)}>{this.props.children}</div>
+          onClick={this.handleColumnClick.bind(this)}>
+          {this.props.children}
+          {defaultSortEl}
+          </div>
       </th>
     )
   }

@@ -100,7 +100,21 @@ class ToolBar extends React.Component{
   }
 
   handleKeyUp(e){
-    this.props.onSearch(e.currentTarget.value);
+    var searchText = e.currentTarget.value;
+
+    if (this.props.onMultiColumnSearch) {
+      var includeAnd = searchText.indexOf(' and ') !== -1; 
+      var includeOr = searchText.indexOf(' or ') !== -1; 
+      if (includeAnd && includeOr) {
+        this.setState({searchInputError: true});
+      } else {
+        this.props.onSearch(searchText);
+        this.setState({searchInputError: false});
+      }
+    } else {
+      this.props.onSearch(searchText);
+      this.setState({searchInputError: false});
+    }
   }
 
   handleExportCSV() {
@@ -130,10 +144,16 @@ class ToolBar extends React.Component{
           <button type="button" className="btn btn-success" onClick={this.handleExportCSV.bind(this)}>
               <i className="glyphicon glyphicon-export"></i> Export to CSV</button> : null;
 
+    var inputErrorMessage = null;
+    if (this.state.searchInputError) {
+      inputErrorMessage = <p style={{color: "red", fontSize: "12px"}}>cannot have both 'and' and 'or'</p>;
+    }
+
     return(
       <div>
         <div className="btn-group btn-group-xs" role="group" aria-label="...">
           {exportCSV}
+          {inputErrorMessage}
           {insertBtn}
           {deleteBtn}
         </div>
