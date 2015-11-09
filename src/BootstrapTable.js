@@ -162,9 +162,9 @@ class BootstrapTable extends React.Component {
     var toolBar = this.renderToolBar();
     var tableFilter = this.renderTableFilter(columns);
     return (
-      <div className="react-bs-container" ref="table" style={style}>
+      <div className="react-bs-container" ref="table">
         {toolBar}
-        <div className="react-bs-table-container">
+        <div className="react-bs-table-container" style={style}>
           <TableHeader
             ref="header"
             rowSelectType={this.props.selectRow.mode}
@@ -178,6 +178,7 @@ class BootstrapTable extends React.Component {
             {this.props.children}
           </TableHeader>
           <TableBody
+            height={this.props.height}
             ref="body"
             data={this.state.data}
             columns={columns}

@@ -101,14 +101,10 @@ class TableBody extends React.Component{
         }
       }, this);
       var selected = this.props.selectedRowKeys.indexOf(data[this.props.keyField]) != -1;
-// <<<<<<< HEAD
       var selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn?
                               this.renderSelectRowColumn(selected):null;
-// =======
-      // var selectRowColumn = isSelectRowDefined?this.renderSelectRowColumn(selected):null;
       //add by bluespring for className customize
       var trClassName=isFun(this.props.trClassName)?this.props.trClassName(data,r):this.props.trClassName;
-// >>>>>>> 99cd459deffd5262d88691e8b075977bc0a2811f
       return (
         <TableRow isSelected={selected} key={r} className={trClassName}
           selectRow={isSelectRowDefined?this.props.selectRow:undefined}
@@ -132,8 +128,11 @@ class TableBody extends React.Component{
     }
 
     this.editing = false;
+
+    var height = this.calculateContainerHeight().toString();
+
     return(
-      <div ref="container" className={containerClasses}>
+      <div ref="container" className={containerClasses} style={{height: height}}>
         <table className={tableClasses}>
           {tableHeader}
           <tbody>
@@ -263,12 +262,20 @@ class TableBody extends React.Component{
     }
   }
 
+  calculateContainerHeight(){
+    if(this.props.height == "100%") return this.props.height;
+    else{
+      return parseInt(this.props.height) - 42;
+    }
+  }
+
   _isSelectRowDefined(){
     return this.props.selectRow.mode == Const.ROW_SELECT_SINGLE ||
           this.props.selectRow.mode == Const.ROW_SELECT_MULTI;
   }
 }
 TableBody.propTypes = {
+  height: React.PropTypes.string,
   data: React.PropTypes.array,
   columns: React.PropTypes.array,
   striped: React.PropTypes.bool,
