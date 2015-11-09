@@ -153,11 +153,11 @@ class ToolBar extends React.Component{
       <div>
         <div className="btn-group btn-group-xs" role="group" aria-label="...">
           {exportCSV}
-          {inputErrorMessage}
           {insertBtn}
           {deleteBtn}
         </div>
         {searchTextInput}
+        {inputErrorMessage}
         <Notifier ref="notifier"></Notifier>
         {modal}
       </div>
