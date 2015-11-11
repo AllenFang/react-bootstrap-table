@@ -17,11 +17,12 @@ It's a [react.js](http://facebook.github.io/react/) table for bootstrap, named r
 - row selection
 - column filter
 - cell edit with multi type editor
-- Insert & Delete Row
+- insert & delete Row
 - row and column style customize
-- Search
-- Export CSV file
-- Rich function hooks
+- search
+- export CSV file
+- rich function hooks
+- large columns table
 
 You can see more about this component on [here](http://allenfang.github.io/react-bootstrap-table/index.html). and example is on [here](http://allenfang.github.io/react-bootstrap-table/example.html).
 See <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/CHANGELOG.md'>CHANGELOG</a> for more detail release notes.
