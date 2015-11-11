@@ -133,7 +133,7 @@ class ToolBar extends React.Component{
             <i className="glyphicon glyphicon-trash"></i> Delete
           </button>:null;
     var searchTextInput = this.props.enableSearch?
-      <input type='text' placeholder={this.props.searchPlaceholder?this.props.searchPlaceholder:'Search'} onKeyUp={this.handleKeyUp.bind(this)}/>:null;
+      <input type='text' refs='searchInput' placeholder={this.props.searchPlaceholder?this.props.searchPlaceholder:'Search'} onKeyUp={this.handleKeyUp.bind(this)}/>:null;
     var modal = this.props.enableInsert?this.renderInsertRowModal(modalClassName):null;
     var warningStyle = {
       display: "none",
