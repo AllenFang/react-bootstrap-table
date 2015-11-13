@@ -8,6 +8,7 @@ module.exports = {
   output: {
     path: './dist',
     filename: '[name].min.js',
+    library: 'ReactBootstrapTable',
     libraryTarget: 'umd'
   },
   externals: [
@@ -37,5 +38,6 @@ module.exports = {
   },
 
   plugins: [
+    new webpack.optimize.UglifyJsPlugin()
   ]
 };
