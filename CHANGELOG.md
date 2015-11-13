@@ -1,3 +1,9 @@
+<a name="v1.2.9"></a>
+# [v1.2.9](https://github.com/AllenFang/react-bootstrap-table/compare/v1.2.8...v1.2.9) (2015-11-13)
+### Bug fixes
+* Fix Only a ReactOwner can have refs([9e7de02](https://github.com/AllenFang/react-bootstrap-table/commit/9e7de028276dde56d93e22993496e1b9f11944b2))
+	* See detail in [Issues#131](https://github.com/AllenFang/react-bootstrap-table/issues/131)
+
 <a name="v1.2.8"></a>
 # [v1.2.8](https://github.com/AllenFang/react-bootstrap-table/compare/v1.2.7...v1.2.8) (2015-11-11)
 ### Bug fixes
