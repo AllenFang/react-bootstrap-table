@@ -5,6 +5,7 @@ var source = require("vinyl-source-stream");
 var babel = require('gulp-babel');
 var concatCss = require('gulp-concat-css');
 var cssmin = require('gulp-cssmin');
+var webpack = require('webpack');
 
 var watching = false;
 var demo = false;
@@ -39,8 +40,18 @@ function buildDemoCode() {
 }
 
 function buildProdDist() {
-  demo = false;
-  browserifing("./src/index.js", "react-bootstrap-table.min.js", "./dist");
+  // Give up the browserify to build product, cause of #131, change to webpack instead
+  // demo = false;
+  // browserifing("./src/index.js", "react-bootstrap-table.min.js", "./dist");
+  var config = require("./webpack.production.config");
+  var compiler = webpack(config);
+
+  compiler.run(function(err, stats) {
+      if(null != err)
+        console.error(err);
+      else
+        console.log("building success");
+  });
 }
 
 function browserifing(main, bundleName, dest) {
