@@ -59,11 +59,11 @@ export class TableDataStore {
     this.remote = remote;
   }
 
-  setData(data) {
+  setData(data, multiColumnSearch) {
     this.data = data;
     if (this.isOnFilter) {
       if (null !== this.filterObj) this.filter(this.filterObj);
-      if (null !== this.searchText) this.search(this.searchText);
+      if (null !== this.searchText) this.search(this.searchText, multiColumnSearch);
     }
     if (this.sortObj) {
       this.sort(this.sortObj.order, this.sortObj.sortField);
