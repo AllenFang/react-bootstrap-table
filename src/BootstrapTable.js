@@ -42,7 +42,7 @@ class BootstrapTable extends React.Component {
       this.store = new TableDataStore(this.props.data.getData());
       this.props.data.clear();
       this.props.data.on('change', (data) => {
-        this.store.setData(data);
+        this.store.setData(data, this.props.multiColumnSearch);
         this.setState({
           data: this.getTableData()
         })
@@ -83,7 +83,7 @@ class BootstrapTable extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (Array.isArray(nextProps.data)) {
-      this.store.setData(nextProps.data);
+      this.store.setData(nextProps.data, nextProps.multiColumnSearch);
       this.store.page(this.props.options.page || 1,
         this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0]);
       this.setState({
