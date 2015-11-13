@@ -14,17 +14,17 @@ var demo = false;
 gulp.task("default", ["prod"]);
 
 gulp.task("prod", function () {
-  // gulp.src('./src/**/*.js')
-  //   .pipe(babel())
-  //   .pipe(gulp.dest('./lib'));
-  // gulp.src('./css/react-bootstrap-table.css')
-  //   .pipe(concatCss("./react-bootstrap-table.min.css"))
-  //   .pipe(cssmin())
-  //   .pipe(gulp.dest('./css'));
-  // gulp.src('./css/react-bootstrap-table-all.css')
-  //   .pipe(concatCss("./react-bootstrap-table-all.min.css"))
-  //   .pipe(cssmin())
-  //   .pipe(gulp.dest('./css'));
+  gulp.src('./src/**/*.js')
+    .pipe(babel())
+    .pipe(gulp.dest('./lib'));
+  gulp.src('./css/react-bootstrap-table.css')
+    .pipe(concatCss("./react-bootstrap-table.min.css"))
+    .pipe(cssmin())
+    .pipe(gulp.dest('./css'));
+  gulp.src('./css/react-bootstrap-table-all.css')
+    .pipe(concatCss("./react-bootstrap-table-all.min.css"))
+    .pipe(cssmin())
+    .pipe(gulp.dest('./css'));
   buildProdDist();
 });
 
