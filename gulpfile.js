@@ -21,7 +21,7 @@ gulp.task("prod", function () {
     .pipe(concatCss("./react-bootstrap-table.min.css"))
     .pipe(cssmin())
     .pipe(gulp.dest('./css'));
-  gulp.src('./css/react-bootstrap-table-all.css')
+  gulp.src(['./css/react-bootstrap-table-all.css', './css/toastr.css'])
     .pipe(concatCss("./react-bootstrap-table-all.min.css"))
     .pipe(cssmin())
     .pipe(gulp.dest('./css'));
