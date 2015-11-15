@@ -11,7 +11,7 @@ class TableHeader extends React.Component{
   }
 
   clearSortCaret(order, sortField){
-    var row = this.refs.header.getDOMNode();
+    var row = this.refs.header;
     for(var i=0;i<row.childElementCount;i++){
       var column = row.childNodes[i].childNodes[0];
       if(column.getElementsByClassName("order").length > 0){
@@ -25,7 +25,7 @@ class TableHeader extends React.Component{
     //default sorting
     if(this.props.sortName){
       this.clearSortCaret(this.props.sortOrder, this.props.sortName);
-      var row = this.refs.header.getDOMNode();
+      var row = this.refs.header;
       for(var i=0;i<row.childElementCount;i++){
         var column = row.childNodes[i].childNodes[0];
         if(column.getAttribute('data-field') === this.props.sortName){
@@ -38,12 +38,16 @@ class TableHeader extends React.Component{
 
   render(){
     var containerClasses = classSet("table-header");
+    var tableClasses = classSet("table", "table-hover", {
+        "table-bordered": this.props.bordered,
+        "table-condensed": this.props.condensed
+    });
     var selectRowHeaderCol = this.props.hideSelectColumn?null:this.renderSelectRowHeader();
     this._attachClearSortCaretFunc();
 
     return(
-      <div className={containerClasses}>
-        <table className="table table-hover table-bordered">
+      <div ref="container" className={containerClasses}>
+        <table className={tableClasses}>
           <thead>
             <tr ref="header">
               {selectRowHeaderCol}
@@ -76,6 +80,23 @@ class TableHeader extends React.Component{
         React.cloneElement(this.props.children, {key: 0, clearSortCaret: this.clearSortCaret.bind(this)});
     }
   }
+
+  fitHeader(headerProps, isVerticalScrollBar){
+    if(Array.isArray(this.props.children)){
+      let startPosition = (this.props.rowSelectType == Const.ROW_SELECT_SINGLE ||
+                              this.props.rowSelectType == Const.ROW_SELECT_MULTI) && !this.props.hideSelectColumn ? 1:0;
+      for(let i=0;i<this.props.children.length;i++){
+        this.props.children[i] =
+          React.cloneElement(this.props.children[i], {width: headerProps[i+startPosition].width+"px"});
+      }
+    } else {
+      this.props.children =
+        React.cloneElement(this.props.children, {width: headerProps[0].width+"px"});
+    }
+    this.forceUpdate();
+    if(isVerticalScrollBar)
+      this.refs.container.style.marginRight = Util.getScrollBarWidth() + "px";
+  }
 }
 TableHeader.propTypes = {
   rowSelectType: React.PropTypes.string,
@@ -83,7 +104,9 @@ TableHeader.propTypes = {
   onSelectAllRow: React.PropTypes.func,
   sortName: React.PropTypes.string,
   sortOrder: React.PropTypes.string,
-  hideSelectColumn: React.PropTypes.bool
+  hideSelectColumn: React.PropTypes.bool,
+  bordered: React.PropTypes.bool,
+  condensed: React.PropTypes.bool
 };
 
 TableHeader.defaultProps = {

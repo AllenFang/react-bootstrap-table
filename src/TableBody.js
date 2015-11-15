@@ -1,5 +1,6 @@
 import React from 'react';
 import Const from './Const';
+import Util from './util';
 import TableRow from './TableRow';
 import TableColumn from './TableColumn';
 import TableEditColumn from './TableEditColumn';
@@ -19,11 +20,20 @@ class TableBody extends React.Component{
     this.editing = false;
   }
 
+  componentDidMount(){
+    this.hardFixHeaderWidth();
+  }
+
+  componentDidUpdate(){
+    this.hardFixHeaderWidth();
+  }
+
   render(){
     var containerClasses = classSet("table-container");
 
-    var tableClasses = classSet("table", "table-bordered", {
+    var tableClasses = classSet("table", {
       'table-striped': this.props.striped,
+      'table-bordered': this.props.bordered,
       'table-hover': this.props.hover,
       'table-condensed': this.props.condensed
     });
@@ -91,18 +101,15 @@ class TableBody extends React.Component{
         }
       }, this);
       var selected = this.props.selectedRowKeys.indexOf(data[this.props.keyField]) != -1;
-// <<<<<<< HEAD
       var selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn?
                               this.renderSelectRowColumn(selected):null;
-// =======
-      // var selectRowColumn = isSelectRowDefined?this.renderSelectRowColumn(selected):null;
       //add by bluespring for className customize
       var trClassName=isFun(this.props.trClassName)?this.props.trClassName(data,r):this.props.trClassName;
-// >>>>>>> 99cd459deffd5262d88691e8b075977bc0a2811f
       return (
         <TableRow isSelected={selected} key={r} className={trClassName}
           selectRow={isSelectRowDefined?this.props.selectRow:undefined}
           enableCellEdit={this.props.cellEdit.mode !== Const.CELL_EDIT_NONE}
+          onRowClick={this.handleRowClick.bind(this)}
           onSelectRow={this.handleSelectRow.bind(this)}>
           {selectRowColumn}
           {tableColumns}
@@ -121,8 +128,11 @@ class TableBody extends React.Component{
     }
 
     this.editing = false;
+
+    var height = this.calculateContainerHeight().toString();
+
     return(
-      <div className={containerClasses}>
+      <div ref="container" className={containerClasses} style={{height: height}}>
         <table className={tableClasses}>
           {tableHeader}
           <tbody>
@@ -138,23 +148,38 @@ class TableBody extends React.Component{
 
     if(isSelectRowDefined){
       let style = {
-        width:35
+        width:35,
+        minWidth:35
       }
       selectRowHeader = this.props.selectRow.hideSelectColumn?null:(<th style={style} key={-1}></th>);
     }
     var theader = this.props.columns.map(function(column, i){
       let style={
         display: column.hidden?"none":null,
-        width: column.width
+        width: column.width,
+        minWidth: column.width
+        /** add min-wdth to fix user assign column width not eq offsetWidth in large column table **/
       };
-      return (<th style={style} key={i} className={column.className}></th>);
+      let sortCaert = column.sort?(Util.renderReactSortCaret(Const.SORT_DESC)):null;
+      return (<th style={style} key={i} className={column.className}>{column.text}{sortCaert}</th>);
     });
 
     return(
-      <thead>
+      <thead ref="header">
         <tr>{selectRowHeader}{theader}</tr>
       </thead>
     )
+  }
+
+  handleRowClick(rowIndex){
+    var key, selectedRow;
+    this.props.data.forEach(function(row, i){
+      if(i == rowIndex-1){
+        key = row[this.props.keyField];
+        selectedRow = row;
+      }
+    }, this);
+    this.props.onRowClick(selectedRow);
   }
 
   handleSelectRow(rowIndex, isSelected){
@@ -219,19 +244,47 @@ class TableBody extends React.Component{
     }
   }
 
+  getBodyHeaderDomProp(){
+    var headers = this.refs.header.childNodes[0].childNodes;
+    var headerDomProps = [];
+    for(let i=0;i<headers.length;i++){
+      headerDomProps.push({
+        width:headers[i].offsetWidth
+      });
+    }
+    return headerDomProps;
+  }
+
+  hardFixHeaderWidth(){
+    var headers = this.refs.header.childNodes[0].childNodes;
+    for(let i=0;i<headers.length;i++){
+      headers[i].style.width = headers[i].offsetWidth + "px";
+    }
+  }
+
+  calculateContainerHeight(){
+    if(this.props.height == "100%") return this.props.height;
+    else{
+      return parseInt(this.props.height) - 42;
+    }
+  }
+
   _isSelectRowDefined(){
     return this.props.selectRow.mode == Const.ROW_SELECT_SINGLE ||
           this.props.selectRow.mode == Const.ROW_SELECT_MULTI;
   }
 }
 TableBody.propTypes = {
+  height: React.PropTypes.string,
   data: React.PropTypes.array,
   columns: React.PropTypes.array,
   striped: React.PropTypes.bool,
+  bordered: React.PropTypes.bool,
   hover: React.PropTypes.bool,
   condensed: React.PropTypes.bool,
   keyField: React.PropTypes.string,
   selectedRowKeys: React.PropTypes.array,
+  onRowClick: React.PropTypes.func,
   onSelectRow: React.PropTypes.func
 };
 export default TableBody;

@@ -19,20 +19,25 @@ function addProducts(quantity) {
 
 addProducts(5);
 
+export default class DefaultSortTable extends React.Component {
+  constructor(props) {
+    super(props);
 
-var options = {
-  sortName: "name",  //default sort column name
-  sortOrder: "desc"  //default sort order
-};
+    this.options = {
+      sortName: "name",  //default sort column name
+      sortOrder: "desc",  //default sort order
+    };
+  }
 
-export default class DefaultSortTable extends React.Component{
-  render(){
+  render() {
     return (
-      <BootstrapTable data={products} options={options}>
+      <div>
+        <BootstrapTable data={products} options={this.options}>
           <TableHeaderColumn dataField="id" isKey={true} dataSort={true}>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
-      </BootstrapTable>
+        </BootstrapTable>
+      </div>
     );
   }
 };

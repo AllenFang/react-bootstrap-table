@@ -31,7 +31,7 @@ class ToolBar extends React.Component{
       if(column.autoValue){//when you want same auto generate value and not allow edit, example ID field
         tempValue=typeof column.autoValue=='function'?column.autoValue():('autovalue-'+new Date().getTime());
       }else{
-        let dom = this.refs[column.field+i].getDOMNode();
+        let dom = this.refs[column.field+i];
         tempValue = dom.value;
 
         if(column.editable && column.editable.type == 'checkbox'){
@@ -86,7 +86,7 @@ class ToolBar extends React.Component{
         shakeEditor:false
       });
       //reset form
-      this.refs.form.getDOMNode().reset();
+      this.refs.form.reset();
 
     }
   }
@@ -96,11 +96,15 @@ class ToolBar extends React.Component{
   }
 
   handleCloseBtn(e){
-    this.refs.warning.getDOMNode().style.display = "none";
+    this.refs.warning.style.display = "none";
   }
 
   handleKeyUp(e){
     this.props.onSearch(e.currentTarget.value);
+  }
+
+  handleExportCSV() {
+    this.props.onExportCSV();
   }
 
   render(){
@@ -121,9 +125,15 @@ class ToolBar extends React.Component{
       display: "none",
       marginBottom: 0
     };
+
+    var exportCSV = this.props.enableExportCSV ?
+          <button type="button" className="btn btn-success" onClick={this.handleExportCSV.bind(this)}>
+              <i className="glyphicon glyphicon-export"></i> Export to CSV</button> : null;
+
     return(
       <div>
         <div className="btn-group btn-group-xs" role="group" aria-label="...">
+          {exportCSV}
           {insertBtn}
           {deleteBtn}
         </div>
@@ -137,9 +147,6 @@ class ToolBar extends React.Component{
   renderInsertRowModal(modalClassName){
     var validateState=this.state.validateState||{};
     var inputField = this.props.columns.map(function(column, i){
-// <<<<<<< HEAD
-//       let disabled = column.editable?false:'disabled';
-// =======
       var editable=column.editable,
           format=column.format,
           attr={ref:column.field+i,placeholder:editable.placeholder?editable.placeholder:column.name};
@@ -148,7 +155,6 @@ class ToolBar extends React.Component{
         return null;
       }
       var error=validateState[column.field]?(<span className="help-block bg-danger">{validateState[column.field]}</span>):null;
-// >>>>>>> 99cd459deffd5262d88691e8b075977bc0a2811f
 
       // let editor = Editor(editable,attr,format);
       // if(editor.props.type && editor.props.type == 'checkbox'){

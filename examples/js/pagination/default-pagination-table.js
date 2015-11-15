@@ -19,14 +19,23 @@ function addProducts(quantity) {
 
 addProducts(70);
 
-export default class DefaultPaginationTable extends React.Component{
-  render(){
+export default class DefaultPaginationTable extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
     return (
-      <BootstrapTable data={products} pagination={true}>
+      <div>
+        <BootstrapTable
+          data={products}
+          pagination
+        >
           <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
-      </BootstrapTable>
+        </BootstrapTable>
+      </div>
     );
   }
 };
