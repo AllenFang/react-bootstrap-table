@@ -15,28 +15,6 @@ class BootstrapTable extends React.Component {
     super(props);
 
     this._attachCellEditFunc();
-    let {keyField} = props;
-    let customSortFuncMap = {};
-
-    if (!(typeof keyField === 'string' && keyField.length)) {
-      React.Children.forEach(this.props.children, column=> {
-        if (column.props.isKey) {
-          if (keyField != null) {
-            throw "Error. Multiple key column be detected in TableHeaderColumn.";
-          }
-          keyField = column.props.dataField;
-        }
-      }, this);
-    }
-
-    React.Children.forEach(this.props.children, column=> {
-      if (column.props.sortFunc) {
-        customSortFuncMap[column.props.dataField] = column.props.sortFunc;
-      }
-    }, this);
-
-    if (keyField == null)
-      throw "Error. No any key column defined in TableHeaderColumn. Use 'isKey={true}' to specify an unique column after version 0.5.4.";
 
     if (!Array.isArray(this.props.data)) {
       this.store = new TableDataStore(this.props.data.getData());
@@ -51,7 +29,7 @@ class BootstrapTable extends React.Component {
       this.store = new TableDataStore(this.props.data);
     }
 
-    this.store.setProps(this.props.pagination, keyField, customSortFuncMap, this.isRemoteDataSource());
+    this.initTable(this.props);
 
     if (this.props.selectRow && this.props.selectRow.selected) {
       this.store.setSelectedRowKey(this.props.selectRow.selected);
@@ -61,6 +39,40 @@ class BootstrapTable extends React.Component {
       data: this.getTableData(),
       selectedRowKeys: this.store.getSelectedRowKeys()
     };
+  }
+
+  initTable(props){
+    let {keyField} = props;
+    let customSortFuncMap = {};
+
+    if (!(typeof keyField === 'string' && keyField.length)) {
+      React.Children.forEach(props.children, column=> {
+        if (column.props.isKey) {
+          if (keyField != null) {
+            throw "Error. Multiple key column be detected in TableHeaderColumn.";
+          }
+          keyField = column.props.dataField;
+        }
+      }, this);
+    }
+
+    React.Children.forEach(props.children, column=> {
+      if (column.props.sortFunc) {
+        customSortFuncMap[column.props.dataField] = column.props.sortFunc;
+      }
+    }, this);
+
+    if (keyField == null)
+      throw "Error. No any key column defined in TableHeaderColumn."+
+            "Use 'isKey={true}' to specify an unique column after version 0.5.4.";
+
+    this.store.setProps({
+      isPagination:props.pagination,
+      keyField: keyField,
+      customSortFuncMap: customSortFuncMap,
+      multiColumnSearch: props.multiColumnSearch,
+      remote: this.isRemoteDataSource()
+    });
   }
 
   getTableData() {
@@ -82,10 +94,11 @@ class BootstrapTable extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.initTable(nextProps);
     if (Array.isArray(nextProps.data)) {
       this.store.setData(nextProps.data);
-      this.store.page(this.props.options.page || 1,
-        this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0]);
+      this.store.page(nextProps.options.page || 1,
+        nextProps.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0]);
       this.setState({
         data: this.getTableData()
       });
@@ -415,7 +428,7 @@ class BootstrapTable extends React.Component {
   }
 
   handleSearch(searchText) {
-    this.store.search(searchText, this.props.multiColumnSearch);
+    this.store.search(searchText);
     let result;
     if (this.props.pagination) {
       let sizePerPage = this.refs.pagination.getSizePerPage();

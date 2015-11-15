@@ -49,14 +49,16 @@ export class TableDataStore {
     this.sortObj = null;
     this.pageObj = {};
     this.selected = [];
+    this.multiColumnSearch = false;
     this.remote = false; // remote data
   }
 
-  setProps(isPagination, keyField, customSortFuncMap, remote) {
-    this.keyField = keyField;
-    this.enablePagination = isPagination;
-    this.customSortFuncMap = customSortFuncMap;
-    this.remote = remote;
+  setProps(props) {
+    this.keyField = props.keyField;
+    this.enablePagination = props.isPagination;
+    this.customSortFuncMap = props.customSortFuncMap;
+    this.remote = props.remote;
+    this.multiColumnSearch = props.multiColumnSearch;
   }
 
   setData(data) {
@@ -176,7 +178,7 @@ export class TableDataStore {
     }
   }
 
-  search(searchText, multiColumnSearch) {
+  search(searchText) {
     if (searchText.trim() === "") {
       this.filteredData = null;
       this.isOnFilter = false;
@@ -187,7 +189,7 @@ export class TableDataStore {
       this.filteredData = this.data.filter(function (row) {
         let valid = false;
 
-        if (multiColumnSearch) {
+        if (this.multiColumnSearch) {
           searchTextArray = searchText.split(' ');
         } else {
           searchTextArray.push(searchText);
@@ -204,7 +206,7 @@ export class TableDataStore {
           }
         }
         return valid;
-      });
+      }, this);
       this.isOnFilter = true;
     }
   }
