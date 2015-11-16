@@ -157,7 +157,7 @@ class TableBody extends React.Component{
       let style={
         display: column.hidden?"none":null,
         width: column.width,
-        minWidth: column.width
+        maxWidth: column.width
         /** add min-wdth to fix user assign column width not eq offsetWidth in large column table **/
       };
       let sortCaert = column.sort?(Util.renderReactSortCaret(Const.SORT_DESC)):null;

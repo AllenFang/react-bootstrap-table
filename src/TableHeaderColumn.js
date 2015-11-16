@@ -23,7 +23,8 @@ class TableHeaderColumn extends React.Component{
     var thStyle = {
       textAlign: this.props.dataAlign,
       display: this.props.hidden?"none":null,
-      width: this.props.width
+      width: this.props.width,
+      maxWidth: this.props.width
     };
 
     var classes = this.props.className+" "+(this.props.dataSort?"sort-column":"");
