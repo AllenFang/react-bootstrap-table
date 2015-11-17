@@ -35,6 +35,9 @@ class TableHeaderColumn extends React.Component{
     var classes = this.props.className+" "+(this.props.dataSort?"sort-column":"");
     var defaultSortEl = this.props.dataSort ? this.renderSortDefaultEl() : null;
 
+    var overlayInfoEl = null;
+    if (this.props.overlayInfo) overlayInfoEl = this.props.overlayInfo;
+
     return(
       <th className={classes} style={thStyle}>
         <div ref="innerDiv" className="th-inner table-header-column"
@@ -42,6 +45,7 @@ class TableHeaderColumn extends React.Component{
           {this.props.children}
           {defaultSortEl}
           </div>
+          {overlayInfoEl}
       </th>
     )
   }
