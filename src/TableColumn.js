@@ -29,7 +29,8 @@ class TableColumn extends React.Component{
       maxWidth: this.props.width
     };
     var classname = this.props.className;
-    if(this.props.width !== null && this.props.width.indexOf('px') > -1){
+    if(this.props.width &&
+      this.props.width !== null && this.props.width.indexOf('px') > -1){
         let w = this.props.width.replace('px','');
         classname += " col-md-"+w;
     }
