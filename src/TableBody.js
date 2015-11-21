@@ -154,10 +154,11 @@ class TableBody extends React.Component{
       selectRowHeader = this.props.selectRow.hideSelectColumn?null:(<th style={style} key={-1}></th>);
     }
     var theader = this.props.columns.map(function(column, i){
+      let width = parseInt(column.width);
       let style={
         display: column.hidden?"none":null,
-        width: column.width,
-        maxWidth: column.width
+        width: width,
+        maxWidth: width
         /** add min-wdth to fix user assign column width not eq offsetWidth in large column table **/
       };
       let sortCaert = column.sort?(Util.renderReactSortCaret(Const.SORT_DESC)):null;

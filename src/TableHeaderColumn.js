@@ -20,11 +20,12 @@ class TableHeaderColumn extends React.Component{
   }
 
   render(){
+    var width = this.props.width!==null?parseInt(this.props.width):null;
     var thStyle = {
       textAlign: this.props.dataAlign,
       display: this.props.hidden?"none":null,
-      width: this.props.width,
-      maxWidth: this.props.width
+      width: width,
+      maxWidth: width
     };
 
     var classes = this.props.className+" "+(this.props.dataSort?"sort-column":"");

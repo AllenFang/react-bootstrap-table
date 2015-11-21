@@ -143,7 +143,7 @@ You can reference [here](http://allenfang.github.io/react-bootstrap-table/docs.h
 | Attr         | Type   | Description                                            |
 | ------------ | ------ | -------------------------------------------------------|
 | isKey        | Bool   | To specify which column is unique, it's required.      |
-| width        | String | Set the column width, ex: 70%, 150px.                  |
+| width        | String | Set the column width, type is Pixels. ex: 150          |
 | dataField    | String | Means which field of data you want to show on column.  |
 | dataAlign    | String | Set align in column,  value is left, center, right, start and end. |
 | dataSort     | Bool   | True to enable table sorting.                          |

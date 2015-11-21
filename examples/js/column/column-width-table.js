@@ -11,7 +11,7 @@ function addProducts(quantity) {
     var id = startId + i;
     products.push({
       id: id,
-      name: "Item name " + id,
+      name: "Item name aaaaaaaaaaaaaa" + id,
       price: 2100 + i
     });
   }
@@ -23,9 +23,9 @@ export default class ColumnWidthTable extends React.Component{
   render(){
     return (
       <BootstrapTable data={products}>
-          <TableHeaderColumn dataField="id" isKey={true} width="15%">Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField="name" width="150px">Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+          <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
+          <TableHeaderColumn dataField="name" width="150">Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField="price" width="90">Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
   }
