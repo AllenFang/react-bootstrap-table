@@ -271,8 +271,8 @@ React.render(
 
 React.render(
   <BootstrapTable data={product15}>
-      <TableHeaderColumn dataField="id" isKey={true} width="15%">Product ID</TableHeaderColumn>
-      <TableHeaderColumn dataField="name" width="150px">Product Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="id" isKey={true} width="70">Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name" width="150">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
   </BootstrapTable>,
 	document.getElementById("width")
