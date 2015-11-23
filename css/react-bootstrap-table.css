@@ -6,9 +6,10 @@
 }
 
 .react-bs-container .table-header{
-  height: 42px;
+  height: 37.5px;
   border: hidden;
   overflow: hidden;
+  border-bottom: 1px solid #dddddd;
 }
 
 .react-bs-container .table-header > table{
@@ -48,6 +49,7 @@
   margin-bottom: 0px;
   border-left-style: hidden;
   border-right-style: hidden;
+  border-bottom-style: hidden;
   border-top-width: 0px;
   width: 100%;
 }

@@ -130,7 +130,7 @@ You can reference [here](http://allenfang.github.io/react-bootstrap-table/docs.h
 | deleteRow    | Bool   | Set true to enable row deletion on table.              |
 | search       | Bool   | Set true to enable search function on table.           |
 | multiColumnSearch | Bool | Set true to enable words search on multiple column function on table from a search box. |
-| exportCSV | Bool | Set true to enable download to CSV (tab delimited). |
+| exportCSV | Bool | Set true to enable download to CSV (comma delimited). |
 | csvFileName | String | Set CSV filename (e.g. items.csv). Default is spreadsheet.csv. |
 | searchPlaceholder | String   | The place holder on search text fields          |
 | keyField     | String | Same as ```isKey``` in &lt;TableHeaderColumn&gt;       |
@@ -143,7 +143,7 @@ You can reference [here](http://allenfang.github.io/react-bootstrap-table/docs.h
 | Attr         | Type   | Description                                            |
 | ------------ | ------ | -------------------------------------------------------|
 | isKey        | Bool   | To specify which column is unique, it's required.      |
-| width        | String | Set the column width, ex: 70%, 150px.                  |
+| width        | String | Set the column width, type is Pixels. ex: 150          |
 | dataField    | String | Means which field of data you want to show on column.  |
 | dataAlign    | String | Set align in column,  value is left, center, right, start and end. |
 | dataSort     | Bool   | True to enable table sorting.                          |

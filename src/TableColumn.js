@@ -22,10 +22,18 @@ class TableColumn extends React.Component{
   }
 
   render(){
+    var width = parseInt(this.props.width);
     var tdStyle = {
       textAlign: this.props.dataAlign,
-      display: this.props.hidden?"none":null
+      display: this.props.hidden?"none":null,
+      width: width,
+      maxWidth: width
     };
+    var classname = this.props.className;
+    if(this.props.width){
+        classname += " col-md-"+width;
+    }
+
 
     var opts = {};
     if(this.props.cellEdit){
@@ -36,7 +44,7 @@ class TableColumn extends React.Component{
       }
     }
     return (
-      <td style={tdStyle} className={this.props.className} {...opts}>
+      <td style={tdStyle} className={classname} {...opts}>
         {this.props.children}
       </td>
     )
