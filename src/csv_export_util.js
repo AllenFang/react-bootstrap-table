@@ -1,5 +1,7 @@
-import filesaver from './filesaver';
-var saveAs = filesaver.saveAs;
+if(typeof window !== 'undefined'){
+  var filesaver = require('./filesaver');
+  var saveAs = filesaver.saveAs
+}
 
 function toString(data, keys) {
   var dataString = "";
@@ -21,7 +23,10 @@ function toString(data, keys) {
 
 var exportCSV = function(data, keys, filename) {
   var dataString = toString(data, keys);
-  saveAs( new Blob([dataString], {type: "text/plain;charset=utf-8"}), filename || 'spreadsheet.csv' );
+  if (typeof window !== 'undefined') {
+    saveAs( new Blob([dataString], {type: "text/plain;charset=utf-8"}), filename || 'spreadsheet.csv' );
+  }
+  
 };
 
 export default exportCSV;
