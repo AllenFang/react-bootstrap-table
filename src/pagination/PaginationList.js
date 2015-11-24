@@ -77,6 +77,8 @@ class PaginationList extends React.Component {
 
     return (
       <div className="row">
+      {
+        this.props.sizePerPageList.length > 1 ?
         <div className="col-md-1">
           <div className="dropdown">
             <button className="btn btn-default dropdown-toggle" type="button" id="pageDropDown" data-toggle="dropdown"
@@ -89,6 +91,8 @@ class PaginationList extends React.Component {
             </ul>
           </div>
         </div>
+        : ""
+      }
         <div className="col-md-6">
           <ul className="pagination" style={pageListStyle}>
             {pageBtns}
