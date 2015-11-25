@@ -150,6 +150,7 @@ class BootstrapTable extends React.Component {
   }
 
   render() {
+
     var tableClass = classSet("react-bs-table");
     var childrens = this.props.children;
     var style = {
@@ -176,6 +177,7 @@ class BootstrapTable extends React.Component {
     var pagination = this.renderPagination();
     var toolBar = this.renderToolBar();
     var tableFilter = this.renderTableFilter(columns);
+    var isSelectAll = this.isSelectAll();
     return (
       <div className="react-bs-container" ref="table">
         {toolBar}
@@ -189,7 +191,8 @@ class BootstrapTable extends React.Component {
             onSort={this.handleSort.bind(this)}
             onSelectAllRow={this.handleSelectAllRow.bind(this)}
             bordered={this.props.bordered}
-            condensed={this.props.condensed}>
+            condensed={this.props.condensed}
+            isSelectAll={isSelectAll}>
             {this.props.children}
           </TableHeader>
           <TableBody
@@ -214,6 +217,16 @@ class BootstrapTable extends React.Component {
         {pagination}
       </div>
     )
+  }
+
+  isSelectAll(){
+    var defaultSelectRowKeys = this.store.getSelectedRowKeys();
+    var allRowKeys = this.store.getAllRowkey();
+    if(defaultSelectRowKeys.length !== allRowKeys.length){
+      return false;
+    } else {
+      return defaultSelectRowKeys.every(elm => allRowKeys.indexOf(elm)>-1);
+    }
   }
 
   handleSort(order, sortField) {
