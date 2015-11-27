@@ -22,7 +22,8 @@ class TableColumn extends React.Component{
   }
 
   render(){
-    var width = parseInt(this.props.width);
+    var width = this.props.width == null?
+                  this.props.width:parseInt(this.props.width);
     var tdStyle = {
       textAlign: this.props.dataAlign,
       display: this.props.hidden?"none":null,

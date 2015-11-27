@@ -154,7 +154,7 @@ class TableBody extends React.Component{
       selectRowHeader = this.props.selectRow.hideSelectColumn?null:(<th style={style} key={-1}></th>);
     }
     var theader = this.props.columns.map(function(column, i){
-      let width = parseInt(column.width);
+      let width = column.width == null?column.width:parseInt(column.width);
       let style={
         display: column.hidden?"none":null,
         width: width,
