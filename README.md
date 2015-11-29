@@ -115,19 +115,19 @@ $ gulp example-server #after start, open browser and go to http://localhost:3004
 Please see:  [docs](http://allenfang.github.io/react-bootstrap-table/docs.html)
 
 #### Thanks
-** [luqin](https://github.com/luqin) **  
+**[luqin](https://github.com/luqin)**  
 Help this project to integrate a better examples demo, add travis & badge, code formatting, give a lot of suggestions and bugs report.  
-** [khinlatt](https://github.com/khinlatt) **  
+**[khinlatt](https://github.com/khinlatt)**  
 Contribute export csv, multi-search and bug fixing.  
-** [tbaeg](https://github.com/tbaeg) **  
+**[tbaeg](https://github.com/tbaeg)**  
 Bugs report and give some bootstrap and css suggestions actively.  
-** [bluedarker](https://github.com/bluedarker) **  
+**[bluedarker](https://github.com/bluedarker)**  
 Contribute the edit format & validation on cell editing and row insertion. Improve the custom styling.  
-** [Sofia Silva](https://github.com/staminaloops) **  
+**[Sofia Silva](https://github.com/staminaloops)**  
 Bug reports and fixing actively.  
-** [aaronhayes](https://github.com/aaronhayes) **  
+**[aaronhayes](https://github.com/aaronhayes)**  
 Bugs report and enhance the cell formatting.  
-** [Reggino](https://github.com/Reggino) **  
+**[Reggino](https://github.com/Reggino)**  
 Implement the TableDataSet component.  
 
 [npm-badge]: http://badge.fury.io/js/react-bootstrap-table.svg
