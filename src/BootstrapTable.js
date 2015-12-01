@@ -114,13 +114,13 @@ class BootstrapTable extends React.Component {
 
   componentDidMount() {
     this._adjustHeaderWidth();
-    window.addEventListener('resize', this._adjustHeaderWidth.bind(this));
-    this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader.bind(this));
+    window.addEventListener('resize', this._adjustHeaderWidth);
+    this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this._adjustHeaderWidth.bind(this));
-    this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader.bind(this));
+    window.removeEventListener('resize', this._adjustHeaderWidth);
+    this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader);
   }
 
   componentDidUpdate() {
@@ -540,11 +540,11 @@ class BootstrapTable extends React.Component {
     }
   }
 
-  _scrollHeader(e){
+  _scrollHeader = (e) => {
     this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
   }
 
-  _adjustHeaderWidth() {
+  _adjustHeaderWidth = () => {
     var tableHeaderDom = this.refs.header.refs.container.childNodes[0];
     var tableBodyDom = this.refs.body.refs.container.childNodes[0];
     if(tableHeaderDom.offsetWidth !== tableBodyDom.offsetWidth){
