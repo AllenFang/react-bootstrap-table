@@ -16,7 +16,7 @@ class TableRow extends React.Component{
       style:{
         backgroundColor: this.props.isSelected?this.props.selectRow.bgColor:null
       },
-      className:this.props.className||''
+      className:(this.props.isSelected && this.props.selectRow.className ? this.props.selectRow.className : '') + (this.props.className||'')
     };
 
     if(this.props.selectRow && !this.props.enableCellEdit &&
