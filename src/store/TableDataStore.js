@@ -125,12 +125,12 @@ export class TableDataStore {
   }
 
   add(newObj) {
-    if (newObj[this.keyField].trim() === "") {
+    if (!newObj[this.keyField] || newObj[this.keyField].toString() === '') {
       throw this.keyField + " can't be empty value.";
     }
     let currentDisplayData = this.getCurrentDisplayData();
     currentDisplayData.forEach(function (row) {
-      if (row[this.keyField].toString() === newObj[this.keyField]) {
+      if (row[this.keyField].toString() === newObj[this.keyField].toString()) {
         throw this.keyField + " " + newObj[this.keyField] + " already exists";
       }
     }, this);
