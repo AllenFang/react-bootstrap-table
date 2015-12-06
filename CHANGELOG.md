@@ -1,3 +1,53 @@
+<a name="v1.3.0"></a>
+# [v1.3.0](https://github.com/AllenFang/react-bootstrap-table/compare/v1.2.15...v1.3.0) (2015-12-06)
+### Bug fixes
+* Fix import by RequireJS unavailable([3272c45](https://github.com/AllenFang/react-bootstrap-table/commit/3272c459bf5dbf75999a85671745f6566c3763ec))
+
+### Features
+* Available to add a custom class on a selection of row([ff06fcd](https://github.com/AllenFang/react-bootstrap-table/commit/ff06fcddf13666b1248079e985c40d480cdc9c49))
+	```js
+	var selectRowProp = {
+	  mode: "checkbox",
+	  className: "my-custom-select-class"
+	};
+
+	<BootstrapTable
+					data={products}
+					selectRow={selectRowProp}
+				>...
+	```
+* Available to insert row By API([a47276a](https://github.com/AllenFang/react-bootstrap-table/commit/a47276acc0b7a566005ae2e26096cf348c8c2226))
+	* Check this [thread](https://github.com/AllenFang/react-bootstrap-table/issues/168)
+* Available to drop row by API([88062b7](https://github.com/AllenFang/react-bootstrap-table/commit/88062b7b04dbed76b76ef8f0045f38ab1ebb256e))
+	* Check this [thread](https://github.com/AllenFang/react-bootstrap-table/issues/168)
+* Available to filter by column through API
+	```js
+	export default class FilterTable extends React.Component{
+		// handle dropdown on select
+		handleDropDownSelect(e){
+		 // find name eq Book and price eq 120
+			this.refs.table.handleFilterData({
+				name: "Book",
+				price: 120
+			});
+		}
+		render(){
+			return (
+				<div>
+				// your dropdown...., if dropdown select then bind to handleDropDownSelect
+				// ...
+				// your table
+				<BootstrapTable ref="table" data={products}>
+						<TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
+						<TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
+						<TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+				</BootstrapTable>
+				</div>
+			);
+		}
+	};
+	```
+
 <a name="v1.2.15"></a>
 # [v1.2.15](https://github.com/AllenFang/react-bootstrap-table/compare/v1.2.14...v1.2.15) (2015-12-01)
 ### Bug fixes
