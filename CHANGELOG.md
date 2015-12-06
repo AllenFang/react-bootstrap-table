@@ -21,11 +21,11 @@
 * Available to drop row by API([88062b7](https://github.com/AllenFang/react-bootstrap-table/commit/88062b7b04dbed76b76ef8f0045f38ab1ebb256e))
 	* Check this [thread](https://github.com/AllenFang/react-bootstrap-table/issues/168)
 * Available to filter by column through API</br>
-	```
+	```javascript
 	export default class FilterTable extends React.Component{
-		// handle dropdown on select
+		/* handle dropdown on select */
 		handleDropDownSelect(e){
-		 // find name eq Book and price eq 120
+		 /* find name eq Book and price eq 120 */
 			this.refs.table.handleFilterData({
 				name: "Book",
 				price: 120
@@ -34,9 +34,10 @@
 		render(){
 			return (
 				<div>
-				// your dropdown...., if dropdown select then bind to handleDropDownSelect
-				// ...
-				// your table
+				/* your dropdown....,
+				   if dropdown select then bind to handleDropDownSelect
+				   ... */
+			  /* your table */
 				<BootstrapTable ref="table" data={products}>
 						<TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
 						<TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
