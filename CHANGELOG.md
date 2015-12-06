@@ -5,7 +5,7 @@
 
 ### Features
 * Available to add a custom class on a selection of row([ff06fcd](https://github.com/AllenFang/react-bootstrap-table/commit/ff06fcddf13666b1248079e985c40d480cdc9c49))
-	```js
+	```javascript
 	var selectRowProp = {
 	  mode: "checkbox",
 	  className: "my-custom-select-class"
@@ -21,7 +21,7 @@
 * Available to drop row by API([88062b7](https://github.com/AllenFang/react-bootstrap-table/commit/88062b7b04dbed76b76ef8f0045f38ab1ebb256e))
 	* Check this [thread](https://github.com/AllenFang/react-bootstrap-table/issues/168)
 * Available to filter by column through API
-	```js
+  ```javascript
 	export default class FilterTable extends React.Component{
 		// handle dropdown on select
 		handleDropDownSelect(e){
