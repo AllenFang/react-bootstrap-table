@@ -2,7 +2,7 @@
   "name": "react-bootstrap-table",
   "version": "1.2.15",
   "description": "It' a react table for bootstrap",
-  "main": "./lib/index.js",
+  "main": "./dist/react-bootstrap-table.min.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/AllenFang/react-bootstrap-table.git"
@@ -21,7 +21,6 @@
   "files": [
     "README.md",
     "dist/",
-    "lib/",
     "css/"
   ],
   "author": "AllenFang",
