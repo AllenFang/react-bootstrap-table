@@ -6,7 +6,7 @@ class SelectRowHeaderColumn extends React.Component{
 
   render(){
     var thStyle = {
-      width: 35
+      width: parseInt(this.props.width)?this.props.width:35
     };
 
     return(

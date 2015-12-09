@@ -8,6 +8,7 @@ class TableHeader extends React.Component{
 
   constructor(props) {
     super(props);
+    this.selectRowColumnWidth = null;
   }
 
   clearSortCaret(order, sortField){
@@ -61,9 +62,9 @@ class TableHeader extends React.Component{
 
   renderSelectRowHeader(){
     if(this.props.rowSelectType == Const.ROW_SELECT_SINGLE) {
-      return (<SelectRowHeaderColumn></SelectRowHeaderColumn>);
+      return (<SelectRowHeaderColumn width={this.selectRowColumnWidth}></SelectRowHeaderColumn>);
     }else if(this.props.rowSelectType == Const.ROW_SELECT_MULTI){
-      return (<SelectRowHeaderColumn>
+      return (<SelectRowHeaderColumn width={this.selectRowColumnWidth}>
           <input type="checkbox" onChange={this.props.onSelectAllRow} checked={this.props.isSelectAll}/>
         </SelectRowHeaderColumn>
       );
@@ -88,6 +89,8 @@ class TableHeader extends React.Component{
     if(Array.isArray(this.props.children)){
       let startPosition = (this.props.rowSelectType == Const.ROW_SELECT_SINGLE ||
                               this.props.rowSelectType == Const.ROW_SELECT_MULTI) && !this.props.hideSelectColumn ? 1:0;
+      if(startPosition == 1)
+        this.selectRowColumnWidth = headerProps[0].width;
       for(let i=0;i<this.props.children.length;i++){
         this.props.children[i] =
           React.cloneElement(this.props.children[i], {width: headerProps[i+startPosition].width+"px"});
