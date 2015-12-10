@@ -81,6 +81,11 @@
         cursor: default!important;
         text-decoration: none;
       }
+
+      pre {
+        background-color: transparent;
+        border: none;
+      }
     </style>
   </head>
   <body>
@@ -180,11 +185,11 @@
           <p>Assign the class name of row(tr). This attribute accept a string or function and function is a better way to do more customization.</p>
           <p>If a string given, means the value will be presented as the row class.</p>
           <p>If a function given, will pass <code>rowData</code> and <code>rowIndex</code> as params and should return string for presenting class. for examples:</p>
-          <pre lang="javascript">
-function trClassFormat(rowData,rowIndex){
-   return rowIndex%2==0?"tr-odd":"tr-even";  //return a class name.
+          <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> trClassFormat(rowData,rowIndex){
+   <span style="color: #AA22FF; font-weight: bold">return</span> rowIndex<span style="color: #666666">%2==0?</span><span style="color: #BB4444">&quot;tr-odd&quot;</span><span style="color: #666666">:</span><span style="color: #BB4444">&quot;tr-even&quot;</span>;  <span style="color: #008800; font-style: italic">//return a class name.</span>
 }
-          </pre>
+</pre></div>
+
         </div>
       </div>
       <div>
@@ -364,6 +369,68 @@ function trClassFormat(rowData,rowIndex){
             <p>Assign a callback function which will be called after a row click.</p>
             <p>This function taking one argument: <code>row</code> which is the row data which you click on.</p>
           </div>
+        </div>
+      </div>
+
+      <h3>
+      <a id="the-attributes-in-tableheadercolumn" class="anchor" href="#the-attributes-in-tableheadercolumn" aria-hidden="true"><span class="octicon octicon-link"></span></a>The expose function on &lt;BootstrapTable&gt;:</h3>
+      <div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">handleAddRow :</font> <font class="attr-type">Object</font></br>
+          <p>Call this function to insert an new row to table.</p>
+          <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> fakeRow <span style="color: #666666">=</span> {
+      id<span style="color: #666666">:</span> <span style="color: #666666">10</span>,
+      name<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;Product one &quot;</span>,
+      price<span style="color: #666666">:</span> <span style="color: #666666">240</span>
+};
+<span style="color: #008800; font-style: italic">// insert a new row</span>
+<span style="color: #AA22FF; font-weight: bold">var</span> result <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">this</span>.refs.table.handleAddRow(fakeRow);
+<span style="color: #AA22FF; font-weight: bold">if</span>(result){  <span style="color: #008800; font-style: italic">//some error happen, ex: doesn&#39;t assign row key or row key duplicated</span>
+      console.log(result);
+}
+</pre></div>
+
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">handleDropRow :</font> <font class="attr-type">Array</font></br>
+          <p>Call this function to drop rows in table.</p>
+          <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-style: italic">//Drop row key 2 &amp; 3</span>
+<span style="color: #AA22FF; font-weight: bold">this</span>.refs.table.handleDropRow([<span style="color: #666666">2</span>,<span style="color: #666666">3</span>]);
+</pre></div>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">handleFilterData :</font> <font class="attr-type">Object</font></br>
+          <p>Call this function to do column filtering on table.</p>
+          <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-style: italic">// find name eq &#39;Allen&#39; &amp;&amp; age eq 26</span>
+<span style="color: #AA22FF; font-weight: bold">this</span>.refs.table.handleFilterData({
+    name<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;Allen&quot;</span>,
+    age<span style="color: #666666">:</span> <span style="color: #666666">26</span>
+});
+</pre></div>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">handleSearch :</font> <font class="attr-type">String</font></br>
+          <p>Call this function with search text for fully searching.</p>
+          <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-style: italic">// Search table for &#39;React.js&#39;</span>
+<span style="color: #AA22FF; font-weight: bold">this</span>.refs.table.handleSearch(<span style="color: #BB4444">&#39;React.js&#39;</span>);
+</pre></div>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">handleSort :</font> <font class="attr-type">String, String</font></br>
+          <p>Call this function to sort table.</p>
+          <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-style: italic">// Force a sort for product_id field by desc</span>
+<span style="color: #AA22FF; font-weight: bold">this</span>.refs.table.handleSort(<span style="color: #BB4444">&#39;desc&#39;</span>, <span style="color: #BB4444">&#39;product_id&#39;</span>);
+</pre></div>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">handleExportCSV :</font> <font class="attr-type">None</font></br>
+          <p>Call this function to export table as csv.</p>
         </div>
       </div>
 
