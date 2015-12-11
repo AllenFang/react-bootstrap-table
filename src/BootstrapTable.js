@@ -269,18 +269,21 @@ class BootstrapTable extends React.Component {
   handleSelectAllRow(e) {
     var isSelected = e.currentTarget.checked;
     let selectedRowKeys = [];
-    if (isSelected) {
-      selectedRowKeys = this.store.getAllRowkey();
+    let result = true;
+    if (this.props.selectRow.onSelectAll) {
+      result = this.props.selectRow.onSelectAll(isSelected,
+        isSelected ? this.store.get() : []);
     }
 
-    this.store.setSelectedRowKey(selectedRowKeys);
-    this.setState({
-      selectedRowKeys: selectedRowKeys
-    });
+    if (typeof result === 'undefined' || result !== false) {
+      if (isSelected) {
+        selectedRowKeys = this.store.getAllRowkey();
+      }
 
-    if (this.props.selectRow.onSelectAll) {
-      this.props.selectRow.onSelectAll(isSelected,
-        isSelected ? this.store.get() : []);
+      this.store.setSelectedRowKey(selectedRowKeys);
+      this.setState({
+        selectedRowKeys: selectedRowKeys
+      });
     }
   }
 
@@ -291,6 +294,7 @@ class BootstrapTable extends React.Component {
     if (this.props.selectRow.onSelect) {
       result = this.props.selectRow.onSelect(row, isSelected);
     }
+
     if (typeof result === 'undefined' || result !== false) {
       if (this.props.selectRow.mode === Const.ROW_SELECT_SINGLE) {
         currSelected = isSelected ? [rowKey] : []
