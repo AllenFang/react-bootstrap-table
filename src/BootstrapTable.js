@@ -287,25 +287,27 @@ class BootstrapTable extends React.Component {
   handleSelectRow(row, isSelected) {
     let currSelected = this.store.getSelectedRowKeys();
     let rowKey = row[this.store.getKeyField()];
-    if (this.props.selectRow.mode === Const.ROW_SELECT_SINGLE) {
-      currSelected = isSelected ? [rowKey] : []
-    } else {
-      if (isSelected) {
-        currSelected.push(rowKey);
-      } else {
-        currSelected = currSelected.filter(function (key) {
-          return rowKey !== key;
-        });
-      }
-    }
-
-    this.store.setSelectedRowKey(currSelected);
-    this.setState({
-      selectedRowKeys: currSelected
-    });
-
+    let result = true;
     if (this.props.selectRow.onSelect) {
-      this.props.selectRow.onSelect(row, isSelected);
+      result = this.props.selectRow.onSelect(row, isSelected);
+    }
+    if (typeof result === 'undefined' || result !== false) {
+      if (this.props.selectRow.mode === Const.ROW_SELECT_SINGLE) {
+        currSelected = isSelected ? [rowKey] : []
+      } else {
+        if (isSelected) {
+          currSelected.push(rowKey);
+        } else {
+          currSelected = currSelected.filter(function (key) {
+            return rowKey !== key;
+          });
+        }
+      }
+
+      this.store.setSelectedRowKey(currSelected);
+      this.setState({
+        selectedRowKeys: currSelected
+      });
     }
   }
 
