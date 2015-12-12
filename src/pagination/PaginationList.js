@@ -57,6 +57,9 @@ class PaginationList extends React.Component {
         currentPage: this.state.currentPage
       });
       this.props.changePage(this.state.currentPage, selectSize);
+      if(this.props.onSizePerPageList){
+        this.props.onSizePerPageList(selectSize);
+      }
     }
   }
 
@@ -147,6 +150,7 @@ PaginationList.propTypes = {
   sizePerPageList: React.PropTypes.array,
   paginationSize: React.PropTypes.number,
   remote: React.PropTypes.bool,
+  onSizePerPageList: React.PropTypes.func
 };
 
 PaginationList.defaultProps = {
