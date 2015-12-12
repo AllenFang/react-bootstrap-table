@@ -476,6 +476,7 @@ class BootstrapTable extends React.Component {
             paginationSize={this.props.options.paginationSize || Const.PAGINATION_SIZE}
             remote={this.isRemoteDataSource()}
             dataSize={dataSize}
+            onSizePerPageList={this.props.options.onSizePerPageList}
           />
         </div>
       );
@@ -602,6 +603,7 @@ BootstrapTable.propTypes = {
     paginationSize: React.PropTypes.number,
     onSortChange: React.PropTypes.func,
     onPageChange: React.PropTypes.func,
+    onSizePerPageList: React.PropTypes.func
   }),
   fetchInfo: React.PropTypes.shape({
     dataTotalSize: React.PropTypes.number,
@@ -650,7 +652,8 @@ BootstrapTable.defaultProps = {
     page: 1,
     sizePerPageList: Const.SIZE_PER_PAGE_LIST,
     sizePerPage: Const.SIZE_PER_PAGE_LIST[0],
-    paginationSize: Const.PAGINATION_SIZE
+    paginationSize: Const.PAGINATION_SIZE,
+    onSizePerPageList: undefined
   },
   fetchInfo: {
     dataTotalSize: 0,
