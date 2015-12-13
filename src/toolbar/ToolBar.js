@@ -120,7 +120,7 @@ class ToolBar extends React.Component{
             <i className="glyphicon glyphicon-trash"></i> Delete
           </Button>:null;
     var searchTextInput = this.props.enableSearch?
-      <Input type='text' placeholder={this.props.searchPlaceholder?this.props.searchPlaceholder:'Search'} onKeyUp={this.handleKeyUp.bind(this)}/>:null;
+      <Input bsSize="small" type='text' placeholder={this.props.searchPlaceholder?this.props.searchPlaceholder:'Search'} onKeyUp={this.handleKeyUp.bind(this)}/>:null;
     var modal = this.props.enableInsert?this.renderInsertRowModal(modalClassName):null;
     var warningStyle = {
       display: "none",
@@ -134,7 +134,7 @@ class ToolBar extends React.Component{
     return(
       <Row>
         <Col xs={9}>
-          <ButtonGroup>
+          <ButtonGroup bsSize="small">
             {exportCSV}
             {insertBtn}
             {deleteBtn}
