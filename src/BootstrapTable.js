@@ -269,43 +269,49 @@ class BootstrapTable extends React.Component {
   handleSelectAllRow(e) {
     var isSelected = e.currentTarget.checked;
     let selectedRowKeys = [];
-    if (isSelected) {
-      selectedRowKeys = this.store.getAllRowkey();
+    let result = true;
+    if (this.props.selectRow.onSelectAll) {
+      result = this.props.selectRow.onSelectAll(isSelected,
+        isSelected ? this.store.get() : []);
     }
 
-    this.store.setSelectedRowKey(selectedRowKeys);
-    this.setState({
-      selectedRowKeys: selectedRowKeys
-    });
+    if (typeof result === 'undefined' || result !== false) {
+      if (isSelected) {
+        selectedRowKeys = this.store.getAllRowkey();
+      }
 
-    if (this.props.selectRow.onSelectAll) {
-      this.props.selectRow.onSelectAll(isSelected,
-        isSelected ? this.store.get() : []);
+      this.store.setSelectedRowKey(selectedRowKeys);
+      this.setState({
+        selectedRowKeys: selectedRowKeys
+      });
     }
   }
 
   handleSelectRow(row, isSelected) {
     let currSelected = this.store.getSelectedRowKeys();
     let rowKey = row[this.store.getKeyField()];
-    if (this.props.selectRow.mode === Const.ROW_SELECT_SINGLE) {
-      currSelected = isSelected ? [rowKey] : []
-    } else {
-      if (isSelected) {
-        currSelected.push(rowKey);
-      } else {
-        currSelected = currSelected.filter(function (key) {
-          return rowKey !== key;
-        });
-      }
+    let result = true;
+    if (this.props.selectRow.onSelect) {
+      result = this.props.selectRow.onSelect(row, isSelected);
     }
 
-    this.store.setSelectedRowKey(currSelected);
-    this.setState({
-      selectedRowKeys: currSelected
-    });
+    if (typeof result === 'undefined' || result !== false) {
+      if (this.props.selectRow.mode === Const.ROW_SELECT_SINGLE) {
+        currSelected = isSelected ? [rowKey] : []
+      } else {
+        if (isSelected) {
+          currSelected.push(rowKey);
+        } else {
+          currSelected = currSelected.filter(function (key) {
+            return rowKey !== key;
+          });
+        }
+      }
 
-    if (this.props.selectRow.onSelect) {
-      this.props.selectRow.onSelect(row, isSelected);
+      this.store.setSelectedRowKey(currSelected);
+      this.setState({
+        selectedRowKeys: currSelected
+      });
     }
   }
 
