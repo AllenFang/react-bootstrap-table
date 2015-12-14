@@ -97,10 +97,11 @@ class BootstrapTable extends React.Component {
     this.initTable(nextProps);
     if (Array.isArray(nextProps.data)) {
       this.store.setData(nextProps.data);
-      this.store.page(nextProps.options.page || 1,
-        nextProps.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0]);
+      let data = this.store.page(nextProps.options.page || this.refs.pagination.getCurrentPage(),
+                                 nextProps.options.sizePerPage || this.refs.pagination.getSizePerPage())
+                           .get();
       this.setState({
-        data: this.getTableData()
+        data: data
       });
     }
     if (nextProps.selectRow && nextProps.selectRow.selected) {
@@ -655,9 +656,9 @@ BootstrapTable.defaultProps = {
     afterSearch: undefined,
     afterColumnFilter: undefined,
     onRowClick: undefined,
-    page: 1,
+    page: undefined,
     sizePerPageList: Const.SIZE_PER_PAGE_LIST,
-    sizePerPage: Const.SIZE_PER_PAGE_LIST[0],
+    sizePerPage: undefined,
     paginationSize: Const.PAGINATION_SIZE,
     onSizePerPageList: undefined
   },
