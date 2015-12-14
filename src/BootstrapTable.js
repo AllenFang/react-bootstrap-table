@@ -79,7 +79,7 @@ class BootstrapTable extends React.Component {
     let result = [];
     if (this.props.pagination) {
       let page, sizePerPage;
-      if (this.store.isChangedPage()) {
+      if (this.refs.pagination) {
         sizePerPage = this.refs.pagination.getSizePerPage();
         page = this.refs.pagination.getCurrentPage();
       } else {
@@ -227,9 +227,9 @@ class BootstrapTable extends React.Component {
     var defaultSelectRowKeys = this.store.getSelectedRowKeys();
     var allRowKeys = this.store.getAllRowkey();
     if(defaultSelectRowKeys.length !== allRowKeys.length){
-      return false;
+      return defaultSelectRowKeys.length === 0 ? false : 'indeterminate';
     } else {
-      return defaultSelectRowKeys.every(elm => allRowKeys.indexOf(elm)>-1);
+      return true;
     }
   }
 

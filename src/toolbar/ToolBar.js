@@ -3,6 +3,7 @@ import classSet from 'classnames';
 import Const from '../Const';
 import Editor from '../Editor';
 import Notifier from '../Notification.js';
+import { Input, ButtonGroup, Button, Row, Col } from 'react-bootstrap';
 
 class ToolBar extends React.Component{
 
@@ -110,16 +111,16 @@ class ToolBar extends React.Component{
   render(){
     var modalClassName = "bs-table-modal-sm"+new Date().getTime();
     var insertBtn = this.props.enableInsert?
-          <button type="button" onClick={this.props.onAddRowBegin} className="btn btn-info" data-toggle="modal" data-target={'.'+modalClassName}>
-            <i className="glyphicon glyphicon-plus"></i> New</button>:null;
+          <Button onClick={this.props.onAddRowBegin} bsStyle="info" data-toggle="modal" data-target={'.'+modalClassName}>
+            <i className="glyphicon glyphicon-plus"></i> New</Button>:null;
 
     var deleteBtn = this.props.enableDelete?
-          <button type="button" className="btn btn-warning" data-toggle="tooltip" data-placement="right" title="Drop selected row"
+          <Button bsStyle="warning" data-toggle="tooltip" data-placement="right" title="Drop selected row"
             onClick={this.handleDropRowBtnClick.bind(this)}>
             <i className="glyphicon glyphicon-trash"></i> Delete
-          </button>:null;
+          </Button>:null;
     var searchTextInput = this.props.enableSearch?
-      <input type='text' placeholder={this.props.searchPlaceholder?this.props.searchPlaceholder:'Search'} onKeyUp={this.handleKeyUp.bind(this)}/>:null;
+      <Input bsSize="small" type='text' placeholder={this.props.searchPlaceholder?this.props.searchPlaceholder:'Search'} onKeyUp={this.handleKeyUp.bind(this)}/>:null;
     var modal = this.props.enableInsert?this.renderInsertRowModal(modalClassName):null;
     var warningStyle = {
       display: "none",
@@ -127,20 +128,24 @@ class ToolBar extends React.Component{
     };
 
     var exportCSV = this.props.enableExportCSV ?
-          <button type="button" className="btn btn-success" onClick={this.handleExportCSV.bind(this)}>
-              <i className="glyphicon glyphicon-export"></i> Export to CSV</button> : null;
+          <Button type="button" className="btn btn-success" onClick={this.handleExportCSV.bind(this)}>
+              <i className="glyphicon glyphicon-export"></i> Export to CSV</Button> : null;
 
     return(
-      <div>
-        <div className="btn-group btn-group-xs" role="group" aria-label="...">
-          {exportCSV}
-          {insertBtn}
-          {deleteBtn}
-        </div>
-        {searchTextInput}
+      <Row>
+        <Col xs={9}>
+          <ButtonGroup bsSize="small">
+            {exportCSV}
+            {insertBtn}
+            {deleteBtn}
+          </ButtonGroup>
+        </Col>
+        <Col xs={3}>
+          {searchTextInput}
+        </Col>
         <Notifier ref="notifier"></Notifier>
         {modal}
-      </div>
+      </Row>
     )
   }
 

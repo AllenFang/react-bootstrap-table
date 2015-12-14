@@ -54,9 +54,6 @@
   width: 100%;
 }
 
-.react-bs-container .tool-bar{
-  margin-bottom: 5px
-}
 /*inline editor default style*/
 .react-bs-container .form-control.editor{
   /*width:100%;
