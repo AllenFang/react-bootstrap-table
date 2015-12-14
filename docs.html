@@ -281,16 +281,18 @@
             <p>Accept a custom callback function, if a row be selected or unselected, this function will be called.</p>
             <p>This callback function taking two arguments <code>row</code> and <code>isSelected</code>:</p>
             <div style="margin-left: 20px;">
-              <code>row</code>: is the row data which you select or unselect.</br>
-              <code>isSelected</code>: it's a boolean value means "whether or not that row is selected?".
+              <code>row</code>: is the row data which you wanted to select or unselect.</br>
+              <code>isSelected</code>: it's a boolean value means "whether or not that row will be selected?".
             </div>
+            <p>If return value of this function is false, the select or deselect action will not be applied.</p>
             <font class="attr-lv1-title">onSelectAll</font> : <font class="attr-lv1-type">Function</font></br>
             <p>Accept a custom callback function, if click select all checkbox, this function will be called.</p>
             <p>This callback function taking two arguments <code>isSelected</code> and <code>currentSelectedAndDisplayData</code>:</p>
             <div style="margin-left: 20px;">
-              <code>isSelected</code>: it's a boolean value means "whether or not that row is selected?".</br>
+              <code>isSelected</code>: it's a boolean value means "whether or not that row will be selected?".</br>
               <code>currentSelectedAndDisplayData</code>: If pagination enabled, this result is the data which in a page. In contrast, this is all data in table.</br>
             </div>
+            <p>If return value of this function is false, the select all or deselect all action will not be applied.</p>
           </div>
         </div>
       </div>
