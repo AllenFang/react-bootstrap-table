@@ -14,5 +14,6 @@ export default {
   CELL_EDIT_CLICK: "click",
   CELL_EDIT_DBCLICK: "dbclick",
   SIZE_PER_PAGE_LIST: [10, 25, 30, 50],
-  PAGINATION_SIZE: 5
+  PAGINATION_SIZE: 5,
+  NO_DATA_TEXT: "There is no data to display"
 }

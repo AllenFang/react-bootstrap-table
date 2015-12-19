@@ -122,7 +122,7 @@ class TableBody extends React.Component{
       <TableRow key="##table-empty##">
         <td colSpan={this.props.columns.length+(isSelectRowDefined?1:0)}
             style={{ textAlign: "center" }}>
-            There is no data to display
+            {this.props.noDataText||Const.NO_DATA_TEXT}
         </td>
       </TableRow>);
     }
@@ -286,6 +286,7 @@ TableBody.propTypes = {
   keyField: React.PropTypes.string,
   selectedRowKeys: React.PropTypes.array,
   onRowClick: React.PropTypes.func,
-  onSelectRow: React.PropTypes.func
+  onSelectRow: React.PropTypes.func,
+  noDataText: React.PropTypes.string
 };
 export default TableBody;

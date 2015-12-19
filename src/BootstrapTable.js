@@ -220,6 +220,7 @@ class BootstrapTable extends React.Component {
             selectedRowKeys={this.state.selectedRowKeys}
             onRowClick={this.handleRowClick.bind(this)}
             onSelectRow={this.handleSelectRow.bind(this)}
+            noDataText={this.props.options.noDataText}
           />
         </div>
         {tableFilter}
@@ -618,7 +619,8 @@ BootstrapTable.propTypes = {
     paginationSize: React.PropTypes.number,
     onSortChange: React.PropTypes.func,
     onPageChange: React.PropTypes.func,
-    onSizePerPageList: React.PropTypes.func
+    onSizePerPageList: React.PropTypes.func,
+    noDataText: React.PropTypes.string
   }),
   fetchInfo: React.PropTypes.shape({
     dataTotalSize: React.PropTypes.number,
@@ -668,7 +670,8 @@ BootstrapTable.defaultProps = {
     sizePerPageList: Const.SIZE_PER_PAGE_LIST,
     sizePerPage: undefined,
     paginationSize: Const.PAGINATION_SIZE,
-    onSizePerPageList: undefined
+    onSizePerPageList: undefined,
+    noDataText: undefined
   },
   fetchInfo: {
     dataTotalSize: 0,
