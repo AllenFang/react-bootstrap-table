@@ -1,8 +1,21 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Const from './Const';
 import Util from './util';
 import classSet from 'classnames';
 import SelectRowHeaderColumn from './SelectRowHeaderColumn';
+
+class Checkbox extends React.Component{
+  componentDidMount() { this.update(this.props.checked); }
+  componentWillReceiveProps(props) { this.update(props.checked); }
+  update(checked) {
+    ReactDOM.findDOMNode(this).indeterminate = checked === 'indeterminate';
+  }
+
+  render() {
+    return <input type="checkbox" checked={this.props.checked} onChange={this.props.onChange} />
+  }
+}
 
 class TableHeader extends React.Component{
 
@@ -65,7 +78,7 @@ class TableHeader extends React.Component{
       return (<SelectRowHeaderColumn width={this.selectRowColumnWidth}></SelectRowHeaderColumn>);
     }else if(this.props.rowSelectType == Const.ROW_SELECT_MULTI){
       return (<SelectRowHeaderColumn width={this.selectRowColumnWidth}>
-          <input type="checkbox" onChange={this.props.onSelectAllRow} checked={this.props.isSelectAll}/>
+          <Checkbox onChange={this.props.onSelectAllRow} checked={this.props.isSelectAll}/>
         </SelectRowHeaderColumn>
       );
     }else{
@@ -113,7 +126,7 @@ TableHeader.propTypes = {
   hideSelectColumn: React.PropTypes.bool,
   bordered: React.PropTypes.bool,
   condensed: React.PropTypes.bool,
-  isSelectAll: React.PropTypes.bool
+  isSelectAll: React.PropTypes.oneOf([true, 'indeterminate', false])
 };
 
 TableHeader.defaultProps = {
