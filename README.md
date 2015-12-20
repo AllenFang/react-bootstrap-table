@@ -124,7 +124,7 @@ Bugs report and give some bootstrap and css suggestions actively.
 **[bluedarker](https://github.com/bluedarker)**  
 Contribute the edit format & validation on cell editing and row insertion. Improve the custom styling.  
 **[Sofia Silva](https://github.com/staminaloops)**  
-Bug reports and fixing actively.
+Bug reports and fixing actively.  
 **[frontsideair](https://github.com/frontsideair)**  
 Fixing bugs and give improvement for functionality.  
 **[aaronhayes](https://github.com/aaronhayes)**  
