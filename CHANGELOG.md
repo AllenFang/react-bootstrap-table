@@ -1,3 +1,25 @@
+<a name="v1.3.2"></a>
+# [v1.3.2](https://github.com/AllenFang/react-bootstrap-table/compare/v1.3.1...v1.3.2) (2015-12-20)
+### Bug fixes
+* Fix a case where current page and pagination size is lost([f01f6ec](https://github.com/AllenFang/react-bootstrap-table/commit/f01f6ec2d9900bf7a11c5a6413b61c177c26e701))([1d57c6d](https://github.com/AllenFang/react-bootstrap-table/commit/1d57c6dd0e845c78f6f69aac8ffeb9530a09ac6c))
+* Pagination style tuning([9ccf5ab](https://github.com/frontsideair/react-bootstrap-table/commit/9ccf5ab2c8f09060db82fd4a2b9333cf49bcf7f3))
+
+### Features
+* Support return value from onSelect and onSelectAll handlers([bf27116](https://github.com/AllenFang/react-bootstrap-table/commit/bf27116f3ebc5634e26a5172efc0b828202fd599))
+	* If return value of this function(onSelect or onSelectAll) is false, the select or deselect action will not be applied.
+* Support indeterminate status to select all checkbox([3d9be07](https://github.com/AllenFang/react-bootstrap-table/commit/3d9be07774c5b49ce859b249e5b4fe0fbbd73242))
+* Support to change display text when data was empty([d4e16e7](https://github.com/AllenFang/react-bootstrap-table/commit/d4e16e7b3e54904a0feddd8a7adc0b77da6f4267))
+	```javascript
+	var options = {
+		noDataText: 'Your_custom_text'
+	};
+
+	<BootstrapTable
+					data={products}
+					options={options}
+				>...
+	```
+
 <a name="v1.3.1"></a>
 # [v1.3.1](https://github.com/AllenFang/react-bootstrap-table/compare/v1.3.0...v1.3.1) (2015-12-12)
 ### Bug fixes
@@ -5,7 +27,6 @@
 
 ### Features
 * Add selection event of size per page dropdown in pagination([7fbd868](https://github.com/AllenFang/react-bootstrap-table/commit/7fbd8686e62d5c1e187aa9a0109aa17e1c7a17a2))
-
 
 <a name="v1.3.0"></a>
 # [v1.3.0](https://github.com/AllenFang/react-bootstrap-table/compare/v1.2.15...v1.3.0) (2015-12-06)
