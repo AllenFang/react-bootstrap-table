@@ -20,6 +20,10 @@
         background-color: #f9f2f4;
         border-radius: 4px;
       }
+        pre {
+          background-color: transparent;
+          border: none;
+        }
     </style>
   </head>
   <body>
@@ -62,21 +66,21 @@
 <p style="font-size:1.7rem">There are two way you can import <code>react-bootstrap-table</code> to your project:</p>
 <p style="font-size:1.6rem"><b>Import react-bootstrap-table in module(CommonJS/AMD)</b></p>
 
-<pre><code>import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';  // in ECMAScript 6
-// or
-var ReactBsTable = require("react-bootstrap-table");
-var BootstrapTable = ReactBsTable.BootstrapTable;
-var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
-</code></pre>
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #AA22FF; font-weight: bold">import</span> {BootstrapTable, TableHeaderColumn} from <span style="color: #BB4444">&#39;react-bootstrap-table&#39;</span>;  <span style="color: #008800; font-style: italic">// in ECMAScript 6</span>
+<span style="color: #008800; font-style: italic">// or</span>
+<span style="color: #AA22FF; font-weight: bold">var</span> ReactBsTable <span style="color: #666666">=</span> require(<span style="color: #BB4444">&quot;react-bootstrap-table&quot;</span>);
+<span style="color: #AA22FF; font-weight: bold">var</span> BootstrapTable <span style="color: #666666">=</span> ReactBsTable.BootstrapTable;
+<span style="color: #AA22FF; font-weight: bold">var</span> TableHeaderColumn <span style="color: #666666">=</span> ReactBsTable.TableHeaderColumn;
+</pre></div>
+
 <p style="font-size:1.6rem"><b>Or in browser global(window object)</b></p>
 
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #666666">&lt;</span>script src<span style="color: #666666">=</span><span style="color: #BB4444">&quot;path/to/react-bootstrap-table/dist/react-bootstrap-table.min.js&quot;</span> <span style="color: #666666">/&gt;</span>
+<span style="color: #666666">&lt;</span>script<span style="color: #666666">&gt;</span>
+  <span style="color: #AA22FF; font-weight: bold">var</span> ReactBsTable <span style="color: #666666">=</span> <span style="color: #AA22FF">window</span>.BootstrapTable;
+<span style="color: #666666">&lt;</span>script<span style="color: #666666">/&gt;</span>
+</pre></div>
 
-<pre>
-&lt;script src="path/to/react-bootstrap-table/dist/react-bootstrap-table.min.js" /&gt;
-&lt;script&gt;
-  var ReactBsTable = window.BootstrapTable;
-&lt;script/&gt;
-</pre>
 
 <h3>Add CSS file to your HTML</h3>
 
@@ -85,58 +89,58 @@ var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 <p style="font-size:1.6rem"><b>react-bootstrap-table.min.css doesn't include toastr.</b></p>
 <p style="font-size:1.6rem;color:red"><b>Notes: react-bootstrap-table use toastr to alarm some message to user.</b></p>
 
-<pre>
-&lt;link rel="stylesheet" href="path/to/react-bootstrap-table/css/react-bootstrap-table-all.min.css"&gt;
-</pre>
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #666666">&lt;</span>link rel<span style="color: #666666">=</span><span style="color: #BB4444">&quot;stylesheet&quot;</span> href<span style="color: #666666">=</span><span style="color: #BB4444">&quot;path/to/react-bootstrap-table/css/react-bootstrap-table-all.min.css&quot;</span><span style="color: #666666">&gt;</span>
+</pre></div>
+
 <p style="font-size:1.7rem">CSS files you can find in the css folder.</p>
 
 
 <h3>Create a react-bootstrap-table in your app</h3>
 
-<pre><code>
-var React = require('react');
-var ReactBsTable  = require('react-bootstrap-table');
-var BootstrapTable = ReactBsTable.BootstrapTable;
-var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> React <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;react&#39;</span>);
+<span style="color: #AA22FF; font-weight: bold">var</span> ReactBsTable  <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;react-bootstrap-table&#39;</span>);
+<span style="color: #AA22FF; font-weight: bold">var</span> BootstrapTable <span style="color: #666666">=</span> ReactBsTable.BootstrapTable;
+<span style="color: #AA22FF; font-weight: bold">var</span> TableHeaderColumn <span style="color: #666666">=</span> ReactBsTable.TableHeaderColumn;
 
-// products will be presented by ReactBsTable
-var products = [
+<span style="color: #008800; font-style: italic">// products will be presented by ReactBsTable</span>
+<span style="color: #AA22FF; font-weight: bold">var</span> products <span style="color: #666666">=</span> [
   {
-      id: 1,
-      name: "Product1",
-      price: 120
+      id<span style="color: #666666">:</span> <span style="color: #666666">1</span>,
+      name<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;Product1&quot;</span>,
+      price<span style="color: #666666">:</span> <span style="color: #666666">120</span>
   },{
-      id: 2,
-      name: "Product2",
-      price: 80
+      id<span style="color: #666666">:</span> <span style="color: #666666">2</span>,
+      name<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;Product2&quot;</span>,
+      price<span style="color: #666666">:</span> <span style="color: #666666">80</span>
   },{
-      id: 3,
-      name: "Product3",
-      price: 207
+      id<span style="color: #666666">:</span> <span style="color: #666666">3</span>,
+      name<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;Product3&quot;</span>,
+      price<span style="color: #666666">:</span> <span style="color: #666666">207</span>
   },{
-      id: 4,
-      name: "Product4",
-      price: 100
+      id<span style="color: #666666">:</span> <span style="color: #666666">4</span>,
+      name<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;Product4&quot;</span>,
+      price<span style="color: #666666">:</span> <span style="color: #666666">100</span>
   },{
-      id: 5,
-      name: "Product5",
-      price: 150
+      id<span style="color: #666666">:</span> <span style="color: #666666">5</span>,
+      name<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;Product5&quot;</span>,
+      price<span style="color: #666666">:</span> <span style="color: #666666">150</span>
   },{
-      id: 6,
-      name: "Product1",
-      price: 160
+      id<span style="color: #666666">:</span> <span style="color: #666666">6</span>,
+      name<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;Product1&quot;</span>,
+      price<span style="color: #666666">:</span> <span style="color: #666666">160</span>
   }
 ];
 
 React.render(
-  &lt;BootstrapTable data={products} striped={true} hover={true}&gt;
-      &lt;TableHeaderColumn isKey={true} dataField="id"&gt;Product ID&lt;/TableHeaderColumn&gt;
-      &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
-      &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
-  &lt;/BootstrapTable&gt;,
-    document.getElementById("basic")
+  <span style="color: #666666">&lt;</span>BootstrapTable data<span style="color: #666666">=</span>{products} striped<span style="color: #666666">=</span>{<span style="color: #AA22FF; font-weight: bold">true</span>} hover<span style="color: #666666">=</span>{<span style="color: #AA22FF; font-weight: bold">true</span>}<span style="color: #666666">&gt;</span>
+      <span style="color: #666666">&lt;</span>TableHeaderColumn isKey<span style="color: #666666">=</span>{<span style="color: #AA22FF; font-weight: bold">true</span>} dataField<span style="color: #666666">=</span><span style="color: #BB4444">&quot;id&quot;</span><span style="color: #666666">&gt;</span>Product ID<span style="color: #666666">&lt;</span><span >/TableHeaderColumn&gt;</span>
+      <span style="color: #666666">&lt;</span>TableHeaderColumn dataField<span style="color: #666666">=</span><span style="color: #BB4444">&quot;name&quot;</span><span style="color: #666666">&gt;</span>Product Name<span style="color: #666666">&lt;</span><span >/TableHeaderColumn&gt;</span>
+      <span style="color: #666666">&lt;</span>TableHeaderColumn dataField<span style="color: #666666">=</span><span style="color: #BB4444">&quot;price&quot;</span><span style="color: #666666">&gt;</span>Product Price<span style="color: #666666">&lt;</span><span >/TableHeaderColumn&gt;</span>
+  <span style="color: #666666">&lt;</span><span >/BootstrapTable&gt;,</span>
+    <span style="color: #AA22FF">document</span>.getElementById(<span style="color: #BB4444">&quot;basic&quot;</span>)
 );
-</code></pre>
+</pre></div>
+
     <h3>See more example codes</h3>
     <pre>
   $ git clone https://github.com/AllenFang/react-bootstrap-table.git

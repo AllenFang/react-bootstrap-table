@@ -15,6 +15,12 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/react-bootstrap-table-all.min.css">
     <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <style>
+      pre {
+        background-color: transparent;
+        border: none;
+      }
+    </style>
   </head>
   <body>
     <meta itemprop="downloadUrl" content="https://github.com/AllenFang/react-bootstrap-table">
@@ -102,25 +108,34 @@
     </div>
     <div style="margin-top: 50px">
         <h1 style="text-align: center">A Quick Demo</h1>
-        <pre style="background-color:cornsilk;font-size:12px"><code>
-function format(cell, row){
-  return '&lt;i class="glyphicon glyphicon-usd"&gt;&lt;/i&gt; ' + cell;
+        <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> format(cell, row){
+  <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #BB4444">&#39;&lt;i class=&quot;glyphicon glyphicon-usd&quot;&gt;&lt;/i&gt; &#39;</span> <span style="color: #666666">+</span> cell;
 }
-//Row select setting
-var selectRowProp = {
-  mode: "checkbox",  //checkbox for multi select, radio for single select.
-  clickToSelect: true,   //click row will trigger a selection on that row.
-  bgColor: "rgb(238, 193, 213)"   //selected row background color
+<span style="color: #008800; font-style: italic">//Row select setting</span>
+<span style="color: #AA22FF; font-weight: bold">var</span> selectRowProp <span style="color: #666666">=</span> {
+  mode<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;checkbox&quot;</span>,  <span style="color: #008800; font-style: italic">//checkbox for multi select, radio for single select.</span>
+  clickToSelect<span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">true</span>,   <span style="color: #008800; font-style: italic">//click row will trigger a selection on that row.</span>
+  bgColor<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;rgb(238, 193, 213)&quot;</span>   <span style="color: #008800; font-style: italic">//selected row background color</span>
 };
 
-&lt;BootstrapTable data={productLong} striped={true} hover={true} condensed={true} pagination={true}
-              selectRow={selectRowProp} insertRow={true} deleteRow={true} columnFilter={true} search={true}&gt;
+<span style="color: #666666">&lt;</span>BootstrapTable
+	data<span style="color: #666666">=</span>{productLong}
+	striped<span style="color: #666666">=</span>{<span style="color: #AA22FF; font-weight: bold">true</span>}
+	hover<span style="color: #666666">=</span>{<span style="color: #AA22FF; font-weight: bold">true</span>}
+	condensed<span style="color: #666666">=</span>{<span style="color: #AA22FF; font-weight: bold">true</span>}
+	pagination<span style="color: #666666">=</span>{<span style="color: #AA22FF; font-weight: bold">true</span>}
+	selectRow<span style="color: #666666">=</span>{selectRowProp}
+	insertRow<span style="color: #666666">=</span>{<span style="color: #AA22FF; font-weight: bold">true</span>}
+	deleteRow<span style="color: #666666">=</span>{<span style="color: #AA22FF; font-weight: bold">true</span>}
+	columnFilter<span style="color: #666666">=</span>{<span style="color: #AA22FF; font-weight: bold">true</span>}
+	search<span style="color: #666666">=</span>{<span style="color: #AA22FF; font-weight: bold">true</span>}<span style="color: #666666">&gt;</span>
+  <span style="color: #666666">&lt;</span>TableHeaderColumn dataField<span style="color: #666666">=</span><span style="color: #BB4444">&quot;id&quot;</span> isKey<span style="color: #666666">=</span>{<span style="color: #AA22FF; font-weight: bold">true</span>} dataAlign<span style="color: #666666">=</span><span style="color: #BB4444">&quot;right&quot;</span> dataSort<span style="color: #666666">=</span>{<span style="color: #AA22FF; font-weight: bold">true</span>}<span style="color: #666666">&gt;</span>Product ID<span style="color: #666666">&lt;</span><span >/TableHeaderColumn&gt;</span>
+  <span style="color: #666666">&lt;</span>TableHeaderColumn dataField<span style="color: #666666">=</span><span style="color: #BB4444">&quot;name&quot;</span> dataSort<span style="color: #666666">=</span>{<span style="color: #AA22FF; font-weight: bold">true</span>}<span style="color: #666666">&gt;</span>Product Name<span style="color: #666666">&lt;</span><span >/TableHeaderColumn&gt;</span>
+  <span style="color: #666666">&lt;</span>TableHeaderColumn dataField<span style="color: #666666">=</span><span style="color: #BB4444">&quot;price&quot;</span> dataAlign<span style="color: #666666">=</span><span style="color: #BB4444">&quot;center&quot;</span> dataFormat<span style="color: #666666">=</span>{format}<span style="color: #666666">&gt;</span>Product Price<span style="color: #666666">&lt;</span><span >/TableHeaderColumn&gt;</span>
+<span style="color: #666666">&lt;</span><span >/BootstrapTable&gt;</span>
+</pre></div>
+</br>
 
-  &lt;TableHeaderColumn dataField="id" isKey={true} dataAlign="right" dataSort={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField="name" dataSort={true}&gt;Product Name&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField="price" dataAlign="center" dataFormat={format}&gt;Product Price&lt;/TableHeaderColumn&gt;
-&lt;/BootstrapTable&gt;
-        </code></pre>
         <div id="index"></div>
 
         Reference more examples on <a href="example.html">here</a>
