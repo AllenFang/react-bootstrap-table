@@ -25,7 +25,7 @@ It's a [react.js](http://facebook.github.io/react/) table for bootstrap, named r
 - large columns table
 
 You can see more about this component on [here](http://allenfang.github.io/react-bootstrap-table/index.html). and example is on [here](http://allenfang.github.io/react-bootstrap-table/example.html).</br>
-Watch <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/CHANGELOG.md'>CHANGELOG</a> for more detail release notes.
+Check the <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/CHANGELOG.md'>CHANGELOG</a> for more detail release notes.
 
 ## Development
 ```react-bootstrap-table``` dependencies on react 0.14.x and Bootstrap 3 written by ES6 and use gulp and browserify for building and bundling.
@@ -44,12 +44,12 @@ $ gulp prod #for production
 ```
 
 ## Usage
-### Install
+### a.Install
 ```
 npm install react-bootstrap-table --save
 ```
 
-### Import Module
+### b.Import Module
 Use react-bootstrap-table in your react app, you should import this component as first. About importing this component, there'r two way in the following you can choose:
 ##### Module(CommonJS/AMD)
 ```
@@ -68,7 +68,7 @@ var TableHeaderColumn = ReactBSTable.TableHeaderColumn;
 <script/>
 ```
 
-### Import CSS
+### c.Import CSS
 Finally, you need to import the css file to your app, there are two css file you can choose.</br>
 ```react-bootstrap-table-all.min.css``` include toastr.</br>```react-bootstrap-table.min.css``` doesn't include toastr.</br>
 **Notes: react-bootstrap-table use toastr to alarm some message to user.**
@@ -124,7 +124,9 @@ Bugs report and give some bootstrap and css suggestions actively.
 **[bluedarker](https://github.com/bluedarker)**  
 Contribute the edit format & validation on cell editing and row insertion. Improve the custom styling.  
 **[Sofia Silva](https://github.com/staminaloops)**  
-Bug reports and fixing actively.  
+Bug reports and fixing actively.
+**[frontsideair](https://github.com/frontsideair)**  
+Fixing bugs and give improvement for functionality.  
 **[aaronhayes](https://github.com/aaronhayes)**  
 Bugs report and enhance the cell formatting.  
 **[Reggino](https://github.com/Reggino)**  
