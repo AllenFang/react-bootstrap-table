@@ -117,7 +117,7 @@ export class TableDataStore {
     if (this.isOnFilter) {
       this.data.forEach(function (row) {
         if (row[this.keyField] === rowKeyCache) {
-          row[this.keyField][fieldName] = newVal;
+          row[fieldName] = newVal;
         }
       }, this);
     }
