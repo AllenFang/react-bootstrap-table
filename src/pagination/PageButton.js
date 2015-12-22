@@ -13,7 +13,10 @@ class PageButton extends React.Component{
   }
 
   render(){
-    var classes = this.props.active?classSet("active"):null;
+    var classes = classSet({
+        'active': this.props.active,
+        'disabled': this.props.disable
+    });
     return (
         <li className={classes}><a href="#" onClick={this.pageBtnClick.bind(this)}>{this.props.children}</a></li>
     )
@@ -21,7 +24,8 @@ class PageButton extends React.Component{
 }
 PageButton.propTypes = {
   changePage: React.PropTypes.func,
-  active: React.PropTypes.bool
+  active: React.PropTypes.bool,
+  disable: React.PropTypes.bool
 };
 
 export default PageButton;

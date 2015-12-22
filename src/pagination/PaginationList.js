@@ -109,8 +109,17 @@ class PaginationList extends React.Component {
     var pages = this.getPages();
     return pages.map(function (page) {
       var isActive = page === this.state.currentPage;
+      var disabled = false;
+      if(this.state.currentPage == 1 &&
+        (page === Const.FIRST_PAGE || page === Const.PRE_PAGE)){
+          disabled = true;
+      }
+      if(this.state.currentPage == this.totalPages &&
+        (page === Const.NEXT_PAGE || page === Const.LAST_PAGE)){
+          disabled = true;
+      }
       return (
-        <PageButton changePage={this.changePage.bind(this)} active={isActive} key={page}>{page}</PageButton>
+        <PageButton changePage={this.changePage.bind(this)} active={isActive} disable={disabled} key={page}>{page}</PageButton>
       )
     }, this);
   }
