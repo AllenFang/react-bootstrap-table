@@ -1,3 +1,12 @@
+<a name="v1.3.3"></a>
+# [v1.3.3](https://github.com/AllenFang/react-bootstrap-table/compare/v1.3.2...v1.3.3) (2015-12-25)
+### Bug fixes
+* Fix Uncaught TypeError: Cannot assign to read only property when edit column after search([689b60f](https://github.com/AllenFang/react-bootstrap-table/commit/689b60f9e51873ee453a847772d3b7e293f98a6b))
+
+### Enhancement
+* Make the paginatation button disabled appropriately when page change to the end or begin([502cffb](https://github.com/AllenFang/react-bootstrap-table/commit/502cffbcc20d605681280a9c64f90e36310905c2))
+
+
 <a name="v1.3.2"></a>
 # [v1.3.2](https://github.com/AllenFang/react-bootstrap-table/compare/v1.3.1...v1.3.2) (2015-12-20)
 ### Bug fixes
