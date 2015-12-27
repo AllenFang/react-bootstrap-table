@@ -21,11 +21,11 @@ class TableBody extends React.Component{
   }
 
   componentDidMount(){
-    this.hardFixHeaderWidth();
+    this.adjustBody();
   }
 
   componentDidUpdate(){
-    this.hardFixHeaderWidth();
+    this.adjustBody();
   }
 
   render(){
@@ -133,7 +133,7 @@ class TableBody extends React.Component{
 
     return(
       <div ref="container" className={containerClasses} style={{height: height}}>
-        <table className={tableClasses}>
+        <table ref="body" className={tableClasses}>
           {tableHeader}
           <tbody>
             {tableRows}
@@ -254,6 +254,13 @@ class TableBody extends React.Component{
       });
     }
     return headerDomProps;
+  }
+
+  adjustBody() {
+    this.hardFixHeaderWidth();
+    if(this.props.condensed) {
+      this.refs.body.style.marginTop = "-36px";
+    }
   }
 
   hardFixHeaderWidth(){
