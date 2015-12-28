@@ -163,7 +163,8 @@ class BootstrapTable extends React.Component {
     var tableClass = classSet("react-bs-table");
     var childrens = this.props.children;
     var style = {
-      height: this.props.height
+      height: this.props.height,
+      maxHeight: this.props.maxHeight
     };
     if (!Array.isArray(this.props.children)) {
       childrens = [this.props.children];
@@ -206,6 +207,7 @@ class BootstrapTable extends React.Component {
           </TableHeader>
           <TableBody
             height={this.props.height}
+            maxHeight={this.props.maxHeight}
             ref="body"
             data={this.state.data}
             columns={columns}
@@ -576,6 +578,7 @@ class BootstrapTable extends React.Component {
 BootstrapTable.propTypes = {
   keyField: React.PropTypes.string,
   height: React.PropTypes.string,
+  maxHeight: React.PropTypes.string,
   data: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.object]),
   remote: React.PropTypes.bool, // remote data, default is false
   striped: React.PropTypes.bool,
@@ -630,6 +633,7 @@ BootstrapTable.propTypes = {
 };
 BootstrapTable.defaultProps = {
   height: "100%",
+  maxHeight: undefined,
   striped: false,
   bordered: true,
   hover: false,

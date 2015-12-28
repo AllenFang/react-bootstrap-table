@@ -261,6 +261,11 @@ class TableBody extends React.Component{
     if(this.props.condensed) {
       this.refs.body.style.marginTop = "-36px";
     }
+
+    if(this.props.maxHeight &&
+      parseInt(this.props.maxHeight) < this.refs.container.offsetHeight) {
+      this.refs.container.style.height = (this.props.maxHeight - 42) + "px";
+    }
   }
 
   hardFixHeaderWidth(){
