@@ -67,6 +67,7 @@ class PaginationList extends React.Component {
     this.totalPages = Math.ceil(this.props.dataSize / this.state.sizePerPage);
     var pageBtns = this.makePage();
     var pageListStyle = {
+      float:" right",
       marginTop: "0px"  //override the margin-top defined in .pagination class in bootstrap.
     }
 
@@ -79,7 +80,7 @@ class PaginationList extends React.Component {
     });
 
     return (
-      <div className="row">
+      <div className="row" style={{ marginTop: 15 }}>
         <div className="col-md-6">
         {
           this.props.sizePerPageList.length > 1 ?
@@ -87,7 +88,10 @@ class PaginationList extends React.Component {
             <button className="btn btn-default dropdown-toggle" type="button" id="pageDropDown" data-toggle="dropdown"
                     aria-expanded="true">
               {this.state.sizePerPage}
-              <span className="caret"/>
+              <span>
+                {" "}
+                <span className="caret"/>
+              </span>
             </button>
             <ul className="dropdown-menu" role="menu" aria-labelledby="pageDropDown">
               {sizePerPageList}
