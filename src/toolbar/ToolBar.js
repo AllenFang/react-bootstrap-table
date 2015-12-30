@@ -120,7 +120,7 @@ class ToolBar extends React.Component{
           </button>:null;
     var searchTextInput = this.props.enableSearch?
       <div className="form-group form-group-sm">
-        <input type='text' placeholder={this.props.searchPlaceholder?this.props.searchPlaceholder:'Search'} onKeyUp={this.handleKeyUp.bind(this)}/>
+        <input className="form-control" type='text' placeholder={this.props.searchPlaceholder?this.props.searchPlaceholder:'Search'} onKeyUp={this.handleKeyUp.bind(this)}/>
       </div>:null;
     var modal = this.props.enableInsert?this.renderInsertRowModal(modalClassName):null;
     var warningStyle = {

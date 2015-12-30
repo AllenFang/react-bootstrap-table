@@ -67,7 +67,7 @@ class PaginationList extends React.Component {
     this.totalPages = Math.ceil(this.props.dataSize / this.state.sizePerPage);
     var pageBtns = this.makePage();
     var pageListStyle = {
-      float:" right",
+      float: "right",
       marginTop: "0px"  //override the margin-top defined in .pagination class in bootstrap.
     }
 
