@@ -394,8 +394,7 @@ class BootstrapTable extends React.Component {
   handleDropRow(rowKeys) {
     let result;
     let dropRowKeys = rowKeys?rowKeys:this.store.getSelectedRowKeys();
-    //add confirm befor the delete action if that optiion is set.
-
+    //add confirm before the delete action if that option is set.
     if (dropRowKeys && dropRowKeys.length > 0 && this.props.confirmDeleteRow) {
       if (!confirm('Are you sure want delete?')) {
         return
