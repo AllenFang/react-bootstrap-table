@@ -392,14 +392,30 @@ class BootstrapTable extends React.Component {
   }
 
   handleDropRow(rowKeys) {
-    let result;
+    let that = this;
     let dropRowKeys = rowKeys?rowKeys:this.store.getSelectedRowKeys();
     //add confirm before the delete action if that option is set.
     if (dropRowKeys && dropRowKeys.length > 0 && this.props.confirmDeleteRow) {
-      if (!confirm('Are you sure want delete?')) {
-        return
+
+      if (this.props.handleConfirmDeleteRow){
+
+        this.props.handleConfirmDeleteRow(
+          function(){
+            that.deleteRow(dropRowKeys);
+          }
+        );
+
+      } else if (confirm('Are you sure want delete?')) {
+        this.deleteRow(dropRowKeys);
       }
+
     }
+
+  }
+
+  deleteRow(dropRowKeys){
+
+    let result;
     this.store.remove(dropRowKeys);  //remove selected Row
     this.store.setSelectedRowKey([]);  //clear selected row key
 
@@ -425,6 +441,7 @@ class BootstrapTable extends React.Component {
     if (this.props.options.afterDeleteRow) {
       this.props.options.afterDeleteRow(dropRowKeys);
     }
+
   }
 
   handleFilterData(filterObj) {
@@ -602,6 +619,7 @@ BootstrapTable.propTypes = {
   insertRow: React.PropTypes.bool,
   deleteRow: React.PropTypes.bool,
   confirmDeleteRow: React.PropTypes.bool,
+  handleConfirmDeleteRow: React.PropTypes.func,
   search: React.PropTypes.bool,
   columnFilter: React.PropTypes.bool,
   trClassName: React.PropTypes.any,
@@ -655,6 +673,7 @@ BootstrapTable.defaultProps = {
   insertRow: false,
   deleteRow: false,
   confirmDeleteRow: true,
+  handleConfirmDeleteRow: undefined,
   search: false,
   multiColumnSearch: false,
   columnFilter: false,
