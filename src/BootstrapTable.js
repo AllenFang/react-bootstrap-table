@@ -394,8 +394,9 @@ class BootstrapTable extends React.Component {
   handleDropRow(rowKeys) {
     let result;
     let dropRowKeys = rowKeys?rowKeys:this.store.getSelectedRowKeys();
-    //add confirm befor the delete action
-    if (dropRowKeys && dropRowKeys.length > 0) {
+    //add confirm befor the delete action if that optiion is set.
+
+    if (dropRowKeys && dropRowKeys.length > 0 && this.props.confirmDeleteRow) {
       if (!confirm('Are you sure want delete?')) {
         return
       }
@@ -601,6 +602,7 @@ BootstrapTable.propTypes = {
   }),
   insertRow: React.PropTypes.bool,
   deleteRow: React.PropTypes.bool,
+  confirmDeleteRow: React.PropTypes.bool,
   search: React.PropTypes.bool,
   columnFilter: React.PropTypes.bool,
   trClassName: React.PropTypes.any,
@@ -653,6 +655,7 @@ BootstrapTable.defaultProps = {
   },
   insertRow: false,
   deleteRow: false,
+  confirmDeleteRow: true,
   search: false,
   multiColumnSearch: false,
   columnFilter: false,
