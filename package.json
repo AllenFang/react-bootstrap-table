@@ -58,8 +58,8 @@
     "webpack-dev-server": "^1.12.1"
   },
   "dependencies": {
-    "react-toastr": "^2.2.2",
-    "classnames": "^2.1.2"
+    "classnames": "^2.1.2",
+    "react-toastr": "^2.3.0"
   },
   "peerDependencies": {
     "react": "^0.14.0"
