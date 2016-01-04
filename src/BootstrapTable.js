@@ -397,22 +397,17 @@ class BootstrapTable extends React.Component {
     let that = this;
     let dropRowKeys = rowKeys?rowKeys:this.store.getSelectedRowKeys();
     //add confirm before the delete action if that option is set.
-    if (dropRowKeys && dropRowKeys.length > 0 && this.props.confirmDeleteRow) {
-
-      if (this.props.handleConfirmDeleteRow){
-
-        this.props.handleConfirmDeleteRow(
+    if (dropRowKeys && dropRowKeys.length > 0) {
+      if (this.props.options.handleConfirmDeleteRow){
+        this.props.options.handleConfirmDeleteRow(
           function(){
             that.deleteRow(dropRowKeys);
           }
         );
-
       } else if (confirm('Are you sure want delete?')) {
         this.deleteRow(dropRowKeys);
       }
-
     }
-
   }
 
   deleteRow(dropRowKeys){
@@ -621,8 +616,6 @@ BootstrapTable.propTypes = {
   }),
   insertRow: React.PropTypes.bool,
   deleteRow: React.PropTypes.bool,
-  confirmDeleteRow: React.PropTypes.bool,
-  handleConfirmDeleteRow: React.PropTypes.func,
   search: React.PropTypes.bool,
   columnFilter: React.PropTypes.bool,
   trClassName: React.PropTypes.any,
@@ -642,7 +635,8 @@ BootstrapTable.propTypes = {
     onSortChange: React.PropTypes.func,
     onPageChange: React.PropTypes.func,
     onSizePerPageList: React.PropTypes.func,
-    noDataText: React.PropTypes.string
+    noDataText: React.PropTypes.string,
+    handleConfirmDeleteRow: React.PropTypes.func
   }),
   fetchInfo: React.PropTypes.shape({
     dataTotalSize: React.PropTypes.number,
@@ -676,8 +670,6 @@ BootstrapTable.defaultProps = {
   },
   insertRow: false,
   deleteRow: false,
-  confirmDeleteRow: true,
-  handleConfirmDeleteRow: undefined,
   search: false,
   multiColumnSearch: false,
   columnFilter: false,
@@ -696,7 +688,8 @@ BootstrapTable.defaultProps = {
     sizePerPage: undefined,
     paginationSize: Const.PAGINATION_SIZE,
     onSizePerPageList: undefined,
-    noDataText: undefined
+    noDataText: undefined,
+    handleConfirmDeleteRow: undefined
   },
   fetchInfo: {
     dataTotalSize: 0,
