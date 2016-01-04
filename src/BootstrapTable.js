@@ -394,14 +394,25 @@ class BootstrapTable extends React.Component {
   }
 
   handleDropRow(rowKeys) {
-    let result;
+    let that = this;
     let dropRowKeys = rowKeys?rowKeys:this.store.getSelectedRowKeys();
-    //add confirm befor the delete action
+    //add confirm before the delete action if that option is set.
     if (dropRowKeys && dropRowKeys.length > 0) {
-      if (!confirm('Are you sure want delete?')) {
-        return
+      if (this.props.options.handleConfirmDeleteRow){
+        this.props.options.handleConfirmDeleteRow(
+          function(){
+            that.deleteRow(dropRowKeys);
+          }
+        );
+      } else if (confirm('Are you sure want delete?')) {
+        this.deleteRow(dropRowKeys);
       }
     }
+  }
+
+  deleteRow(dropRowKeys){
+
+    let result;
     this.store.remove(dropRowKeys);  //remove selected Row
     this.store.setSelectedRowKey([]);  //clear selected row key
 
@@ -427,6 +438,7 @@ class BootstrapTable extends React.Component {
     if (this.props.options.afterDeleteRow) {
       this.props.options.afterDeleteRow(dropRowKeys);
     }
+
   }
 
   handleFilterData(filterObj) {
@@ -623,7 +635,8 @@ BootstrapTable.propTypes = {
     onSortChange: React.PropTypes.func,
     onPageChange: React.PropTypes.func,
     onSizePerPageList: React.PropTypes.func,
-    noDataText: React.PropTypes.string
+    noDataText: React.PropTypes.string,
+    handleConfirmDeleteRow: React.PropTypes.func
   }),
   fetchInfo: React.PropTypes.shape({
     dataTotalSize: React.PropTypes.number,
@@ -675,7 +688,8 @@ BootstrapTable.defaultProps = {
     sizePerPage: undefined,
     paginationSize: Const.PAGINATION_SIZE,
     onSizePerPageList: undefined,
-    noDataText: undefined
+    noDataText: undefined,
+    handleConfirmDeleteRow: undefined
   },
   fetchInfo: {
     dataTotalSize: 0,
