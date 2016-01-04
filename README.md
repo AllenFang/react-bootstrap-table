@@ -31,13 +31,13 @@ Check the <a href='https://github.com/AllenFang/react-bootstrap-table/blob/maste
 ```react-bootstrap-table``` dependencies on react 0.14.x and Bootstrap 3 written by ES6 and use gulp and browserify for building and bundling.
 
 You can use the following commands to prepare development
-```
+```bash
 $ git clone https://github.com/AllenFang/react-bootstrap-table.git
 $ cd react-bootstrap-table
 $ npm install
 ```
 Use gulp to build the react-bootstrap-table
-```
+```bash
 $ gulp dev  #for development
 $ gulp example-server #see all examples, go to localhost:3004
 $ gulp prod #for production
@@ -45,14 +45,14 @@ $ gulp prod #for production
 
 ## Usage
 ### a.Install
-```
+```bash
 npm install react-bootstrap-table --save
 ```
 
 ### b.Import Module
 Use react-bootstrap-table in your react app, you should import this component as first. About importing this component, there'r two way in the following you can choose:
 ##### Module(CommonJS/AMD)
-```
+```js
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';  // in ECMAScript 6
 // or in ECMAScript 5
 var ReactBSTable = require("react-bootstrap-table");  
@@ -60,7 +60,7 @@ var BootstrapTable = ReactBSTable.BootstrapTable;
 var TableHeaderColumn = ReactBSTable.TableHeaderColumn;
 ```
 ##### Browser global(window object)
-```
+```html
 <script src="path/to/react-bootstrap-table/dist/react-bootstrap-table.min.js" />
 <script>
   var ReactBsTable = window.BootstrapTable;
@@ -72,13 +72,13 @@ var TableHeaderColumn = ReactBSTable.TableHeaderColumn;
 Finally, you need to import the css file to your app, there are two css file you can choose.</br>
 ```react-bootstrap-table-all.min.css``` include toastr.</br>```react-bootstrap-table.min.css``` doesn't include toastr.</br>
 **Notes: react-bootstrap-table use toastr to alarm some message to user.**
-```
+```html
 <link rel="stylesheet" href="./css/react-bootstrap-table-all.min.css">
 ```
 CSS files you can find in the css folder.
 
 ### Quick Demo
-```
+```js
 // products will be presented by react-bootstrap-table
 var products = [{
       id: 1,
@@ -104,7 +104,8 @@ React.render(
 );
 ```
 ### See react-bootstrap-table examples
-```
+The example source codes is in the [examples](https://github.com/AllenFang/react-bootstrap-table/tree/master/examples) folder. Run  the following commands for a live demo.</br>
+```bash
 $ git clone https://github.com/AllenFang/react-bootstrap-table.git
 $ cd react-bootstrap-table
 $ npm install
