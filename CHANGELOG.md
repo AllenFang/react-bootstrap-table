@@ -1,3 +1,36 @@
+<a name="v1.4.0"></a>
+# [v1.4.0](https://github.com/AllenFang/react-bootstrap-table/compare/v1.3.3...v1.4.0) (2016-01-06)
+### Bug fixes
+* Fix condensed table with a overlapping padding on first row([159b8f3](https://github.com/AllenFang/react-bootstrap-table/commit/159b8f3a8021ab0c0552b3f20c8842ed629c3c3d))
+
+### Features
+* Support max height([91bcf2a](https://github.com/AllenFang/react-bootstrap-table/commit/91bcf2a14353ad96b44d108d6a1ca7ebbe830ab2))
+	* Assign <code>maxHeight</code> to set a max height of table.
+* Allow to customize confirmation for row deletion([eb21ec8](https://github.com/AllenFang/react-bootstrap-table/commit/eb21ec850052dd0f6b7ba75664d9be46ada91ba7))
+	```javascript
+	function customConfirm(next){
+	  if (confirm("(It's a custom confirm function)Are you sure you want to delete?")){
+	      //If the confirmation is true, call the function that
+	      //continues the deletion of the record.
+	      next();
+	  }
+	}
+
+	var options = {
+	  handleConfirmDeleteRow: customConfirm
+	}
+
+	<BootstrapTable
+			data={products}
+			deleteRow={true}
+			selectRow={selectRowProp}
+			options={options}>...
+	```
+### Enhancement
+* Tuning the styling of pagination and toolbar panel([3100ee6](https://github.com/AllenFang/react-bootstrap-table/commit/3100ee634fb2af81d9198e539405512705b7979b))
+* Upgrade <code>react-toastr</code> to <code>2.3.0</code>([d9e1c14](https://github.com/AllenFang/react-bootstrap-table/commit/d9e1c146a62d879ea361856a8a3ed3e4a063f037))
+* Upgrade <code>react</code> to <code>0.14.3</code>([9af1c24](https://github.com/AllenFang/react-bootstrap-table/commit/9af1c24920ecd7c2ee27a5cb38d690726979f537))
+
 <a name="v1.3.3"></a>
 # [v1.3.3](https://github.com/AllenFang/react-bootstrap-table/compare/v1.3.2...v1.3.3) (2015-12-25)
 ### Bug fixes
