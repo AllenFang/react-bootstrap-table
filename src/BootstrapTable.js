@@ -22,7 +22,7 @@ class BootstrapTable extends React.Component {
       this.props.data.on('change', (data) => {
         this.store.setData(data);
         this.setState({
-          data: this.getTableData(this.props)
+          data: this.getTableData()
         })
       });
     } else {
@@ -36,7 +36,7 @@ class BootstrapTable extends React.Component {
     }
 
     this.state = {
-      data: this.getTableData(this.props),
+      data: this.getTableData(),
       selectedRowKeys: this.store.getSelectedRowKeys()
     };
   }
@@ -75,39 +75,33 @@ class BootstrapTable extends React.Component {
     });
   }
 
-  getTableData(props) {
-    let result = [];
-    if (props.pagination) {
-      let page = props.options.page;
-      let sizePerPage = props.options.sizePerPage;
-      if(!page){
-        if(!this.refs.pagination){
-          page = 1;
-        } else {
-          page = this.refs.pagination.getCurrentPage();
-        }
-      }
-      if(!sizePerPage){
-        if(!this.refs.pagination){
-          sizePerPage = Const.SIZE_PER_PAGE;
-        } else {
-          sizePerPage = this.refs.pagination.getSizePerPage();
-        }
-      }
-      // #125
-      if(page >= props.data.length / sizePerPage) page = 1;
-      result = this.store.page(page, sizePerPage).get();
-    } else {
-      result = this.store.get();
-    }
-    return result;
-  }
+  getTableData() {
+     let result = [];
+     if (this.props.pagination) {
+       let page, sizePerPage;
+       if (this.store.isChangedPage()) {
+         sizePerPage = this.refs.pagination.getSizePerPage();
+         page = this.refs.pagination.getCurrentPage();
+       } else {
+         sizePerPage = this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0];
+         page = this.props.options.page || 1;
+       }
+       result = this.store.page(page, sizePerPage).get();
+     } else {
+       result = this.store.get();
+     }
+     return result;
+   }
 
   componentWillReceiveProps(nextProps) {
     this.initTable(nextProps);
     if (Array.isArray(nextProps.data)) {
       this.store.setData(nextProps.data);
-      let data = this.getTableData(nextProps);
+      let page = nextProps.options.page || this.refs.pagination.getCurrentPage();
+      let sizePerPage = nextProps.options.sizePerPage || this.refs.pagination.getSizePerPage();
+      // #125
+      if(page > Math.ceil(nextProps.data.length / sizePerPage)) page = 1;
+      let data = this.store.page(page, sizePerPage).get();
       this.setState({
         data: data
       });
