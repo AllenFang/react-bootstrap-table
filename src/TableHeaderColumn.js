@@ -49,7 +49,8 @@ TableHeaderColumn.propTypes = {
   className:React.PropTypes.string,
   width: React.PropTypes.string,
   sortFunc: React.PropTypes.func,
-  columnClassName: React.PropTypes.any
+  columnClassName: React.PropTypes.any,
+  filterFormatted: React.PropTypes.bool
 };
 
 TableHeaderColumn.defaultProps = {
@@ -63,7 +64,8 @@ TableHeaderColumn.defaultProps = {
   className: "",
   width: null,
   sortFunc: undefined,
-  columnClassName: ''
+  columnClassName: '',
+  filterFormatted: false
 };
 
 export default TableHeaderColumn;
