@@ -490,7 +490,7 @@ class BootstrapTable extends React.Component {
         dataSize = this.store.getDataNum();
       }
       return (
-        <div>
+        <div className="table-footer-pagination">
           <PaginationList
             ref="pagination"
             currPage={this.props.options.page || 1}
