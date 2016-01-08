@@ -55,7 +55,10 @@ class BootstrapTable extends React.Component {
       }, this);
     }
 
-    let colInfos = this.getColumnsDescription(props);
+    let colInfos = this.getColumnsDescription(props).reduce(( prev, curr ) => {
+      prev[curr.name] = curr;
+      return prev;
+    }, {});
 
     if (keyField == null)
       throw "Error. No any key column defined in TableHeaderColumn."+
@@ -95,6 +98,7 @@ class BootstrapTable extends React.Component {
         align: column.props.dataAlign,
         sort: column.props.dataSort,
         format: column.props.dataFormat,
+        filterFormatted: column.props.filterFormatted,
         editable: column.props.editable,
         hidden: column.props.hidden,
         className: column.props.columnClassName,

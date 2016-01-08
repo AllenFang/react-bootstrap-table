@@ -92,7 +92,7 @@ export class TableDataStore {
     };
 
     let currentDisplayData = this.getCurrentDisplayData();
-    const { sortFunc } = this.colInfos.find(x => x.name === sortField);
+    const { sortFunc } = this.colInfos[sortField];
     currentDisplayData = _sort(currentDisplayData, sortField, order, sortFunc);
 
     return this;
@@ -164,10 +164,17 @@ export class TableDataStore {
       this.filterObj = null;
     } else {
       this.filterObj = filterObj;
-      this.filteredData = this.data.filter(function (row) {
+      this.filteredData = this.data.filter( row => {
         let valid = true;
         for (var key in filterObj) {
-          if (row[key].toString().toLowerCase().indexOf(filterObj[key].toLowerCase()) == -1) {
+          let filterVal = filterObj[key].toLowerCase();
+          let targetVal = row[key];
+          const { format, filterFormatted } = this.colInfos[key];
+
+          if(filterFormatted && format) {
+            targetVal = format(row[key], row);
+          }
+          if (targetVal.toString().toLowerCase().indexOf(filterVal) == -1) {
             valid = false;
             break;
           }
