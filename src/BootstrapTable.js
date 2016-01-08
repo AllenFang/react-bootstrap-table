@@ -43,7 +43,6 @@ class BootstrapTable extends React.Component {
 
   initTable(props){
     let {keyField} = props;
-    let customSortFuncMap = {};
 
     if (!(typeof keyField === 'string' && keyField.length)) {
       React.Children.forEach(props.children, column=> {
@@ -56,20 +55,16 @@ class BootstrapTable extends React.Component {
       }, this);
     }
 
-    React.Children.forEach(props.children, column=> {
-      if (column.props.sortFunc) {
-        customSortFuncMap[column.props.dataField] = column.props.sortFunc;
-      }
-    }, this);
+    let colInfos = this.getColumnsDescription(props);
 
     if (keyField == null)
       throw "Error. No any key column defined in TableHeaderColumn."+
             "Use 'isKey={true}' to specify an unique column after version 0.5.4.";
 
     this.store.setProps({
-      isPagination:props.pagination,
+      isPagination: props.pagination,
       keyField: keyField,
-      customSortFuncMap: customSortFuncMap,
+      colInfos: colInfos,
       multiColumnSearch: props.multiColumnSearch,
       remote: this.isRemoteDataSource()
     });
@@ -91,7 +86,25 @@ class BootstrapTable extends React.Component {
        result = this.store.get();
      }
      return result;
-   }
+  }
+
+  getColumnsDescription({ children }) {
+    return children.map((column, i) => {
+      return {
+        name: column.props.dataField,
+        align: column.props.dataAlign,
+        sort: column.props.dataSort,
+        format: column.props.dataFormat,
+        editable: column.props.editable,
+        hidden: column.props.hidden,
+        className: column.props.columnClassName,
+        width: column.props.width,
+        text: column.props.children,
+        sortFunc: column.props.sortFunc,
+        index: i
+      };
+    });
+  }
 
   componentWillReceiveProps(nextProps) {
     this.initTable(nextProps);
@@ -163,20 +176,7 @@ class BootstrapTable extends React.Component {
     if (!Array.isArray(this.props.children)) {
       childrens = [this.props.children];
     }
-    var columns = childrens.map(function (column, i) {
-      return {
-        name: column.props.dataField,
-        align: column.props.dataAlign,
-        sort: column.props.dataSort,
-        format: column.props.dataFormat,
-        editable: column.props.editable,
-        hidden: column.props.hidden,
-        className: column.props.columnClassName,
-        width: column.props.width,
-        text: column.props.children,
-        index: i
-      };
-    }, this);
+    var columns = this.getColumnsDescription(this.props);
 
     var pagination = this.renderPagination();
     var toolBar = this.renderToolBar();

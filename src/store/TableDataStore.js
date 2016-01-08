@@ -41,7 +41,7 @@ export class TableDataStore {
 
   constructor(data) {
     this.data = data;
-    this.customSortFuncMap = null;
+    this.colInfos = null;
     this.filteredData = null;
     this.isOnFilter = false;
     this.filterObj = null;
@@ -56,7 +56,7 @@ export class TableDataStore {
   setProps(props) {
     this.keyField = props.keyField;
     this.enablePagination = props.isPagination;
-    this.customSortFuncMap = props.customSortFuncMap;
+    this.colInfos = props.colInfos;
     this.remote = props.remote;
     this.multiColumnSearch = props.multiColumnSearch;
   }
@@ -92,7 +92,7 @@ export class TableDataStore {
     };
 
     let currentDisplayData = this.getCurrentDisplayData();
-    let sortFunc = this.customSortFuncMap[sortField];
+    const { sortFunc } = this.colInfos.find(x => x.name === sortField);
     currentDisplayData = _sort(currentDisplayData, sortField, order, sortFunc);
 
     return this;
