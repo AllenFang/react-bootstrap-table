@@ -193,7 +193,7 @@ export class TableDataStore {
     } else {
       this.searchText = searchText;
       var searchTextArray = [];
-      this.filteredData = this.data.filter(function (row) {
+      this.filteredData = this.data.filter( row => {
         let valid = false;
 
         if (this.multiColumnSearch) {
@@ -204,8 +204,15 @@ export class TableDataStore {
 
         for (var key in row) {
           if (row[key]) {
-            searchTextArray.forEach(function(text) {
-              if (row[key].toString().toLowerCase().indexOf(text.toLowerCase()) !== -1) {
+            searchTextArray.forEach( text => {
+              let filterVal = text.toLowerCase();
+              let targetVal = row[key];
+              const { format, filterFormatted } = this.colInfos[key];
+
+              if(filterFormatted && format) {
+                targetVal = format(targetVal, row);
+              }
+              if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
                 valid = true;
               }
             });
@@ -213,7 +220,7 @@ export class TableDataStore {
           }
         }
         return valid;
-      }, this);
+      });
       this.isOnFilter = true;
     }
   }
