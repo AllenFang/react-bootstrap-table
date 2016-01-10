@@ -1,3 +1,13 @@
+<a name="v1.4.1"></a>
+# [v1.4.1](https://github.com/AllenFang/react-bootstrap-table/compare/v1.4.0...v1.4.1) (2016-01-10)
+### Bug fixes
+* Fix the background color of header can't spread to 100%([fa2c827](https://github.com/AllenFang/react-bootstrap-table/commit/fa2c827169e4c1bed0491747f69abe4193cbe89d))
+
+### Enhancement
+* Add class(**table-footer-pagination**) on pagination for better customization([1ab1662](https://github.com/AllenFang/react-bootstrap-table/commit/1ab16629f0a59e17dd3b3a95416d51fae4b3471f))
+* Add class(**table-header-wrapper**) on table header for better customization([fa2c827](https://github.com/AllenFang/react-bootstrap-table/commit/fa2c827169e4c1bed0491747f69abe4193cbe89d))
+* Improve search bar too small on small screens (eg. iphone4/5)([674bf95](https://github.com/AllenFang/react-bootstrap-table/commit/674bf95e577f74988ee42b4dc18b255f8ab203fe), [351d925](https://github.com/AllenFang/react-bootstrap-table/commit/351d9252f87673072e3a7e085d27476ebf818f58))
+
 <a name="v1.4.0"></a>
 # [v1.4.0](https://github.com/AllenFang/react-bootstrap-table/compare/v1.3.3...v1.4.0) (2016-01-06)
 ### Bug fixes
