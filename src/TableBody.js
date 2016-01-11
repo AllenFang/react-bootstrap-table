@@ -13,7 +13,7 @@ var isFun=function(obj){
 class TableBody extends React.Component{
 
   constructor(props) {
-		super(props);
+    super(props);
     this.state = {
       currEditCell: null
     };
@@ -189,6 +189,7 @@ class TableBody extends React.Component{
       if(i == rowIndex-1){
         key = row[this.props.keyField];
         selectedRow = row;
+        return false;
       }
     }, this);
     this.props.onSelectRow(selectedRow, isSelected);
