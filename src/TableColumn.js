@@ -25,7 +25,7 @@ class TableColumn extends React.Component{
         shouldUpdated = shouldUpdated ||
           children.props.dangerouslySetInnerHTML.__html !==
             nextProps.children.props.dangerouslySetInnerHTML.__html;
-      } else if(children.props.type === 'checkbox') {
+      } else if(children.props.type === 'checkbox' || children.props.type === 'radio') {
         shouldUpdated = shouldUpdated ||
           children.props.type !== nextProps.children.props.type ||
           children.props.checked !== nextProps.children.props.checked;
