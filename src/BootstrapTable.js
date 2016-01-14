@@ -222,6 +222,7 @@ class BootstrapTable extends React.Component {
             cellEdit={this.props.cellEdit}
             selectedRowKeys={this.state.selectedRowKeys}
             onRowClick={this.handleRowClick.bind(this)}
+            onRowDblClick={this.handleRowDblClick.bind(this)}
             onSelectRow={this.handleSelectRow.bind(this)}
             noDataText={this.props.options.noDataText}
           />
@@ -276,6 +277,12 @@ class BootstrapTable extends React.Component {
   handleRowClick(row) {
     if (this.props.options.onRowClick) {
       this.props.options.onRowClick(row);
+    }
+  }
+
+  handleRowDblClick(row) {
+    if (this.props.options.onRowDblClick) {
+      this.props.options.onRowDblClick(row);
     }
   }
 
@@ -629,6 +636,7 @@ BootstrapTable.propTypes = {
     afterSearch: React.PropTypes.func,
     afterColumnFilter: React.PropTypes.func,
     onRowClick: React.PropTypes.func,
+    onRowDblClick: React.PropTypes.func,
     page: React.PropTypes.number,
     sizePerPageList: React.PropTypes.array,
     sizePerPage: React.PropTypes.number,
@@ -684,6 +692,7 @@ BootstrapTable.defaultProps = {
     afterSearch: undefined,
     afterColumnFilter: undefined,
     onRowClick: undefined,
+    onRowDblClick: undefined,
     page: undefined,
     sizePerPageList: Const.SIZE_PER_PAGE_LIST,
     sizePerPage: undefined,
