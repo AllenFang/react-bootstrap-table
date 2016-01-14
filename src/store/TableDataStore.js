@@ -50,6 +50,7 @@ export class TableDataStore {
     this.pageObj = {};
     this.selected = [];
     this.multiColumnSearch = false;
+    this.showOnlySelected = false;
     this.remote = false; // remote data
   }
 
@@ -83,6 +84,19 @@ export class TableDataStore {
   getCurrentDisplayData() {
     if (this.isOnFilter) return this.filteredData;
     else return this.data;
+  }
+
+  ignoreNonSelected() {
+    this.showOnlySelected = !this.showOnlySelected;
+    if(this.showOnlySelected){
+      this.isOnFilter = true;
+      this.filteredData = this.data.filter( row => {
+        let result = this.selected.find(x => row[this.keyField] === x)
+        return typeof result !== 'undefined' ? true : false;
+      });
+    } else {
+      this.isOnFilter = false;
+    }
   }
 
   sort(order, sortField) {

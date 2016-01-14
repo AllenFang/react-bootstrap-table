@@ -12,7 +12,8 @@ class ToolBar extends React.Component{
     this.state = {
       isInsertRowTrigger: true,
       validateState:null,
-      shakeEditor:false
+      shakeEditor:false,
+      showSelected: false
     };
   }
   componentWillUnmount(){
@@ -91,6 +92,13 @@ class ToolBar extends React.Component{
     }
   }
 
+  handleShowOnlyToggle = e => {
+    this.setState({
+      showSelected: !this.state.showSelected
+    });
+    this.props.onShowOnlySelected();
+  }
+
   handleDropRowBtnClick(e){
     this.props.onDropRow();
   }
@@ -122,6 +130,12 @@ class ToolBar extends React.Component{
       <div className="form-group form-group-sm">
         <input className="form-control" type='text' placeholder={this.props.searchPlaceholder?this.props.searchPlaceholder:'Search'} onKeyUp={this.handleKeyUp.bind(this)}/>
       </div>:null;
+
+    var showSelectedOnlyBtn = this.props.enableShowOnlySelected?
+      <button type="button" onClick={this.handleShowOnlyToggle.bind(this)} className="btn btn-primary" data-toggle="button" aria-pressed="false">
+        { this.state.showSelected? Const.SHOW_ALL : Const.SHOW_ONLY_SELECT }
+      </button>:null;
+
     var modal = this.props.enableInsert?this.renderInsertRowModal(modalClassName):null;
     var warningStyle = {
       display: "none",
@@ -139,6 +153,7 @@ class ToolBar extends React.Component{
             {exportCSV}
             {insertBtn}
             {deleteBtn}
+            {showSelectedOnlyBtn}
           </div>
         </div>
         <div className="col-xs-12 col-sm-6 col-md-6 col-lg-4">
@@ -205,9 +220,11 @@ class ToolBar extends React.Component{
 ToolBar.propTypes = {
   onAddRow: React.PropTypes.func,
   onDropRow: React.PropTypes.func,
+  onShowOnlySelected: React.PropTypes.func,
   enableInsert: React.PropTypes.bool,
   enableDelete: React.PropTypes.bool,
   enableSearch: React.PropTypes.bool,
+  enableShowOnlySelected: React.PropTypes.bool,
   columns: React.PropTypes.array,
   searchPlaceholder: React.PropTypes.string
 };
@@ -215,6 +232,7 @@ ToolBar.propTypes = {
 ToolBar.defaultProps = {
   enableInsert: false,
   enableDelete: false,
-  enableSearch: false
+  enableSearch: false,
+  enableShowOnlySelected: false
 }
 export default ToolBar;

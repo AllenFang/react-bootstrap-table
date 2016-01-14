@@ -300,6 +300,21 @@ class BootstrapTable extends React.Component {
     }
   }
 
+  handleShowOnlySelected() {
+    this.store.ignoreNonSelected();
+    let result;
+    if (this.props.pagination) {
+      let sizePerPage = this.refs.pagination.getSizePerPage();
+      result = this.store.page(1, sizePerPage).get();
+      this.refs.pagination.changePage(1);
+    } else {
+      result = this.store.get();
+    }
+    this.setState({
+      data: result
+    });
+  }
+
   handleSelectRow(row, isSelected) {
     let currSelected = this.store.getSelectedRowKeys();
     let rowKey = row[this.store.getKeyField()];
@@ -516,28 +531,33 @@ class BootstrapTable extends React.Component {
   }
 
   renderToolBar() {
-    let columns;
-    if (Array.isArray(this.props.children)) {
-      columns = this.props.children.map(function (column) {
-        var props = column.props;
-        return {
-          name: props.children,
-          field: props.dataField,
-          //when you want same auto generate value and not allow edit, example ID field
-          autoValue: props.autoValue || false,
-          //for create eidtor, no params for column.editable() indicate that editor for new row
-          editable: props.editable && (typeof props.editable === "function") ? props.editable() : props.editable,
-          format: props.format ? format : false
-        };
-      });
-    } else {
-      columns = [{
-        name: this.props.children.props.children,
-        field: this.props.children.props.dataField,
-        editable: this.props.children.props.editable
-      }];
-    }
-    if (this.props.insertRow || this.props.deleteRow || this.props.search || this.props.exportCSV) {
+    let enableShowOnlySelected = this.props.selectRow && this.props.selectRow.showOnlySelected;
+    if (enableShowOnlySelected
+        || this.props.insertRow
+        || this.props.deleteRow
+        || this.props.search
+        || this.props.exportCSV) {
+      let columns;
+      if (Array.isArray(this.props.children)) {
+        columns = this.props.children.map(function (column) {
+          var props = column.props;
+          return {
+            name: props.children,
+            field: props.dataField,
+            //when you want same auto generate value and not allow edit, example ID field
+            autoValue: props.autoValue || false,
+            //for create eidtor, no params for column.editable() indicate that editor for new row
+            editable: props.editable && (typeof props.editable === "function") ? props.editable() : props.editable,
+            format: props.format ? format : false
+          };
+        });
+      } else {
+        columns = [{
+          name: this.props.children.props.children,
+          field: this.props.children.props.dataField,
+          editable: this.props.children.props.editable
+        }];
+      }
       return (
         <div className="tool-bar">
           <ToolBar
@@ -545,6 +565,7 @@ class BootstrapTable extends React.Component {
             enableDelete={this.props.deleteRow}
             enableSearch={this.props.search}
             enableExportCSV={this.props.exportCSV}
+            enableShowOnlySelected={enableShowOnlySelected}
             columns={columns}
             searchPlaceholder={this.props.searchPlaceholder}
             onAddRow={this.handleAddRow.bind(this)}
@@ -552,6 +573,7 @@ class BootstrapTable extends React.Component {
             onDropRow={this.handleDropRow.bind(this)}
             onSearch={this.handleSearch.bind(this)}
             onExportCSV={this.handleExportCSV.bind(this)}
+            onShowOnlySelected={this.handleShowOnlySelected.bind(this)}
           />
         </div>
       )
@@ -608,7 +630,8 @@ BootstrapTable.propTypes = {
     onSelectAll: React.PropTypes.func,
     clickToSelect: React.PropTypes.bool,
     hideSelectColumn: React.PropTypes.bool,
-    clickToSelectAndEditCell: React.PropTypes.bool
+    clickToSelectAndEditCell: React.PropTypes.bool,
+    showOnlySelected: React.PropTypes.bool
   }),
   cellEdit: React.PropTypes.shape({
     mode: React.PropTypes.string,
@@ -662,7 +685,8 @@ BootstrapTable.defaultProps = {
     onSelectAll: undefined,
     clickToSelect: false,
     hideSelectColumn: false,
-    clickToSelectAndEditCell: false
+    clickToSelectAndEditCell: false,
+    showOnlySelected: false
   },
   cellEdit: {
     mode: Const.CELL_EDIT_NONE,
