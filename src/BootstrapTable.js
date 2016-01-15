@@ -75,6 +75,10 @@ class BootstrapTable extends React.Component {
 
   getTableData() {
      let result = [];
+
+     if(this.props.options.sortName && this.props.options.sortOrder)
+       this.store.sort(this.props.options.sortOrder, this.props.options.sortName);
+
      if (this.props.pagination) {
        let page, sizePerPage;
        if (this.store.isChangedPage()) {
@@ -121,6 +125,10 @@ class BootstrapTable extends React.Component {
                   (paginationDom ? paginationDom.getSizePerPage() : Const.SIZE_PER_PAGE_LIST[0]);
       // #125
       if(page > Math.ceil(nextProps.data.length / sizePerPage)) page = 1;
+      let sortInfo = this.store.getSortInfo();
+      let sortField = nextProps.options.sortName || (sortInfo ? sortInfo.sortField : undefined);
+      let sortOrder = nextProps.options.sortOrder || (sortInfo ? sortInfo.order : undefined);
+      if(sortField && sortOrder) this.store.sort(sortOrder, sortField);
       let data = this.store.page(page, sizePerPage).get();
       this.setState({
         data: data
@@ -184,7 +192,7 @@ class BootstrapTable extends React.Component {
       childrens = [this.props.children];
     }
     var columns = this.getColumnsDescription(this.props);
-
+    var sortInfo = this.store.getSortInfo();
     var pagination = this.renderPagination();
     var toolBar = this.renderToolBar();
     var tableFilter = this.renderTableFilter(columns);
@@ -197,8 +205,8 @@ class BootstrapTable extends React.Component {
             ref="header"
             rowSelectType={this.props.selectRow.mode}
             hideSelectColumn={this.props.selectRow.hideSelectColumn}
-            sortName={this.props.options.sortName}
-            sortOrder={this.props.options.sortOrder}
+            sortName={sortInfo ? sortInfo.sortField : undefined}
+            sortOrder={sortInfo ? sortInfo.order : undefined}
             onSort={this.handleSort.bind(this)}
             onSelectAllRow={this.handleSelectAllRow.bind(this)}
             bordered={this.props.bordered}
@@ -245,10 +253,6 @@ class BootstrapTable extends React.Component {
   handleSort(order, sortField) {
     if (this.props.options.onSortChange) {
       this.props.options.onSortChange(sortField, order, this.props);
-    }
-
-    if (this.isRemoteDataSource()) {
-      return;
     }
 
     let result = this.store.sort(order, sortField).get();
@@ -701,7 +705,7 @@ BootstrapTable.defaultProps = {
   trClassName: '',
   options: {
     sortName: undefined,
-    sortOrder: Const.SORT_DESC,
+    sortOrder: undefined,
     afterTableComplete: undefined,
     afterDeleteRow: undefined,
     afterInsertRow: undefined,

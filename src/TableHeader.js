@@ -24,7 +24,7 @@ class TableHeader extends React.Component{
     this.selectRowColumnWidth = null;
   }
 
-  clearSortCaret(order, sortField){
+  clearSortCaret(order, sortField) {
     var row = this.refs.header;
     for(var i=0;i<row.childElementCount;i++){
       var column = row.childNodes[i].childNodes[0];
@@ -32,11 +32,9 @@ class TableHeader extends React.Component{
         column.removeChild(column.getElementsByClassName("order")[0]);
       }
     }
-    this.props.onSort(order, sortField);
   }
 
-  componentDidMount(){
-    //default sorting
+  componentDidUpdate(){
     if(this.props.sortName){
       this.clearSortCaret(this.props.sortOrder, this.props.sortName);
       var row = this.refs.header;
@@ -92,11 +90,11 @@ class TableHeader extends React.Component{
     if(Array.isArray(this.props.children)){
       for(let i=0;i<this.props.children.length;i++){
         this.props.children[i] =
-          React.cloneElement(this.props.children[i], {key: i, clearSortCaret: this.clearSortCaret.bind(this)});
+          React.cloneElement(this.props.children[i], {key: i, onSort: this.props.onSort});
       }
     } else {
       this.props.children =
-        React.cloneElement(this.props.children, {key: 0, clearSortCaret: this.clearSortCaret.bind(this)});
+        React.cloneElement(this.props.children, {key: 0, onSort: this.props.onSort});
     }
   }
 

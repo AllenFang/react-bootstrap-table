@@ -73,6 +73,10 @@ export class TableDataStore {
     }
   }
 
+  getSortInfo() {
+    return this.sortObj;
+  }
+
   setSelectedRowKey(selectedRowKeys) {
     this.selected = selectedRowKeys;
   }

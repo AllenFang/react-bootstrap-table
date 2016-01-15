@@ -9,10 +9,8 @@ class TableHeaderColumn extends React.Component{
 
   handleColumnClick(e){
     if(!this.props.dataSort)return;
-    var dom = this.refs.innerDiv;
     this.order = this.order == Const.SORT_DESC?Const.SORT_ASC:Const.SORT_DESC;
-    this.props.clearSortCaret(this.order, this.props.dataField);
-    dom.appendChild(Util.renderSortCaret(this.order));
+    this.props.onSort(this.order, this.props.dataField);
   }
 
   componentDidMount(){
@@ -41,7 +39,7 @@ TableHeaderColumn.propTypes = {
   dataField: React.PropTypes.string,
   dataAlign: React.PropTypes.string,
   dataSort: React.PropTypes.bool,
-  clearSortCaret: React.PropTypes.func,
+  onSort: React.PropTypes.func,
   dataFormat: React.PropTypes.func,
   isKey: React.PropTypes.bool,
   editable: React.PropTypes.any,
@@ -59,7 +57,7 @@ TableHeaderColumn.defaultProps = {
   dataFormat: undefined,
   isKey: false,
   editable: true,
-  clearSortCaret: undefined,
+  onSort: undefined,
   hidden: false,
   className: "",
   width: null,
