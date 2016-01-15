@@ -24,15 +24,11 @@ export default class SortHookTable extends React.Component {
     super(props);
 
     this.state = {
-      page: undefined,
-      sizePerPage: undefined,
       sortName: undefined,
       sortOrder: undefined,
     };
 
     this.options = {
-      sortName: "name",  //default sort column name
-      sortOrder: "desc",  //default sort order
       onSortChange: this.onSortChange.bind(this),
     };
   }
