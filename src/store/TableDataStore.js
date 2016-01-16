@@ -187,10 +187,11 @@ export class TableDataStore {
         for (var key in filterObj) {
           let filterVal = filterObj[key].toLowerCase();
           let targetVal = row[key];
-          const { format, filterFormatted } = this.colInfos[key];
-
-          if(filterFormatted && format) {
-            targetVal = format(row[key], row);
+          if(this.colInfos[key]) {
+            const { format, filterFormatted } = this.colInfos[key];
+            if(filterFormatted && format) {
+              targetVal = format(row[key], row);
+            }
           }
           if (targetVal.toString().toLowerCase().indexOf(filterVal) == -1) {
             valid = false;
@@ -221,7 +222,7 @@ export class TableDataStore {
         }
 
         for (var key in row) {
-          if (row[key]) {
+          if (this.colInfos[key] && row[key]) {
             searchTextArray.forEach( text => {
               let filterVal = text.toLowerCase();
               let targetVal = row[key];
