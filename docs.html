@@ -146,6 +146,13 @@
       <div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">maxHeight :</font> <font class="attr-type">String(Pixels)</font></br>
+          <p>Set the max column width</p>
+        </div>
+      </div>
+      <div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">striped :</font> <font class="attr-type">Bool</font></br>
           <p>Enable striped by setting <code>striped</code> to true. Same as Bootstrap table class <code>.table-striped</code>, default is false.</p>
         </div>
@@ -277,6 +284,8 @@
             <font class="attr-lv1-title">hideSelectColumn</font> : <font class="attr-lv1-type">Bool</font></br>
             <p>if true, the radio/checkbox column will be hide.</p>
             <p>You can enable this attribute if you enable <code>clickToSelect</code> and you don't want to show the selection column.</p>
+            <font class="attr-lv1-title">showOnlySelected</font> : <font class="attr-lv1-type">Bool</font></br>
+            <p>Default is false, if enabled, there will be a button on top of table for toggling selected rows only.</p>
             <font class="attr-lv1-title">onSelect</font> : <font class="attr-lv1-type">Function</font></br>
             <p>Accept a custom callback function, if a row be selected or unselected, this function will be called.</p>
             <p>This callback function taking two arguments <code>row</code> and <code>isSelected</code>:</p>
@@ -378,6 +387,13 @@
             <font class="attr-lv1-title">onRowClick</font> : <font class="attr-lv1-type">Function</font></br>
             <p>Assign a callback function which will be called after a row click.</p>
             <p>This function taking one argument: <code>row</code> which is the row data which you click on.</p>
+            <font class="attr-lv1-title">handleConfirmDeleteRow</font> : <font class="attr-lv1-type">Function</font></br>
+            <p>Assign a callback function which will be called when row dropping.</p>
+            <p>It give you a chance to customize your confirmation for row deletion.</p>
+            <p>This function taking one argument: <code>next</code>.</p>
+            <div style="margin-left: 20px;">
+              <code>next</code>: If you confirm to drop row, call next() to continue the process</br>
+            </div>
           </div>
         </div>
       </div>
@@ -479,6 +495,11 @@
           <font class="attr-title">dataFormat :</font> <font class="attr-type">Function</font></br>
           <p>To customize the column. This callback function should return a String or a React Component.</p>
           <p>In addition, this function taking two argument: <code>cell</code> and <code>row</code>.</p>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">filterFormatted :</font> <font class="attr-type">Bool</font></br>
+          <p>To to enable search or filter data on formatting. Default is false</p>
         </div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
