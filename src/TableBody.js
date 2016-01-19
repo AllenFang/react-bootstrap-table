@@ -80,6 +80,7 @@ class TableBody extends React.Component{
                            key={i}
                            className={tdClassName}
                            cellEdit={this.props.cellEdit}
+                           hidden={column.hidden}
                            onEdit={this.handleEditCell.bind(this)}
                            width={column.width}>
                 {formattedValue}
