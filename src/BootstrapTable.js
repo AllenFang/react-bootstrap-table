@@ -119,10 +119,8 @@ class BootstrapTable extends React.Component {
     if (Array.isArray(nextProps.data)) {
       this.store.setData(nextProps.data);
       let paginationDom = this.refs.pagination;
-      let page = nextProps.options.page ||
-                  (paginationDom ? paginationDom.getCurrentPage() : 1);
-      let sizePerPage = nextProps.options.sizePerPage ||
-                  (paginationDom ? paginationDom.getSizePerPage() : Const.SIZE_PER_PAGE_LIST[0]);
+      let page = paginationDom && paginationDom.getCurrentPage() || nextProps.options.page || 1;
+      let sizePerPage = paginationDom && paginationDom.getSizePerPage() || nextProps.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0];
       // #125
       if(page > Math.ceil(nextProps.data.length / sizePerPage)) page = 1;
       let sortInfo = this.store.getSortInfo();
