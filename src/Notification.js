@@ -1,9 +1,13 @@
 import React from 'react';
 import Const from './Const';
-import Toastr from 'react-toastr';
 
-var ToastrContainer=Toastr.ToastContainer;
-var ToastrMessageFactory=React.createFactory(Toastr.ToastMessage.animation);
+import {
+  ToastContainer,
+  ToastMessage,
+} from "react-toastr";
+
+
+var ToastrMessageFactory=React.createFactory(ToastMessage.animation);
 
 class Notification extends React.Component{
   // allow type is success,info,warning,error
@@ -20,8 +24,8 @@ class Notification extends React.Component{
 
   render(){
     return(
-        <ToastrContainer ref="toastr" toastMessageFactory={ToastrMessageFactory}
-                         id="toast-container"  className="toast-top-right"></ToastrContainer>
+        <ToastContainer ref="toastr" toastMessageFactory={ToastrMessageFactory}
+                         id="toast-container"  className="toast-top-right"></ToastContainer>
     )
   }
 }
