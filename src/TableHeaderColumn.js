@@ -26,11 +26,15 @@ class TableHeaderColumn extends React.Component{
       maxWidth: width
     };
 
+    const sortCaret = this.props.sort ? Util.renderReactSortCaret(this.props.sort) : null;
+
     var classes = this.props.className+" "+(this.props.dataSort?"sort-column":"");
     return(
-      <th className={classes} style={thStyle}>
+      <th ref='header-col' className={classes} style={thStyle}>
         <div ref="innerDiv" className="th-inner table-header-column"
-          onClick={this.handleColumnClick.bind(this)}>{this.props.children}</div>
+          onClick={this.handleColumnClick.bind(this)}>
+          {this.props.children}{sortCaret}
+        </div>
       </th>
     )
   }
@@ -48,7 +52,8 @@ TableHeaderColumn.propTypes = {
   width: React.PropTypes.string,
   sortFunc: React.PropTypes.func,
   columnClassName: React.PropTypes.any,
-  filterFormatted: React.PropTypes.bool
+  filterFormatted: React.PropTypes.bool,
+  sort: React.PropTypes.string
 };
 
 TableHeaderColumn.defaultProps = {
@@ -63,7 +68,8 @@ TableHeaderColumn.defaultProps = {
   width: null,
   sortFunc: undefined,
   columnClassName: '',
-  filterFormatted: false
+  filterFormatted: false,
+  sort: undefined
 };
 
 export default TableHeaderColumn;
