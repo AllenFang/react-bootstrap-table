@@ -5,12 +5,10 @@ import Util from './util';
 
 class TableHeaderColumn extends React.Component{
 
-  order: Const.SORT_DESC
-
   handleColumnClick(e){
     if(!this.props.dataSort)return;
-    this.order = this.order == Const.SORT_DESC?Const.SORT_ASC:Const.SORT_DESC;
-    this.props.onSort(this.order, this.props.dataField);
+    let order = this.props.sort == Const.SORT_DESC?Const.SORT_ASC:Const.SORT_DESC;
+    this.props.onSort(order, this.props.dataField);
   }
 
   componentDidMount(){
