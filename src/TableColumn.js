@@ -29,6 +29,8 @@ class TableColumn extends React.Component{
         shouldUpdated = shouldUpdated ||
           children.props.type !== nextProps.children.props.type ||
           children.props.checked !== nextProps.children.props.checked;
+      } else {
+        shouldUpdated = true;
       }
     } else {
       shouldUpdated = shouldUpdated || children !== nextProps.children;
