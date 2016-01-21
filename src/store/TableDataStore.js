@@ -110,6 +110,8 @@ export class TableDataStore {
     };
 
     let currentDisplayData = this.getCurrentDisplayData();
+    if(!this.colInfos[sortField]) return this;
+
     const { sortFunc } = this.colInfos[sortField];
     currentDisplayData = _sort(currentDisplayData, sortField, order, sortFunc);
 
