@@ -82,25 +82,6 @@ class PaginationList extends React.Component {
     return (
       <div className="row" style={{ marginTop: 15 }}>
         <div className="col-md-6">
-        {
-          this.props.sizePerPageList.length > 1 ?
-          <div className="dropdown">
-            <button className="btn btn-default dropdown-toggle" type="button" id="pageDropDown" data-toggle="dropdown"
-                    aria-expanded="true">
-              {this.state.sizePerPage}
-              <span>
-                {" "}
-                <span className="caret"/>
-              </span>
-            </button>
-            <ul className="dropdown-menu" role="menu" aria-labelledby="pageDropDown">
-              {sizePerPageList}
-            </ul>
-          </div>
-          : ""
-        }
-        </div>
-        <div className="col-md-6">
           <ul className="pagination" style={pageListStyle}>
             {pageBtns}
           </ul>
@@ -108,6 +89,36 @@ class PaginationList extends React.Component {
       </div>
     )
   }
+
+  //   return (
+  //     <div className="row" style={{ marginTop: 15 }}>
+  //       <div className="col-md-6">
+  //       {
+  //         this.props.sizePerPageList.length > 1 ?
+  //         <div className="dropdown">
+  //           <button className="btn btn-default dropdown-toggle" type="button" id="pageDropDown" data-toggle="dropdown"
+  //                   aria-expanded="true">
+  //             {this.state.sizePerPage}
+  //             <span>
+  //               {" "}
+  //               <span className="caret"/>
+  //             </span>
+  //           </button>
+  //           <ul className="dropdown-menu" role="menu" aria-labelledby="pageDropDown">
+  //             {sizePerPageList}
+  //           </ul>
+  //         </div>
+  //         : ""
+  //       }
+  //       </div>
+  //       <div className="col-md-6">
+  //         <ul className="pagination" style={pageListStyle}>
+  //           {pageBtns}
+  //         </ul>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
   makePage() {
     var pages = this.getPages();
@@ -138,12 +149,13 @@ class PaginationList extends React.Component {
       endPage = this.totalPages;
       startPage = endPage - this.props.paginationSize + 1;
     }
-    var pages = [Const.FIRST_PAGE, Const.PRE_PAGE];
+    // var pages = [Const.FIRST_PAGE, Const.PRE_PAGE];
+    var pages = [];
     for (var i = startPage; i <= endPage; i++) {
       if (i > 0)pages.push(i);
     }
-    pages.push(Const.NEXT_PAGE);
-    pages.push(Const.LAST_PAGE);
+    // pages.push(Const.NEXT_PAGE);
+    // pages.push(Const.LAST_PAGE);
     return pages;
   }
 
