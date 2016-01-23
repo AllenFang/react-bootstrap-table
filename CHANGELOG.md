@@ -1,6 +1,12 @@
+<a name="v1.4.4"></a>
+# [v1.4.4](https://github.com/AllenFang/react-bootstrap-table/compare/v1.4.3...v1.4.4) (2016-01-21)
+### Bug fixes
+* Sorting not re-rendering data when dataFormat is being used([7810fa3](https://github.com/AllenFang/react-bootstrap-table/commit/7810fa338b9a8e7475b9d1a0026c5661fd7db988))
+* Table should be sortable when a column is hidden programmatically([1c403b1](https://github.com/AllenFang/react-bootstrap-table/commit/1c403b17ff2e47af18ce42856103209c5a5dea56))
+
 <a name="v1.4.3"></a>
 # [v1.4.3](https://github.com/AllenFang/react-bootstrap-table/compare/v1.4.2...v1.4.3) (2016-01-20)
-### Bud fixes
+### Bug fixes
 * Row end with a superfluous comma when export csv([078d91d](https://github.com/AllenFang/react-bootstrap-table/commit/078d91dcc3169a221468aca0647ff0978988e271))
 * Apply a dataFormat column will breaks when hiding([6878e90](https://github.com/AllenFang/react-bootstrap-table/commit/6878e90f8a9ea179384f9c6363994715d0693d1a))
 * Setting default sort and then sorting first time always sort descending([ab43542](https://github.com/AllenFang/react-bootstrap-table/commit/ab43542c8beb0ca41f755fcf495009ab03456a22))
