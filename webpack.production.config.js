@@ -21,6 +21,14 @@ module.exports = {
       }
     },
     {
+      'react-onclickoutside': {
+        root: 'OnClickOutside',
+        commonjs2: 'react-onclickoutside',
+        commonjs: 'react-onclickoutside',
+        amd: 'react-onclickoutside'
+      }
+    },
+    {
       'react-dom': {
         root: 'ReactDOM',
         commonjs2: 'react-dom',
