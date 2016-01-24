@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 
 module.exports = {
-
+  devtool: 'eval-source-map',
   entry: {
     'react-bootstrap-table': './src/index.js'
   },
