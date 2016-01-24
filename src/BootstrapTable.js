@@ -26,7 +26,8 @@ class BootstrapTable extends React.Component {
         })
       });
     } else {
-      this.store = new TableDataStore(this.props.data);
+      let copy = this.props.data.slice();
+      this.store = new TableDataStore(copy);
     }
 
     this.initTable(this.props);
@@ -117,7 +118,7 @@ class BootstrapTable extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.initTable(nextProps);
     if (Array.isArray(nextProps.data)) {
-      this.store.setData(nextProps.data);
+      this.store.setData(nextProps.data.slice());
       let paginationDom = this.refs.pagination;
       let page = paginationDom && paginationDom.getCurrentPage() || nextProps.options.page || 1;
       let sizePerPage = paginationDom && paginationDom.getSizePerPage() || nextProps.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0];
