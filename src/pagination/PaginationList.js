@@ -1,22 +1,6 @@
 import React from 'react';
 import PageButton from './PageButton.js';
 import Const from '../Const';
-import listensToClickOutside from 'react-onclickoutside/decorator';
-
-@listensToClickOutside()
-class DropdownMenu extends React.Component {
-  handleClickOutside() {
-    this.props.hide();
-  }
-
-  render() {
-    return (
-      <ul className="dropdown-menu" role="menu" aria-labelledby="pageDropDown" style={{display: 'block'}}>
-        {this.props.children}
-      </ul>
-    );
-  }
-}
 
 class PaginationList extends React.Component {
 
@@ -24,8 +8,7 @@ class PaginationList extends React.Component {
     super(props);
     this.state = {
       currentPage: this.props.currPage,
-      sizePerPage: this.props.sizePerPage,
-      dropdownVisible: false
+      sizePerPage: this.props.sizePerPage
     };
   }
 
@@ -62,7 +45,6 @@ class PaginationList extends React.Component {
 
   changeSizePerPage(e) {
     e.preventDefault();
-    this.setState({ dropdownVisible: false })
 
     var selectSize = parseInt(e.currentTarget.text);
     if (selectSize != this.state.sizePerPage) {
@@ -103,24 +85,17 @@ class PaginationList extends React.Component {
         {
           this.props.sizePerPageList.length > 1 ?
           <div className="dropdown">
-            <button
-              className="btn btn-default dropdown-toggle ignore-react-onclickoutside"
-              type="button"
-              id="pageDropDown"
-              onClick={() => this.setState({ dropdownVisible: !this.state.dropdownVisible })}
-              aria-expanded="true">
+            <button className="btn btn-default dropdown-toggle" type="button" id="pageDropDown" data-toggle="dropdown"
+                    aria-expanded="true">
               {this.state.sizePerPage}
               <span>
                 {" "}
                 <span className="caret"/>
               </span>
             </button>
-            { this.state.dropdownVisible ?
-              <DropdownMenu hide={() => this.setState({ dropdownVisible: false })}>
-                {sizePerPageList}
-              </DropdownMenu>
-              : ""
-            }
+            <ul className="dropdown-menu" role="menu" aria-labelledby="pageDropDown">
+              {sizePerPageList}
+            </ul>
           </div>
           : ""
         }
