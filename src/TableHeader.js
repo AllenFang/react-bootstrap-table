@@ -13,7 +13,7 @@ class Checkbox extends React.Component{
   }
 
   render() {
-    return <input type="checkbox" checked={this.props.checked} onChange={this.props.onChange} />
+    return <input className='react-bs-select-all' type="checkbox" checked={this.props.checked} onChange={this.props.onChange} />
   }
 }
 
