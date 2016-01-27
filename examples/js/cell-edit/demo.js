@@ -4,11 +4,21 @@ import DbClickToEditTable from './dbclick-to-edit-table';
 import BlurToSaveTable from './blur-to-save-table';
 import CellEditHookTable from './cell-edit-hook-table';
 import NonEditableTable from './non-editable-table';
+import ComboEditTable   from './combo-edit-table';
 
 class Demo extends React.Component {
   render() {
     return (
       <div>
+        <div className="col-md-offset-1 col-md-8">
+          <div className="panel panel-default">
+            <div className="panel-heading">Combobox Editor Example&nbsp;(Press ENTER to save, ESC to cancel)</div>
+            <div className="panel-body">
+              <h5>Source in /examples/js/cell-edit/combo-edit-table.js</h5>
+              <ComboEditTable />
+            </div>
+          </div>
+        </div>
         <div className="col-md-offset-1 col-md-8">
           <div className="panel panel-default">
             <div className="panel-heading">Click to Edit Cell Example&nbsp;(Press ENTER to save, ESC to cancel)</div>
