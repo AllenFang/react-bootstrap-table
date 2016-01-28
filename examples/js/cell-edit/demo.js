@@ -12,15 +12,6 @@ class Demo extends React.Component {
       <div>
         <div className="col-md-offset-1 col-md-8">
           <div className="panel panel-default">
-            <div className="panel-heading">Combobox Editor Example&nbsp;(Press ENTER to save, ESC to cancel)</div>
-            <div className="panel-body">
-              <h5>Source in /examples/js/cell-edit/combo-edit-table.js</h5>
-              <ComboEditTable />
-            </div>
-          </div>
-        </div>
-        <div className="col-md-offset-1 col-md-8">
-          <div className="panel panel-default">
             <div className="panel-heading">Click to Edit Cell Example&nbsp;(Press ENTER to save, ESC to cancel)</div>
             <div className="panel-body">
               <h5>Source in /examples/js/cell-edit/click-to-edit-table.js</h5>
@@ -61,6 +52,15 @@ class Demo extends React.Component {
             <div className="panel-body">
               <h5>Source in /examples/js/cell-edit/cell-edit-hook-table.js</h5>
               <CellEditHookTable />
+            </div>
+          </div>
+        </div>
+        <div className="col-md-offset-1 col-md-8">
+          <div className="panel panel-default">
+            <div className="panel-heading">Combobox Editor Example&nbsp;(Press ENTER to save, ESC to cancel)</div>
+            <div className="panel-body">
+              <h5>Source in /examples/js/cell-edit/combo-edit-table.js</h5>
+              <ComboEditTable />
             </div>
           </div>
         </div>

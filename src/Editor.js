@@ -1,5 +1,7 @@
 import React from 'react';
-var Editor=function(editable, attr, format, editorClass, defaultValue){
+import ComboBoxEditor from './editors/ComboBoxEditor';
+
+var Editor=function(editable, attr, format, editorClass, defaultValue, classifier, displayField, valueField){
 
 
     if(editable===true||typeof editable==="string"){//simple declare
@@ -25,18 +27,15 @@ var Editor=function(editable, attr, format, editorClass, defaultValue){
                          (editable.className?(" "+editable.className):"");
 
         if(editable.type === 'select'){//process select input
-            var options = [], values=editable.options.values;
-            if(Array.isArray(values)){//only can use arrray data for options
-                var rowValue;
-                options=values.map(function(d,i){
-                    rowValue=format?format(d):d;
-                    return(
-                        <option key={'option'+i} value={d}>{rowValue}</option>
-                    )
-                });
-            }
-            return(
-                <select {...attr} defaultValue={defaultValue}>{options}</select>
+            return (
+              <ComboBoxEditor ref={attr.ref}
+                              options={editable.options}
+                              attr={attr}
+                              defaultValue={defaultValue}
+                              classifier={classifier}
+                              displayField={displayField}
+                              valueField={valueField}
+                              format={format} />
             );
         } else if(editable.type === 'textarea'){//process textarea input
             //put  other if exist

@@ -28,6 +28,27 @@ class TableBody extends React.Component{
     this.adjustBody();
   }
 
+  getFieldValue(data, column) {
+    const { valueField, displayField, classifier, name } = column;
+    let fieldValue = data[name];
+
+    if (classifier) {
+      const valueById = o => {
+        return o[valueField] == fieldValue;
+      };
+      const fromClassifier = (cls, fn) => {
+        let value;
+        const rec = cls.find(fn);
+        if (rec) value = rec[displayField];
+        return value;
+      };
+
+      fieldValue = fromClassifier(classifier, valueById);
+    }
+
+    return fieldValue;
+  }
+
   render(){
     var containerClasses = classSet("table-container");
 
@@ -43,7 +64,8 @@ class TableBody extends React.Component{
 
     var tableRows = this.props.data.map(function(data, r){
       var tableColumns = this.props.columns.map(function(column, i){
-        var fieldValue = data[column.name];
+        // var fieldValue = data[column.name];
+        var fieldValue = this.getFieldValue(data, column);
         if(this.editing &&
           column.name !== this.props.keyField && // Key field can't be edit
           column.editable && // column is editable? default is true, user can set it false
@@ -62,6 +84,9 @@ class TableBody extends React.Component{
                                key={i}
                                blurToSave={this.props.cellEdit.blurToSave}
                                rowIndex={r}
+                               classifier={column.classifier}
+                               displayField={column.displayField}
+                               valueField={column.valueField}
                                colIndex={i}>
                 {fieldValue}
               </TableEditColumn>
@@ -81,6 +106,9 @@ class TableBody extends React.Component{
                            className={tdClassName}
                            cellEdit={this.props.cellEdit}
                            hidden={column.hidden}
+                           classifier={column.classifier}
+                           displayField={column.displayField}
+                           valueField={column.valueField}
                            onEdit={this.handleEditCell.bind(this)}
                            width={column.width}>
                 {formattedValue}
@@ -93,6 +121,9 @@ class TableBody extends React.Component{
                            className={tdClassName}
                            cellEdit={this.props.cellEdit}
                            hidden={column.hidden}
+                           classifier={column.classifier}
+                           displayField={column.displayField}
+                           valueField={column.valueField}
                            onEdit={this.handleEditCell.bind(this)}
                            width={column.width}>
                 {fieldValue}
