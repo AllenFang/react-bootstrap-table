@@ -249,6 +249,13 @@ class BootstrapTable extends React.Component {
     }
   }
 
+  cleanSelected() {
+    this.store.setSelectedRowKey([]);
+    this.setState({
+      selectedRowKeys: []
+    });
+  }
+
   handleSort(order, sortField) {
     if (this.props.options.onSortChange) {
       this.props.options.onSortChange(sortField, order, this.props);
