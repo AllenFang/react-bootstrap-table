@@ -51,7 +51,7 @@ class TableBody extends React.Component{
           this.state.currEditCell.rid == r &&
           this.state.currEditCell.cid == i){
             var format=column.format?function(value){
-              return column.format(value,data).replace(/<.*?>/g,'');
+              return column.format(value, data, column.formatExtraData).replace(/<.*?>/g,'');
             }:false;
 
           return(
@@ -71,7 +71,7 @@ class TableBody extends React.Component{
           var tdClassName=isFun(column.className)?column.className(fieldValue,data,r,i):column.className;
 
           if(typeof column.format !== "undefined"){
-            var formattedValue = column.format(fieldValue, data);
+            var formattedValue = column.format(fieldValue, data, column.formatExtraData);
             if (!React.isValidElement(formattedValue)) {
               formattedValue = <div dangerouslySetInnerHTML={{__html: formattedValue}}></div>;
             }

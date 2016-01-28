@@ -103,6 +103,7 @@ class BootstrapTable extends React.Component {
         align: column.props.dataAlign,
         sort: column.props.dataSort,
         format: column.props.dataFormat,
+        formatExtraData: column.props.formatExtraData,
         filterFormatted: column.props.filterFormatted,
         editable: column.props.editable,
         hidden: column.props.hidden,
