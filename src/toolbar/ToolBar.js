@@ -115,6 +115,11 @@ class ToolBar extends React.Component{
     this.props.onExportCSV();
   }
 
+  handleClearBtnClick = () => {
+    this.refs.seachInput.value = '';
+    this.props.onSearch('');
+  }
+
   render(){
     var modalClassName = "bs-table-modal-sm"+new Date().getTime();
     var insertBtn = this.props.enableInsert?
@@ -126,10 +131,8 @@ class ToolBar extends React.Component{
             onClick={this.handleDropRowBtnClick.bind(this)}>
             <i className="glyphicon glyphicon-trash"></i> Delete
           </button>:null;
-    var searchTextInput = this.props.enableSearch?
-      <div className="form-group form-group-sm">
-        <input className="form-control" type='text' placeholder={this.props.searchPlaceholder?this.props.searchPlaceholder:'Search'} onKeyUp={this.handleKeyUp.bind(this)}/>
-      </div>:null;
+
+    var searchTextInput = this.renderSearchPanel();
 
     var showSelectedOnlyBtn = this.props.enableShowOnlySelected?
       <button type="button" onClick={this.handleShowOnlyToggle.bind(this)} className="btn btn-primary" data-toggle="button" aria-pressed="false">
@@ -163,6 +166,35 @@ class ToolBar extends React.Component{
         {modal}
       </div>
     )
+  }
+
+  renderSearchPanel() {
+    if(this.props.enableSearch) {
+      let classNames = 'form-group form-group-sm';
+      let clearBtn = null;
+      if(this.props.clearSearch) {
+        clearBtn = (
+          <span className="input-group-btn">
+            <button
+              className="btn btn-default"
+              type="button"
+              onClick={ this.handleClearBtnClick }>Clear</button>
+          </span>
+        );
+        classNames = 'form-group form-group-sm input-group input-group-sm';
+      }
+
+      return (
+        <div className={classNames}>
+          <input ref='seachInput' className="form-control" type='text'
+            placeholder={this.props.searchPlaceholder?this.props.searchPlaceholder:'Search'}
+            onKeyUp={this.handleKeyUp.bind(this)}/>
+            { clearBtn }
+        </div>
+      );
+    } else {
+      return null;
+    }
   }
 
   renderInsertRowModal(modalClassName){
@@ -226,13 +258,15 @@ ToolBar.propTypes = {
   enableSearch: React.PropTypes.bool,
   enableShowOnlySelected: React.PropTypes.bool,
   columns: React.PropTypes.array,
-  searchPlaceholder: React.PropTypes.string
+  searchPlaceholder: React.PropTypes.string,
+  clearSearch: React.PropTypes.bool
 };
 
 ToolBar.defaultProps = {
   enableInsert: false,
   enableDelete: false,
   enableSearch: false,
-  enableShowOnlySelected: false
+  enableShowOnlySelected: false,
+  clearSearch: false
 }
 export default ToolBar;

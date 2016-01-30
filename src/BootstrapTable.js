@@ -571,6 +571,7 @@ class BootstrapTable extends React.Component {
       return (
         <div className="tool-bar">
           <ToolBar
+            clearSearch={this.props.options.clearSearch}
             enableInsert={this.props.insertRow}
             enableDelete={this.props.deleteRow}
             enableSearch={this.props.search}
@@ -654,6 +655,7 @@ BootstrapTable.propTypes = {
   columnFilter: React.PropTypes.bool,
   trClassName: React.PropTypes.any,
   options: React.PropTypes.shape({
+    clearSearch: React.PropTypes.bool,
     sortName: React.PropTypes.string,
     sortOrder: React.PropTypes.string,
     afterTableComplete: React.PropTypes.func,
@@ -710,6 +712,7 @@ BootstrapTable.defaultProps = {
   columnFilter: false,
   trClassName: '',
   options: {
+    clearSearch: false,
     sortName: undefined,
     sortOrder: undefined,
     afterTableComplete: undefined,
