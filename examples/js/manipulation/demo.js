@@ -6,6 +6,7 @@ import ColumnFilterTable from './filter-table';
 import MultiSearchTable from './multi-search-table';
 import ExportCSVTable from './export-csv-table';
 import DeleteRowCustomComfirmTable from './del-row-custom-confirm';
+import SearchClearTable from './search-clear-table';
 
 class Demo extends React.Component {
   render() {
@@ -36,6 +37,15 @@ class Demo extends React.Component {
               <h5>Source in /examples/js/manipulation/search-table.js</h5>
               <h5>See your console to watch information of after searching.</h5>
               <SearchTable />
+            </div>
+          </div>
+        </div>
+        <div className="col-md-offset-1 col-md-8">
+          <div className="panel panel-default">
+            <div className="panel-heading">Table Search Example with Clear Button</div>
+            <div className="panel-body">
+              <h5>Source in /examples/js/manipulation/search-clear-table.js</h5>
+              <SearchClearTable />
             </div>
           </div>
         </div>
