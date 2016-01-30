@@ -7,7 +7,8 @@ module.exports = {
     app: './examples/js/app.js',
     vendors: ['webpack-dev-server/client?http://localhost:3004', 'webpack/hot/only-dev-server']
   },
-  devtool: 'eval',
+  debug: true,
+  devtool: 'eval-source-map',
   output: {
     path: path.join(__dirname, 'examples'),
     filename: '[name].bundle.js'
