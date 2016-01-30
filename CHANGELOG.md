@@ -1,3 +1,24 @@
+<a name="v1.4.6"></a>
+# [v1.4.6](https://github.com/AllenFang/react-bootstrap-table/compare/v1.4.5...v1.4.6) (2016-01-30)
+### Features
+* Support column format with extra data([a4e4565](https://github.com/AllenFang/react-bootstrap-table/commit/a4e4565a872a5f188d117b5fc01e767b4d0e03ef))
+	* Add ```formatExtraData``` in ```TableHeaderColumn```. Check the example in ```examples/js/column-format/format-extra-data-table.js```
+* Add Clear button for cleaning search input field([8d41dc5](https://github.com/AllenFang/react-bootstrap-table/commit/8d41dc546ca327c8108edfc2f340ac05bb85615f))
+	* add  ```clearSearch``` on ```options``` props
+	```js
+	var options = {
+		clearSearch: true
+	};
+	//...
+	ReactDOM.render(
+		<BootstrapTable data={collection} options={options}>...
+	);
+	```
+
+### Enhancement
+* Available to clean all selection state By API([f5978f9](https://github.com/AllenFang/react-bootstrap-table/commit/f5978f95c1e8229562483c3b55ca649b8b4bcde5))
+	* Check this [thread](https://github.com/AllenFang/react-bootstrap-table/issues/244)
+
 <a name="v1.4.5"></a>
 # [v1.4.5](https://github.com/AllenFang/react-bootstrap-table/compare/v1.4.4...v1.4.5) (2016-01-25)
 ### Bug fixes
