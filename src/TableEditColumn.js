@@ -66,6 +66,9 @@ class TableEditColumn extends React.Component{
   }
   componentDidMount(){
       var input = this.refs.inputRef;
+      if (React.isValidElement(input)) { // editor input is wrapped in React element
+        input = input.refs.inputRef
+      }
       // input.value = this.props.children||'';
       input.focus();
   }
@@ -75,20 +78,19 @@ class TableEditColumn extends React.Component{
   }
 
   render(){
-    var editable=this.props.editable,
-        format=this.props.format,
-        attr={
-            ref:"inputRef",
-            onKeyDown:this.handleKeyPress.bind(this),
-            onBlur:this.handleBlur.bind(this)
-        };
-        //put placeholder if exist
-        editable.placeholder&&(attr.placeholder=editable.placeholder);
+    var { editable, format, classifier, displayField, valueField } = this.props;
+    var attr={
+      ref:"inputRef",
+      onKeyDown:this.handleKeyPress.bind(this),
+      onBlur:this.handleBlur.bind(this)
+    };
+    //put placeholder if exist
+    editable.placeholder&&(attr.placeholder=editable.placeholder);
 
     var editorClass=classSet({'animated':this.state.shakeEditor,'shake':this.state.shakeEditor});
     return(
         <td ref="td" style={{position:'relative'}}>
-            {Editor(editable,attr,format,editorClass,this.props.children||'')}
+            {Editor(editable,attr,format,editorClass,this.props.children||'', classifier, displayField, valueField)}
             <Notifier ref="notifier"></Notifier>
         </td>
     )

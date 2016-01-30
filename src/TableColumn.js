@@ -72,7 +72,6 @@ class TableColumn extends React.Component{
         classname += " col-md-"+width;
     }
 
-
     var opts = {};
     if(this.props.cellEdit){
       if(this.props.cellEdit.mode == Const.CELL_EDIT_CLICK){

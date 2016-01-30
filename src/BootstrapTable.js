@@ -111,7 +111,10 @@ class BootstrapTable extends React.Component {
         width: column.props.width,
         text: column.props.children,
         sortFunc: column.props.sortFunc,
-        index: i
+        index: i,
+        classifier: column.props.classifier,
+        displayField: column.props.displayField,
+        valueField: column.props.valueField
       };
     });
   }
