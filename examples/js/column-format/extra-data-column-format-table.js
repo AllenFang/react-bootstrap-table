@@ -51,7 +51,7 @@ export default class ExtraDataColumnFormatTable extends React.Component{
                 <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
                 <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
                 <TableHeaderColumn dataField="quality" dataFormat={enumFormatter} formatExtraData={qualityType}>Product Quality</TableHeaderColumn>
-                <TableHeaderColumn dataField="inStock" dataFormat={enumFormatter} formatExtraData={inStockStatus} editable={{type:'select', options:{values:optionValues}}}>Product Stock Status</TableHeaderColumn>
+                <TableHeaderColumn dataField="inStock" dataFormat={enumFormatter} formatExtraData={inStockStatus}>Product Stock Status</TableHeaderColumn>
             </BootstrapTable>
         );
     }
