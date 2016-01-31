@@ -550,9 +550,11 @@ class BootstrapTable extends React.Component {
             field: props.dataField,
             //when you want same auto generate value and not allow edit, example ID field
             autoValue: props.autoValue || false,
-            //for create eidtor, no params for column.editable() indicate that editor for new row
+            //for create editor, no params for column.editable() indicate that editor for new row
             editable: props.editable && (typeof props.editable === "function") ? props.editable() : props.editable,
-            format: props.format ? format : false
+            format: props.dataFormat ? function(value){
+              return props.dataFormat(value, null, props.formatExtraData).replace(/<.*?>/g,'');
+            } : false
           };
         });
       } else {
