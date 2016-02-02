@@ -229,48 +229,52 @@ class BootstrapTable extends React.Component {
     let sortIndicator = this.props.options.sortIndicator;
     if(typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
     return (
-      <div className="react-bs-container" ref="table">
-        {toolBar}
-        <div className="react-bs-table-container"
+      <div>
+        <div ref="table"
+             className="react-bs-container"
              onMouseEnter={this.handleMouseEnter.bind(this)}
-             onMouseLeave={this.handleMouseLeave.bind(this)}
-             style={style}>
-          <TableHeader
-            ref="header"
-            rowSelectType={this.props.selectRow.mode}
-            hideSelectColumn={this.props.selectRow.hideSelectColumn}
-            sortName={sortInfo ? sortInfo.sortField : undefined}
-            sortOrder={sortInfo ? sortInfo.order : undefined}
-            sortIndicator={sortIndicator}
-            onSort={this.handleSort.bind(this)}
-            onSelectAllRow={this.handleSelectAllRow.bind(this)}
-            bordered={this.props.bordered}
-            condensed={this.props.condensed}
-            isFiltered={this.filter ? true : false}
-            isSelectAll={isSelectAll}>
-            {this.props.children}
-          </TableHeader>
-          <TableBody
-            height={this.props.height}
-            maxHeight={this.props.maxHeight}
-            ref="body"
-            data={this.state.data}
-            columns={columns}
-            trClassName={this.props.trClassName}
-            striped={this.props.striped}
-            bordered={this.props.bordered}
-            hover={this.props.hover}
-            keyField={this.store.getKeyField()}
-            condensed={this.props.condensed}
-            selectRow={this.props.selectRow}
-            cellEdit={this.props.cellEdit}
-            selectedRowKeys={this.state.selectedRowKeys}
-            onRowClick={this.handleRowClick.bind(this)}
-            onRowMouseOver={this.handleRowMouseOver.bind(this)}
-            onRowMouseOut={this.handleRowMouseOut.bind(this)}
-            onSelectRow={this.handleSelectRow.bind(this)}
-            noDataText={this.props.options.noDataText}
-          />
+             onMouseLeave={this.handleMouseLeave.bind(this)}>
+          {toolBar}
+          <div className="react-bs-container-header">
+            <TableHeader
+              ref="header"
+              rowSelectType={this.props.selectRow.mode}
+              hideSelectColumn={this.props.selectRow.hideSelectColumn}
+              sortName={sortInfo ? sortInfo.sortField : undefined}
+              sortOrder={sortInfo ? sortInfo.order : undefined}
+              sortIndicator={sortIndicator}
+              onSort={this.handleSort.bind(this)}
+              onSelectAllRow={this.handleSelectAllRow.bind(this)}
+              bordered={this.props.bordered}
+              condensed={this.props.condensed}
+              isFiltered={this.filter ? true : false}
+              isSelectAll={isSelectAll}>
+              {this.props.children}
+            </TableHeader>
+          </div>
+          <div className='react-bs-container-body' style={ style }>
+            <TableBody
+              height={this.props.height}
+              maxHeight={this.props.maxHeight}
+              ref="body"
+              data={this.state.data}
+              columns={columns}
+              trClassName={this.props.trClassName}
+              striped={this.props.striped}
+              bordered={this.props.bordered}
+              hover={this.props.hover}
+              keyField={this.store.getKeyField()}
+              condensed={this.props.condensed}
+              selectRow={this.props.selectRow}
+              cellEdit={this.props.cellEdit}
+              selectedRowKeys={this.state.selectedRowKeys}
+              onRowClick={this.handleRowClick.bind(this)}
+              onRowMouseOver={this.handleRowMouseOver.bind(this)}
+              onRowMouseOut={this.handleRowMouseOut.bind(this)}
+              onSelectRow={this.handleSelectRow.bind(this)}
+              noDataText={this.props.options.noDataText}
+            />
+          </div>
         </div>
         {tableFilter}
         {pagination}

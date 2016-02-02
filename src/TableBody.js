@@ -134,15 +134,24 @@ class TableBody extends React.Component{
 
     var height = this.calculateContainerHeight().toString();
 
+    // return(
+    //   <div ref="container" className={containerClasses} style={{height: height}}>
+    //     <table ref="body" className={tableClasses}>
+    //       {tableHeader}
+    //       <tbody>
+    //         {tableRows}
+    //       </tbody>
+    //     </table>
+    //   </div>
+    // )
+
     return(
-      <div ref="container" className={containerClasses} style={{height: height}}>
-        <table ref="body" className={tableClasses}>
-          {tableHeader}
-          <tbody>
-            {tableRows}
-          </tbody>
-        </table>
-      </div>
+      <table ref="body" className={tableClasses}>
+        {tableHeader}
+        <tbody>
+          {tableRows}
+        </tbody>
+      </table>
     )
   }
 
@@ -151,27 +160,25 @@ class TableBody extends React.Component{
 
     if(isSelectRowDefined){
       let style = {
-        width:35,
-        minWidth:35
+        width:35
       }
-      selectRowHeader = this.props.selectRow.hideSelectColumn?null:(<th style={style} key={-1}></th>);
+      selectRowHeader = this.props.selectRow.hideSelectColumn?null:(<col style={style} key={-1}></col>);
     }
     var theader = this.props.columns.map(function(column, i){
       let width = column.width == null?column.width:parseInt(column.width);
       let style={
         display: column.hidden?"none":null,
-        width: width,
-        maxWidth: width
+        width: width
         /** add min-wdth to fix user assign column width not eq offsetWidth in large column table **/
       };
       let sortCaert = column.sort?(Util.renderReactSortCaret(Const.SORT_DESC)):null;
-      return (<th style={style} key={i} className={column.className}>{column.text}{sortCaert}</th>);
+      return (<col style={style} key={i} className={column.className}>{column.text}{sortCaert}</col>);
     });
 
     return(
-      <thead ref="header">
-        <tr>{selectRowHeader}{theader}</tr>
-      </thead>
+      <colgroup ref="header">
+        {selectRowHeader}{theader}
+      </colgroup>
     )
   }
 

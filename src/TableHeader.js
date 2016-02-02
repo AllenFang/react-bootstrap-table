@@ -25,7 +25,7 @@ class TableHeader extends React.Component{
   }
 
   render(){
-    var containerClasses = classSet("table-header");
+    // var containerClasses = classSet("table-header");
     var tableClasses = classSet("table", "table-hover", {
         "table-bordered": this.props.bordered,
         "table-condensed": this.props.condensed
@@ -34,18 +34,14 @@ class TableHeader extends React.Component{
     this._attachClearSortCaretFunc();
 
     return(
-      <div className="table-header-wrapper">
-        <div ref="container" className={containerClasses}>
-          <table className={tableClasses}>
-            <thead>
-              <tr ref="header">
-                {selectRowHeaderCol}
-                {this.props.children}
-              </tr>
-            </thead>
-          </table>
-        </div>
-      </div>
+      <table className={tableClasses}>
+        <thead>
+          <tr ref="header">
+            {selectRowHeaderCol}
+            {this.props.children}
+          </tr>
+        </thead>
+      </table>
     )
   }
 
@@ -81,25 +77,25 @@ class TableHeader extends React.Component{
   }
 
   fitHeader(headerProps, isVerticalScrollBar){
-    if(Array.isArray(this.props.children)){
-      let startPosition = (this.props.rowSelectType == Const.ROW_SELECT_SINGLE ||
-                              this.props.rowSelectType == Const.ROW_SELECT_MULTI) && !this.props.hideSelectColumn ? 1:0;
-      if(startPosition == 1)
-        this.selectRowColumnWidth = headerProps[0].width;
-      for(let i=0;i<this.props.children.length;i++){
-        this.props.children[i] =
-          React.cloneElement(this.props.children[i], {width: headerProps[i+startPosition].width+"px"});
-      }
-    } else {
-      this.props.children =
-        React.cloneElement(this.props.children, {width: headerProps[0].width+"px"});
-    }
-    if(this.props.condensed && !this.props.isFiltered) {
-      this.refs.container.style.height = "36px";
-    }
-    this.forceUpdate();
-    if(isVerticalScrollBar)
-      this.refs.container.style.marginRight = Util.getScrollBarWidth() + "px";
+    // if(Array.isArray(this.props.children)){
+    //   let startPosition = (this.props.rowSelectType == Const.ROW_SELECT_SINGLE ||
+    //                           this.props.rowSelectType == Const.ROW_SELECT_MULTI) && !this.props.hideSelectColumn ? 1:0;
+    //   if(startPosition == 1)
+    //     this.selectRowColumnWidth = headerProps[0].width;
+    //   for(let i=0;i<this.props.children.length;i++){
+    //     this.props.children[i] =
+    //       React.cloneElement(this.props.children[i], {width: headerProps[i+startPosition].width+"px"});
+    //   }
+    // } else {
+    //   this.props.children =
+    //     React.cloneElement(this.props.children, {width: headerProps[0].width+"px"});
+    // }
+    // if(this.props.condensed) {
+    //   this.refs.container.style.height = "36px";
+    // }
+    // this.forceUpdate();
+    // if(isVerticalScrollBar)
+    //   this.refs.container.style.marginRight = Util.getScrollBarWidth() + "px";
   }
 }
 TableHeader.propTypes = {

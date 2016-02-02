@@ -1,6 +1,79 @@
 /*editor error animate*/
 /*@import "~toastr/build/toastr.min.css";*/
 
+.react-bs-container {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+.react-bs-container table {
+  margin-bottom: 0px;
+  table-layout: fixed;
+}
+
+.react-bs-container table td,
+.react-bs-container table th {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.react-bs-container-header {
+  overflow: hidden;
+  width: 100%;
+}
+
+.react-bs-container-body {
+  /*height: 154px;*/
+  overflow: auto;
+  width: 100%;
+}
+
+.table-bordered {
+    border: 0px;
+}
+.table-bordered > thead > tr > th,
+.table-bordered > thead > tr > td {
+border-bottom-width: 2px;
+}
+.table-bordered > tfoot > tr > th,
+.table-bordered > tfoot > tr > td {
+border-top-width: 2px;
+}
+.table-bordered > tfoot > tr > th,
+.table-bordered > tfoot > tr > td {
+border-bottom-width: 0px;
+}
+/*Esquerda*/
+.table-bordered > thead > tr > th:first-child,
+.table-bordered > tbody > tr > th:first-child,
+.table-bordered > tfoot > tr > th:first-child,
+.table-bordered > thead > tr > td:first-child,
+.table-bordered > tbody > tr > td:first-child,
+.table-bordered > tfoot > tr > td:first-child {
+border-left-width: 0px;
+}
+/*Direita*/
+.table-bordered > thead > tr > th:last-child,
+.table-bordered > tbody > tr > th:last-child,
+.table-bordered > tfoot > tr > th:last-child,
+.table-bordered > thead > tr > td:last-child,
+.table-bordered > tbody > tr > td:last-child,
+.table-bordered > tfoot > tr > td:last-child {
+border-right-width: 0px;
+}
+/*Topo*/
+.table-bordered > thead > tr:first-child > th,
+.table-bordered > thead > tr:first-child > td {
+border-top-width: 0px;
+}
+/*Baixo*/
+.table-bordered > tfoot > tr:last-child > th,
+.table-bordered > tfoot > tr:last-child > td {
+border-bottom-width: 0px;
+}
+/*
 .react-bs-container .react-bs-table-container {
   border: 1px solid #dddddd;
 }
@@ -11,7 +84,6 @@
 }
 
 .react-bs-container .table-header > table{
-  /*table-layout: fixed;*/
   border-top-style: hidden;
   border-right-style: hidden;
   border-left-style: hidden;
@@ -80,14 +152,13 @@
 
 .react-bs-container .table-container > table{
   margin-top: -42px;
-  /*table-layout: fixed;*/
   margin-bottom: 0px;
   border-left-style: hidden;
   border-right-style: hidden;
   border-bottom-style: hidden;
   border-top-width: 0px;
   width: 100%;
-}
+}*/
 
 /*inline editor default style*/
 .react-bs-container .form-control.editor{
