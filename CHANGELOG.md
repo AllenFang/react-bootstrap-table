@@ -2,7 +2,7 @@
 # [v1.4.6](https://github.com/AllenFang/react-bootstrap-table/compare/v1.4.5...v1.4.6) (2016-01-30)
 ### Features
 * Support column format with extra data([a4e4565](https://github.com/AllenFang/react-bootstrap-table/commit/a4e4565a872a5f188d117b5fc01e767b4d0e03ef))
-	* Add ```formatExtraData``` in ```TableHeaderColumn```. Check the example in ```examples/js/column-format/format-extra-data-table.js```
+	* Add ```formatExtraData``` in ```TableHeaderColumn```. Check the example in ```examples/js/column-format/extra-data-column-format-table.js```
 * Add Clear button for cleaning search input field([8d41dc5](https://github.com/AllenFang/react-bootstrap-table/commit/8d41dc546ca327c8108edfc2f340ac05bb85615f))
 	* add  ```clearSearch``` on ```options``` props
 	```js
