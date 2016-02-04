@@ -14,7 +14,6 @@ class TextFilter extends React.Component {
 		}
 		const self = this;
 		const filterValue = event.target.value;
-		debugger;
 		this.timeout = setTimeout(function() {
 			self.props.filterHandler(filterValue);
 		}, self.props.delay);

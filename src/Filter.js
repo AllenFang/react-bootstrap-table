@@ -7,7 +7,6 @@ export class Filter extends EventEmitter {
     }
 
     handleFilter(dataField, value) {
-        debugger;
         if (value.trim() === "") {
             delete this.currentFilter[dataField];
         } else {

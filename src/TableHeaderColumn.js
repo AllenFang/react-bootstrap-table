@@ -18,7 +18,6 @@ class TableHeaderColumn extends React.Component{
   }
 
   getFilters() {
-    debugger;
     const delay = this.props.filter.delay || Const.FILTER_DELAY;
 
     switch (this.props.filter.type) {

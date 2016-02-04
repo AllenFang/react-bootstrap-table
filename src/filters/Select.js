@@ -12,13 +12,11 @@ class SelectFilter extends React.Component {
 
 	filter(event) {
 		event.preventDefault();
-		debugger;
 		this.setState({isPlaceholderSelected: (event.target.value === "")});
 		this.props.filterHandler(event.target.value);
 	}
 
 	getOptions(options) {
-		debugger;
 		let optionTags = [];
 		optionTags.push(<option key="-1" value="">{this.props.placeholder}</option>);
 		Object.keys(options).map((value) => {
@@ -28,7 +26,6 @@ class SelectFilter extends React.Component {
 	}
 
 	render() {
-		debugger;
 		const options = this.getOptions(this.props.options);
 		var selectClass = classSet("filter", "select-filter", "form-control", {	"placeholder-selected": this.state.isPlaceholderSelected });
 
