@@ -6,7 +6,6 @@
 }
 
 .react-bs-container .table-header{
-  height: 42px;
   border: hidden;
   overflow: hidden;
 }
@@ -17,6 +16,7 @@
   border-right-style: hidden;
   border-left-style: hidden;
   width: 100%;
+  margin-bottom: 0;
 }
 
 .react-bs-container .table-header > table > thead > tr{
@@ -31,6 +31,22 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.react-bs-container .table-header > table > thead > tr > th .filter{
+  font-weight: normal;
+}
+
+.react-bs-container .table-header > table > thead > tr > th .select-filter option[value=''],
+.react-bs-container .table-header > table > thead > tr > th .select-filter.placeholder-selected,
+.react-bs-container .table-header > table > thead > tr > th .text-filter::-webkit-input-placeholder {
+  color: lightgrey;
+  font-style: italic;
+}
+
+.react-bs-container .table-header > table > thead > tr > th .select-filter.placeholder-selected option:not([value='']) {
+  color: initial;
+  font-style: initial;
 }
 
 .react-bs-container .table-header > table > thead > tr > .sort-column{

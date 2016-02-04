@@ -2,6 +2,8 @@ import React from 'react';
 import classSet from 'classnames';
 import Const from './Const';
 import Util from './util';
+import TextFilter from './filters/Text';
+import SelectFilter from './filters/Select';
 
 class TableHeaderColumn extends React.Component{
 
@@ -9,6 +11,26 @@ class TableHeaderColumn extends React.Component{
     if(!this.props.dataSort)return;
     let order = this.props.sort == Const.SORT_DESC?Const.SORT_ASC:Const.SORT_DESC;
     this.props.onSort(order, this.props.dataField);
+  }
+
+  handleFilter(value) {
+    this.props.filter.emitter.handleFilter(this.props.dataField, value);
+  }
+
+  getFilters() {
+    debugger;
+    const delay = this.props.filter.delay || Const.FILTER_DELAY;
+
+    switch (this.props.filter.type) {
+      case "TextFilter": {
+        const placeholder = this.props.filter.placeholder || `Enter ${this.props.children}...`;
+        return <TextFilter delay={delay} filterHandler={this.handleFilter.bind(this)} placeholder={placeholder} />;
+      }
+      case "SelectFilter": {
+        const placeholder = this.props.filter.placeholder || `Select ${this.props.children}...`;
+        return <SelectFilter filterHandler={this.handleFilter.bind(this)} options={this.props.filter.options} placeholder={placeholder} />;
+      }
+    }
   }
 
   componentDidMount(){
@@ -33,6 +55,7 @@ class TableHeaderColumn extends React.Component{
           onClick={this.handleColumnClick.bind(this)}>
           {this.props.children}{sortCaret}
         </div>
+        {this.props.filter ? this.getFilters() : ''}
       </th>
     )
   }
@@ -52,7 +75,14 @@ TableHeaderColumn.propTypes = {
   columnClassName: React.PropTypes.any,
   filterFormatted: React.PropTypes.bool,
   sort: React.PropTypes.string,
-  formatExtraData: React.PropTypes.any
+  formatExtraData: React.PropTypes.any,
+  filter: React.PropTypes.shape({
+    type: React.PropTypes.string.isRequired,
+    delay: React.PropTypes.number,
+    options: React.PropTypes.object,
+    emitter: React.PropTypes.object,
+    placeholder: React.PropTypes.string
+  })
 };
 
 TableHeaderColumn.defaultProps = {
@@ -69,7 +99,8 @@ TableHeaderColumn.defaultProps = {
   columnClassName: '',
   filterFormatted: false,
   sort: undefined,
-  formatExtraData: undefined
+  formatExtraData: undefined,
+  filter: undefined
 };
 
 export default TableHeaderColumn;

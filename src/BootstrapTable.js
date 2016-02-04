@@ -8,6 +8,7 @@ import ToolBar from './toolbar/ToolBar';
 import TableFilter from './TableFilter';
 import {TableDataStore} from './store/TableDataStore';
 import exportCSV from './csv_export_util';
+import {Filter} from './Filter';
 
 class BootstrapTable extends React.Component {
 
@@ -32,6 +33,13 @@ class BootstrapTable extends React.Component {
 
     this.initTable(this.props);
 
+    if (this.filter) {
+      const self = this;
+      this.filter.on('filter', (currentFilter) => {
+        self.handleFilterData(currentFilter);
+      });
+    }
+
     if (this.props.selectRow && this.props.selectRow.selected) {
       this.store.setSelectedRowKey(this.props.selectRow.selected);
     }
@@ -52,6 +60,15 @@ class BootstrapTable extends React.Component {
             throw "Error. Multiple key column be detected in TableHeaderColumn.";
           }
           keyField = column.props.dataField;
+        }
+        if (column.props.filter) {
+          // a column contains a filter
+          if (!this.filter) {
+            // first time create the filter on the BootstrapTable
+            this.filter = new Filter();
+          }
+          // pass the filter to column with filter
+          column.props.filter.emitter = this.filter;
         }
       }, this);
     }
