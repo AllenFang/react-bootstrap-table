@@ -18,4 +18,12 @@ export default {
   NO_DATA_TEXT: "There is no data to display",
   SHOW_ONLY_SELECT: "Show Selected Only",
   SHOW_ALL: "Show All",
+  FILTER_DELAY: 500,
+  FILTER_TYPE: {
+    TEXT: "TextFilter",
+    SELECT: "SelectFilter",
+    NUMBER: "NumberFilter",
+    DATE: "DateFilter",
+    CUSTOM: "CustomFilter"
+  }
 }
