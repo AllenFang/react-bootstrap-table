@@ -93,7 +93,7 @@ class TableHeader extends React.Component{
       this.props.children =
         React.cloneElement(this.props.children, {width: headerProps[0].width+"px"});
     }
-    if(this.props.condensed) {
+    if(this.props.condensed && !this.props.isFiltered) {
       this.refs.container.style.height = "36px";
     }
     this.forceUpdate();
@@ -110,6 +110,7 @@ TableHeader.propTypes = {
   hideSelectColumn: React.PropTypes.bool,
   bordered: React.PropTypes.bool,
   condensed: React.PropTypes.bool,
+  isFiltered: React.PropTypes.bool,
   isSelectAll: React.PropTypes.oneOf([true, 'indeterminate', false])
 };
 
