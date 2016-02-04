@@ -534,6 +534,10 @@ class BootstrapTable extends React.Component {
             remote={this.isRemoteDataSource()}
             dataSize={dataSize}
             onSizePerPageList={this.props.options.onSizePerPageList}
+            prePage={this.props.options.prePage || Const.PRE_PAGE}
+            nextPage={this.props.options.nextPage || Const.NEXT_PAGE}
+            firstPage={this.props.options.firstPage || Const.FIRST_PAGE}
+            lastPage={this.props.options.lastPage || Const.LAST_PAGE}
           />
         </div>
       );
@@ -673,7 +677,11 @@ BootstrapTable.propTypes = {
     onPageChange: React.PropTypes.func,
     onSizePerPageList: React.PropTypes.func,
     noDataText: React.PropTypes.string,
-    handleConfirmDeleteRow: React.PropTypes.func
+    handleConfirmDeleteRow: React.PropTypes.func,
+    prePage: React.PropTypes.string,
+    nextPage: React.PropTypes.string,
+    firstPage: React.PropTypes.string,
+    lastPage: React.PropTypes.string
   }),
   fetchInfo: React.PropTypes.shape({
     dataTotalSize: React.PropTypes.number,
@@ -728,7 +736,11 @@ BootstrapTable.defaultProps = {
     paginationSize: Const.PAGINATION_SIZE,
     onSizePerPageList: undefined,
     noDataText: undefined,
-    handleConfirmDeleteRow: undefined
+    handleConfirmDeleteRow: undefined,
+    prePage: Const.PRE_PAGE,
+    nextPage: Const.NEXT_PAGE,
+    firstPage: Const.FIRST_PAGE,
+    lastPage: Const.LAST_PAGE
   },
   fetchInfo: {
     dataTotalSize: 0,
