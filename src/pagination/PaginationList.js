@@ -13,13 +13,13 @@ class PaginationList extends React.Component {
   }
 
   changePage(page) {
-    if (page == Const.PRE_PAGE) {
+    if (page == this.props.prePage) {
       page = this.state.currentPage - 1 < 1 ? 1 : this.state.currentPage - 1;
-    } else if (page == Const.NEXT_PAGE) {
+    } else if (page == this.props.nextPage) {
       page = this.state.currentPage + 1 > this.totalPages ? this.totalPages : this.state.currentPage + 1;
-    } else if (page == Const.LAST_PAGE) {
+    } else if (page == this.props.lastPage) {
       page = this.totalPages;
-    } else if (page == Const.FIRST_PAGE) {
+    } else if (page == this.props.firstPage) {
       page = 1;
     } else {
       page = parseInt(page);
@@ -114,16 +114,19 @@ class PaginationList extends React.Component {
     return pages.map(function (page) {
       var isActive = page === this.state.currentPage;
       var disabled = false;
+      var hidden = false;
       if(this.state.currentPage == 1 &&
-        (page === Const.FIRST_PAGE || page === Const.PRE_PAGE)){
+        (page === this.props.firstPage || page === this.props.prePage)){
           disabled = true;
+          hidden = true;
       }
       if(this.state.currentPage == this.totalPages &&
-        (page === Const.NEXT_PAGE || page === Const.LAST_PAGE)){
+        (page === this.props.nextPage || page === this.props.lastPage)){
           disabled = true;
+          hidden = true;
       }
       return (
-        <PageButton changePage={this.changePage.bind(this)} active={isActive} disable={disabled} key={page}>{page}</PageButton>
+        <PageButton changePage={this.changePage.bind(this)} active={isActive} disable={disabled} hidden={hidden} key={page}>{page}</PageButton>
       )
     }, this);
   }
@@ -138,12 +141,24 @@ class PaginationList extends React.Component {
       endPage = this.totalPages;
       startPage = endPage - this.props.paginationSize + 1;
     }
-    var pages = [Const.FIRST_PAGE, Const.PRE_PAGE];
+    var pages;
+    if(startPage != 1 && this.totalPages > this.props.paginationSize) {
+      pages = [this.props.firstPage, this.props.prePage];
+    } else if (this.totalPages > 1) {
+      pages = [this.props.prePage];
+    }
+    else {
+      pages = []
+    }
     for (var i = startPage; i <= endPage; i++) {
       if (i > 0)pages.push(i);
     }
-    pages.push(Const.NEXT_PAGE);
-    pages.push(Const.LAST_PAGE);
+    if (endPage != this.totalPages) {
+      pages.push(this.props.nextPage);
+      pages.push(this.props.lastPage);
+    } else if (this.totalPages > 1){
+      pages.push(this.props.nextPage);
+    }
     return pages;
   }
 
@@ -163,7 +178,8 @@ PaginationList.propTypes = {
   sizePerPageList: React.PropTypes.array,
   paginationSize: React.PropTypes.number,
   remote: React.PropTypes.bool,
-  onSizePerPageList: React.PropTypes.func
+  onSizePerPageList: React.PropTypes.func,
+  prePage: React.PropTypes.string
 };
 
 PaginationList.defaultProps = {

@@ -15,7 +15,8 @@ class PageButton extends React.Component{
   render(){
     var classes = classSet({
         'active': this.props.active,
-        'disabled': this.props.disable
+        'disabled': this.props.disable,
+        'hidden': this.props.hidden
     });
     return (
         <li className={classes}><a href="#" onClick={this.pageBtnClick.bind(this)}>{this.props.children}</a></li>
