@@ -144,8 +144,11 @@ class PaginationList extends React.Component {
     var pages;
     if(startPage != 1 && this.totalPages > this.props.paginationSize) {
       pages = [this.props.firstPage, this.props.prePage];
-    } else {
+    } else if (this.totalPages > 1) {
       pages = [this.props.prePage];
+    }
+    else {
+      pages = []
     }
     for (var i = startPage; i <= endPage; i++) {
       if (i > 0)pages.push(i);
@@ -153,7 +156,7 @@ class PaginationList extends React.Component {
     if (endPage != this.totalPages) {
       pages.push(this.props.nextPage);
       pages.push(this.props.lastPage);
-    } else {
+    } else if (this.totalPages > 1){
       pages.push(this.props.nextPage);
     }
     return pages;
