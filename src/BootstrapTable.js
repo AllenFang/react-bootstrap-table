@@ -33,7 +33,8 @@ class BootstrapTable extends React.Component {
     this.initTable(this.props);
 
     if (this.props.selectRow && this.props.selectRow.selected) {
-      this.store.setSelectedRowKey(this.props.selectRow.selected);
+      let copy = this.props.selectRow.selected.slice();
+      this.store.setSelectedRowKey(copy);
     }
 
     this.state = {
@@ -136,9 +137,10 @@ class BootstrapTable extends React.Component {
     }
     if (nextProps.selectRow && nextProps.selectRow.selected) {
       //set default select rows to store.
-      this.store.setSelectedRowKey(nextProps.selectRow.selected);
+      let copy = nextProps.selectRow.selected.slice();
+      this.store.setSelectedRowKey(copy);
       this.setState({
-        selectedRowKeys: nextProps.selectRow.selected
+        selectedRowKeys: copy
       });
     }
   }
