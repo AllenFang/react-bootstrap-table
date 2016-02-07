@@ -4,6 +4,7 @@ import Const from './Const';
 import Util from './util';
 import TextFilter from './filters/Text';
 import SelectFilter from './filters/Select';
+import NumberFilter from './filters/Number';
 
 class TableHeaderColumn extends React.Component{
 
@@ -28,6 +29,10 @@ class TableHeaderColumn extends React.Component{
       case "SelectFilter": {
         const placeholder = this.props.filter.placeholder || `Select ${this.props.children}...`;
         return <SelectFilter filterHandler={this.handleFilter.bind(this)} options={this.props.filter.options} placeholder={placeholder} />;
+      }
+      case "NumberFilter": {
+        const placeholder = this.props.filter.placeholder || (this.props.filter.options) ? `Select ${this.props.children}...` : `Enter ${this.props.children}...`;
+        return <NumberFilter filterHandler={this.handleFilter.bind(this)} delay={delay} options={this.props.filter.options} placeholder={placeholder} numberComparators={this.props.filter.numberComparators} />;
       }
     }
   }
@@ -88,7 +93,11 @@ TableHeaderColumn.propTypes = {
   filter: React.PropTypes.shape({
     type: React.PropTypes.string.isRequired,
     delay: React.PropTypes.number,
-    options: React.PropTypes.object,
+    options: React.PropTypes.oneOfType([
+      React.PropTypes.object,
+      React.PropTypes.arrayOf(React.PropTypes.number)
+        ]),
+    numberComparators: React.PropTypes.arrayOf(React.PropTypes.string),
     emitter: React.PropTypes.object,
     placeholder: React.PropTypes.string
   })

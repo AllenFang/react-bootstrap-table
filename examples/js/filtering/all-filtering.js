@@ -17,7 +17,9 @@ function addProducts(quantity) {
         products.push({
             id: id,
             name: "Item name " + id,
-            quality: i%3
+            quality: i%3,
+            price: Math.floor((Math.random() * 100) + 1),
+            satisfaction: Math.floor(Math.random() * 6)
         });
     }
 }
@@ -28,13 +30,17 @@ function enumFormatter(cell, row, enumObject){
     return enumObject[cell];
 }
 
+var satisfaction = [0, 1, 2, 3, 4, 5];
+
 export default class AllFiltering extends React.Component{
     render(){
         return (
-            <BootstrapTable ref="table" data={products}>
+            <BootstrapTable data={products}>
                 <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
                 <TableHeaderColumn dataField="name" filter={{type: "TextFilter", placeholder: "Please enter a value"}}>Product Name</TableHeaderColumn>
                 <TableHeaderColumn dataField="quality" dataFormat={enumFormatter} formatExtraData={qualityType} filter={{type: "SelectFilter", options: qualityType}}>Product Quality</TableHeaderColumn>
+                <TableHeaderColumn dataField="price" filter={{type: "NumberFilter", delay: 1000}}>Product Price</TableHeaderColumn>
+                <TableHeaderColumn dataField="satisfaction" filter={{type: "NumberFilter", options: satisfaction}}>Buyer Satisfaction</TableHeaderColumn>
             </BootstrapTable>
         );
     }

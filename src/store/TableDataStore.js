@@ -186,8 +186,15 @@ export class TableDataStore {
       this.filterObj = filterObj;
       this.filteredData = this.data.filter( row => {
         let valid = true;
+        let filterVal;
         for (var key in filterObj) {
-          let filterVal = filterObj[key].toLowerCase();
+          let isNumberFilter = false;
+          if (typeof filterObj[key] === 'object') {
+            filterVal = filterObj[key].value;
+            isNumberFilter = true;
+          } else {
+            filterVal = filterObj[key].toLowerCase();
+          }
           let targetVal = row[key];
           if(this.colInfos[key]) {
             const { format, filterFormatted, formatExtraData } = this.colInfos[key];
@@ -195,9 +202,50 @@ export class TableDataStore {
               targetVal = format(row[key], row, formatExtraData);
             }
           }
-          if (targetVal.toString().toLowerCase().indexOf(filterVal) == -1) {
-            valid = false;
-            break;
+          if (!isNumberFilter) {
+            if (targetVal.toString().toLowerCase().indexOf(filterVal) == -1) {
+              valid = false;
+              break;
+            }
+          } else {
+            switch (filterObj[key].comparator) {
+              case "=":
+                if (targetVal != filterVal) {
+                  valid = false;
+                }
+                break;
+              case ">":
+                if (targetVal <= filterVal) {
+                  valid = false;
+                }
+                break;
+              case ">=":
+                if (targetVal < filterVal) {
+                  valid = false;
+                }
+                break;
+              case "<":
+                if (targetVal >= filterVal) {
+                  valid = false;
+                }
+                break;
+              case "<=":
+                if (targetVal > filterVal) {
+                  valid = false;;
+                }
+                break;
+              case "!=":
+                if (targetVal == filterVal) {
+                  valid = false;
+                }
+                break;
+              default:
+                console.error("Number comparator provided is not supported");
+                break;
+            }
+            if (!valid) {
+              break;
+            }
           }
         }
         return valid;

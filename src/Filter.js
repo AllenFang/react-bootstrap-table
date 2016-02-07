@@ -7,10 +7,18 @@ export class Filter extends EventEmitter {
     }
 
     handleFilter(dataField, value) {
-        if (value.trim() === "") {
+        if (typeof value === 'object') {
+            // this is a number filter
+            if (value.comparator === "" || value.value === "") {
+                delete this.currentFilter[dataField];
+            } else {
+                this.currentFilter[dataField] = value;
+            }
+        }
+        else if (value.trim() === "") {
             delete this.currentFilter[dataField];
         } else {
-            this.currentFilter[dataField] = value;
+            this.currentFilter[dataField] = value.trim();
         }
         this.emit('filter', this.currentFilter);
     }

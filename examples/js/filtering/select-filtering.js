@@ -31,7 +31,7 @@ function enumFormatter(cell, row, enumObject){
 export default class SelectFiltering extends React.Component{
     render(){
         return (
-            <BootstrapTable ref="table" data={products}>
+            <BootstrapTable data={products}>
                 <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
                 <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
                 <TableHeaderColumn dataField="quality" dataFormat={enumFormatter} formatExtraData={qualityType} filter={{type: "SelectFilter", options: qualityType}}>Product Quality</TableHeaderColumn>
