@@ -1,5 +1,6 @@
 import React from 'react';
 import classSet from 'classnames';
+import Const from '../Const';
 
 const legalComparators = ["=", ">", ">=", "<", "<=", "!="];
 
@@ -26,7 +27,7 @@ class NumberFilter extends React.Component {
         const self = this;
         const filterValue = event.target.value;
         this.timeout = setTimeout(function() {
-            self.props.filterHandler({comparator: self.refs.numberFilterComparator.value, value: filterValue});
+            self.props.filterHandler({value: filterValue, comparator: self.refs.numberFilterComparator.value}, Const.FILTER_TYPE.NUMBER);
         }, self.props.delay);
     }
 
@@ -36,7 +37,7 @@ class NumberFilter extends React.Component {
         if (this.refs.numberFilterComparator.value === "") {
             return;
         }
-        this.props.filterHandler({comparator: this.refs.numberFilterComparator.value, value: event.target.value});
+        this.props.filterHandler({value: event.target.value, comparator: this.refs.numberFilterComparator.value}, Const.FILTER_TYPE.NUMBER);
     }
 
     onChangeComparator(event) {
@@ -44,7 +45,7 @@ class NumberFilter extends React.Component {
         if (this.refs.numberFilter.value === "") {
             return;
         }
-        this.props.filterHandler({comparator: event.target.value, value: this.refs.numberFilter.value});
+        this.props.filterHandler({value: this.refs.numberFilter.value, comparator: event.target.value}, Const.FILTER_TYPE.NUMBER);
     }
 
     getComparatorOptions() {

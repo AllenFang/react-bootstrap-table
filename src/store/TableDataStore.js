@@ -188,64 +188,106 @@ export class TableDataStore {
         let valid = true;
         let filterVal;
         for (var key in filterObj) {
-          let isNumberFilter = false;
-          if (typeof filterObj[key] === 'object') {
-            filterVal = filterObj[key].value;
-            isNumberFilter = true;
-          } else {
-            filterVal = filterObj[key].toLowerCase();
-          }
           let targetVal = row[key];
-          if(this.colInfos[key]) {
+
+          switch (filterObj[key].type) {
+            case Const.FILTER_TYPE.NUMBER:
+            {
+              filterVal = filterObj[key].value.value;
+              break;
+            }
+            case Const.FILTER_TYPE.DATE:
+            {
+              filterVal = new Date(filterObj[key].value);
+              targetVal = new Date(row[key]);
+              break;
+            }
+            default: {
+              filterVal = filterObj[key].value.toLowerCase();
+              break;
+            }
+          }
+
+          if (this.colInfos[key]) {
             const { format, filterFormatted, formatExtraData } = this.colInfos[key];
-            if(filterFormatted && format) {
+            if (filterFormatted && format) {
               targetVal = format(row[key], row, formatExtraData);
             }
           }
-          if (!isNumberFilter) {
-            if (targetVal.toString().toLowerCase().indexOf(filterVal) == -1) {
-              valid = false;
+
+          switch (filterObj[key].type) {
+            case Const.FILTER_TYPE.NUMBER:
+            {
+              switch (filterObj[key].value.comparator) {
+                case "=":
+                {
+                  if (targetVal != filterVal) {
+                    valid = false;
+                  }
+                  break;
+                }
+                case ">":
+                {
+                  if (targetVal <= filterVal) {
+                    valid = false;
+                  }
+                  break;
+                }
+                case ">=":
+                {
+                  if (targetVal < filterVal) {
+                    valid = false;
+                  }
+                  break;
+                }
+                case "<":
+                {
+                  if (targetVal >= filterVal) {
+                    valid = false;
+                  }
+                  break;
+                }
+                case "<=":
+                {
+                  if (targetVal > filterVal) {
+                    valid = false;
+                    ;
+                  }
+                  break;
+                }
+                case "!=":
+                {
+                  if (targetVal == filterVal) {
+                    valid = false;
+                  }
+                  break;
+                }
+                default:
+                {
+                  console.error("Number comparator provided is not supported");
+                  break;
+                }
+              }
               break;
             }
-          } else {
-            switch (filterObj[key].comparator) {
-              case "=":
-                if (targetVal != filterVal) {
-                  valid = false;
-                }
-                break;
-              case ">":
-                if (targetVal <= filterVal) {
-                  valid = false;
-                }
-                break;
-              case ">=":
-                if (targetVal < filterVal) {
-                  valid = false;
-                }
-                break;
-              case "<":
-                if (targetVal >= filterVal) {
-                  valid = false;
-                }
-                break;
-              case "<=":
-                if (targetVal > filterVal) {
-                  valid = false;;
-                }
-                break;
-              case "!=":
-                if (targetVal == filterVal) {
-                  valid = false;
-                }
-                break;
-              default:
-                console.error("Number comparator provided is not supported");
-                break;
-            }
-            if (!valid) {
+            case Const.FILTER_TYPE.DATE:
+            {
+              if (targetVal.getDate() != filterVal.getDate() ||
+                  targetVal.getMonth() != filterVal.getMonth() ||
+                  targetVal.getYear() != filterVal.getYear()) {
+                valid = false;
+              }
               break;
             }
+            default: {
+              if (targetVal.toString().toLowerCase().indexOf(filterVal) == -1) {
+                valid = false;
+              }
+              break;
+            }
+          }
+          if (!valid) {
+            break;
           }
         }
         return valid;

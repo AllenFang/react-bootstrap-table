@@ -18,5 +18,9 @@ export default {
   NO_DATA_TEXT: "There is no data to display",
   SHOW_ONLY_SELECT: "Show Selected Only",
   SHOW_ALL: "Show All",
-  FILTER_DELAY: 2000
+  FILTER_DELAY: 2000,
+  FILTER_TYPE: {
+    NUMBER: "NumberFilter",
+    DATE: "DateFilter"
+  }
 }

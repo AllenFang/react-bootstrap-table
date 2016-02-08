@@ -39,7 +39,7 @@
 
 .react-bs-container .table-header > table > thead > tr > th .select-filter option[value=''],
 .react-bs-container .table-header > table > thead > tr > th .select-filter.placeholder-selected,
-.react-bs-container .table-header > table > thead > tr > th .text-filter::-webkit-input-placeholder,
+.react-bs-container .table-header > table > thead > tr > th .filter::-webkit-input-placeholder,
 .react-bs-container .table-header > table > thead > tr > th .number-filter-input::-webkit-input-placeholder{
   color: lightgrey;
   font-style: italic;

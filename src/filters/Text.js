@@ -5,7 +5,7 @@ class TextFilter extends React.Component {
 		super(props);
 		this.filter = this.filter.bind(this);
 		this.timeout = null;
-	}
+}
 
 	filter(event) {
 		event.preventDefault();

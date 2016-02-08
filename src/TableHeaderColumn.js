@@ -2,6 +2,7 @@ import React from 'react';
 import classSet from 'classnames';
 import Const from './Const';
 import Util from './util';
+import DateFilter from './filters/Date';
 import TextFilter from './filters/Text';
 import SelectFilter from './filters/Select';
 import NumberFilter from './filters/Number';
@@ -14,8 +15,8 @@ class TableHeaderColumn extends React.Component{
     this.props.onSort(order, this.props.dataField);
   }
 
-  handleFilter(value) {
-    this.props.filter.emitter.handleFilter(this.props.dataField, value);
+  handleFilter(value, type) {
+    this.props.filter.emitter.handleFilter(this.props.dataField, value, type);
   }
 
   getFilters() {
@@ -33,6 +34,10 @@ class TableHeaderColumn extends React.Component{
       case "NumberFilter": {
         const placeholder = this.props.filter.placeholder || (this.props.filter.options) ? `Select ${this.props.children}...` : `Enter ${this.props.children}...`;
         return <NumberFilter filterHandler={this.handleFilter.bind(this)} delay={delay} options={this.props.filter.options} placeholder={placeholder} numberComparators={this.props.filter.numberComparators} />;
+      }
+      case "DateFilter": {
+        const placeholder = this.props.filter.placeholder || `Select ${this.props.children}...`;
+        return <DateFilter filterHandler={this.handleFilter.bind(this)} placeholder={placeholder} />;
       }
     }
   }

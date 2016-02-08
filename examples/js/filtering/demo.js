@@ -3,6 +3,7 @@ import TextFiltering from './text-filtering';
 import SelectFiltering from './select-filtering';
 import NumberFiltering from './number-filtering';
 import NumberOptionsFiltering from './number-options-filtering';
+import DateFiltering from './date-filtering';
 import AllFiltering from './all-filtering';
 
 class Demo extends React.Component {
@@ -42,6 +43,15 @@ class Demo extends React.Component {
                         <div className="panel-body">
                             <h5>Source in /examples/js/filtering/number-options-filtering.js</h5>
                             <NumberOptionsFiltering />
+                        </div>
+                    </div>
+                </div>
+                <div className="col-md-offset-1 col-md-8">
+                    <div className="panel panel-default">
+                        <div className="panel-heading">Date Filtering Example</div>
+                        <div className="panel-body">
+                            <h5>Source in /examples/js/filtering/date-filtering.js</h5>
+                            <DateFiltering />
                         </div>
                     </div>
                 </div>
