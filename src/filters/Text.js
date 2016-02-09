@@ -1,21 +1,21 @@
 import React from 'react';
+import Const from '../Const';
 
 class TextFilter extends React.Component {
 	constructor(props) {
 		super(props);
 		this.filter = this.filter.bind(this);
 		this.timeout = null;
-}
+	}
 
 	filter(event) {
-		event.preventDefault();
 		if (this.timeout) {
 			clearTimeout(this.timeout);
 		}
 		const self = this;
 		const filterValue = event.target.value;
 		this.timeout = setTimeout(function() {
-			self.props.filterHandler(filterValue);
+			self.props.filterHandler(filterValue, Const.FILTER_TYPE.TEXT);
 		}, self.props.delay);
 	}
 

@@ -17,7 +17,6 @@ class NumberFilter extends React.Component {
     }
 
     onChangeNumber(event) {
-        event.preventDefault();
         if (this.refs.numberFilterComparator.value === "") {
             return;
         }
@@ -27,25 +26,23 @@ class NumberFilter extends React.Component {
         const self = this;
         const filterValue = event.target.value;
         this.timeout = setTimeout(function() {
-            self.props.filterHandler({value: filterValue, comparator: self.refs.numberFilterComparator.value}, Const.FILTER_TYPE.NUMBER);
+            self.props.filterHandler({number: filterValue, comparator: self.refs.numberFilterComparator.value}, Const.FILTER_TYPE.NUMBER);
         }, self.props.delay);
     }
 
     onChangeNumberSet(event) {
-        event.preventDefault();
         this.setState({isPlaceholderSelected: (event.target.value === "")});
         if (this.refs.numberFilterComparator.value === "") {
             return;
         }
-        this.props.filterHandler({value: event.target.value, comparator: this.refs.numberFilterComparator.value}, Const.FILTER_TYPE.NUMBER);
+        this.props.filterHandler({number: event.target.value, comparator: this.refs.numberFilterComparator.value}, Const.FILTER_TYPE.NUMBER);
     }
 
     onChangeComparator(event) {
-        event.preventDefault();
         if (this.refs.numberFilter.value === "") {
             return;
         }
-        this.props.filterHandler({value: this.refs.numberFilter.value, comparator: event.target.value}, Const.FILTER_TYPE.NUMBER);
+        this.props.filterHandler({number: this.refs.numberFilter.value, comparator: event.target.value}, Const.FILTER_TYPE.NUMBER);
     }
 
     getComparatorOptions() {
@@ -84,7 +81,7 @@ class NumberFilter extends React.Component {
 
 NumberFilter.propTypes = {
     filterHandler: React.PropTypes.func.isRequired,
-    options: React.PropTypes.array,
+    options: React.PropTypes.arrayOf(React.PropTypes.number),
     delay: React.PropTypes.number,
     numberComparators: function(props, propName) {
         if (!props[propName]) {

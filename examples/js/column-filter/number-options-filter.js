@@ -20,7 +20,7 @@ addProducts(5);
 
 var satisfaction = [0, 1, 2, 3, 4, 5];
 
-export default class NumberOptionsFiltering extends React.Component{
+export default class NumberOptionsFilter extends React.Component{
     render(){
         return (
             <BootstrapTable data={products}>

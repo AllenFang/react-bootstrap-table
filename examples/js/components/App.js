@@ -48,9 +48,8 @@ class App extends React.Component {
       text: 'Column Format',
       href: 'column-format',
     }, {
-    }, {
-      text: 'Filtering',
-      href: 'filtering',
+      text: 'Column Filter',
+      href: 'column-filter',
     }, {
       text: 'Row Selection',
       href: 'selection',

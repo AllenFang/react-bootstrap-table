@@ -35,7 +35,7 @@ class BootstrapTable extends React.Component {
 
     if (this.filter) {
       const self = this;
-      this.filter.on('filter', (currentFilter) => {
+      this.filter.on('onFilterChange', (currentFilter) => {
         self.handleFilterData(currentFilter);
       });
     }
@@ -171,6 +171,9 @@ class BootstrapTable extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this._adjustHeaderWidth);
     this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader);
+    if (this.filter) {
+      this.filter.removeAllListeners("onFilterChange");
+    }
   }
 
   componentDidUpdate() {

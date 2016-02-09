@@ -6,25 +6,32 @@ var products = [];
 
 function addProducts(quantity) {
     var startId = products.length;
+    const startDate = new Date(2015, 0, 1);
+    const endDate = new Date();
     for (var i = 0; i < quantity; i++) {
+        const date = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
         var id = startId + i;
         products.push({
             id: id,
             name: "Item name " + id,
-            price: Math.floor((Math.random() * 100) + 1)
+            inStockDate: date
         });
     }
 }
 
 addProducts(5);
 
-export default class NumberFiltering extends React.Component{
+function dateFormatter(cell, row) {
+    return cell.getDate()  + "/" + (cell.getMonth()+1) + "/" + cell.getFullYear();
+}
+
+export default class DateFilter extends React.Component{
     render(){
         return (
             <BootstrapTable data={products}>
                 <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
                 <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
-                <TableHeaderColumn dataField="price" filter={{type: "NumberFilter", delay: 1000, numberComparators: ["=", ">", "<="]}}>Product Price</TableHeaderColumn>
+                <TableHeaderColumn dataField="inStockDate" dataFormat={dateFormatter} filter={{type: "DateFilter"}}>In Stock From</TableHeaderColumn>
             </BootstrapTable>
         );
     }

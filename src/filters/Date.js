@@ -8,7 +8,6 @@ class DateFilter extends React.Component {
     }
 
     filter(event) {
-        event.preventDefault();
         this.props.filterHandler(event.target.value, Const.FILTER_TYPE.DATE);
     }
 

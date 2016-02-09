@@ -23,6 +23,10 @@
   border-bottom-style: hidden;
 }
 
+.react-bs-container .table-header > table > thead > tr > th {
+  vertical-align: inherit;
+}
+
 .react-bs-container .table-container > table > tbody > tr > td,
 .react-bs-container .table-container > table > thead > tr > th,
 .react-bs-container .table-header > table > thead > tr > th .table-header-column{
@@ -48,6 +52,10 @@
 .react-bs-container .table-header > table > thead > tr > th .select-filter.placeholder-selected option:not([value='']) {
   color: initial;
   font-style: initial;
+}
+
+.react-bs-container .table-header > table > thead > tr > th .number-filter {
+  display: inline-flex;
 }
 
 .react-bs-container .table-header > table > thead > tr > th .number-filter-input {

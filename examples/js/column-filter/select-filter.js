@@ -28,7 +28,7 @@ function enumFormatter(cell, row, enumObject){
     return enumObject[cell];
 }
 
-export default class SelectFiltering extends React.Component{
+export default class SelectFilter extends React.Component{
     render(){
         return (
             <BootstrapTable data={products}>

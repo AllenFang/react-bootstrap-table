@@ -21,7 +21,7 @@ const routes = (
         <Route path="column" component={require('./column/demo')} />
         <Route path="sort" component={require('./sort/demo')} />
         <Route path="column-format" component={require('./column-format/demo')} />
-        <Route path="filtering" component={require('./filtering/demo')} />
+        <Route path="column-filter" component={require('./column-filter/demo')} />
         <Route path="selection" component={require('./selection/demo')} />
         <Route path="pagination" component={require('./pagination/demo')} />
         <Route path="manipulation" component={require('./manipulation/demo')} />

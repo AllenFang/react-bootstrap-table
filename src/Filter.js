@@ -8,7 +8,10 @@ export class Filter extends EventEmitter {
     }
 
     handleFilter(dataField, value, type) {
-        if (typeof value === 'object') {
+        const filterType = type || Const.FILTER_TYPE.CUSTOM;
+
+        if (value != null && typeof value === 'object') {
+            // value of the filter is an object
             let hasValue = true;
             for (let prop in value) {
                 if (!value[prop] || value[prop] === "") {
@@ -16,12 +19,13 @@ export class Filter extends EventEmitter {
                     break;
                 }
             }
-            (hasValue) ? this.currentFilter[dataField] = {value: value, type: type} : delete this.currentFilter[dataField];
-        } else if (value.trim() === "") {
+            // if one of the object properties is undefined or empty, we remove the filter
+            (hasValue) ? this.currentFilter[dataField] = {value: value, type: filterType} : delete this.currentFilter[dataField];
+        } else if (!value || value.trim() === "") {
             delete this.currentFilter[dataField];
         } else {
-            this.currentFilter[dataField] = {value: value.trim(), type: type || Const.FILTER_TYPE.TEXT};
+            this.currentFilter[dataField] = {value: value.trim(), type: filterType};
         }
-        this.emit('filter', this.currentFilter);
+        this.emit('onFilterChange', this.currentFilter);
     }
 }

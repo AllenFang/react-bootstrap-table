@@ -193,7 +193,7 @@ export class TableDataStore {
           switch (filterObj[key].type) {
             case Const.FILTER_TYPE.NUMBER:
             {
-              filterVal = filterObj[key].value.value;
+              filterVal = filterObj[key].value.number;
               break;
             }
             case Const.FILTER_TYPE.DATE:
@@ -202,8 +202,15 @@ export class TableDataStore {
               targetVal = new Date(row[key]);
               break;
             }
+            case Const.FILTER_TYPE.CUSTOM:
+            {
+              filterVal = (typeof filterObj[key].value === "object") ?
+                  undefined :
+                  (typeof filterObj[key].value === "string") ? filterObj[key].value.toLowerCase() : filterObj[key].value;
+              break;
+            }
             default: {
-              filterVal = filterObj[key].value.toLowerCase();
+              filterVal = (typeof filterObj[key].value === "string") ? filterObj[key].value.toLowerCase() : filterObj[key].value;
               break;
             }
           }
@@ -218,71 +225,21 @@ export class TableDataStore {
           switch (filterObj[key].type) {
             case Const.FILTER_TYPE.NUMBER:
             {
-              switch (filterObj[key].value.comparator) {
-                case "=":
-                {
-                  if (targetVal != filterVal) {
-                    valid = false;
-                  }
-                  break;
-                }
-                case ">":
-                {
-                  if (targetVal <= filterVal) {
-                    valid = false;
-                  }
-                  break;
-                }
-                case ">=":
-                {
-                  if (targetVal < filterVal) {
-                    valid = false;
-                  }
-                  break;
-                }
-                case "<":
-                {
-                  if (targetVal >= filterVal) {
-                    valid = false;
-                  }
-                  break;
-                }
-                case "<=":
-                {
-                  if (targetVal > filterVal) {
-                    valid = false;
-                    ;
-                  }
-                  break;
-                }
-                case "!=":
-                {
-                  if (targetVal == filterVal) {
-                    valid = false;
-                  }
-                  break;
-                }
-                default:
-                {
-                  console.error("Number comparator provided is not supported");
-                  break;
-                }
-              }
+              valid = this.filterNumber(targetVal, filterVal, filterObj[key].value.comparator);
               break;
             }
             case Const.FILTER_TYPE.DATE:
             {
-              if (targetVal.getDate() != filterVal.getDate() ||
-                  targetVal.getMonth() != filterVal.getMonth() ||
-                  targetVal.getYear() != filterVal.getYear()) {
-                valid = false;
-              }
+              valid = this.filterDate(targetVal, filterVal);
+              break;
+            }
+            case Const.FILTER_TYPE.CUSTOM:
+            {
+              valid = this.filterCustom(targetVal, filterVal, filterObj[key].value);
               break;
             }
             default: {
-              if (targetVal.toString().toLowerCase().indexOf(filterVal) == -1) {
-                valid = false;
-              }
+              valid = this.filterText(targetVal, filterVal);
               break;
             }
           }
@@ -294,6 +251,82 @@ export class TableDataStore {
       });
       this.isOnFilter = true;
     }
+  }
+
+  filterNumber(targetVal, filterVal, comparator) {
+    let valid = true;
+    switch (comparator) {
+      case "=":
+      {
+        if (targetVal != filterVal) {
+          valid = false;
+        }
+        break;
+      }
+      case ">":
+      {
+        if (targetVal <= filterVal) {
+          valid = false;
+        }
+        break;
+      }
+      case ">=":
+      {
+        if (targetVal < filterVal) {
+          valid = false;
+        }
+        break;
+      }
+      case "<":
+      {
+        if (targetVal >= filterVal) {
+          valid = false;
+        }
+        break;
+      }
+      case "<=":
+      {
+        if (targetVal > filterVal) {
+          valid = false;
+        }
+        break;
+      }
+      case "!=":
+      {
+        if (targetVal == filterVal) {
+          valid = false;
+        }
+        break;
+      }
+      default:
+      {
+        console.error("Number comparator provided is not supported");
+        break;
+      }
+    }
+    return valid;
+  }
+
+  filterDate(targetVal, filterVal) {
+    return (targetVal.getDate() == filterVal.getDate() &&
+        targetVal.getMonth() == filterVal.getMonth() &&
+        targetVal.getYear() == filterVal.getYear());
+  }
+
+  filterCustom(targetVal, filterVal, callbackInfo) {
+    if (callbackInfo != null && typeof callbackInfo === "object") {
+      return callbackInfo.callback(targetVal, callbackInfo.callbackParameters);
+    }
+
+    return filterText(targetVal, filterVal);
+  }
+
+  filterText(targetVal, filterVal) {
+    if (targetVal.toString().toLowerCase().indexOf(filterVal) == -1) {
+      return false;
+    }
+
+    return true;
   }
 
   search(searchText) {

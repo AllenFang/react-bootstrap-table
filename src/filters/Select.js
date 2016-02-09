@@ -1,5 +1,6 @@
 import React from 'react';
 import classSet from 'classnames';
+import Const from '../Const';
 
 class SelectFilter extends React.Component {
 	constructor(props) {
@@ -11,9 +12,8 @@ class SelectFilter extends React.Component {
 	}
 
 	filter(event) {
-		event.preventDefault();
 		this.setState({isPlaceholderSelected: (event.target.value === "")});
-		this.props.filterHandler(event.target.value);
+		this.props.filterHandler(event.target.value, Const.FILTER_TYPE.SELECT);
 	}
 
 	getOptions(options) {

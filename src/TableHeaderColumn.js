@@ -9,6 +9,11 @@ import NumberFilter from './filters/Number';
 
 class TableHeaderColumn extends React.Component{
 
+  constructor(props) {
+    super(props);
+    this.handleFilter = this.handleFilter.bind(this);
+  }
+
   handleColumnClick(e){
     if(!this.props.dataSort)return;
     let order = this.props.sort == Const.SORT_DESC?Const.SORT_ASC:Const.SORT_DESC;
@@ -23,21 +28,24 @@ class TableHeaderColumn extends React.Component{
     const delay = this.props.filter.delay || Const.FILTER_DELAY;
 
     switch (this.props.filter.type) {
-      case "TextFilter": {
+      case Const.FILTER_TYPE.TEXT: {
         const placeholder = this.props.filter.placeholder || `Enter ${this.props.children}...`;
-        return <TextFilter delay={delay} filterHandler={this.handleFilter.bind(this)} placeholder={placeholder} />;
+        return <TextFilter delay={delay} filterHandler={this.handleFilter} placeholder={placeholder} />;
       }
-      case "SelectFilter": {
+      case Const.FILTER_TYPE.SELECT: {
         const placeholder = this.props.filter.placeholder || `Select ${this.props.children}...`;
-        return <SelectFilter filterHandler={this.handleFilter.bind(this)} options={this.props.filter.options} placeholder={placeholder} />;
+        return <SelectFilter filterHandler={this.handleFilter} options={this.props.filter.options} placeholder={placeholder} />;
       }
-      case "NumberFilter": {
+      case Const.FILTER_TYPE.NUMBER: {
         const placeholder = this.props.filter.placeholder || (this.props.filter.options) ? `Select ${this.props.children}...` : `Enter ${this.props.children}...`;
-        return <NumberFilter filterHandler={this.handleFilter.bind(this)} delay={delay} options={this.props.filter.options} placeholder={placeholder} numberComparators={this.props.filter.numberComparators} />;
+        return <NumberFilter filterHandler={this.handleFilter} delay={delay} options={this.props.filter.options} placeholder={placeholder} numberComparators={this.props.filter.numberComparators} />;
       }
-      case "DateFilter": {
+      case Const.FILTER_TYPE.DATE: {
         const placeholder = this.props.filter.placeholder || `Select ${this.props.children}...`;
-        return <DateFilter filterHandler={this.handleFilter.bind(this)} placeholder={placeholder} />;
+        return <DateFilter filterHandler={this.handleFilter} placeholder={placeholder} />;
+      }
+      case Const.FILTER_TYPE.CUSTOM: {
+        return this.props.filter.getElement(this.handleFilter, this.props.filter.customFilterParameters);
       }
     }
   }
@@ -79,6 +87,12 @@ class TableHeaderColumn extends React.Component{
     )
   }
 }
+
+var filterTypeArray = [];
+for (let key in Const.FILTER_TYPE) {
+  filterTypeArray.push(Const.FILTER_TYPE[key]);
+}
+
 TableHeaderColumn.propTypes = {
   dataField: React.PropTypes.string,
   dataAlign: React.PropTypes.string,
@@ -96,15 +110,17 @@ TableHeaderColumn.propTypes = {
   sort: React.PropTypes.string,
   formatExtraData: React.PropTypes.any,
   filter: React.PropTypes.shape({
-    type: React.PropTypes.string.isRequired,
+    type: React.PropTypes.oneOf(filterTypeArray),
     delay: React.PropTypes.number,
     options: React.PropTypes.oneOfType([
-      React.PropTypes.object,
-      React.PropTypes.arrayOf(React.PropTypes.number)
+      React.PropTypes.object, // for SelectFilter
+      React.PropTypes.arrayOf(React.PropTypes.number) //for NumberFilter
         ]),
     numberComparators: React.PropTypes.arrayOf(React.PropTypes.string),
     emitter: React.PropTypes.object,
-    placeholder: React.PropTypes.string
+    placeholder: React.PropTypes.string,
+    getElement: React.PropTypes.func,
+    customFilterParameters: React.PropTypes.object
   })
 };
 
