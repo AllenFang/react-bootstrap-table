@@ -196,12 +196,6 @@ export class TableDataStore {
               filterVal = filterObj[key].value.number;
               break;
             }
-            case Const.FILTER_TYPE.DATE:
-            {
-              filterVal = new Date(filterObj[key].value);
-              targetVal = new Date(row[key]);
-              break;
-            }
             case Const.FILTER_TYPE.CUSTOM:
             {
               filterVal = (typeof filterObj[key].value === "object") ?
@@ -217,7 +211,7 @@ export class TableDataStore {
 
           if (this.colInfos[key]) {
             const { format, filterFormatted, formatExtraData } = this.colInfos[key];
-            if (filterFormatted && format) {
+            if(filterFormatted && format) {
               targetVal = format(row[key], row, formatExtraData);
             }
           }
@@ -310,7 +304,7 @@ export class TableDataStore {
   filterDate(targetVal, filterVal) {
     return (targetVal.getDate() == filterVal.getDate() &&
         targetVal.getMonth() == filterVal.getMonth() &&
-        targetVal.getYear() == filterVal.getYear());
+        targetVal.getFullYear() == filterVal.getFullYear());
   }
 
   filterCustom(targetVal, filterVal, callbackInfo) {

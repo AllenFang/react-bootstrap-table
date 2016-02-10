@@ -30,19 +30,19 @@ class TableHeaderColumn extends React.Component{
     switch (this.props.filter.type) {
       case Const.FILTER_TYPE.TEXT: {
         const placeholder = this.props.filter.placeholder || `Enter ${this.props.children}...`;
-        return <TextFilter delay={delay} filterHandler={this.handleFilter} placeholder={placeholder} />;
+        return <TextFilter placeholder={placeholder} defaultValue={this.props.filter.defaultValue} filterHandler={this.handleFilter} delay={delay} />;
       }
       case Const.FILTER_TYPE.SELECT: {
         const placeholder = this.props.filter.placeholder || `Select ${this.props.children}...`;
-        return <SelectFilter filterHandler={this.handleFilter} options={this.props.filter.options} placeholder={placeholder} />;
+        return <SelectFilter placeholder={placeholder} defaultValue={this.props.filter.defaultValue} filterHandler={this.handleFilter} options={this.props.filter.options} />;
       }
       case Const.FILTER_TYPE.NUMBER: {
         const placeholder = this.props.filter.placeholder || (this.props.filter.options) ? `Select ${this.props.children}...` : `Enter ${this.props.children}...`;
-        return <NumberFilter filterHandler={this.handleFilter} delay={delay} options={this.props.filter.options} placeholder={placeholder} numberComparators={this.props.filter.numberComparators} />;
+        return <NumberFilter placeholder={placeholder} defaultValue={this.props.filter.defaultValue} filterHandler={this.handleFilter} delay={delay} options={this.props.filter.options} numberComparators={this.props.filter.numberComparators} />;
       }
       case Const.FILTER_TYPE.DATE: {
         const placeholder = this.props.filter.placeholder || `Select ${this.props.children}...`;
-        return <DateFilter filterHandler={this.handleFilter} placeholder={placeholder} />;
+        return <DateFilter placeholder={placeholder} defaultValue={this.props.filter.defaultValue} filterHandler={this.handleFilter} />;
       }
       case Const.FILTER_TYPE.CUSTOM: {
         return this.props.filter.getElement(this.handleFilter, this.props.filter.customFilterParameters);

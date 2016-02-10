@@ -22,7 +22,7 @@ function addProducts(quantity) {
 addProducts(5);
 
 function dateFormatter(cell, row) {
-    return cell.getDate()  + "/" + (cell.getMonth()+1) + "/" + cell.getFullYear();
+    return `${("0" + cell.getDate()).slice(-2)}/${("0" + (cell.getMonth() + 1)).slice(-2)}/${cell.getFullYear()}`;
 }
 
 export default class DateFilter extends React.Component{

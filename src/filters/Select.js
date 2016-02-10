@@ -7,7 +7,8 @@ class SelectFilter extends React.Component {
 		super(props);
 		this.filter = this.filter.bind(this);
 		this.state = {
-			isPlaceholderSelected: true
+			isPlaceholderSelected: (this.props.defaultValue == undefined ||
+									!this.props.options.hasOwnProperty(this.props.defaultValue))
 		};
 	}
 
@@ -16,22 +17,32 @@ class SelectFilter extends React.Component {
 		this.props.filterHandler(event.target.value, Const.FILTER_TYPE.SELECT);
 	}
 
-	getOptions(options) {
+	getOptions() {
 		let optionTags = [];
+		const options = this.props.options;
 		optionTags.push(<option key="-1" value="">{this.props.placeholder}</option>);
-		Object.keys(options).map((value) => {
-			optionTags.push(<option key={value} value={value}>{options[value]}</option>);
+		Object.keys(options).map((key) => {
+			optionTags.push(<option key={key} value={key}>{options[key]}</option>);
 		});
 		return optionTags;
 	}
 
+	componentDidMount() {
+		if (this.refs.selectInput.value) {
+			this.props.filterHandler(this.refs.selectInput.value, Const.FILTER_TYPE.SELECT);
+		}
+	}
+
 	render() {
-		const options = this.getOptions(this.props.options);
-		var selectClass = classSet("filter", "select-filter", "form-control", {	"placeholder-selected": this.state.isPlaceholderSelected });
+		var selectClass = classSet("filter", "select-filter", "form-control",
+							{"placeholder-selected": this.state.isPlaceholderSelected});
 
 		return (
-			<select ref="select" className={selectClass} onChange={this.filter} defaultValue="">
-				{options}
+			<select ref="selectInput"
+					className={selectClass}
+					onChange={this.filter}
+					defaultValue={(this.props.defaultValue != undefined) ? this.props.defaultValue : ""}>
+				{this.getOptions()}
 			</select>
 		);
 	}

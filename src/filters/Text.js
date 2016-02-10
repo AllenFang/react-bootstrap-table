@@ -19,15 +19,27 @@ class TextFilter extends React.Component {
 		}, self.props.delay);
 	}
 
+	componentDidMount() {
+		if (this.refs.inputText.defaultValue) {
+			this.props.filterHandler(this.refs.inputText.defaultValue, Const.FILTER_TYPE.TEXT);
+		}
+	}
+
 	render() {
 		return (
-			<input className="filter text-filter form-control" type="text" onChange={this.filter} placeholder={this.props.placeholder} />
+			<input ref="inputText"
+				   className="filter text-filter form-control"
+				   type="text"
+				   onChange={this.filter}
+				   placeholder={this.props.placeholder}
+				   defaultValue={(this.props.defaultValue) ? this.props.defaultValue : ""} />
 		);
 	}
 };
 
 TextFilter.propTypes = {
 	filterHandler: React.PropTypes.func.isRequired,
+	defaultValue: React.PropTypes.string,
 	delay: React.PropTypes.number
 };
 
