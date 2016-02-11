@@ -1,3 +1,18 @@
+<a name="v1.5.0"></a>
+# [v1.5.0](https://github.com/AllenFang/react-bootstrap-table/compare/v1.4.6...v1.5.0) (2016-02-05)
+### Bug fixes
+* Fix variable reference issue for default selected([13f736c](https://github.com/AllenFang/react-bootstrap-table/commit/13f736c4c38066f1c6030a1e45e7557826fb029c))
+
+### Features
+* Support column formatting with extra data([9de2e9e](https://github.com/AllenFang/react-bootstrap-table/commit/9de2e9ed90c8c0601a579f203570e2251b70728d))
+	* Check [this](https://github.com/AllenFang/react-bootstrap-table/blob/79bc278924fffe492ab05e8f94b2ec9b7f4ada8b/examples/js/column-format/extra-data-column-format-table.js) examples
+* Change the pagination behavior([74c1fc7](https://github.com/AllenFang/react-bootstrap-table/commit/74c1fc7ed8c6cf2f2d46033bd8f8416436bfb895))
+	* Check this [PR](https://github.com/AllenFang/react-bootstrap-table/pull/256) for more detail
+
+### Enhancement
+* Show sorting caret on header if sort enabled([55ac719](https://github.com/AllenFang/react-bootstrap-table/commit/55ac719981bfd30708059f218b33431e4650bc2a))
+
+
 <a name="v1.4.6"></a>
 # [v1.4.6](https://github.com/AllenFang/react-bootstrap-table/compare/v1.4.5...v1.4.6) (2016-01-30)
 ### Features
