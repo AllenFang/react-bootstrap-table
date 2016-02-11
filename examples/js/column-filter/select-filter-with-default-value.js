@@ -2,17 +2,12 @@
 import React from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
-
 var products = [];
 
 var qualityType = {
     0: "good",
     1: "bad",
     2: "unknown"
-};
-var inStockStatus = {
-    1: "yes",
-    2: "no"
 };
 
 function addProducts(quantity) {
@@ -22,8 +17,7 @@ function addProducts(quantity) {
         products.push({
             id: id,
             name: "Item name " + id,
-            quality: i%3,
-            inStock: i%2+1
+            quality: i%3
         });
     }
 }
@@ -34,14 +28,13 @@ function enumFormatter(cell, row, enumObject){
     return enumObject[cell];
 }
 
-export default class ExtraDataColumnFormatTable extends React.Component{
+export default class SelectFilterWithDefaultValue extends React.Component{
     render(){
         return (
             <BootstrapTable data={products}>
                 <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
                 <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
-                <TableHeaderColumn dataField="quality" dataFormat={enumFormatter} formatExtraData={qualityType}>Product Quality</TableHeaderColumn>
-                <TableHeaderColumn dataField="inStock" dataFormat={enumFormatter} formatExtraData={inStockStatus}>Product Stock Status</TableHeaderColumn>
+                <TableHeaderColumn dataField="quality" dataFormat={enumFormatter} formatExtraData={qualityType} filter={{type: "SelectFilter", options: qualityType, defaultValue: 1}}>Product Quality</TableHeaderColumn>
             </BootstrapTable>
         );
     }
