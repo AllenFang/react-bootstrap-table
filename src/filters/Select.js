@@ -20,7 +20,7 @@ class SelectFilter extends React.Component {
 	getOptions() {
 		let optionTags = [];
 		const options = this.props.options;
-		optionTags.push(<option key="-1" value="">{this.props.placeholder}</option>);
+		optionTags.push(<option key="-1" value="">{this.props.placeholder || `Select ${this.props.columnName}...`}</option>);
 		Object.keys(options).map((key) => {
 			optionTags.push(<option key={key} value={key}>{options[key]}</option>);
 		});
@@ -50,7 +50,9 @@ class SelectFilter extends React.Component {
 
 SelectFilter.propTypes = {
 	filterHandler: React.PropTypes.func.isRequired,
-	options: React.PropTypes.object.isRequired
+	options: React.PropTypes.object.isRequired,
+	placeholder: React.PropTypes.string,
+	columnName: React.PropTypes.string
 };
 
 export default SelectFilter;

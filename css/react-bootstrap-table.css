@@ -55,7 +55,7 @@
 }
 
 .react-bs-container .table-header > table > thead > tr > th .number-filter {
-  display: inline-flex;
+  display: flex;
 }
 
 .react-bs-container .table-header > table > thead > tr > th .number-filter-input {

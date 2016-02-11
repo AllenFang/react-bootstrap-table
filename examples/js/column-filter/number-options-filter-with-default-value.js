@@ -11,20 +11,22 @@ function addProducts(quantity) {
         products.push({
             id: id,
             name: "Item name " + id,
-            price: 2100 + i
+            satisfaction: Math.floor(Math.random() * 6)
         });
     }
 }
 
 addProducts(5);
 
-export default class TextFilterWithDefaultValue extends React.Component{
+var satisfaction = [0, 1, 2, 3, 4, 5];
+
+export default class NumberOptionsFilterWithDefaultValue extends React.Component{
     render(){
         return (
             <BootstrapTable data={products}>
                 <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
-                <TableHeaderColumn dataField="name" filter={{type: "TextFilter", defaultValue: "0"}}>Product Name</TableHeaderColumn>
-                <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+                <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
+                <TableHeaderColumn dataField="satisfaction" filter={{type: "NumberFilter", options: satisfaction, defaultValue: {number: 3, comparator: ">="}}}>Buyer Satisfaction</TableHeaderColumn>
             </BootstrapTable>
         );
     }

@@ -11,7 +11,7 @@ class NumberFilter extends React.Component {
         this.state = {
             isPlaceholderSelected: (this.props.defaultValue == undefined ||
                                     this.props.defaultValue.number == undefined ||
-                                    this.props.options.indexOf(this.props.defaultValue.number) == -1)
+                                    (this.props.options && this.props.options.indexOf(this.props.defaultValue.number) == -1))
         };
         this.onChangeNumber = this.onChangeNumber.bind(this);
         this.onChangeNumberSet = this.onChangeNumberSet.bind(this);
@@ -62,7 +62,8 @@ class NumberFilter extends React.Component {
     getNumberOptions() {
         let optionTags = [];
         const options = this.props.options;
-        optionTags.push(<option key="-1" value="">{this.props.placeholder}</option>);
+
+        optionTags.push(<option key="-1" value="">{this.props.placeholder || `Select ${this.props.columnName}...`}</option>);
         for (let i = 0; i < options.length; i++) {
             optionTags.push(<option key={i} value={options[i]}>{options[i]}</option>);
         };
@@ -71,7 +72,8 @@ class NumberFilter extends React.Component {
 
     componentDidMount() {
         if (this.refs.numberFilterComparator.value && this.refs.numberFilter.value) {
-            this.props.filterHandler({number: this.refs.numberFilter.value, comparator: this.refs.numberFilterComparator.value},
+            this.props.filterHandler({number: this.refs.numberFilter.value,
+                comparator: this.refs.numberFilterComparator.value},
                 Const.FILTER_TYPE.NUMBER);
         }
     }
@@ -91,15 +93,20 @@ class NumberFilter extends React.Component {
                 {(this.props.options) ? <select ref="numberFilter"
                                                 className={selectClass}
                                                 onChange={this.onChangeNumberSet}
-                                                defaultValue={(this.props.defaultValue) ? this.props.defaultValue.number : ""}>
+                                                defaultValue={(this.props.defaultValue) ?
+                                                    this.props.defaultValue.number :
+                                                    ""}>
                                             {this.getNumberOptions()}
                                         </select> :
+
                                         <input ref="numberFilter"
                                                type="number"
                                                className="number-filter-input form-control"
-                                               placeholder={this.props.placeholder}
+                                               placeholder={this.props.placeholder || `Enter ${this.props.columnName}...`}
                                                onChange={this.onChangeNumber}
-                                               defaultValue={(this.props.defaultValue) ? this.props.defaultValue.number : ""} />}
+                                               defaultValue={(this.props.defaultValue) ?
+                                                    this.props.defaultValue.number :
+                                                    ""} />}
             </div>
         );
     }
@@ -130,6 +137,12 @@ NumberFilter.propTypes = {
             }
         }
     },
+    placeholder: React.PropTypes.string,
+    columnName: React.PropTypes.string
+};
+
+NumberFilter.defaultProps = {
+    delay: Const.FILTER_DELAY
 };
 
 export default NumberFilter;

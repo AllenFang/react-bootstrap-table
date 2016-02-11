@@ -11,20 +11,20 @@ function addProducts(quantity) {
         products.push({
             id: id,
             name: "Item name " + id,
-            price: 2100 + i
+            price: Math.floor((Math.random() * 100) + 1)
         });
     }
 }
 
 addProducts(5);
 
-export default class TextFilterWithDefaultValue extends React.Component{
+export default class NumberFilterWithDefaultValue extends React.Component{
     render(){
         return (
             <BootstrapTable data={products}>
                 <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
-                <TableHeaderColumn dataField="name" filter={{type: "TextFilter", defaultValue: "0"}}>Product Name</TableHeaderColumn>
-                <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+                <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
+                <TableHeaderColumn dataField="price" filter={{type: "NumberFilter", delay: 1000, numberComparators: ["=", ">", "<="], defaultValue: {number: 50, comparator: ">"}}}>Product Price</TableHeaderColumn>
             </BootstrapTable>
         );
     }

@@ -35,7 +35,7 @@ function enumFormatter(cell, row, enumObject){
 }
 
 function dateFormatter(cell, row) {
-    return cell.getDate()  + "/" + (cell.getMonth()+1) + "/" + cell.getFullYear();
+    return `${("0" + cell.getDate()).slice(-2)}/${("0" + (cell.getMonth() + 1)).slice(-2)}/${cell.getFullYear()}`;
 }
 
 var satisfaction = [0, 1, 2, 3, 4, 5];

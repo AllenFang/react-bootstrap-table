@@ -31,7 +31,7 @@ class TextFilter extends React.Component {
 				   className="filter text-filter form-control"
 				   type="text"
 				   onChange={this.filter}
-				   placeholder={this.props.placeholder}
+				   placeholder={this.props.placeholder || `Enter ${this.props.columnName}...`}
 				   defaultValue={(this.props.defaultValue) ? this.props.defaultValue : ""} />
 		);
 	}
@@ -40,7 +40,13 @@ class TextFilter extends React.Component {
 TextFilter.propTypes = {
 	filterHandler: React.PropTypes.func.isRequired,
 	defaultValue: React.PropTypes.string,
-	delay: React.PropTypes.number
+	delay: React.PropTypes.number,
+	placeholder: React.PropTypes.string,
+	columnName: React.PropTypes.string
 };
+
+TextFilter.defaultProps = {
+	delay: Const.FILTER_DELAY
+}
 
 export default TextFilter;

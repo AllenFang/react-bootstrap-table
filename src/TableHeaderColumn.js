@@ -25,24 +25,18 @@ class TableHeaderColumn extends React.Component{
   }
 
   getFilters() {
-    const delay = this.props.filter.delay || Const.FILTER_DELAY;
-
     switch (this.props.filter.type) {
       case Const.FILTER_TYPE.TEXT: {
-        const placeholder = this.props.filter.placeholder || `Enter ${this.props.children}...`;
-        return <TextFilter placeholder={placeholder} defaultValue={this.props.filter.defaultValue} filterHandler={this.handleFilter} delay={delay} />;
+        return <TextFilter {...this.props.filter} columnName={this.props.children} filterHandler={this.handleFilter} />;
       }
       case Const.FILTER_TYPE.SELECT: {
-        const placeholder = this.props.filter.placeholder || `Select ${this.props.children}...`;
-        return <SelectFilter placeholder={placeholder} defaultValue={this.props.filter.defaultValue} filterHandler={this.handleFilter} options={this.props.filter.options} />;
+        return <SelectFilter {...this.props.filter} columnName={this.props.children} filterHandler={this.handleFilter} />;
       }
       case Const.FILTER_TYPE.NUMBER: {
-        const placeholder = this.props.filter.placeholder || (this.props.filter.options) ? `Select ${this.props.children}...` : `Enter ${this.props.children}...`;
-        return <NumberFilter placeholder={placeholder} defaultValue={this.props.filter.defaultValue} filterHandler={this.handleFilter} delay={delay} options={this.props.filter.options} numberComparators={this.props.filter.numberComparators} />;
+        return <NumberFilter {...this.props.filter} columnName={this.props.children} filterHandler={this.handleFilter} />;
       }
       case Const.FILTER_TYPE.DATE: {
-        const placeholder = this.props.filter.placeholder || `Select ${this.props.children}...`;
-        return <DateFilter placeholder={placeholder} defaultValue={this.props.filter.defaultValue} filterHandler={this.handleFilter} />;
+        return <DateFilter {...this.props.filter} columnName={this.props.children} filterHandler={this.handleFilter} />;
       }
       case Const.FILTER_TYPE.CUSTOM: {
         return this.props.filter.getElement(this.handleFilter, this.props.filter.customFilterParameters);

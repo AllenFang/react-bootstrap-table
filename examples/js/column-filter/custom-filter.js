@@ -46,7 +46,7 @@ class CheckboxFilter extends React.Component {
         return (
             <div>
                 <input ref="okCheckbox" type="checkbox" className="filter" onChange={this.filter} defaultChecked={true} /><label>{this.props.textOK}</label>
-                <input ref="nokCheckbox" type="checkbox" className="filter" onChange={this.filter} defaultChecked={true} /><label>{this.props.textNOK}</label>
+                <input ref="nokCheckbox" type="checkbox" className="filter" onChange={this.filter} defaultChecked={true} style={{marginLeft:  30 + "px"}} /><label>{this.props.textNOK}</label>
             </div>
         );
     }

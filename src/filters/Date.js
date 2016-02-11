@@ -39,7 +39,6 @@ class DateFilter extends React.Component {
                    className="filter date-filter form-control"
                    type="date"
                    onChange={this.filter}
-                   placeholder={this.props.placeholder}
                    defaultValue={this.setDefaultDate()} />
         );
     }
@@ -47,7 +46,8 @@ class DateFilter extends React.Component {
 
 DateFilter.propTypes = {
     filterHandler: React.PropTypes.func.isRequired,
-    defaultValue: React.PropTypes.object
+    defaultValue: React.PropTypes.object,
+    columnName: React.PropTypes.string
 };
 
 export default DateFilter;
