@@ -232,11 +232,10 @@ class BootstrapTable extends React.Component {
     if(typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
     return (
       <div>
-        <div ref="table"
-             className="react-bs-container"
-             onMouseEnter={this.handleMouseEnter.bind(this)}
-             onMouseLeave={this.handleMouseLeave.bind(this)}>
-          {toolBar}
+        {toolBar}
+        <div className="react-bs-container" ref="table"
+            onMouseEnter={this.handleMouseEnter.bind(this)}
+            onMouseLeave={this.handleMouseLeave.bind(this)}>
           <TableHeader
             ref="header"
             rowSelectType={this.props.selectRow.mode}
@@ -627,7 +626,7 @@ class BootstrapTable extends React.Component {
         }];
       }
       return (
-        <div className="tool-bar">
+        <div className="react-bs-table-tool-bar">
           <ToolBar
             clearSearch={this.props.options.clearSearch}
             enableInsert={this.props.insertRow}
