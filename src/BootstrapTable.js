@@ -231,9 +231,9 @@ class BootstrapTable extends React.Component {
     let sortIndicator = this.props.options.sortIndicator;
     if(typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
     return (
-      <div>
+      <div className="react-bs-table-container">
         {toolBar}
-        <div className="react-bs-container" ref="table"
+        <div className="react-bs-table" ref="table"
             onMouseEnter={this.handleMouseEnter.bind(this)}
             onMouseLeave={this.handleMouseLeave.bind(this)}>
           <TableHeader
@@ -573,7 +573,7 @@ class BootstrapTable extends React.Component {
         dataSize = this.store.getDataNum();
       }
       return (
-        <div className="table-footer-pagination">
+        <div className="react-bs-table-pagination">
           <PaginationList
             ref="pagination"
             currPage={ this.state.currPage }

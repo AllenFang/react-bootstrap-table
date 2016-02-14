@@ -1,22 +1,27 @@
 /*editor error animate*/
 /*@import "~toastr/build/toastr.min.css";*/
 
-.react-bs-container {
+.react-bs-table {
   border: 1px solid #ddd;
   border-radius: 5px;
-  margin: 10px;
+  /*margin: 10px;*/
 }
 
-.react-bs-container table {
+.react-bs-table table {
   margin-bottom: 0px;
   table-layout: fixed;
 }
 
-.react-bs-container table td,
-.react-bs-container table th {
+.react-bs-table table td,
+.react-bs-table table th {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+.react-bs-table,
+.react-bs-table-tool-bar,
+.react-bs-table-pagination {
+  margin: 10px;
 }
 
 .react-bs-container-header {
