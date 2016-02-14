@@ -25,7 +25,8 @@ class TableHeader extends React.Component{
   }
 
   render(){
-    // var containerClasses = classSet("table-header");
+    var containerClasses = classSet("react-bs-container-header",
+      "table-header-wrapper");
     var tableClasses = classSet("table", "table-hover", {
         "table-bordered": this.props.bordered,
         "table-condensed": this.props.condensed
@@ -34,7 +35,7 @@ class TableHeader extends React.Component{
     this._attachClearSortCaretFunc();
 
     return(
-      <div ref="container" className="react-bs-container-header">
+      <div ref="container" className={containerClasses}>
         <table className={tableClasses}>
           <thead>
             <tr ref="header">
