@@ -7,6 +7,7 @@ import PaginationList from './pagination/PaginationList';
 import ToolBar from './toolbar/ToolBar';
 import TableFilter from './TableFilter';
 import {TableDataStore} from './store/TableDataStore';
+import Util from './util';
 import exportCSV from './csv_export_util';
 import {Filter} from './Filter';
 
@@ -172,6 +173,7 @@ class BootstrapTable extends React.Component {
   componentDidMount() {
     this._adjustHeaderWidth();
     window.addEventListener('resize', this._adjustHeaderWidth);
+    console.log(this.refs.body.refs.container);
     this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader);
   }
 
@@ -235,46 +237,41 @@ class BootstrapTable extends React.Component {
              onMouseEnter={this.handleMouseEnter.bind(this)}
              onMouseLeave={this.handleMouseLeave.bind(this)}>
           {toolBar}
-          <div className="react-bs-container-header">
-            <TableHeader
-              ref="header"
-              rowSelectType={this.props.selectRow.mode}
-              hideSelectColumn={this.props.selectRow.hideSelectColumn}
-              sortName={sortInfo ? sortInfo.sortField : undefined}
-              sortOrder={sortInfo ? sortInfo.order : undefined}
-              sortIndicator={sortIndicator}
-              onSort={this.handleSort.bind(this)}
-              onSelectAllRow={this.handleSelectAllRow.bind(this)}
-              bordered={this.props.bordered}
-              condensed={this.props.condensed}
-              isFiltered={this.filter ? true : false}
-              isSelectAll={isSelectAll}>
-              {this.props.children}
-            </TableHeader>
-          </div>
-          <div className='react-bs-container-body' style={ style }>
-            <TableBody
-              height={this.props.height}
-              maxHeight={this.props.maxHeight}
-              ref="body"
-              data={this.state.data}
-              columns={columns}
-              trClassName={this.props.trClassName}
-              striped={this.props.striped}
-              bordered={this.props.bordered}
-              hover={this.props.hover}
-              keyField={this.store.getKeyField()}
-              condensed={this.props.condensed}
-              selectRow={this.props.selectRow}
-              cellEdit={this.props.cellEdit}
-              selectedRowKeys={this.state.selectedRowKeys}
-              onRowClick={this.handleRowClick.bind(this)}
-              onRowMouseOver={this.handleRowMouseOver.bind(this)}
-              onRowMouseOut={this.handleRowMouseOut.bind(this)}
-              onSelectRow={this.handleSelectRow.bind(this)}
-              noDataText={this.props.options.noDataText}
-            />
-          </div>
+          <TableHeader
+            ref="header"
+            rowSelectType={this.props.selectRow.mode}
+            hideSelectColumn={this.props.selectRow.hideSelectColumn}
+            sortName={sortInfo ? sortInfo.sortField : undefined}
+            sortOrder={sortInfo ? sortInfo.order : undefined}
+            sortIndicator={sortIndicator}
+            onSort={this.handleSort.bind(this)}
+            onSelectAllRow={this.handleSelectAllRow.bind(this)}
+            bordered={this.props.bordered}
+            condensed={this.props.condensed}
+            isFiltered={this.filter ? true : false}
+            isSelectAll={isSelectAll}>
+            {this.props.children}
+          </TableHeader>
+          <TableBody
+            ref="body"
+            style={style}
+            data={this.state.data}
+            columns={columns}
+            trClassName={this.props.trClassName}
+            striped={this.props.striped}
+            bordered={this.props.bordered}
+            hover={this.props.hover}
+            keyField={this.store.getKeyField()}
+            condensed={this.props.condensed}
+            selectRow={this.props.selectRow}
+            cellEdit={this.props.cellEdit}
+            selectedRowKeys={this.state.selectedRowKeys}
+            onRowClick={this.handleRowClick.bind(this)}
+            onRowMouseOver={this.handleRowMouseOver.bind(this)}
+            onRowMouseOut={this.handleRowMouseOut.bind(this)}
+            onSelectRow={this.handleSelectRow.bind(this)}
+            noDataText={this.props.options.noDataText}
+          />
         </div>
         {tableFilter}
         {pagination}
@@ -667,18 +664,38 @@ class BootstrapTable extends React.Component {
   }
 
   _scrollHeader = (e) => {
+    console.log(e.currentTarget.scrollLeft);
     this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
   }
 
   _adjustHeaderWidth = () => {
-    var tableHeaderDom = this.refs.header.refs.container.childNodes[0];
-    var tableBodyDom = this.refs.body.refs.container.childNodes[0];
-    if(tableHeaderDom.offsetWidth !== tableBodyDom.offsetWidth){
-      tableHeaderDom.style.width = tableBodyDom.offsetWidth + "px";
+    // var tableHeaderDom = this.refs.header.refs.container.childNodes[0];
+    // var tableBodyDom = this.refs.body.refs.container.childNodes[0];
+    // if(tableHeaderDom.offsetWidth !== tableBodyDom.offsetWidth){
+    //   tableHeaderDom.style.width = tableBodyDom.offsetWidth + "px";
+    // }
+    // const headerProps = this.refs.body.getBodyHeaderDomProp();
+    // this.refs.header.fitHeader(headerProps,
+    //   this.refs.body.refs.container.scrollHeight > this.refs.body.refs.container.clientHeight);
+    const header = this.refs.header.refs.header;
+    const scrollBarWidth = Util.getScrollBarWidth();
+    const tbody = this.refs.body.refs.tbody;
+    const firstRow = tbody.childNodes[0];
+    if (firstRow && this.store.getDataNum()) {
+      const cells = firstRow.childNodes;
+      for (let i = 0; i < cells.length; i++) {
+        const cell = cells[i];
+        let width = parseInt(getComputedStyle(cell).width.replace("px", ""));
+        const lastPadding = (cells.length -1 == i ? scrollBarWidth : 0);
+        if (width <= 0) {
+          width = 120;
+          cell.width = width + lastPadding + "px";
+        }
+        console.log(width + "," + lastPadding);
+        header.childNodes[i].width = width + lastPadding + "px";
+      }
     }
-    const headerProps = this.refs.body.getBodyHeaderDomProp();
-    this.refs.header.fitHeader(headerProps,
-      this.refs.body.refs.container.scrollHeight > this.refs.body.refs.container.clientHeight);
+    console.log(tbody);
   }
 
   _handleAfterAddingRow(newObj) {

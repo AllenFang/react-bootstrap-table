@@ -34,14 +34,16 @@ class TableHeader extends React.Component{
     this._attachClearSortCaretFunc();
 
     return(
-      <table className={tableClasses}>
-        <thead>
-          <tr ref="header">
-            {selectRowHeaderCol}
-            {this.props.children}
-          </tr>
-        </thead>
-      </table>
+      <div ref="container" className="react-bs-container-header">
+        <table className={tableClasses}>
+          <thead>
+            <tr ref="header">
+              {selectRowHeaderCol}
+              {this.props.children}
+            </tr>
+          </thead>
+        </table>
+      </div>
     )
   }
 

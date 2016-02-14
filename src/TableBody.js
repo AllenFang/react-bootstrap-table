@@ -21,16 +21,14 @@ class TableBody extends React.Component{
   }
 
   componentDidMount(){
-    this.adjustBody();
+    // this.adjustBody();
   }
 
   componentDidUpdate(){
-    this.adjustBody();
+    // this.adjustBody();
   }
 
   render(){
-    var containerClasses = classSet("table-container");
-
     var tableClasses = classSet("table", {
       'table-striped': this.props.striped,
       'table-bordered': this.props.bordered,
@@ -132,7 +130,7 @@ class TableBody extends React.Component{
 
     this.editing = false;
 
-    var height = this.calculateContainerHeight().toString();
+    // var height = this.calculateContainerHeight().toString();
 
     // return(
     //   <div ref="container" className={containerClasses} style={{height: height}}>
@@ -146,12 +144,14 @@ class TableBody extends React.Component{
     // )
 
     return(
-      <table ref="body" className={tableClasses}>
-        {tableHeader}
-        <tbody>
-          {tableRows}
-        </tbody>
-      </table>
+      <div ref="container" className='react-bs-container-body' style={ this.props.style }>
+        <table className={tableClasses}>
+          {tableHeader}
+          <tbody ref="tbody">
+            {tableRows}
+          </tbody>
+        </table>
+      </div>
     )
   }
 
@@ -172,7 +172,8 @@ class TableBody extends React.Component{
         /** add min-wdth to fix user assign column width not eq offsetWidth in large column table **/
       };
       let sortCaert = column.sort?(Util.renderReactSortCaret(Const.SORT_DESC)):null;
-      return (<col style={style} key={i} className={column.className}>{column.text}{sortCaert}</col>);
+      // return (<col style={style} key={i} className={column.className}>{column.text}{sortCaert}</col>);
+      return (<col style={style} key={i} className={column.className}></col>);
     });
 
     return(
@@ -275,31 +276,31 @@ class TableBody extends React.Component{
     return headerDomProps;
   }
 
-  adjustBody() {
-    this.hardFixHeaderWidth();
-    if(this.props.condensed) {
-      this.refs.body.style.marginTop = "-36px";
-    }
+  // adjustBody() {
+  //   this.hardFixHeaderWidth();
+  //   if(this.props.condensed) {
+  //     this.refs.container.style.marginTop = "-36px";
+  //   }
+  //
+  //   if(this.props.maxHeight &&
+  //     parseInt(this.props.maxHeight) < this.refs.container.offsetHeight) {
+  //     this.refs.container.style.height = (this.props.maxHeight - 42) + "px";
+  //   }
+  // }
+  //
+  // hardFixHeaderWidth(){
+  //   var headers = this.refs.header.childNodes[0].childNodes;
+  //   for(let i=0;i<headers.length;i++){
+  //     headers[i].style.width = headers[i].offsetWidth + "px";
+  //   }
+  // }
 
-    if(this.props.maxHeight &&
-      parseInt(this.props.maxHeight) < this.refs.container.offsetHeight) {
-      this.refs.container.style.height = (this.props.maxHeight - 42) + "px";
-    }
-  }
-
-  hardFixHeaderWidth(){
-    var headers = this.refs.header.childNodes[0].childNodes;
-    for(let i=0;i<headers.length;i++){
-      headers[i].style.width = headers[i].offsetWidth + "px";
-    }
-  }
-
-  calculateContainerHeight(){
-    if(this.props.height == "100%") return this.props.height;
-    else{
-      return parseInt(this.props.height) - 42;
-    }
-  }
+  // calculateContainerHeight(){
+  //   if(this.props.height == "100%") return this.props.height;
+  //   else{
+  //     return parseInt(this.props.height);
+  //   }
+  // }
 
   _isSelectRowDefined(){
     return this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ||
@@ -307,7 +308,7 @@ class TableBody extends React.Component{
   }
 }
 TableBody.propTypes = {
-  height: React.PropTypes.string,
+  // height: React.PropTypes.string,
   data: React.PropTypes.array,
   columns: React.PropTypes.array,
   striped: React.PropTypes.bool,
@@ -318,6 +319,7 @@ TableBody.propTypes = {
   selectedRowKeys: React.PropTypes.array,
   onRowClick: React.PropTypes.func,
   onSelectRow: React.PropTypes.func,
-  noDataText: React.PropTypes.string
+  noDataText: React.PropTypes.string,
+  style: React.PropTypes.object
 };
 export default TableBody;
