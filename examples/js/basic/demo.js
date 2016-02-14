@@ -20,6 +20,11 @@ class Demo extends React.Component {
         </Panel>
         <Panel header={"A Large Column Table Demo"}>
           <h5>Source in /examples/js/basic/large-column-table.js</h5>
+          <h3 style={{color: "red"}}>Warning</h3>
+          <span style={{color: "red"}}>
+            There is one restriction when you want to make a large column table scrollable:<br/>
+            <b>You need set the width on some column to make the total width of table exceed the width of outter.</b>
+          </span>
           <LargeColumnTable/>
         </Panel>
         <Panel header={"Table Scroll Example"}>
