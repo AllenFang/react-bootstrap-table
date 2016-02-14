@@ -1,6 +1,10 @@
 /*editor error animate*/
 /*@import "~toastr/build/toastr.min.css";*/
 
+.react-bs-table-container .react-bs-table-search-form {
+  margin-bottom: 0px;
+}
+
 .react-bs-table {
   border: 1px solid #ddd;
   border-radius: 5px;
