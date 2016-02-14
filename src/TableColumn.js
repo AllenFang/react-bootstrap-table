@@ -54,7 +54,7 @@ class TableColumn extends React.Component{
       }
     }
     this.props.onEdit(
-      e.currentTarget.parentElement.rowIndex,
+      e.currentTarget.parentElement.rowIndex+1,
       e.currentTarget.cellIndex);
   }
 
