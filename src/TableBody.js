@@ -219,7 +219,7 @@ class TableBody extends React.Component{
   handleSelectRowColumChange(e){
     if(!this.props.selectRow.clickToSelect || !this.props.selectRow.clickToSelectAndEditCell){
       this.handleSelectRow(
-        e.currentTarget.parentElement.parentElement.rowIndex, e.currentTarget.checked);
+        e.currentTarget.parentElement.parentElement.rowIndex+1, e.currentTarget.checked);
     }
   }
 
