@@ -1,6 +1,7 @@
 import React from 'react';
 import BasicTable from './basic-table';
 import HoverStripedTable from './hover-striped-table';
+import BorderlessTable from './borderless-table';
 import ScrollTable from './scroll-table';
 import LargeColumnTable from './large-column-table';
 
@@ -15,6 +16,10 @@ class Demo extends React.Component {
           <BasicTable/>
         </Panel>
         <Panel header={"Table hover, striped and condensed Example"}>
+          <h5>Source in /examples/js/basic/borderless-table.js</h5>
+          <BorderlessTable/>
+        </Panel>
+        <Panel header={"Borderless table Example"}>
           <h5>Source in /examples/js/basic/hover-striped-table.js</h5>
           <HoverStripedTable/>
         </Panel>
