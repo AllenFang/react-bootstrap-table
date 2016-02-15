@@ -20,7 +20,7 @@ class TableColumn extends React.Component{
       return shouldUpdated;
     }
 
-    if(typeof children === 'object') {
+    if(typeof children === 'object' && children !== null) {
       if(children.props.type === 'checkbox' || children.props.type === 'radio') {
         shouldUpdated = shouldUpdated ||
           children.props.type !== nextProps.children.props.type ||
