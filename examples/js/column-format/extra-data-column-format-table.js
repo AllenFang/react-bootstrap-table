@@ -9,11 +9,11 @@ var qualityType = {
     0: "good",
     1: "bad",
     2: "unknown"
-}
+};
 var inStockStatus = {
     1: "yes",
     2: "no"
-}
+};
 
 function addProducts(quantity) {
     var startId = products.length;
@@ -34,20 +34,10 @@ function enumFormatter(cell, row, enumObject){
     return enumObject[cell];
 }
 
-var cellEditProp = {
-    mode: "click",
-    blurToSave: true
-};
-
 export default class ExtraDataColumnFormatTable extends React.Component{
     render(){
-        var optionValues = [];
-        $.map(inStockStatus, function(value, index) {
-            optionValues.push(index);
-        });
-
         return (
-            <BootstrapTable data={products} cellEdit={cellEditProp} insertRow={true}>
+            <BootstrapTable data={products} >
                 <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
                 <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
                 <TableHeaderColumn dataField="quality" dataFormat={enumFormatter} formatExtraData={qualityType}>Product Quality</TableHeaderColumn>
