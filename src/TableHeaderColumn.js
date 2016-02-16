@@ -76,7 +76,7 @@ class TableHeaderColumn extends React.Component{
           onClick={this.handleColumnClick.bind(this)}>
           {this.props.children}{sortCaret}
         </div>
-        {this.props.filter ? this.getFilters() : ''}
+        {this.props.filter ? this.getFilters() : null}
       </th>
     )
   }
