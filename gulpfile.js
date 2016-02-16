@@ -26,7 +26,8 @@ gulp.task("prod", function () {
     .pipe(concatCss("./react-bootstrap-table-all.min.css"))
     .pipe(cssmin())
     .pipe(gulp.dest('./css'));
-  buildProdDist();
+  buildProdDist("./webpack.production.config");
+  buildProdDist("./webpack.production.min.config");
 });
 
 gulp.task("dev", function () {
@@ -40,18 +41,18 @@ function buildDemoCode() {
   browserifing("./demo/js/demo.js", "demo.bundle.js", "./demo/js");
 }
 
-function buildProdDist() {
+function buildProdDist(configLocation) {
   // Give up the browserify to build product, cause of #131, change to webpack instead
   // demo = false;
   // browserifing("./src/index.js", "react-bootstrap-table.min.js", "./dist");
-  var config = require("./webpack.production.config");
+  var config = require(configLocation);
   var compiler = webpack(config);
 
   compiler.run(function(err, stats) {
       if(null != err)
         console.error(err);
       else
-        console.log("building success");
+        console.log("Success building distribution from " + configLocation);
   });
 }
 

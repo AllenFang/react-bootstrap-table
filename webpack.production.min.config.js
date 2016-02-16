@@ -1,13 +1,13 @@
 var webpack = require('webpack');
 
 module.exports = {
-  devtool: 'inline-source-map',
+  devtool: '#eval-source-map',
   entry: {
     'react-bootstrap-table': './src/index.js'
   },
   output: {
     path: './dist',
-    filename: '[name].js',
+    filename: '[name].min.js',
     library: 'ReactBootstrapTable',
     libraryTarget: 'umd'
   },
@@ -35,5 +35,9 @@ module.exports = {
         exclude: /node_modules/,
         loaders: ['babel']
       }]
-  }
+  },
+
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin()
+  ]
 };
