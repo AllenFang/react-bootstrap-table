@@ -64,7 +64,7 @@ class BootstrapTable extends React.Component {
 
     if (keyField == null)
       throw "Error. No any key column defined in TableHeaderColumn."+
-            "Use 'isKey={true}' to specify an unique column after version 0.5.4.";
+            "Use 'isKey={true}' to specify a unique column after version 0.5.4.";
 
     this.store.setProps({
       isPagination: props.pagination,
