@@ -2,13 +2,46 @@ import React from 'react';
 import classSet from 'classnames';
 import Const from './Const';
 import Util from './util';
+import DateFilter from './filters/Date';
+import TextFilter from './filters/Text';
+import SelectFilter from './filters/Select';
+import NumberFilter from './filters/Number';
 
 class TableHeaderColumn extends React.Component{
+
+  constructor(props) {
+    super(props);
+    this.handleFilter = this.handleFilter.bind(this);
+  }
 
   handleColumnClick(e){
     if(!this.props.dataSort)return;
     let order = this.props.sort == Const.SORT_DESC?Const.SORT_ASC:Const.SORT_DESC;
     this.props.onSort(order, this.props.dataField);
+  }
+
+  handleFilter(value, type) {
+    this.props.filter.emitter.handleFilter(this.props.dataField, value, type);
+  }
+
+  getFilters() {
+    switch (this.props.filter.type) {
+      case Const.FILTER_TYPE.TEXT: {
+        return <TextFilter {...this.props.filter} columnName={this.props.children} filterHandler={this.handleFilter} />;
+      }
+      case Const.FILTER_TYPE.SELECT: {
+        return <SelectFilter {...this.props.filter} columnName={this.props.children} filterHandler={this.handleFilter} />;
+      }
+      case Const.FILTER_TYPE.NUMBER: {
+        return <NumberFilter {...this.props.filter} columnName={this.props.children} filterHandler={this.handleFilter} />;
+      }
+      case Const.FILTER_TYPE.DATE: {
+        return <DateFilter {...this.props.filter} columnName={this.props.children} filterHandler={this.handleFilter} />;
+      }
+      case Const.FILTER_TYPE.CUSTOM: {
+        return this.props.filter.getElement(this.handleFilter, this.props.filter.customFilterParameters);
+      }
+    }
   }
 
   componentDidMount(){
@@ -43,10 +76,17 @@ class TableHeaderColumn extends React.Component{
           onClick={this.handleColumnClick.bind(this)}>
           {this.props.children}{sortCaret}
         </div>
+        {this.props.filter ? this.getFilters() : ''}
       </th>
     )
   }
 }
+
+var filterTypeArray = [];
+for (let key in Const.FILTER_TYPE) {
+  filterTypeArray.push(Const.FILTER_TYPE[key]);
+}
+
 TableHeaderColumn.propTypes = {
   dataField: React.PropTypes.string,
   dataAlign: React.PropTypes.string,
@@ -61,7 +101,21 @@ TableHeaderColumn.propTypes = {
   sortFunc: React.PropTypes.func,
   columnClassName: React.PropTypes.any,
   filterFormatted: React.PropTypes.bool,
-  sort: React.PropTypes.string
+  sort: React.PropTypes.string,
+  formatExtraData: React.PropTypes.any,
+  filter: React.PropTypes.shape({
+    type: React.PropTypes.oneOf(filterTypeArray),
+    delay: React.PropTypes.number,
+    options: React.PropTypes.oneOfType([
+      React.PropTypes.object, // for SelectFilter
+      React.PropTypes.arrayOf(React.PropTypes.number) //for NumberFilter
+        ]),
+    numberComparators: React.PropTypes.arrayOf(React.PropTypes.string),
+    emitter: React.PropTypes.object,
+    placeholder: React.PropTypes.string,
+    getElement: React.PropTypes.func,
+    customFilterParameters: React.PropTypes.object
+  })
 };
 
 TableHeaderColumn.defaultProps = {
@@ -77,7 +131,9 @@ TableHeaderColumn.defaultProps = {
   sortFunc: undefined,
   columnClassName: '',
   filterFormatted: false,
-  sort: undefined
+  sort: undefined,
+  formatExtraData: undefined,
+  filter: undefined
 };
 
 export default TableHeaderColumn;
