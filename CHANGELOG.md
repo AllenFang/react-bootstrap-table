@@ -1,3 +1,17 @@
+<a name="v1.5.1"></a>
+# [v1.5.1](https://github.com/AllenFang/react-bootstrap-table/compare/v1.5.0...v1.5.1) (2016-02-17)
+### Bug fixes
+* Fix On state change: Uncaught TypeError: Cannot read property 'props' of null([38a8bd9](https://github.com/AllenFang/react-bootstrap-table/commit/38a8bd9231f4c92c7fbfd64fdf631351d52828c2))
+
+### Features
+* New filtering behavior + default filter definition([68416ef](https://github.com/AllenFang/react-bootstrap-table/commit/68416ef178a9995465847f60e8df360ed9d00c1a))
+	* Check this [PR](https://github.com/AllenFang/react-bootstrap-table/pull/270)
+	* See more examples on example [folder](https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/column-filter)
+
+### Enhancement
+* Add className on delete and insert button([3baedef](https://github.com/AllenFang/react-bootstrap-table/commit/3baedef5e95776fc6144272a68ffea21357939b4))
+* Add className on no data ```<th>```, can Customize of the "no data to display" cell([79dd442](https://github.com/AllenFang/react-bootstrap-table/commit/79dd44215bac6e38dbe92a802fbc3d4b41900886))
+
 <a name="v1.5.0"></a>
 # [v1.5.0](https://github.com/AllenFang/react-bootstrap-table/compare/v1.4.6...v1.5.0) (2016-02-05)
 ### Bug fixes
@@ -11,7 +25,6 @@
 
 ### Enhancement
 * Show sorting caret on header if sort enabled([55ac719](https://github.com/AllenFang/react-bootstrap-table/commit/55ac719981bfd30708059f218b33431e4650bc2a))
-
 
 <a name="v1.4.6"></a>
 # [v1.4.6](https://github.com/AllenFang/react-bootstrap-table/compare/v1.4.5...v1.4.6) (2016-01-30)
