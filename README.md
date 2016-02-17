@@ -122,6 +122,8 @@ Please see:  [docs](http://allenfang.github.io/react-bootstrap-table/docs.html)
 Help this project to integrate a better examples demo, add travis & badge, code formatting, give a lot of suggestions and bugs report.  
 **[khinlatt](https://github.com/khinlatt)**  
 Contribute export csv, multi-search and bug fixing.  
+**[dana](https://github.com/dana2208)**  
+Contribute a new colum-filter design and great feedback given.
 **[tbaeg](https://github.com/tbaeg)**  
 Bugs report and give some bootstrap and css suggestions actively.  
 **[bluedarker](https://github.com/bluedarker)**  
