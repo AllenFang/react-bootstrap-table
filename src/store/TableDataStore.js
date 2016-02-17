@@ -186,17 +186,62 @@ export class TableDataStore {
       this.filterObj = filterObj;
       this.filteredData = this.data.filter( row => {
         let valid = true;
+        let filterVal;
         for (var key in filterObj) {
-          let filterVal = filterObj[key].toLowerCase();
           let targetVal = row[key];
-          if(this.colInfos[key]) {
+
+          switch (filterObj[key].type) {
+            case Const.FILTER_TYPE.NUMBER:
+            {
+              filterVal = filterObj[key].value.number;
+              break;
+            }
+            case Const.FILTER_TYPE.CUSTOM:
+            {
+              filterVal = (typeof filterObj[key].value === "object") ?
+                  undefined :
+                  (typeof filterObj[key].value === "string") ? filterObj[key].value.toLowerCase() : filterObj[key].value;
+              break;
+            }
+            default: {
+              filterVal = (typeof filterObj[key].value === "string") ? filterObj[key].value.toLowerCase() : filterObj[key].value;
+              // support old filter
+              if (filterVal === undefined) {
+                filterVal = filterObj[key].toLowerCase();
+              }
+              break;
+            }
+          }
+
+          if (this.colInfos[key]) {
             const { format, filterFormatted, formatExtraData } = this.colInfos[key];
             if(filterFormatted && format) {
               targetVal = format(row[key], row, formatExtraData);
             }
           }
-          if (targetVal.toString().toLowerCase().indexOf(filterVal) == -1) {
-            valid = false;
+
+          switch (filterObj[key].type) {
+            case Const.FILTER_TYPE.NUMBER:
+            {
+              valid = this.filterNumber(targetVal, filterVal, filterObj[key].value.comparator);
+              break;
+            }
+            case Const.FILTER_TYPE.DATE:
+            {
+              valid = this.filterDate(targetVal, filterVal);
+              break;
+            }
+            case Const.FILTER_TYPE.CUSTOM:
+            {
+              valid = this.filterCustom(targetVal, filterVal, filterObj[key].value);
+              break;
+            }
+            default: {
+              valid = this.filterText(targetVal, filterVal);
+              break;
+            }
+          }
+          if (!valid) {
             break;
           }
         }
@@ -204,6 +249,82 @@ export class TableDataStore {
       });
       this.isOnFilter = true;
     }
+  }
+
+  filterNumber(targetVal, filterVal, comparator) {
+    let valid = true;
+    switch (comparator) {
+      case "=":
+      {
+        if (targetVal != filterVal) {
+          valid = false;
+        }
+        break;
+      }
+      case ">":
+      {
+        if (targetVal <= filterVal) {
+          valid = false;
+        }
+        break;
+      }
+      case ">=":
+      {
+        if (targetVal < filterVal) {
+          valid = false;
+        }
+        break;
+      }
+      case "<":
+      {
+        if (targetVal >= filterVal) {
+          valid = false;
+        }
+        break;
+      }
+      case "<=":
+      {
+        if (targetVal > filterVal) {
+          valid = false;
+        }
+        break;
+      }
+      case "!=":
+      {
+        if (targetVal == filterVal) {
+          valid = false;
+        }
+        break;
+      }
+      default:
+      {
+        console.error("Number comparator provided is not supported");
+        break;
+      }
+    }
+    return valid;
+  }
+
+  filterDate(targetVal, filterVal) {
+    return (targetVal.getDate() == filterVal.getDate() &&
+        targetVal.getMonth() == filterVal.getMonth() &&
+        targetVal.getFullYear() == filterVal.getFullYear());
+  }
+
+  filterCustom(targetVal, filterVal, callbackInfo) {
+    if (callbackInfo != null && typeof callbackInfo === "object") {
+      return callbackInfo.callback(targetVal, callbackInfo.callbackParameters);
+    }
+
+    return filterText(targetVal, filterVal);
+  }
+
+  filterText(targetVal, filterVal) {
+    if (targetVal.toString().toLowerCase().indexOf(filterVal) == -1) {
+      return false;
+    }
+
+    return true;
   }
 
   search(searchText) {
