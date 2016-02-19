@@ -3,15 +3,37 @@ import Const from './Const';
 
 class TableRow extends React.Component{
 
+  constructor(props) {
+    super(props);
+    this.clickNum = 0;
+  }
+
   rowClick(e){
     if(e.target.tagName !== "INPUT") {
-      if (this.props.selectRow && this.props.selectRow.clickToSelect) this.props.onSelectRow(e.currentTarget.rowIndex, !this.props.isSelected);
-      if (this.props.onRowClick) this.props.onRowClick(e.currentTarget.rowIndex);
+      const rowIndex = e.currentTarget.rowIndex;
+      if (this.props.selectRow) {
+          if (this.props.selectRow.clickToSelect) {
+            this.props.onSelectRow(rowIndex, !this.props.isSelected);
+          } else if (this.props.selectRow.clickToSelectAndEditCell) {
+            this.clickNum++;
+            /** if clickToSelectAndEditCell is enabled,
+             *  there should be a delay to prevent a selection changed when
+             *  user dblick to edit cell on same row but different cell
+            **/
+            setTimeout(() => {
+              if(this.clickNum === 1) {
+                this.props.onSelectRow(rowIndex, !this.props.isSelected);
+              }
+              this.clickNum = 0;
+            }, 200);
+          }
+      }
+      if (this.props.onRowClick) this.props.onRowClick(rowIndex);
     }
   }
 
   render(){
-
+    this.clickNum = 0;
     var trCss={
       style:{
         backgroundColor: this.props.isSelected?this.props.selectRow.bgColor:null
@@ -19,8 +41,8 @@ class TableRow extends React.Component{
       className:(this.props.isSelected && this.props.selectRow.className ? this.props.selectRow.className : '') + (this.props.className||'')
     };
 
-    if(this.props.selectRow && !this.props.enableCellEdit &&
-      (this.props.selectRow.clickToSelect || this.props.selectRow.clickToSelectAndEditCell) || this.props.onRowClick){
+    if(this.props.selectRow && (this.props.selectRow.clickToSelect ||
+      this.props.selectRow.clickToSelectAndEditCell) || this.props.onRowClick){
       return(
         <tr {...trCss} onClick={this.rowClick.bind(this)}>{this.props.children}</tr>
       )

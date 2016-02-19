@@ -220,9 +220,7 @@ class TableBody extends React.Component{
     };
 
     if(this.props.selectRow.clickToSelectAndEditCell){
-      //if edit cell, trigger row selections also
-      let selected = this.props.selectedRowKeys.indexOf(this.props.data[rowIndex][this.props.keyField]) != -1;
-      this.handleSelectRow(rowIndex+1, !selected);
+      this.handleSelectRow(rowIndex+1, true);
     }
     this.setState(stateObj);
   }
