@@ -284,8 +284,8 @@ class TableBody extends React.Component{
   }
 
   _isSelectRowDefined(){
-    return this.props.selectRow.mode == Const.ROW_SELECT_SINGLE ||
-          this.props.selectRow.mode == Const.ROW_SELECT_MULTI;
+    return this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ||
+          this.props.selectRow.mode === Const.ROW_SELECT_MULTI;
   }
 }
 TableBody.propTypes = {

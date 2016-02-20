@@ -664,7 +664,11 @@ BootstrapTable.propTypes = {
   pagination: React.PropTypes.bool,
   searchPlaceholder: React.PropTypes.string,
   selectRow: React.PropTypes.shape({
-    mode: React.PropTypes.string,
+    mode: React.PropTypes.oneOf([
+      Const.ROW_SELECT_NONE,
+      Const.ROW_SELECT_SINGLE,
+      Const.ROW_SELECT_MULTI
+    ]),
     bgColor: React.PropTypes.string,
     selected: React.PropTypes.array,
     onSelect: React.PropTypes.func,
