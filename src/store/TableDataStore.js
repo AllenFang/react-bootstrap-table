@@ -140,6 +140,8 @@ export class TableDataStore {
           row[fieldName] = newVal;
         }
       }, this);
+      if (null !== this.filterObj) this.filter(this.filterObj);
+      if (null !== this.searchText) this.search(this.searchText);
     }
     return this;
   }
