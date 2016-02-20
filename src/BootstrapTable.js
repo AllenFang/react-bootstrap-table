@@ -54,34 +54,33 @@ class BootstrapTable extends React.Component {
   initTable(props){
     let {keyField} = props;
 
-    if (!(typeof keyField === 'string' && keyField.length)) {
-      React.Children.forEach(props.children, column=> {
-        if (column.props.isKey) {
-          if (keyField != null) {
-            throw "Error. Multiple key column be detected in TableHeaderColumn.";
-          }
-          keyField = column.props.dataField;
+    const isKeyFieldDefined = typeof keyField === 'string' && keyField.length;
+    React.Children.forEach(props.children, column=> {
+      if (column.props.isKey) {
+        if (keyField) {
+          throw "Error. Multiple key column be detected in TableHeaderColumn.";
         }
-        if (column.props.filter) {
-          // a column contains a filter
-          if (!this.filter) {
-            // first time create the filter on the BootstrapTable
-            this.filter = new Filter();
-          }
-          // pass the filter to column with filter
-          column.props.filter.emitter = this.filter;
+        keyField = column.props.dataField;
+      }
+      if (column.props.filter) {
+        // a column contains a filter
+        if (!this.filter) {
+          // first time create the filter on the BootstrapTable
+          this.filter = new Filter();
         }
-      }, this);
-    }
+        // pass the filter to column with filter
+        column.props.filter.emitter = this.filter;
+      }
+    }, this);
 
     let colInfos = this.getColumnsDescription(props).reduce(( prev, curr ) => {
       prev[curr.name] = curr;
       return prev;
     }, {});
 
-    if (keyField == null)
-      throw "Error. No any key column defined in TableHeaderColumn."+
-            "Use 'isKey={true}' to specify a unique column after version 0.5.4.";
+    if (!isKeyFieldDefined && !keyField)
+      throw `Error. No any key column defined in TableHeaderColumn.
+            Use 'isKey={true}' to specify a unique column after version 0.5.4.`;
 
     this.store.setProps({
       isPagination: props.pagination,
