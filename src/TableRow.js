@@ -12,7 +12,7 @@ class TableRow extends React.Component{
     if(e.target.tagName !== "INPUT" &&
         e.target.tagName !== "SELECT" &&
         e.target.tagName !== "TEXTAREA") {
-      const rowIndex = e.currentTarget.rowIndex;
+      const rowIndex = e.currentTarget.rowIndex + 1;
       if (this.props.selectRow) {
           if (this.props.selectRow.clickToSelect) {
             this.props.onSelectRow(rowIndex, !this.props.isSelected);
