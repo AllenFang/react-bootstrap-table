@@ -4,19 +4,19 @@ import Const from '../Const';
 
 class PaginationList extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentPage: this.props.currPage,
-      sizePerPage: this.props.sizePerPage
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     currentPage: this.props.currPage,
+  //     sizePerPage: this.props.sizePerPage
+  //   };
+  // }
 
   changePage(page) {
     if (page == this.props.prePage) {
-      page = this.state.currentPage - 1 < 1 ? 1 : this.state.currentPage - 1;
+      page = this.props.currPage - 1 < 1 ? 1 : this.props.currPage - 1;
     } else if (page == this.props.nextPage) {
-      page = this.state.currentPage + 1 > this.totalPages ? this.totalPages : this.state.currentPage + 1;
+      page = this.props.currPage + 1 > this.totalPages ? this.totalPages : this.props.currPage + 1;
     } else if (page == this.props.lastPage) {
       page = this.totalPages;
     } else if (page == this.props.firstPage) {
@@ -25,38 +25,23 @@ class PaginationList extends React.Component {
       page = parseInt(page);
     }
 
-    if (page != this.state.currentPage) {
-      this.setState({currentPage: page});
-      this.props.changePage(page, this.state.sizePerPage);
+    if (page != this.props.currPage) {
+      // this.setState({currentPage: page});
+      this.props.changePage(page, this.props.sizePerPage);
     }
   }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.remote) {
-      if (nextProps.currPage || nextProps.sizePerPage) {
-        this.setState({
-          currentPage: nextProps.currPage,
-          sizePerPage: nextProps.sizePerPage,
-        });
-      }
-    }
-  }
-
 
   changeSizePerPage(e) {
     e.preventDefault();
 
-    var selectSize = parseInt(e.currentTarget.text);
-    if (selectSize != this.state.sizePerPage) {
+    const selectSize = parseInt(e.currentTarget.text);
+    let { currPage } = this.props;
+    if (selectSize != this.props.sizePerPage) {
       this.totalPages = Math.ceil(this.props.dataSize / selectSize);
-      if (this.state.currentPage > this.totalPages)
-        this.state.currentPage = this.totalPages;
+      if (currPage > this.totalPages)
+        currPage = this.totalPages;
 
-      this.setState({
-        sizePerPage: selectSize,
-        currentPage: this.state.currentPage
-      });
-      this.props.changePage(this.state.currentPage, selectSize);
+      this.props.changePage(currPage, selectSize);
       if(this.props.onSizePerPageList){
         this.props.onSizePerPageList(selectSize);
       }
@@ -64,7 +49,7 @@ class PaginationList extends React.Component {
   }
 
   render() {
-    this.totalPages = Math.ceil(this.props.dataSize / this.state.sizePerPage);
+    this.totalPages = Math.ceil(this.props.dataSize / this.props.sizePerPage);
     var pageBtns = this.makePage();
     var pageListStyle = {
       float: "right",
@@ -87,7 +72,7 @@ class PaginationList extends React.Component {
           <div className="dropdown">
             <button className="btn btn-default dropdown-toggle" type="button" id="pageDropDown" data-toggle="dropdown"
                     aria-expanded="true">
-              {this.state.sizePerPage}
+              {this.props.sizePerPage}
               <span>
                 {" "}
                 <span className="caret"/>
@@ -112,15 +97,15 @@ class PaginationList extends React.Component {
   makePage() {
     var pages = this.getPages();
     return pages.map(function (page) {
-      var isActive = page === this.state.currentPage;
+      var isActive = page === this.props.currPage;
       var disabled = false;
       var hidden = false;
-      if(this.state.currentPage == 1 &&
+      if(this.props.currPage == 1 &&
         (page === this.props.firstPage || page === this.props.prePage)){
           disabled = true;
           hidden = true;
       }
-      if(this.state.currentPage == this.totalPages &&
+      if(this.props.currPage == this.totalPages &&
         (page === this.props.nextPage || page === this.props.lastPage)){
           disabled = true;
           hidden = true;
@@ -134,7 +119,7 @@ class PaginationList extends React.Component {
   getPages() {
     var startPage = 1, endPage = this.totalPages;
 
-    startPage = Math.max(this.state.currentPage - Math.floor(this.props.paginationSize / 2), 1);
+    startPage = Math.max(this.props.currPage - Math.floor(this.props.paginationSize / 2), 1);
     endPage = startPage + this.props.paginationSize - 1;
 
     if (endPage > this.totalPages) {
@@ -163,11 +148,11 @@ class PaginationList extends React.Component {
   }
 
   getCurrentPage() {
-    return this.state.currentPage;
+    return this.props.currPage;
   }
 
   getSizePerPage() {
-    return this.state.sizePerPage;
+    return this.props.sizePerPage;
   }
 }
 PaginationList.propTypes = {
