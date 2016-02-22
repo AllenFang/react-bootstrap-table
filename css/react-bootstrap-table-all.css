@@ -105,6 +105,11 @@
   right: 0;
   top: -21px;
 }
+
+.react-bs-table-no-data {
+  text-align: center;
+}
+
 /*error tip style*/
 .animated {
   animation-fill-mode: both;

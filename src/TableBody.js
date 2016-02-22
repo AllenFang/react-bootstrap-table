@@ -122,7 +122,6 @@ class TableBody extends React.Component{
       tableRows.push(
       <TableRow key="##table-empty##">
         <td colSpan={this.props.columns.length+(isSelectRowDefined?1:0)}
-            style={{ textAlign: "center" }}
             className="react-bs-table-no-data">
             {this.props.noDataText||Const.NO_DATA_TEXT}
         </td>
