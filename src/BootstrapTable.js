@@ -47,6 +47,8 @@ class BootstrapTable extends React.Component {
 
     this.state = {
       data: this.getTableData(),
+      currPage: this.props.options.page || 1,
+      sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
       selectedRowKeys: this.store.getSelectedRowKeys()
     };
   }
@@ -100,8 +102,8 @@ class BootstrapTable extends React.Component {
      if (this.props.pagination) {
        let page, sizePerPage;
        if (this.store.isChangedPage()) {
-         sizePerPage = this.refs.pagination.getSizePerPage();
-         page = this.refs.pagination.getCurrentPage();
+        sizePerPage = this.state.sizePerPage;
+        page = this.state.currPage;
        } else {
          sizePerPage = this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0];
          page = this.props.options.page || 1;
@@ -148,7 +150,9 @@ class BootstrapTable extends React.Component {
       if(sortField && sortOrder) this.store.sort(sortOrder, sortField);
       let data = this.store.page(page, sizePerPage).get();
       this.setState({
-        data: data
+        data: data,
+        currPage: page,
+        sizePerPage: sizePerPage
       });
     }
     if (nextProps.selectRow && nextProps.selectRow.selected) {
@@ -302,7 +306,9 @@ class BootstrapTable extends React.Component {
 
     let result = this.store.page(page, sizePerPage).get();
     this.setState({
-      data: result
+      data: result,
+      currPage: page,
+      sizePerPage
     });
   }
 
@@ -337,14 +343,13 @@ class BootstrapTable extends React.Component {
     this.store.ignoreNonSelected();
     let result;
     if (this.props.pagination) {
-      let sizePerPage = this.refs.pagination.getSizePerPage();
-      result = this.store.page(1, sizePerPage).get();
-      this.refs.pagination.changePage(1);
+      result = this.store.page(1, this.state.sizePerPage).get();
     } else {
       result = this.store.get();
     }
     this.setState({
-      data: result
+      data: result,
+      currPage: 1,
     });
   }
 
@@ -411,13 +416,13 @@ class BootstrapTable extends React.Component {
 
     if (this.props.pagination) {
       //if pagination is enabled and insert row be trigger, change to last page
-      let sizePerPage = this.refs.pagination.getSizePerPage();
-      let currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
+      const { sizePerPage } = this.state;
+      const currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
       result = this.store.page(currLastPage, sizePerPage).get();
       this.setState({
-        data: result
+        data: result,
+        currPage: currLastPage,
       });
-      this.refs.pagination.changePage(currLastPage);
     } else {
       result = this.store.get();
       this.setState({
@@ -431,15 +436,11 @@ class BootstrapTable extends React.Component {
   }
 
   getSizePerPage() {
-    if (this.props.pagination) {
-      return this.refs.pagination.getSizePerPage();
-    }
+    return this.state.sizePerPage;
   }
 
   getCurrentPage() {
-    if (this.props.pagination) {
-      return this.refs.pagination.getCurrentPage();
-    }
+    return this.state.currPage;
   }
 
   handleDropRow(rowKeys) {
@@ -466,17 +467,17 @@ class BootstrapTable extends React.Component {
     this.store.setSelectedRowKey([]);  //clear selected row key
 
     if (this.props.pagination) {
-      let sizePerPage = this.refs.pagination.getSizePerPage();
+      const { sizePerPage } = this.state;
+      let { currPage } = this.state;
       let currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
-      let currentPage = this.refs.pagination.getCurrentPage();
-      if (currentPage > currLastPage)
-        currentPage = currLastPage;
-      result = this.store.page(currentPage, sizePerPage).get();
+      if (currPage > currLastPage)
+        currPage = currLastPage;
+      result = this.store.page(currPage, sizePerPage).get();
       this.setState({
         data: result,
-        selectedRowKeys: this.store.getSelectedRowKeys()
+        selectedRowKeys: this.store.getSelectedRowKeys(),
+        currPage
       });
-      this.refs.pagination.changePage(currentPage);
     } else {
       result = this.store.get();
       this.setState({
@@ -494,9 +495,8 @@ class BootstrapTable extends React.Component {
     this.store.filter(filterObj);
     let result;
     if (this.props.pagination) {
-      let sizePerPage = this.refs.pagination.getSizePerPage();
+      const { sizePerPage } = this.state;
       result = this.store.page(1, sizePerPage).get();
-      this.refs.pagination.changePage(1);
     } else {
       result = this.store.get();
     }
@@ -504,7 +504,8 @@ class BootstrapTable extends React.Component {
       this.props.options.afterColumnFilter(filterObj,
         this.store.getDataIgnoringPagination());
     this.setState({
-      data: result
+      data: result,
+      currPage: 1
     });
   }
 
@@ -523,16 +524,16 @@ class BootstrapTable extends React.Component {
     this.store.search(searchText);
     let result;
     if (this.props.pagination) {
-      let sizePerPage = this.refs.pagination.getSizePerPage();
+      const { sizePerPage } = this.state;
       result = this.store.page(1, sizePerPage).get();
-      this.refs.pagination.changePage(1);
     } else {
       result = this.store.get();
     }
     if(this.props.options.afterSearch)
       this.props.options.afterSearch(searchText, this.store.getDataIgnoringPagination());
     this.setState({
-      data: result
+      data: result,
+      currPage: 1
     });
   }
 
@@ -548,9 +549,9 @@ class BootstrapTable extends React.Component {
         <div className="table-footer-pagination">
           <PaginationList
             ref="pagination"
-            currPage={this.props.options.page || 1}
+            currPage={ this.state.currPage }
             changePage={this.handlePaginationData.bind(this)}
-            sizePerPage={this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0]}
+            sizePerPage={ this.state.sizePerPage }
             sizePerPageList={this.props.options.sizePerPageList || Const.SIZE_PER_PAGE_LIST}
             paginationSize={this.props.options.paginationSize || Const.PAGINATION_SIZE}
             remote={this.isRemoteDataSource()}
