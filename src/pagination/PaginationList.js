@@ -4,14 +4,6 @@ import Const from '../Const';
 
 class PaginationList extends React.Component {
 
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     currentPage: this.props.currPage,
-  //     sizePerPage: this.props.sizePerPage
-  //   };
-  // }
-
   changePage(page) {
     if (page == this.props.prePage) {
       page = this.props.currPage - 1 < 1 ? 1 : this.props.currPage - 1;
@@ -26,7 +18,6 @@ class PaginationList extends React.Component {
     }
 
     if (page != this.props.currPage) {
-      // this.setState({currentPage: page});
       this.props.changePage(page, this.props.sizePerPage);
     }
   }

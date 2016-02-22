@@ -102,8 +102,6 @@ class BootstrapTable extends React.Component {
      if (this.props.pagination) {
        let page, sizePerPage;
        if (this.store.isChangedPage()) {
-        //  sizePerPage = this.refs.pagination.getSizePerPage();
-        //  page = this.refs.pagination.getCurrentPage();
         sizePerPage = this.state.sizePerPage;
         page = this.state.currPage;
        } else {
@@ -345,9 +343,7 @@ class BootstrapTable extends React.Component {
     this.store.ignoreNonSelected();
     let result;
     if (this.props.pagination) {
-      // let sizePerPage = this.refs.pagination.getSizePerPage();
       result = this.store.page(1, this.state.sizePerPage).get();
-      // this.refs.pagination.changePage(1);
     } else {
       result = this.store.get();
     }
@@ -427,7 +423,6 @@ class BootstrapTable extends React.Component {
         data: result,
         currPage: currLastPage,
       });
-      // this.refs.pagination.changePage(currLastPage);
     } else {
       result = this.store.get();
       this.setState({
@@ -441,16 +436,10 @@ class BootstrapTable extends React.Component {
   }
 
   getSizePerPage() {
-    // if (this.props.pagination) {
-    //   return this.refs.pagination.getSizePerPage();
-    // }
     return this.state.sizePerPage;
   }
 
   getCurrentPage() {
-    // if (this.props.pagination) {
-    //   return this.refs.pagination.getCurrentPage();
-    // }
     return this.state.currPage;
   }
 
@@ -481,7 +470,6 @@ class BootstrapTable extends React.Component {
       const { sizePerPage } = this.state;
       let { currPage } = this.state;
       let currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
-      // let currentPage = this.refs.pagination.getCurrentPage();
       if (currPage > currLastPage)
         currPage = currLastPage;
       result = this.store.page(currPage, sizePerPage).get();
@@ -490,7 +478,6 @@ class BootstrapTable extends React.Component {
         selectedRowKeys: this.store.getSelectedRowKeys(),
         currPage
       });
-      // this.refs.pagination.changePage(currentPage);
     } else {
       result = this.store.get();
       this.setState({
@@ -510,7 +497,6 @@ class BootstrapTable extends React.Component {
     if (this.props.pagination) {
       const { sizePerPage } = this.state;
       result = this.store.page(1, sizePerPage).get();
-      // this.refs.pagination.changePage(1);
     } else {
       result = this.store.get();
     }
@@ -540,7 +526,6 @@ class BootstrapTable extends React.Component {
     if (this.props.pagination) {
       const { sizePerPage } = this.state;
       result = this.store.page(1, sizePerPage).get();
-      // this.refs.pagination.changePage(1);
     } else {
       result = this.store.get();
     }
