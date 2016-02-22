@@ -9,7 +9,9 @@ class TableRow extends React.Component{
   }
 
   rowClick(e){
-    if(e.target.tagName !== "INPUT") {
+    if(e.target.tagName !== "INPUT" &&
+        e.target.tagName !== "SELECT" &&
+        e.target.tagName !== "TEXTAREA") {
       const rowIndex = e.currentTarget.rowIndex;
       if (this.props.selectRow) {
           if (this.props.selectRow.clickToSelect) {
