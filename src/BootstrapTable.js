@@ -16,6 +16,8 @@ class BootstrapTable extends React.Component {
     super(props);
 
     this._attachCellEditFunc();
+    this._isMounted = false;
+    this.filterObjectAfterMount = [];
 
     if (!Array.isArray(this.props.data)) {
       this.store = new TableDataStore(this.props.data.getData());
@@ -165,6 +167,13 @@ class BootstrapTable extends React.Component {
     this._adjustHeaderWidth();
     window.addEventListener('resize', this._adjustHeaderWidth);
     this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader);
+    this._isMounted = true;
+    if (this.filterObjectAfterMount.length > 0) {
+      this.filterObjectAfterMount.forEach((filterObject) => {
+        this.handleFilterData(filterObject);
+      });
+      this.filterObjectAfterMount.length = 0;
+    }
   }
 
   componentWillUnmount() {
@@ -173,6 +182,7 @@ class BootstrapTable extends React.Component {
     if (this.filter) {
       this.filter.removeAllListeners("onFilterChange");
     }
+    this._isMounted = false;
   }
 
   componentDidUpdate() {
@@ -491,6 +501,14 @@ class BootstrapTable extends React.Component {
   }
 
   handleFilterData(filterObj) {
+    if (!this._isMounted && this.props.pagination) {
+      // There is no access to this.refs.pagination until BootstrapTable is mounted,
+      // therefore we will filter later, i.e. after it is mounted
+      // This happens when using defaultValue of a filter together with pagination
+      // For a better fix, need to handle pagination states in Bootstrap table
+      this.filterObjectAfterMount.push(filterObj);
+      return;
+    }
     this.store.filter(filterObj);
     let result;
     if (this.props.pagination) {
