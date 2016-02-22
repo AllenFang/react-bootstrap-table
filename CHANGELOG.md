@@ -1,3 +1,15 @@
+<a name="v1.5.2"></a>
+# [v1.5.2](https://github.com/AllenFang/react-bootstrap-table/compare/v1.5.1...v1.5.2) (2016-02-21)
+### Bug fixes
+* [#276](https://github.com/AllenFang/react-bootstrap-table/issues/276)([4578e3d](https://github.com/AllenFang/react-bootstrap-table/commit/4578e3db6ae91e0e5ed5c14de4d8ee2e6c867156))
+* [#279](https://github.com/AllenFang/react-bootstrap-table/issues/279)：Fix data should be filtered out after editing([760ef80](https://github.com/AllenFang/react-bootstrap-table/commit/760ef8087c300a598a63c9a558764bb94aba75a9))
+* Fix search work on hidden column([1f3798b](https://github.com/AllenFang/react-bootstrap-table/commit/1f3798bc105f9dfa40e84ccb8568cfc18307b307))
+* [#283](https://github.com/AllenFang/react-bootstrap-table/issues/283)：Fix rare a bug when enable column-filter and ```keyField```([125e975](https://github.com/AllenFang/react-bootstrap-table/commit/125e9758b6c91387d0002c0d3c09fc112c3cefaa))
+
+### Enhancement
+* [#278](https://github.com/AllenFang/react-bootstrap-table/issues/278)([226e60d](https://github.com/AllenFang/react-bootstrap-table/commit/226e60d0be5d6e81aa5afc2ddde4f50150447581))
+* Provide a unminified production build in ```dist```([2821436](https://github.com/AllenFang/react-bootstrap-table/commit/2821436ddf577d9777b1f63f5ea0480e09651e80))
+
 <a name="v1.5.1"></a>
 # [v1.5.1](https://github.com/AllenFang/react-bootstrap-table/compare/v1.5.0...v1.5.1) (2016-02-17)
 ### Bug fixes
