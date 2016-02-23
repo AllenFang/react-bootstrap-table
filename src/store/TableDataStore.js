@@ -207,6 +207,10 @@ export class TableDataStore {
             }
             default: {
               filterVal = (typeof filterObj[key].value === "string") ? filterObj[key].value.toLowerCase() : filterObj[key].value;
+              if (filterVal === undefined) {
+                // Support old filter
+                filterVal = filterObj[key].toLowerCase();
+              }
               break;
             }
           }
