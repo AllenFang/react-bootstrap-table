@@ -337,33 +337,36 @@ export class TableDataStore {
     } else {
       this.searchText = searchText;
       var searchTextArray = [];
-      this.filteredData = this.data.filter( row => {
-        let valid = false;
 
         if (this.multiColumnSearch) {
-          searchTextArray = searchText.split(' ');
+            searchTextArray = searchText.split(' ');
         } else {
-          searchTextArray.push(searchText);
+            searchTextArray.push(searchText);
         }
 
-        for (var key in row) {
-          if (this.colInfos[key] && row[key]) {
-            searchTextArray.forEach( text => {
-              let filterVal = text.toLowerCase();
-              let targetVal = row[key];
-              const { format, filterFormatted, formatExtraData, hidden} = this.colInfos[key];
-              if (!hidden) {
-                if(filterFormatted && format) {
-                  targetVal = format(targetVal, row, formatExtraData);
-                }
-                if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
-                  valid = true;
-                }
+      this.filteredData = this.data.filter( row => {
+          let keys = Object.keys(row);
+          let valid = false;
+
+          for(let i=0; i<keys.length; i++) {
+              let key = keys[i];
+              if (this.colInfos[key] && row[key]) {
+                  searchTextArray.forEach( text => {
+                      let filterVal = text.toLowerCase();
+                      let targetVal = row[key];
+                      const { format, filterFormatted, formatExtraData } = this.colInfos[key];
+
+                      if(filterFormatted && format) {
+                          targetVal = format(targetVal, row, formatExtraData);
+                      }
+                      if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
+                          valid = true;
+                      }
+                  });
+                  if (valid) break;
               }
-            });
-            if (valid) break;
           }
-        }
+
         return valid;
       });
       this.isOnFilter = true;
