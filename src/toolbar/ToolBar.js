@@ -85,10 +85,11 @@ class ToolBar extends React.Component{
       this.setState({
         validateState:null,
         shakeEditor:false
+      }, () => {
+        document.querySelector("."+"modal-backdrop").click();
       });
       //reset form
       this.refs.form.reset();
-
     }
   }
 
