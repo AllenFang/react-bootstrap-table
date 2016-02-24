@@ -222,7 +222,7 @@ export class TableDataStore {
           searchTextArray.push(searchText);
         }
 
-        // Changed for in loop to use keys.
+        // Changed `for .. in` loop to use `Object.keys`.
         let keys = Object.keys(row);
         let valid = false;
 
