@@ -215,91 +215,41 @@ export class TableDataStore {
       this.searchText = searchText;
       var searchTextArray = [];
 
-        if (this.multiColumnSearch) {
-            searchTextArray = searchText.split(' ');
-        } else {
-            searchTextArray.push(searchText);
-        }
+      if (this.multiColumnSearch) {
+        searchTextArray = searchText.split(' ');
+      } else {
+        searchTextArray.push(searchText);
+      }
 
       this.filteredData = this.data.filter( row => {
-          let keys = Object.keys(row);
-          let valid = false;
+        // Changed for in loop to use keys.
+        let keys = Object.keys(row);
+        let valid = false;
 
-          for(let i=0; i<keys.length; i++) {
-              let key = keys[i];
-              if (this.colInfos[key] && row[key]) {
-                  searchTextArray.forEach( text => {
-                      let filterVal = text.toLowerCase();
-                      let targetVal = row[key];
-                      const { format, filterFormatted, formatExtraData } = this.colInfos[key];
+        for(let i=0; i<keys.length; i++) {
+          let key = keys[i];
+          if (this.colInfos[key] && row[key]) {
+            searchTextArray.forEach( text => {
+              let filterVal = text.toLowerCase();
+              let targetVal = row[key];
+              const { format, filterFormatted, formatExtraData } = this.colInfos[key];
 
-                      if(filterFormatted && format) {
-                          targetVal = format(targetVal, row, formatExtraData);
-                      }
-                      if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
-                          valid = true;
-                      }
-                  });
-                  if (valid) break;
+              if(filterFormatted && format) {
+                targetVal = format(targetVal, row, formatExtraData);
               }
+              if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
+                valid = true;
+              }
+            });
+
+            if (valid) break;
           }
-
-        //for (var key in row) {
-        //  if (this.colInfos[key] && row[key]) {
-        //    searchTextArray.forEach( text => {
-        //      let filterVal = text.toLowerCase();
-        //      let targetVal = row[key];
-        //      const { format, filterFormatted, formatExtraData } = this.colInfos[key];
-        //
-        //      if(filterFormatted && format) {
-        //        targetVal = format(targetVal, row, formatExtraData);
-        //      }
-        //      if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
-        //        valid = true;
-        //      }
-        //    });
-        //    if (valid) break;
-        //  }
-        //}
-
+        }
         return valid;
       });
       this.isOnFilter = true;
     }
   }
-
-  //search(searchText) {
-  //  if (searchText.trim() === "") {
-  //    this.filteredData = null;
-  //    this.isOnFilter = false;
-  //    this.searchText = null;
-  //  } else {
-  //    this.searchText = searchText;
-  //    var searchTextArray = [];
-  //
-  //      if (this.multiColumnSearch) {
-  //          searchTextArray = searchText.split(' ');
-  //      } else {
-  //          searchTextArray.push(searchText);
-  //      }
-  //
-  //    this.filteredData = this.data.filter( row => {
-  //        let valid = false;
-  //        //console.log(row);
-  //        let keyedData = row[this.keyField].toLowerCase();
-  //        for(let i=0; i<searchTextArray.length; i++) {
-  //            let text = searchTextArray[i];
-  //            if(keyedData.indexOf(text.toLowerCase()) > -1) {
-  //                valid = true;
-  //                break;
-  //            }
-  //        }
-  //
-  //      return valid;
-  //    });
-  //    this.isOnFilter = true;
-  //  }
-  //}
 
   getDataIgnoringPagination() {
     let _data = this.getCurrentDisplayData();
