@@ -215,13 +215,13 @@ export class TableDataStore {
       this.searchText = searchText;
       var searchTextArray = [];
 
-      if (this.multiColumnSearch) {
-        searchTextArray = searchText.split(' ');
-      } else {
-        searchTextArray.push(searchText);
-      }
-
       this.filteredData = this.data.filter( row => {
+        if (this.multiColumnSearch) {
+          searchTextArray = searchText.split(' ');
+        } else {
+          searchTextArray.push(searchText);
+        }
+
         // Changed for in loop to use keys.
         let keys = Object.keys(row);
         let valid = false;
