@@ -59,26 +59,28 @@ class PaginationList extends React.Component {
       <div className="row" style={{ marginTop: 15 }}>
         {
           this.props.sizePerPageList.length > 1
-          ? <div className="col-md-6">
-              <div className="dropdown">
-                <button className="btn btn-default dropdown-toggle" type="button" id="pageDropDown" data-toggle="dropdown"
-                        aria-expanded="true">
-                  {this.props.sizePerPage}
-                  <span>
-                    {" "}
-                    <span className="caret"/>
-                  </span>
-                </button>
-                <ul className="dropdown-menu" role="menu" aria-labelledby="pageDropDown">
-                  {sizePerPageList}
-                </ul>
-              </div>
+          ? <div>
               <div className="col-md-6">
-                <ul className="pagination" style={pageListStyle}>
-                  {pageBtns}
-                </ul>
+                  <div className="dropdown">
+                    <button className="btn btn-default dropdown-toggle" type="button" id="pageDropDown" data-toggle="dropdown"
+                            aria-expanded="true">
+                      {this.props.sizePerPage}
+                      <span>
+                        {" "}
+                        <span className="caret"/>
+                      </span>
+                    </button>
+                    <ul className="dropdown-menu" role="menu" aria-labelledby="pageDropDown">
+                      {sizePerPageList}
+                    </ul>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <ul className="pagination" style={pageListStyle}>
+                    {pageBtns}
+                  </ul>
+                </div>
               </div>
-            </div>
           : <div className="col-md-12">
               <ul className="pagination" style={pageListStyle}>
                 {pageBtns}
