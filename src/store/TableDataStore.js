@@ -354,13 +354,14 @@ export class TableDataStore {
               searchTextArray.forEach( text => {
                 let filterVal = text.toLowerCase();
                 let targetVal = row[key];
-                const { format, filterFormatted, formatExtraData } = this.colInfos[key];
-
-                if(filterFormatted && format) {
-                  targetVal = format(targetVal, row, formatExtraData);
-                }
-                if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
-                  valid = true;
+                const { format, filterFormatted, formatExtraData, hidden } = this.colInfos[key];
+                if (!hidden) {
+                  if(filterFormatted && format) {
+                    targetVal = format(targetVal, row, formatExtraData);
+                  }
+                  if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
+                    valid = true;
+                  }
                 }
               });
               if (valid) break;
