@@ -111,6 +111,8 @@ class TableBody extends React.Component{
           selectRow={isSelectRowDefined?this.props.selectRow:undefined}
           enableCellEdit={this.props.cellEdit.mode !== Const.CELL_EDIT_NONE}
           onRowClick={this.handleRowClick.bind(this)}
+          onRowMouseOver={this.handleRowMouseOver.bind(this)}
+          onRowMouseOut={this.handleRowMouseOut.bind(this)}
           onSelectRow={this.handleSelectRow.bind(this)}>
           {selectRowColumn}
           {tableColumns}
@@ -171,6 +173,28 @@ class TableBody extends React.Component{
         <tr>{selectRowHeader}{theader}</tr>
       </thead>
     )
+  }
+
+  handleRowMouseOut(rowIndex){
+    var key, selectedRow;
+    this.props.data.forEach(function(row, i){
+      if(i == rowIndex-1){
+        key = row[this.props.keyField];
+        selectedRow = row;
+      }
+    }, this);
+    this.props.onRowMouseOut(selectedRow);
+  }
+
+  handleRowMouseOver(rowIndex){
+    var key, selectedRow;
+    this.props.data.forEach(function(row, i){
+      if(i == rowIndex-1){
+        key = row[this.props.keyField];
+        selectedRow = row;
+      }
+    }, this);
+    this.props.onRowMouseOver(selectedRow);
   }
 
   handleRowClick(rowIndex){

@@ -34,6 +34,18 @@ class TableRow extends React.Component{
     }
   }
 
+  rowMouseOut(e) {
+    if (this.props.onRowMouseOut) {
+      this.props.onRowMouseOut(e.currentTarget.rowIndex);
+    }
+  }
+
+  rowMouseOver(e) {
+    if (this.props.onRowMouseOver) {
+      this.props.onRowMouseOver(e.currentTarget.rowIndex);
+    }
+  }
+
   render(){
     this.clickNum = 0;
     var trCss={
@@ -46,7 +58,10 @@ class TableRow extends React.Component{
     if(this.props.selectRow && (this.props.selectRow.clickToSelect ||
       this.props.selectRow.clickToSelectAndEditCell) || this.props.onRowClick){
       return(
-        <tr {...trCss} onClick={this.rowClick.bind(this)}>{this.props.children}</tr>
+        <tr {...trCss}
+            onMouseOver={this.rowMouseOver.bind(this)}
+            onMouseOut={this.rowMouseOut.bind(this)}
+            onClick={this.rowClick.bind(this)}>{this.props.children}</tr>
       )
     }else{
       return(
