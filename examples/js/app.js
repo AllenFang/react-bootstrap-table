@@ -28,6 +28,7 @@ const routes = (
         <Route path="cell-edit" component={require('./cell-edit/demo')} />
         <Route path="style" component={require('./style/demo')} />
         <Route path="advance" component={require('./advance/demo')} />
+        <Route path="others" component={require('./others/demo')} />
         <Route path="complex" component={require('./complex/demo')} />
         <Route path="tableDataSet" component={require('./tableDataSet/demo')} />
       </Route>

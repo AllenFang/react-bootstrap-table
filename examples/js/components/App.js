@@ -69,6 +69,9 @@ class App extends React.Component {
       text: 'Advance data edit&insert',
       href: 'advance',
     }, {
+      text: 'Other',
+      href: 'others',
+    }, {
       text: 'A complex demo',
       href: 'complex',
     }, {
