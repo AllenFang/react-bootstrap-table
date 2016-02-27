@@ -176,25 +176,13 @@ class TableBody extends React.Component{
   }
 
   handleRowMouseOut(rowIndex){
-    var key, selectedRow;
-    this.props.data.forEach(function(row, i){
-      if(i == rowIndex-1){
-        key = row[this.props.keyField];
-        selectedRow = row;
-      }
-    }, this);
-    this.props.onRowMouseOut(selectedRow);
+    const targetRow = this.props.data[rowIndex-1];
+    this.props.onRowMouseOut(targetRow);
   }
 
   handleRowMouseOver(rowIndex){
-    var key, selectedRow;
-    this.props.data.forEach(function(row, i){
-      if(i == rowIndex-1){
-        key = row[this.props.keyField];
-        selectedRow = row;
-      }
-    }, this);
-    this.props.onRowMouseOver(selectedRow);
+    const targetRow = this.props.data[rowIndex-1];
+    this.props.onRowMouseOver(targetRow);
   }
 
   handleRowClick(rowIndex){

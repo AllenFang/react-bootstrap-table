@@ -74,7 +74,9 @@ TableRow.propTypes = {
   isSelected: React.PropTypes.bool,
   enableCellEdit: React.PropTypes.bool,
   onRowClick: React.PropTypes.func,
-  onSelectRow: React.PropTypes.func
+  onSelectRow: React.PropTypes.func,
+  onRowMouseOut: React.PropTypes.func,
+  onRowMouseOver: React.PropTypes.func
 };
 TableRow.defaultProps = {
   onRowClick: undefined
