@@ -225,7 +225,10 @@ class BootstrapTable extends React.Component {
     return (
       <div className="react-bs-container" ref="table">
         {toolBar}
-        <div className="react-bs-table-container" style={style}>
+        <div className="react-bs-table-container"
+             onMouseEnter={this.handleMouseEnter.bind(this)}
+             onMouseLeave={this.handleMouseLeave.bind(this)}
+             style={style}>
           <TableHeader
             ref="header"
             rowSelectType={this.props.selectRow.mode}
@@ -256,6 +259,8 @@ class BootstrapTable extends React.Component {
             cellEdit={this.props.cellEdit}
             selectedRowKeys={this.state.selectedRowKeys}
             onRowClick={this.handleRowClick.bind(this)}
+            onRowMouseOver={this.handleRowMouseOver.bind(this)}
+            onRowMouseOut={this.handleRowMouseOut.bind(this)}
             onSelectRow={this.handleSelectRow.bind(this)}
             noDataText={this.props.options.noDataText}
           />
@@ -310,6 +315,30 @@ class BootstrapTable extends React.Component {
       currPage: page,
       sizePerPage
     });
+  }
+
+  handleMouseLeave() {
+    if (this.props.options.onMouseLeave) {
+      this.props.options.onMouseLeave();
+    }
+  }
+
+  handleMouseEnter() {
+    if (this.props.options.onMouseEnter) {
+      this.props.options.onMouseEnter();
+    }
+  }
+
+  handleRowMouseOut(row) {
+    if (this.props.options.onRowMouseOut) {
+      this.props.options.onRowMouseOut(row);
+    }
+  }
+
+  handleRowMouseOver(row) {
+    if (this.props.options.onRowMouseOver) {
+      this.props.options.onRowMouseOver(row);
+    }
   }
 
   handleRowClick(row) {
@@ -759,6 +788,10 @@ BootstrapTable.defaultProps = {
     afterSearch: undefined,
     afterColumnFilter: undefined,
     onRowClick: undefined,
+    onMouseLeave: undefined,
+    onMouseEnter: undefined,
+    onRowMouseOut: undefined,
+    onRowMouseOver: undefined,
     page: undefined,
     sizePerPageList: Const.SIZE_PER_PAGE_LIST,
     sizePerPage: undefined,
