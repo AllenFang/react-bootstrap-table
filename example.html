@@ -15,6 +15,22 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/react-bootstrap-table-all.min.css">
     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <style>
+      .td-header-string-example {
+        font-style: oblique;
+        color: red;
+        background-color: aquamarine;
+      }
+      .tr-string-example {
+        font-style: oblique;
+        color: red;
+        background-color: aquamarine;
+      }
+      .td-column-string-example {
+        color: blue;
+        background-color: antiquewhite;
+      }
+    </style>
   </head>
   <body>
     <a href="https://github.com/AllenFang/react-bootstrap-table"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
@@ -97,15 +113,19 @@
               <ul class="nav"></ul>
           </li>
           <li>
+            <a href="#header-filter">Column Filter in Header</a>
+              <ul class="nav"></ul>
+          </li>
+          <li>
             <a href="#search">Table Search</a>
               <ul class="nav"></ul>
           </li>
           <li>
-            <a href="#fly">Update Table</a>
+            <a href="#hidden">Column Hidden</a>
               <ul class="nav"></ul>
           </li>
           <li>
-            <a href="#hidden">Column Hidden</a>
+            <a href="#custom-style">Custom Table Styling</a>
               <ul class="nav"></ul>
           </li>
         </ul>
@@ -341,6 +361,59 @@ var selectRowProp = {
           </code></pre>
         </div></br>
         <div>
+          <h1 id="header-filter">Advance Column Filter</h1>
+          Use <code>filter</code> to enable the column filter within header.</br>
+          This feature is more flexible and customizable than <code>columnFilter</code></br>
+          </br>
+          <div id="header-column-filter-div"></div>
+          <pre><code>
+function enumFormatter(cell, row, enumObject){
+    return enumObject[cell];
+}
+
+function dateFormatter(cell, row) {
+    return ("0" + cell.getDate()).slice(-2) + "/" +
+           ("0" + (cell.getMonth() + 1)).slice(-2) + "/" +
+           cell.getFullYear();
+}
+
+var satisfaction = [0, 1, 2, 3, 4, 5];
+var qualityType = {
+    0: "good",
+    1: "bad",
+    2: "unknown"
+};
+React.render(
+  &lt;BootstrapTable data={product16}>
+      &lt;TableHeaderColumn dataField="id" isKey={true}>Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn
+        dataField="name" filter={{type: "TextFilter", placeholder: "Please enter a value"}}&gt;
+        Product Name
+      &lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn
+        dataField="quality" filter={{type: "SelectFilter", options: qualityType}}
+        dataFormat={enumFormatter}
+        formatExtraData={qualityType}&gt;
+        Product Quality
+      &lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn
+        dataField="price" filter={{type: "NumberFilter", delay: 1000}}&gt;
+        Product Price
+      &lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn
+        dataField="satisfaction" filter={{type: "NumberFilter", options: satisfaction}}&gt;
+        Buyer Satisfaction
+      &lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn
+        dataField="inStockDate" filter={{type: "DateFilter"}} dataFormat={dateFormatter}&gt;
+        In Stock From
+      &lt;/TableHeaderColumn&gt;
+  &lt;/BootstrapTable&gt;,
+document.getElementById("header-column-filter-div")
+);
+          </code></pre>
+        </div></br>
+        <div>
           <h1 id="search">Table Search</h1>
           Use <code>search</code> to enable the column filter on table.</br>
           Use <code>searchPlaceholder</code><b>(optional)</b> to change the placeholder in search field.</br>
@@ -355,33 +428,6 @@ var selectRowProp = {
           </code></pre>
         </div></br>
         <div>
-          <h1 id="fly">Update table data on fly</h1>
-          react-bootstrap-table support the client can update data on fly through a TableDataSet object.</br>
-          See the example in the following or reference <a href="./docs.html#about-tabledataset">About TableDataSet</a>.</br>
-          </br>
-          <div>
-            <button id="clickme">Click me!</button>
-          </div>
-          <div id="fly-div"></div>
-          <pre><code>
-var ReactBsTable  = require('react-bootstrap-table');
-var BootstrapTable = ReactBsTable.BootstrapTable;
-var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
-var TableDataSet = ReactBsTable.TableDataSet; //import TableDataSet
-
-var dataSet = new TableDataSet(products);
-&lt;BootstrapTable data={dataSet}&gt;
-  &lt;TableHeaderColumn dataField="id" isKey={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField="name"&gt;Product Name&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
-&lt;/BootstrapTable&gt;
-// ...
-// in any time, you want to update or reset data on table, you can:
-dataSet.setData(newProdcuts);
-// the table data will be updated auto.
-          </code></pre>
-        </div></br>
-        <div>
           <h1 id="hidden">Column Hidden</h1>
           Use <code>hidden</code> as attribute in <code>TableHeaderColumn</code> to enable the column hidden.</br>
           </br>
@@ -391,6 +437,22 @@ dataSet.setData(newProdcuts);
   &lt;TableHeaderColumn dataField="id" isKey={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="name" hidden={true}&gt;Product Name&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField="price"&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+          </code></pre>
+        </div></br>
+        <div>
+          <h1 id="custom-style">Custom Table Styling</h1>
+          Use <code>trClassName</code> as attribute in <code>BootstrapTable</code> to set the class for row(tr).</br>
+          Use <code>columnClassName</code> as attribute in <code>TableHeaderColumn</code> to set the class for column(td).</br>
+          Use <code>className</code> as attribute in <code>TableHeaderColumn</code> to set the class for header(td).</br>
+          You can check <a href='advance.html#custom-table-style'>advance usage</a> for this feature.</br>
+          </br>
+          <div id="custom-style-div"></div>
+          <pre><code>
+&lt;BootstrapTable data={product17} trClassName="tr-string-example"&gt;
+    &lt;TableHeaderColumn dataField="id" isKey={true}&gt;Product ID&lt;/TableHeaderColumn&gt;
+    &lt;TableHeaderColumn dataField="name" className="td-header-string-example"&gt;Product Name&lt;/TableHeaderColumn&gt;
+    &lt;TableHeaderColumn dataField="price" columnClassName="td-column-string-example"&gt;Product Price&lt;/TableHeaderColumn&gt;
 &lt;/BootstrapTable&gt;
           </code></pre>
         </div></br>

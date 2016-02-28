@@ -334,14 +334,24 @@
             <p>Assign a default sort ordering.</p>
             <font class="attr-lv1-title">noDataText</font> : <font class="attr-lv1-type">String</font></br>
             <p>Change the displaying text when data is empty.</p>
+            <font class="attr-lv1-title">clearSearch</font> : <font class="attr-lv1-type">Bool</font></br>
+            <p>Only work on enable search. If true, there will be a button beside search input field for clear search field text. </p>
             <font class="attr-lv1-title">afterTableComplete</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called after table update</p>
+            <p>Assign a callback function which will be called after table update.</p>
             <font class="attr-lv1-title">afterDeleteRow</font> : <font class="attr-lv1-type">Function</font></br>
             <p>Assign a callback function which will be called after row delete.</p>
             <p>This function taking one argument: <code>rowKeys</code>, which means the row key you dropped.</p>
             <font class="attr-lv1-title">afterInsertRow</font> : <font class="attr-lv1-type">Function</font></br>
             <p>Assign a callback function which will be called after row insert.</p>
             <p>This function taking one argument: <code>row</code>, which means the whole row data you added.</p>
+            <font class="attr-lv1-title">prePage</font> : <font class="attr-lv1-type">String</font></br>
+            <p>Customize the text of previouse page button</p>
+            <font class="attr-lv1-title">nextPage</font> : <font class="attr-lv1-type">String</font></br>
+            <p>Customize the text of next page button</p>
+            <font class="attr-lv1-title">firstPage</font> : <font class="attr-lv1-type">String</font></br>
+            <p>Customize the text of first page button</p>
+            <font class="attr-lv1-title">lastPage</font> : <font class="attr-lv1-type">String</font></br>
+            <p>Customize the text of last page button</p>
             <font class="attr-lv1-title">page</font> : <font class="attr-lv1-type">Number</font></br>
             <p>Accept a number, which means the page you want to show as default.</p>
             <font class="attr-lv1-title">sizePerPageList</font> : <font class="attr-lv1-type">Array</font></br>
@@ -387,6 +397,16 @@
             <font class="attr-lv1-title">onRowClick</font> : <font class="attr-lv1-type">Function</font></br>
             <p>Assign a callback function which will be called after a row click.</p>
             <p>This function taking one argument: <code>row</code> which is the row data which you click on.</p>
+            <font class="attr-lv1-title">onMouseEnter</font> : <font class="attr-lv1-type">Function</font></br>
+            <p>Assign a callback function which will be called when mouse enter into the table.</p>
+            <font class="attr-lv1-title">onMouseLeave</font> : <font class="attr-lv1-type">Function</font></br>
+            <p>Assign a callback function which will be called when mouse leave from the table.</p>
+            <font class="attr-lv1-title">onRowMouseOver</font> : <font class="attr-lv1-type">Function</font></br>
+            <p>Assign a callback function which will be called when mouse over a row in table.</p>
+            <p>This function taking one argument: <code>row</code> which is the row data which mouse over.</p>
+            <font class="attr-lv1-title">onRowMouseOut</font> : <font class="attr-lv1-type">Function</font></br>
+            <p>Assign a callback function which will be called when mouse leave from a row in table.</p>
+            <p>This function taking one argument: <code>row</code> which is the row data which mouse out.</p>
             <font class="attr-lv1-title">handleConfirmDeleteRow</font> : <font class="attr-lv1-type">Function</font></br>
             <p>Assign a callback function which will be called when row dropping.</p>
             <p>It give you a chance to customize your confirmation for row deletion.</p>
@@ -457,6 +477,12 @@
           <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">handleExportCSV :</font> <font class="attr-type">None</font></br>
           <p>Call this function to export table as csv.</p>
+        </div>
+
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">cleanSelected :</font> <font class="attr-type">None</font></br>
+          <p>Clean all the selection state on table.</p>
         </div>
       </div>
 
@@ -541,30 +567,34 @@
 }
           </pre>
         </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">autoValue :</font> <font class="attr-type">Bool</font></br>
+          <p>It only work when you enable <code>insertRow</code> and be assign on rowKey column.</p>
+          <p>If true, the row key will be generated automatically after a row insertion.</p>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">filter :</font> <font class="attr-type">Object</font></br>
+          <p>To Enable a column filter within header column.</p>
+          <p>This feature support a lots of filter type and condition. Please check <a href='https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/column-filter'>example</a></p>
+          <p>Following is the format for <code>filter</code></p>
+          <pre>
+{
+  type: "TextFilter"||"SelectFilter"||"NumberFilter"||"DateFilter"||"YOUR_CUSTOM_FILTER".
+  defaultValue: //Default value on filter. If type is NumberFilter, this value will like { number: 50, comparator: '>' }
+  delay: //Assign a millisecond for delay when trigger filtering, default is 500.
+  placeholder: //Only work on TextFilter. Assign the placeholder text on text filter
+  numberComparators: //Only work on NumberFilter. Accept an array which conatin the filter condition, like: ['<','>','=']
+  options:
+  // Only work on SelectFilter or NumberFilter.
+  // For SelectFilter, you can assign the selection option by a object which presented as { 0: 'good', 1: 'bad' ... }
+  // For NumberFilter, you can assign the number range by an array which presented as [1,2,3,4...]
+}
+          </pre>
+          <p>Check <a href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column-filter/custom-filter.js">this</a> for a custom filter.</p>
+        </div>
       </div>
-      <h3>
-      <a id="about-tabledataset" class="anchor" href="#about-tabledataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-      About TableDataSet</h3>
-
-      After v0.8.0, rect-bootstrap-table provide the ability of updating table data on fly. How to do it?</br></br>
-      1. Import TableDataSet</br>
-      <pre>
-var ReactBsTable  = require('react-bootstrap-table');
-var TableDataSet = ReactBsTable.TableDataSet; //import TableDataSet</pre>
-
-      2. Create a TableDataSet object with you data.
-      <pre>
-var dataSet = new TableDataSet(products);</pre>
-
-      3. Pass this object to <code>data</code>
-      <pre>
-&lt;BootstrapTable data={dataSet}&gt;
-   ...
-&lt;/BootstrapTable&gt;</pre>
-
-      4. If you want to reset or update table data in any time, you can:
-      <pre>
-dataSet.setData(newproducts);</pre>
       <hr>
       <span class="site-footer-owner"><a href="https://github.com/AllenFang/react-bootstrap-table">React-bootstrap-table</a> is maintained by <a href="https://github.com/AllenFang">AllenFang</a>.</span>
 

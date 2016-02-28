@@ -45,36 +45,30 @@
       <a id="api--attributes" class="anchor" href="#api--attributes" aria-hidden="true">
         <span class="octicon octicon-link"></span>
       </a>
-      <strong>Advance Programming</strong>
+      <strong>Advance Usage</strong>
       </h2>
 
-      <h3 style="text-align: center">Update data on fly</h3>
-      <code>react-bootstrap-table</code> support developer can reset the table data without a react render,
-      <a href="http://allenfang.github.io/react-bootstrap-table/example.html#fly">See Example</a></br></br>
-      Follow below steps to accomplish this feature: </br></br>
-      <b>1. Import TableDataSet</b></br>
-      <pre>
-var ReactBsTable  = require('react-bootstrap-table');
-var TableDataSet = ReactBsTable.TableDataSet; //import TableDataSet</pre>
+      <div>
+        There are some topic for advance usage for <code>react-bootstrap-table</code>. If you have any questions,
+        feel free to ask example on github.
+        <ul>
+          <li><a href='#cell-format-with-react'>Cell Format with a React Component</a></li>
+          <li><a href='#cell-format-with-extra-data'>Cell Format with Extra Data</a></li>
+          <li><a href='#customSort'>Custom Sort</a></li>
+          <li><a href='#sort-programmatically'>Sort Programmatically</a></li>
+          <li><a href='#dynamic-select'>Dynamic Select Row</a></li>
+          <li><a href='#how-to-get-select'>How to Get Selected Row?</a></li>
+          <li><a href='#custom-filter'>A Custom Filter</a></li>
+          <li><a href='#how-to-get-page'>How to Get Current Page?</a></li>
+          <li><a href='#custom-table-style'>Advance Table Styling</a></li>
+          <li><a href='#advance-cell-editing'>Advance Cell Editing</a></li>
+        </ul>
+      </div>
 
-      <b>2. Create a TableDataSet object with you data.</b>
-      <pre>
-var dataSet = new TableDataSet(products);</pre>
-
-      <b>3. Pass this object to <code>data</code> prop</b>
-      <pre>
-&lt;BootstrapTable data={dataSet}&gt;
-   ...
-&lt;/BootstrapTable&gt;</pre>
-
-      <b>4. If you want to reset or update table data in any time, you can:</b>
-      <pre>
-dataSet.setData(newproducts);</pre>
-      <h3 style="text-align: center">Cell Format with a React Component</h3>
+      <h3 id='cell-format-with-react' style="text-align: center">Cell Format with a React Component</h3>
       <code>react-bootstrap-table</code> allow you to customize your column through a function which return a HTML string.
-      <a href="http://allenfang.github.io/react-bootstrap-table/example.html#column-format">Here</a> is an example.</br></br>
+      <a href="http://allenfang.github.io/react-bootstrap-table/example.html#column-format">Here</a> is an example.</br>
       But also allow you return a "React Component". For Example: </br>
-
       <pre>
 function priceFormatter(cell, row){
   return &lt;ReactComponent price={cell} format="USD"/&gt;;
@@ -105,12 +99,44 @@ function mySortFunc(a, b, order){   //order is desc or asc
 &lt;/BootstrapTable&gt;
 </pre>
 
+      <h3 id="cell-format-with-extra-data" style="text-align: center">Cell Format with Extra Data</h3>
+      When you use <code>dataFormat</code> but need some extra or external data, you can use <code>formatExtraData</code> like following example
+      <script src="https://gist.github.com/AllenFang/10aeedae0e0d0784ade4.js"></script>
 
-      <h3 style="text-align: center">Dynamic Select Row</h3>
+      <h3 id="sort-programmatically" style="text-align: center">Sort Programmatically</h3>
+      If you want to make sorting programmatically, you can use <code>handleSort</code> API exposed by <code>BootstrapTable</code>.
+      In following example, you can click button to perform a sorting by expose API.
+      <script src="https://gist.github.com/AllenFang/e7642a13a2026a17c507.js"></script>
+
+      <h3 id="dynamic-select" style="text-align: center">Dynamic Select Row</h3>
       <code>react-bootstrap-table</code> support the default selected row on table
-      and also use the same way to allow user to set select row <b>programmatically</b></br></br>
+      and also use the same way to allow user to set select row <b>programmatically</b></br>
       You can reference an exmaple on <a href="https://gist.github.com/AllenFang/e6440666329ac5b27a60">gist</a> as below
       <script src="https://gist.github.com/AllenFang/e6440666329ac5b27a60.js"></script>
+
+      <h3 id="how-to-get-select" style="text-align: center">How to Get Selected Row?</h3>
+      Check following gist
+      <script src="https://gist.github.com/AllenFang/306c31f410f8939ab1fb.js"></script>
+
+      <h3 id="custom-filter" style="text-align: center">A Custom Filter</h3>
+      <code>react-bootstrap-table</code> support a advance column filter on header, there are couple type provided:
+      text, select, date or number. You can check these example on <a href='https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/column-filter'>here</a>
+      However, you can custom yourself filter like following example</br>
+      <script src="https://gist.github.com/AllenFang/01e560f343e1ba4e62c3.js"></script>
+
+      <h3 id="how-to-get-page" style="text-align: center">How to Get Current Page?</h3>
+      There are two way you can choose, check the following example
+      <script src="https://gist.github.com/AllenFang/4fa700b1b57298aee277.js"></script>
+
+      <h3 id="custom-table-style" style="text-align: center">Advance Table Styling</h3>
+      In this <a href='example.html#custom-style'>example</a> show we how to use a basic custom style on table. Following show how to do more customization styling.</br>
+      <code>trClassName</code> and <code>columnClassName</code> also accept a function to make customization more flexible.
+      Check <a href='docs.html'>docs</a>
+      <script src="https://gist.github.com/AllenFang/9797c08cbabdead22a64.js"></script>
+
+      <h3 id="advance-cell-editing" style="text-align: center">Advance Cell Editing</h3>
+      <code>react-bootstrap-table</code> support a basic cell editing but also give some useful data type on insertion and editing.
+      <script src="https://gist.github.com/AllenFang/a07cc1c13876eb73b10a.js"></script>
     </section>
 
 
