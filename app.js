@@ -34,8 +34,28 @@ var products = [
 
 var product1 = [], product2 = [],product3 = [],product4 = [],
 product5 = [],product6 = [],product7 = [],product8 = [],
-product9 = [],product10 = [],product11 = [],product12 = [],product13 = [],product14 = [],
-product15 = [];
+product9 = [],product10 = [],product11 = [],product12 = [],product14 = [],
+product15 = [], product16 = [], product17 = [];
+
+function addProductsFor16(quantity) {
+    var startId = product16.length;
+    const startDate = new Date(2015, 0, 1);
+    const endDate = new Date();
+    for (var i = 0; i < quantity; i++) {
+        const date = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
+        var id = startId + i;
+        product16.push({
+            id: id,
+            name: "Item name " + id,
+            quality: i%3,
+            price: Math.floor((Math.random() * 100) + 1),
+            satisfaction: Math.floor(Math.random() * 6),
+            inStockDate: date
+        });
+    }
+}
+
+addProductsFor16(5);
 
 for(var i=1;i<=6;i++){
   var p = {
@@ -46,9 +66,10 @@ for(var i=1;i<=6;i++){
 
   product1.push(p);product2.push(p);product4.push(p);product5.push(p);
   product6.push(p);
-  product10.push(p);product11.push(p);product3.push(p);product12.push(p);product13.push(p);
+  product10.push(p);product11.push(p);product3.push(p);product12.push(p);
   product14.push(p)
   product15.push(p);
+  product17.push(p);
 
   product7.push({
     id: i,
@@ -234,32 +255,6 @@ React.render(
 	document.getElementById("search-div")
 );
 
-var dataSet = new TableDataSet(product13);
-
-React.render(
-  <BootstrapTable data={dataSet}>
-      <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
-      <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
-      <TableHeaderColumn dataField="price" editable={false}>Product Price</TableHeaderColumn>
-  </BootstrapTable>,
-	document.getElementById("fly-div")
-);
-
-var btn = document.getElementById('clickme');
-btn.onclick = function(){
-  var newproducts = [];
-  for(var i=1;i<=12;i++){
-    var p = {
-      id: i,
-      name: "Product"+i,
-      price: 100+i
-    };
-    newproducts.push(p);
-    dataSet.setData(newproducts);
-  }
-};
-
-
 React.render(
   <BootstrapTable data={product14}>
       <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
@@ -276,4 +271,39 @@ React.render(
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
   </BootstrapTable>,
 	document.getElementById("width")
+);
+
+React.render(
+  <BootstrapTable data={product17} trClassName="tr-string-example">
+      <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name" className="td-header-string-example">Product Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="price" columnClassName="td-column-string-example">Product Price</TableHeaderColumn>
+  </BootstrapTable>,
+	document.getElementById("custom-style-div")
+);
+
+function enumFormatter(cell, row, enumObject){
+    return enumObject[cell];
+}
+
+function dateFormatter(cell, row) {
+    return ("0" + cell.getDate()).slice(-2) + "/" + ("0" + (cell.getMonth() + 1)).slice(-2) + "/" + cell.getFullYear();
+}
+
+var satisfaction = [0, 1, 2, 3, 4, 5];
+var qualityType = {
+    0: "good",
+    1: "bad",
+    2: "unknown"
+};
+React.render(
+  <BootstrapTable data={product16}>
+      <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name" filter={{type: "TextFilter", placeholder: "Please enter a value"}}>Product Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="quality" filter={{type: "SelectFilter", options: qualityType}} dataFormat={enumFormatter} formatExtraData={qualityType}>Product Quality</TableHeaderColumn>
+      <TableHeaderColumn dataField="price" filter={{type: "NumberFilter", delay: 1000}}>Product Price</TableHeaderColumn>
+      <TableHeaderColumn dataField="satisfaction" filter={{type: "NumberFilter", options: satisfaction}}>Buyer Satisfaction</TableHeaderColumn>
+      <TableHeaderColumn dataField="inStockDate" filter={{type: "DateFilter"}} dataFormat={dateFormatter}>In Stock From</TableHeaderColumn>
+  </BootstrapTable>,
+	document.getElementById("header-column-filter-div")
 );
