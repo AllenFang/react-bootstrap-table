@@ -1,3 +1,15 @@
+<a name="v1.5.4"></a>
+# [v1.5.4](https://github.com/AllenFang/react-bootstrap-table/compare/v1.5.3...v1.5.4) (2016-02-27)
+### Bug fixes
+* Search optimization([07c96c8](https://github.com/AllenFang/react-bootstrap-table/commit/07c96c8d2029b73c3a1de55dbf1c88918974dbfd))
+
+### Enhancement
+* [#303](https://github.com/AllenFang/react-bootstrap-table/pull/303)([04592b0](https://github.com/AllenFang/react-bootstrap-table/commit/04592b089eb5dc63598d326ddd471c80183afc3e))
+
+### Features
+* Support mouse event on table and row([47bce92](https://github.com/AllenFang/react-bootstrap-table/commit/47bce923ee48c931b71efde9e00c859b9db2a62c))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/others/mouse-event-table.js)
+
 <a name="v1.5.3"></a>
 # [v1.5.3](https://github.com/AllenFang/react-bootstrap-table/compare/v1.5.2...v1.5.3) (2016-02-23)
 ### Bug fixes
