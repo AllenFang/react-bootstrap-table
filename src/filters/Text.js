@@ -25,6 +25,10 @@ class TextFilter extends React.Component {
 		}
 	}
 
+	componentWillUnmount() {
+		clearTimeout(this.timeout);
+	}
+
 	render() {
 		return (
 			<input ref="inputText"

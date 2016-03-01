@@ -8,6 +8,7 @@ class NumberFilter extends React.Component {
     constructor(props) {
         super(props);
         this.numberComparators = this.props.numberComparators || legalComparators;
+        this.timeout = null;
         this.state = {
             isPlaceholderSelected: (this.props.defaultValue == undefined ||
                                     this.props.defaultValue.number == undefined ||
@@ -76,6 +77,10 @@ class NumberFilter extends React.Component {
                 comparator: this.refs.numberFilterComparator.value},
                 Const.FILTER_TYPE.NUMBER);
         }
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.timeout);
     }
 
     render() {
