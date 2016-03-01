@@ -26,7 +26,9 @@ It's a [react.js](http://facebook.github.io/react/) table for bootstrap, named r
 - rich function hooks
 - large columns table
 
-You can see more about this component on [here](http://allenfang.github.io/react-bootstrap-table/index.html). and example is on [here](http://allenfang.github.io/react-bootstrap-table/example.html).</br>
+You can see more about [react-bootstrap-table](http://allenfang.github.io/react-bootstrap-table/index.html).
+[Here](https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js) are a lots of examples.</br>
+You can check the [this](http://allenfang.github.io/react-bootstrap-table/advance.html) for more advance usage for ```react-bootstrap-table```. Feel free to ask more examples.</br>
 Check the <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/CHANGELOG.md'>CHANGELOG</a> for more detail release notes.
 
 ## Development
@@ -117,7 +119,7 @@ $ gulp example-server #after start, open browser and go to http://localhost:3004
 ### Documentation
 Please see:  [docs](http://allenfang.github.io/react-bootstrap-table/docs.html)
 
-#### Thanks
+### Thanks
 **[luqin](https://github.com/luqin)**  
 Help this project to integrate a better examples demo, add travis & badge, code formatting, give a lot of suggestions and bugs report.  
 **[khinlatt](https://github.com/khinlatt)**  
