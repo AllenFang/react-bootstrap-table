@@ -28,7 +28,7 @@ It's a [react.js](http://facebook.github.io/react/) table for bootstrap, named r
 
 You can see more about [react-bootstrap-table](http://allenfang.github.io/react-bootstrap-table/index.html).
 [Here](https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js) are a lots of examples.</br>
-You can check the [this](http://allenfang.github.io/react-bootstrap-table/advance.html) for more advance usage for ```react-bootstrap-table```. Feel free to ask more examples.</br>
+You can check [this](http://allenfang.github.io/react-bootstrap-table/advance.html) for more advance usage for ```react-bootstrap-table```. Feel free to ask more examples.</br>
 Check the <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/CHANGELOG.md'>CHANGELOG</a> for more detail release notes.
 
 ## Development
