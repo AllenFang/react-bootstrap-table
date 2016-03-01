@@ -123,39 +123,43 @@ border-bottom-width: 0px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+*/
 
-.react-bs-container .table-header > table > thead > tr > th .filter{
+.react-bs-table .react-bs-container-header > table > thead > tr > th {
+  vertical-align: middle;
+}
+.react-bs-table .react-bs-container-header > table > thead > tr > th .filter{
   font-weight: normal;
 }
 
-.react-bs-container .table-header > table > thead > tr > th .select-filter option[value=''],
-.react-bs-container .table-header > table > thead > tr > th .select-filter.placeholder-selected,
-.react-bs-container .table-header > table > thead > tr > th .filter::-webkit-input-placeholder,
-.react-bs-container .table-header > table > thead > tr > th .number-filter-input::-webkit-input-placeholder{
+.react-bs-table .react-bs-container-header > table > thead > tr > th .select-filter option[value=''],
+.react-bs-table .react-bs-container-header > table > thead > tr > th .select-filter.placeholder-selected,
+.react-bs-table .react-bs-container-header > table > thead > tr > th .filter::-webkit-input-placeholder,
+.react-bs-table .react-bs-container-header > table > thead > tr > th .number-filter-input::-webkit-input-placeholder{
   color: lightgrey;
   font-style: italic;
 }
 
-.react-bs-container .table-header > table > thead > tr > th .select-filter.placeholder-selected option:not([value='']) {
+.react-bs-table .react-bs-container-header > table > thead > tr > th .select-filter.placeholder-selected option:not([value='']) {
   color: initial;
   font-style: initial;
 }
 
-.react-bs-container .table-header > table > thead > tr > th .number-filter {
+.react-bs-table .react-bs-container-header > table > thead > tr > th .number-filter {
   display: flex;
 }
 
-.react-bs-container .table-header > table > thead > tr > th .number-filter-input {
+.react-bs-table .react-bs-container-header > table > thead > tr > th .number-filter-input {
   margin-left: 5px;
   float: left;
   width: calc(100% - 67px - 5px);
 }
 
-.react-bs-container .table-header > table > thead > tr > th .number-filter-comparator {
+.react-bs-table .react-bs-container-header > table > thead > tr > th .number-filter-comparator {
   width: 67px;
   float: left;
 }
-
+/*
 .react-bs-container .table-header > table > thead > tr > .sort-column{
   cursor: pointer;
 }
@@ -164,6 +168,7 @@ border-bottom-width: 0px;
   overflow: auto;
   height: 100%;
 }
+
 
 .react-bs-container .table-container > table{
   margin-top: -42px;
