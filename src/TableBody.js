@@ -184,12 +184,12 @@ class TableBody extends React.Component{
   }
 
   handleRowMouseOut(rowIndex){
-    const targetRow = this.props.data[rowIndex-1];
+    const targetRow = this.props.data[rowIndex];
     this.props.onRowMouseOut(targetRow);
   }
 
   handleRowMouseOver(rowIndex){
-    const targetRow = this.props.data[rowIndex-1];
+    const targetRow = this.props.data[rowIndex];
     this.props.onRowMouseOver(targetRow);
   }
 
