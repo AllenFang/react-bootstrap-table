@@ -126,6 +126,7 @@ class BootstrapTable extends React.Component {
         filterFormatted: column.props.filterFormatted,
         editable: column.props.editable,
         hidden: column.props.hidden,
+        searchable: column.props.searchable,
         className: column.props.columnClassName,
         width: column.props.width,
         text: column.props.children,
