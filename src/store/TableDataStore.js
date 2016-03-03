@@ -350,7 +350,6 @@ export class TableDataStore {
 
       this.filteredData = this.data.filter( row => {
         const keys = Object.keys(row);
-        const keysLength = keys.length;
         let valid = false;
 
         // for loops are ugly, but performance matters here.
