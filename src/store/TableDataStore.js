@@ -5,7 +5,7 @@ function _sort(arr, sortField, order, sortFunc) {
   order = order.toLowerCase();
   arr.sort((a, b) => {
     if (sortFunc) {
-      return sortFunc(a, b, order);
+      return sortFunc(a, b, order, sortField);
     } else {
       if (order == Const.SORT_DESC) {
         return a[sortField] > b[sortField] ? -1 : ((a[sortField] < b[sortField]) ? 1 : 0);
