@@ -351,27 +351,31 @@ export class TableDataStore {
       this.filteredData = this.data.filter( row => {
         const keys = Object.keys(row);
         let valid = false;
-
         // for loops are ugly, but performance matters here.
         // And you cant break from a forEach.
         // http://jsperf.com/for-vs-foreach/66
         for (let i = 0, keysLength = keys.length; i < keysLength; i++) {
           const key = keys[i];
-          const { format, filterFormatted, formatExtraData, searchable, hidden } = this.colInfos[key];
-          let targetVal = row[key];
           if (this.colInfos[key] && row[key]) {
-            for (let j = 0, textLength = searchTextArray.length; j < textLength; j++) {
-              const filterVal = searchTextArray[j].toLowerCase();
-              if (!hidden || searchable) {
-                if (filterFormatted && format) {
-                  targetVal = format(targetVal, row, formatExtraData);
-                }
-                if (typeof targetVal !== 'number') {
+            const { format, filterFormatted, formatExtraData, searchable, hidden } = this.colInfos[key];
+            let targetVal = row[key];
+            if (!hidden || searchable) {
+              if (filterFormatted && format) {
+                targetVal = format(targetVal, row, formatExtraData);
+              }
+              if (typeof targetVal !== 'number') {
+                for (let j = 0, textLength = searchTextArray.length; j < textLength; j++) {
+                  let filterVal = searchTextArray[j].toLowerCase();
                   if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
                     valid = true;
                   }
-                } else if (parseInt(targetVal, 10) === parseInt(filterVal, 10)) {
-                  valid = true;
+                }
+              } else {
+                for (let k = 0, textLength = searchTextArray.length; k < textLength; k++) {
+                  let filterVal = searchTextArray[k].toLowerCase();
+                  if (parseInt(targetVal, 10) === parseInt(filterVal, 10)) {
+                    valid = true;
+                  }
                 }
               }
             }
