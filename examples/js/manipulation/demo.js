@@ -36,6 +36,7 @@ class Demo extends React.Component {
             <div className="panel-body">
               <h5>Source in /examples/js/manipulation/search-table.js</h5>
               <h5>See your console to watch information of after searching.</h5>
+              <h5>The column ID has <code>searchable</code> set to <code>false</code>.</h5>
               <SearchTable />
             </div>
           </div>
@@ -45,6 +46,7 @@ class Demo extends React.Component {
             <div className="panel-heading">Table Search Example with Clear Button</div>
             <div className="panel-body">
               <h5>Source in /examples/js/manipulation/search-clear-table.js</h5>
+              <h5>The column ID has <code>searchable</code> set to <code>false</code>.</h5>
               <SearchClearTable />
             </div>
           </div>
@@ -54,6 +56,7 @@ class Demo extends React.Component {
             <div className="panel-heading">Table Multi Search Example(Use space to delimited search text, ex:3 4)</div>
             <div className="panel-body">
               <h5>Source in /examples/js/manipulation/multi-search-table.js</h5>
+              <h5>The column ID has <code>searchable</code> set to <code>false</code>.</h5>
               <MultiSearchTable />
             </div>
           </div>
