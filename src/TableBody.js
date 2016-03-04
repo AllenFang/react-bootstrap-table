@@ -251,7 +251,7 @@ class TableBody extends React.Component{
 
   renderSelectRowColumn(selected){
     if(this.props.selectRow.mode == Const.ROW_SELECT_SINGLE) {
-      return (<TableColumn><input type="radio" name="selection" checked={selected} onChange={this.handleSelectRowColumChange.bind(this)}/></TableColumn>);
+      return (<TableColumn><input type="radio" checked={selected} onChange={this.handleSelectRowColumChange.bind(this)}/></TableColumn>);
     }else {
       return (<TableColumn ><input type="checkbox" checked={selected} onChange={this.handleSelectRowColumChange.bind(this)}/></TableColumn>);
     }
