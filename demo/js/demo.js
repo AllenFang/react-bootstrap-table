@@ -88,11 +88,11 @@ React.render(
   <BootstrapTable data={products} striped={true} hover={true} pagination={true} selectRow={selectRowProp} cellEdit={cellEditProp}
                   insertRow={true} deleteRow={true} search={true} columnFilter={true} options={options}>
       <TableHeaderColumn dataField="id" dataAlign="center" dataSort={true} isKey={true}>Product ID</TableHeaderColumn>
-      <TableHeaderColumn dataField="name" width="200px" dataSort={true} searchable>Product Name</TableHeaderColumn>
-      <TableHeaderColumn dataField="price" width="100px" dataFormat={priceFormatter} editable={false} searchable>Product Price</TableHeaderColumn>
-      <TableHeaderColumn dataField="supplierId" editable={true} searchable>Supplier ID</TableHeaderColumn>
-      <TableHeaderColumn dataField="discount" editable={false} searchable>Discount(Percentage)</TableHeaderColumn>
-      <TableHeaderColumn dataField="categoryId" editable={true} searchable>Category ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="name" width="200px" dataSort={true}>Product Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="price" width="100px" dataFormat={priceFormatter} editable={false}>Product Price</TableHeaderColumn>
+      <TableHeaderColumn dataField="supplierId" editable={true}>Supplier ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="discount" editable={false}>Discount(Percentage)</TableHeaderColumn>
+      <TableHeaderColumn dataField="categoryId" editable={true}>Category ID</TableHeaderColumn>
   </BootstrapTable>,
 	document.getElementById("basic")
 );

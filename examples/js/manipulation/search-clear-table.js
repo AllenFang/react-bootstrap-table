@@ -36,9 +36,9 @@ export default class SearchClearTable extends React.Component{
   render(){
     return (
       <BootstrapTable data={products} search={true} options={options}>
-          <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField="name" searchable>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField="price" searchable>Product Price</TableHeaderColumn>
+          <TableHeaderColumn dataField="id" isKey={true} searchable={false}>Product ID</TableHeaderColumn>
+          <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
   }

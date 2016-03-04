@@ -25,9 +25,9 @@ export default class MultiSearchTable extends React.Component{
   render(){
     return (
       <BootstrapTable data={products} search={true} multiColumnSearch={true}>
-        <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
-        <TableHeaderColumn dataField="name" searchable>Fruits</TableHeaderColumn>
-        <TableHeaderColumn dataField="price" searchable>Price</TableHeaderColumn>
+        <TableHeaderColumn dataField="id" isKey={true} searchable={false}>Product ID</TableHeaderColumn>
+        <TableHeaderColumn dataField="name">Fruits</TableHeaderColumn>
+        <TableHeaderColumn dataField="price">Price</TableHeaderColumn>
       </BootstrapTable>
     );
   }

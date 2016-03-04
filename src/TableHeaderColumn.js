@@ -127,7 +127,7 @@ TableHeaderColumn.defaultProps = {
   editable: true,
   onSort: undefined,
   hidden: false,
-  searchable: false,
+  searchable: true,
   className: "",
   width: null,
   sortFunc: undefined,
