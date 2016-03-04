@@ -355,7 +355,7 @@ export class TableDataStore {
         // for loops are ugly, but performance matters here.
         // And you cant break from a forEach.
         // http://jsperf.com/for-vs-foreach/66
-        for (let i = 0, keysLenght = keys.length; i < keysLength; i++) {
+        for (let i = 0, keysLength = keys.length; i < keysLength; i++) {
           const key = keys[i];
           if (this.colInfos[key] && row[key]) {
             for (let j = 0, textLength = searchTextArray.length; j < textLength; j++) {
