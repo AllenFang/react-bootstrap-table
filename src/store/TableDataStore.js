@@ -361,8 +361,8 @@ export class TableDataStore {
             for (let j = 0, textLength = searchTextArray.length; j < textLength; j++) {
               const filterVal = searchTextArray[j].toLowerCase();
               let targetVal = row[key];
-              const { format, filterFormatted, formatExtraData, searchable } = this.colInfos[key];
-              if (searchable) {
+              const { format, filterFormatted, formatExtraData, searchable, hidden } = this.colInfos[key];
+              if (!hidden || searchable) {
                 if (filterFormatted && format) {
                   targetVal = format(targetVal, row, formatExtraData);
                 }
