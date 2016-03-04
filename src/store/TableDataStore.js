@@ -146,6 +146,23 @@ export class TableDataStore {
     return this;
   }
 
+  addAtBegin(newObj) {
+    if (!newObj[this.keyField] || newObj[this.keyField].toString() === '') {
+      throw this.keyField + " can't be empty value.";
+    }
+    let currentDisplayData = this.getCurrentDisplayData();
+    currentDisplayData.forEach(function (row) {
+      if (row[this.keyField].toString() === newObj[this.keyField].toString()) {
+        throw this.keyField + " " + newObj[this.keyField] + " already exists";
+      }
+    }, this);
+    console.log('@@');
+    currentDisplayData.unshift(newObj);
+    if (this.isOnFilter) {
+      this.data.unshift(newObj);
+    }
+  }
+
   add(newObj) {
     if (!newObj[this.keyField] || newObj[this.keyField].toString() === '') {
       throw this.keyField + " can't be empty value.";

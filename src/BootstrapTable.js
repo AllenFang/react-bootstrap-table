@@ -435,33 +435,24 @@ class BootstrapTable extends React.Component {
     }
   }
 
+  handleAddRowAtBegin(newObj) {
+    let result;
+    try {
+      this.store.addAtBegin(newObj);
+    } catch (e) {
+      return e;
+    }
+    this._handleAfterAddingRow(newObj);
+  }
+
   handleAddRow(newObj) {
-    let msg = null, result;
+    let result;
     try {
       this.store.add(newObj);
     } catch (e) {
       return e;
     }
-
-    if (this.props.pagination) {
-      //if pagination is enabled and insert row be trigger, change to last page
-      const { sizePerPage } = this.state;
-      const currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
-      result = this.store.page(currLastPage, sizePerPage).get();
-      this.setState({
-        data: result,
-        currPage: currLastPage,
-      });
-    } else {
-      result = this.store.get();
-      this.setState({
-        data: result
-      });
-    }
-
-    if (this.props.options.afterInsertRow) {
-      this.props.options.afterInsertRow(newObj);
-    }
+    this._handleAfterAddingRow(newObj);
   }
 
   getSizePerPage() {
@@ -677,6 +668,29 @@ class BootstrapTable extends React.Component {
     const headerProps = this.refs.body.getBodyHeaderDomProp();
     this.refs.header.fitHeader(headerProps,
       this.refs.body.refs.container.scrollHeight > this.refs.body.refs.container.clientHeight);
+  }
+
+  _handleAfterAddingRow(newObj) {
+    let result;
+    if (this.props.pagination) {
+      //if pagination is enabled and insert row be trigger, change to last page
+      const { sizePerPage } = this.state;
+      const currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
+      result = this.store.page(currLastPage, sizePerPage).get();
+      this.setState({
+        data: result,
+        currPage: currLastPage,
+      });
+    } else {
+      result = this.store.get();
+      this.setState({
+        data: result
+      });
+    }
+
+    if (this.props.options.afterInsertRow) {
+      this.props.options.afterInsertRow(newObj);
+    }
   }
 }
 
