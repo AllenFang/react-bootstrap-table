@@ -365,16 +365,18 @@ export class TableDataStore {
               }
               if (typeof targetVal !== 'number') {
                 for (let j = 0, textLength = searchTextArray.length; j < textLength; j++) {
-                  let filterVal = searchTextArray[j].toLowerCase();
+                  const filterVal = searchTextArray[j].toLowerCase();
                   if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
                     valid = true;
+                    break;
                   }
                 }
               } else {
                 for (let k = 0, textLength = searchTextArray.length; k < textLength; k++) {
-                  let filterVal = searchTextArray[k].toLowerCase();
+                  const filterVal = searchTextArray[k].toLowerCase();
                   if (parseInt(targetVal, 10) === parseInt(filterVal, 10)) {
                     valid = true;
+                    break;
                   }
                 }
               }
