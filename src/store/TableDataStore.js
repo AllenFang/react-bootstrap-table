@@ -357,11 +357,11 @@ export class TableDataStore {
         // http://jsperf.com/for-vs-foreach/66
         for (let i = 0, keysLength = keys.length; i < keysLength; i++) {
           const key = keys[i];
+          const { format, filterFormatted, formatExtraData, searchable, hidden } = this.colInfos[key];
+          let targetVal = row[key];
           if (this.colInfos[key] && row[key]) {
             for (let j = 0, textLength = searchTextArray.length; j < textLength; j++) {
               const filterVal = searchTextArray[j].toLowerCase();
-              let targetVal = row[key];
-              const { format, filterFormatted, formatExtraData, searchable, hidden } = this.colInfos[key];
               if (!hidden || searchable) {
                 if (filterFormatted && format) {
                   targetVal = format(targetVal, row, formatExtraData);
@@ -369,7 +369,6 @@ export class TableDataStore {
                 if (typeof targetVal !== 'number') {
                   if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
                     valid = true;
-                    break;
                   }
                 } else if (parseInt(targetVal, 10) === parseInt(filterVal, 10)) {
                   valid = true;

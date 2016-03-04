@@ -9,9 +9,10 @@ function addProducts(quantity) {
   var startId = products.length;
   for (var i = 0; i < quantity; i++) {
     var id = startId + i;
+    var fruits = ['banana', 'apple', 'orange', 'tomato', 'strawberries']
     products.push({
       id: id,
-      name: "Item name " + id,
+      name: "Fruit name is " + fruits[i],
       price: 2100 + i
     });
   }
