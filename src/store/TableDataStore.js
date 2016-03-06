@@ -346,6 +346,10 @@ export class TableDataStore {
     return true;
   }
 
+  /* General search function
+   * It will search for the text if the input includes that text;
+   * It will search for exact number if the input is that number
+   */
   search(searchText) {
     if (searchText.trim() === "") {
       this.filteredData = null;
@@ -353,38 +357,40 @@ export class TableDataStore {
       this.searchText = null;
     } else {
       this.searchText = searchText;
-      var searchTextArray = [];
+      let searchTextArray = [];
 
       if (this.multiColumnSearch) {
-          searchTextArray = searchText.split(' ');
+        searchTextArray = searchText.split(' ');
       } else {
-          searchTextArray.push(searchText);
+        searchTextArray.push(searchText);
       }
 
       this.filteredData = this.data.filter( row => {
-          let keys = Object.keys(row);
-          let valid = false;
-          // Changed `for .. in` loop to use `Object.keys`
-          for(let i=0; i<keys.length; i++) {
-            let key = keys[i];
-            if (this.colInfos[key] && row[key]) {
-              searchTextArray.forEach( text => {
-                let filterVal = text.toLowerCase();
-                let targetVal = row[key];
-                const { format, filterFormatted, formatExtraData, hidden } = this.colInfos[key];
-                if (!hidden) {
-                  if(filterFormatted && format) {
-                    targetVal = format(targetVal, row, formatExtraData);
-                  }
-                  if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
-                    valid = true;
-                  }
+        const keys = Object.keys(row);
+        let valid = false;
+        // for loops are ugly, but performance matters here.
+        // And you cant break from a forEach.
+        // http://jsperf.com/for-vs-foreach/66
+        for (let i = 0, keysLength = keys.length; i < keysLength; i++) {
+          const key = keys[i];
+          if (this.colInfos[key] && row[key]) {
+            const { format, filterFormatted, formatExtraData, searchable, hidden } = this.colInfos[key];
+            let targetVal = row[key];
+            if (!hidden && searchable) {
+              if (filterFormatted && format) {
+                targetVal = format(targetVal, row, formatExtraData);
+              }
+              for (let j = 0, textLength = searchTextArray.length; j < textLength; j++) {
+                const filterVal = searchTextArray[j].toLowerCase();
+                if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
+                  valid = true;
+                  break;
                 }
-              });
-              if (valid) break;
+              }
             }
           }
-          return valid;
+        }
+        return valid;
       });
       this.isOnFilter = true;
     }
