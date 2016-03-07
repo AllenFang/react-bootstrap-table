@@ -376,7 +376,7 @@ export class TableDataStore {
           if (this.colInfos[key] && row[key]) {
             const { format, filterFormatted, formatExtraData, searchable, hidden } = this.colInfos[key];
             let targetVal = row[key];
-            if (!hidden && searchable) {
+            if (searchable) {
               if (filterFormatted && format) {
                 targetVal = format(targetVal, row, formatExtraData);
               }
