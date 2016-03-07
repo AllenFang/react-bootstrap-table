@@ -1,5 +1,5 @@
 <a name="v1.6.0"></a>
-# [v1.6.0](https://github.com/AllenFang/react-bootstrap-table/compare/v1.5.4...v1.6.0) (2016-02-27)
+# [v1.6.0](https://github.com/AllenFang/react-bootstrap-table/compare/v1.5.4...v1.6.0) (2016-03-06)
 ### Bug fixes
 * Fix selection checkbox sharing with the same name([207dbf2](https://github.com/AllenFang/react-bootstrap-table/commit/207dbf25a74dde99016ed5dc9038817fdde364f1))
 
@@ -35,15 +35,13 @@
 	  //....
 	}
 	//...
-	render(){
-	  return (
-	    <BootstrapTable data={products}>
-	        <TableHeaderColumn dataField="id" isKey={true} dataSort={true} sortFunc={numberSortFunc}>Product ID</TableHeaderColumn>
-	        <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
-	        <TableHeaderColumn dataField="price" dataSort={true} sortFunc={numberSortFunc}>Product Price</TableHeaderColumn>
-	    </BootstrapTable>
-	  );
-	};
+	ReactDOM.render(
+    <BootstrapTable data={products}>
+        <TableHeaderColumn dataField='id' isKey={true} dataSort={true} sortFunc={numberSortFunc}>Product ID</TableHeaderColumn>
+        <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
+        <TableHeaderColumn dataField='price' dataSort={true} sortFunc={numberSortFunc}>Product Price</TableHeaderColumn>
+    </BootstrapTable>
+  );
 	```
 
 <a name="v1.5.4"></a>
