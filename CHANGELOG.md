@@ -1,3 +1,51 @@
+<a name="v1.6.0"></a>
+# [v1.6.0](https://github.com/AllenFang/react-bootstrap-table/compare/v1.5.4...v1.6.0) (2016-02-27)
+### Bug fixes
+* Fix selection checkbox sharing with the same name([207dbf2](https://github.com/AllenFang/react-bootstrap-table/commit/207dbf25a74dde99016ed5dc9038817fdde364f1))
+
+### Features
+* Provide ```searchable``` on ```<TableHeaderColumn>``` for enable/disable search on column([82c6b12](https://github.com/AllenFang/react-bootstrap-table/commit/82c6b12dd6632b6dd4795ef2c8a405e783e92588))
+* Support prepend new row on table([881cb13](https://github.com/AllenFang/react-bootstrap-table/commit/881cb13f4ba12db6aeeb505a06866d614c81a427))
+	* It's a expose API by BootstrapTable
+	```js
+	handleBtnClick = () => {
+   this.refs.table.handleAddRowAtBegin({
+     id: fake_id,
+     name: 'product 1', .....
+   });
+	}
+
+	render() {
+	  return (
+	    <div>
+	      <button onClick={this.handleBtnClick}>Prepend</button>
+	      <BootstrapTable ref='table'>
+	          ....
+	      </BootstrapTable>
+	    </div>
+	  );
+	}
+	```
+
+### Enhancement
+* Clear timer on number and text filter when component unmount([c71f508](https://github.com/AllenFang/react-bootstrap-table/commit/c71f508912b61cf988dafafc62703fac308934a3))
+* make sort field be passed as fourth argument when customize sort function([011a8d7](https://github.com/AllenFang/react-bootstrap-table/commit/011a8d77553063d56630721322d457c0c54a806d))
+	```js
+	function numberSortFunc(a, b, order, sortField){   //we add sortField in this patch
+	  //....
+	}
+	//...
+	render(){
+	  return (
+	    <BootstrapTable data={products}>
+	        <TableHeaderColumn dataField="id" isKey={true} dataSort={true} sortFunc={numberSortFunc}>Product ID</TableHeaderColumn>
+	        <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
+	        <TableHeaderColumn dataField="price" dataSort={true} sortFunc={numberSortFunc}>Product Price</TableHeaderColumn>
+	    </BootstrapTable>
+	  );
+	};
+	```
+
 <a name="v1.5.4"></a>
 # [v1.5.4](https://github.com/AllenFang/react-bootstrap-table/compare/v1.5.3...v1.5.4) (2016-02-27)
 ### Bug fixes
