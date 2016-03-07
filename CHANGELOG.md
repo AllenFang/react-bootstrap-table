@@ -29,7 +29,8 @@
 
 ### Enhancement
 * Clear timer on number and text filter when component unmount([c71f508](https://github.com/AllenFang/react-bootstrap-table/commit/c71f508912b61cf988dafafc62703fac308934a3))
-* make sort field be passed as fourth argument when customize sort function([011a8d7](https://github.com/AllenFang/react-bootstrap-table/commit/011a8d77553063d56630721322d457c0c54a806d))
+* Make sort field be passed as fourth argument when customize sort function([011a8d7](https://github.com/AllenFang/react-bootstrap-table/commit/011a8d77553063d56630721322d457c0c54a806d))
+	* Check following code
 	```js
 	function numberSortFunc(a, b, order, sortField){   //we add sortField in this patch
 	  //....
