@@ -116,7 +116,7 @@ class BootstrapTable extends React.Component {
   }
 
   getColumnsDescription({ children }) {
-    return children.map((column, i) => {
+    return React.Children.map(children, (column, i) => {
       return {
         name: column.props.dataField,
         align: column.props.dataAlign,
