@@ -143,14 +143,6 @@ class PaginationList extends React.Component {
     }
     return pages;
   }
-
-  getCurrentPage() {
-    return this.props.currPage;
-  }
-
-  getSizePerPage() {
-    return this.props.sizePerPage;
-  }
 }
 PaginationList.propTypes = {
   currPage: React.PropTypes.number,
