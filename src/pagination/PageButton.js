@@ -9,7 +9,7 @@ class PageButton extends React.Component{
 
   pageBtnClick(e){
     e.preventDefault();
-    this.props.changePage(e.currentTarget.text);
+    this.props.changePage(e.currentTarget.textContent);
   }
 
   render(){
