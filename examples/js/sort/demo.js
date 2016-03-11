@@ -4,6 +4,7 @@ import DefaultSortTable from './default-sort-table';
 import CustomSortTable from './custom-sort-table';
 import ReusableCustomSortTable from './reusable-custom-sort-table';
 import SortHookTable from './sort-hook-table';
+import DisableSortIndicatorTable from './disable-sort-indicator-table';
 
 class Demo extends React.Component {
   render() {
@@ -51,6 +52,15 @@ class Demo extends React.Component {
             <div className="panel-body">
               <h5>Source in /examples/js/sort/sort-hook-table.js</h5>
               <SortHookTable />
+            </div>
+          </div>
+        </div>
+        <div className="col-md-offset-1 col-md-8">
+          <div className="panel panel-default">
+            <div className="panel-heading">Disable sort indicator</div>
+            <div className="panel-body">
+              <h5>Source in /examples/js/sort/disable-sort-indicator-table.js</h5>
+              <DisableSortIndicatorTable />
             </div>
           </div>
         </div>
