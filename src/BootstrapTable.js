@@ -226,6 +226,8 @@ class BootstrapTable extends React.Component {
     var toolBar = this.renderToolBar();
     var tableFilter = this.renderTableFilter(columns);
     var isSelectAll = this.isSelectAll();
+    let sortIndicator = this.props.options.sortIndicator;
+    if(typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
     return (
       <div className="react-bs-container" ref="table">
         {toolBar}
@@ -239,6 +241,7 @@ class BootstrapTable extends React.Component {
             hideSelectColumn={this.props.selectRow.hideSelectColumn}
             sortName={sortInfo ? sortInfo.sortField : undefined}
             sortOrder={sortInfo ? sortInfo.order : undefined}
+            sortIndicator={sortIndicator}
             onSort={this.handleSort.bind(this)}
             onSelectAllRow={this.handleSelectAllRow.bind(this)}
             bordered={this.props.bordered}
@@ -739,6 +742,7 @@ BootstrapTable.propTypes = {
     clearSearch: React.PropTypes.bool,
     sortName: React.PropTypes.string,
     sortOrder: React.PropTypes.string,
+    sortIndicator: React.PropTypes.bool,
     afterTableComplete: React.PropTypes.func,
     afterDeleteRow: React.PropTypes.func,
     afterInsertRow: React.PropTypes.func,
@@ -800,6 +804,7 @@ BootstrapTable.defaultProps = {
     clearSearch: false,
     sortName: undefined,
     sortOrder: undefined,
+    sortIndicator: true,
     afterTableComplete: undefined,
     afterDeleteRow: undefined,
     afterInsertRow: undefined,

@@ -63,19 +63,20 @@ class TableHeader extends React.Component{
   }
 
   _attachClearSortCaretFunc(){
+    let { sortIndicator } = this.props;
     if(Array.isArray(this.props.children)){
       for(let i=0;i<this.props.children.length;i++){
         const field = this.props.children[i].props.dataField;
         const sort = field === this.props.sortName ? this.props.sortOrder : undefined;
         this.props.children[i] =
           React.cloneElement(this.props.children[i],
-            { key: i, onSort: this.props.onSort, sort });
+            { key: i, onSort: this.props.onSort, sort, sortIndicator });
       }
     } else {
       const field = this.props.children.props.dataField;
       const sort = field === this.props.sortName ? this.props.sortOrder : undefined;
       this.props.children =
-        React.cloneElement(this.props.children, {key: 0, onSort: this.props.onSort, sort});
+        React.cloneElement(this.props.children, {key: 0, onSort: this.props.onSort, sort, sortIndicator});
     }
   }
 
@@ -111,7 +112,8 @@ TableHeader.propTypes = {
   bordered: React.PropTypes.bool,
   condensed: React.PropTypes.bool,
   isFiltered: React.PropTypes.bool,
-  isSelectAll: React.PropTypes.oneOf([true, 'indeterminate', false])
+  isSelectAll: React.PropTypes.oneOf([true, 'indeterminate', false]),
+  sortIndicator: React.PropTypes.bool
 };
 
 TableHeader.defaultProps = {
