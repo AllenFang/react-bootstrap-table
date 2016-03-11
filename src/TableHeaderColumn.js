@@ -74,7 +74,7 @@ class TableHeaderColumn extends React.Component{
     var classes = this.props.className+" "+(this.props.dataSort?"sort-column":"");
     return(
       <th ref='header-col' className={classes} style={thStyle}>
-        <div ref="innerDiv" className="th-inner table-header-column"
+        <div ref="innerDiv" className="th-inner table-header-column" title={this.props.children}
           onClick={this.handleColumnClick.bind(this)}>
           {this.props.children}{sortCaret}
         </div>
