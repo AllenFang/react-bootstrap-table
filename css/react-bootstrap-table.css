@@ -159,6 +159,10 @@ border-bottom-width: 0px;
   width: 67px;
   float: left;
 }
+
+.react-bs-table .react-bs-container-header .sort-column {
+  cursor: pointer;
+}
 /*
 .react-bs-container .table-header > table > thead > tr > .sort-column{
   cursor: pointer;
