@@ -681,12 +681,12 @@ class BootstrapTable extends React.Component {
       for (let i = 0; i < cells.length; i++) {
         const cell = cells[i];
         const computedStyle = getComputedStyle(cell);
-        let width = parseInt(computedStyle.width.replace("px", ""));
+        let width = parseFloat(computedStyle.width.replace("px", ""));
         if (this.isIE) {
-          const paddingLeftWidth = parseInt(computedStyle.paddingLeft.replace("px", ""));
-          const paddingRightWidth = parseInt(computedStyle.paddingRight.replace("px", ""));
-          const borderRightWidth = parseInt(computedStyle.borderRightWidth.replace("px", ""));
-          const borderLeftWidth = parseInt(computedStyle.borderLeftWidth.replace("px", ""));
+          const paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace("px", ""));
+          const paddingRightWidth = parseFloat(computedStyle.paddingRight.replace("px", ""));
+          const borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace("px", ""));
+          const borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace("px", ""));
           width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
         }
         const lastPadding = (cells.length -1 == i ? scrollBarWidth : 0);
