@@ -15,9 +15,11 @@ class BootstrapTable extends React.Component {
 
   constructor(props) {
     super(props);
-
+    this.isIE = false;
     this._attachCellEditFunc();
-
+    if (document) {
+      this.isIE = document.documentMode;
+    }
     if (!Array.isArray(this.props.data)) {
       this.store = new TableDataStore(this.props.data.getData());
       this.props.data.clear();
@@ -668,23 +670,25 @@ class BootstrapTable extends React.Component {
   }
 
   _adjustHeaderWidth = () => {
-    // var tableHeaderDom = this.refs.header.refs.container.childNodes[0];
-    // var tableBodyDom = this.refs.body.refs.container.childNodes[0];
-    // if(tableHeaderDom.offsetWidth !== tableBodyDom.offsetWidth){
-    //   tableHeaderDom.style.width = tableBodyDom.offsetWidth + "px";
-    // }
-    // const headerProps = this.refs.body.getBodyHeaderDomProp();
-    // this.refs.header.fitHeader(headerProps,
-    //   this.refs.body.refs.container.scrollHeight > this.refs.body.refs.container.clientHeight);
     const header = this.refs.header.refs.header;
-    const scrollBarWidth = Util.getScrollBarWidth();
+    const headerContainer = this.refs.header.refs.container;
     const tbody = this.refs.body.refs.tbody;
     const firstRow = tbody.childNodes[0];
+    const isScroll = headerContainer.offsetWidth !== tbody.parentNode.offsetWidth;
+    const scrollBarWidth = isScroll?Util.getScrollBarWidth():0;
     if (firstRow && this.store.getDataNum()) {
       const cells = firstRow.childNodes;
       for (let i = 0; i < cells.length; i++) {
         const cell = cells[i];
-        let width = parseInt(getComputedStyle(cell).width.replace("px", ""));
+        const computedStyle = getComputedStyle(cell);
+        let width = parseInt(computedStyle.width.replace("px", ""));
+        if (this.isIE) {
+          const paddingLeftWidth = parseInt(computedStyle.paddingLeft.replace("px", ""));
+          const paddingRightWidth = parseInt(computedStyle.paddingRight.replace("px", ""));
+          const borderRightWidth = parseInt(computedStyle.borderRightWidth.replace("px", ""));
+          const borderLeftWidth = parseInt(computedStyle.borderLeftWidth.replace("px", ""));
+          width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
+        }
         const lastPadding = (cells.length -1 == i ? scrollBarWidth : 0);
         if (width <= 0) {
           width = 120;
