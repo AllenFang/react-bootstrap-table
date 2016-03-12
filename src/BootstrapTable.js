@@ -173,14 +173,14 @@ class BootstrapTable extends React.Component {
   }
 
   componentDidMount() {
-    this._adjustHeaderWidth();
-    window.addEventListener('resize', this._adjustHeaderWidth);
+    this._adjustTable();
+    window.addEventListener('resize', this._adjustTable);
     console.log(this.refs.body.refs.container);
     this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this._adjustHeaderWidth);
+    window.removeEventListener('resize', this._adjustTable);
     this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader);
     if (this.filter) {
       this.filter.removeAllListeners("onFilterChange");
@@ -188,7 +188,7 @@ class BootstrapTable extends React.Component {
   }
 
   componentDidUpdate() {
-    this._adjustHeaderWidth();
+    this._adjustTable();
     this._attachCellEditFunc();
     if (this.props.options.afterTableComplete)
       this.props.options.afterTableComplete();
@@ -235,7 +235,7 @@ class BootstrapTable extends React.Component {
     return (
       <div className="react-bs-table-container">
         {toolBar}
-        <div className="react-bs-table" ref="table"
+        <div className="react-bs-table" ref="table" style={style}
             onMouseEnter={this.handleMouseEnter.bind(this)}
             onMouseLeave={this.handleMouseLeave.bind(this)}>
           <TableHeader
@@ -669,6 +669,11 @@ class BootstrapTable extends React.Component {
     this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
   }
 
+  _adjustTable = () => {
+    this._adjustHeaderWidth();
+    this._adjustHeight();
+  }
+
   _adjustHeaderWidth = () => {
     const header = this.refs.header.refs.header;
     const headerContainer = this.refs.header.refs.container;
@@ -698,7 +703,13 @@ class BootstrapTable extends React.Component {
         header.childNodes[i].width = width + lastPadding + "px";
       }
     }
-    console.log(tbody);
+  }
+
+  _adjustHeight = () => {
+    if(this.props.height.indexOf('%') === -1) {
+      this.refs.body.refs.container.style.height =
+        parseFloat(this.props.height) - this.refs.header.refs.container.offsetHeight + "px";
+    }
   }
 
   _handleAfterAddingRow(newObj) {
