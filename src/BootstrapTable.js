@@ -213,8 +213,6 @@ class BootstrapTable extends React.Component {
   }
 
   render() {
-
-    var tableClass = classSet("react-bs-table");
     var childrens = this.props.children;
     var style = {
       height: this.props.height,
