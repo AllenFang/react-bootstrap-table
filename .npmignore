@@ -7,5 +7,3 @@ node_modules
 *.iml
 
 # generated
-dist/*
-demo/js/demo.bundle.js
