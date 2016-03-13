@@ -222,6 +222,11 @@ export class TableDataStore {
                   (typeof filterObj[key].value === "string") ? filterObj[key].value.toLowerCase() : filterObj[key].value;
               break;
             }
+            case Const.FILTER_TYPE.REGEX:
+            {
+              filterVal = filterObj[key].value;
+              break;
+            }
             default: {
               filterVal = (typeof filterObj[key].value === "string") ? filterObj[key].value.toLowerCase() : filterObj[key].value;
               if (filterVal === undefined) {
@@ -336,7 +341,12 @@ export class TableDataStore {
   }
 
   filterRegex(targetVal, filterVal) {
-    return new RegExp(filterVal).test(targetVal);
+    try {
+      return new RegExp(filterVal, 'i').test(targetVal);
+    } catch (e) {
+      console.error('Invalid regular expression');
+      return true;
+    }
   }
 
   filterCustom(targetVal, filterVal, callbackInfo) {
