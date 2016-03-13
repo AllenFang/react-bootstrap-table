@@ -699,7 +699,6 @@ class BootstrapTable extends React.Component {
           width = 120;
           cell.width = width + lastPadding + "px";
         }
-        console.log(width + "," + lastPadding);
         const result = width + lastPadding + "px";
         header.childNodes[i].style.width = result;
         header.childNodes[i].style.minWidth = result;

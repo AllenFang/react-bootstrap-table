@@ -50,12 +50,9 @@ class TableHeaderColumn extends React.Component{
 
   render(){
     let defaultCaret;
-    // var width = this.props.width!==null?parseInt(this.props.width):null;
     var thStyle = {
       textAlign: this.props.dataAlign,
       display: this.props.hidden?"none":null
-      // width: width,
-      // maxWidth: width
     };
     if(this.props.sortIndicator) {
       defaultCaret = (!this.props.dataSort) ? null : (

@@ -1,6 +1,5 @@
 import React from 'react';
 import Const from './Const';
-import Util from './util';
 import TableRow from './TableRow';
 import TableColumn from './TableColumn';
 import TableEditColumn from './TableEditColumn';
@@ -18,14 +17,6 @@ class TableBody extends React.Component{
       currEditCell: null
     };
     this.editing = false;
-  }
-
-  componentDidMount(){
-    // this.adjustBody();
-  }
-
-  componentDidUpdate(){
-    // this.adjustBody();
   }
 
   render(){
@@ -130,19 +121,6 @@ class TableBody extends React.Component{
 
     this.editing = false;
 
-    // var height = this.calculateContainerHeight().toString();
-
-    // return(
-    //   <div ref="container" className={containerClasses} style={{height: height}}>
-    //     <table ref="body" className={tableClasses}>
-    //       {tableHeader}
-    //       <tbody>
-    //         {tableRows}
-    //       </tbody>
-    //     </table>
-    //   </div>
-    // )
-
     return(
       <div ref="container" className='react-bs-container-body' style={ this.props.style }>
         <table className={tableClasses}>
@@ -172,8 +150,6 @@ class TableBody extends React.Component{
         minWidth: width
         /** add min-wdth to fix user assign column width not eq offsetWidth in large column table **/
       };
-      let sortCaert = column.sort?(Util.renderReactSortCaret(Const.SORT_DESC)):null;
-      // return (<col style={style} key={i} className={column.className}>{column.text}{sortCaert}</col>);
       return (<col style={style} key={i} className={column.className}></col>);
     });
 
@@ -265,43 +241,6 @@ class TableBody extends React.Component{
       return (<TableColumn ><input type="checkbox" checked={selected} onChange={this.handleSelectRowColumChange.bind(this)}/></TableColumn>);
     }
   }
-
-  getBodyHeaderDomProp(){
-    var headers = this.refs.header.childNodes[0].childNodes;
-    var headerDomProps = [];
-    for(let i=0;i<headers.length;i++){
-      headerDomProps.push({
-        width:headers[i].offsetWidth
-      });
-    }
-    return headerDomProps;
-  }
-
-  // adjustBody() {
-  //   this.hardFixHeaderWidth();
-  //   if(this.props.condensed) {
-  //     this.refs.container.style.marginTop = "-36px";
-  //   }
-  //
-  //   if(this.props.maxHeight &&
-  //     parseInt(this.props.maxHeight) < this.refs.container.offsetHeight) {
-  //     this.refs.container.style.height = (this.props.maxHeight - 42) + "px";
-  //   }
-  // }
-  //
-  // hardFixHeaderWidth(){
-  //   var headers = this.refs.header.childNodes[0].childNodes;
-  //   for(let i=0;i<headers.length;i++){
-  //     headers[i].style.width = headers[i].offsetWidth + "px";
-  //   }
-  // }
-
-  // calculateContainerHeight(){
-  //   if(this.props.height == "100%") return this.props.height;
-  //   else{
-  //     return parseInt(this.props.height);
-  //   }
-  // }
 
   _isSelectRowDefined(){
     return this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ||
