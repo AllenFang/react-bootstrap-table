@@ -31,10 +31,10 @@ export default class LargeColumnTable extends React.Component{
           <TableHeaderColumn width="150" dataField="name">ProductName</TableHeaderColumn>
           <TableHeaderColumn width="150" dataField="price">ProductPrice</TableHeaderColumn>
           <TableHeaderColumn width="150" dataField="name">ProductName</TableHeaderColumn>
-          <TableHeaderColumn dataField="price">ProductPrice</TableHeaderColumn>
-          <TableHeaderColumn dataField="name">ProductName</TableHeaderColumn>
-          <TableHeaderColumn dataField="price">ProductPrice</TableHeaderColumn>
-          <TableHeaderColumn dataField="name">ProductName</TableHeaderColumn>
+          <TableHeaderColumn width="150" dataField="price">ProductPrice</TableHeaderColumn>
+          <TableHeaderColumn width="150" dataField="name">ProductName</TableHeaderColumn>
+          <TableHeaderColumn width="150" dataField="price">ProductPrice</TableHeaderColumn>
+          <TableHeaderColumn width="150" dataField="name">ProductName</TableHeaderColumn>
       </BootstrapTable>
     );
   }
