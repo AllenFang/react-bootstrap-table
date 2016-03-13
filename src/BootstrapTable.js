@@ -175,7 +175,6 @@ class BootstrapTable extends React.Component {
   componentDidMount() {
     this._adjustTable();
     window.addEventListener('resize', this._adjustTable);
-    console.log(this.refs.body.refs.container);
     this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader);
   }
 
@@ -665,7 +664,6 @@ class BootstrapTable extends React.Component {
   }
 
   _scrollHeader = (e) => {
-    console.log(e.currentTarget.scrollLeft);
     this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
   }
 
