@@ -250,6 +250,11 @@ export class TableDataStore {
               valid = this.filterDate(targetVal, filterVal);
               break;
             }
+            case Const.FILTER_TYPE.REGEX:
+            {
+              valid = this.filterRegex(targetVal, filterVal);
+              break;
+            }
             case Const.FILTER_TYPE.CUSTOM:
             {
               valid = this.filterCustom(targetVal, filterVal, filterObj[key].value);
@@ -328,6 +333,10 @@ export class TableDataStore {
     return (targetVal.getDate() == filterVal.getDate() &&
         targetVal.getMonth() == filterVal.getMonth() &&
         targetVal.getFullYear() == filterVal.getFullYear());
+  }
+
+  filterRegex(targetVal, filterVal) {
+    return new RegExp(filterVal).test(targetVal);
   }
 
   filterCustom(targetVal, filterVal, callbackInfo) {
