@@ -22,13 +22,20 @@ export default class TableInTabs extends React.Component {
       return(
           <Tabs defaultActiveKey={2}>
               <Tab eventKey={1} title="Tab 1">
-                  <BootstrapTable data={products}>
-                      <TableHeaderColumn dataField="id" isKey={true} dataSort={true}>Product ID</TableHeaderColumn>
-                      <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
-                      <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
-                  </BootstrapTable>
+                <BootstrapTable data={products}>
+                  <TableHeaderColumn dataField="id" isKey={true} dataSort={true}>Product ID</TableHeaderColumn>
+                  <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
+                  <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+                </BootstrapTable>
               </Tab>
-              <Tab eventKey={2} title="Tab 2">Tab 3 content</Tab>
+              <Tab eventKey={2} title="Tab 2">
+                <BootstrapTable data={products}>
+                    <TableHeaderColumn dataField="id" isKey={true} dataSort={true}>Product ID</TableHeaderColumn>
+                    <TableHeaderColumn dataField="name" dataSort={true} width="200">Product Name</TableHeaderColumn>
+                    <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+                    <TableHeaderColumn dataField="price" width="90">Product Price</TableHeaderColumn>
+                </BootstrapTable>
+              </Tab>
               <Tab eventKey={3} title="Tab 3">Tab 3 content</Tab>
           </Tabs>
       );
