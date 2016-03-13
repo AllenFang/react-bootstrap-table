@@ -10,26 +10,29 @@
 
 It's a [react.js](http://facebook.github.io/react/) table for bootstrap, named reactbsTable. It's a configurable, functional table component and make you build a Bootstrap Table more efficiency and easy in your React application, However ```react-bootstrap-table``` support these features:
 
-- column align
-- column hidden
+- striped, borderless, condensed table
+- column align, hidden, width, sort
 - scrolling table
-- data sort
 - cell format
 - pagination
 - row selection
-- column filter
+- column filter with multi type
 - cell edit with multi type editor
 - insert & delete Row
-- row and column style customize
-- search
-- export CSV file
+- row and column style customization
+- global search
+- export to CSV file
 - rich function hooks
 - large columns table
 
-You can see more about [react-bootstrap-table](http://allenfang.github.io/react-bootstrap-table/index.html).
-[Here](https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js) are a lots of examples.</br>
-You can check [this](http://allenfang.github.io/react-bootstrap-table/advance.html) for more advance usage for ```react-bootstrap-table```. Feel free to ask more examples.</br>
+Explore more example on [examples](https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js) folder</br>
+See more about [react-bootstrap-table](http://allenfang.github.io/react-bootstrap-table/index.html).</br>
+Check [this](http://allenfang.github.io/react-bootstrap-table/advance.html) for more advance usage for ```react-bootstrap-table```. Feel free to ask more examples.</br>
 Check the <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/CHANGELOG.md'>CHANGELOG</a> for more detail release notes.
+
+## Notes
+***```v2.0.0``` has been released, the main patches are fixing the unalign or wrong size column on different browsers and improving the table structure. Please check [this](https://github.com/AllenFang/react-bootstrap-table/issues/331) for more detail explanation.<br/>***
+
 
 ## Development
 ```react-bootstrap-table``` dependencies on react 0.14.x and Bootstrap 3 written by ES6 and use gulp and browserify for building and bundling.
