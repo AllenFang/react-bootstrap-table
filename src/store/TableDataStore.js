@@ -156,7 +156,6 @@ export class TableDataStore {
         throw this.keyField + " " + newObj[this.keyField] + " already exists";
       }
     }, this);
-    console.log('@@');
     currentDisplayData.unshift(newObj);
     if (this.isOnFilter) {
       this.data.unshift(newObj);

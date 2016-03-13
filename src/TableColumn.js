@@ -54,24 +54,15 @@ class TableColumn extends React.Component{
       }
     }
     this.props.onEdit(
-      e.currentTarget.parentElement.rowIndex,
+      e.currentTarget.parentElement.rowIndex+1,
       e.currentTarget.cellIndex);
   }
 
   render(){
-    var width = this.props.width == null?
-                  this.props.width:parseInt(this.props.width);
     var tdStyle = {
       textAlign: this.props.dataAlign,
-      display: this.props.hidden?"none":null,
-      width: width,
-      maxWidth: width
+      display: this.props.hidden?"none":null
     };
-    var classname = this.props.className;
-    if(this.props.width){
-        classname += " col-md-"+width;
-    }
-
 
     var opts = {};
     if(this.props.cellEdit){
@@ -82,7 +73,7 @@ class TableColumn extends React.Component{
       }
     }
     return (
-      <td style={tdStyle} className={classname} {...opts}>
+      <td style={tdStyle} className={this.props.className} {...opts}>
         {this.props.children}
       </td>
     )

@@ -7,6 +7,7 @@ import PaginationList from './pagination/PaginationList';
 import ToolBar from './toolbar/ToolBar';
 import TableFilter from './TableFilter';
 import {TableDataStore} from './store/TableDataStore';
+import Util from './util';
 import exportCSV from './csv_export_util';
 import {Filter} from './Filter';
 
@@ -14,9 +15,11 @@ class BootstrapTable extends React.Component {
 
   constructor(props) {
     super(props);
-
+    this.isIE = false;
     this._attachCellEditFunc();
-
+    if (document) {
+      this.isIE = document.documentMode;
+    }
     if (!Array.isArray(this.props.data)) {
       this.store = new TableDataStore(this.props.data.getData());
       this.props.data.clear();
@@ -170,13 +173,13 @@ class BootstrapTable extends React.Component {
   }
 
   componentDidMount() {
-    this._adjustHeaderWidth();
-    window.addEventListener('resize', this._adjustHeaderWidth);
+    this._adjustTable();
+    window.addEventListener('resize', this._adjustTable);
     this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this._adjustHeaderWidth);
+    window.removeEventListener('resize', this._adjustTable);
     this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader);
     if (this.filter) {
       this.filter.removeAllListeners("onFilterChange");
@@ -184,7 +187,7 @@ class BootstrapTable extends React.Component {
   }
 
   componentDidUpdate() {
-    this._adjustHeaderWidth();
+    this._adjustTable();
     this._attachCellEditFunc();
     if (this.props.options.afterTableComplete)
       this.props.options.afterTableComplete();
@@ -229,12 +232,11 @@ class BootstrapTable extends React.Component {
     let sortIndicator = this.props.options.sortIndicator;
     if(typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
     return (
-      <div className="react-bs-container" ref="table">
+      <div className="react-bs-table-container">
         {toolBar}
-        <div className="react-bs-table-container"
-             onMouseEnter={this.handleMouseEnter.bind(this)}
-             onMouseLeave={this.handleMouseLeave.bind(this)}
-             style={style}>
+        <div className="react-bs-table" ref="table" style={style}
+            onMouseEnter={this.handleMouseEnter.bind(this)}
+            onMouseLeave={this.handleMouseLeave.bind(this)}>
           <TableHeader
             ref="header"
             rowSelectType={this.props.selectRow.mode}
@@ -251,9 +253,8 @@ class BootstrapTable extends React.Component {
             {this.props.children}
           </TableHeader>
           <TableBody
-            height={this.props.height}
-            maxHeight={this.props.maxHeight}
             ref="body"
+            style={style}
             data={this.state.data}
             columns={columns}
             trClassName={this.props.trClassName}
@@ -573,7 +574,7 @@ class BootstrapTable extends React.Component {
         dataSize = this.store.getDataNum();
       }
       return (
-        <div className="table-footer-pagination">
+        <div className="react-bs-table-pagination">
           <PaginationList
             ref="pagination"
             currPage={ this.state.currPage }
@@ -626,7 +627,7 @@ class BootstrapTable extends React.Component {
         }];
       }
       return (
-        <div className="tool-bar">
+        <div className="react-bs-table-tool-bar">
           <ToolBar
             clearSearch={this.props.options.clearSearch}
             enableInsert={this.props.insertRow}
@@ -666,15 +667,48 @@ class BootstrapTable extends React.Component {
     this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
   }
 
+  _adjustTable = () => {
+    this._adjustHeaderWidth();
+    this._adjustHeight();
+  }
+
   _adjustHeaderWidth = () => {
-    var tableHeaderDom = this.refs.header.refs.container.childNodes[0];
-    var tableBodyDom = this.refs.body.refs.container.childNodes[0];
-    if(tableHeaderDom.offsetWidth !== tableBodyDom.offsetWidth){
-      tableHeaderDom.style.width = tableBodyDom.offsetWidth + "px";
+    const header = this.refs.header.refs.header;
+    const headerContainer = this.refs.header.refs.container;
+    const tbody = this.refs.body.refs.tbody;
+    const firstRow = tbody.childNodes[0];
+    const isScroll = headerContainer.offsetWidth !== tbody.parentNode.offsetWidth;
+    const scrollBarWidth = isScroll?Util.getScrollBarWidth():0;
+    if (firstRow && this.store.getDataNum()) {
+      const cells = firstRow.childNodes;
+      for (let i = 0; i < cells.length; i++) {
+        const cell = cells[i];
+        const computedStyle = getComputedStyle(cell);
+        let width = parseFloat(computedStyle.width.replace("px", ""));
+        if (this.isIE) {
+          const paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace("px", ""));
+          const paddingRightWidth = parseFloat(computedStyle.paddingRight.replace("px", ""));
+          const borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace("px", ""));
+          const borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace("px", ""));
+          width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
+        }
+        const lastPadding = (cells.length -1 == i ? scrollBarWidth : 0);
+        if (width <= 0) {
+          width = 120;
+          cell.width = width + lastPadding + "px";
+        }
+        const result = width + lastPadding + "px";
+        header.childNodes[i].style.width = result;
+        header.childNodes[i].style.minWidth = result;
+      }
     }
-    const headerProps = this.refs.body.getBodyHeaderDomProp();
-    this.refs.header.fitHeader(headerProps,
-      this.refs.body.refs.container.scrollHeight > this.refs.body.refs.container.clientHeight);
+  }
+
+  _adjustHeight = () => {
+    if(this.props.height.indexOf('%') === -1) {
+      this.refs.body.refs.container.style.height =
+        parseFloat(this.props.height) - this.refs.header.refs.container.offsetHeight + "px";
+    }
   }
 
   _handleAfterAddingRow(newObj) {

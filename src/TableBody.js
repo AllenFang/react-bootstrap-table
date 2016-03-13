@@ -1,6 +1,5 @@
 import React from 'react';
 import Const from './Const';
-import Util from './util';
 import TableRow from './TableRow';
 import TableColumn from './TableColumn';
 import TableEditColumn from './TableEditColumn';
@@ -20,17 +19,7 @@ class TableBody extends React.Component{
     this.editing = false;
   }
 
-  componentDidMount(){
-    this.adjustBody();
-  }
-
-  componentDidUpdate(){
-    this.adjustBody();
-  }
-
   render(){
-    var containerClasses = classSet("table-container");
-
     var tableClasses = classSet("table", {
       'table-striped': this.props.striped,
       'table-bordered': this.props.bordered,
@@ -132,13 +121,11 @@ class TableBody extends React.Component{
 
     this.editing = false;
 
-    var height = this.calculateContainerHeight().toString();
-
     return(
-      <div ref="container" className={containerClasses} style={{height: height}}>
-        <table ref="body" className={tableClasses}>
+      <div ref="container" className='react-bs-container-body' style={ this.props.style }>
+        <table className={tableClasses}>
           {tableHeader}
-          <tbody>
+          <tbody ref="tbody">
             {tableRows}
           </tbody>
         </table>
@@ -151,37 +138,36 @@ class TableBody extends React.Component{
 
     if(isSelectRowDefined){
       let style = {
-        width:35,
-        minWidth:35
+        width: 30,
+        minWidth: 30
       }
-      selectRowHeader = this.props.selectRow.hideSelectColumn?null:(<th style={style} key={-1}></th>);
+      selectRowHeader = this.props.selectRow.hideSelectColumn?null:(<col style={style} key={-1}></col>);
     }
     var theader = this.props.columns.map(function(column, i){
       let width = column.width == null?column.width:parseInt(column.width);
       let style={
         display: column.hidden?"none":null,
         width: width,
-        maxWidth: width
+        minWidth: width
         /** add min-wdth to fix user assign column width not eq offsetWidth in large column table **/
       };
-      let sortCaert = column.sort?(Util.renderReactSortCaret(Const.SORT_DESC)):null;
-      return (<th style={style} key={i} className={column.className}>{column.text}{sortCaert}</th>);
+      return (<col style={style} key={i} className={column.className}></col>);
     });
 
     return(
-      <thead ref="header">
-        <tr>{selectRowHeader}{theader}</tr>
-      </thead>
+      <colgroup ref="header">
+        {selectRowHeader}{theader}
+      </colgroup>
     )
   }
 
   handleRowMouseOut(rowIndex){
-    const targetRow = this.props.data[rowIndex-1];
+    const targetRow = this.props.data[rowIndex];
     this.props.onRowMouseOut(targetRow);
   }
 
   handleRowMouseOver(rowIndex){
-    const targetRow = this.props.data[rowIndex-1];
+    const targetRow = this.props.data[rowIndex];
     this.props.onRowMouseOver(targetRow);
   }
 
@@ -211,7 +197,7 @@ class TableBody extends React.Component{
   handleSelectRowColumChange(e){
     if(!this.props.selectRow.clickToSelect || !this.props.selectRow.clickToSelectAndEditCell){
       this.handleSelectRow(
-        e.currentTarget.parentElement.parentElement.rowIndex, e.currentTarget.checked);
+        e.currentTarget.parentElement.parentElement.rowIndex+1, e.currentTarget.checked);
     }
   }
 
@@ -251,46 +237,9 @@ class TableBody extends React.Component{
 
   renderSelectRowColumn(selected){
     if(this.props.selectRow.mode == Const.ROW_SELECT_SINGLE) {
-      return (<TableColumn><input type="radio" checked={selected} onChange={this.handleSelectRowColumChange.bind(this)}/></TableColumn>);
+      return (<TableColumn dataAlign="center"><input type="radio" checked={selected} onChange={this.handleSelectRowColumChange.bind(this)}/></TableColumn>);
     }else {
-      return (<TableColumn ><input type="checkbox" checked={selected} onChange={this.handleSelectRowColumChange.bind(this)}/></TableColumn>);
-    }
-  }
-
-  getBodyHeaderDomProp(){
-    var headers = this.refs.header.childNodes[0].childNodes;
-    var headerDomProps = [];
-    for(let i=0;i<headers.length;i++){
-      headerDomProps.push({
-        width:headers[i].offsetWidth
-      });
-    }
-    return headerDomProps;
-  }
-
-  adjustBody() {
-    this.hardFixHeaderWidth();
-    if(this.props.condensed) {
-      this.refs.body.style.marginTop = "-36px";
-    }
-
-    if(this.props.maxHeight &&
-      parseInt(this.props.maxHeight) < this.refs.container.offsetHeight) {
-      this.refs.container.style.height = (this.props.maxHeight - 42) + "px";
-    }
-  }
-
-  hardFixHeaderWidth(){
-    var headers = this.refs.header.childNodes[0].childNodes;
-    for(let i=0;i<headers.length;i++){
-      headers[i].style.width = headers[i].offsetWidth + "px";
-    }
-  }
-
-  calculateContainerHeight(){
-    if(this.props.height == "100%") return this.props.height;
-    else{
-      return parseInt(this.props.height) - 42;
+      return (<TableColumn dataAlign="center"><input type="checkbox" checked={selected} onChange={this.handleSelectRowColumChange.bind(this)}/></TableColumn>);
     }
   }
 
@@ -300,7 +249,7 @@ class TableBody extends React.Component{
   }
 }
 TableBody.propTypes = {
-  height: React.PropTypes.string,
+  // height: React.PropTypes.string,
   data: React.PropTypes.array,
   columns: React.PropTypes.array,
   striped: React.PropTypes.bool,
@@ -311,6 +260,7 @@ TableBody.propTypes = {
   selectedRowKeys: React.PropTypes.array,
   onRowClick: React.PropTypes.func,
   onSelectRow: React.PropTypes.func,
-  noDataText: React.PropTypes.string
+  noDataText: React.PropTypes.string,
+  style: React.PropTypes.object
 };
 export default TableBody;
