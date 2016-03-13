@@ -138,8 +138,8 @@ class TableBody extends React.Component{
 
     if(isSelectRowDefined){
       let style = {
-        width: 29,
-        minWidth: 29
+        width: 30,
+        minWidth: 30
       }
       selectRowHeader = this.props.selectRow.hideSelectColumn?null:(<col style={style} key={-1}></col>);
     }
@@ -237,9 +237,9 @@ class TableBody extends React.Component{
 
   renderSelectRowColumn(selected){
     if(this.props.selectRow.mode == Const.ROW_SELECT_SINGLE) {
-      return (<TableColumn><input type="radio" checked={selected} onChange={this.handleSelectRowColumChange.bind(this)}/></TableColumn>);
+      return (<TableColumn dataAlign="center"><input type="radio" checked={selected} onChange={this.handleSelectRowColumChange.bind(this)}/></TableColumn>);
     }else {
-      return (<TableColumn ><input type="checkbox" checked={selected} onChange={this.handleSelectRowColumChange.bind(this)}/></TableColumn>);
+      return (<TableColumn dataAlign="center"><input type="checkbox" checked={selected} onChange={this.handleSelectRowColumChange.bind(this)}/></TableColumn>);
     }
   }
 

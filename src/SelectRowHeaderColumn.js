@@ -6,7 +6,7 @@ class SelectRowHeaderColumn extends React.Component{
 
   render(){
     return(
-      <th>
+      <th style={{textAlign: 'center'}}>
         { this.props.children }
       </th>
     )
