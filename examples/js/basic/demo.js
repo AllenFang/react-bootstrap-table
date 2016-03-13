@@ -17,11 +17,11 @@ class Demo extends React.Component {
         </Panel>
         <Panel header={"Table hover, striped and condensed Example"}>
           <h5>Source in /examples/js/basic/borderless-table.js</h5>
-          <BorderlessTable/>
+          <HoverStripedTable/>
         </Panel>
         <Panel header={"Borderless table Example"}>
           <h5>Source in /examples/js/basic/hover-striped-table.js</h5>
-          <HoverStripedTable/>
+          <BorderlessTable/>
         </Panel>
         <Panel header={"A Large Column Table Demo"}>
           <h5>Source in /examples/js/basic/large-column-table.js</h5>
