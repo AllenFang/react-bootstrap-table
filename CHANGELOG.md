@@ -1,3 +1,24 @@
+<a name="v1.6.2"></a>
+# [v1.6.2](https://github.com/AllenFang/react-bootstrap-table/compare/v1.6.1...v1.6.2) (2016-03-11)
+### Bug fixes
+* Options value for current page and size per page are not respected([0f30823](https://github.com/AllenFang/react-bootstrap-table/commit/0f308233d423d594a1b65825fd79a3a95b06734a))
+	* [#304](https://github.com/AllenFang/react-bootstrap-table/issues/304)
+* Pagination doesn't work in IE9([79af10e](https://github.com/AllenFang/react-bootstrap-table/commit/79af10e1f801575a840e3342f8d75de0484eb2e8))
+
+### Features
+* Sort indicator configurable([d66634c](https://github.com/AllenFang/react-bootstrap-table/commit/d66634cf796f120c9f3bf6e202e123a906f54f68))
+	* Default is enable, means sort indicator will show on header column if enable sort
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/sort/disable-sort-indicator-table.js) to see how to disable it
+
+<a name="v1.6.1"></a>
+# [v1.6.1](https://github.com/AllenFang/react-bootstrap-table/compare/v1.6.0...v1.6.1) (2016-03-08)
+### Bug fixes
+* Fix Uncaught TypeError: Cannot read property 'type' of null([54e97a1](https://github.com/AllenFang/react-bootstrap-table/commit/54e97a1febc0c168997cc7cf14efe0eabf86a1b1))
+* Fix Uncaught TypeError: children.map is not a function([7d45b80](https://github.com/AllenFang/react-bootstrap-table/commit/7d45b806c8e5a531c4104a63d0795875ec72c719))
+
+### Features
+* Make hidden column can be searched by default([1d3dd8e](https://github.com/AllenFang/react-bootstrap-table/commit/1d3dd8ea0a6e4929703ba38c0467dcdfb4c8b914))
+
 <a name="v1.6.0"></a>
 # [v1.6.0](https://github.com/AllenFang/react-bootstrap-table/compare/v1.5.4...v1.6.0) (2016-03-06)
 ### Bug fixes
