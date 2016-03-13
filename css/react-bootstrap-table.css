@@ -8,7 +8,6 @@
 .react-bs-table {
   border: 1px solid #ddd;
   border-radius: 5px;
-  /*margin: 10px;*/
 }
 
 .react-bs-table table {
@@ -50,15 +49,15 @@
 }
 .table-bordered > thead > tr > th,
 .table-bordered > thead > tr > td {
-border-bottom-width: 2px;
+  border-bottom-width: 2px;
 }
 .table-bordered > tfoot > tr > th,
 .table-bordered > tfoot > tr > td {
-border-top-width: 2px;
+  border-top-width: 2px;
 }
 .table-bordered > tfoot > tr > th,
 .table-bordered > tfoot > tr > td {
-border-bottom-width: 0px;
+  border-bottom-width: 0px;
 }
 /*Esquerda*/
 .table-bordered > thead > tr > th:first-child,
@@ -67,7 +66,7 @@ border-bottom-width: 0px;
 .table-bordered > thead > tr > td:first-child,
 .table-bordered > tbody > tr > td:first-child,
 .table-bordered > tfoot > tr > td:first-child {
-border-left-width: 0px;
+  border-left-width: 0px;
 }
 /*Direita*/
 .table-bordered > thead > tr > th:last-child,
@@ -76,54 +75,18 @@ border-left-width: 0px;
 .table-bordered > thead > tr > td:last-child,
 .table-bordered > tbody > tr > td:last-child,
 .table-bordered > tfoot > tr > td:last-child {
-border-right-width: 0px;
+  border-right-width: 0px;
 }
 /*Topo*/
 .table-bordered > thead > tr:first-child > th,
 .table-bordered > thead > tr:first-child > td {
-border-top-width: 0px;
+  border-top-width: 0px;
 }
 /*Baixo*/
 .table-bordered > tfoot > tr:last-child > th,
 .table-bordered > tfoot > tr:last-child > td {
-border-bottom-width: 0px;
+  border-bottom-width: 0px;
 }
-/*
-.react-bs-container .react-bs-table-container {
-  border: 1px solid #dddddd;
-}
-
-.react-bs-container .table-header{
-  border: hidden;
-  overflow: hidden;
-}
-
-.react-bs-container .table-header > table{
-  border-top-style: hidden;
-  border-right-style: hidden;
-  border-left-style: hidden;
-  width: 100%;
-  margin-bottom: 0;
-}
-
-.react-bs-container .table-header > table > thead > tr{
-  border-bottom-style: hidden;
-}
-
-.react-bs-container .table-header > table > thead > tr > th {
-  vertical-align: inherit;
-}
-
-.react-bs-container .table-container > table > tbody > tr > td,
-.react-bs-container .table-container > table > thead > tr > th,
-.react-bs-container .table-header > table > thead > tr > th .table-header-column{
-  line-height: 25px;
-  vertical-align: top;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-*/
 
 .react-bs-table .react-bs-container-header > table > thead > tr > th {
   vertical-align: middle;
@@ -163,26 +126,6 @@ border-bottom-width: 0px;
 .react-bs-table .react-bs-container-header .sort-column {
   cursor: pointer;
 }
-/*
-.react-bs-container .table-header > table > thead > tr > .sort-column{
-  cursor: pointer;
-}
-
-.react-bs-container .table-container{
-  overflow: auto;
-  height: 100%;
-}
-
-
-.react-bs-container .table-container > table{
-  margin-top: -42px;
-  margin-bottom: 0px;
-  border-left-style: hidden;
-  border-right-style: hidden;
-  border-bottom-style: hidden;
-  border-top-width: 0px;
-  width: 100%;
-}*/
 
 /*inline editor default style*/
 .react-bs-container .form-control.editor{
