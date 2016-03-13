@@ -21,7 +21,6 @@ class TableHeader extends React.Component{
 
   constructor(props) {
     super(props);
-    this.selectRowColumnWidth = null;
   }
 
   render(){
@@ -50,9 +49,9 @@ class TableHeader extends React.Component{
 
   renderSelectRowHeader(){
     if(this.props.rowSelectType == Const.ROW_SELECT_SINGLE) {
-      return (<SelectRowHeaderColumn width={this.selectRowColumnWidth}></SelectRowHeaderColumn>);
+      return (<SelectRowHeaderColumn></SelectRowHeaderColumn>);
     }else if(this.props.rowSelectType == Const.ROW_SELECT_MULTI){
-      return (<SelectRowHeaderColumn width={this.selectRowColumnWidth}>
+      return (<SelectRowHeaderColumn>
           <Checkbox onChange={this.props.onSelectAllRow} checked={this.props.isSelectAll}/>
         </SelectRowHeaderColumn>
       );
