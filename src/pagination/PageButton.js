@@ -1,32 +1,36 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import classSet from 'classnames';
 
-class PageButton extends React.Component{
+class PageButton extends Component {
 
   constructor(props) {
-		super(props);
-	}
+    super(props);
+  }
 
-  pageBtnClick(e){
+  pageBtnClick = e => {
     e.preventDefault();
     this.props.changePage(e.currentTarget.textContent);
   }
 
-  render(){
-    var classes = classSet({
-        'active': this.props.active,
-        'disabled': this.props.disable,
-        'hidden': this.props.hidden
+  render() {
+    const classes = classSet({
+      'active': this.props.active,
+      'disabled': this.props.disable,
+      'hidden': this.props.hidden
     });
     return (
-        <li className={classes}><a href="#" onClick={this.pageBtnClick.bind(this)}>{this.props.children}</a></li>
-    )
+      <li className={ classes }>
+        <a href='#' onClick={ this.pageBtnClick }>{ this.props.children }</a>
+      </li>
+    );
   }
 }
 PageButton.propTypes = {
-  changePage: React.PropTypes.func,
-  active: React.PropTypes.bool,
-  disable: React.PropTypes.bool
+  changePage: PropTypes.func,
+  active: PropTypes.bool,
+  disable: PropTypes.bool,
+  hidden: PropTypes.bool,
+  children: PropTypes.node
 };
 
 export default PageButton;
