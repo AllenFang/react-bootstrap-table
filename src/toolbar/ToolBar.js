@@ -9,6 +9,7 @@ class ToolBar extends React.Component{
   constructor(props) {
 		super(props);
     this.timeouteClear=0;
+    this.modalClassName;
     this.state = {
       isInsertRowTrigger: true,
       validateState:null,
@@ -87,6 +88,7 @@ class ToolBar extends React.Component{
         shakeEditor:false
       }, () => {
         document.querySelector("."+"modal-backdrop").click();
+        document.querySelector("."+this.modalClassName).click();
       });
       //reset form
       this.refs.form.reset();
@@ -122,9 +124,9 @@ class ToolBar extends React.Component{
   }
 
   render(){
-    var modalClassName = "bs-table-modal-sm"+new Date().getTime();
+    this.modalClassName = "bs-table-modal-sm"+new Date().getTime();
     var insertBtn = this.props.enableInsert?
-          <button type="button" onClick={this.props.onAddRowBegin} className="btn btn-info react-bs-table-add-btn" data-toggle="modal" data-target={'.'+modalClassName}>
+          <button type="button" onClick={this.props.onAddRowBegin} className="btn btn-info react-bs-table-add-btn" data-toggle="modal" data-target={'.'+this.modalClassName}>
             <i className="glyphicon glyphicon-plus"></i> New</button>:null;
 
     var deleteBtn = this.props.enableDelete?
@@ -140,7 +142,7 @@ class ToolBar extends React.Component{
         { this.state.showSelected? Const.SHOW_ALL : Const.SHOW_ONLY_SELECT }
       </button>:null;
 
-    var modal = this.props.enableInsert?this.renderInsertRowModal(modalClassName):null;
+    var modal = this.props.enableInsert?this.renderInsertRowModal():null;
     var warningStyle = {
       display: "none",
       marginBottom: 0
@@ -198,7 +200,7 @@ class ToolBar extends React.Component{
     }
   }
 
-  renderInsertRowModal(modalClassName){
+  renderInsertRowModal(){
     var validateState=this.state.validateState||{};
     var inputField = this.props.columns.map(function(column, i){
       var editable=column.editable,
@@ -220,7 +222,7 @@ class ToolBar extends React.Component{
         </div>
       );
     });
-    var modalClass = classSet("modal", "fade" , modalClassName,{
+    var modalClass = classSet("modal", "fade" , this.modalClassName,{
       'in':this.state.shakeEditor||this.state.validateState//hack prevent bootstrap modal hide by reRender
     });
     var dialogClass=classSet("modal-dialog","modal-sm",{
