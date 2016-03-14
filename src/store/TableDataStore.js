@@ -200,6 +200,7 @@ export class TableDataStore {
       this.filteredData = null;
       this.isOnFilter = false;
       this.filterObj = null;
+      if (null !== this.searchText) this.search(this.searchText);
     } else {
       this.filterObj = filterObj;
       this.filteredData = this.data.filter( row => {
@@ -347,13 +348,13 @@ export class TableDataStore {
 
   /* General search function
    * It will search for the text if the input includes that text;
-   * It will search for exact number if the input is that number
    */
   search(searchText) {
     if (searchText.trim() === "") {
       this.filteredData = null;
       this.isOnFilter = false;
       this.searchText = null;
+      if (null !== this.filterObj) this.filter(this.filterObj);
     } else {
       this.searchText = searchText;
       let searchTextArray = [];
@@ -364,7 +365,9 @@ export class TableDataStore {
         searchTextArray.push(searchText);
       }
 
-      this.filteredData = this.data.filter( row => {
+      const source = this.isOnFilter ? this.filteredData : this.data;
+
+      this.filteredData = source.filter( row => {
         const keys = Object.keys(row);
         let valid = false;
         // for loops are ugly, but performance matters here.
