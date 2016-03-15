@@ -1,3 +1,13 @@
+<a name="v2.0.0"></a>
+# [v2.0.0](https://github.com/AllenFang/react-bootstrap-table/compare/v1.6.2...v2.0.0) (2016-03-13)
+For ```v2.0.0```, I improve the dom structure and css of table. The main issues what I want to solve is</br>
+* The column unalign problem in different browser or in tabs(react-bootstrap)
+* A wrong rendering width on column in some case
+* A wrong height on table
+* Large columns problems
+
+Please check this [discussion](https://github.com/AllenFang/react-bootstrap-table/issues/331) for more detail explanation.
+
 <a name="v1.6.2"></a>
 # [v1.6.2](https://github.com/AllenFang/react-bootstrap-table/compare/v1.6.1...v1.6.2) (2016-03-11)
 ### Bug fixes
