@@ -38,6 +38,9 @@ export default {
     document.body.removeChild (outer);
 
     return (w1 - w2);
-  }
+  },
 
+  canUseDOM() {
+    return typeof window !== 'undefined' && typeof window.document !== 'undefined';
+  }
 };
