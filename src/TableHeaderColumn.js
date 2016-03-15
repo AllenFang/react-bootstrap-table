@@ -73,6 +73,7 @@ class TableHeaderColumn extends React.Component{
       <th ref='header-col'
           className={classes}
           style={thStyle}
+          title={this.props.children}
           onClick={this.handleColumnClick.bind(this)}>
         {this.props.children}{sortCaret}
         {this.props.filter ? this.getFilters() : null}
