@@ -12,6 +12,7 @@ import DateFilter from './date-filter';
 import DateFilterWithDefaultValue from './date-filter-with-default-value';
 import CustomFilter from './custom-filter';
 import AllFilter from './all-filters';
+import FloatFilter from './float-filter';
 
 class Demo extends React.Component {
     render() {
@@ -68,6 +69,15 @@ class Demo extends React.Component {
                         <div className="panel-body">
                             <h5>Source in /examples/js/column-filter/number-filter.js</h5>
                             <NumberFilter />
+                        </div>
+                    </div>
+                </div>
+                <div className="col-md-offset-1 col-md-8">
+                    <div className="panel panel-default">
+                        <div className="panel-heading">Floating point number Filter Example</div>
+                        <div className="panel-body">
+                            <h5>Source in /examples/js/column-filter/float-filter.js</h5>
+                            <FloatFilter />
                         </div>
                     </div>
                 </div>
