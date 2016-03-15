@@ -25,8 +25,10 @@ module.exports = {
     }
   },
   module: {
+    preLoaders: [
+      { test: /\.js$/, exclude: [ /node_modules/, path.resolve(__dirname, './src/filesaver.js') ], loader: 'eslint' }
+    ],
     loaders: [
-
       {
         test: /\.jsx$/,
         exclude: /node_modules/,
