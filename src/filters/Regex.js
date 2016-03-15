@@ -35,7 +35,7 @@ class RegexFilter extends React.Component {
 				   className="filter text-filter form-control"
 				   type="text"
 				   onChange={this.filter}
-				   placeholder={this.props.placeholder || `Enter ${this.props.columnName}...`}
+				   placeholder={this.props.placeholder || `Enter Regex for ${this.props.columnName}...`}
 				   defaultValue={(this.props.defaultValue) ? this.props.defaultValue : ""} />
 		);
 	}
