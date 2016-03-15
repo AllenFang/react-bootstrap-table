@@ -4,6 +4,7 @@ import Const from './Const';
 import Util from './util';
 import DateFilter from './filters/Date';
 import TextFilter from './filters/Text';
+import RegexFilter from './filters/Regex';
 import SelectFilter from './filters/Select';
 import NumberFilter from './filters/Number';
 
@@ -28,6 +29,9 @@ class TableHeaderColumn extends React.Component{
     switch (this.props.filter.type) {
       case Const.FILTER_TYPE.TEXT: {
         return <TextFilter {...this.props.filter} columnName={this.props.children} filterHandler={this.handleFilter} />;
+      }
+      case Const.FILTER_TYPE.REGEX: {
+        return <RegexFilter {...this.props.filter} columnName={this.props.children} filterHandler={this.handleFilter} />;
       }
       case Const.FILTER_TYPE.SELECT: {
         return <SelectFilter {...this.props.filter} columnName={this.props.children} filterHandler={this.handleFilter} />;

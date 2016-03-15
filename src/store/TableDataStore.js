@@ -222,6 +222,11 @@ export class TableDataStore {
                   (typeof filterObj[key].value === "string") ? filterObj[key].value.toLowerCase() : filterObj[key].value;
               break;
             }
+            case Const.FILTER_TYPE.REGEX:
+            {
+              filterVal = filterObj[key].value;
+              break;
+            }
             default: {
               filterVal = (typeof filterObj[key].value === "string") ? filterObj[key].value.toLowerCase() : filterObj[key].value;
               if (filterVal === undefined) {
@@ -248,6 +253,11 @@ export class TableDataStore {
             case Const.FILTER_TYPE.DATE:
             {
               valid = this.filterDate(targetVal, filterVal);
+              break;
+            }
+            case Const.FILTER_TYPE.REGEX:
+            {
+              valid = this.filterRegex(targetVal, filterVal);
               break;
             }
             case Const.FILTER_TYPE.CUSTOM:
@@ -328,6 +338,15 @@ export class TableDataStore {
     return (targetVal.getDate() == filterVal.getDate() &&
         targetVal.getMonth() == filterVal.getMonth() &&
         targetVal.getFullYear() == filterVal.getFullYear());
+  }
+
+  filterRegex(targetVal, filterVal) {
+    try {
+      return new RegExp(filterVal, 'i').test(targetVal);
+    } catch (e) {
+      console.error('Invalid regular expression');
+      return true;
+    }
   }
 
   filterCustom(targetVal, filterVal, callbackInfo) {
