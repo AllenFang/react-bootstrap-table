@@ -16,6 +16,7 @@ class TableHeaderColumn extends React.Component{
 
   handleColumnClick(e){
     if(!this.props.dataSort)return;
+    if(e.target.tagName != "TH" && e.target.tagName != "SPAN")return;
     let order = this.props.sort == Const.SORT_DESC?Const.SORT_ASC:Const.SORT_DESC;
     this.props.onSort(order, this.props.dataField);
   }
