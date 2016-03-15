@@ -21,6 +21,7 @@ export default {
   FILTER_DELAY: 500,
   FILTER_TYPE: {
     TEXT: "TextFilter",
+    REGEX: "RegexFilter",
     SELECT: "SelectFilter",
     NUMBER: "NumberFilter",
     DATE: "DateFilter",
