@@ -1,13 +1,52 @@
 {
-  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "extends": "eslint-config-airbnb",
+  "plugins": ["react"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "mocha": true
+  },
   "globals": {
-    "__DEV__": true
+    "chai": true
   },
   "rules": {
+    "react/display-name": [2, { "acceptTranspilerName": true }],
+    "react/jsx-curly-spacing": [2, "always"],
+    "react/jsx-no-duplicate-props": 2,
+    "react/jsx-no-undef": 2,
     "react/jsx-quotes": 0,
-    "jsx-quotes": [
-      2,
-      "prefer-double"
-    ]
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "react/jsx-closing-bracket-location": [2, "after-props" ],
+    "react/no-did-mount-set-state": 2,
+    "react/no-did-update-set-state": 2,
+    "react/no-multi-comp": 0,
+    "react/no-unknown-property": 2,
+    "react/prop-types": 1,
+    "react/react-in-jsx-scope": 2,
+    "react/require-extension": 2,
+    "react/self-closing-comp": 2,
+    "react/wrap-multilines": 2,
+    "react/sort-comp": 0,
+    "react/jsx-no-bind": 0,
+
+    "quotes": [2, "single", "avoid-escape"],
+    "jsx-quotes": [2, "prefer-single"],
+    "comma-dangle": [2, "never"],
+    "indent": [2, 2],
+    "object-curly-spacing": [2, "always"],
+    "array-bracket-spacing": [2, "always"],
+    "no-undef": 2,
+    "no-underscore-dangle": 0,
+    "func-names": 0,
+    "no-else-return": 0,
+    "no-console": 1,
+    "no-throw-literal": 0,
+    "id-length": 0,
+    "no-unused-expressions": 0,
+    "no-param-reassign": 0,
+    "max-len": [1, 100]
   }
 }
