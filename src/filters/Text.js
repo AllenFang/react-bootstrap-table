@@ -1,56 +1,57 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import Const from '../Const';
 
-class TextFilter extends React.Component {
-	constructor(props) {
-		super(props);
-		this.filter = this.filter.bind(this);
-		this.timeout = null;
-	}
+class TextFilter extends Component {
+  constructor(props) {
+    super(props);
+    this.filter = this.filter.bind(this);
+    this.timeout = null;
+  }
 
-	filter(event) {
-		if (this.timeout) {
-			clearTimeout(this.timeout);
-		}
-		const self = this;
-		const filterValue = event.target.value;
-		this.timeout = setTimeout(function() {
-			self.props.filterHandler(filterValue, Const.FILTER_TYPE.TEXT);
-		}, self.props.delay);
-	}
+  filter(event) {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+    const filterValue = event.target.value;
+    this.timeout = setTimeout(() => {
+      this.props.filterHandler(filterValue, Const.FILTER_TYPE.TEXT);
+    }, this.props.delay);
+  }
 
-	componentDidMount() {
-		if (this.refs.inputText.defaultValue) {
-			this.props.filterHandler(this.refs.inputText.defaultValue, Const.FILTER_TYPE.TEXT);
-		}
-	}
+  componentDidMount() {
+    const defaultValue = this.refs.inputText.defaultValue;
+    if (defaultValue) {
+      this.props.filterHandler(defaultValue, Const.FILTER_TYPE.TEXT);
+    }
+  }
 
-	componentWillUnmount() {
-		clearTimeout(this.timeout);
-	}
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
 
-	render() {
-		return (
-			<input ref="inputText"
-				   className="filter text-filter form-control"
-				   type="text"
-				   onChange={this.filter}
-				   placeholder={this.props.placeholder || `Enter ${this.props.columnName}...`}
-				   defaultValue={(this.props.defaultValue) ? this.props.defaultValue : ""} />
-		);
-	}
-};
+  render() {
+    const { placeholder, columnName, defaultValue } = this.props;
+    return (
+      <input ref='inputText'
+        className='filter text-filter form-control'
+        type='text'
+        onChange={ this.filter }
+        placeholder={ placeholder || `Enter ${columnName}...` }
+        defaultValue={ defaultValue ? defaultValue : '' } />
+    );
+  }
+}
 
 TextFilter.propTypes = {
-	filterHandler: React.PropTypes.func.isRequired,
-	defaultValue: React.PropTypes.string,
-	delay: React.PropTypes.number,
-	placeholder: React.PropTypes.string,
-	columnName: React.PropTypes.string
+  filterHandler: PropTypes.func.isRequired,
+  defaultValue: PropTypes.string,
+  delay: PropTypes.number,
+  placeholder: PropTypes.string,
+  columnName: PropTypes.string
 };
 
 TextFilter.defaultProps = {
-	delay: Const.FILTER_DELAY
-}
+  delay: Const.FILTER_DELAY
+};
 
 export default TextFilter;
