@@ -1,3 +1,17 @@
+<a name="v2.0.1"></a>
+# [v2.0.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.0.0...v2.0.1) (2016-03-16)
+### Bug fixes
+* Fix screen remains dark after inserting( row[423d6e5](https://github.com/AllenFang/react-bootstrap-table/commit/423d6e5cab437286f7a83c1c4e0bec9a573ef660))
+* Fix search and filter features combination does not work([643f9ca](https://github.com/AllenFang/react-bootstrap-table/commit/643f9ca053b10b820eae2e6a57774d0ba5035a98))
+
+### Features
+* Support regex filter([90a347d](https://github.com/AllenFang/react-bootstrap-table/commit/90a347dcd771295365df8a0e309d71f29d2a8cec))
+
+### Enhancement
+* Make column text as the title on table header([68efb43](https://github.com/AllenFang/react-bootstrap-table/commit/68efb4334cd6ad601f3de3e4c7bf149fb06f6261))
+* Add a float filter on examples folder([d2b7854](https://github.com/AllenFang/react-bootstrap-table/commit/d2b78543ac58dd9af28e3e0b81a1b8197e0c395f))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column-filter/regex-filter.js)
+
 <a name="v2.0.0"></a>
 # [v2.0.0](https://github.com/AllenFang/react-bootstrap-table/compare/v1.6.2...v2.0.0) (2016-03-13)
 For ```v2.0.0```, I improve the dom structure and css of table. The main issues what I want to solve is</br>
