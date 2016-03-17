@@ -156,7 +156,7 @@ React.render(
 );
 
 React.render(
-  <BootstrapTable height="400" data={productLong} pagination={true}>
+  <BootstrapTable height="450" data={productLong} pagination={true}>
       <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
