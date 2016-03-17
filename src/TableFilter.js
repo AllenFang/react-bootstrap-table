@@ -1,66 +1,73 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import Const from './Const';
 import classSet from 'classnames';
 
-class TableFilter extends React.Component{
+class TableFilter extends Component {
 
   constructor(props) {
     super(props);
     this.filterObj = {};
+    this.handleKeyUp.bind(this);
   }
 
-  handleKeyUp(e){
-    if(e.currentTarget.value.trim() === "")
-      delete this.filterObj[e.currentTarget.name];
-    else
-      this.filterObj[e.currentTarget.name] = e.currentTarget.value;
-
+  handleKeyUp(e) {
+    const { value, name } = e.currentTarget;
+    if (value.trim() === '') {
+      delete this.filterObj[name];
+    } else {
+      this.filterObj[name] = value;
+    }
     this.props.onFilter(this.filterObj);
   }
 
-  render(){
-    var tableClasses = classSet("table", {
-      'table-striped': this.props.striped,
-      'table-condensed': this.props.condensed
+  render() {
+    const { striped, condensed, rowSelectType, columns } = this.props;
+    const tableClasses = classSet('table', {
+      'table-striped': striped,
+      'table-condensed': condensed
     });
-    var selectRowHeader = null;
+    let selectRowHeader = null;
 
-    if(this.props.rowSelectType == Const.ROW_SELECT_SINGLE ||
-        this.props.rowSelectType == Const.ROW_SELECT_MULTI){
-      let style = {
-        width:35,
+    if (rowSelectType === Const.ROW_SELECT_SINGLE ||
+        rowSelectType === Const.ROW_SELECT_MULTI) {
+      const style = {
+        width: 35,
         paddingLeft: 0,
         paddingRight: 0
-      }
-      selectRowHeader = (<th style={style} key={-1}>Filter</th>);
-    }
-    var filterField = this.props.columns.map(function(column){
-      var thStyle = {
-        display: column.hidden?"none":null,
-        width: column.width
       };
-      return(
-        <th key={column.name} style={thStyle}>
-          <div className="th-inner table-header-column">
-            <input size="10" type="text" placeholder={column.name} name={column.name} onKeyUp={this.handleKeyUp.bind(this)}/>
+      selectRowHeader = (<th style={ style } key={ -1 }>Filter</th>);
+    }
+
+    const filterField = columns.map(function(column) {
+      const { hidden, width, name } = column;
+      const thStyle = {
+        display: hidden ? 'none' : null,
+        width
+      };
+      return (
+        <th key={ name } style={ thStyle }>
+          <div className='th-inner table-header-column'>
+            <input size='10' type='text'
+              placeholder={ name } name={ name } onKeyUp={ this.handleKeyUp }/>
           </div>
         </th>
-      )
+      );
     }, this);
-    return(
-      <table className={tableClasses} style={{marginTop:5}}>
+
+    return (
+      <table className={ tableClasses } style={ { marginTop: 5 } }>
         <thead>
-          <tr style={{borderBottomStyle: 'hidden'}}>
-            {selectRowHeader}{filterField}
+          <tr style={ { borderBottomStyle: 'hidden' } }>
+            { selectRowHeader }{ filterField }
           </tr>
         </thead>
       </table>
-    )
+    );
   }
 }
 TableFilter.propTypes = {
-  columns: React.PropTypes.array,
-  rowSelectType: React.PropTypes.string,
-  onFilter: React.PropTypes.func
+  columns: PropTypes.array,
+  rowSelectType: PropTypes.string,
+  onFilter: PropTypes.func
 };
 export default TableFilter;
