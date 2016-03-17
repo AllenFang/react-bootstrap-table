@@ -337,6 +337,8 @@
             <p>Assign a default sort field.</p>
             <font class="attr-lv1-title">sortOrder</font> : <font class="attr-lv1-type">String(asc/desc)</font></br>
             <p>Assign a default sort ordering.</p>
+            <font class="attr-lv1-title">sortIndicator</font> : <font class="attr-lv1-type">Bool</font></br>
+            <p>False to disable sort indicator on header column, default is true.</p>
             <font class="attr-lv1-title">noDataText</font> : <font class="attr-lv1-type">String</font></br>
             <p>Change the displaying text when data is empty.</p>
             <font class="attr-lv1-title">clearSearch</font> : <font class="attr-lv1-type">Bool</font></br>
@@ -445,6 +447,23 @@
         </div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">handleAddRowAtBegin :</font> <font class="attr-type">Object</font></br>
+          <p>Call this function to insert an new row as first row on table.</p>
+          <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> fakeRow <span style="color: #666666">=</span> {
+      id<span style="color: #666666">:</span> <span style="color: #666666">10</span>,
+      name<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;Product one &quot;</span>,
+      price<span style="color: #666666">:</span> <span style="color: #666666">240</span>
+};
+<span style="color: #008800; font-style: italic">// insert a new row at begin</span>
+<span style="color: #AA22FF; font-weight: bold">var</span> result <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">this</span>.refs.table.handleAddRowAtBegin(fakeRow);
+<span style="color: #AA22FF; font-weight: bold">if</span>(result){  <span style="color: #008800; font-style: italic">//some error happen, ex: doesn&#39;t assign row key or row key duplicated</span>
+      console.log(result);
+}
+</pre></div>
+
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">handleDropRow :</font> <font class="attr-type">Array</font></br>
           <p>Call this function to drop rows in table.</p>
           <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-style: italic">//Drop row key 2 &amp; 3</span>
@@ -539,9 +558,14 @@
         </div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">searchable :</font> <font class="attr-type">Bool</font></br>
+          <p>False to disable search functionality on column, default is true.</p>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">sortFunc :</font> <font class="attr-type">Function</font></br>
           <p>Give a customize function for data sorting.</p>
-          <p>This function taking three arguments: <code>a</code>, <code>b</code>, <code>order</code></p>
+          <p>This function taking four arguments: <code>a</code>, <code>b</code>, <code>order</code>, <code>sortField</code></p>
         </div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
@@ -586,10 +610,10 @@
           <p>Following is the format for <code>filter</code></p>
           <pre>
 {
-  type: "TextFilter"||"SelectFilter"||"NumberFilter"||"DateFilter"||"YOUR_CUSTOM_FILTER".
+  type: "TextFilter"||"SelectFilter"||"NumberFilter"||"DateFilter"||"RegexFilter"||"YOUR_CUSTOM_FILTER".
   defaultValue: //Default value on filter. If type is NumberFilter, this value will like { number: 50, comparator: '>' }
   delay: //Assign a millisecond for delay when trigger filtering, default is 500.
-  placeholder: //Only work on TextFilter. Assign the placeholder text on text filter
+  placeholder: //Only work on TextFilter. Assign the placeholder text on text and regex filter
   numberComparators: //Only work on NumberFilter. Accept an array which conatin the filter condition, like: ['<','>','=']
   options:
   // Only work on SelectFilter or NumberFilter.
