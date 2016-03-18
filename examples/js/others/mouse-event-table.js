@@ -1,17 +1,17 @@
-'use strict';
+/* eslint no-console: 0 */
 import React from 'react';
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 
-var products = [];
+const products = [];
 
 function addProducts(quantity) {
-  var startId = products.length;
-  for (var i = 0; i < quantity; i++) {
-    var id = startId + i;
+  const startId = products.length;
+  for (let i = 0; i < quantity; i++) {
+    const id = startId + i;
     products.push({
       id: id,
-      name: "Item name " + id,
+      name: 'Item name ' + id,
       price: 2100 + i
     });
   }
@@ -19,10 +19,9 @@ function addProducts(quantity) {
 
 addProducts(5);
 
-export default class MouseEventTable extends React.Component{
-  render(){
-
-    var options = {
+export default class MouseEventTable extends React.Component {
+  render() {
+    const options = {
       onMouseLeave: function() {
         console.log('mouse leave from table');
       },
@@ -38,11 +37,11 @@ export default class MouseEventTable extends React.Component{
     };
 
     return (
-      <BootstrapTable data={products} options={options}>
-          <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+      <BootstrapTable data={ products } options={ options }>
+          <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
+          <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
   }
-};
+}

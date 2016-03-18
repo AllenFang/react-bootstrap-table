@@ -31,6 +31,7 @@
     "react/wrap-multilines": 2,
     "react/sort-comp": 0,
     "react/jsx-no-bind": 0,
+    "react/jsx-boolean-value": 0,
 
     "quotes": [2, "single", "avoid-escape"],
     "jsx-quotes": [2, "prefer-single"],
