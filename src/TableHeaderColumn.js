@@ -1,5 +1,6 @@
-import React from 'react';
-import classSet from 'classnames';
+/* eslint default-case: 0 */
+/* eslint guard-for-in: 0 */
+import React, { Component, PropTypes } from 'react';
 import Const from './Const';
 import Util from './util';
 import DateFilter from './filters/Date';
@@ -8,16 +9,16 @@ import RegexFilter from './filters/Regex';
 import SelectFilter from './filters/Select';
 import NumberFilter from './filters/Number';
 
-class TableHeaderColumn extends React.Component{
+class TableHeaderColumn extends Component {
 
   constructor(props) {
     super(props);
     this.handleFilter = this.handleFilter.bind(this);
   }
 
-  handleColumnClick(e){
-    if(!this.props.dataSort)return;
-    let order = this.props.sort == Const.SORT_DESC?Const.SORT_ASC:Const.SORT_DESC;
+  handleColumnClick = () => {
+    if (!this.props.dataSort) return;
+    const order = this.props.sort === Const.SORT_DESC ? Const.SORT_ASC : Const.SORT_DESC;
     this.props.onSort(order, this.props.dataField);
   }
 
@@ -27,105 +28,121 @@ class TableHeaderColumn extends React.Component{
 
   getFilters() {
     switch (this.props.filter.type) {
-      case Const.FILTER_TYPE.TEXT: {
-        return <TextFilter {...this.props.filter} columnName={this.props.children} filterHandler={this.handleFilter} />;
-      }
-      case Const.FILTER_TYPE.REGEX: {
-        return <RegexFilter {...this.props.filter} columnName={this.props.children} filterHandler={this.handleFilter} />;
-      }
-      case Const.FILTER_TYPE.SELECT: {
-        return <SelectFilter {...this.props.filter} columnName={this.props.children} filterHandler={this.handleFilter} />;
-      }
-      case Const.FILTER_TYPE.NUMBER: {
-        return <NumberFilter {...this.props.filter} columnName={this.props.children} filterHandler={this.handleFilter} />;
-      }
-      case Const.FILTER_TYPE.DATE: {
-        return <DateFilter {...this.props.filter} columnName={this.props.children} filterHandler={this.handleFilter} />;
-      }
-      case Const.FILTER_TYPE.CUSTOM: {
-        return this.props.filter.getElement(this.handleFilter, this.props.filter.customFilterParameters);
-      }
+    case Const.FILTER_TYPE.TEXT: {
+      return (
+        <TextFilter { ...this.props.filter }
+          columnName={ this.props.children } filterHandler={ this.handleFilter } />
+      );
+    }
+    case Const.FILTER_TYPE.REGEX: {
+      return (
+        <RegexFilter { ...this.props.filter }
+          columnName={ this.props.children } filterHandler={ this.handleFilter } />
+      );
+    }
+    case Const.FILTER_TYPE.SELECT: {
+      return (
+        <SelectFilter { ...this.props.filter }
+          columnName={ this.props.children } filterHandler={ this.handleFilter } />
+      );
+    }
+    case Const.FILTER_TYPE.NUMBER: {
+      return (
+        <NumberFilter { ...this.props.filter }
+          columnName={ this.props.children } filterHandler={ this.handleFilter } />
+      );
+    }
+    case Const.FILTER_TYPE.DATE: {
+      return (
+        <DateFilter { ...this.props.filter }
+          columnName={ this.props.children } filterHandler={ this.handleFilter } />
+      );
+    }
+    case Const.FILTER_TYPE.CUSTOM: {
+      return this.props.filter.getElement(this.handleFilter,
+          this.props.filter.customFilterParameters);
+    }
     }
   }
 
-  componentDidMount(){
-    this.refs["header-col"].setAttribute("data-field", this.props.dataField);
+  componentDidMount() {
+    this.refs['header-col'].setAttribute('data-field', this.props.dataField);
   }
 
-  render(){
+  render() {
     let defaultCaret;
-    var thStyle = {
+    const thStyle = {
       textAlign: this.props.dataAlign,
-      display: this.props.hidden?"none":null
+      display: this.props.hidden ? 'none' : null
     };
-    if(this.props.sortIndicator) {
+    if (this.props.sortIndicator) {
       defaultCaret = (!this.props.dataSort) ? null : (
-        <span className="order">
-          <span className="dropdown">
-            <span className="caret" style={{margin: '10px 0 10px 5px', color: '#ccc'}}></span>
+        <span className='order'>
+          <span className='dropdown'>
+            <span className='caret' style={ { margin: '10px 0 10px 5px', color: '#ccc' } }></span>
           </span>
-          <span className="dropup">
-            <span className="caret" style={{margin: '10px 0', color: '#ccc'}}></span>
+          <span className='dropup'>
+            <span className='caret' style={ { margin: '10px 0', color: '#ccc' } }></span>
           </span>
         </span>
       );
     }
     const sortCaret = this.props.sort ? Util.renderReactSortCaret(this.props.sort) : defaultCaret;
+    const classes = this.props.className + ' ' + (this.props.dataSort ? 'sort-column' : '');
 
-    var classes = this.props.className+" "+(this.props.dataSort?"sort-column":"");
-    return(
+    return (
       <th ref='header-col'
-          className={classes}
-          style={thStyle}
-          title={this.props.children}
-          onClick={this.handleColumnClick.bind(this)}>
-        {this.props.children}{sortCaret}
-        {this.props.filter ? this.getFilters() : null}
+          className={ classes }
+          style={ thStyle }
+          title={ this.props.children }
+          onClick={ this.handleColumnClick }>
+        { this.props.children }{ sortCaret }
+        { this.props.filter ? this.getFilters() : null }
       </th>
-    )
+    );
   }
 }
 
-var filterTypeArray = [];
-for (let key in Const.FILTER_TYPE) {
+const filterTypeArray = [];
+for (const key in Const.FILTER_TYPE) {
   filterTypeArray.push(Const.FILTER_TYPE[key]);
 }
 
 TableHeaderColumn.propTypes = {
-  dataField: React.PropTypes.string,
-  dataAlign: React.PropTypes.string,
-  dataSort: React.PropTypes.bool,
-  onSort: React.PropTypes.func,
-  dataFormat: React.PropTypes.func,
-  isKey: React.PropTypes.bool,
-  editable: React.PropTypes.any,
-  hidden: React.PropTypes.bool,
-  searchable: React.PropTypes.bool,
-  className:React.PropTypes.string,
-  width: React.PropTypes.string,
-  sortFunc: React.PropTypes.func,
-  columnClassName: React.PropTypes.any,
-  filterFormatted: React.PropTypes.bool,
-  sort: React.PropTypes.string,
-  formatExtraData: React.PropTypes.any,
-  filter: React.PropTypes.shape({
-    type: React.PropTypes.oneOf(filterTypeArray),
-    delay: React.PropTypes.number,
-    options: React.PropTypes.oneOfType([
-      React.PropTypes.object, // for SelectFilter
-      React.PropTypes.arrayOf(React.PropTypes.number) //for NumberFilter
-        ]),
-    numberComparators: React.PropTypes.arrayOf(React.PropTypes.string),
-    emitter: React.PropTypes.object,
-    placeholder: React.PropTypes.string,
-    getElement: React.PropTypes.func,
-    customFilterParameters: React.PropTypes.object
+  dataField: PropTypes.string,
+  dataAlign: PropTypes.string,
+  dataSort: PropTypes.bool,
+  onSort: PropTypes.func,
+  dataFormat: PropTypes.func,
+  isKey: PropTypes.bool,
+  editable: PropTypes.any,
+  hidden: PropTypes.bool,
+  searchable: PropTypes.bool,
+  className: PropTypes.string,
+  width: PropTypes.string,
+  sortFunc: PropTypes.func,
+  columnClassName: PropTypes.any,
+  filterFormatted: PropTypes.bool,
+  sort: PropTypes.string,
+  formatExtraData: PropTypes.any,
+  filter: PropTypes.shape({
+    type: PropTypes.oneOf(filterTypeArray),
+    delay: PropTypes.number,
+    options: PropTypes.oneOfType([
+      PropTypes.object, // for SelectFilter
+      PropTypes.arrayOf(PropTypes.number) // for NumberFilter
+    ]),
+    numberComparators: PropTypes.arrayOf(PropTypes.string),
+    emitter: PropTypes.object,
+    placeholder: PropTypes.string,
+    getElement: PropTypes.func,
+    customFilterParameters: PropTypes.object
   }),
-  sortIndicator: React.PropTypes.bool
+  sortIndicator: PropTypes.bool
 };
 
 TableHeaderColumn.defaultProps = {
-  dataAlign: "left",
+  dataAlign: 'left',
   dataSort: false,
   dataFormat: undefined,
   isKey: false,
@@ -133,7 +150,7 @@ TableHeaderColumn.defaultProps = {
   onSort: undefined,
   hidden: false,
   searchable: true,
-  className: "",
+  className: '',
   width: null,
   sortFunc: undefined,
   columnClassName: '',

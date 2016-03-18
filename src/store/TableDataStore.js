@@ -1,5 +1,7 @@
-import Const from "../Const";
-var EventEmitter = require('events').EventEmitter;
+/* eslint no-nested-ternary: 0 */
+/* eslint guard-for-in: 0 */
+import Const from '../Const';
+const EventEmitter = require('events').EventEmitter;
 
 function _sort(arr, sortField, order, sortFunc) {
   order = order.toLowerCase();
@@ -7,7 +9,7 @@ function _sort(arr, sortField, order, sortFunc) {
     if (sortFunc) {
       return sortFunc(a, b, order, sortField);
     } else {
-      if (order == Const.SORT_DESC) {
+      if (order === Const.SORT_DESC) {
         return a[sortField] > b[sortField] ? -1 : ((a[sortField] < b[sortField]) ? 1 : 0);
       } else {
         return a[sortField] < b[sortField] ? -1 : ((a[sortField] > b[sortField]) ? 1 : 0);
@@ -65,8 +67,8 @@ export class TableDataStore {
   setData(data) {
     this.data = data;
     if (this.isOnFilter) {
-      if (null !== this.filterObj) this.filter(this.filterObj);
-      if (null !== this.searchText) this.search(this.searchText);
+      if (this.filterObj !== null) this.filter(this.filterObj);
+      if (this.searchText !== null) this.search(this.searchText);
     }
     if (this.sortObj) {
       this.sort(this.sortObj.order, this.sortObj.sortField);
@@ -92,10 +94,10 @@ export class TableDataStore {
 
   ignoreNonSelected() {
     this.showOnlySelected = !this.showOnlySelected;
-    if(this.showOnlySelected){
+    if (this.showOnlySelected) {
       this.isOnFilter = true;
       this.filteredData = this.data.filter( row => {
-        let result = this.selected.find(x => row[this.keyField] === x)
+        const result = this.selected.find(x => row[this.keyField] === x);
         return typeof result !== 'undefined' ? true : false;
       });
     } else {
@@ -104,13 +106,10 @@ export class TableDataStore {
   }
 
   sort(order, sortField) {
-    this.sortObj = {
-      order: order,
-      sortField: sortField
-    };
+    this.sortObj = { order, sortField };
 
     let currentDisplayData = this.getCurrentDisplayData();
-    if(!this.colInfos[sortField]) return this;
+    if (!this.colInfos[sortField]) return this;
 
     const { sortFunc } = this.colInfos[sortField];
     currentDisplayData = _sort(currentDisplayData, sortField, order, sortFunc);
@@ -125,7 +124,7 @@ export class TableDataStore {
   }
 
   edit(newVal, rowIndex, fieldName) {
-    let currentDisplayData = this.getCurrentDisplayData();
+    const currentDisplayData = this.getCurrentDisplayData();
     let rowKeyCache;
     if (!this.enablePagination) {
       currentDisplayData[rowIndex][fieldName] = newVal;
@@ -135,25 +134,25 @@ export class TableDataStore {
       rowKeyCache = currentDisplayData[this.pageObj.start + rowIndex][this.keyField];
     }
     if (this.isOnFilter) {
-      this.data.forEach(function (row) {
+      this.data.forEach(function(row) {
         if (row[this.keyField] === rowKeyCache) {
           row[fieldName] = newVal;
         }
       }, this);
-      if (null !== this.filterObj) this.filter(this.filterObj);
-      if (null !== this.searchText) this.search(this.searchText);
+      if (this.filterObj !== null) this.filter(this.filterObj);
+      if (this.searchText !== null) this.search(this.searchText);
     }
     return this;
   }
 
   addAtBegin(newObj) {
     if (!newObj[this.keyField] || newObj[this.keyField].toString() === '') {
-      throw this.keyField + " can't be empty value.";
+      throw `${this.keyField} can't be empty value.`;
     }
-    let currentDisplayData = this.getCurrentDisplayData();
-    currentDisplayData.forEach(function (row) {
+    const currentDisplayData = this.getCurrentDisplayData();
+    currentDisplayData.forEach(function(row) {
       if (row[this.keyField].toString() === newObj[this.keyField].toString()) {
-        throw this.keyField + " " + newObj[this.keyField] + " already exists";
+        throw `${this.keyField} ${newObj[this.keyField]} already exists`;
       }
     }, this);
     currentDisplayData.unshift(newObj);
@@ -164,12 +163,12 @@ export class TableDataStore {
 
   add(newObj) {
     if (!newObj[this.keyField] || newObj[this.keyField].toString() === '') {
-      throw this.keyField + " can't be empty value.";
+      throw `${this.keyField} can't be empty value.`;
     }
-    let currentDisplayData = this.getCurrentDisplayData();
-    currentDisplayData.forEach(function (row) {
+    const currentDisplayData = this.getCurrentDisplayData();
+    currentDisplayData.forEach(function(row) {
       if (row[this.keyField].toString() === newObj[this.keyField].toString()) {
-        throw this.keyField + " " + newObj[this.keyField] + " already exists";
+        throw `${this.keyField} ${newObj[this.keyField]} already exists`;
       }
     }, this);
 
@@ -180,15 +179,15 @@ export class TableDataStore {
   }
 
   remove(rowKey) {
-    let currentDisplayData = this.getCurrentDisplayData();
-    let result = currentDisplayData.filter(function (row) {
-      return rowKey.indexOf(row[this.keyField]) == -1;
-    }, this);
+    const currentDisplayData = this.getCurrentDisplayData();
+    const result = currentDisplayData.filter(row => {
+      return rowKey.indexOf(row[this.keyField]) === -1;
+    });
 
     if (this.isOnFilter) {
-      this.data = this.data.filter(function (row) {
-        return rowKey.indexOf(row[this.keyField]) == -1;
-      }, this);
+      this.data = this.data.filter(row => {
+        return rowKey.indexOf(row[this.keyField]) === -1;
+      });
       this.filteredData = result;
     } else {
       this.data = result;
@@ -196,79 +195,76 @@ export class TableDataStore {
   }
 
   filter(filterObj) {
-    if (Object.keys(filterObj).length == 0) {
+    if (Object.keys(filterObj).length === 0) {
       this.filteredData = null;
       this.isOnFilter = false;
       this.filterObj = null;
-      if (null !== this.searchText) this.search(this.searchText);
+      if (this.searchText !== null) this.search(this.searchText);
     } else {
       this.filterObj = filterObj;
       this.filteredData = this.data.filter( row => {
         let valid = true;
         let filterVal;
-        for (var key in filterObj) {
+        for (const key in filterObj) {
           let targetVal = row[key];
 
           switch (filterObj[key].type) {
-            case Const.FILTER_TYPE.NUMBER:
-            {
-              filterVal = filterObj[key].value.number;
-              break;
+          case Const.FILTER_TYPE.NUMBER: {
+            filterVal = filterObj[key].value.number;
+            break;
+          }
+          case Const.FILTER_TYPE.CUSTOM: {
+            filterVal = (typeof filterObj[key].value === 'object') ?
+              undefined :
+              (typeof filterObj[key].value === 'string') ?
+                filterObj[key].value.toLowerCase() :
+                filterObj[key].value;
+            break;
+          }
+          case Const.FILTER_TYPE.REGEX: {
+            filterVal = filterObj[key].value;
+            break;
+          }
+          default: {
+            filterVal = (typeof filterObj[key].value === 'string') ?
+              filterObj[key].value.toLowerCase() :
+              filterObj[key].value;
+            if (filterVal === undefined) {
+              // Support old filter
+              filterVal = filterObj[key].toLowerCase();
             }
-            case Const.FILTER_TYPE.CUSTOM:
-            {
-              filterVal = (typeof filterObj[key].value === "object") ?
-                  undefined :
-                  (typeof filterObj[key].value === "string") ? filterObj[key].value.toLowerCase() : filterObj[key].value;
-              break;
-            }
-            case Const.FILTER_TYPE.REGEX:
-            {
-              filterVal = filterObj[key].value;
-              break;
-            }
-            default: {
-              filterVal = (typeof filterObj[key].value === "string") ? filterObj[key].value.toLowerCase() : filterObj[key].value;
-              if (filterVal === undefined) {
-                // Support old filter
-                filterVal = filterObj[key].toLowerCase();
-              }
-              break;
-            }
+            break;
+          }
           }
 
           if (this.colInfos[key]) {
             const { format, filterFormatted, formatExtraData } = this.colInfos[key];
-            if(filterFormatted && format) {
+            if (filterFormatted && format) {
               targetVal = format(row[key], row, formatExtraData);
             }
           }
 
           switch (filterObj[key].type) {
-            case Const.FILTER_TYPE.NUMBER:
-            {
-              valid = this.filterNumber(targetVal, filterVal, filterObj[key].value.comparator);
-              break;
-            }
-            case Const.FILTER_TYPE.DATE:
-            {
-              valid = this.filterDate(targetVal, filterVal);
-              break;
-            }
-            case Const.FILTER_TYPE.REGEX:
-            {
-              valid = this.filterRegex(targetVal, filterVal);
-              break;
-            }
-            case Const.FILTER_TYPE.CUSTOM:
-            {
-              valid = this.filterCustom(targetVal, filterVal, filterObj[key].value);
-              break;
-            }
-            default: {
-              valid = this.filterText(targetVal, filterVal);
-              break;
-            }
+          case Const.FILTER_TYPE.NUMBER: {
+            valid = this.filterNumber(targetVal, filterVal, filterObj[key].value.comparator);
+            break;
+          }
+          case Const.FILTER_TYPE.DATE: {
+            valid = this.filterDate(targetVal, filterVal);
+            break;
+          }
+          case Const.FILTER_TYPE.REGEX: {
+            valid = this.filterRegex(targetVal, filterVal);
+            break;
+          }
+          case Const.FILTER_TYPE.CUSTOM: {
+            valid = this.filterCustom(targetVal, filterVal, filterObj[key].value);
+            break;
+          }
+          default: {
+            valid = this.filterText(targetVal, filterVal);
+            break;
+          }
           }
           if (!valid) {
             break;
@@ -283,61 +279,54 @@ export class TableDataStore {
   filterNumber(targetVal, filterVal, comparator) {
     let valid = true;
     switch (comparator) {
-      case "=":
-      {
-        if (targetVal != filterVal) {
-          valid = false;
-        }
-        break;
+    case '=': {
+      if (targetVal !== filterVal) {
+        valid = false;
       }
-      case ">":
-      {
-        if (targetVal <= filterVal) {
-          valid = false;
-        }
-        break;
+      break;
+    }
+    case '>': {
+      if (targetVal <= filterVal) {
+        valid = false;
       }
-      case ">=":
-      {
-        if (targetVal < filterVal) {
-          valid = false;
-        }
-        break;
+      break;
+    }
+    case '>=': {
+      if (targetVal < filterVal) {
+        valid = false;
       }
-      case "<":
-      {
-        if (targetVal >= filterVal) {
-          valid = false;
-        }
-        break;
+      break;
+    }
+    case '<': {
+      if (targetVal >= filterVal) {
+        valid = false;
       }
-      case "<=":
-      {
-        if (targetVal > filterVal) {
-          valid = false;
-        }
-        break;
+      break;
+    }
+    case '<=': {
+      if (targetVal > filterVal) {
+        valid = false;
       }
-      case "!=":
-      {
-        if (targetVal == filterVal) {
-          valid = false;
-        }
-        break;
+      break;
+    }
+    case '!=': {
+      if (targetVal === filterVal) {
+        valid = false;
       }
-      default:
-      {
-        console.error("Number comparator provided is not supported");
-        break;
-      }
+      break;
+    }
+    default: {
+      console.error('Number comparator provided is not supported');
+      break;
+    }
     }
     return valid;
   }
 
   filterDate(targetVal, filterVal) {
-    return (targetVal.getDate() == filterVal.getDate() &&
-        targetVal.getMonth() == filterVal.getMonth() &&
-        targetVal.getFullYear() == filterVal.getFullYear());
+    return (targetVal.getDate() === filterVal.getDate() &&
+        targetVal.getMonth() === filterVal.getMonth() &&
+        targetVal.getFullYear() === filterVal.getFullYear());
   }
 
   filterRegex(targetVal, filterVal) {
@@ -350,18 +339,17 @@ export class TableDataStore {
   }
 
   filterCustom(targetVal, filterVal, callbackInfo) {
-    if (callbackInfo != null && typeof callbackInfo === "object") {
+    if (callbackInfo !== null && typeof callbackInfo === 'object') {
       return callbackInfo.callback(targetVal, callbackInfo.callbackParameters);
     }
 
-    return filterText(targetVal, filterVal);
+    return this.filterText(targetVal, filterVal);
   }
 
   filterText(targetVal, filterVal) {
-    if (targetVal.toString().toLowerCase().indexOf(filterVal) == -1) {
+    if (targetVal.toString().toLowerCase().indexOf(filterVal) === -1) {
       return false;
     }
-
     return true;
   }
 
@@ -369,11 +357,11 @@ export class TableDataStore {
    * It will search for the text if the input includes that text;
    */
   search(searchText) {
-    if (searchText.trim() === "") {
+    if (searchText.trim() === '') {
       this.filteredData = null;
       this.isOnFilter = false;
       this.searchText = null;
-      if (null !== this.filterObj) this.filter(this.filterObj);
+      if (this.filterObj !== null) this.filter(this.filterObj);
     } else {
       this.searchText = searchText;
       let searchTextArray = [];
@@ -395,7 +383,7 @@ export class TableDataStore {
         for (let i = 0, keysLength = keys.length; i < keysLength; i++) {
           const key = keys[i];
           if (this.colInfos[key] && row[key]) {
-            const { format, filterFormatted, formatExtraData, searchable, hidden } = this.colInfos[key];
+            const { format, filterFormatted, formatExtraData, searchable } = this.colInfos[key];
             let targetVal = row[key];
             if (searchable) {
               if (filterFormatted && format) {
@@ -418,22 +406,21 @@ export class TableDataStore {
   }
 
   getDataIgnoringPagination() {
-    let _data = this.getCurrentDisplayData();
-    return _data;
+    return this.getCurrentDisplayData();
   }
 
   get() {
-    let _data = this.getCurrentDisplayData();
+    const _data = this.getCurrentDisplayData();
 
-    if (_data.length == 0) return _data;
+    if (_data.length === 0) return _data;
 
     if (this.remote || !this.enablePagination) {
       return _data;
     } else {
-      var result = [];
-      for (var i = this.pageObj.start; i <= this.pageObj.end; i++) {
+      const result = [];
+      for (let i = this.pageObj.start; i <= this.pageObj.end; i++) {
         result.push(_data[i]);
-        if (i + 1 == _data.length)break;
+        if (i + 1 === _data.length) break;
       }
       return result;
     }
@@ -452,10 +439,8 @@ export class TableDataStore {
   }
 
   getAllRowkey() {
-    return this.data.map(function (row) {
+    return this.data.map(row => {
       return row[this.keyField];
-    }, this);
+    });
   }
-
 }
-;

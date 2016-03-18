@@ -153,7 +153,6 @@ class ToolBar extends Component {
     if (this.props.enableInsert) {
       insertBtn = (
         <button type='button'
-          onClick={ this.props.onAddRowBegin }
           className='btn btn-info react-bs-table-add-btn'
           data-toggle='modal'
           data-target={ '.' + this.modalClassName }>
