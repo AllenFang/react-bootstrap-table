@@ -1,17 +1,18 @@
-'use strict';
+/* eslint max-len: 0 */
+/* eslint no-alert: 0 */
 import React from 'react';
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 
-var products = [];
+const products = [];
 
 function addProducts(quantity) {
-  var startId = products.length;
-  for (var i = 0; i < quantity; i++) {
-    var id = startId + i;
+  const startId = products.length;
+  for (let i = 0; i < quantity; i++) {
+    const id = startId + i;
     products.push({
       id: id,
-      name: "Item name " + id,
+      name: 'Item name ' + id,
       price: 2100 + i
     });
   }
@@ -29,27 +30,26 @@ export default class PaginationHookTable extends React.Component {
     };
   }
 
-  sizePerPageListChange(sizePerPage){
-    alert('sizePerPage: ' + sizePerPage);
+  sizePerPageListChange(sizePerPage) {
+    alert(`sizePerPage: ${sizePerPage}`);
   }
 
   onPageChange(page, sizePerPage) {
-    alert('page: ' + page + ', sizePerPage: ' + sizePerPage);
+    alert(`page: ${page}, sizePerPage: ${sizePerPage}`);
   }
 
   render() {
     return (
       <div>
         <BootstrapTable
-          data={products}
+          data={ products }
           pagination
-          options={this.options}
-        >
-          <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+          options={ this.options }>
+          <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
+          <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
         </BootstrapTable>
       </div>
     );
   }
-};
+}

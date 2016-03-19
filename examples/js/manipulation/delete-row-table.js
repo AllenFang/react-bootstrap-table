@@ -1,17 +1,19 @@
-'use strict';
+/* eslint max-len: 0 */
+/* eslint no-console: 0 */
+/* eslint no-alert: 0 */
 import React from 'react';
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 
-var products = [];
+const products = [];
 
 function addProducts(quantity) {
-  var startId = products.length;
-  for (var i = 0; i < quantity; i++) {
-    var id = startId + i;
+  const startId = products.length;
+  for (let i = 0; i < quantity; i++) {
+    const id = startId + i;
     products.push({
       id: id,
-      name: "Item name " + id,
+      name: 'Item name ' + id,
       price: 2100 + i
     });
   }
@@ -19,27 +21,27 @@ function addProducts(quantity) {
 
 addProducts(5);
 
-function onAfterDeleteRow(rowKeys){
-  alert("The rowkey you drop: "+rowKeys);
+function onAfterDeleteRow(rowKeys) {
+  alert('The rowkey you drop: ' + rowKeys);
 }
 
-var options = {
-  afterDeleteRow: onAfterDeleteRow,  // A hook for after droping rows.
-}
-
-//If you want to enable deleteRow, you must enable row selection also.
-var selectRowProp = {
-  mode: "checkbox"
+const options = {
+  afterDeleteRow: onAfterDeleteRow  // A hook for after droping rows.
 };
 
-export default class DeleteRowTable extends React.Component{
-  render(){
+// If you want to enable deleteRow, you must enable row selection also.
+const selectRowProp = {
+  mode: 'checkbox'
+};
+
+export default class DeleteRowTable extends React.Component {
+  render() {
     return (
-      <BootstrapTable data={products} deleteRow={true} selectRow={selectRowProp} options={options}>
-          <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+      <BootstrapTable data={ products } deleteRow={ true } selectRow={ selectRowProp } options={ options }>
+          <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
+          <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
   }
-};
+}
