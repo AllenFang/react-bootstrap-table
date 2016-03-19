@@ -20,7 +20,11 @@ export class Filter extends EventEmitter {
         }
       }
       // if one of the object properties is undefined or empty, we remove the filter
-      (hasValue) ? this.currentFilter[dataField] = { value: value, type: filterType } : delete this.currentFilter[dataField];
+      if (hasValue) {
+        this.currentFilter[dataField] = { value: value, type: filterType };
+      } else {
+        delete this.currentFilter[dataField];
+      }
     } else if (!value || value.trim() === '') {
       delete this.currentFilter[dataField];
     } else {

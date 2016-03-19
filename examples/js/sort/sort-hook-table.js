@@ -1,18 +1,19 @@
-'use strict';
+/* eslint max-len: 0 */
+/* eslint no-console: 0 */
 import React from 'react';
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 
-var products = [];
+const products = [];
 
 function addProducts(quantity) {
-  var startId = products.length;
-  for (var i = 0; i < quantity; i++) {
-    var id = startId + i;
+  const startId = products.length;
+  for (let i = 0; i < quantity; i++) {
+    const id = startId + i;
     products.push({
       id: id,
-      name: "Item name " + id,
-      price: 100 + i
+      name: 'Item name ' + id,
+      price: 2100 + i
     });
   }
 }
@@ -25,11 +26,11 @@ export default class SortHookTable extends React.Component {
 
     this.state = {
       sortName: undefined,
-      sortOrder: undefined,
+      sortOrder: undefined
     };
 
     this.options = {
-      onSortChange: this.onSortChange.bind(this),
+      onSortChange: this.onSortChange.bind(this)
     };
   }
 
@@ -37,20 +38,20 @@ export default class SortHookTable extends React.Component {
     console.info('onSortChange', arguments);
     this.setState({
       sortName,
-      sortOrder,
+      sortOrder
     });
   }
 
   render() {
     return (
       <div>
-        <p style={{color: 'red'}}>sort: sortName={this.state.sortName}, sortOrder={this.state.sortOrder}</p>
-        <BootstrapTable data={products} options={this.options}>
-          <TableHeaderColumn dataField="id" isKey={true} dataSort={true}>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+        <p style={ { color: 'red' } }>sort: sortName={ this.state.sortName }, sortOrder={ this.state.sortOrder }</p>
+        <BootstrapTable data={ products } options={ this.options }>
+          <TableHeaderColumn dataField='id' isKey={ true } dataSort={ true }>Product ID</TableHeaderColumn>
+          <TableHeaderColumn dataField='name' dataSort={ true }>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
         </BootstrapTable>
       </div>
     );
   }
-};
+}

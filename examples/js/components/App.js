@@ -1,5 +1,6 @@
+/* eslint max-len: 0 */
 import React from 'react';
-import {LinkContainer} from 'react-router-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 // import 'bootstrap/dist/css/bootstrap.css';
 import 'toastr/build/toastr.min.css';
@@ -15,13 +16,13 @@ import {
   MenuItem,
   Grid,
   Row,
-  Col,
+  Col
 } from 'react-bootstrap';
 
 class App extends React.Component {
 
   static propTypes = {
-    children: React.PropTypes.node,
+    children: React.PropTypes.node
   };
 
   static defaultProps = {};
@@ -31,79 +32,76 @@ class App extends React.Component {
     this.state = {};
   }
 
-  componentDidMount() {
-  }
-
   render() {
-    let examples = [{
+    const examples = [ {
       text: 'Basic Table',
-      href: 'basic',
+      href: 'basic'
     }, {
       text: 'Work on Column',
-      href: 'column',
+      href: 'column'
     }, {
       text: 'Table Sort',
-      href: 'sort',
+      href: 'sort'
     }, {
       text: 'Column Format',
-      href: 'column-format',
+      href: 'column-format'
     }, {
       text: 'Column Filter',
-      href: 'column-filter',
+      href: 'column-filter'
     }, {
       text: 'Row Selection',
-      href: 'selection',
+      href: 'selection'
     }, {
       text: 'Pagination',
-      href: 'pagination',
+      href: 'pagination'
     }, {
       text: 'Table Manipulation',
-      href: 'manipulation',
+      href: 'manipulation'
     }, {
       text: 'Cell Edit',
-      href: 'cell-edit',
+      href: 'cell-edit'
     }, {
       text: 'Table Styling',
-      href: 'style',
+      href: 'style'
     }, {
       text: 'Advance data edit&insert',
-      href: 'advance',
+      href: 'advance'
     }, {
       text: 'Other',
-      href: 'others',
+      href: 'others'
     }, {
       text: 'A complex demo',
-      href: 'complex',
+      href: 'complex'
     }, {
       text: 'TableDataSet demo',
-      href: 'tableDataSet',
-    }];
+      href: 'tableDataSet'
+    } ];
 
-    const exampleMenuItems = examples.map((item, idx)=> {
+    const exampleMenuItems = examples.map((item, idx) => {
       return (
-        <LinkContainer key={idx} to={'/examples/' + item.href}>
-          <MenuItem key={idx}>{item.text}</MenuItem>
+        <LinkContainer key={ idx } to={ '/examples/' + item.href }>
+          <MenuItem key={ idx }>{ item.text }</MenuItem>
         </LinkContainer>
       );
     });
     return (
       <div>
-        <Navbar inverse toggleNavKey={0}>
-          <NavBrand><a href="#">react-bootstrap-table</a></NavBrand>
+        <Navbar inverse toggleNavKey={ 0 }>
+          <NavBrand><a href='#'>react-bootstrap-table</a></NavBrand>
           <Nav>
-            <LinkContainer to="/getting-started">
+            <LinkContainer to='/getting-started'>
               <NavItem>Getting started</NavItem>
             </LinkContainer>
-            <NavDropdown title="Examples" id="collapsible-navbar-dropdown">
-              {exampleMenuItems}
+            <NavDropdown title='Examples' id='collapsible-navbar-dropdown'>
+              { exampleMenuItems }
             </NavDropdown>
-            <NavItem href="https://github.com/AllenFang/react-bootstrap-table" target="_blank">GitHub</NavItem>
+            <NavItem href='https://github.com/AllenFang/react-bootstrap-table' target='_blank'>GitHub</NavItem>
           </Nav>
         </Navbar>
         <Grid fluid>
           <Row>
-            <Col md={12}>
-              {this.props.children}
+            <Col md={ 12 }>
+              { this.props.children }
             </Col>
           </Row>
         </Grid>

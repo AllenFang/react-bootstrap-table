@@ -1,3 +1,5 @@
+/* eslint no-alert: 0 */
+/* eslint max-len: 0 */
 import React, { Component, PropTypes } from 'react';
 import Const from './Const';
 import TableHeader from './TableHeader';
