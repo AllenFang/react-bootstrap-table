@@ -7,10 +7,9 @@ class TableFilter extends Component {
   constructor(props) {
     super(props);
     this.filterObj = {};
-    this.handleKeyUp.bind(this);
   }
 
-  handleKeyUp(e) {
+  handleKeyUp = e => {
     const { value, name } = e.currentTarget;
     if (value.trim() === '') {
       delete this.filterObj[name];
