@@ -1,6 +1,7 @@
 /* eslint no-nested-ternary: 0 */
 /* eslint guard-for-in: 0 */
 /* eslint no-console: 0 */
+/* eslint eqeqeq: 0 */
 import Const from '../Const';
 const EventEmitter = require('events').EventEmitter;
 
@@ -281,7 +282,7 @@ export class TableDataStore {
     let valid = true;
     switch (comparator) {
     case '=': {
-      if (targetVal !== filterVal) {
+      if (targetVal != filterVal) {
         valid = false;
       }
       break;
@@ -311,7 +312,7 @@ export class TableDataStore {
       break;
     }
     case '!=': {
-      if (targetVal === filterVal) {
+      if (targetVal == filterVal) {
         valid = false;
       }
       break;
