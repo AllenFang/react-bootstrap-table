@@ -46,7 +46,7 @@ class NumberFilter extends Component {
 
   onChangeComparator(event) {
     const value = this.refs.numberFilter.value;
-    const { comparator } = event.target;
+    const comparator = event.target.value;
     if (value === '') {
       return;
     }
