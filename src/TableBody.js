@@ -75,6 +75,8 @@ class TableBody extends Component {
               columnChild = (
                 <div dangerouslySetInnerHTML={ { __html: formattedValue } }></div>
               );
+            } else {
+              columnChild = formattedValue;
             }
           }
           return (
