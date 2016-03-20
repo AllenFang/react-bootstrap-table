@@ -49,10 +49,23 @@ function buildProdDist(configLocation) {
   var compiler = webpack(config);
 
   compiler.run(function(err, stats) {
-      if(null != err)
-        console.error(err);
-      else
-        console.log("Success building distribution from " + configLocation);
+    var jsonStats = stats.toJson();
+    var valid = true;
+    if (stats.hasErrors()) {
+      valid = false;
+      console.log('Errors:', jsonStats.errors.join('\n'));
+    }
+
+    if (stats.hasWarnings()) {
+      console.log('Warnings:', jsonStats.warnings.join('\n'));
+    }
+
+    if(null != err) {
+      valid = false;
+      console.error(err);
+    }
+    if(valid)
+      console.log("Success building distribution from " + configLocation);
   });
 }
 

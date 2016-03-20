@@ -1,16 +1,16 @@
-import React from 'react';
-import classSet from 'classnames';
-import Const from './Const';
+import React, { Component, PropTypes } from 'react';
 
-class SelectRowHeaderColumn extends React.Component{
+class SelectRowHeaderColumn extends Component {
 
-  render(){
-    return(
-      <th style={{textAlign: 'center'}}>
+  render() {
+    return (
+      <th style={ { textAlign: 'center' } }>
         { this.props.children }
       </th>
-    )
+    );
   }
 }
-
+SelectRowHeaderColumn.propTypes = {
+  children: PropTypes.node
+};
 export default SelectRowHeaderColumn;

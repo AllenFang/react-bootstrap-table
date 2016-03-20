@@ -1,97 +1,98 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Const from './Const';
-import Util from './util';
 import classSet from 'classnames';
 import SelectRowHeaderColumn from './SelectRowHeaderColumn';
 
-class Checkbox extends React.Component{
+class Checkbox extends Component {
   componentDidMount() { this.update(this.props.checked); }
   componentWillReceiveProps(props) { this.update(props.checked); }
   update(checked) {
     ReactDOM.findDOMNode(this).indeterminate = checked === 'indeterminate';
   }
-
   render() {
-    return <input className='react-bs-select-all' type="checkbox" checked={this.props.checked} onChange={this.props.onChange} />
+    return (
+      <input className='react-bs-select-all'
+        type='checkbox'
+        checked={ this.props.checked }
+        onChange={ this.props.onChange } />
+    );
   }
 }
 
-class TableHeader extends React.Component{
+class TableHeader extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
-  render(){
-    var containerClasses = classSet("react-bs-container-header",
-      "table-header-wrapper");
-    var tableClasses = classSet("table", "table-hover", {
-        "table-bordered": this.props.bordered,
-        "table-condensed": this.props.condensed
+  render() {
+    const containerClasses = classSet('react-bs-container-header', 'table-header-wrapper');
+    const tableClasses = classSet('table', 'table-hover', {
+      'table-bordered': this.props.bordered,
+      'table-condensed': this.props.condensed
     });
-    var selectRowHeaderCol = this.props.hideSelectColumn?null:this.renderSelectRowHeader();
+    let selectRowHeaderCol = null;
+    if (!this.props.hideSelectColumn) selectRowHeaderCol = this.renderSelectRowHeader();
     this._attachClearSortCaretFunc();
 
-    return(
-      <div ref="container" className={containerClasses}>
-        <table className={tableClasses}>
+    return (
+      <div ref='container' className={ containerClasses }>
+        <table className={ tableClasses }>
           <thead>
-            <tr ref="header">
-              {selectRowHeaderCol}
-              {this.props.children}
+            <tr ref='header'>
+              { selectRowHeaderCol }
+              { this.props.children }
             </tr>
           </thead>
         </table>
       </div>
-    )
+    );
   }
 
-  renderSelectRowHeader(){
-    if(this.props.rowSelectType == Const.ROW_SELECT_SINGLE) {
-      return (<SelectRowHeaderColumn></SelectRowHeaderColumn>);
-    }else if(this.props.rowSelectType == Const.ROW_SELECT_MULTI){
-      return (<SelectRowHeaderColumn>
-          <Checkbox onChange={this.props.onSelectAllRow} checked={this.props.isSelectAll}/>
+  renderSelectRowHeader() {
+    if (this.props.rowSelectType === Const.ROW_SELECT_SINGLE) {
+      return (<SelectRowHeaderColumn />);
+    } else if (this.props.rowSelectType === Const.ROW_SELECT_MULTI) {
+      return (
+        <SelectRowHeaderColumn>
+          <Checkbox
+            onChange={ this.props.onSelectAllRow }
+            checked={ this.props.isSelectAll }/>
         </SelectRowHeaderColumn>
       );
-    }else{
+    } else {
       return null;
     }
   }
 
-  _attachClearSortCaretFunc(){
-    let { sortIndicator } = this.props;
-    if(Array.isArray(this.props.children)){
-      for(let i=0;i<this.props.children.length;i++){
-        const field = this.props.children[i].props.dataField;
-        const sort = field === this.props.sortName ? this.props.sortOrder : undefined;
+  _attachClearSortCaretFunc() {
+    const { sortIndicator, children, sortName, sortOrder, onSort } = this.props;
+    if (Array.isArray(children)) {
+      for (let i = 0; i < children.length; i++) {
+        const field = children[i].props.dataField;
+        const sort = field === sortName ? sortOrder : undefined;
         this.props.children[i] =
-          React.cloneElement(this.props.children[i],
-            { key: i, onSort: this.props.onSort, sort, sortIndicator });
+          React.cloneElement(children[i],
+            { key: i, onSort, sort, sortIndicator });
       }
     } else {
-      const field = this.props.children.props.dataField;
-      const sort = field === this.props.sortName ? this.props.sortOrder : undefined;
+      const field = children.props.dataField;
+      const sort = field === sortName ? sortOrder : undefined;
       this.props.children =
-        React.cloneElement(this.props.children, {key: 0, onSort: this.props.onSort, sort, sortIndicator});
+        React.cloneElement(children,
+          { key: 0, onSort, sort, sortIndicator });
     }
   }
 }
 TableHeader.propTypes = {
-  rowSelectType: React.PropTypes.string,
-  onSort: React.PropTypes.func,
-  onSelectAllRow: React.PropTypes.func,
-  sortName: React.PropTypes.string,
-  sortOrder: React.PropTypes.string,
-  hideSelectColumn: React.PropTypes.bool,
-  bordered: React.PropTypes.bool,
-  condensed: React.PropTypes.bool,
-  isFiltered: React.PropTypes.bool,
-  isSelectAll: React.PropTypes.oneOf([true, 'indeterminate', false]),
-  sortIndicator: React.PropTypes.bool
+  rowSelectType: PropTypes.string,
+  onSort: PropTypes.func,
+  onSelectAllRow: PropTypes.func,
+  sortName: PropTypes.string,
+  sortOrder: PropTypes.string,
+  hideSelectColumn: PropTypes.bool,
+  bordered: PropTypes.bool,
+  condensed: PropTypes.bool,
+  isFiltered: PropTypes.bool,
+  isSelectAll: PropTypes.oneOf([ true, 'indeterminate', false ]),
+  sortIndicator: PropTypes.bool
 };
 
-TableHeader.defaultProps = {
-};
 export default TableHeader;

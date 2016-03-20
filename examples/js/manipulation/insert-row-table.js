@@ -1,17 +1,19 @@
-'use strict';
+/* eslint max-len: 0 */
+/* eslint no-alert: 0 */
+/* eslint guard-for-in: 0 */
 import React from 'react';
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 
-var products = [];
+const products = [];
 
 function addProducts(quantity) {
-  var startId = products.length;
-  for (var i = 0; i < quantity; i++) {
-    var id = startId + i;
+  const startId = products.length;
+  for (let i = 0; i < quantity; i++) {
+    const id = startId + i;
     products.push({
       id: id,
-      name: "Item name " + id,
+      name: 'Item name ' + id,
       price: 2100 + i
     });
   }
@@ -19,27 +21,27 @@ function addProducts(quantity) {
 
 addProducts(5);
 
-function onAfterInsertRow(row){
-  var newRowStr = "";
+function onAfterInsertRow(row) {
+  let newRowStr = '';
 
-  for(var prop in row){
-    newRowStr += prop+": " + row[prop] + " \n";
+  for (const prop in row) {
+    newRowStr += prop + ': ' + row[prop] + ' \n';
   }
-  alert("The new row is:\n " + newRowStr);
+  alert('The new row is:\n ' + newRowStr);
 }
 
-var options = {
+const options = {
   afterInsertRow: onAfterInsertRow   // A hook for after insert rows
 };
 
-export default class InsertRowTable extends React.Component{
-  render(){
+export default class InsertRowTable extends React.Component {
+  render() {
     return (
-      <BootstrapTable data={products} insertRow={true} options={options}>
-          <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+      <BootstrapTable data={ products } insertRow={ true } options={ options }>
+          <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
+          <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
   }
-};
+}

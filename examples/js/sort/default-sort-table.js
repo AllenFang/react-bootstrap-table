@@ -1,18 +1,18 @@
-'use strict';
+/* eslint max-len: 0 */
 import React from 'react';
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 
-var products = [];
+const products = [];
 
 function addProducts(quantity) {
-  var startId = products.length;
-  for (var i = 0; i < quantity; i++) {
-    var id = startId + i;
+  const startId = products.length;
+  for (let i = 0; i < quantity; i++) {
+    const id = startId + i;
     products.push({
       id: id,
-      name: "Item name " + id,
-      price: 100 + i
+      name: 'Item name ' + id,
+      price: 2100 + i
     });
   }
 }
@@ -24,20 +24,20 @@ export default class DefaultSortTable extends React.Component {
     super(props);
 
     this.options = {
-      sortName: "name",  //default sort column name
-      sortOrder: "desc",  //default sort order
+      sortName: 'name',  // default sort column name
+      sortOrder: 'desc'  // default sort order
     };
   }
 
   render() {
     return (
       <div>
-        <BootstrapTable data={products} options={this.options}>
-          <TableHeaderColumn dataField="id" isKey={true} dataSort={true}>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField="price">Product Price</TableHeaderColumn>
+        <BootstrapTable data={ products } options={ this.options }>
+          <TableHeaderColumn dataField='id' isKey={ true } dataSort={ true }>Product ID</TableHeaderColumn>
+          <TableHeaderColumn dataField='name' dataSort={ true }>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
         </BootstrapTable>
       </div>
     );
   }
-};
+}

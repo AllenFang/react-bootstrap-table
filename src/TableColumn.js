@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import Const from './Const';
 
-class TableColumn extends React.Component{
+class TableColumn extends Component {
 
   constructor(props) {
     super(props);
   }
-
+  /* eslint no-unused-vars: [0, { "args": "after-used" }] */
   shouldComponentUpdate(nextProps, nextState) {
     const { children } = this.props;
     let shouldUpdated = this.props.width !== nextProps.width
@@ -14,14 +14,14 @@ class TableColumn extends React.Component{
       || this.props.hidden !== nextProps.hidden
       || this.props.dataAlign !== nextProps.dataAlign
       || typeof children !== typeof nextProps.children
-      || (''+this.props.onEdit).toString() !== (''+nextProps.onEdit).toString()
+      || ('' + this.props.onEdit).toString() !== ('' + nextProps.onEdit).toString();
 
-    if(shouldUpdated){
+    if (shouldUpdated) {
       return shouldUpdated;
     }
 
-    if(typeof children === 'object' && children !== null && children.props !== null) {
-      if(children.props.type === 'checkbox' || children.props.type === 'radio') {
+    if (typeof children === 'object' && children !== null && children.props !== null) {
+      if (children.props.type === 'checkbox' || children.props.type === 'radio') {
         shouldUpdated = shouldUpdated ||
           children.props.type !== nextProps.children.props.type ||
           children.props.checked !== nextProps.children.props.checked;
@@ -32,11 +32,11 @@ class TableColumn extends React.Component{
       shouldUpdated = shouldUpdated || children !== nextProps.children;
     }
 
-    if(shouldUpdated){
+    if (shouldUpdated) {
       return shouldUpdated;
     }
 
-    if(!(this.props.cellEdit && nextProps.cellEdit)) {
+    if (!(this.props.cellEdit && nextProps.cellEdit)) {
       return false;
     } else {
       return shouldUpdated
@@ -44,50 +44,51 @@ class TableColumn extends React.Component{
     }
   }
 
-  handleCellEdit(e){
-    if(this.props.cellEdit.mode == Const.CELL_EDIT_DBCLICK){
-      if(document.selection && document.selection.empty) {
+  handleCellEdit = e => {
+    if (this.props.cellEdit.mode === Const.CELL_EDIT_DBCLICK) {
+      if (document.selection && document.selection.empty) {
         document.selection.empty();
-      } else if(window.getSelection) {
-          var sel = window.getSelection();
-          sel.removeAllRanges();
+      } else if (window.getSelection) {
+        const sel = window.getSelection();
+        sel.removeAllRanges();
       }
     }
     this.props.onEdit(
-      e.currentTarget.parentElement.rowIndex+1,
+      e.currentTarget.parentElement.rowIndex + 1,
       e.currentTarget.cellIndex);
   }
 
-  render(){
-    var tdStyle = {
+  render() {
+    const tdStyle = {
       textAlign: this.props.dataAlign,
-      display: this.props.hidden?"none":null
+      display: this.props.hidden ? 'none' : null
     };
 
-    var opts = {};
-    if(this.props.cellEdit){
-      if(this.props.cellEdit.mode == Const.CELL_EDIT_CLICK){
-        opts.onClick = this.handleCellEdit.bind(this);
-      }else if(this.props.cellEdit.mode == Const.CELL_EDIT_DBCLICK){
-        opts.onDoubleClick = this.handleCellEdit.bind(this);
+    const opts = {};
+    if (this.props.cellEdit) {
+      if (this.props.cellEdit.mode === Const.CELL_EDIT_CLICK) {
+        opts.onClick = this.handleCellEdit;
+      } else if (this.props.cellEdit.mode === Const.CELL_EDIT_DBCLICK) {
+        opts.onDoubleClick = this.handleCellEdit;
       }
     }
     return (
-      <td style={tdStyle} className={this.props.className} {...opts}>
-        {this.props.children}
+      <td style={ tdStyle } className={ this.props.className } { ...opts }>
+        { this.props.children }
       </td>
-    )
+    );
   }
 }
 TableColumn.propTypes = {
-  dataAlign: React.PropTypes.string,
-  hidden: React.PropTypes.bool,
-  className:React.PropTypes.string
+  dataAlign: PropTypes.string,
+  hidden: PropTypes.bool,
+  className: PropTypes.string,
+  children: PropTypes.node
 };
 
 TableColumn.defaultProps = {
-  dataAlign: "left",
+  dataAlign: 'left',
   hidden: false,
-  className:""
-}
+  className: ''
+};
 export default TableColumn;

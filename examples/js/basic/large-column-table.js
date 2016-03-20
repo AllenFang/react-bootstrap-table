@@ -1,17 +1,17 @@
-'use strict';
+/* eslint max-len: 0 */
 import React from 'react';
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 
-var products = [];
+const products = [];
 
 function addProducts(quantity) {
-  var startId = products.length;
-  for (var i = 0; i < quantity; i++) {
-    var id = startId + i;
+  const startId = products.length;
+  for (let i = 0; i < quantity; i++) {
+    const id = startId + i;
     products.push({
       id: id,
-      name: "Item name 12345678" + id,
+      name: 'Item name 12345678' + id,
       price: 2100 + i
     });
   }
@@ -19,23 +19,23 @@ function addProducts(quantity) {
 
 addProducts(5);
 
-export default class LargeColumnTable extends React.Component{
-  render(){
+export default class LargeColumnTable extends React.Component {
+  render() {
     return (
-      <BootstrapTable data={products}>
-          <TableHeaderColumn width="150" dataField="id" isKey={true}>ProductID</TableHeaderColumn>
-          <TableHeaderColumn width="150" dataField="name">ProductName</TableHeaderColumn>
-          <TableHeaderColumn width="150" dataField="price">ProductPrice</TableHeaderColumn>
-          <TableHeaderColumn width="150" dataField="name">ProductName</TableHeaderColumn>
-          <TableHeaderColumn width="150" dataField="price">ProductPrice</TableHeaderColumn>
-          <TableHeaderColumn width="150" dataField="name">ProductName</TableHeaderColumn>
-          <TableHeaderColumn width="150" dataField="price">ProductPrice</TableHeaderColumn>
-          <TableHeaderColumn width="150" dataField="name">ProductName</TableHeaderColumn>
-          <TableHeaderColumn width="150" dataField="price">ProductPrice</TableHeaderColumn>
-          <TableHeaderColumn width="150" dataField="name">ProductName</TableHeaderColumn>
-          <TableHeaderColumn width="150" dataField="price">ProductPrice</TableHeaderColumn>
-          <TableHeaderColumn width="150" dataField="name">ProductName</TableHeaderColumn>
+      <BootstrapTable data={ products }>
+          <TableHeaderColumn width='150' dataField='id' isKey={ true }>ProductID</TableHeaderColumn>
+          <TableHeaderColumn width='150' dataField='name'>ProductName</TableHeaderColumn>
+          <TableHeaderColumn width='150' dataField='price'>ProductPrice</TableHeaderColumn>
+          <TableHeaderColumn width='150' dataField='name'>ProductName</TableHeaderColumn>
+          <TableHeaderColumn width='150' dataField='price'>ProductPrice</TableHeaderColumn>
+          <TableHeaderColumn width='150' dataField='name'>ProductName</TableHeaderColumn>
+          <TableHeaderColumn width='150' dataField='price'>ProductPrice</TableHeaderColumn>
+          <TableHeaderColumn width='150' dataField='name'>ProductName</TableHeaderColumn>
+          <TableHeaderColumn width='150' dataField='price'>ProductPrice</TableHeaderColumn>
+          <TableHeaderColumn width='150' dataField='name'>ProductName</TableHeaderColumn>
+          <TableHeaderColumn width='150' dataField='price'>ProductPrice</TableHeaderColumn>
+          <TableHeaderColumn width='150' dataField='name'>ProductName</TableHeaderColumn>
       </BootstrapTable>
     );
   }
-};
+}
