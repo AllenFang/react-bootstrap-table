@@ -1,6 +1,7 @@
 /* eslint max-len: 0 */
 /* eslint no-alert: 0 */
 /* eslint guard-for-in: 0 */
+/* eslint no-unused-vars: 0 */
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
@@ -32,9 +33,16 @@ function onAfterSaveCell(row, cellName, cellValue) {
   alert('Thw whole row :\n' + rowStr);
 }
 
+function onBeforeSaveCell(row, cellName, cellValue) {
+  // You can do any validation on here for editing value,
+  // return false for reject the editing
+  return true;
+}
+
 const cellEditProp = {
   mode: 'click',
   blurToSave: true,
+  beforeSaveCell: onBeforeSaveCell, // a hook for before saving cell
   afterSaveCell: onAfterSaveCell  // a hook for after saving cell
 };
 
