@@ -1,8 +1,10 @@
-/* global saveAs */
+/* eslint block-scoped-var: 0 */
+/* eslint vars-on-top: 0 */
+/* eslint no-var: 0 */
+/* eslint no-unused-vars: 0 */
 if (typeof window !== 'undefined') {
   const filesaver = require('./filesaver');
-  /* eslint no-unused-vars: [2, { "varsIgnorePattern": "saveAs" }] */
-  const saveAs = filesaver.saveAs;
+  var saveAs = filesaver.saveAs;
 }
 
 function toString(data, keys) {
