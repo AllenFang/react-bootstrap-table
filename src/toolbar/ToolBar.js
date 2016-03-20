@@ -51,7 +51,7 @@ class ToolBar extends Component {
           const values = tempValue.split(':');
           tempValue = dom.checked ? values[0] : values[1];
         }
-        
+
         if (column.editable && column.editable.validator) { // process validate
           tempMsg = column.editable.validator(tempValue);
           if (tempMsg !== true) {
