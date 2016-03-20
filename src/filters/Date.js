@@ -1,3 +1,5 @@
+/* eslint quotes: 0 */
+/* eslint max-len: 0 */
 import React, { Component, PropTypes } from 'react';
 import Const from '../Const';
 
@@ -12,9 +14,7 @@ class DateFilter extends Component {
     if (this.props.defaultValue) {
         // Set the appropriate format for the input type=date, i.e. "YYYY-MM-DD"
       const defaultValue = new Date(this.props.defaultValue);
-      defaultDate = `${defaultValue.getFullYear()}-
-        ${('0' + (defaultValue.getMonth() + 1)).slice(-2)}-
-        ${('0' + defaultValue.getDate()).slice(-2)}`;
+      defaultDate = `${defaultValue.getFullYear()}-${("0" + (defaultValue.getMonth() + 1)).slice(-2)}-${("0" + defaultValue.getDate()).slice(-2)}`;
     }
     return defaultDate;
   }
