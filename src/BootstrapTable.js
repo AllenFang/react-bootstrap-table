@@ -416,6 +416,7 @@ class BootstrapTable extends Component {
   }
 
   handleEditCell(newVal, rowIndex, colIndex) {
+    const { beforeSaveCell, afterSaveCell } = this.props.cellEdit;
     let fieldName;
     React.Children.forEach(this.props.children, function(column, i) {
       if (i === colIndex) {
@@ -424,13 +425,23 @@ class BootstrapTable extends Component {
       }
     });
 
+    if (beforeSaveCell) {
+      const isValid = beforeSaveCell(this.state.data[rowIndex], fieldName, newVal);
+      if (!isValid && typeof isValid !== 'undefined') {
+        this.setState({
+          data: this.store.get()
+        });
+        return;
+      }
+    }
+
     const result = this.store.edit(newVal, rowIndex, fieldName).get();
     this.setState({
       data: result
     });
 
-    if (this.props.cellEdit.afterSaveCell) {
-      this.props.cellEdit.afterSaveCell(this.state.data[rowIndex], fieldName, newVal);
+    if (afterSaveCell) {
+      afterSaveCell(this.state.data[rowIndex], fieldName, newVal);
     }
   }
 
@@ -750,6 +761,7 @@ BootstrapTable.propTypes = {
   cellEdit: PropTypes.shape({
     mode: PropTypes.string,
     blurToSave: PropTypes.bool,
+    beforeSaveCell: PropTypes.func,
     afterSaveCell: PropTypes.func
   }),
   insertRow: PropTypes.bool,
@@ -811,6 +823,7 @@ BootstrapTable.defaultProps = {
   cellEdit: {
     mode: Const.CELL_EDIT_NONE,
     blurToSave: false,
+    beforeSaveCell: undefined,
     afterSaveCell: undefined
   },
   insertRow: false,
