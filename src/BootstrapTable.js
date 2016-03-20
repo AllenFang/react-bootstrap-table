@@ -18,7 +18,7 @@ class BootstrapTable extends Component {
     super(props);
     this.isIE = false;
     this._attachCellEditFunc();
-    if (document) {
+    if (Util.canUseDOM()) {
       this.isIE = document.documentMode;
     }
     if (!Array.isArray(this.props.data)) {
