@@ -97,7 +97,9 @@ class TableHeaderColumn extends Component {
           title={ this.props.children }
           onClick={ this.handleColumnClick }>
         { this.props.children }{ sortCaret }
-        { this.props.filter ? this.getFilters() : null }
+        <div onClick={ e => e.stopPropagation() }>
+          { this.props.filter ? this.getFilters() : null }
+        </div>
       </th>
     );
   }
