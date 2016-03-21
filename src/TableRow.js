@@ -35,13 +35,13 @@ class TableRow extends Component {
 
   rowMouseOut = e => {
     if (this.props.onRowMouseOut) {
-      this.props.onRowMouseOut(e.currentTarget.rowIndex);
+      this.props.onRowMouseOut(e.currentTarget.rowIndex, e);
     }
   }
 
   rowMouseOver = e => {
     if (this.props.onRowMouseOver) {
-      this.props.onRowMouseOver(e.currentTarget.rowIndex);
+      this.props.onRowMouseOver(e.currentTarget.rowIndex, e);
     }
   }
 

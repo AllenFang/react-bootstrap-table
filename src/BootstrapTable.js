@@ -337,15 +337,15 @@ class BootstrapTable extends Component {
     }
   }
 
-  handleRowMouseOut = row => {
+  handleRowMouseOut = (row, event) => {
     if (this.props.options.onRowMouseOut) {
-      this.props.options.onRowMouseOut(row);
+      this.props.options.onRowMouseOut(row, event);
     }
   }
 
-  handleRowMouseOver = row => {
+  handleRowMouseOver = (row, event) => {
     if (this.props.options.onRowMouseOver) {
-      this.props.options.onRowMouseOver(row);
+      this.props.options.onRowMouseOver(row, event);
     }
   }
 
