@@ -1,3 +1,16 @@
+<a name="v2.0.2"></a>
+# [v2.0.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.0.1...v2.0.2) (2016-03-20)
+### Bug fixes
+* Fix when interacting with filters will cause a column sort([00213b9](https://github.com/AllenFang/react-bootstrap-table/commit/00213b99c8749ca2ce80f5970076087b8bcb8506))
+* Fix 'document is not defined' when used with server side rendering([4c26adf](https://github.com/AllenFang/react-bootstrap-table/commit/4c26adf23458e68029db004c2a0d14469f74382d))
+
+### Features
+* Support ```beforeSaveCell``` on cell editing, you can do a validation and decide whether accept this editing([2233de7](https://github.com/AllenFang/react-bootstrap-table/commit/2233de70466f4259ad283d5f3dd0e7a0912774a3))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/cell-edit/cell-edit-hook-table.js)
+
+### Enhancement
+* Apply eslint more strict([a836bb5](https://github.com/AllenFang/react-bootstrap-table/commit/a836bb5ffefa23f5296d885646919c38c7da60a3))
+
 <a name="v2.0.1"></a>
 # [v2.0.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.0.0...v2.0.1) (2016-03-16)
 ### Bug fixes
