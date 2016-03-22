@@ -7,7 +7,7 @@ if (typeof window !== 'undefined') {
   window.TableHeaderColumn = TableHeaderColumn;
   window.TableDataSet = TableDataSet;
 }
-export default {
+export {
   BootstrapTable,
   TableHeaderColumn,
   TableDataSet

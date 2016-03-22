@@ -5,6 +5,8 @@ import DataInsertTypeTable from './insert-type-table';
 import AutoRowKeyTable from './auto-rowkey-table';
 import ValidatorTable from './validator-table';
 
+import renderLinks from '../utils';
+
 import { Col, Panel } from 'react-bootstrap';
 
 class Demo extends React.Component {
@@ -12,19 +14,19 @@ class Demo extends React.Component {
     return (
       <Col md={ 8 } mdOffset={ 1 }>
         <Panel header={ 'Cell Edit Type Example(text, textarea, select, checkbox)' }>
-          <h5>Source in /examples/js/advance/edit-type-table.js</h5>
+          { renderLinks('advance/edit-type-table.js') }
           <EditTypeTable/>
         </Panel>
         <Panel header={ 'Data Insert Type Example(text, textarea, select, checkbox)' }>
-          <h5>Source in /examples/js/advance/insert-type-table.js</h5>
+          { renderLinks('advance/insert-type-table.js') }
           <DataInsertTypeTable/>
         </Panel>
         <Panel header={ 'Auto RowKey on Data Insert Example' }>
-          <h5>Source in /examples/js/advance/auto-rowkey-table.js</h5>
+          { renderLinks('advance/auto-rowkey-table.js') }
           <AutoRowKeyTable/>
         </Panel>
         <Panel header={ 'Data Validator Example(Job Name length must great 10 char)' }>
-          <h5>Source in /examples/js/advance/validator-table.js</h5>
+          { renderLinks('advance/validator-table.js') }
           <ValidatorTable/>
         </Panel>
       </Col>

@@ -57,22 +57,39 @@ npm install react-bootstrap-table --save
 ```
 
 ### b.Import Module
-Use react-bootstrap-table in your react app, you should import this component as first. About importing this component, there'r two way in the following you can choose:
-##### Module(CommonJS/AMD)
+To use react-bootstrap-table in your react app, you should import it first.
+You can do this in two ways:
+
+##### With a module bundler
+With a module bundler like [webpack](https://webpack.github.io/) that supports either CommonJS or ES2015 modules, use as you would anything else.  
+You can include source maps on your build system to debug on development. Don't forget to Uglify on production.
+
 ```js
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';  // in ECMAScript 6
+// in ECMAScript 6
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 // or in ECMAScript 5
-var ReactBSTable = require("react-bootstrap-table");  
+var ReactBSTable = require('react-bootstrap-table');  
 var BootstrapTable = ReactBSTable.BootstrapTable;
 var TableHeaderColumn = ReactBSTable.TableHeaderColumn;
 ```
 ##### Browser global(window object)
+In the `dist` folder you have a UMD bundle with source maps (`react-bootstrap-table.js`) as well as a minified version (`react-bootstrap-table.min.js`).
+
 ```html
 <script src="path/to/react-bootstrap-table/dist/react-bootstrap-table.min.js" />
 <script>
   var ReactBsTable = window.BootstrapTable;
   //...
 <script/>
+```
+
+The UMD build is also available on [npmcdn](https://npmcdn.com):
+
+```html
+// source maps: https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.js.map
+<script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.js"></script>
+// or use the min version
+<script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.min.js"></script>
 ```
 
 ### c.Import CSS

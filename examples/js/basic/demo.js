@@ -6,6 +6,8 @@ import BorderlessTable from './borderless-table';
 import ScrollTable from './scroll-table';
 import LargeColumnTable from './large-column-table';
 
+import renderLinks from '../utils';
+
 import { Col, Panel } from 'react-bootstrap';
 
 class Demo extends React.Component {
@@ -13,19 +15,19 @@ class Demo extends React.Component {
     return (
       <Col md={ 8 } mdOffset={ 1 }>
         <Panel header={ 'A basic react-bootstrap-table' }>
-          <h5>Source in /examples/js/basic/basic-table.js</h5>
+          { renderLinks('basic/basic-table.js') }
           <BasicTable/>
         </Panel>
         <Panel header={ 'Table hover, striped and condensed Example' }>
-          <h5>Source in /examples/js/basic/borderless-table.js</h5>
+          { renderLinks('basic/hover-striped-table.js') }
           <HoverStripedTable/>
         </Panel>
         <Panel header={ 'Borderless table Example' }>
-          <h5>Source in /examples/js/basic/hover-striped-table.js</h5>
+          { renderLinks('basic/borderless-table.js') }
           <BorderlessTable/>
         </Panel>
         <Panel header={ 'A Large Column Table Demo' }>
-          <h5>Source in /examples/js/basic/large-column-table.js</h5>
+          { renderLinks('basic/large-column-table.js') }
           <h3 style={ { color: 'red' } }>Warning</h3>
           <span style={ { color: 'red' } }>
             There is one restriction when you want to make a large column table scrollable:<br/>
@@ -34,7 +36,7 @@ class Demo extends React.Component {
           <LargeColumnTable/>
         </Panel>
         <Panel header={ 'Table Scroll Example' }>
-          <h5>Source in /examples/js/basic/scroll-table.js</h5>
+          { renderLinks('basic/scroll-table') }
           <ScrollTable/>
         </Panel>
       </Col>
