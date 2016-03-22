@@ -58,34 +58,6 @@ gulp.task('umdBuild', ['clean'], shell.task([
   'webpack --config webpack.umd.min.config.js'
 ]));
 
-function buildProdDist(configLocation) {
-  // Give up the browserify to build product, cause of #131, change to webpack instead
-  // demo = false;
-  // browserifing("./src/index.js", "react-bootstrap-table.min.js", "./dist");
-  var config = require(configLocation);
-  var compiler = webpack(config);
-
-  compiler.run(function(err, stats) {
-    var jsonStats = stats.toJson();
-    var valid = true;
-    if (stats.hasErrors()) {
-      valid = false;
-      console.log('Errors:', jsonStats.errors.join('\n'));
-    }
-
-    if (stats.hasWarnings()) {
-      console.log('Warnings:', jsonStats.warnings.join('\n'));
-    }
-
-    if (null != err) {
-      valid = false;
-      console.error(err);
-    }
-    if (valid)
-      console.log("Success building distribution from " + configLocation);
-  });
-}
-
 //------------
 // EXAMPLES
 // -----------
@@ -109,6 +81,7 @@ gulp.task('example-server', function() {
 
 });
 
+// TODO: consider droping browserify and just use webpack
 //------------
 // DEMO
 // -----------

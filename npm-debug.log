@@ -1,0 +1,42 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs', '/home/sofia/local/bin/npm', 'run', 'lint' ]
+2 info using npm@3.3.1
+3 info using node@v5.9.0
+4 verbose run-script [ 'prelint', 'lint', 'postlint' ]
+5 info lifecycle react-bootstrap-table@2.0.2~prelint: react-bootstrap-table@2.0.2
+6 silly lifecycle react-bootstrap-table@2.0.2~prelint: no script for prelint, continuing
+7 info lifecycle react-bootstrap-table@2.0.2~lint: react-bootstrap-table@2.0.2
+8 verbose lifecycle react-bootstrap-table@2.0.2~lint: unsafe-perm in lifecycle true
+9 verbose lifecycle react-bootstrap-table@2.0.2~lint: PATH: /home/sofia/local/lib/node_modules/npm/bin/node-gyp-bin:/home/sofia/Desktop/react-bootstrap-table/node_modules/.bin:/home/sofia/Desktop/optylon/src/static/bin:/home/sofia/flyway-3.2.1:/home/sofia/anaconda/bin:/home/sofia/local/bin:/home/sofia/.rvm/gems/ruby-2.2.1/bin:/home/sofia/.rvm/gems/ruby-2.2.1@global/bin:/home/sofia/.rvm/rubies/ruby-2.2.1/bin:/home/sofia/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/sofia/.rvm/bin:/home/sofia/.rvm/bin:/home/sofia/.rvm/bin
+10 verbose lifecycle react-bootstrap-table@2.0.2~lint: CWD: /home/sofia/Desktop/react-bootstrap-table
+11 silly lifecycle react-bootstrap-table@2.0.2~lint: Args: [ '-c', 'eslint src' ]
+12 silly lifecycle react-bootstrap-table@2.0.2~lint: Returned: code: 1  signal: null
+13 info lifecycle react-bootstrap-table@2.0.2~lint: Failed to exec lint script
+14 verbose stack Error: react-bootstrap-table@2.0.2 lint: `eslint src`
+14 verbose stack Exit status 1
+14 verbose stack     at EventEmitter.<anonymous> (/home/sofia/local/lib/node_modules/npm/lib/utils/lifecycle.js:233:16)
+14 verbose stack     at emitTwo (events.js:100:13)
+14 verbose stack     at EventEmitter.emit (events.js:185:7)
+14 verbose stack     at ChildProcess.<anonymous> (/home/sofia/local/lib/node_modules/npm/lib/utils/spawn.js:24:14)
+14 verbose stack     at emitTwo (events.js:100:13)
+14 verbose stack     at ChildProcess.emit (events.js:185:7)
+14 verbose stack     at maybeClose (internal/child_process.js:850:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:215:5)
+15 verbose pkgid react-bootstrap-table@2.0.2
+16 verbose cwd /home/sofia/Desktop/react-bootstrap-table
+17 error Linux 3.16.0-67-generic
+18 error argv "/usr/bin/nodejs" "/home/sofia/local/bin/npm" "run" "lint"
+19 error node v5.9.0
+20 error npm  v3.3.1
+21 error code ELIFECYCLE
+22 error react-bootstrap-table@2.0.2 lint: `eslint src`
+22 error Exit status 1
+23 error Failed at the react-bootstrap-table@2.0.2 lint script 'eslint src'.
+23 error This is most likely a problem with the react-bootstrap-table package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     eslint src
+23 error You can get their info via:
+23 error     npm owner ls react-bootstrap-table
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]
