@@ -63,15 +63,15 @@ gulp.task('umdBuild', ['clean'], shell.task([
 // -----------
 gulp.task('example-server', function() {
 
-  new WebpackDevServer(webpack(config), {
-    publicPath: config.serverConfig.publicPath,
-    contentBase: config.serverConfig.contentBase,
+  new WebpackDevServer(webpack(exampleConfig), {
+    publicPath: exampleConfig.serverConfig.publicPath,
+    contentBase: exampleConfig.serverConfig.contentBase,
     hot: true,
     headers: {
       'Access-Control-Allow-Origin': '*'
     },
     historyApiFallback: true
-  }).listen(config.serverConfig.port, 'localhost', function(err, result) {
+  }).listen(exampleConfig.serverConfig.port, 'localhost', function(err, result) {
     if (err) {
       console.log(err);
     }

@@ -8,9 +8,9 @@
 
 // You can do this easily using the following setup:
 
-// - Add the umd (or dist) directory to your .gitignore file
-// - Add the umd directory to your files array in package.json
-// - Use a build script to generate your UMD build in the umd directory just before you publish
+// - Add the umd (or dist in this case) directory to your .gitignore file
+// - Add the dist directory to your files array in package.json
+// - Use a build script to generate your UMD build in the dist directory just before you publish
 // - That's it! Now when you npm publish you'll have a version available on npmcdn as well
 
 var path = require('path');
