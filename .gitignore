@@ -6,4 +6,3 @@ node_modules
 *.idea
 *.iml
 lib/
-jsonOutputWebpack.json
