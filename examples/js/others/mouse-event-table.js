@@ -1,4 +1,5 @@
 /* eslint no-console: 0 */
+/* eslint no-console: 0 */
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
@@ -28,10 +29,12 @@ export default class MouseEventTable extends React.Component {
       onMouseEnter: function() {
         console.log('mouse enter to table');
       },
-      onRowMouseOut: function(row) {
+      onRowMouseOut: function(row, e) {
+        console.log(e);
         console.log('mouse leave from row ' + row.id);
       },
-      onRowMouseOver: function(row) {
+      onRowMouseOver: function(row, e) {
+        console.log(e);
         console.log('mouse enter from row ' + row.id);
       }
     };
