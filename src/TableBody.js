@@ -171,14 +171,14 @@ class TableBody extends Component {
     );
   }
 
-  handleRowMouseOut = rowIndex => {
+  handleRowMouseOut = (rowIndex, event) => {
     const targetRow = this.props.data[rowIndex];
-    this.props.onRowMouseOut(targetRow);
+    this.props.onRowMouseOut(targetRow, event);
   }
 
-  handleRowMouseOver = rowIndex => {
+  handleRowMouseOver = (rowIndex, event) => {
     const targetRow = this.props.data[rowIndex];
-    this.props.onRowMouseOver(targetRow);
+    this.props.onRowMouseOver(targetRow, event);
   }
 
   handleRowClick = rowIndex => {
