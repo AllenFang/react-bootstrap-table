@@ -1,3 +1,9 @@
+<a name="v2.0.3"></a>
+# [v2.0.3](https://github.com/AllenFang/react-bootstrap-table/compare/v2.0.2...v2.0.3) (2016-03-22)
+### Enhancement
+* Improve build system for reducing the size of bundling file([0e29899](https://github.com/AllenFang/react-bootstrap-table/commit/0e298993805bec53f7e6f0877bae41a41c20d999))
+* Pass event as param for event mouse([482f2f0](https://github.com/AllenFang/react-bootstrap-table/commit/482f2f05d06706d701a06346b221d8a8409fcb1a))
+
 <a name="v2.0.2"></a>
 # [v2.0.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.0.1...v2.0.2) (2016-03-20)
 ### Bug fixes
