@@ -32,11 +32,11 @@ export default class ExternallyManagedSelection extends React.Component {
     const {
       currPage
     } = this.state;
-    const onRowSelect = ({ id }, isSelected, page) => {
+    const onRowSelect = ({ id }, isSelected) => {
       if (isSelected && this.state.selected.length !== 2) {
         this.setState({
           selected: [ ...this.state.selected, id ].sort(),
-          currPage: page
+          currPage: this.refs.table.state.currPage
         });
       } else {
         this.setState({ selected: this.state.selected.filter(it => it !== id) });
@@ -60,7 +60,7 @@ export default class ExternallyManagedSelection extends React.Component {
     };
 
     return (
-      <BootstrapTable data={ products } selectRow={ selectRowProp } pagination={ true } options={ options }>
+      <BootstrapTable ref='table' data={ products } selectRow={ selectRowProp } pagination={ true } options={ options }>
         <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
         <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>

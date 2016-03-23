@@ -389,15 +389,12 @@ class BootstrapTable extends Component {
   }
 
   handleSelectRow = (row, isSelected) => {
-    const {
-      currPage
-    } = this.state;
     let result = true;
     let currSelected = this.store.getSelectedRowKeys();
     const rowKey = row[ this.store.getKeyField() ];
     const { selectRow } = this.props;
     if (selectRow.onSelect) {
-      result = selectRow.onSelect(row, isSelected, currPage);
+      result = selectRow.onSelect(row, isSelected);
     }
 
     if (typeof result === 'undefined' || result !== false) {
