@@ -23,14 +23,21 @@ export default class ExternallyManagedSelection extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: []
+      selected: [],
+      currPage: 1
     };
   }
 
   render() {
-    const onRowSelect = ({ id }, isSelected) => {
+    const {
+      currPage
+    } = this.state;
+    const onRowSelect = ({ id }, isSelected, page) => {
       if (isSelected && this.state.selected.length !== 2) {
-        this.setState({ selected: [ ...this.state.selected, id ].sort() });
+        this.setState({
+          selected: [ ...this.state.selected, id ].sort(),
+          currPage: page
+        });
       } else {
         this.setState({ selected: this.state.selected.filter(it => it !== id) });
       }
@@ -47,6 +54,7 @@ export default class ExternallyManagedSelection extends React.Component {
     const options = {
       sizePerPageList: [ 5, 10, 15, 20 ],
       sizePerPage: 10,
+      page: currPage,
       sortName: 'id',
       sortOrder: 'desc'
     };
