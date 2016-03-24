@@ -196,6 +196,9 @@ class BootstrapTable extends Component {
     if (this.props.options.afterTableComplete) {
       this.props.options.afterTableComplete();
     }
+    if (this.props.keyHandler) {
+      this.handleOnEntitySelect(this.props.keyHandler.rowKeys, this.props.keyHandler.onEntitySelect);
+    }
   }
 
   _attachCellEditFunc() {
@@ -560,6 +563,19 @@ class BootstrapTable extends Component {
       data: result,
       currPage: 1
     });
+  }
+
+  handleOnEntitySelect = (rowKey, entityFn) => {
+    const {
+      sizePerPage
+    } = this.state;
+    const AllRowkey = this.store.getAllRowkey();
+    const totalPage = AllRowkey.length / sizePerPage;
+    let page;
+    page = parseInt(totalPage + 1 - ((AllRowkey.length - rowKey + 1) / sizePerPage), 10);
+    if (typeof page === 'number') {
+      entityFn(page);
+    }
   }
 
   renderPagination() {
