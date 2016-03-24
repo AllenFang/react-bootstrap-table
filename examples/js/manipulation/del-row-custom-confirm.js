@@ -21,8 +21,9 @@ function addProducts(quantity) {
 
 addProducts(5);
 
-function customConfirm(next) {
-  if (confirm('(It is a custom confirm function)Are you sure you want to delete?')) {
+function customConfirm(next, dropRowKeys) {
+  const dropRowKeysStr = dropRowKeys.join(',');
+  if (confirm(`(It's a custom confirm)Are you sure you want to delete ${dropRowKeysStr}?`)) {
     // If the confirmation is true, call the function that
     // continues the deletion of the record.
     next();
