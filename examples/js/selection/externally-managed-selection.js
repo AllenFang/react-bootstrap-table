@@ -23,14 +23,21 @@ export default class ExternallyManagedSelection extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: []
+      selected: [],
+      currPage: 1
     };
   }
 
   render() {
+    const {
+      currPage
+    } = this.state;
     const onRowSelect = ({ id }, isSelected) => {
       if (isSelected && this.state.selected.length !== 2) {
-        this.setState({ selected: [ ...this.state.selected, id ].sort() });
+        this.setState({
+          selected: [ ...this.state.selected, id ].sort(),
+          currPage: this.refs.table.state.currPage
+        });
       } else {
         this.setState({ selected: this.state.selected.filter(it => it !== id) });
       }
@@ -47,12 +54,13 @@ export default class ExternallyManagedSelection extends React.Component {
     const options = {
       sizePerPageList: [ 5, 10, 15, 20 ],
       sizePerPage: 10,
+      page: currPage,
       sortName: 'id',
       sortOrder: 'desc'
     };
 
     return (
-      <BootstrapTable data={ products } selectRow={ selectRowProp } pagination={ true } options={ options }>
+      <BootstrapTable ref='table' data={ products } selectRow={ selectRowProp } pagination={ true } options={ options }>
         <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
         <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
