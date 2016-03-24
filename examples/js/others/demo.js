@@ -1,6 +1,7 @@
 import React from 'react';
 import MouseEventTable from './mouse-event-table';
 import TableInTabs from './table-in-tabs';
+import ExposeApiTable from './expose-api-table';
 import { Col, Panel } from 'react-bootstrap';
 
 class Demo extends React.Component {
@@ -16,6 +17,11 @@ class Demo extends React.Component {
           <h5>Source in /examples/js/advance/table-in-tabs.js</h5>
           <h5>react-bootstrap-table in tabs</h5>
           <TableInTabs/>
+        </Panel>
+        <Panel header={ 'Expose Api Table Example)' }>
+          <h5>Source in /examples/js/advance/expose-api-table.js</h5>
+          <h5>expose api to get page by row key</h5>
+          <ExposeApiTable/>
         </Panel>
       </Col>
     );
