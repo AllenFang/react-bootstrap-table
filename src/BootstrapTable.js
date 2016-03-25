@@ -282,12 +282,12 @@ class BootstrapTable extends Component {
   isSelectAll() {
     const defaultSelectRowKeys = this.store.getSelectedRowKeys();
     const allRowKeys = this.store.getAllRowkey();
-    if (allRowKeys.length === 0) {
-      return false;
-    }
     if (defaultSelectRowKeys.length !== allRowKeys.length) {
       return defaultSelectRowKeys.length === 0 ? false : 'indeterminate';
     } else {
+      if (this.handleDataIsEmpty(allRowKeys)) {
+        return false;
+      }
       return true;
     }
   }
@@ -297,6 +297,10 @@ class BootstrapTable extends Component {
     this.setState({
       selectedRowKeys: []
     });
+  }
+
+  handleDataIsEmpty = (data) => {
+    return (data.length === 0 || data === null || data === undefined);
   }
 
   handleSort = (order, sortField) => {
