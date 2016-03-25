@@ -274,6 +274,9 @@ class BootstrapTable extends Component {
     if (defaultSelectRowKeys.length !== allRowKeys.length) {
       return defaultSelectRowKeys.length === 0 ? false : 'indeterminate';
     } else {
+      if (this.store.isEmpty()) {
+        return false;
+      }
       return true;
     }
   }

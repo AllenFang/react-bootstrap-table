@@ -420,6 +420,12 @@ export class TableDataStore {
     return this.pageObj.start && this.pageObj.end ? true : false;
   }
 
+  isEmpty() {
+    return (this.data.length === 0 ||
+      this.data === null ||
+      this.data === undefined);
+  }
+
   getAllRowkey() {
     return this.data.map(row => {
       return row[this.keyField];
