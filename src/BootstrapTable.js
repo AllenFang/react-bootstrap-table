@@ -274,7 +274,7 @@ class BootstrapTable extends Component {
     if (defaultSelectRowKeys.length !== allRowKeys.length) {
       return defaultSelectRowKeys.length === 0 ? false : 'indeterminate';
     } else {
-      if (this.handleDataIsEmpty(allRowKeys)) {
+      if (this.store.isEmpty()) {
         return false;
       }
       return true;
@@ -286,10 +286,6 @@ class BootstrapTable extends Component {
     this.setState({
       selectedRowKeys: []
     });
-  }
-
-  handleDataIsEmpty = (data) => {
-    return (data.length === 0 || data === null || data === undefined);
   }
 
   handleSort = (order, sortField) => {
