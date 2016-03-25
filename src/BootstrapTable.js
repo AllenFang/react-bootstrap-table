@@ -463,6 +463,18 @@ class BootstrapTable extends Component {
     return this.state.currPage;
   }
 
+  getPageByRowKey = rowKey => {
+    const { sizePerPage } = this.state;
+    const currentData = this.store.getCurrentDisplayData();
+    const keyField = this.store.getKeyField();
+    const result = currentData.findIndex((x) => x[ keyField ] === rowKey);
+    if (result > -1) {
+      return parseInt((result / sizePerPage), 10) + 1;
+    } else {
+      return result;
+    }
+  }
+
   handleDropRow = rowKeys => {
     const dropRowKeys = rowKeys ? rowKeys : this.store.getSelectedRowKeys();
     // add confirm before the delete action if that option is set.
