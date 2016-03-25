@@ -617,6 +617,7 @@ class BootstrapTable extends Component {
         <div className='react-bs-table-tool-bar'>
           <ToolBar
             clearSearch={ this.props.options.clearSearch }
+            searchDelayTime={ this.props.options.searchDelayTime }
             enableInsert={ insertRow }
             enableDelete={ deleteRow }
             enableSearch={ search }
