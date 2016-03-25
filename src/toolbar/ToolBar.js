@@ -155,7 +155,11 @@ class ToolBar extends Component {
   }
 
   handleKeyUp = () => {
-    this.props.onSearch(this.refs.seachInput.value);
+    this.handleDebounce(() => {
+      this.props.onSearch(this.refs.seachInput.value);
+    },
+      500
+    )();
   }
 
   handleExportCSV = () => {
