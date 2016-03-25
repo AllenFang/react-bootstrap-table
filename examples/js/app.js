@@ -30,7 +30,6 @@ const routes = (
         <Route path='advance' component={ require('./advance/demo') } />
         <Route path='others' component={ require('./others/demo') } />
         <Route path='complex' component={ require('./complex/demo') } />
-        <Route path='tableDataSet' component={ require('./tableDataSet/demo') } />
       </Route>
       <Route path='*' component={ PageNotFound }/>
     </Route>

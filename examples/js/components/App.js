@@ -72,9 +72,6 @@ class App extends React.Component {
     }, {
       text: 'A complex demo',
       href: 'complex'
-    }, {
-      text: 'TableDataSet demo',
-      href: 'tableDataSet'
     } ];
 
     const exampleMenuItems = examples.map((item, idx) => {
