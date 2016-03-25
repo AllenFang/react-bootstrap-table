@@ -1,5 +1,5 @@
 /* eslint max-len: 0 */
-/* eslint no-console: 0 */
+/* eslint no-alert: 0 */
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
@@ -28,7 +28,7 @@ export default class ExposeApiTable extends React.Component {
   }
 
   handleClick = (rowKey) => {
-    console.log(this.refs.table.getPageByRowKey(rowKey));
+    alert(this.refs.table.getPageByRowKey(rowKey));
   }
 
   render() {
