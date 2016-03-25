@@ -130,8 +130,37 @@ class ToolBar extends Component {
     this.refs.warning.style.display = 'none';
   }
 
-  handleKeyUp = e => {
-    this.props.onSearch(e.currentTarget.value);
+  handleDebounce = (func, wait, immediate) => {
+    let timeout;
+
+    return () => {
+      const later = () => {
+        timeout = null;
+
+        if (!immediate) {
+          func.apply(this, arguments);
+        }
+      };
+
+      const callNow = immediate && !timeout;
+
+      clearTimeout(timeout);
+
+      timeout = setTimeout(later, wait || 0);
+
+      if (callNow) {
+        func.appy(this, arguments);
+      }
+    };
+  }
+
+  handleKeyUp = () => {
+    const delay = this.props.searchDelayTime ? this.props.searchDelayTime : 0;
+    this.handleDebounce(() => {
+      this.props.onSearch(this.refs.seachInput.value);
+    },
+      delay
+    )();
   }
 
   handleExportCSV = () => {

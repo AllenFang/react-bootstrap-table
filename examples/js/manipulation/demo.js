@@ -8,6 +8,7 @@ import MultiSearchTable from './multi-search-table';
 import ExportCSVTable from './export-csv-table';
 import DeleteRowCustomComfirmTable from './del-row-custom-confirm';
 import SearchClearTable from './search-clear-table';
+import DebounceSearchTable from './debounce-search-table';
 
 class Demo extends React.Component {
   render() {
@@ -59,6 +60,16 @@ class Demo extends React.Component {
               <h5>Source in /examples/js/manipulation/multi-search-table.js</h5>
               <h5>The Product ID has <code>searchable</code> set to <code>false</code>.</h5>
               <MultiSearchTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Debounce Search Table Example(Use searchDelayTime props to set your search delay time)</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/manipulation/debounce-search-table.js</h5>
+              <h5>use <code>searchDelayTime</code> for <code>options</code> object to set delay time in search input and default is 0.</h5>
+              <DebounceSearchTable />
             </div>
           </div>
         </div>
