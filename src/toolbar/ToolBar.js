@@ -130,6 +130,30 @@ class ToolBar extends Component {
     this.refs.warning.style.display = 'none';
   }
 
+  handleDebounce = (func, wait, immediate) => {
+    let timeout;
+
+    return () => {
+      const later = () => {
+        timeout = null;
+
+        if (!immediate) {
+          func.apply(this, arguments);
+        }
+      };
+
+      const callNow = immediate && !timeout;
+
+      clearTimeout(timeout);
+
+      timeout = setTimeout(later, wait || 0);
+
+      if (callNow) {
+        func.appy(this, arguments);
+      }
+    };
+  }
+
   handleKeyUp = e => {
     this.props.onSearch(e.currentTarget.value);
   }
