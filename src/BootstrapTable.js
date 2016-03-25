@@ -282,6 +282,9 @@ class BootstrapTable extends Component {
   isSelectAll() {
     const defaultSelectRowKeys = this.store.getSelectedRowKeys();
     const allRowKeys = this.store.getAllRowkey();
+    if (allRowKeys.length === 0) {
+      return false;
+    }
     if (defaultSelectRowKeys.length !== allRowKeys.length) {
       return defaultSelectRowKeys.length === 0 ? false : 'indeterminate';
     } else {
