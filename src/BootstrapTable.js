@@ -21,19 +21,8 @@ class BootstrapTable extends Component {
     if (Util.canUseDOM()) {
       this.isIE = document.documentMode;
     }
-    if (!Array.isArray(this.props.data)) {
-      this.store = new TableDataStore(this.props.data.getData());
-      this.props.data.clear();
-      this.props.data.on('change', (data) => {
-        this.store.setData(data);
-        this.setState({
-          data: this.getTableData()
-        });
-      });
-    } else {
-      const copy = this.props.data.slice();
-      this.store = new TableDataStore(copy);
-    }
+
+    this.store = new TableDataStore(this.props.data.slice());
 
     this.initTable(this.props);
 
@@ -145,27 +134,27 @@ class BootstrapTable extends Component {
   componentWillReceiveProps(nextProps) {
     this.initTable(nextProps);
     const { options, selectRow } = nextProps;
-    if (Array.isArray(nextProps.data)) {
-      this.store.setData(nextProps.data.slice());
-      let page = options.page || this.state.currPage;
-      const sizePerPage = options.sizePerPage || this.state.sizePerPage;
 
-      // #125
-      if (!options.page &&
-        page >= Math.ceil(nextProps.data.length / sizePerPage)) {
-        page = 1;
-      }
-      const sortInfo = this.store.getSortInfo();
-      const sortField = options.sortName || (sortInfo ? sortInfo.sortField : undefined);
-      const sortOrder = options.sortOrder || (sortInfo ? sortInfo.order : undefined);
-      if (sortField && sortOrder) this.store.sort(sortOrder, sortField);
-      const data = this.store.page(page, sizePerPage).get();
-      this.setState({
-        data,
-        currPage: page,
-        sizePerPage
-      });
+    this.store.setData(nextProps.data.slice());
+    let page = options.page || this.state.currPage;
+    const sizePerPage = options.sizePerPage || this.state.sizePerPage;
+
+    // #125
+    if (!options.page &&
+      page >= Math.ceil(nextProps.data.length / sizePerPage)) {
+      page = 1;
     }
+    const sortInfo = this.store.getSortInfo();
+    const sortField = options.sortName || (sortInfo ? sortInfo.sortField : undefined);
+    const sortOrder = options.sortOrder || (sortInfo ? sortInfo.order : undefined);
+    if (sortField && sortOrder) this.store.sort(sortOrder, sortField);
+    const data = this.store.page(page, sizePerPage).get();
+    this.setState({
+      data,
+      currPage: page,
+      sizePerPage
+    });
+
     if (selectRow && selectRow.selected) {
       // set default select rows to store.
       const copy = selectRow.selected.slice();

@@ -3,7 +3,6 @@
 /* eslint no-console: 0 */
 /* eslint eqeqeq: 0 */
 import Const from '../Const';
-const EventEmitter = require('events').EventEmitter;
 
 function _sort(arr, sortField, order, sortFunc) {
   order = order.toLowerCase();
@@ -20,25 +19,6 @@ function _sort(arr, sortField, order, sortFunc) {
   });
 
   return arr;
-}
-
-export class TableDataSet extends EventEmitter {
-  constructor(data) {
-    super(data);
-    this.data = data;
-  }
-
-  setData(data) {
-    this.emit('change', data);
-  }
-
-  clear() {
-    this.data = null;
-  }
-
-  getData() {
-    return this.data;
-  }
 }
 
 export class TableDataStore {
