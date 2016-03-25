@@ -782,7 +782,8 @@ BootstrapTable.propTypes = {
     prePage: PropTypes.string,
     nextPage: PropTypes.string,
     firstPage: PropTypes.string,
-    lastPage: PropTypes.string
+    lastPage: PropTypes.string,
+    searchDelayTime: PropTypes.number
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -847,7 +848,8 @@ BootstrapTable.defaultProps = {
     prePage: Const.PRE_PAGE,
     nextPage: Const.NEXT_PAGE,
     firstPage: Const.FIRST_PAGE,
-    lastPage: Const.LAST_PAGE
+    lastPage: Const.LAST_PAGE,
+    searchDelayTime: undefined
   },
   fetchInfo: {
     dataTotalSize: 0
