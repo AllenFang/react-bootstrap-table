@@ -155,10 +155,11 @@ class ToolBar extends Component {
   }
 
   handleKeyUp = () => {
+    const delay = this.props.searchDelayTime ? this.props.searchDelayTime : 0;
     this.handleDebounce(() => {
       this.props.onSearch(this.refs.seachInput.value);
     },
-      500
+      delay
     )();
   }
 
