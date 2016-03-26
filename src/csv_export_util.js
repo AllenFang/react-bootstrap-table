@@ -2,7 +2,9 @@
 /* eslint vars-on-top: 0 */
 /* eslint no-var: 0 */
 /* eslint no-unused-vars: 0 */
-if (typeof window !== 'undefined') {
+import Util from './util';
+
+if (Util.canUseDOM()) {
   const filesaver = require('./filesaver');
   var saveAs = filesaver.saveAs;
 }
