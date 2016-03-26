@@ -70,16 +70,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _TableHeaderColumn2 = _interopRequireDefault(_TableHeaderColumn);
 
-	var _storeTableDataStore = __webpack_require__(33);
-
 	if (typeof window !== 'undefined') {
 	  window.BootstrapTable = _BootstrapTable2['default'];
 	  window.TableHeaderColumn = _TableHeaderColumn2['default'];
-	  window.TableDataSet = _storeTableDataStore.TableDataSet;
 	}
 	exports.BootstrapTable = _BootstrapTable2['default'];
 	exports.TableHeaderColumn = _TableHeaderColumn2['default'];
-	exports.TableDataSet = _storeTableDataStore.TableDataSet;
 
 /***/ },
 /* 1 */
@@ -133,15 +129,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _storeTableDataStore = __webpack_require__(33);
 
-	var _util = __webpack_require__(35);
+	var _util = __webpack_require__(34);
 
 	var _util2 = _interopRequireDefault(_util);
 
-	var _csv_export_util = __webpack_require__(36);
+	var _csv_export_util = __webpack_require__(35);
 
 	var _csv_export_util2 = _interopRequireDefault(_csv_export_util);
 
-	var _Filter = __webpack_require__(40);
+	var _Filter = __webpack_require__(39);
 
 	var BootstrapTable = (function (_Component) {
 	  _inherits(BootstrapTable, _Component);
@@ -284,6 +280,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _this._handleAfterAddingRow(newObj);
 	    };
 
+	    this.getPageByRowKey = function (rowKey) {
+	      var sizePerPage = _this.state.sizePerPage;
+
+	      var currentData = _this.store.getCurrentDisplayData();
+	      var keyField = _this.store.getKeyField();
+	      var result = currentData.findIndex(function (x) {
+	        return x[keyField] === rowKey;
+	      });
+	      if (result > -1) {
+	        return parseInt(result / sizePerPage, 10) + 1;
+	      } else {
+	        return result;
+	      }
+	    };
+
 	    this.handleDropRow = function (rowKeys) {
 	      var dropRowKeys = rowKeys ? rowKeys : _this.store.getSelectedRowKeys();
 	      // add confirm before the delete action if that option is set.
@@ -291,7 +302,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (_this.props.options.handleConfirmDeleteRow) {
 	          _this.props.options.handleConfirmDeleteRow(function () {
 	            _this.deleteRow(dropRowKeys);
-	          });
+	          }, dropRowKeys);
 	        } else if (confirm('Are you sure want delete?')) {
 	          _this.deleteRow(dropRowKeys);
 	        }
@@ -399,19 +410,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (_util2['default'].canUseDOM()) {
 	      this.isIE = document.documentMode;
 	    }
-	    if (!Array.isArray(this.props.data)) {
-	      this.store = new _storeTableDataStore.TableDataStore(this.props.data.getData());
-	      this.props.data.clear();
-	      this.props.data.on('change', function (data) {
-	        _this.store.setData(data);
-	        _this.setState({
-	          data: _this.getTableData()
-	        });
-	      });
-	    } else {
-	      var copy = this.props.data.slice();
-	      this.store = new _storeTableDataStore.TableDataStore(copy);
-	    }
+
+	    this.store = new _storeTableDataStore.TableDataStore(this.props.data.slice());
 
 	    this.initTable(this.props);
 
@@ -536,26 +536,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var options = nextProps.options;
 	      var selectRow = nextProps.selectRow;
 
-	      if (Array.isArray(nextProps.data)) {
-	        this.store.setData(nextProps.data.slice());
-	        var page = options.page || this.state.currPage;
-	        var sizePerPage = options.sizePerPage || this.state.sizePerPage;
+	      this.store.setData(nextProps.data.slice());
+	      var page = options.page || this.state.currPage;
+	      var sizePerPage = options.sizePerPage || this.state.sizePerPage;
 
-	        // #125
-	        if (!options.page && page >= Math.ceil(nextProps.data.length / sizePerPage)) {
-	          page = 1;
-	        }
-	        var sortInfo = this.store.getSortInfo();
-	        var sortField = options.sortName || (sortInfo ? sortInfo.sortField : undefined);
-	        var sortOrder = options.sortOrder || (sortInfo ? sortInfo.order : undefined);
-	        if (sortField && sortOrder) this.store.sort(sortOrder, sortField);
-	        var data = this.store.page(page, sizePerPage).get();
-	        this.setState({
-	          data: data,
-	          currPage: page,
-	          sizePerPage: sizePerPage
-	        });
+	      // #125
+	      if (!options.page && page >= Math.ceil(nextProps.data.length / sizePerPage)) {
+	        page = 1;
 	      }
+	      var sortInfo = this.store.getSortInfo();
+	      var sortField = options.sortName || (sortInfo ? sortInfo.sortField : undefined);
+	      var sortOrder = options.sortOrder || (sortInfo ? sortInfo.order : undefined);
+	      if (sortField && sortOrder) this.store.sort(sortOrder, sortField);
+	      var data = this.store.page(page, sizePerPage).get();
+	      this.setState({
+	        data: data,
+	        currPage: page,
+	        sizePerPage: sizePerPage
+	      });
+
 	      if (selectRow && selectRow.selected) {
 	        // set default select rows to store.
 	        var copy = selectRow.selected.slice();
@@ -688,6 +687,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (defaultSelectRowKeys.length !== allRowKeys.length) {
 	        return defaultSelectRowKeys.length === 0 ? false : 'indeterminate';
 	      } else {
+	        if (this.store.isEmpty()) {
+	          return false;
+	        }
 	        return true;
 	      }
 	    }
@@ -858,6 +860,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          { className: 'react-bs-table-tool-bar' },
 	          _react2['default'].createElement(_toolbarToolBar2['default'], {
 	            clearSearch: this.props.options.clearSearch,
+	            searchDelayTime: this.props.options.searchDelayTime,
 	            enableInsert: insertRow,
 	            enableDelete: deleteRow,
 	            enableSearch: search,
@@ -865,6 +868,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            enableShowOnlySelected: enableShowOnlySelected,
 	            columns: columns,
 	            searchPlaceholder: this.props.searchPlaceholder,
+	            exportCSVText: this.props.options.exportCSVText,
 	            onAddRow: this.handleAddRow,
 	            onDropRow: this.handleDropRow,
 	            onSearch: this.handleSearch,
@@ -973,7 +977,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    prePage: _react.PropTypes.string,
 	    nextPage: _react.PropTypes.string,
 	    firstPage: _react.PropTypes.string,
-	    lastPage: _react.PropTypes.string
+	    lastPage: _react.PropTypes.string,
+	    searchDelayTime: _react.PropTypes.number,
+	    exportCSVText: _react.PropTypes.text
 	  }),
 	  fetchInfo: _react.PropTypes.shape({
 	    dataTotalSize: _react.PropTypes.number
@@ -1038,7 +1044,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    prePage: _Const2['default'].PRE_PAGE,
 	    nextPage: _Const2['default'].NEXT_PAGE,
 	    firstPage: _Const2['default'].FIRST_PAGE,
-	    lastPage: _Const2['default'].LAST_PAGE
+	    lastPage: _Const2['default'].LAST_PAGE,
+	    searchDelayTime: undefined,
+	    exportCSVText: _Const2['default'].EXPORT_CSV_TEXT
 	  },
 	  fetchInfo: {
 	    dataTotalSize: 0
@@ -1085,6 +1093,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  NO_DATA_TEXT: 'There is no data to display',
 	  SHOW_ONLY_SELECT: 'Show Selected Only',
 	  SHOW_ALL: 'Show All',
+	  EXPORT_CSV_TEXT: 'Export to CSV',
 	  FILTER_DELAY: 500,
 	  FILTER_TYPE: {
 	    TEXT: 'TextFilter',
@@ -4024,8 +4033,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	var ToolBar = (function (_Component) {
 	  _inherits(ToolBar, _Component);
 
+	  _createClass(ToolBar, null, [{
+	    key: 'modalSeq',
+	    value: 0,
+	    enumerable: true
+	  }]);
+
 	  function ToolBar(props) {
-	    var _this = this;
+	    var _this = this,
+	        _arguments2 = arguments;
 
 	    _classCallCheck(this, ToolBar);
 
@@ -4075,8 +4091,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _this.props.onDropRow();
 	    };
 
-	    this.handleKeyUp = function (e) {
-	      _this.props.onSearch(e.currentTarget.value);
+	    this.handleDebounce = function (func, wait, immediate) {
+	      var timeout = undefined;
+
+	      return function () {
+	        var later = function later() {
+	          timeout = null;
+
+	          if (!immediate) {
+	            func.apply(_this, _arguments2);
+	          }
+	        };
+
+	        var callNow = immediate && !timeout;
+
+	        clearTimeout(timeout);
+
+	        timeout = setTimeout(later, wait || 0);
+
+	        if (callNow) {
+	          func.appy(_this, _arguments2);
+	        }
+	      };
+	    };
+
+	    this.handleKeyUp = function () {
+	      var delay = _this.props.searchDelayTime ? _this.props.searchDelayTime : 0;
+	      _this.handleDebounce(function () {
+	        _this.props.onSearch(_this.refs.seachInput.value);
+	      }, delay)();
 	    };
 
 	    this.handleExportCSV = function () {
@@ -4182,7 +4225,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      this.modalClassName = 'bs-table-modal-sm' + new Date().getTime();
+	      this.modalClassName = 'bs-table-modal-sm' + ToolBar.modalSeq++;
 	      var insertBtn = null;
 	      var deleteBtn = null;
 	      var exportCSV = null;
@@ -4233,7 +4276,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            className: 'btn btn-success',
 	            onClick: this.handleExportCSV },
 	          _react2['default'].createElement('i', { className: 'glyphicon glyphicon-export' }),
-	          ' Export to CSV'
+	          this.props.exportCSVText
 	        );
 	      }
 
@@ -4426,6 +4469,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  enableShowOnlySelected: _react.PropTypes.bool,
 	  columns: _react.PropTypes.array,
 	  searchPlaceholder: _react.PropTypes.string,
+	  exportCSVText: _react.PropTypes.string,
 	  clearSearch: _react.PropTypes.bool
 	};
 
@@ -4591,19 +4635,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 	var _Const = __webpack_require__(3);
 
 	var _Const2 = _interopRequireDefault(_Const);
-
-	var EventEmitter = __webpack_require__(34).EventEmitter;
 
 	function _sort(arr, sortField, order, sortFunc) {
 	  order = order.toLowerCase();
@@ -4621,38 +4659,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return arr;
 	}
-
-	var TableDataSet = (function (_EventEmitter) {
-	  _inherits(TableDataSet, _EventEmitter);
-
-	  function TableDataSet(data) {
-	    _classCallCheck(this, TableDataSet);
-
-	    _get(Object.getPrototypeOf(TableDataSet.prototype), 'constructor', this).call(this, data);
-	    this.data = data;
-	  }
-
-	  _createClass(TableDataSet, [{
-	    key: 'setData',
-	    value: function setData(data) {
-	      this.emit('change', data);
-	    }
-	  }, {
-	    key: 'clear',
-	    value: function clear() {
-	      this.data = null;
-	    }
-	  }, {
-	    key: 'getData',
-	    value: function getData() {
-	      return this.data;
-	    }
-	  }]);
-
-	  return TableDataSet;
-	})(EventEmitter);
-
-	exports.TableDataSet = TableDataSet;
 
 	var TableDataStore = (function () {
 	  function TableDataStore(data) {
@@ -5032,8 +5038,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	          } else {
 	            searchTextArray.push(searchText);
 	          }
-
-	          var source = _this4.isOnFilter ? _this4.filteredData : _this4.data;
+	          // Mark following code for fixing #363
+	          // To avoid to search on a data which be searched or filtered
+	          // But this solution have a poor performance, because I do a filter again
+	          // const source = this.isOnFilter ? this.filteredData : this.data;
+	          var source = _this4.filterObj !== null ? _this4.filter(_this4.filterObj) : _this4.data;
 
 	          _this4.filteredData = source.filter(function (row) {
 	            var keys = Object.keys(row);
@@ -5110,6 +5119,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return this.pageObj.start && this.pageObj.end ? true : false;
 	    }
 	  }, {
+	    key: 'isEmpty',
+	    value: function isEmpty() {
+	      return this.data.length === 0 || this.data === null || this.data === undefined;
+	    }
+	  }, {
 	    key: 'getAllRowkey',
 	    value: function getAllRowkey() {
 	      var _this5 = this;
@@ -5127,6 +5141,481 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Const = __webpack_require__(3);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	var _classnames = __webpack_require__(6);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	exports['default'] = {
+	  renderReactSortCaret: function renderReactSortCaret(order) {
+	    var orderClass = (0, _classnames2['default'])('order', {
+	      'dropup': order === _Const2['default'].SORT_ASC
+	    });
+	    return _react2['default'].createElement(
+	      'span',
+	      { className: orderClass },
+	      _react2['default'].createElement('span', { className: 'caret', style: { margin: '0px 5px' } })
+	    );
+	  },
+
+	  getScrollBarWidth: function getScrollBarWidth() {
+	    var inner = document.createElement('p');
+	    inner.style.width = '100%';
+	    inner.style.height = '200px';
+
+	    var outer = document.createElement('div');
+	    outer.style.position = 'absolute';
+	    outer.style.top = '0px';
+	    outer.style.left = '0px';
+	    outer.style.visibility = 'hidden';
+	    outer.style.width = '200px';
+	    outer.style.height = '150px';
+	    outer.style.overflow = 'hidden';
+	    outer.appendChild(inner);
+
+	    document.body.appendChild(outer);
+	    var w1 = inner.offsetWidth;
+	    outer.style.overflow = 'scroll';
+	    var w2 = inner.offsetWidth;
+	    if (w1 === w2) w2 = outer.clientWidth;
+
+	    document.body.removeChild(outer);
+
+	    return w1 - w2;
+	  },
+
+	  canUseDOM: function canUseDOM() {
+	    return typeof window !== 'undefined' && typeof window.document !== 'undefined';
+	  }
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* eslint block-scoped-var: 0 */
+	/* eslint vars-on-top: 0 */
+	/* eslint no-var: 0 */
+	/* eslint no-unused-vars: 0 */
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _util = __webpack_require__(34);
+
+	var _util2 = _interopRequireDefault(_util);
+
+	if (_util2['default'].canUseDOM()) {
+	  var filesaver = __webpack_require__(36);
+	  var saveAs = filesaver.saveAs;
+	}
+
+	function toString(data, keys) {
+	  var dataString = '';
+	  if (data.length === 0) return dataString;
+
+	  dataString += keys.join(',') + '\n';
+
+	  data.map(function (row) {
+	    keys.map(function (col, i) {
+	      var cell = typeof row[col] !== 'undefined' ? '"' + row[col] + '"' : '';
+	      dataString += cell;
+	      if (i + 1 < keys.length) dataString += ',';
+	    });
+
+	    dataString += '\n';
+	  });
+
+	  return dataString;
+	}
+
+	var exportCSV = function exportCSV(data, keys, filename) {
+	  var dataString = toString(data, keys);
+	  if (typeof window !== 'undefined') {
+	    saveAs(new Blob([dataString], { type: 'text/plain;charset=utf-8' }), filename || 'spreadsheet.csv');
+	  }
+	};
+
+	exports['default'] = exportCSV;
+	module.exports = exports['default'];
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* FileSaver.js
+	 * A saveAs() FileSaver implementation.
+	 * 1.1.20151003
+	 *
+	 * By Eli Grey, http://eligrey.com
+	 * License: MIT
+	 *   See https://github.com/eligrey/FileSaver.js/blob/master/LICENSE.md
+	 */
+
+	/*global self */
+	/*jslint bitwise: true, indent: 4, laxbreak: true, laxcomma: true, smarttabs: true, plusplus: true */
+
+	/*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
+
+	"use strict";
+
+	var saveAs = saveAs || (function (view) {
+		"use strict";
+		// IE <10 is explicitly unsupported
+		if (typeof navigator !== "undefined" && /MSIE [1-9]\./.test(navigator.userAgent)) {
+			return;
+		}
+		var doc = view.document,
+		   
+		// only get URL when necessary in case Blob.js hasn't overridden it yet
+		get_URL = function get_URL() {
+			return view.URL || view.webkitURL || view;
+		},
+		    save_link = doc.createElementNS("http://www.w3.org/1999/xhtml", "a"),
+		    can_use_save_link = ("download" in save_link),
+		    click = function click(node) {
+			var event = new MouseEvent("click");
+			node.dispatchEvent(event);
+		},
+		    is_safari = /Version\/[\d\.]+.*Safari/.test(navigator.userAgent),
+		    webkit_req_fs = view.webkitRequestFileSystem,
+		    req_fs = view.requestFileSystem || webkit_req_fs || view.mozRequestFileSystem,
+		    throw_outside = function throw_outside(ex) {
+			(view.setImmediate || view.setTimeout)(function () {
+				throw ex;
+			}, 0);
+		},
+		    force_saveable_type = "application/octet-stream",
+		    fs_min_size = 0,
+		   
+		// See https://code.google.com/p/chromium/issues/detail?id=375297#c7 and
+		// https://github.com/eligrey/FileSaver.js/commit/485930a#commitcomment-8768047
+		// for the reasoning behind the timeout and revocation flow
+		arbitrary_revoke_timeout = 500,
+		    // in ms
+		revoke = function revoke(file) {
+			var revoker = function revoker() {
+				if (typeof file === "string") {
+					// file is an object URL
+					get_URL().revokeObjectURL(file);
+				} else {
+					// file is a File
+					file.remove();
+				}
+			};
+			if (view.chrome) {
+				revoker();
+			} else {
+				setTimeout(revoker, arbitrary_revoke_timeout);
+			}
+		},
+		    dispatch = function dispatch(filesaver, event_types, event) {
+			event_types = [].concat(event_types);
+			var i = event_types.length;
+			while (i--) {
+				var listener = filesaver["on" + event_types[i]];
+				if (typeof listener === "function") {
+					try {
+						listener.call(filesaver, event || filesaver);
+					} catch (ex) {
+						throw_outside(ex);
+					}
+				}
+			}
+		},
+		    auto_bom = function auto_bom(blob) {
+			// prepend BOM for UTF-8 XML and text/* types (including HTML)
+			if (/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(blob.type)) {
+				return new Blob(["﻿", blob], { type: blob.type });
+			}
+			return blob;
+		},
+		    FileSaver = function FileSaver(blob, name, no_auto_bom) {
+			if (!no_auto_bom) {
+				blob = auto_bom(blob);
+			}
+			// First try a.download, then web filesystem, then object URLs
+			var filesaver = this,
+			    type = blob.type,
+			    blob_changed = false,
+			    object_url,
+			    target_view,
+			    dispatch_all = function dispatch_all() {
+				dispatch(filesaver, "writestart progress write writeend".split(" "));
+			},
+			   
+			// on any filesys errors revert to saving with object URLs
+			fs_error = function fs_error() {
+				if (target_view && is_safari && typeof FileReader !== "undefined") {
+					// Safari doesn't allow downloading of blob urls
+					var reader = new FileReader();
+					reader.onloadend = function () {
+						var base64Data = reader.result;
+						target_view.location.href = "data:attachment/file" + base64Data.slice(base64Data.search(/[,;]/));
+						filesaver.readyState = filesaver.DONE;
+						dispatch_all();
+					};
+					reader.readAsDataURL(blob);
+					filesaver.readyState = filesaver.INIT;
+					return;
+				}
+				// don't create more object URLs than needed
+				if (blob_changed || !object_url) {
+					object_url = get_URL().createObjectURL(blob);
+				}
+				if (target_view) {
+					target_view.location.href = object_url;
+				} else {
+					var new_tab = view.open(object_url, "_blank");
+					if (new_tab == undefined && is_safari) {
+						//Apple do not allow window.open, see http://bit.ly/1kZffRI
+						view.location.href = object_url;
+					}
+				}
+				filesaver.readyState = filesaver.DONE;
+				dispatch_all();
+				revoke(object_url);
+			},
+			    abortable = function abortable(func) {
+				return function () {
+					if (filesaver.readyState !== filesaver.DONE) {
+						return func.apply(this, arguments);
+					}
+				};
+			},
+			    create_if_not_found = { create: true, exclusive: false },
+			    slice;
+			filesaver.readyState = filesaver.INIT;
+			if (!name) {
+				name = "download";
+			}
+			if (can_use_save_link) {
+				object_url = get_URL().createObjectURL(blob);
+				save_link.href = object_url;
+				save_link.download = name;
+				setTimeout(function () {
+					click(save_link);
+					dispatch_all();
+					revoke(object_url);
+					filesaver.readyState = filesaver.DONE;
+				});
+				return;
+			}
+			// Object and web filesystem URLs have a problem saving in Google Chrome when
+			// viewed in a tab, so I force save with application/octet-stream
+			// http://code.google.com/p/chromium/issues/detail?id=91158
+			// Update: Google errantly closed 91158, I submitted it again:
+			// https://code.google.com/p/chromium/issues/detail?id=389642
+			if (view.chrome && type && type !== force_saveable_type) {
+				slice = blob.slice || blob.webkitSlice;
+				blob = slice.call(blob, 0, blob.size, force_saveable_type);
+				blob_changed = true;
+			}
+			// Since I can't be sure that the guessed media type will trigger a download
+			// in WebKit, I append .download to the filename.
+			// https://bugs.webkit.org/show_bug.cgi?id=65440
+			if (webkit_req_fs && name !== "download") {
+				name += ".download";
+			}
+			if (type === force_saveable_type || webkit_req_fs) {
+				target_view = view;
+			}
+			if (!req_fs) {
+				fs_error();
+				return;
+			}
+			fs_min_size += blob.size;
+			req_fs(view.TEMPORARY, fs_min_size, abortable(function (fs) {
+				fs.root.getDirectory("saved", create_if_not_found, abortable(function (dir) {
+					var save = function save() {
+						dir.getFile(name, create_if_not_found, abortable(function (file) {
+							file.createWriter(abortable(function (writer) {
+								writer.onwriteend = function (event) {
+									target_view.location.href = file.toURL();
+									filesaver.readyState = filesaver.DONE;
+									dispatch(filesaver, "writeend", event);
+									revoke(file);
+								};
+								writer.onerror = function () {
+									var error = writer.error;
+									if (error.code !== error.ABORT_ERR) {
+										fs_error();
+									}
+								};
+								"writestart progress write abort".split(" ").forEach(function (event) {
+									writer["on" + event] = filesaver["on" + event];
+								});
+								writer.write(blob);
+								filesaver.abort = function () {
+									writer.abort();
+									filesaver.readyState = filesaver.DONE;
+								};
+								filesaver.readyState = filesaver.WRITING;
+							}), fs_error);
+						}), fs_error);
+					};
+					dir.getFile(name, { create: false }, abortable(function (file) {
+						// delete file if it already exists
+						file.remove();
+						save();
+					}), abortable(function (ex) {
+						if (ex.code === ex.NOT_FOUND_ERR) {
+							save();
+						} else {
+							fs_error();
+						}
+					}));
+				}), fs_error);
+			}), fs_error);
+		},
+		    FS_proto = FileSaver.prototype,
+		    saveAs = function saveAs(blob, name, no_auto_bom) {
+			return new FileSaver(blob, name, no_auto_bom);
+		};
+		// IE 10+ (native saveAs)
+		if (typeof navigator !== "undefined" && navigator.msSaveOrOpenBlob) {
+			return function (blob, name, no_auto_bom) {
+				if (!no_auto_bom) {
+					blob = auto_bom(blob);
+				}
+				return navigator.msSaveOrOpenBlob(blob, name || "download");
+			};
+		}
+
+		FS_proto.abort = function () {
+			var filesaver = this;
+			filesaver.readyState = filesaver.DONE;
+			dispatch(filesaver, "abort");
+		};
+		FS_proto.readyState = FS_proto.INIT = 0;
+		FS_proto.WRITING = 1;
+		FS_proto.DONE = 2;
+
+		FS_proto.error = FS_proto.onwritestart = FS_proto.onprogress = FS_proto.onwrite = FS_proto.onabort = FS_proto.onerror = FS_proto.onwriteend = null;
+
+		return saveAs;
+	})(typeof self !== "undefined" && self || typeof window !== "undefined" && window || undefined.content);
+	// `self` is undefined in Firefox for Android content script context
+	// while `this` is nsIContentFrameMessageManager
+	// with an attribute `content` that corresponds to the window
+
+	if (typeof module !== "undefined" && module.exports) {
+		module.exports.saveAs = saveAs;
+	} else if ("function" !== "undefined" && __webpack_require__(37) !== null && __webpack_require__(38) != null) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+			return saveAs;
+		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	}
+
+/***/ },
+/* 37 */
+/***/ function(module, exports) {
+
+	module.exports = function() { throw new Error("define cannot be used indirect"); };
+
+
+/***/ },
+/* 38 */
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, {}))
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _Const = __webpack_require__(3);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	var _events = __webpack_require__(40);
+
+	var Filter = (function (_EventEmitter) {
+	  _inherits(Filter, _EventEmitter);
+
+	  function Filter(data) {
+	    _classCallCheck(this, Filter);
+
+	    _get(Object.getPrototypeOf(Filter.prototype), 'constructor', this).call(this, data);
+	    this.currentFilter = {};
+	  }
+
+	  _createClass(Filter, [{
+	    key: 'handleFilter',
+	    value: function handleFilter(dataField, value, type) {
+	      var filterType = type || _Const2['default'].FILTER_TYPE.CUSTOM;
+
+	      if (value !== null && typeof value === 'object') {
+	        // value of the filter is an object
+	        var hasValue = true;
+	        for (var prop in value) {
+	          if (!value[prop] || value[prop] === '') {
+	            hasValue = false;
+	            break;
+	          }
+	        }
+	        // if one of the object properties is undefined or empty, we remove the filter
+	        if (hasValue) {
+	          this.currentFilter[dataField] = { value: value, type: filterType };
+	        } else {
+	          delete this.currentFilter[dataField];
+	        }
+	      } else if (!value || value.trim() === '') {
+	        delete this.currentFilter[dataField];
+	      } else {
+	        this.currentFilter[dataField] = { value: value.trim(), type: filterType };
+	      }
+	      this.emit('onFilterChange', this.currentFilter);
+	    }
+	  }]);
+
+	  return Filter;
+	})(_events.EventEmitter);
+
+	exports.Filter = Filter;
+
+/***/ },
+/* 40 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -5430,474 +5919,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 35 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Const = __webpack_require__(3);
-
-	var _Const2 = _interopRequireDefault(_Const);
-
-	var _classnames = __webpack_require__(6);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	exports['default'] = {
-	  renderReactSortCaret: function renderReactSortCaret(order) {
-	    var orderClass = (0, _classnames2['default'])('order', {
-	      'dropup': order === _Const2['default'].SORT_ASC
-	    });
-	    return _react2['default'].createElement(
-	      'span',
-	      { className: orderClass },
-	      _react2['default'].createElement('span', { className: 'caret', style: { margin: '0px 5px' } })
-	    );
-	  },
-
-	  getScrollBarWidth: function getScrollBarWidth() {
-	    var inner = document.createElement('p');
-	    inner.style.width = '100%';
-	    inner.style.height = '200px';
-
-	    var outer = document.createElement('div');
-	    outer.style.position = 'absolute';
-	    outer.style.top = '0px';
-	    outer.style.left = '0px';
-	    outer.style.visibility = 'hidden';
-	    outer.style.width = '200px';
-	    outer.style.height = '150px';
-	    outer.style.overflow = 'hidden';
-	    outer.appendChild(inner);
-
-	    document.body.appendChild(outer);
-	    var w1 = inner.offsetWidth;
-	    outer.style.overflow = 'scroll';
-	    var w2 = inner.offsetWidth;
-	    if (w1 === w2) w2 = outer.clientWidth;
-
-	    document.body.removeChild(outer);
-
-	    return w1 - w2;
-	  },
-
-	  canUseDOM: function canUseDOM() {
-	    return typeof window !== 'undefined' && typeof window.document !== 'undefined';
-	  }
-	};
-	module.exports = exports['default'];
-
-/***/ },
-/* 36 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* eslint block-scoped-var: 0 */
-	/* eslint vars-on-top: 0 */
-	/* eslint no-var: 0 */
-	/* eslint no-unused-vars: 0 */
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	if (typeof window !== 'undefined') {
-	  var filesaver = __webpack_require__(37);
-	  var saveAs = filesaver.saveAs;
-	}
-
-	function toString(data, keys) {
-	  var dataString = '';
-	  if (data.length === 0) return dataString;
-
-	  dataString += keys.join(',') + '\n';
-
-	  data.map(function (row) {
-	    keys.map(function (col, i) {
-	      var cell = typeof row[col] !== 'undefined' ? '"' + row[col] + '"' : '';
-	      dataString += cell;
-	      if (i + 1 < keys.length) dataString += ',';
-	    });
-
-	    dataString += '\n';
-	  });
-
-	  return dataString;
-	}
-
-	var exportCSV = function exportCSV(data, keys, filename) {
-	  var dataString = toString(data, keys);
-	  if (typeof window !== 'undefined') {
-	    saveAs(new Blob([dataString], { type: 'text/plain;charset=utf-8' }), filename || 'spreadsheet.csv');
-	  }
-	};
-
-	exports['default'] = exportCSV;
-	module.exports = exports['default'];
-
-/***/ },
-/* 37 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* FileSaver.js
-	 * A saveAs() FileSaver implementation.
-	 * 1.1.20151003
-	 *
-	 * By Eli Grey, http://eligrey.com
-	 * License: MIT
-	 *   See https://github.com/eligrey/FileSaver.js/blob/master/LICENSE.md
-	 */
-
-	/*global self */
-	/*jslint bitwise: true, indent: 4, laxbreak: true, laxcomma: true, smarttabs: true, plusplus: true */
-
-	/*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
-
-	"use strict";
-
-	var saveAs = saveAs || (function (view) {
-		"use strict";
-		// IE <10 is explicitly unsupported
-		if (typeof navigator !== "undefined" && /MSIE [1-9]\./.test(navigator.userAgent)) {
-			return;
-		}
-		var doc = view.document,
-		   
-		// only get URL when necessary in case Blob.js hasn't overridden it yet
-		get_URL = function get_URL() {
-			return view.URL || view.webkitURL || view;
-		},
-		    save_link = doc.createElementNS("http://www.w3.org/1999/xhtml", "a"),
-		    can_use_save_link = ("download" in save_link),
-		    click = function click(node) {
-			var event = new MouseEvent("click");
-			node.dispatchEvent(event);
-		},
-		    is_safari = /Version\/[\d\.]+.*Safari/.test(navigator.userAgent),
-		    webkit_req_fs = view.webkitRequestFileSystem,
-		    req_fs = view.requestFileSystem || webkit_req_fs || view.mozRequestFileSystem,
-		    throw_outside = function throw_outside(ex) {
-			(view.setImmediate || view.setTimeout)(function () {
-				throw ex;
-			}, 0);
-		},
-		    force_saveable_type = "application/octet-stream",
-		    fs_min_size = 0,
-		   
-		// See https://code.google.com/p/chromium/issues/detail?id=375297#c7 and
-		// https://github.com/eligrey/FileSaver.js/commit/485930a#commitcomment-8768047
-		// for the reasoning behind the timeout and revocation flow
-		arbitrary_revoke_timeout = 500,
-		    // in ms
-		revoke = function revoke(file) {
-			var revoker = function revoker() {
-				if (typeof file === "string") {
-					// file is an object URL
-					get_URL().revokeObjectURL(file);
-				} else {
-					// file is a File
-					file.remove();
-				}
-			};
-			if (view.chrome) {
-				revoker();
-			} else {
-				setTimeout(revoker, arbitrary_revoke_timeout);
-			}
-		},
-		    dispatch = function dispatch(filesaver, event_types, event) {
-			event_types = [].concat(event_types);
-			var i = event_types.length;
-			while (i--) {
-				var listener = filesaver["on" + event_types[i]];
-				if (typeof listener === "function") {
-					try {
-						listener.call(filesaver, event || filesaver);
-					} catch (ex) {
-						throw_outside(ex);
-					}
-				}
-			}
-		},
-		    auto_bom = function auto_bom(blob) {
-			// prepend BOM for UTF-8 XML and text/* types (including HTML)
-			if (/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(blob.type)) {
-				return new Blob(["﻿", blob], { type: blob.type });
-			}
-			return blob;
-		},
-		    FileSaver = function FileSaver(blob, name, no_auto_bom) {
-			if (!no_auto_bom) {
-				blob = auto_bom(blob);
-			}
-			// First try a.download, then web filesystem, then object URLs
-			var filesaver = this,
-			    type = blob.type,
-			    blob_changed = false,
-			    object_url,
-			    target_view,
-			    dispatch_all = function dispatch_all() {
-				dispatch(filesaver, "writestart progress write writeend".split(" "));
-			},
-			   
-			// on any filesys errors revert to saving with object URLs
-			fs_error = function fs_error() {
-				if (target_view && is_safari && typeof FileReader !== "undefined") {
-					// Safari doesn't allow downloading of blob urls
-					var reader = new FileReader();
-					reader.onloadend = function () {
-						var base64Data = reader.result;
-						target_view.location.href = "data:attachment/file" + base64Data.slice(base64Data.search(/[,;]/));
-						filesaver.readyState = filesaver.DONE;
-						dispatch_all();
-					};
-					reader.readAsDataURL(blob);
-					filesaver.readyState = filesaver.INIT;
-					return;
-				}
-				// don't create more object URLs than needed
-				if (blob_changed || !object_url) {
-					object_url = get_URL().createObjectURL(blob);
-				}
-				if (target_view) {
-					target_view.location.href = object_url;
-				} else {
-					var new_tab = view.open(object_url, "_blank");
-					if (new_tab == undefined && is_safari) {
-						//Apple do not allow window.open, see http://bit.ly/1kZffRI
-						view.location.href = object_url;
-					}
-				}
-				filesaver.readyState = filesaver.DONE;
-				dispatch_all();
-				revoke(object_url);
-			},
-			    abortable = function abortable(func) {
-				return function () {
-					if (filesaver.readyState !== filesaver.DONE) {
-						return func.apply(this, arguments);
-					}
-				};
-			},
-			    create_if_not_found = { create: true, exclusive: false },
-			    slice;
-			filesaver.readyState = filesaver.INIT;
-			if (!name) {
-				name = "download";
-			}
-			if (can_use_save_link) {
-				object_url = get_URL().createObjectURL(blob);
-				save_link.href = object_url;
-				save_link.download = name;
-				setTimeout(function () {
-					click(save_link);
-					dispatch_all();
-					revoke(object_url);
-					filesaver.readyState = filesaver.DONE;
-				});
-				return;
-			}
-			// Object and web filesystem URLs have a problem saving in Google Chrome when
-			// viewed in a tab, so I force save with application/octet-stream
-			// http://code.google.com/p/chromium/issues/detail?id=91158
-			// Update: Google errantly closed 91158, I submitted it again:
-			// https://code.google.com/p/chromium/issues/detail?id=389642
-			if (view.chrome && type && type !== force_saveable_type) {
-				slice = blob.slice || blob.webkitSlice;
-				blob = slice.call(blob, 0, blob.size, force_saveable_type);
-				blob_changed = true;
-			}
-			// Since I can't be sure that the guessed media type will trigger a download
-			// in WebKit, I append .download to the filename.
-			// https://bugs.webkit.org/show_bug.cgi?id=65440
-			if (webkit_req_fs && name !== "download") {
-				name += ".download";
-			}
-			if (type === force_saveable_type || webkit_req_fs) {
-				target_view = view;
-			}
-			if (!req_fs) {
-				fs_error();
-				return;
-			}
-			fs_min_size += blob.size;
-			req_fs(view.TEMPORARY, fs_min_size, abortable(function (fs) {
-				fs.root.getDirectory("saved", create_if_not_found, abortable(function (dir) {
-					var save = function save() {
-						dir.getFile(name, create_if_not_found, abortable(function (file) {
-							file.createWriter(abortable(function (writer) {
-								writer.onwriteend = function (event) {
-									target_view.location.href = file.toURL();
-									filesaver.readyState = filesaver.DONE;
-									dispatch(filesaver, "writeend", event);
-									revoke(file);
-								};
-								writer.onerror = function () {
-									var error = writer.error;
-									if (error.code !== error.ABORT_ERR) {
-										fs_error();
-									}
-								};
-								"writestart progress write abort".split(" ").forEach(function (event) {
-									writer["on" + event] = filesaver["on" + event];
-								});
-								writer.write(blob);
-								filesaver.abort = function () {
-									writer.abort();
-									filesaver.readyState = filesaver.DONE;
-								};
-								filesaver.readyState = filesaver.WRITING;
-							}), fs_error);
-						}), fs_error);
-					};
-					dir.getFile(name, { create: false }, abortable(function (file) {
-						// delete file if it already exists
-						file.remove();
-						save();
-					}), abortable(function (ex) {
-						if (ex.code === ex.NOT_FOUND_ERR) {
-							save();
-						} else {
-							fs_error();
-						}
-					}));
-				}), fs_error);
-			}), fs_error);
-		},
-		    FS_proto = FileSaver.prototype,
-		    saveAs = function saveAs(blob, name, no_auto_bom) {
-			return new FileSaver(blob, name, no_auto_bom);
-		};
-		// IE 10+ (native saveAs)
-		if (typeof navigator !== "undefined" && navigator.msSaveOrOpenBlob) {
-			return function (blob, name, no_auto_bom) {
-				if (!no_auto_bom) {
-					blob = auto_bom(blob);
-				}
-				return navigator.msSaveOrOpenBlob(blob, name || "download");
-			};
-		}
-
-		FS_proto.abort = function () {
-			var filesaver = this;
-			filesaver.readyState = filesaver.DONE;
-			dispatch(filesaver, "abort");
-		};
-		FS_proto.readyState = FS_proto.INIT = 0;
-		FS_proto.WRITING = 1;
-		FS_proto.DONE = 2;
-
-		FS_proto.error = FS_proto.onwritestart = FS_proto.onprogress = FS_proto.onwrite = FS_proto.onabort = FS_proto.onerror = FS_proto.onwriteend = null;
-
-		return saveAs;
-	})(typeof self !== "undefined" && self || typeof window !== "undefined" && window || undefined.content);
-	// `self` is undefined in Firefox for Android content script context
-	// while `this` is nsIContentFrameMessageManager
-	// with an attribute `content` that corresponds to the window
-
-	if (typeof module !== "undefined" && module.exports) {
-		module.exports.saveAs = saveAs;
-	} else if ("function" !== "undefined" && __webpack_require__(38) !== null && __webpack_require__(39) != null) {
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-			return saveAs;
-		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	}
-
-/***/ },
-/* 38 */
-/***/ function(module, exports) {
-
-	module.exports = function() { throw new Error("define cannot be used indirect"); };
-
-
-/***/ },
-/* 39 */
-/***/ function(module, exports) {
-
-	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
-
-	/* WEBPACK VAR INJECTION */}.call(exports, {}))
-
-/***/ },
-/* 40 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _Const = __webpack_require__(3);
-
-	var _Const2 = _interopRequireDefault(_Const);
-
-	var _events = __webpack_require__(34);
-
-	var Filter = (function (_EventEmitter) {
-	  _inherits(Filter, _EventEmitter);
-
-	  function Filter(data) {
-	    _classCallCheck(this, Filter);
-
-	    _get(Object.getPrototypeOf(Filter.prototype), 'constructor', this).call(this, data);
-	    this.currentFilter = {};
-	  }
-
-	  _createClass(Filter, [{
-	    key: 'handleFilter',
-	    value: function handleFilter(dataField, value, type) {
-	      var filterType = type || _Const2['default'].FILTER_TYPE.CUSTOM;
-
-	      if (value !== null && typeof value === 'object') {
-	        // value of the filter is an object
-	        var hasValue = true;
-	        for (var prop in value) {
-	          if (!value[prop] || value[prop] === '') {
-	            hasValue = false;
-	            break;
-	          }
-	        }
-	        // if one of the object properties is undefined or empty, we remove the filter
-	        if (hasValue) {
-	          this.currentFilter[dataField] = { value: value, type: filterType };
-	        } else {
-	          delete this.currentFilter[dataField];
-	        }
-	      } else if (!value || value.trim() === '') {
-	        delete this.currentFilter[dataField];
-	      } else {
-	        this.currentFilter[dataField] = { value: value.trim(), type: filterType };
-	      }
-	      this.emit('onFilterChange', this.currentFilter);
-	    }
-	  }]);
-
-	  return Filter;
-	})(_events.EventEmitter);
-
-	exports.Filter = Filter;
-
-/***/ },
 /* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -5929,7 +5950,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Const2 = _interopRequireDefault(_Const);
 
-	var _util = __webpack_require__(35);
+	var _util = __webpack_require__(34);
 
 	var _util2 = _interopRequireDefault(_util);
 
