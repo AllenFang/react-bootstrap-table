@@ -6,6 +6,8 @@ import Notifier from '../Notification.js';
 
 class ToolBar extends Component {
 
+  static modalSeq = 0;
+
   constructor(props) {
     super(props);
     this.timeouteClear = 0;
@@ -173,7 +175,7 @@ class ToolBar extends Component {
   }
 
   render() {
-    this.modalClassName = 'bs-table-modal-sm' + new Date().getTime();
+    this.modalClassName = 'bs-table-modal-sm' + ToolBar.modalSeq++;
     let insertBtn = null;
     let deleteBtn = null;
     let exportCSV = null;
