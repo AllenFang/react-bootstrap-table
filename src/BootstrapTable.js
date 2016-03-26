@@ -640,6 +640,7 @@ class BootstrapTable extends Component {
             enableShowOnlySelected={ enableShowOnlySelected }
             columns={ columns }
             searchPlaceholder={ this.props.searchPlaceholder }
+            exportCSVText={ this.props.options.exportCSVText }
             onAddRow={ this.handleAddRow }
             onDropRow={ this.handleDropRow }
             onSearch={ this.handleSearch }
@@ -798,7 +799,8 @@ BootstrapTable.propTypes = {
     nextPage: PropTypes.string,
     firstPage: PropTypes.string,
     lastPage: PropTypes.string,
-    searchDelayTime: PropTypes.number
+    searchDelayTime: PropTypes.number,
+    exportCSVText: PropTypes.text
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -864,7 +866,8 @@ BootstrapTable.defaultProps = {
     nextPage: Const.NEXT_PAGE,
     firstPage: Const.FIRST_PAGE,
     lastPage: Const.LAST_PAGE,
-    searchDelayTime: undefined
+    searchDelayTime: undefined,
+    exportCSVText: Const.EXPORT_CSV_TEXT
   },
   fetchInfo: {
     dataTotalSize: 0
