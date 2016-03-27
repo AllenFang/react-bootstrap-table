@@ -1,3 +1,38 @@
+<a name="v2.1.0"></a>
+# [v2.1.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.0.3...v2.1.0) (2016-03-26)
+### Bug fixes
+* Fix the select all checkbox should be empty if there is no data in table([449eb1b](https://github.com/AllenFang/react-bootstrap-table/commit/449eb1be3cdb9261d3254ab796da235ae7f771f0))
+* Fix a SSR issue on csv export module([d46ca49](https://github.com/AllenFang/react-bootstrap-table/commit/d46ca49489b665aef0da36af3f470797be49a1c4))
+* Fix a SSR issue when enable ```insertRow```([fbc4654](https://github.com/AllenFang/react-bootstrap-table/commit/fbc465463bac8c15e96f405ccc3927cada912160))
+	* Check [#348](https://github.com/AllenFang/react-bootstrap-table/issues/348)
+* Fix search broke with a backspace([d24f1c4](https://github.com/AllenFang/react-bootstrap-table/commit/d24f1c4c6b5f2378194bf6b782adecc74407b972))
+
+### Features
+* ```TableDataSet``` has been removed on ```v2.1.0```([239d8b1](https://github.com/AllenFang/react-bootstrap-table/commit/239d8b1c39d07c71db62b1b4850663801fb17517))
+* Support a delay when typing search text([b54f84a](https://github.com/AllenFang/react-bootstrap-table/commit/b54f84a4a3aea6a81cb8cf27f2cbffa44dd1ac9b))
+	* Check example at [here](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/manipulation/debounce-search-table.js)
+* It's able to get the page number by rowKey([55d475f](https://github.com/AllenFang/react-bootstrap-table/commit/55d475f61977932c9e5e46be16b9ad9db70be75f))
+	* [#353](https://github.com/AllenFang/react-bootstrap-table/issues/353)
+	* Check example at [here](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/others/expose-api-table.js)
+* Allow user to change the text on export CSV button([f6171fa](https://github.com/AllenFang/react-bootstrap-table/commit/f6171fae78fd7cad17ea123c024f486efcf126e3))
+	* use ```exportCSVText``` in ```option``` props
+	```js
+	render() {
+		const options = { exportCSVText: 'MY_CUSTOM_TEXT' };
+		return (
+			<div>
+				<BootstrapTable ref='table' options={ options }>
+	        		....
+				</BootstrapTable>
+			</div>
+		);
+	}
+	```
+
+### Enhancement
+* Pass rowKey as parameter for ```handleConfirmDeleteRow``` callback function([c2f8ce1](https://github.com/AllenFang/react-bootstrap-table/commit/c2f8ce187f39f516fffa475729b54e9ea416b9d1))
+	* Check example at [here](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/manipulation/del-row-custom-confirm.js)
+
 <a name="v2.0.3"></a>
 # [v2.0.3](https://github.com/AllenFang/react-bootstrap-table/compare/v2.0.2...v2.0.3) (2016-03-22)
 ### Enhancement
