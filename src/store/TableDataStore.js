@@ -4,11 +4,11 @@
 /* eslint eqeqeq: 0 */
 import Const from '../Const';
 
-function _sort(arr, sortField, order, sortFunc) {
+function _sort(arr, sortField, order, sortFunc, sortFuncExtraData) {
   order = order.toLowerCase();
   arr.sort((a, b) => {
     if (sortFunc) {
-      return sortFunc(a, b, order, sortField);
+      return sortFunc(a, b, order, sortField, sortFuncExtraData);
     } else {
       if (order === Const.SORT_DESC) {
         return a[sortField] > b[sortField] ? -1 : ((a[sortField] < b[sortField]) ? 1 : 0);
@@ -93,8 +93,8 @@ export class TableDataStore {
     let currentDisplayData = this.getCurrentDisplayData();
     if (!this.colInfos[sortField]) return this;
 
-    const { sortFunc } = this.colInfos[sortField];
-    currentDisplayData = _sort(currentDisplayData, sortField, order, sortFunc);
+    const { sortFunc, sortFuncExtraData } = this.colInfos[sortField];
+    currentDisplayData = _sort(currentDisplayData, sortField, order, sortFunc, sortFuncExtraData);
 
     return this;
   }
