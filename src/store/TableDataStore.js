@@ -48,13 +48,7 @@ export class TableDataStore {
 
   setData(data) {
     this.data = data;
-    if (this.isOnFilter) {
-      if (this.filterObj !== null) this.filter(this.filterObj);
-      if (this.searchText !== null) this.search(this.searchText);
-    }
-    if (this.sortObj) {
-      this.sort(this.sortObj.order, this.sortObj.sortField);
-    }
+    this._refresh();
   }
 
   getSortInfo() {
@@ -72,6 +66,16 @@ export class TableDataStore {
   getCurrentDisplayData() {
     if (this.isOnFilter) return this.filteredData;
     else return this.data;
+  }
+
+  _refresh() {
+    if (this.isOnFilter) {
+      if (this.filterObj !== null) this.filter(this.filterObj);
+      if (this.searchText !== null) this.search(this.searchText);
+    }
+    if (this.sortObj) {
+      this.sort(this.sortObj.order, this.sortObj.sortField);
+    }
   }
 
   ignoreNonSelected() {
@@ -141,6 +145,7 @@ export class TableDataStore {
     if (this.isOnFilter) {
       this.data.unshift(newObj);
     }
+    this._refresh();
   }
 
   add(newObj) {
@@ -158,6 +163,7 @@ export class TableDataStore {
     if (this.isOnFilter) {
       this.data.push(newObj);
     }
+    this._refresh();
   }
 
   remove(rowKey) {
