@@ -123,6 +123,7 @@ TableHeaderColumn.propTypes = {
   className: PropTypes.string,
   width: PropTypes.string,
   sortFunc: PropTypes.func,
+  sortFuncExtraData: PropTypes.any,
   columnClassName: PropTypes.any,
   filterFormatted: PropTypes.bool,
   sort: PropTypes.string,
@@ -159,6 +160,7 @@ TableHeaderColumn.defaultProps = {
   filterFormatted: false,
   sort: undefined,
   formatExtraData: undefined,
+  sortFuncExtraData: undefined,
   filter: undefined,
   sortIndicator: true
 };

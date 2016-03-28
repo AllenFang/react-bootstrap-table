@@ -126,6 +126,7 @@ class BootstrapTable extends Component {
         width: column.props.width,
         text: column.props.children,
         sortFunc: column.props.sortFunc,
+        sortFuncExtraData: column.props.sortFuncExtraData,
         index: i
       };
     });
