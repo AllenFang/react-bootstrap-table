@@ -48,6 +48,11 @@ export class TableDataStore {
 
   setData(data) {
     this.data = data;
+
+    if (this.remote) {
+      return;
+    }
+
     if (this.isOnFilter) {
       if (this.filterObj !== null) this.filter(this.filterObj);
       if (this.searchText !== null) this.search(this.searchText);
@@ -57,8 +62,19 @@ export class TableDataStore {
     }
   }
 
+  getColInfos() {
+    return this.colInfos;
+  }
+
   getSortInfo() {
     return this.sortObj;
+  }
+
+  setSortInfo(order, sortField) {
+    this.sortObj = {
+      order: order,
+      sortField: sortField
+    };
   }
 
   setSelectedRowKey(selectedRowKeys) {
@@ -88,7 +104,7 @@ export class TableDataStore {
   }
 
   sort(order, sortField) {
-    this.sortObj = { order, sortField };
+    this.setSortInfo(order, sortField);
 
     let currentDisplayData = this.getCurrentDisplayData();
     if (!this.colInfos[sortField]) return this;
@@ -161,6 +177,13 @@ export class TableDataStore {
   }
 
   remove(rowKey) {
+    if (this.remote) {
+      /* this.data = this.data.filter(function(row) {
+        return rowKey.indexOf(row[this.keyField]) == -1;
+      }, this); */
+      return;
+    }
+
     const currentDisplayData = this.getCurrentDisplayData();
     const result = currentDisplayData.filter(row => {
       return rowKey.indexOf(row[this.keyField]) === -1;
@@ -307,8 +330,8 @@ export class TableDataStore {
 
   filterDate(targetVal, filterVal) {
     return (targetVal.getDate() === filterVal.getDate() &&
-        targetVal.getMonth() === filterVal.getMonth() &&
-        targetVal.getFullYear() === filterVal.getFullYear());
+    targetVal.getMonth() === filterVal.getMonth() &&
+    targetVal.getFullYear() === filterVal.getFullYear());
   }
 
   filterRegex(targetVal, filterVal) {
@@ -425,8 +448,8 @@ export class TableDataStore {
 
   isEmpty() {
     return (this.data.length === 0 ||
-      this.data === null ||
-      this.data === undefined);
+    this.data === null ||
+    this.data === undefined);
   }
 
   getAllRowkey() {
