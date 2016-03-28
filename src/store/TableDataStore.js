@@ -306,6 +306,9 @@ export class TableDataStore {
   }
 
   filterDate(targetVal, filterVal) {
+    if (!targetVal) {
+      return false;
+    }
     return (targetVal.getDate() === filterVal.getDate() &&
         targetVal.getMonth() === filterVal.getMonth() &&
         targetVal.getFullYear() === filterVal.getFullYear());
