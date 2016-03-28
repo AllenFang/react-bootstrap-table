@@ -20,6 +20,15 @@ class ToolBar extends Component {
     };
   }
 
+  componentWillMount() {
+    const delay = this.props.searchDelayTime ? this.props.searchDelayTime : 0;
+    this.debounceCallback = this.handleDebounce(() => {
+      this.props.onSearch(this.refs.seachInput.value);
+    },
+      delay
+    );
+  }
+
   componentWillUnmount() {
     this.clearTimeout();
   }
@@ -156,13 +165,9 @@ class ToolBar extends Component {
     };
   }
 
-  handleKeyUp = () => {
-    const delay = this.props.searchDelayTime ? this.props.searchDelayTime : 0;
-    this.handleDebounce(() => {
-      this.props.onSearch(this.refs.seachInput.value);
-    },
-      delay
-    )();
+  handleKeyUp = (event) => {
+    event.persist();
+    this.debounceCallback(event);
   }
 
   handleExportCSV = () => {

@@ -24,7 +24,7 @@ addProducts(5);
 export default class DebounceSearchTable extends React.Component {
   render() {
     const options = {
-      searchDelayTime: 500
+      searchDelayTime: 3000
     };
 
     return (
