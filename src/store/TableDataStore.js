@@ -6,14 +6,27 @@ import Const from '../Const';
 
 function _sort(arr, sortField, order, sortFunc, sortFuncExtraData) {
   order = order.toLowerCase();
+  const isDesc = order === Const.SORT_DESC;
   arr.sort((a, b) => {
     if (sortFunc) {
       return sortFunc(a, b, order, sortField, sortFuncExtraData);
     } else {
-      if (order === Const.SORT_DESC) {
-        return a[sortField] > b[sortField] ? -1 : ((a[sortField] < b[sortField]) ? 1 : 0);
+      if (isDesc) {
+        if (b[sortField] === null) return false;
+        if (a[sortField] === null) return true;
+        if (typeof b[sortField] === 'string') {
+          return b[sortField].localeCompare(a[sortField]);
+        } else {
+          return a[sortField] > b[sortField] ? -1 : ((a[sortField] < b[sortField]) ? 1 : 0);
+        }
       } else {
-        return a[sortField] < b[sortField] ? -1 : ((a[sortField] > b[sortField]) ? 1 : 0);
+        if (b[sortField] === null) return true;
+        if (a[sortField] === null) return false;
+        if (typeof a[sortField] === 'string') {
+          return a[sortField].localeCompare(b[sortField]);
+        } else {
+          return a[sortField] < b[sortField] ? -1 : ((a[sortField] > b[sortField]) ? 1 : 0);
+        }
       }
     }
   });
