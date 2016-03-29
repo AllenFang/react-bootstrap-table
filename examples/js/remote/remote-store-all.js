@@ -256,7 +256,11 @@ export default class RemoteStoreSorting extends React.Component {
   onSizePerPageList(sizePerPage) {
     const products = this.getCurrentData();
 
-    const currentIndex = (this.state.currentPage - 1) * sizePerPage;
+    let currentIndex = (this.state.currentPage - 1) * sizePerPage;
+    if (currentIndex > products.length - 1) {
+      const lastPage = Math.ceil(products.length / sizePerPage);
+      currentIndex = (lastPage - 1) * sizePerPage;
+    }
     this.setState({
       data: products.slice(currentIndex, currentIndex + sizePerPage),
       sizePerPage: sizePerPage

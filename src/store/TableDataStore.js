@@ -177,13 +177,6 @@ export class TableDataStore {
   }
 
   remove(rowKey) {
-    if (this.remote) {
-      /* this.data = this.data.filter(function(row) {
-        return rowKey.indexOf(row[this.keyField]) == -1;
-      }, this); */
-      return;
-    }
-
     const currentDisplayData = this.getCurrentDisplayData();
     const result = currentDisplayData.filter(row => {
       return rowKey.indexOf(row[this.keyField]) === -1;

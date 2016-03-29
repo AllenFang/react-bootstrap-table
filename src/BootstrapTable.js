@@ -136,13 +136,14 @@ class BootstrapTable extends Component {
     const { options, selectRow } = nextProps;
 
     this.store.setData(nextProps.data.slice());
+    let page = options.page || this.state.currPage;
 
     if (this.isRemoteDataSource()) {
       this.setState({
-        data: nextProps.data.slice()
+        data: nextProps.data.slice(),
+        currPage: page
       });
     } else {
-      let page = options.page || this.state.currPage;
       const sizePerPage = options.sizePerPage || this.state.sizePerPage;
 
       // #125
@@ -666,7 +667,7 @@ class BootstrapTable extends Component {
           <PaginationList
             ref='pagination'
             currPage={ this.state.currPage }
-            changePage={ this.handlePaginationData }
+            changePage={ this.handlePaginationData.bind(this) }
             sizePerPage={ this.state.sizePerPage }
             sizePerPageList={ options.sizePerPageList || Const.SIZE_PER_PAGE_LIST }
             paginationSize={ options.paginationSize || Const.PAGINATION_SIZE }

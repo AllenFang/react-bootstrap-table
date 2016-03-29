@@ -13,6 +13,7 @@ export default class RemotePaging extends React.Component {
                       options={ { sizePerPage: this.props.sizePerPage,
                                   onPageChange: this.props.onPageChange,
                                   sizePerPageList: [ 5, 10 ],
+                                  page: this.props.currentPage,
                                   onSizePerPageList: this.props.onSizePerPageList } }>
         <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
