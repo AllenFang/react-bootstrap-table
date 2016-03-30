@@ -274,7 +274,7 @@ TableBody.propTypes = {
   selectedRowKeys: PropTypes.array,
   onRowClick: PropTypes.func,
   onSelectRow: PropTypes.func,
-  noDataText: PropTypes.string,
+  noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
   style: PropTypes.object
 };
 export default TableBody;

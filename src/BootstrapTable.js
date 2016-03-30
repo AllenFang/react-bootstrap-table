@@ -794,7 +794,7 @@ BootstrapTable.propTypes = {
     onSortChange: PropTypes.func,
     onPageChange: PropTypes.func,
     onSizePerPageList: PropTypes.func,
-    noDataText: PropTypes.string,
+    noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
     handleConfirmDeleteRow: PropTypes.func,
     prePage: PropTypes.string,
     nextPage: PropTypes.string,
