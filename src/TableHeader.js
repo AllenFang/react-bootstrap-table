@@ -66,15 +66,15 @@ class TableHeader extends Component {
     const { sortIndicator, children, sortName, sortOrder, onSort } = this.props;
     if (Array.isArray(children)) {
       for (let i = 0; i < children.length; i++) {
-        const field = children[i].props.dataField;
-        const sort = field === sortName ? sortOrder : undefined;
+        const { dataField, dataSort } = children[i].props;
+        const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
         this.props.children[i] =
           React.cloneElement(children[i],
             { key: i, onSort, sort, sortIndicator });
       }
     } else {
-      const field = children.props.dataField;
-      const sort = field === sortName ? sortOrder : undefined;
+      const { dataField, dataSort } = children.props;
+      const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
       this.props.children =
         React.cloneElement(children,
           { key: 0, onSort, sort, sortIndicator });
