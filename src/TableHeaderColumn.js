@@ -89,13 +89,13 @@ class TableHeaderColumn extends Component {
     }
     const sortCaret = this.props.sort ? Util.renderReactSortCaret(this.props.sort) : defaultCaret;
     const classes = this.props.className + ' ' + (this.props.dataSort ? 'sort-column' : '');
-
+    const title = typeof this.props.children === 'string' ? { title: this.props.children } : null;
     return (
       <th ref='header-col'
           className={ classes }
           style={ thStyle }
-          title={ this.props.children }
-          onClick={ this.handleColumnClick }>
+          onClick={ this.handleColumnClick }
+          { ...title }>
         { this.props.children }{ sortCaret }
         <div onClick={ e => e.stopPropagation() }>
           { this.props.filter ? this.getFilters() : null }
