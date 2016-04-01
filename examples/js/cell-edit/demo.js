@@ -42,6 +42,10 @@ class Demo extends React.Component {
             <div className='panel-heading'>A Non Editable Cell Example&nbsp;(Product Name can not be edited)</div>
             <div className='panel-body'>
               <h5>Source in /examples/js/cell-edit/non-editable-table.js</h5>
+              <span>
+                BTW, if you set editable to true, which field will be non editable also when insert.<br/>
+                so if you want to make field editable when insert, you can set ignoreEditable to true in options prop.<br/>
+              </span>
               <NonEditableTable />
             </div>
           </div>

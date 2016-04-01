@@ -28,7 +28,7 @@ const cellEditProp = {
 export default class NonEditableTable extends React.Component {
   render() {
     return (
-      <BootstrapTable data={ products } cellEdit={ cellEditProp }>
+      <BootstrapTable data={ products } cellEdit={ cellEditProp } insertRow={ true }>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name' editable={ false }>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
