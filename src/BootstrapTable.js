@@ -642,6 +642,7 @@ class BootstrapTable extends Component {
             columns={ columns }
             searchPlaceholder={ this.props.searchPlaceholder }
             exportCSVText={ this.props.options.exportCSVText }
+            ignoreEditable={ this.props.options.ignoreEditable }
             onAddRow={ this.handleAddRow }
             onDropRow={ this.handleDropRow }
             onSearch={ this.handleSearch }
@@ -801,7 +802,8 @@ BootstrapTable.propTypes = {
     firstPage: PropTypes.string,
     lastPage: PropTypes.string,
     searchDelayTime: PropTypes.number,
-    exportCSVText: PropTypes.text
+    exportCSVText: PropTypes.text,
+    ignoreEditable: PropTypes.bool
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -868,7 +870,8 @@ BootstrapTable.defaultProps = {
     firstPage: Const.FIRST_PAGE,
     lastPage: Const.LAST_PAGE,
     searchDelayTime: undefined,
-    exportCSVText: Const.EXPORT_CSV_TEXT
+    exportCSVText: Const.EXPORT_CSV_TEXT,
+    ignoreEditable: false
   },
   fetchInfo: {
     dataTotalSize: 0

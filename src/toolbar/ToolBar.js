@@ -290,7 +290,7 @@ class ToolBar extends Component {
   renderInsertRowModal() {
     const validateState = this.state.validateState || {};
     const shakeEditor = this.state.shakeEditor;
-    const inputField = this.props.columns.map(function(column, i) {
+    const inputField = this.props.columns.map((column, i) => {
       const { editable, format, field, name, autoValue } = column;
       const attr = {
         ref: field + i,
@@ -311,7 +311,7 @@ class ToolBar extends Component {
       return (
         <div className='form-group' key={ field }>
           <label>{ name }</label>
-          { editor(editable, attr, format, '') }
+          { editor(editable, attr, format, '', undefined, this.props.ignoreEditable) }
           { error }
         </div>
       );
@@ -372,7 +372,8 @@ ToolBar.propTypes = {
   columns: PropTypes.array,
   searchPlaceholder: PropTypes.string,
   exportCSVText: PropTypes.string,
-  clearSearch: PropTypes.bool
+  clearSearch: PropTypes.bool,
+  ignoreEditable: PropTypes.bool
 };
 
 ToolBar.defaultProps = {
@@ -380,7 +381,8 @@ ToolBar.defaultProps = {
   enableDelete: false,
   enableSearch: false,
   enableShowOnlySelected: false,
-  clearSearch: false
+  clearSearch: false,
+  ignoreEditable: false
 };
 
 export default ToolBar;
