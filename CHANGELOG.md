@@ -1,3 +1,24 @@
+<a name="v2.1.1"></a>
+# [v2.1.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.1.0...v2.1.1) (2016-04-01)
+### Bug fixes
+* Fix the delay search bug(it not real to wait for typing nothing)[d601337](https://github.com/AllenFang/react-bootstrap-table/commit/d60133724c4a53b1bcd7a037476ad30b1168d520)
+* Fix a error if cell is empty on date filter([40b4a40](https://github.com/AllenFang/react-bootstrap-table/commit/40b4a4077e3ac171db2f8973bdf6c48a4d0ff3d2))
+* Fix a bug when insert row with sort and filter([027c0ec](https://github.com/AllenFang/react-bootstrap-table/commit/027c0ecc6294445116fbc3d6f1c6ffa02997c351))
+	* Check [#366](https://github.com/AllenFang/react-bootstrap-table/issues/366)
+* Give a workaround for fixing a bug when sort on same field([16d8488](https://github.com/AllenFang/react-bootstrap-table/commit/16d84882e3c0179005c0976fd56cd153233b64ec))
+* Fix [#375](https://github.com/AllenFang/react-bootstrap-table/issues/375)([cf28f8f](https://github.com/AllenFang/react-bootstrap-table/commit/cf28f8fa755484f8539c2f9e4e26b116aaed01c7))
+
+### Features
+* Allow noDataText to accept JSX([97a08ff](https://github.com/AllenFang/react-bootstrap-table/commit/97a08ff91f88e6c2efdfe2491f99ff84db9243d2))
+* Ignore editable configuration when insert row([61b60d1](https://github.com/AllenFang/react-bootstrap-table/commit/61b60d1355110905c3bcfab824658f6dc5d067d9))
+	* Check [this comment](https://github.com/AllenFang/react-bootstrap-table/issues/380#issuecomment-204424114)
+
+### Enhancement
+* Able to provide extra data with a custom sort function([509ce22](https://github.com/AllenFang/react-bootstrap-table/commit/509ce225ece070142386a235fcbddbd97919ee1f))
+	* Check [PR#368](https://github.com/AllenFang/react-bootstrap-table/pull/368)
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/sort/custom-sort-with-extra-data-table.js)
+* Avoid '[object Object]' shown as title on column header([5da38c3](https://github.com/AllenFang/react-bootstrap-table/commit/5da38c399570eada37e93dbba92e2561d6f9ea4b))
+
 <a name="v2.1.0"></a>
 # [v2.1.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.0.3...v2.1.0) (2016-03-26)
 ### Bug fixes
