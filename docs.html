@@ -321,6 +321,10 @@
             <font class="attr-lv1-title">blurToSave</font> : <font class="attr-lv1-type">Bool</font></br>
             <p>Enable <code>blurToSave</code> will trigger a saving event on cell when mouse blur on the input field. Default is false.</p>
             <p>In the default condition, you need to press <code>ENTER</code> to save the cell.</p>
+            <font class="attr-lv1-title">beforeSaveCell</font> : <font class="attr-lv1-type">Function</font></br>
+            <p>Accept a custom callback function, before cell saving, this function will be called.</p>
+            <p>This callback function taking three arguments:<code>row</code>, <code>cellName</code> and <code>cellValue</code></p>
+            <p>It's necessary to return a bool value which whether apply this cell editing.</p>
             <font class="attr-lv1-title">afterSaveCell</font> : <font class="attr-lv1-type">Function</font></br>
             <p>Accept a custom callback function, after cell saving, this function will be called.</p>
             <p>This callback function taking three arguments:<code>row</code>, <code>cellName</code> and <code>cellValue</code></p>
@@ -339,8 +343,14 @@
             <p>Assign a default sort ordering.</p>
             <font class="attr-lv1-title">sortIndicator</font> : <font class="attr-lv1-type">Bool</font></br>
             <p>False to disable sort indicator on header column, default is true.</p>
-            <font class="attr-lv1-title">noDataText</font> : <font class="attr-lv1-type">String</font></br>
-            <p>Change the displaying text when data is empty.</p>
+            <font class="attr-lv1-title">noDataText</font> : <font class="attr-lv1-type">String or JSX</font></br>
+            <p>Change the displaying text on table if data is empty.</p>
+            <font class="attr-lv1-title">searchDelayTime</font> : <font class="attr-lv1-type">Number(millisecond)</font></br>
+            <p>A delay for trigger search after a keyup</p>
+            <font class="attr-lv1-title">exportCSVText</font> : <font class="attr-lv1-type">String</font></br>
+            <p>A custom text on export csv button</p>
+            <font class="attr-lv1-title">ignoreEditable</font> : <font class="attr-lv1-type">Bool</font></br>
+            <p>Default is false, if true means you want to ignore any <code>editable</code> configuration when row insert.</p>
             <font class="attr-lv1-title">clearSearch</font> : <font class="attr-lv1-type">Bool</font></br>
             <p>Only work on enable search. If true, there will be a button beside search input field for clear search field text. </p>
             <font class="attr-lv1-title">afterTableComplete</font> : <font class="attr-lv1-type">Function</font></br>
@@ -417,9 +427,10 @@
             <font class="attr-lv1-title">handleConfirmDeleteRow</font> : <font class="attr-lv1-type">Function</font></br>
             <p>Assign a callback function which will be called when row dropping.</p>
             <p>It give you a chance to customize your confirmation for row deletion.</p>
-            <p>This function taking one argument: <code>next</code>.</p>
+            <p>This function taking two argument: <code>next</code> and <code>rowKeys</code>:</p>
             <div style="margin-left: 20px;">
               <code>next</code>: If you confirm to drop row, call next() to continue the process</br>
+              <code>rowKeys</code> is the row keys which been deleted, you can call next function to apply this deletion.</br>
             </div>
           </div>
         </div>
@@ -499,6 +510,14 @@
         </div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">getPageByRowKey :</font> <font class="attr-type">String</font></br>
+          <p>Call this function to get the page by a rowkey</p>
+          <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-style: italic">// Find page of product_id</span>
+<span style="color: #AA22FF; font-weight: bold">this</span>.refs.table.getPageByRowKey(<span style="color: #BB4444">&#39;product_id&#39;</span>);
+</pre></div>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">handleExportCSV :</font> <font class="attr-type">None</font></br>
           <p>Call this function to export table as csv.</p>
         </div>
@@ -565,7 +584,12 @@
           <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">sortFunc :</font> <font class="attr-type">Function</font></br>
           <p>Give a customize function for data sorting.</p>
-          <p>This function taking four arguments: <code>a</code>, <code>b</code>, <code>order</code>, <code>sortField</code></p>
+          <p>This function taking four arguments: <code>a</code>, <code>b</code>, <code>order</code>, <code>sortField</code>, <code>extraData</code></p>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">sortFuncExtraData :</font> <font class="attr-type">Any</font></br>
+          <p>It's a extra data for custom sort function, if defined, this data will be pass as fifth argument in <code>sortFunc</code>.</p>
         </div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
