@@ -146,8 +146,8 @@ class BootstrapTable extends Component {
       page = 1;
     }
     const sortInfo = this.store.getSortInfo();
-    const sortField = options.sortName || (sortInfo ? sortInfo.sortField : undefined);
-    const sortOrder = options.sortOrder || (sortInfo ? sortInfo.order : undefined);
+    const sortField = sortInfo ? sortInfo.sortField : options.sortName;
+    const sortOrder = sortInfo ? sortInfo.order : options.sortOrder;
     if (sortField && sortOrder) this.store.sort(sortOrder, sortField);
     const data = this.store.page(page, sizePerPage).get();
     this.setState({
