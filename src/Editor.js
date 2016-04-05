@@ -1,7 +1,9 @@
 import React from 'react';
 
 const editor = function(editable, attr, format, editorClass, defaultValue, ignoreEditable) {
-  if (editable === true || ignoreEditable || typeof editable === 'string') { // simple declare
+  if (editable === true ||
+    (editable === false && ignoreEditable) ||
+    typeof editable === 'string') { // simple declare
     const type = editable ? 'text' : editable;
     return (
       <input { ...attr } type={ type } defaultValue={ defaultValue }
