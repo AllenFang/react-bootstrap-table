@@ -20,7 +20,6 @@ function addProducts(quantity) {
       quality: i % (Object.keys(qualityType).length)
     });
   }
-  console.log(products);
 }
 
 addProducts(15);
