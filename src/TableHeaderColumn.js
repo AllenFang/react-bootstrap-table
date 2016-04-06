@@ -87,7 +87,11 @@ class TableHeaderColumn extends Component {
         </span>
       );
     }
-    const sortCaret = this.props.sort ? Util.renderReactSortCaret(this.props.sort) : defaultCaret;
+    let sortCaret = this.props.sort ? Util.renderReactSortCaret(this.props.sort) : defaultCaret;
+    if (this.props.caretRender) {
+      sortCaret = this.props.caretRender(this.props.sort);
+    }
+
     const classes = this.props.className + ' ' + (this.props.dataSort ? 'sort-column' : '');
     const title = typeof this.props.children === 'string' ? { title: this.props.children } : null;
     return (
@@ -127,6 +131,7 @@ TableHeaderColumn.propTypes = {
   columnClassName: PropTypes.any,
   filterFormatted: PropTypes.bool,
   sort: PropTypes.string,
+  caretRender: PropTypes.func,
   formatExtraData: PropTypes.any,
   filter: PropTypes.shape({
     type: PropTypes.oneOf(filterTypeArray),
