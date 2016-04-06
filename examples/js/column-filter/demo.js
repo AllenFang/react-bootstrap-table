@@ -5,6 +5,7 @@ import TextFilterWithDefaultValue from './text-filter-with-default-value';
 import RegexFilter from './regex-filter';
 import SelectFilter from './select-filter';
 import SelectFilterWithDefaultValue from './select-filter-with-default-value';
+import SelectFilterWithSort from './select-filter-with-sort';
 import NumberFilter from './number-filter';
 import NumberFilterWithDefaultValue from './number-filter-with-default-value';
 import NumberOptionsFilter from './number-options-filter';
@@ -61,6 +62,15 @@ class Demo extends React.Component {
                     <div className='panel-body'>
                         <h5>Source in /examples/js/column-filter/select-filter-with-default-value.js</h5>
                         <SelectFilterWithDefaultValue />
+                    </div>
+                </div>
+            </div>
+            <div className='col-md-offset-1 col-md-8'>
+                <div className='panel panel-default'>
+                    <div className='panel-heading'>Date Filter With Column Sorting Example</div>
+                    <div className='panel-body'>
+                        <h5>Source in /examples/js/column-filter/date-filter-with-sort.js</h5>
+                        <SelectFilterWithSort />
                     </div>
                 </div>
             </div>

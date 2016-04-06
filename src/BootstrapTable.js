@@ -520,7 +520,15 @@ class BootstrapTable extends Component {
 
   handleFilterData = filterObj => {
     this.store.filter(filterObj);
+
+    const sortObj = this.store.getSortInfo();
+
+    if (sortObj) {
+      this.store.sort(sortObj.order, sortObj.sortField);
+    }
+
     let result;
+
     if (this.props.pagination) {
       const { sizePerPage } = this.state;
       result = this.store.page(1, sizePerPage).get();
