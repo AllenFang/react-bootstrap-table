@@ -2,6 +2,7 @@
 import React from 'react';
 import SortTable from './sort-table';
 import DefaultSortTable from './default-sort-table';
+import ExternalSort from './manage-sort-external-table';
 import CustomSortTable from './custom-sort-table';
 import CustomSortWithExtraDataTable from './custom-sort-with-extra-data-table';
 import ReusableCustomSortTable from './reusable-custom-sort-table';
@@ -28,6 +29,15 @@ class Demo extends React.Component {
             <div className='panel-body'>
               <h5>Source in /examples/js/sort/default-sort-table.js</h5>
               <DefaultSortTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Manage Sorting Externally Example</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/sort/manage-sort-external-table.js</h5>
+              <ExternalSort />
             </div>
           </div>
         </div>
