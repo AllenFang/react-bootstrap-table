@@ -87,10 +87,12 @@ class BootstrapTable extends Component {
   }
 
   getTableData() {
-    const { options, pagination } = this.props;
     let result = [];
-    if (options.sortName && options.sortOrder) {
-      this.store.sort(options.sortOrder, options.sortName);
+    const { options, pagination } = this.props;
+    const sortName = options.defaultSortName || options.sortName;
+    const sortOrder = options.defaultSortOrder || options.sortOrder;
+    if (sortName && sortOrder) {
+      this.store.sort(sortOrder, sortName);
     }
 
     if (pagination) {
@@ -789,6 +791,8 @@ BootstrapTable.propTypes = {
     clearSearch: PropTypes.bool,
     sortName: PropTypes.string,
     sortOrder: PropTypes.string,
+    defaultSortName: PropTypes.string,
+    defaultSortOrder: PropTypes.string,
     sortIndicator: PropTypes.bool,
     afterTableComplete: PropTypes.func,
     afterDeleteRow: PropTypes.func,
@@ -855,6 +859,8 @@ BootstrapTable.defaultProps = {
     clearSearch: false,
     sortName: undefined,
     sortOrder: undefined,
+    defaultSortName: undefined,
+    defaultSortOrder: undefined,
     sortIndicator: true,
     afterTableComplete: undefined,
     afterDeleteRow: undefined,
