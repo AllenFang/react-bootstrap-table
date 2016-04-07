@@ -1,3 +1,13 @@
+<a name="v2.1.2"></a>
+# [v2.1.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.1.1...v2.1.2) (2016-04-06)
+### Bug fixes
+* Fix editor type broken if enable ```ignoreEditable```([b92481d](https://github.com/AllenFang/react-bootstrap-table/commit/b92481d9a42f71e97a848e8419282a05142049b0))
+* Fix sort broken after doing column filter([47cad29](https://github.com/AllenFang/react-bootstrap-table/commit/47cad293e5cd10afa4f9ced5c1d322a6c7a4af0f))
+
+### Features
+* Support to customize sort caret([d9799f5](https://github.com/AllenFang/react-bootstrap-table/commit/d9799f567e4be59fb08367b67cee1839f9b201c7))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/sort/custom-caret-sort-table.js)
+
 <a name="v2.1.1"></a>
 # [v2.1.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.1.0...v2.1.1) (2016-04-01)
 ### Bug fixes
