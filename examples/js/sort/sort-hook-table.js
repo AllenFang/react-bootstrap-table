@@ -35,7 +35,6 @@ export default class SortHookTable extends React.Component {
   }
 
   onSortChange(sortName, sortOrder) {
-    console.info('onSortChange', arguments);
     this.setState({
       sortName,
       sortOrder

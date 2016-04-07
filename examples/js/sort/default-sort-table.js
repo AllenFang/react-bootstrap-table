@@ -24,8 +24,8 @@ export default class DefaultSortTable extends React.Component {
     super(props);
 
     this.options = {
-      sortName: 'name',  // default sort column name
-      sortOrder: 'desc'  // default sort order
+      defaultSortName: 'name',  // default sort column name
+      defaultSortOrder: 'desc'  // default sort order
     };
   }
 
