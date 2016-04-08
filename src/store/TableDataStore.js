@@ -222,6 +222,10 @@ export class TableDataStore {
                 filterObj[key].value;
             break;
           }
+          case Const.FILTER_TYPE.DATE: {
+            filterVal = filterObj[key].value.date;
+            break;
+          }
           case Const.FILTER_TYPE.REGEX: {
             filterVal = filterObj[key].value;
             break;
@@ -251,7 +255,7 @@ export class TableDataStore {
             break;
           }
           case Const.FILTER_TYPE.DATE: {
-            valid = this.filterDate(targetVal, filterVal);
+            valid = this.filterDate(targetVal, filterVal, filterObj[key].value.comparator);
             break;
           }
           case Const.FILTER_TYPE.REGEX: {
@@ -324,13 +328,61 @@ export class TableDataStore {
     return valid;
   }
 
-  filterDate(targetVal, filterVal) {
-    if (!targetVal) {
-      return false;
+  filterDate(targetVal, filterVal, comparator) {
+    // if (!targetVal) {
+    //   return false;
+    // }
+    // return (targetVal.getDate() === filterVal.getDate() &&
+    //     targetVal.getMonth() === filterVal.getMonth() &&
+    //     targetVal.getFullYear() === filterVal.getFullYear());
+
+    let valid = true;
+    switch (comparator) {
+    case '=': {
+      if (targetVal != filterVal) {
+        valid = false;
+      }
+      break;
     }
-    return (targetVal.getDate() === filterVal.getDate() &&
-        targetVal.getMonth() === filterVal.getMonth() &&
-        targetVal.getFullYear() === filterVal.getFullYear());
+    case '>': {
+      if (targetVal <= filterVal) {
+        valid = false;
+      }
+      break;
+    }
+    case '>=': {
+      // console.log(targetVal);
+      // console.log(filterVal);
+      // console.log(filterVal.getDate());
+      if (targetVal < filterVal) {
+        valid = false;
+      }
+      break;
+    }
+    case '<': {
+      if (targetVal >= filterVal) {
+        valid = false;
+      }
+      break;
+    }
+    case '<=': {
+      if (targetVal > filterVal) {
+        valid = false;
+      }
+      break;
+    }
+    case '!=': {
+      if (targetVal == filterVal) {
+        valid = false;
+      }
+      break;
+    }
+    default: {
+      console.error('Date comparator provided is not supported');
+      break;
+    }
+    }
+    return valid;
   }
 
   filterRegex(targetVal, filterVal) {

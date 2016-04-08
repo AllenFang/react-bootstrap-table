@@ -108,17 +108,20 @@
   font-style: initial;
 }
 
-.react-bs-table .react-bs-container-header > table > thead > tr > th .number-filter {
+.react-bs-table .react-bs-container-header > table > thead > tr > th .number-filter,
+.react-bs-table .react-bs-container-header > table > thead > tr > th .date-filter {
   display: flex;
 }
 
-.react-bs-table .react-bs-container-header > table > thead > tr > th .number-filter-input {
+.react-bs-table .react-bs-container-header > table > thead > tr > th .number-filter-input,
+.react-bs-table .react-bs-container-header > table > thead > tr > th .date-filter-input {
   margin-left: 5px;
   float: left;
   width: calc(100% - 67px - 5px);
 }
 
-.react-bs-table .react-bs-container-header > table > thead > tr > th .number-filter-comparator {
+.react-bs-table .react-bs-container-header > table > thead > tr > th .number-filter-comparator,
+.react-bs-table .react-bs-container-header > table > thead > tr > th .date-filter-comparator {
   width: 67px;
   float: left;
 }
