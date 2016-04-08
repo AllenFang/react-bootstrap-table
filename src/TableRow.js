@@ -14,7 +14,7 @@ class TableRow extends Component {
       const rowIndex = e.currentTarget.rowIndex + 1;
       if (this.props.selectRow) {
         if (this.props.selectRow.clickToSelect) {
-          this.props.onSelectRow(rowIndex, !this.props.isSelected);
+          this.props.onSelectRow(rowIndex, !this.props.isSelected, e);
         } else if (this.props.selectRow.clickToSelectAndEditCell) {
           this.clickNum++;
           /** if clickToSelectAndEditCell is enabled,
@@ -23,7 +23,7 @@ class TableRow extends Component {
           **/
           setTimeout(() => {
             if (this.clickNum === 1) {
-              this.props.onSelectRow(rowIndex, !this.props.isSelected);
+              this.props.onSelectRow(rowIndex, !this.props.isSelected, e);
             }
             this.clickNum = 0;
           }, 200);

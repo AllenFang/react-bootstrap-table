@@ -55,7 +55,8 @@ class TableColumn extends Component {
     }
     this.props.onEdit(
       e.currentTarget.parentElement.rowIndex + 1,
-      e.currentTarget.cellIndex);
+      e.currentTarget.cellIndex,
+      e);
   }
 
   render() {

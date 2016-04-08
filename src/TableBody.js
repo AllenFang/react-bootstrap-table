@@ -192,7 +192,7 @@ class TableBody extends Component {
     onRowClick(selectedRow);
   }
 
-  handleSelectRow = (rowIndex, isSelected) => {
+  handleSelectRow = (rowIndex, isSelected, e) => {
     let selectedRow;
     const { data, onSelectRow } = this.props;
     data.forEach((row, i) => {
@@ -201,7 +201,7 @@ class TableBody extends Component {
         return false;
       }
     });
-    onSelectRow(selectedRow, isSelected);
+    onSelectRow(selectedRow, isSelected, e);
   }
 
   handleSelectRowColumChange = e => {
@@ -209,11 +209,12 @@ class TableBody extends Component {
       !this.props.selectRow.clickToSelectAndEditCell) {
       this.handleSelectRow(
         e.currentTarget.parentElement.parentElement.rowIndex + 1,
-        e.currentTarget.checked);
+        e.currentTarget.checked,
+        e);
     }
   }
 
-  handleEditCell = (rowIndex, columnIndex) => {
+  handleEditCell = (rowIndex, columnIndex, e) => {
     this.editing = true;
     if (this._isSelectRowDefined()) {
       columnIndex--;
@@ -231,7 +232,7 @@ class TableBody extends Component {
         this.props.cellEdit.mode !== Const.CELL_EDIT_DBCLICK) {
       const selected = this.props.selectedRowKeys.indexOf(
         this.props.data[rowIndex][this.props.keyField]) !== -1;
-      this.handleSelectRow(rowIndex + 1, !selected);
+      this.handleSelectRow(rowIndex + 1, !selected, e);
     }
     this.setState(stateObj);
   }
