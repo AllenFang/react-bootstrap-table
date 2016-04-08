@@ -1,6 +1,7 @@
 /* eslint max-len: 0 */
 /* eslint no-alert: 0 */
 /* eslint guard-for-in: 0 */
+/* eslint no-console: 0 */
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
@@ -21,11 +22,12 @@ function addProducts(quantity) {
 
 addProducts(5);
 
-function onRowSelect(row, isSelected) {
+function onRowSelect(row, isSelected, e) {
   let rowStr = '';
   for (const prop in row) {
     rowStr += prop + ': "' + row[prop] + '"';
   }
+  console.log(e);
   alert(`is selected: ${isSelected}, ${rowStr}`);
 }
 
