@@ -32,7 +32,7 @@ export default class DateFilterWithDefaultValue extends React.Component {
       <BootstrapTable data={ products }>
         <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
-        <TableHeaderColumn dataField='inStockDate' dataFormat={ dateFormatter } filter={ { type: 'DateFilter', defaultValue: new Date(2015, 7, 22) } }>In Stock From</TableHeaderColumn>
+        <TableHeaderColumn dataField='inStockDate' dataFormat={ dateFormatter } filter={ { type: 'DateFilter', defaultValue: { date: new Date(2015, 7, 22), comparator: '>=' } } }>In Stock From</TableHeaderColumn>
       </BootstrapTable>
     );
   }
