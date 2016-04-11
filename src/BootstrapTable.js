@@ -342,9 +342,9 @@ class BootstrapTable extends Component {
     }
   }
 
-  handleRowClick = row => {
+  handleRowClick = (row, event) => {
     if (this.props.options.onRowClick) {
-      this.props.options.onRowClick(row);
+      this.props.options.onRowClick(row, event);
     }
   }
 

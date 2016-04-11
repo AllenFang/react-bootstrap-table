@@ -181,7 +181,7 @@ class TableBody extends Component {
     this.props.onRowMouseOver(targetRow, event);
   }
 
-  handleRowClick = rowIndex => {
+  handleRowClick = (rowIndex, event) => {
     let selectedRow;
     const { data, onRowClick } = this.props;
     data.forEach((row, i) => {
@@ -189,7 +189,7 @@ class TableBody extends Component {
         selectedRow = row;
       }
     });
-    onRowClick(selectedRow);
+    onRowClick(selectedRow, event);
   }
 
   handleSelectRow = (rowIndex, isSelected) => {
