@@ -241,14 +241,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	    };
 
-	    this.handleSelectRow = function (row, isSelected) {
+	    this.handleSelectRow = function (row, isSelected, e) {
 	      var result = true;
 	      var currSelected = _this.store.getSelectedRowKeys();
 	      var rowKey = row[_this.store.getKeyField()];
 	      var selectRow = _this.props.selectRow;
 
 	      if (selectRow.onSelect) {
-	        result = selectRow.onSelect(row, isSelected);
+	        result = selectRow.onSelect(row, isSelected, e);
 	      }
 
 	      if (typeof result === 'undefined' || result !== false) {
@@ -488,13 +488,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'getTableData',
 	    value: function getTableData() {
+	      var result = [];
 	      var _props = this.props;
 	      var options = _props.options;
 	      var pagination = _props.pagination;
 
-	      var result = [];
-	      if (options.sortName && options.sortOrder) {
-	        this.store.sort(options.sortOrder, options.sortName);
+	      var sortName = options.defaultSortName || options.sortName;
+	      var sortOrder = options.defaultSortOrder || options.sortOrder;
+	      if (sortName && sortOrder) {
+	        this.store.sort(sortOrder, sortName);
 	      }
 
 	      if (pagination) {
@@ -968,6 +970,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    clearSearch: _react.PropTypes.bool,
 	    sortName: _react.PropTypes.string,
 	    sortOrder: _react.PropTypes.string,
+	    defaultSortName: _react.PropTypes.string,
+	    defaultSortOrder: _react.PropTypes.string,
 	    sortIndicator: _react.PropTypes.bool,
 	    afterTableComplete: _react.PropTypes.func,
 	    afterDeleteRow: _react.PropTypes.func,
@@ -1034,6 +1038,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    clearSearch: false,
 	    sortName: undefined,
 	    sortOrder: undefined,
+	    defaultSortName: undefined,
+	    defaultSortOrder: undefined,
 	    sortIndicator: true,
 	    afterTableComplete: undefined,
 	    afterDeleteRow: undefined,
@@ -1497,7 +1503,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      onRowClick(selectedRow);
 	    };
 
-	    this.handleSelectRow = function (rowIndex, isSelected) {
+	    this.handleSelectRow = function (rowIndex, isSelected, e) {
 	      var selectedRow = undefined;
 	      var _props2 = _this.props;
 	      var data = _props2.data;
@@ -1509,16 +1515,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	          return false;
 	        }
 	      });
-	      onSelectRow(selectedRow, isSelected);
+	      onSelectRow(selectedRow, isSelected, e);
 	    };
 
 	    this.handleSelectRowColumChange = function (e) {
 	      if (!_this.props.selectRow.clickToSelect || !_this.props.selectRow.clickToSelectAndEditCell) {
-	        _this.handleSelectRow(e.currentTarget.parentElement.parentElement.rowIndex + 1, e.currentTarget.checked);
+	        _this.handleSelectRow(e.currentTarget.parentElement.parentElement.rowIndex + 1, e.currentTarget.checked, e);
 	      }
 	    };
 
-	    this.handleEditCell = function (rowIndex, columnIndex) {
+	    this.handleEditCell = function (rowIndex, columnIndex, e) {
 	      _this.editing = true;
 	      if (_this._isSelectRowDefined()) {
 	        columnIndex--;
@@ -1534,7 +1540,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if (_this.props.selectRow.clickToSelectAndEditCell && _this.props.cellEdit.mode !== _Const2['default'].CELL_EDIT_DBCLICK) {
 	        var selected = _this.props.selectedRowKeys.indexOf(_this.props.data[rowIndex][_this.props.keyField]) !== -1;
-	        _this.handleSelectRow(rowIndex + 1, !selected);
+	        _this.handleSelectRow(rowIndex + 1, !selected, e);
 	      }
 	      _this.setState(stateObj);
 	    };
@@ -1795,7 +1801,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          var rowIndex = e.currentTarget.rowIndex + 1;
 	          if (_this.props.selectRow) {
 	            if (_this.props.selectRow.clickToSelect) {
-	              _this.props.onSelectRow(rowIndex, !_this.props.isSelected);
+	              _this.props.onSelectRow(rowIndex, !_this.props.isSelected, e);
 	            } else if (_this.props.selectRow.clickToSelectAndEditCell) {
 	              _this.clickNum++;
 	              /** if clickToSelectAndEditCell is enabled,
@@ -1804,7 +1810,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              **/
 	              setTimeout(function () {
 	                if (_this.clickNum === 1) {
-	                  _this.props.onSelectRow(rowIndex, !_this.props.isSelected);
+	                  _this.props.onSelectRow(rowIndex, !_this.props.isSelected, e);
 	                }
 	                _this.clickNum = 0;
 	              }, 200);
@@ -1926,7 +1932,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          sel.removeAllRanges();
 	        }
 	      }
-	      _this.props.onEdit(e.currentTarget.parentElement.rowIndex + 1, e.currentTarget.cellIndex);
+	      _this.props.onEdit(e.currentTarget.parentElement.rowIndex + 1, e.currentTarget.cellIndex, e);
 	    };
 	  }
 
@@ -4917,6 +4923,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                  filterVal = typeof filterObj[key].value === 'object' ? undefined : typeof filterObj[key].value === 'string' ? filterObj[key].value.toLowerCase() : filterObj[key].value;
 	                  break;
 	                }
+	              case _Const2['default'].FILTER_TYPE.DATE:
+	                {
+	                  filterVal = filterObj[key].value.date;
+	                  break;
+	                }
 	              case _Const2['default'].FILTER_TYPE.REGEX:
 	                {
 	                  filterVal = filterObj[key].value;
@@ -4952,7 +4963,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	              case _Const2['default'].FILTER_TYPE.DATE:
 	                {
-	                  valid = _this3.filterDate(targetVal, filterVal);
+	                  valid = _this3.filterDate(targetVal, filterVal, filterObj[key].value.comparator);
 	                  break;
 	                }
 	              case _Const2['default'].FILTER_TYPE.REGEX:
@@ -5037,11 +5048,68 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'filterDate',
-	    value: function filterDate(targetVal, filterVal) {
-	      if (!targetVal) {
-	        return false;
+	    value: function filterDate(targetVal, filterVal, comparator) {
+	      // if (!targetVal) {
+	      //   return false;
+	      // }
+	      // return (targetVal.getDate() === filterVal.getDate() &&
+	      //     targetVal.getMonth() === filterVal.getMonth() &&
+	      //     targetVal.getFullYear() === filterVal.getFullYear());
+
+	      var valid = true;
+	      switch (comparator) {
+	        case '=':
+	          {
+	            if (targetVal != filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        case '>':
+	          {
+	            if (targetVal <= filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        case '>=':
+	          {
+	            // console.log(targetVal);
+	            // console.log(filterVal);
+	            // console.log(filterVal.getDate());
+	            if (targetVal < filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        case '<':
+	          {
+	            if (targetVal >= filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        case '<=':
+	          {
+	            if (targetVal > filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        case '!=':
+	          {
+	            if (targetVal == filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        default:
+	          {
+	            console.error('Date comparator provided is not supported');
+	            break;
+	          }
 	      }
-	      return targetVal.getDate() === filterVal.getDate() && targetVal.getMonth() === filterVal.getMonth() && targetVal.getFullYear() === filterVal.getFullYear();
+	      return valid;
 	    }
 	  }, {
 	    key: 'filterRegex',
@@ -6241,6 +6309,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Const2 = _interopRequireDefault(_Const);
 
+	var legalComparators = ['=', '>', '>=', '<', '<=', '!='];
+
+	function dateParser(d) {
+	  return d.getFullYear() + '-' + ("0" + (d.getMonth() + 1)).slice(-2) + '-' + ("0" + d.getDate()).slice(-2);
+	}
+
 	var DateFilter = (function (_Component) {
 	  _inherits(DateFilter, _Component);
 
@@ -6248,26 +6322,55 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _classCallCheck(this, DateFilter);
 
 	    _get(Object.getPrototypeOf(DateFilter.prototype), 'constructor', this).call(this, props);
+	    this.dateComparators = this.props.dateComparators || legalComparators;
 	    this.filter = this.filter.bind(this);
+	    this.onChangeComparator = this.onChangeComparator.bind(this);
 	  }
 
 	  _createClass(DateFilter, [{
 	    key: 'setDefaultDate',
 	    value: function setDefaultDate() {
 	      var defaultDate = '';
-	      if (this.props.defaultValue) {
+	      var defaultValue = this.props.defaultValue;
+
+	      if (defaultValue && defaultValue.date) {
 	        // Set the appropriate format for the input type=date, i.e. "YYYY-MM-DD"
-	        var defaultValue = new Date(this.props.defaultValue);
-	        defaultDate = defaultValue.getFullYear() + '-' + ("0" + (defaultValue.getMonth() + 1)).slice(-2) + '-' + ("0" + defaultValue.getDate()).slice(-2);
+	        defaultDate = dateParser(new Date(defaultValue.date));
 	      }
 	      return defaultDate;
 	    }
 	  }, {
+	    key: 'onChangeComparator',
+	    value: function onChangeComparator(event) {
+	      var date = this.refs.inputDate.value;
+	      var comparator = event.target.value;
+	      if (date === '') {
+	        return;
+	      }
+	      date = new Date(date);
+	      this.props.filterHandler({ date: date, comparator: comparator }, _Const2['default'].FILTER_TYPE.DATE);
+	    }
+	  }, {
+	    key: 'getComparatorOptions',
+	    value: function getComparatorOptions() {
+	      var optionTags = [];
+	      optionTags.push(_react2['default'].createElement('option', { key: '-1' }));
+	      for (var i = 0; i < this.dateComparators.length; i++) {
+	        optionTags.push(_react2['default'].createElement(
+	          'option',
+	          { key: i, value: this.dateComparators[i] },
+	          this.dateComparators[i]
+	        ));
+	      }
+	      return optionTags;
+	    }
+	  }, {
 	    key: 'filter',
 	    value: function filter(event) {
+	      var comparator = this.refs.dateFilterComparator.value;
 	      var dateValue = event.target.value;
 	      if (dateValue) {
-	        this.props.filterHandler(new Date(dateValue), _Const2['default'].FILTER_TYPE.DATE);
+	        this.props.filterHandler({ date: new Date(dateValue), comparator: comparator }, _Const2['default'].FILTER_TYPE.DATE);
 	      } else {
 	        this.props.filterHandler(null, _Const2['default'].FILTER_TYPE.DATE);
 	      }
@@ -6275,19 +6378,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var comparator = this.refs.dateFilterComparator.value;
 	      var dateValue = this.refs.inputDate.defaultValue;
-	      if (dateValue) {
-	        this.props.filterHandler(new Date(dateValue), _Const2['default'].FILTER_TYPE.DATE);
+	      if (comparator && dateValue) {
+	        this.props.filterHandler({ date: new Date(dateValue), comparator: comparator }, _Const2['default'].FILTER_TYPE.DATE);
 	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2['default'].createElement('input', { ref: 'inputDate',
-	        className: 'filter date-filter form-control',
-	        type: 'date',
-	        onChange: this.filter,
-	        defaultValue: this.setDefaultDate() });
+	      var defaultValue = this.props.defaultValue;
+
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: 'filter date-filter' },
+	        _react2['default'].createElement(
+	          'select',
+	          { ref: 'dateFilterComparator',
+	            className: 'date-filter-comparator form-control',
+	            onChange: this.onChangeComparator,
+	            defaultValue: defaultValue ? defaultValue.comparator : '' },
+	          this.getComparatorOptions()
+	        ),
+	        _react2['default'].createElement('input', { ref: 'inputDate',
+	          className: 'filter date-filter-input form-control',
+	          type: 'date',
+	          onChange: this.filter,
+	          defaultValue: this.setDefaultDate() })
+	      );
 	    }
 	  }]);
 
@@ -6296,7 +6414,28 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	DateFilter.propTypes = {
 	  filterHandler: _react.PropTypes.func.isRequired,
-	  defaultValue: _react.PropTypes.object,
+	  defaultValue: _react.PropTypes.shape({
+	    date: _react.PropTypes.object,
+	    comparator: _react.PropTypes.oneOf(legalComparators)
+	  }),
+	  /* eslint consistent-return: 0 */
+	  dateComparators: function dateComparators(props, propName) {
+	    if (!props[propName]) {
+	      return;
+	    }
+	    for (var i = 0; i < props[propName].length; i++) {
+	      var comparatorIsValid = false;
+	      for (var j = 0; j < legalComparators.length; j++) {
+	        if (legalComparators[j] === props[propName][i]) {
+	          comparatorIsValid = true;
+	          break;
+	        }
+	      }
+	      if (!comparatorIsValid) {
+	        return new Error('Date comparator provided is not supported.\n          Use only ' + legalComparators);
+	      }
+	    }
+	  },
 	  columnName: _react.PropTypes.string
 	};
 
