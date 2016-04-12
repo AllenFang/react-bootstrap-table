@@ -31,7 +31,7 @@ class Demo extends React.Component {
           <ValidatorTable/>
         </Panel>
         <Panel header={ 'Data Validator Example(Job Name length must great 10 char) and row can use the notifier.' }>
-          { renderLinks('advance/validator-table.js') }
+          { renderLinks('advance/validator-row-notifier-table.js') }
           <ValidatorRowNotifierTable/>
         </Panel>
       </Col>
