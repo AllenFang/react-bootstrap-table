@@ -16,7 +16,9 @@ const editor = function(editable, attr, format, editorClass, defaultValue, ignor
           disabled='disabled'
           className={ ( editorClass || '') + ' form-control editor edit-text' } />
     );
-  } else if (editable && editable.type === undefined) {
+  } else if (editable && (editable.type === undefined ||
+             editable.type === null ||
+             editable.type.trim() === '')) {
     const type = editable ? 'text' : editable;
     return (
       <input { ...attr } type={ type } defaultValue={ defaultValue }
