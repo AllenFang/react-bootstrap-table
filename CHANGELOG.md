@@ -1,3 +1,13 @@
+<a name="v2.1.3"></a>
+# [v2.1.3](https://github.com/AllenFang/react-bootstrap-table/compare/v2.1.2...v2.1.3) (2016-04-11)
+### Features
+* Support comparator on date filter([bf5b4d2](https://github.com/AllenFang/react-bootstrap-table/commit/bf5b4d2358ba43646f721ddcd352446e977df7a9))
+
+### Enhancement
+* Pass event object as third argument on ```onRowSelect``` callback function([b1e8d18](https://github.com/AllenFang/react-bootstrap-table/commit/b1e8d18b0183e9116e4defdbe8e71027e193a9a2))
+* Support a better mechanism for default sorting([ac0dd35](https://github.com/AllenFang/react-bootstrap-table/commit/ac0dd3516d5b03cfbd8093e329613b4e554dae9f))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/sort/default-sort-table.js)
+
 <a name="v2.1.2"></a>
 # [v2.1.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.1.1...v2.1.2) (2016-04-06)
 ### Bug fixes
