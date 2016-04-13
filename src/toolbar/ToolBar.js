@@ -64,10 +64,7 @@ class ToolBar extends Component {
         }
 
         if (column.editable && column.editable.validator) { // process validate
-          const isObject = (typeof column.editable.validator(tempValue) === 'object');
-          tempMsg = isObject ?
-                    column.editable.validator(tempValue).tip :
-                    column.editable.validator(tempValue);
+          tempMsg = column.editable.validator(tempValue);
           if (tempMsg !== true) {
             isValid = false;
             validateState[column.field] = tempMsg;
