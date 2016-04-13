@@ -44,7 +44,7 @@ class TableEditColumn extends Component {
     const ts = this;
     if (ts.props.editable.validator) {
       const valid = ts.props.editable.validator(value);
-      if (!valid) {
+      if (valid !== true) {
         ts.refs.notifier.notice('error', valid, 'Pressed ESC can cancel');
         const input = ts.refs.inputRef;
         // animate input
