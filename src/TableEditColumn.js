@@ -54,7 +54,7 @@ class TableEditColumn extends Component {
           ts.setState({ shakeEditor: false });
         }, 300);
         input.focus();
-        return validate;
+        return false;
       }
     }
     return true;

@@ -4,7 +4,6 @@ import EditTypeTable from './edit-type-table';
 import DataInsertTypeTable from './insert-type-table';
 import AutoRowKeyTable from './auto-rowkey-table';
 import ValidatorTable from './validator-table';
-import ValidatorRowNotifierTable from './validator-row-notifier-table';
 
 import renderLinks from '../utils';
 
@@ -29,10 +28,6 @@ class Demo extends React.Component {
         <Panel header={ 'Data Validator Example(Job Name length must great 10 char)' }>
           { renderLinks('advance/validator-table.js') }
           <ValidatorTable/>
-        </Panel>
-        <Panel header={ 'Data Validator Example(Job Name length must great 10 char) and row can use the notifier.' }>
-          { renderLinks('advance/validator-row-notifier-table.js') }
-          <ValidatorRowNotifierTable/>
         </Panel>
       </Col>
     );
