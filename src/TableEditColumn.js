@@ -44,7 +44,7 @@ class TableEditColumn extends Component {
     const ts = this;
     if (ts.props.editable.validator) {
       const valid = ts.props.editable.validator(value);
-      if (!valid || (valid && typeof valid === 'object')) {
+      if (valid !== true || (valid && typeof valid === 'object')) {
         const isObject = (typeof valid === 'object');
         const tip = isObject ? valid.tip : valid;
         const validate = isObject ? valid.validate : false;
