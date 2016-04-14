@@ -62,7 +62,7 @@ class DateFilter extends Component {
 
   componentDidMount() {
     const comparator = this.refs.dateFilterComparator.value;
-    const dateValue = this.refs.inputDate.defaultValue;
+    const dateValue = this.refs.inputDate.value;
     if (comparator && dateValue) {
       this.props.filterHandler({ date: new Date(dateValue), comparator }, Const.FILTER_TYPE.DATE);
     }
