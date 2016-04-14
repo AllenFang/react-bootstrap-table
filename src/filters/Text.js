@@ -19,7 +19,7 @@ class TextFilter extends Component {
   }
 
   componentDidMount() {
-    const defaultValue = this.refs.inputText.defaultValue;
+    const defaultValue = this.refs.inputText.value;
     if (defaultValue) {
       this.props.filterHandler(defaultValue, Const.FILTER_TYPE.TEXT);
     }
