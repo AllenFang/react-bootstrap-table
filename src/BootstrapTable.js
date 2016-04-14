@@ -272,16 +272,21 @@ class BootstrapTable extends Component {
   }
 
   isSelectAll() {
+    if (this.store.isEmpty()) return false;
+
     const defaultSelectRowKeys = this.store.getSelectedRowKeys();
     const allRowKeys = this.store.getAllRowkey();
-    if (defaultSelectRowKeys.length !== allRowKeys.length) {
-      return defaultSelectRowKeys.length === 0 ? false : 'indeterminate';
-    } else {
-      if (this.store.isEmpty()) {
-        return false;
-      }
-      return true;
-    }
+
+    if (defaultSelectRowKeys.length === 0) return false;
+    let match = 0;
+    let noFound = 0;
+    defaultSelectRowKeys.forEach(selected => {
+      if (allRowKeys.indexOf(selected) !== -1) match++;
+      else noFound++;
+    });
+
+    if (noFound === defaultSelectRowKeys.length) return false;
+    return (match === allRowKeys.length) ? true : 'indeterminate';
   }
 
   cleanSelected() {
