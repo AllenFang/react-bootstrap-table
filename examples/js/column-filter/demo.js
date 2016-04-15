@@ -67,9 +67,9 @@ class Demo extends React.Component {
             </div>
             <div className='col-md-offset-1 col-md-8'>
                 <div className='panel panel-default'>
-                    <div className='panel-heading'>Date Filter With Column Sorting Example</div>
+                    <div className='panel-heading'>Select Filter With Column Sorting Example</div>
                     <div className='panel-body'>
-                        <h5>Source in /examples/js/column-filter/date-filter-with-sort.js</h5>
+                        <h5>Source in /examples/js/column-filter/select-filter-with-sort.js</h5>
                         <SelectFilterWithSort />
                     </div>
                 </div>

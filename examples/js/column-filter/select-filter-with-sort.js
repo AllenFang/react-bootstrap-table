@@ -38,7 +38,7 @@ export default class SelectFilterWithSort extends React.Component {
       <BootstrapTable data={ products }>
           <TableHeaderColumn dataSort dataField='id' filter={ filter } isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField='quality' dataFormat={ enumFormatter }
+          <TableHeaderColumn dataSort dataField='quality' dataFormat={ enumFormatter }
             formatExtraData={ qualityType } filter={ { type: 'SelectFilter', options: qualityType, defaultValue: 1 } }>Product Quality</TableHeaderColumn>
       </BootstrapTable>
     );
