@@ -693,16 +693,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'isSelectAll',
 	    value: function isSelectAll() {
+	      if (this.store.isEmpty()) return false;
+
 	      var defaultSelectRowKeys = this.store.getSelectedRowKeys();
 	      var allRowKeys = this.store.getAllRowkey();
-	      if (defaultSelectRowKeys.length !== allRowKeys.length) {
-	        return defaultSelectRowKeys.length === 0 ? false : 'indeterminate';
-	      } else {
-	        if (this.store.isEmpty()) {
-	          return false;
-	        }
-	        return true;
-	      }
+
+	      if (defaultSelectRowKeys.length === 0) return false;
+	      var match = 0;
+	      var noFound = 0;
+	      defaultSelectRowKeys.forEach(function (selected) {
+	        if (allRowKeys.indexOf(selected) !== -1) match++;else noFound++;
+	      });
+
+	      if (noFound === defaultSelectRowKeys.length) return false;
+	      return match === allRowKeys.length ? true : 'indeterminate';
 	    }
 	  }, {
 	    key: 'cleanSelected',
@@ -1581,7 +1585,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var format = column.format ? function (value) {
 	              return column.format(value, data, column.formatExtraData).replace(/<.*?>/g, '');
 	            } : false;
-
 	            if (isFun(column.editable)) {
 	              editable = column.editable(fieldValue, data, r, i);
 	            }
@@ -2093,7 +2096,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var ts = this;
 	      if (ts.props.editable.validator) {
 	        var valid = ts.props.editable.validator(value);
-	        if (!valid) {
+	        if (valid !== true) {
 	          ts.refs.notifier.notice('error', valid, 'Pressed ESC can cancel');
 	          var input = ts.refs.inputRef;
 	          // animate input
@@ -2215,6 +2218,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var type = editable ? 'text' : editable;
 	    return _react2['default'].createElement('input', _extends({}, attr, { type: type, defaultValue: defaultValue,
 	      disabled: 'disabled',
+	      className: (editorClass || '') + ' form-control editor edit-text' }));
+	  } else if (editable && (editable.type === undefined || editable.type === null || editable.type.trim() === '')) {
+	    var type = editable ? 'text' : editable;
+	    return _react2['default'].createElement('input', _extends({}, attr, { type: type, defaultValue: defaultValue,
 	      className: (editorClass || '') + ' form-control editor edit-text' }));
 	  } else if (editable.type) {
 	    // standard declare
