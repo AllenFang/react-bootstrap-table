@@ -1,3 +1,11 @@
+<a name="v2.1.4"></a>
+# [v2.1.4](https://github.com/AllenFang/react-bootstrap-table/compare/v2.1.3...v2.1.4) (2016-04-15)
+### Bug fixes
+* Fix data loss on cell edit when only a validator given([d652e63](https://github.com/AllenFang/react-bootstrap-table/commit/d652e635c4f505b7292f4e024c7d58e8d1145ef4))
+
+* Fix select state still remain when update state on table([9ffea48](https://github.com/AllenFang/react-bootstrap-table/commit/9ffea4869a9a264e34e734429d2f938915952536))
+	* check the [scenario](https://github.com/AllenFang/react-bootstrap-table/issues/403)
+
 <a name="v2.1.3"></a>
 # [v2.1.3](https://github.com/AllenFang/react-bootstrap-table/compare/v2.1.2...v2.1.3) (2016-04-11)
 ### Features
