@@ -59,7 +59,9 @@ class PaginationList extends Component {
       );
     });
     const total = paginationShowsTotal ? <span>
-      Showing rows { (currPage - 1) * sizePerPage + 1 } to { Math.min(currPage * sizePerPage, dataSize) } of { dataSize }
+      Showing rows { (currPage - 1) * sizePerPage + 1 } to&nbsp;
+      { Math.min(currPage * sizePerPage, dataSize) } of&nbsp;
+      { dataSize }
     </span> : null;
 
     return (
