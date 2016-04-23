@@ -40,7 +40,7 @@ class PaginationList extends Component {
   }
 
   render() {
-    const { dataSize, sizePerPage, sizePerPageList } = this.props;
+    const { currPage, dataSize, sizePerPage, sizePerPageList, paginationShowsTotal } = this.props;
     this.totalPages = Math.ceil(dataSize / sizePerPage);
     const pageBtns = this.makePage();
     const pageListStyle = {
@@ -58,6 +58,11 @@ class PaginationList extends Component {
         </li>
       );
     });
+    const total = paginationShowsTotal ? <span>
+      Showing rows { (currPage - 1) * sizePerPage + 1 } to&nbsp;
+      { Math.min(currPage * sizePerPage, dataSize) } of&nbsp;
+      { dataSize }
+    </span> : null;
 
     return (
       <div className='row' style={ { marginTop: 15 } }>
@@ -65,7 +70,8 @@ class PaginationList extends Component {
           sizePerPageList.length > 1
           ? <div>
               <div className='col-md-6'>
-                <div className='dropdown'>
+                { total }{ ' ' }
+                <span className='dropdown'>
                   <button className='btn btn-default dropdown-toggle'
                     type='button' id='pageDropDown' data-toggle='dropdown'
                     aria-expanded='true'>
@@ -78,7 +84,7 @@ class PaginationList extends Component {
                   <ul className='dropdown-menu' role='menu' aria-labelledby='pageDropDown'>
                     { sizePerPageOptions }
                   </ul>
-                </div>
+                </span>
               </div>
               <div className='col-md-6'>
                 <ul className='pagination' style={ pageListStyle }>
@@ -86,10 +92,15 @@ class PaginationList extends Component {
                 </ul>
               </div>
             </div>
-          : <div className='col-md-12'>
-              <ul className='pagination' style={ pageListStyle }>
-                { pageBtns }
-              </ul>
+          : <div>
+              <div className='col-md-6'>
+                { total }
+              </div>
+              <div className='col-md-6'>
+                <ul className='pagination' style={ pageListStyle }>
+                  { pageBtns }
+                </ul>
+              </div>
             </div>
         }
       </div>
@@ -164,6 +175,7 @@ PaginationList.propTypes = {
   dataSize: PropTypes.number,
   changePage: PropTypes.func,
   sizePerPageList: PropTypes.array,
+  paginationShowsTotal: PropTypes.bool,
   paginationSize: PropTypes.number,
   remote: PropTypes.bool,
   onSizePerPageList: PropTypes.func,

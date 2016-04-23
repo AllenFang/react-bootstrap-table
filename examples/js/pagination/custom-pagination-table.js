@@ -29,7 +29,8 @@ export default class CustomPaginationTable extends React.Component {
       prePage: 'Prev', // Previous page button text
       nextPage: 'Next', // Next page button text
       firstPage: 'First', // First page button text
-      lastPage: 'Last' // Last page button text
+      lastPage: 'Last', // Last page button text
+      paginationShowsTotal: true
     };
 
     return (

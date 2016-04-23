@@ -599,6 +599,7 @@ class BootstrapTable extends Component {
             changePage={ this.handlePaginationData }
             sizePerPage={ this.state.sizePerPage }
             sizePerPageList={ options.sizePerPageList || Const.SIZE_PER_PAGE_LIST }
+            paginationShowsTotal={ options.paginationShowsTotal }
             paginationSize={ options.paginationSize || Const.PAGINATION_SIZE }
             remote={ this.isRemoteDataSource() }
             dataSize={ dataSize }
@@ -806,6 +807,7 @@ BootstrapTable.propTypes = {
     afterColumnFilter: PropTypes.func,
     onRowClick: PropTypes.func,
     page: PropTypes.number,
+    paginationShowsTotal: PropTypes.bool,
     sizePerPageList: PropTypes.array,
     sizePerPage: PropTypes.number,
     paginationSize: PropTypes.number,
@@ -878,6 +880,7 @@ BootstrapTable.defaultProps = {
     onRowMouseOut: undefined,
     onRowMouseOver: undefined,
     page: undefined,
+    paginationShowsTotal: false,
     sizePerPageList: Const.SIZE_PER_PAGE_LIST,
     sizePerPage: undefined,
     paginationSize: Const.PAGINATION_SIZE,

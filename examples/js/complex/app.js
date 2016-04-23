@@ -72,6 +72,7 @@ const cellEditProp = {
 };
 
 const options = {
+  paginationShowsTotal: true,
   sortName: 'name',  // default sort column name
   sortOrder: 'desc',  // default sort order
   afterTableComplete: onAfterTableComplete, // A hook for after table render complete.
