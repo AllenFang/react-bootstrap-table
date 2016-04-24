@@ -293,10 +293,11 @@
             <p>Default is false, if enabled, there will be a button on top of table for toggling selected rows only.</p>
             <font class="attr-lv1-title">onSelect</font> : <font class="attr-lv1-type">Function</font></br>
             <p>Accept a custom callback function, if a row be selected or unselected, this function will be called.</p>
-            <p>This callback function taking two arguments <code>row</code> and <code>isSelected</code>:</p>
+            <p>This callback function taking three arguments <code>row</code>, <code>isSelected</code> and <code>event</code>:</p>
             <div style="margin-left: 20px;">
               <code>row</code>: is the row data which you wanted to select or unselect.</br>
-              <code>isSelected</code>: it's a boolean value means "whether or not that row will be selected?".
+              <code>isSelected</code>: it's a boolean value means "whether or not that row will be selected?".</br>
+              <code>event</code>: The event target object.</br>
             </div>
             <p>If return value of this function is false, the select or deselect action will not be applied.</p>
             <font class="attr-lv1-title">onSelectAll</font> : <font class="attr-lv1-type">Function</font></br>
@@ -338,8 +339,12 @@
           <p>For some options setting on this component, you can set the options attribute and give an object which contain following properties</p>
           <div style="margin-left: 20px;">
             <font class="attr-lv1-title">sortName</font> : <font class="attr-lv1-type">String</font></br>
-            <p>Assign a default sort field.</p>
+            <p>Manage sort field by yourself</p>
             <font class="attr-lv1-title">sortOrder</font> : <font class="attr-lv1-type">String(asc/desc)</font></br>
+            <p>Manage sort order by yourself</p>
+            <font class="attr-lv1-title">defaultSortName</font> : <font class="attr-lv1-type">String</font></br>
+            <p>Assign a default sort field.</p>
+            <font class="attr-lv1-title">defaultSortOrder</font> : <font class="attr-lv1-type">String(asc/desc)</font></br>
             <p>Assign a default sort ordering.</p>
             <font class="attr-lv1-title">sortIndicator</font> : <font class="attr-lv1-type">Bool</font></br>
             <p>False to disable sort indicator on header column, default is true.</p>
@@ -561,6 +566,12 @@
         </div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">caretRender :</font> <font class="attr-type">Function</font></br>
+          <p>Allow user to render a custom sort caret. You should give a function and should return a JSX.</p>
+          <p>This function taking one arguments: <code>order</code> which present the sort order currently.</p>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">dataFormat :</font> <font class="attr-type">Function</font></br>
           <p>To customize the column. This callback function should return a String or a React Component.</p>
           <p>In addition, this function taking two argument: <code>cell</code> and <code>row</code>.</p>
@@ -635,7 +646,7 @@
           <pre>
 {
   type: "TextFilter"||"SelectFilter"||"NumberFilter"||"DateFilter"||"RegexFilter"||"YOUR_CUSTOM_FILTER".
-  defaultValue: //Default value on filter. If type is NumberFilter, this value will like { number: 50, comparator: '>' }
+  defaultValue: //Default value on filter. If type is NumberFilter or DateFilter, this value will like { number||date: xxx, comparator: '>' }
   delay: //Assign a millisecond for delay when trigger filtering, default is 500.
   placeholder: //Only work on TextFilter. Assign the placeholder text on text and regex filter
   numberComparators: //Only work on NumberFilter. Accept an array which conatin the filter condition, like: ['<','>','=']
