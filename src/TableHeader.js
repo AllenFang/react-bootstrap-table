@@ -33,7 +33,7 @@ class TableHeader extends Component {
     this._attachClearSortCaretFunc();
 
     return (
-      <div ref='container' className={ containerClasses }>
+      <div ref='container' className={ containerClasses } style={ this.props.style }>
         <table className={ tableClasses }>
           <thead>
             <tr ref='header'>
@@ -82,6 +82,7 @@ class TableHeader extends Component {
   }
 }
 TableHeader.propTypes = {
+  style: PropTypes.object,
   rowSelectType: PropTypes.string,
   onSort: PropTypes.func,
   onSelectAllRow: PropTypes.func,

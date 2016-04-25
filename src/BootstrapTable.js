@@ -226,13 +226,14 @@ class BootstrapTable extends Component {
     let sortIndicator = this.props.options.sortIndicator;
     if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
     return (
-      <div className='react-bs-table-container'>
+      <div className='react-bs-table-container' style={ this.props.containerStyle }>
         { toolBar }
-        <div className='react-bs-table' ref='table' style={ style }
+        <div className='react-bs-table' ref='table' style={ { ...style, ...this.props.tableStyle } }
             onMouseEnter={ this.handleMouseEnter }
             onMouseLeave={ this.handleMouseLeave }>
           <TableHeader
             ref='header'
+            style={ this.props.headerStyle }
             rowSelectType={ this.props.selectRow.mode }
             hideSelectColumn={ this.props.selectRow.hideSelectColumn }
             sortName={ sortInfo ? sortInfo.sortField : undefined }
@@ -247,7 +248,7 @@ class BootstrapTable extends Component {
             { this.props.children }
           </TableHeader>
           <TableBody ref='body'
-            style={ style }
+            style={ { ...style, ...this.props.bodyStyle } }
             data={ this.state.data }
             columns={ columns }
             trClassName={ this.props.trClassName }
@@ -793,6 +794,10 @@ BootstrapTable.propTypes = {
   search: PropTypes.bool,
   columnFilter: PropTypes.bool,
   trClassName: PropTypes.any,
+  tableStyle: PropTypes.object,
+  containerStyle: PropTypes.object,
+  headerStyle: PropTypes.object,
+  bodyStyle: PropTypes.object,
   options: PropTypes.shape({
     clearSearch: PropTypes.bool,
     sortName: PropTypes.string,
@@ -862,6 +867,10 @@ BootstrapTable.defaultProps = {
   multiColumnSearch: false,
   columnFilter: false,
   trClassName: '',
+  tableStyle: undefined,
+  containerStyle: undefined,
+  headerStyle: undefined,
+  bodyStyle: undefined,
   options: {
     clearSearch: false,
     sortName: undefined,
