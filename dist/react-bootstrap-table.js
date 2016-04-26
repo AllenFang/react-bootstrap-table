@@ -89,6 +89,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -643,17 +645,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
 	      return _react2['default'].createElement(
 	        'div',
-	        { className: 'react-bs-table-container' },
+	        { className: 'react-bs-table-container', style: this.props.containerStyle },
 	        toolBar,
 	        _react2['default'].createElement(
 	          'div',
-	          { className: 'react-bs-table', ref: 'table', style: style,
+	          { className: 'react-bs-table', ref: 'table', style: _extends({}, style, this.props.tableStyle),
 	            onMouseEnter: this.handleMouseEnter,
 	            onMouseLeave: this.handleMouseLeave },
 	          _react2['default'].createElement(
 	            _TableHeader2['default'],
 	            {
 	              ref: 'header',
+	              style: this.props.headerStyle,
 	              rowSelectType: this.props.selectRow.mode,
 	              hideSelectColumn: this.props.selectRow.hideSelectColumn,
 	              sortName: sortInfo ? sortInfo.sortField : undefined,
@@ -668,7 +671,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.props.children
 	          ),
 	          _react2['default'].createElement(_TableBody2['default'], { ref: 'body',
-	            style: style,
+	            style: _extends({}, style, this.props.bodyStyle),
 	            data: this.state.data,
 	            columns: columns,
 	            trClassName: this.props.trClassName,
@@ -822,6 +825,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            changePage: this.handlePaginationData,
 	            sizePerPage: this.state.sizePerPage,
 	            sizePerPageList: options.sizePerPageList || _Const2['default'].SIZE_PER_PAGE_LIST,
+	            paginationShowsTotal: options.paginationShowsTotal,
 	            paginationSize: options.paginationSize || _Const2['default'].PAGINATION_SIZE,
 	            remote: this.isRemoteDataSource(),
 	            dataSize: dataSize,
@@ -970,6 +974,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  search: _react.PropTypes.bool,
 	  columnFilter: _react.PropTypes.bool,
 	  trClassName: _react.PropTypes.any,
+	  tableStyle: _react.PropTypes.object,
+	  containerStyle: _react.PropTypes.object,
+	  headerStyle: _react.PropTypes.object,
+	  bodyStyle: _react.PropTypes.object,
 	  options: _react.PropTypes.shape({
 	    clearSearch: _react.PropTypes.bool,
 	    sortName: _react.PropTypes.string,
@@ -984,6 +992,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    afterColumnFilter: _react.PropTypes.func,
 	    onRowClick: _react.PropTypes.func,
 	    page: _react.PropTypes.number,
+	    paginationShowsTotal: _react.PropTypes.bool,
 	    sizePerPageList: _react.PropTypes.array,
 	    sizePerPage: _react.PropTypes.number,
 	    paginationSize: _react.PropTypes.number,
@@ -1038,6 +1047,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  multiColumnSearch: false,
 	  columnFilter: false,
 	  trClassName: '',
+	  tableStyle: undefined,
+	  containerStyle: undefined,
+	  headerStyle: undefined,
+	  bodyStyle: undefined,
 	  options: {
 	    clearSearch: false,
 	    sortName: undefined,
@@ -1056,6 +1069,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    onRowMouseOut: undefined,
 	    onRowMouseOver: undefined,
 	    page: undefined,
+	    paginationShowsTotal: false,
 	    sizePerPageList: _Const2['default'].SIZE_PER_PAGE_LIST,
 	    sizePerPage: undefined,
 	    paginationSize: _Const2['default'].PAGINATION_SIZE,
@@ -1228,7 +1242,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return _react2['default'].createElement(
 	        'div',
-	        { ref: 'container', className: containerClasses },
+	        { ref: 'container', className: containerClasses, style: this.props.style },
 	        _react2['default'].createElement(
 	          'table',
 	          { className: tableClasses },
@@ -1296,6 +1310,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react.Component);
 
 	TableHeader.propTypes = {
+	  style: _react.PropTypes.object,
 	  rowSelectType: _react.PropTypes.string,
 	  onSort: _react.PropTypes.func,
 	  onSelectAllRow: _react.PropTypes.func,
@@ -3780,9 +3795,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _this2 = this;
 
 	      var _props2 = this.props;
+	      var currPage = _props2.currPage;
 	      var dataSize = _props2.dataSize;
 	      var sizePerPage = _props2.sizePerPage;
 	      var sizePerPageList = _props2.sizePerPageList;
+	      var paginationShowsTotal = _props2.paginationShowsTotal;
 
 	      this.totalPages = Math.ceil(dataSize / sizePerPage);
 	      var pageBtns = this.makePage();
@@ -3805,6 +3822,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	          )
 	        );
 	      });
+	      var total = paginationShowsTotal ? _react2['default'].createElement(
+	        'span',
+	        null,
+	        'Showing rows ',
+	        (currPage - 1) * sizePerPage + 1,
+	        ' to ',
+	        Math.min(currPage * sizePerPage, dataSize),
+	        ' of ',
+	        dataSize
+	      ) : null;
 
 	      return _react2['default'].createElement(
 	        'div',
@@ -3815,8 +3842,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _react2['default'].createElement(
 	            'div',
 	            { className: 'col-md-6' },
+	            total,
+	            ' ',
 	            _react2['default'].createElement(
-	              'div',
+	              'span',
 	              { className: 'dropdown' },
 	              _react2['default'].createElement(
 	                'button',
@@ -3849,11 +3878,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	          )
 	        ) : _react2['default'].createElement(
 	          'div',
-	          { className: 'col-md-12' },
+	          null,
 	          _react2['default'].createElement(
-	            'ul',
-	            { className: 'pagination', style: pageListStyle },
-	            pageBtns
+	            'div',
+	            { className: 'col-md-6' },
+	            total
+	          ),
+	          _react2['default'].createElement(
+	            'div',
+	            { className: 'col-md-6' },
+	            _react2['default'].createElement(
+	              'ul',
+	              { className: 'pagination', style: pageListStyle },
+	              pageBtns
+	            )
 	          )
 	        )
 	      );
@@ -3931,6 +3969,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  dataSize: _react.PropTypes.number,
 	  changePage: _react.PropTypes.func,
 	  sizePerPageList: _react.PropTypes.array,
+	  paginationShowsTotal: _react.PropTypes.bool,
 	  paginationSize: _react.PropTypes.number,
 	  remote: _react.PropTypes.bool,
 	  onSizePerPageList: _react.PropTypes.func,
