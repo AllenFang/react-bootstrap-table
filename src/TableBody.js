@@ -32,7 +32,10 @@ class TableBody extends Component {
 
     const tableRows = this.props.data.map(function(data, r) {
       const tableColumns = this.props.columns.map(function(column, i) {
-        const fieldValue = data[column.name];
+        const fieldValue = typeof column.dataAccess === 'function' ?
+          column.dataAccess(data) :
+          data[column.name];
+
         if (this.editing &&
           column.name !== this.props.keyField && // Key field can't be edit
           column.editable && // column is editable? default is true, user can set it false

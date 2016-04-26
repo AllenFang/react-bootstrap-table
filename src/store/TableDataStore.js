@@ -386,7 +386,9 @@ export class TableDataStore {
       let valid = true;
       let filterVal;
       for (const key in filterObj) {
-        let targetVal = row[key];
+        let targetVal = typeof this.colInfos[key].dataAccess === 'function' ?
+          this.colInfos[key].dataAccess(row) :
+          row[key];
         if (targetVal === null) return false;
 
         switch (filterObj[key].type) {
