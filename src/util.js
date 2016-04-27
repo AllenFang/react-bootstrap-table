@@ -9,7 +9,7 @@ export default {
     });
     return (
       <span className={ orderClass }>
-        <span className='caret' style={ { margin: '0px 5px' } }></span>
+        <span className='caret' style={ { margin: '10px 5px' } }></span>
       </span>
     );
   },
