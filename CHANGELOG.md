@@ -1,3 +1,18 @@
+<a name="v2.1.5"></a>
+# [v2.1.5](https://github.com/AllenFang/react-bootstrap-table/compare/v2.1.4...v2.1.5) (2016-04-26)
+### Features
+* Support position and total pages([8c6393b](https://github.com/AllenFang/react-bootstrap-table/commit/8c6393b93bfb6ca814d5f650a4160734cc429369))
+	* Enable ```paginationShowsTotal``` in ```options``` props
+	* check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/pagination/custom-pagination-table.js#L33)
+
+### Enhancement
+* Allow developer to define inline styling on ```react-bootstrap-table```([e60e607](https://github.com/AllenFang/react-bootstrap-table/commit/e60e607ca8a01ec89cd728196f083636bd7f99bf))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/style/inline-style-table.js)
+	* ```containerStyle``` props is corresponding to the ```react-bs-table-container``` class.
+	* ```tableStyle``` props is corresponding to the ```react-bs-table``` class.
+	* ```headerStyle``` props is corresponding to the ```react-bs-container-header``` class.
+	* ```bodyStyle``` props is corresponding to the ```react-bs-container-body``` class.
+
 <a name="v2.1.4"></a>
 # [v2.1.4](https://github.com/AllenFang/react-bootstrap-table/compare/v2.1.3...v2.1.4) (2016-04-15)
 ### Bug fixes
