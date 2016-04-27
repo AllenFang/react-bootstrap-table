@@ -19,7 +19,7 @@ class RegexFilter extends Component {
   }
 
   componentDidMount() {
-    const value = this.refs.inputText.defaultValue;
+    const value = this.refs.inputText.value;
     if (value) {
       this.props.filterHandler(value, Const.FILTER_TYPE.REGEX);
     }
