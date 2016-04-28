@@ -19,6 +19,8 @@ export default {
   SHOW_ONLY_SELECT: 'Show Selected Only',
   SHOW_ALL: 'Show All',
   EXPORT_CSV_TEXT: 'Export to CSV',
+  INSERT_BTN_TEXT: 'New',
+  DELETE_BTN_TEXT: 'Delete',
   FILTER_DELAY: 500,
   FILTER_TYPE: {
     TEXT: 'TextFilter',

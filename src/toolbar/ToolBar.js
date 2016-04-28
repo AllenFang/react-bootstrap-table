@@ -192,7 +192,7 @@ class ToolBar extends Component {
           className='btn btn-info react-bs-table-add-btn'
           data-toggle='modal'
           data-target={ '.' + this.modalClassName }>
-          <i className='glyphicon glyphicon-plus'></i> New
+          <i className='glyphicon glyphicon-plus'></i> { this.props.insertText }
         </button>
       );
     }
@@ -205,7 +205,7 @@ class ToolBar extends Component {
           data-placement='right'
           title='Drop selected row'
           onClick={ this.handleDropRowBtnClick }>
-          <i className='glyphicon glyphicon-trash'></i> Delete
+          <i className='glyphicon glyphicon-trash'></i> { this.props.deleteText }
         </button>
       );
     }
@@ -372,6 +372,8 @@ ToolBar.propTypes = {
   columns: PropTypes.array,
   searchPlaceholder: PropTypes.string,
   exportCSVText: PropTypes.string,
+  insertText: PropTypes.string,
+  deleteText: PropTypes.string,
   clearSearch: PropTypes.bool,
   ignoreEditable: PropTypes.bool
 };
@@ -382,7 +384,10 @@ ToolBar.defaultProps = {
   enableSearch: false,
   enableShowOnlySelected: false,
   clearSearch: false,
-  ignoreEditable: false
+  ignoreEditable: false,
+  exportCSVText: Const.EXPORT_CSV_TEXT,
+  insertText: Const.INSERT_BTN_TEXT,
+  deleteText: Const.DELETE_BTN_TEXT
 };
 
 export default ToolBar;
