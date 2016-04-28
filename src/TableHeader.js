@@ -30,15 +30,21 @@ class TableHeader extends Component {
     });
     let selectRowHeaderCol = null;
     if (!this.props.hideSelectColumn) selectRowHeaderCol = this.renderSelectRowHeader();
-    this._attachClearSortCaretFunc();
-
+    let i = 0;
     return (
       <div ref='container' className={ containerClasses } style={ this.props.style }>
         <table className={ tableClasses }>
           <thead>
             <tr ref='header'>
               { selectRowHeaderCol }
-              { this.props.children }
+              {
+                React.Children.map(this.props.children, (elm) => {
+                  const { sortIndicator, sortName, sortOrder, onSort } = this.props;
+                  const { dataField, dataSort } = elm.props;
+                  const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
+                  return React.cloneElement(elm, { key: i++, onSort, sort, sortIndicator });
+                })
+              }
             </tr>
           </thead>
         </table>
@@ -59,25 +65,6 @@ class TableHeader extends Component {
       );
     } else {
       return null;
-    }
-  }
-
-  _attachClearSortCaretFunc() {
-    const { sortIndicator, children, sortName, sortOrder, onSort } = this.props;
-    if (Array.isArray(children)) {
-      for (let i = 0; i < children.length; i++) {
-        const { dataField, dataSort } = children[i].props;
-        const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
-        this.props.children[i] =
-          React.cloneElement(children[i],
-            { key: i, onSort, sort, sortIndicator });
-      }
-    } else {
-      const { dataField, dataSort } = children.props;
-      const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
-      this.props.children =
-        React.cloneElement(children,
-          { key: 0, onSort, sort, sortIndicator });
     }
   }
 }
