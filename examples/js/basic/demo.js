@@ -1,6 +1,7 @@
 /* eslint max-len: 0 */
 import React from 'react';
 import BasicTable from './basic-table';
+import SingleColumnTable from './single-column-table';
 import HoverStripedTable from './hover-striped-table';
 import BorderlessTable from './borderless-table';
 import ScrollTable from './scroll-table';
@@ -17,6 +18,10 @@ class Demo extends React.Component {
         <Panel header={ 'A basic react-bootstrap-table' }>
           { renderLinks('basic/basic-table.js') }
           <BasicTable/>
+        </Panel>
+        <Panel header={ 'A Single Column react-bootstrap-table' }>
+          { renderLinks('basic/single-column-table.js') }
+          <SingleColumnTable/>
         </Panel>
         <Panel header={ 'Table hover, striped and condensed Example' }>
           { renderLinks('basic/hover-striped-table.js') }
