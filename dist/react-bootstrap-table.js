@@ -888,6 +888,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            columns: columns,
 	            searchPlaceholder: this.props.searchPlaceholder,
 	            exportCSVText: this.props.options.exportCSVText,
+	            insertText: this.props.options.insertText,
+	            deleteText: this.props.options.deleteText,
 	            ignoreEditable: this.props.options.ignoreEditable,
 	            onAddRow: this.handleAddRow,
 	            onDropRow: this.handleDropRow,
@@ -1006,7 +1008,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    firstPage: _react.PropTypes.string,
 	    lastPage: _react.PropTypes.string,
 	    searchDelayTime: _react.PropTypes.number,
-	    exportCSVText: _react.PropTypes.text,
+	    exportCSVText: _react.PropTypes.string,
+	    insertText: _react.PropTypes.string,
+	    deleteText: _react.PropTypes.string,
 	    ignoreEditable: _react.PropTypes.bool
 	  }),
 	  fetchInfo: _react.PropTypes.shape({
@@ -1082,6 +1086,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    lastPage: _Const2['default'].LAST_PAGE,
 	    searchDelayTime: undefined,
 	    exportCSVText: _Const2['default'].EXPORT_CSV_TEXT,
+	    insertText: _Const2['default'].INSERT_BTN_TEXT,
+	    deleteText: _Const2['default'].DELETE_BTN_TEXT,
 	    ignoreEditable: false
 	  },
 	  fetchInfo: {
@@ -1130,6 +1136,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  SHOW_ONLY_SELECT: 'Show Selected Only',
 	  SHOW_ALL: 'Show All',
 	  EXPORT_CSV_TEXT: 'Export to CSV',
+	  INSERT_BTN_TEXT: 'New',
+	  DELETE_BTN_TEXT: 'Delete',
 	  FILTER_DELAY: 500,
 	  FILTER_TYPE: {
 	    TEXT: 'TextFilter',
@@ -1231,6 +1239,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(TableHeader, [{
 	    key: 'render',
 	    value: function render() {
+	      var _this = this;
+
 	      var containerClasses = (0, _classnames2['default'])('react-bs-container-header', 'table-header-wrapper');
 	      var tableClasses = (0, _classnames2['default'])('table', 'table-hover', {
 	        'table-bordered': this.props.bordered,
@@ -1238,8 +1248,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	      var selectRowHeaderCol = null;
 	      if (!this.props.hideSelectColumn) selectRowHeaderCol = this.renderSelectRowHeader();
-	      this._attachClearSortCaretFunc();
-
+	      var i = 0;
 	      return _react2['default'].createElement(
 	        'div',
 	        { ref: 'container', className: containerClasses, style: this.props.style },
@@ -1253,7 +1262,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	              'tr',
 	              { ref: 'header' },
 	              selectRowHeaderCol,
-	              this.props.children
+	              _react2['default'].Children.map(this.props.children, function (elm) {
+	                var _props = _this.props;
+	                var sortIndicator = _props.sortIndicator;
+	                var sortName = _props.sortName;
+	                var sortOrder = _props.sortOrder;
+	                var onSort = _props.onSort;
+	                var _elm$props = elm.props;
+	                var dataField = _elm$props.dataField;
+	                var dataSort = _elm$props.dataSort;
+
+	                var sort = dataSort && dataField === sortName ? sortOrder : undefined;
+	                return _react2['default'].cloneElement(elm, { key: i++, onSort: onSort, sort: sort, sortIndicator: sortIndicator });
+	              })
 	            )
 	          )
 	        )
@@ -1274,34 +1295,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        );
 	      } else {
 	        return null;
-	      }
-	    }
-	  }, {
-	    key: '_attachClearSortCaretFunc',
-	    value: function _attachClearSortCaretFunc() {
-	      var _props = this.props;
-	      var sortIndicator = _props.sortIndicator;
-	      var children = _props.children;
-	      var sortName = _props.sortName;
-	      var sortOrder = _props.sortOrder;
-	      var onSort = _props.onSort;
-
-	      if (Array.isArray(children)) {
-	        for (var i = 0; i < children.length; i++) {
-	          var _children$i$props = children[i].props;
-	          var dataField = _children$i$props.dataField;
-	          var dataSort = _children$i$props.dataSort;
-
-	          var sort = dataSort && dataField === sortName ? sortOrder : undefined;
-	          this.props.children[i] = _react2['default'].cloneElement(children[i], { key: i, onSort: onSort, sort: sort, sortIndicator: sortIndicator });
-	        }
-	      } else {
-	        var _children$props = children.props;
-	        var dataField = _children$props.dataField;
-	        var dataSort = _children$props.dataSort;
-
-	        var sort = dataSort && dataField === sortName ? sortOrder : undefined;
-	        this.props.children = _react2['default'].cloneElement(children, { key: 0, onSort: onSort, sort: sort, sortIndicator: sortIndicator });
 	      }
 	    }
 	  }]);
@@ -4318,7 +4311,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            'data-toggle': 'modal',
 	            'data-target': '.' + this.modalClassName },
 	          _react2['default'].createElement('i', { className: 'glyphicon glyphicon-plus' }),
-	          ' New'
+	          ' ',
+	          this.props.insertText
 	        );
 	      }
 
@@ -4332,7 +4326,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            title: 'Drop selected row',
 	            onClick: this.handleDropRowBtnClick },
 	          _react2['default'].createElement('i', { className: 'glyphicon glyphicon-trash' }),
-	          ' Delete'
+	          ' ',
+	          this.props.deleteText
 	        );
 	      }
 
@@ -4551,6 +4546,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  columns: _react.PropTypes.array,
 	  searchPlaceholder: _react.PropTypes.string,
 	  exportCSVText: _react.PropTypes.string,
+	  insertText: _react.PropTypes.string,
+	  deleteText: _react.PropTypes.string,
 	  clearSearch: _react.PropTypes.bool,
 	  ignoreEditable: _react.PropTypes.bool
 	};
@@ -4561,7 +4558,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  enableSearch: false,
 	  enableShowOnlySelected: false,
 	  clearSearch: false,
-	  ignoreEditable: false
+	  ignoreEditable: false,
+	  exportCSVText: _Const2['default'].EXPORT_CSV_TEXT,
+	  insertText: _Const2['default'].INSERT_BTN_TEXT,
+	  deleteText: _Const2['default'].DELETE_BTN_TEXT
 	};
 
 	exports['default'] = ToolBar;
@@ -5341,7 +5341,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return _react2['default'].createElement(
 	      'span',
 	      { className: orderClass },
-	      _react2['default'].createElement('span', { className: 'caret', style: { margin: '0px 5px' } })
+	      _react2['default'].createElement('span', { className: 'caret', style: { margin: '10px 5px' } })
 	    );
 	  },
 
@@ -6425,7 +6425,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var comparator = this.refs.dateFilterComparator.value;
-	      var dateValue = this.refs.inputDate.defaultValue;
+	      var dateValue = this.refs.inputDate.value;
 	      if (comparator && dateValue) {
 	        this.props.filterHandler({ date: new Date(dateValue), comparator: comparator }, _Const2['default'].FILTER_TYPE.DATE);
 	      }
@@ -6543,7 +6543,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var defaultValue = this.refs.inputText.defaultValue;
+	      var defaultValue = this.refs.inputText.value;
 	      if (defaultValue) {
 	        this.props.filterHandler(defaultValue, _Const2['default'].FILTER_TYPE.TEXT);
 	      }
@@ -6643,7 +6643,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var value = this.refs.inputText.defaultValue;
+	      var value = this.refs.inputText.value;
 	      if (value) {
 	        this.props.filterHandler(value, _Const2['default'].FILTER_TYPE.REGEX);
 	      }
