@@ -9,6 +9,7 @@ import ExportCSVTable from './export-csv-table';
 import DeleteRowCustomComfirmTable from './del-row-custom-confirm';
 import SearchClearTable from './search-clear-table';
 import DebounceSearchTable from './debounce-search-table';
+import CustomButtonTextTable from './custom-btn-text-table';
 
 class Demo extends React.Component {
   render() {
@@ -89,6 +90,15 @@ class Demo extends React.Component {
             <div className='panel-body'>
               <h5>Source in /examples/js/manipulation/export-csv-table.js</h5>
               <ExportCSVTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>A Custom add/delete/exportcsv Button Text Example</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/manipulation/custom-btn-text-table.js</h5>
+              <CustomButtonTextTable />
             </div>
           </div>
         </div>
