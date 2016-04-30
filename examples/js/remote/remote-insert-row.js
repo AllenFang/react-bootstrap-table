@@ -11,7 +11,7 @@ export default class RemoteInsertRow extends React.Component {
       <BootstrapTable data={ this.props.data }
                       remote={ true }
                       insertRow={ true }
-                      options={ { onExportToCSV: this.props.onExportToCSV } }>
+                      options={ { onAddRow: this.props.onAddRow } }>
         <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
         <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
