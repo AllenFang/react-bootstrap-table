@@ -33,7 +33,7 @@ const exportCSV = function(data, keys, filename) {
   if (typeof window !== 'undefined') {
     saveAs(new Blob([ dataString ],
         { type: 'text/plain;charset=utf-8' }),
-        filename || 'spreadsheet.csv');
+        filename);
   }
 };
 

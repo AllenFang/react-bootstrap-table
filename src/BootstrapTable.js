@@ -67,7 +67,7 @@ class BootstrapTable extends Component {
       }
     });
 
-    const colInfos = this.getColumnsDescription(props).reduce(( prev, curr ) => {
+    this.colInfos = this.getColumnsDescription(props).reduce(( prev, curr ) => {
       prev[curr.name] = curr;
       return prev;
     }, {});
@@ -80,7 +80,7 @@ class BootstrapTable extends Component {
     this.store.setProps({
       isPagination: props.pagination,
       keyField: keyField,
-      colInfos: colInfos,
+      colInfos: this.colInfos,
       multiColumnSearch: props.multiColumnSearch,
       remote: this.isRemoteDataSource()
     });
@@ -140,23 +140,31 @@ class BootstrapTable extends Component {
 
     this.store.setData(nextProps.data.slice());
     let page = options.page || this.state.currPage;
-    const sizePerPage = options.sizePerPage || this.state.sizePerPage;
 
-    // #125
-    if (!options.page &&
-      page >= Math.ceil(nextProps.data.length / sizePerPage)) {
-      page = 1;
+    if (this.isRemoteDataSource()) {
+      this.setState({
+        data: nextProps.data.slice(),
+        currPage: page
+      });
+    } else {
+      const sizePerPage = options.sizePerPage || this.state.sizePerPage;
+
+      // #125
+      if (!options.page &&
+        page >= Math.ceil(nextProps.data.length / sizePerPage)) {
+        page = 1;
+      }
+      const sortInfo = this.store.getSortInfo();
+      const sortField = options.sortName || (sortInfo ? sortInfo.sortField : undefined);
+      const sortOrder = options.sortOrder || (sortInfo ? sortInfo.order : undefined);
+      if (sortField && sortOrder) this.store.sort(sortOrder, sortField);
+      const data = this.store.page(page, sizePerPage).get();
+      this.setState({
+        data,
+        currPage: page,
+        sizePerPage
+      });
     }
-    const sortInfo = this.store.getSortInfo();
-    const sortField = options.sortName || (sortInfo ? sortInfo.sortField : undefined);
-    const sortOrder = options.sortOrder || (sortInfo ? sortInfo.order : undefined);
-    if (sortField && sortOrder) this.store.sort(sortOrder, sortField);
-    const data = this.store.page(page, sizePerPage).get();
-    this.setState({
-      data,
-      currPage: page,
-      sizePerPage
-    });
 
     if (selectRow && selectRow.selected) {
       // set default select rows to store.
@@ -302,6 +310,11 @@ class BootstrapTable extends Component {
       this.props.options.onSortChange(sortField, order, this.props);
     }
 
+    if (this.isRemoteDataSource()) {
+      this.store.setSortInfo(order, sortField);
+      return;
+    }
+
     const result = this.store.sort(order, sortField).get();
     this.setState({
       data: result
@@ -314,15 +327,18 @@ class BootstrapTable extends Component {
       onPageChange(page, sizePerPage);
     }
 
+    this.setState({
+      currPage: page,
+      sizePerPage
+    });
+
     if (this.isRemoteDataSource()) {
       return;
     }
 
     const result = this.store.page(page, sizePerPage).get();
     this.setState({
-      data: result,
-      currPage: page,
-      sizePerPage
+      data: result
     });
   }
 
@@ -456,6 +472,19 @@ class BootstrapTable extends Component {
   }
 
   handleAddRow = newObj => {
+    const { onAddRow } = this.props.options;
+    if (onAddRow) {
+      const colInfos = this.store.getColInfos();
+      onAddRow(newObj, colInfos);
+    }
+
+    if (this.isRemoteDataSource()) {
+      if (this.props.options.afterInsertRow) {
+        this.props.options.afterInsertRow(newObj);
+      }
+      return null;
+    }
+
     try {
       this.store.add(newObj);
     } catch (e) {
@@ -499,10 +528,22 @@ class BootstrapTable extends Component {
   }
 
   deleteRow(dropRowKeys) {
-    let result;
-    this.store.remove(dropRowKeys);  // remove selected Row
+    const { onDeleteRow } = this.props.options;
+    if (onDeleteRow) {
+      onDeleteRow(dropRowKeys);
+    }
+
     this.store.setSelectedRowKey([]);  // clear selected row key
 
+    if (this.isRemoteDataSource()) {
+      if (this.props.options.afterDeleteRow) {
+        this.props.options.afterDeleteRow(dropRowKeys);
+      }
+      return;
+    }
+
+    this.store.remove(dropRowKeys);  // remove selected Row
+    let result;
     if (this.props.pagination) {
       const { sizePerPage } = this.state;
       const currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
@@ -527,6 +568,23 @@ class BootstrapTable extends Component {
   }
 
   handleFilterData = filterObj => {
+    const { onFilterChange } = this.props.options;
+    if (onFilterChange) {
+      const colInfos = this.store.getColInfos();
+      onFilterChange(filterObj, colInfos);
+    }
+
+    this.setState({
+      currPage: 1
+    });
+
+    if (this.isRemoteDataSource()) {
+      if (this.props.options.afterColumnFilter) {
+        this.props.options.afterColumnFilter(filterObj, this.store.getDataIgnoringPagination());
+      }
+      return;
+    }
+
     this.store.filter(filterObj);
 
     const sortObj = this.store.getSortInfo();
@@ -548,23 +606,53 @@ class BootstrapTable extends Component {
         this.store.getDataIgnoringPagination());
     }
     this.setState({
-      data: result,
-      currPage: 1
+      data: result
     });
   }
 
   handleExportCSV = () => {
-    const result = this.store.getDataIgnoringPagination();
+    let result = {};
+
+    const { onExportToCSV } = this.props.options;
+    if (onExportToCSV) {
+      result = onExportToCSV();
+    }
+
     const keys = [];
     this.props.children.map(function(column) {
       if (column.props.hidden === false) {
         keys.push(column.props.dataField);
       }
     });
+
+    if (this.isRemoteDataSource()) {
+      exportCSV(result, keys, this.props.csvFileName);
+      return;
+    }
+
+    result = this.store.getDataIgnoringPagination();
     exportCSV(result, keys, this.props.csvFileName);
   }
 
   handleSearch = searchText => {
+    const { onSearchChange } = this.props.options;
+    if (onSearchChange) {
+      const colInfos = this.store.getColInfos();
+      onSearchChange(searchText, colInfos, this.props.multiColumnSearch);
+    }
+
+    this.setState({
+      currPage: 1
+    });
+
+    if (this.isRemoteDataSource()) {
+      if (this.props.options.afterSearch) {
+        this.props.options.afterSearch(searchText, this.store.getDataIgnoringPagination());
+      }
+      return;
+    }
+
+
     this.store.search(searchText);
     let result;
     if (this.props.pagination) {
@@ -578,8 +666,7 @@ class BootstrapTable extends Component {
         this.store.getDataIgnoringPagination());
     }
     this.setState({
-      data: result,
-      currPage: 1
+      data: result
     });
   }
 
@@ -597,7 +684,7 @@ class BootstrapTable extends Component {
           <PaginationList
             ref='pagination'
             currPage={ this.state.currPage }
-            changePage={ this.handlePaginationData }
+            changePage={ this.handlePaginationData.bind(this) }
             sizePerPage={ this.state.sizePerPage }
             sizePerPageList={ options.sizePerPageList || Const.SIZE_PER_PAGE_LIST }
             paginationShowsTotal={ options.paginationShowsTotal }
@@ -619,10 +706,10 @@ class BootstrapTable extends Component {
     const { selectRow, insertRow, deleteRow, search, children } = this.props;
     const enableShowOnlySelected = selectRow && selectRow.showOnlySelected;
     if (enableShowOnlySelected
-        || insertRow
-        || deleteRow
-        || search
-        || this.props.exportCSV) {
+      || insertRow
+      || deleteRow
+      || search
+      || this.props.exportCSV) {
       let columns;
       if (Array.isArray(children)) {
         columns = children.map(function(column) {
@@ -678,8 +765,8 @@ class BootstrapTable extends Component {
     if (this.props.columnFilter) {
       return (
         <TableFilter columns={ columns }
-          rowSelectType={ this.props.selectRow.mode }
-          onFilter={ this.handleFilterData }/>
+                     rowSelectType={ this.props.selectRow.mode }
+                     onFilter={ this.handleFilterData }/>
       );
     } else {
       return null;
@@ -821,6 +908,10 @@ BootstrapTable.propTypes = {
     onSortChange: PropTypes.func,
     onPageChange: PropTypes.func,
     onSizePerPageList: PropTypes.func,
+    onFilterChange: React.PropTypes.func,
+    onSearchChange: React.PropTypes.func,
+    onAddRow: React.PropTypes.func,
+    onExportToCSV: React.PropTypes.func,
     noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
     handleConfirmDeleteRow: PropTypes.func,
     prePage: PropTypes.string,
@@ -914,7 +1005,7 @@ BootstrapTable.defaultProps = {
     dataTotalSize: 0
   },
   exportCSV: false,
-  csvFileName: undefined
+  csvFileName: 'spreadsheet.csv'
 };
 
 export default BootstrapTable;

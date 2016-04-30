@@ -64,6 +64,9 @@ class App extends React.Component {
       text: 'Table Styling',
       href: 'style'
     }, {
+      text: 'Remote Data',
+      href: 'remote'
+    }, {
       text: 'Advance data edit&insert',
       href: 'advance'
     }, {
