@@ -1,3 +1,15 @@
+<a name="v2.2.0"></a>
+# [v2.2.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.1.5...v2.2.0) (2016-04-29)
+### Bug fixes
+* Fix default value on filter are broken when upgrade to ```react@15.0.0```([b455582](https://github.com/AllenFang/react-bootstrap-table/commit/b455582c736d77aeb739ffb3d8c1815c7cb79442))
+* Fix column header pulse when sorting([4ec7521](https://github.com/AllenFang/react-bootstrap-table/commit/4ec75213627e0dd1a651e13ae9fde2276041612f))
+* Fix Cannot assign to read only property 'children' of object '#<Object>' on single column table([3a95495](https://github.com/AllenFang/react-bootstrap-table/commit/3a95495e5886b84fce9c8c4f484c745ef9351413))
+
+### Features
+* Compatible on both ```react@0.14.x``` and ```react@15.x```([8487ea7](https://github.com/AllenFang/react-bootstrap-table/pull/423/commits/8487ea7997815edd951f23af1ddb47f227a1dde4))
+* Customization text on Delete and Insert row button([0f2e6b7](https://github.com/AllenFang/react-bootstrap-table/commit/0f2e6b7735e423586f31b80a091a173fd7bf952a))
+	* [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/manipulation/custom-btn-text-table.js)
+
 <a name="v2.1.5"></a>
 # [v2.1.5](https://github.com/AllenFang/react-bootstrap-table/compare/v2.1.4...v2.1.5) (2016-04-26)
 ### Features
