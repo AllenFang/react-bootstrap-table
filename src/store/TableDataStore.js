@@ -61,11 +61,26 @@ export class TableDataStore {
 
   setData(data) {
     this.data = data;
+    if (this.remote) {
+      return;
+    }
+
     this._refresh();
+  }
+
+  getColInfos() {
+    return this.colInfos;
   }
 
   getSortInfo() {
     return this.sortObj;
+  }
+
+  setSortInfo(order, sortField) {
+    this.sortObj = {
+      order: order,
+      sortField: sortField
+    };
   }
 
   setSelectedRowKey(selectedRowKeys) {
@@ -105,7 +120,7 @@ export class TableDataStore {
   }
 
   sort(order, sortField) {
-    this.sortObj = { order, sortField };
+    this.setSortInfo(order, sortField);
 
     let currentDisplayData = this.getCurrentDisplayData();
     if (!this.colInfos[sortField]) return this;
@@ -499,8 +514,8 @@ export class TableDataStore {
 
   isEmpty() {
     return (this.data.length === 0 ||
-      this.data === null ||
-      this.data === undefined);
+    this.data === null ||
+    this.data === undefined);
   }
 
   getAllRowkey() {

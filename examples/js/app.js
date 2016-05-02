@@ -30,6 +30,7 @@ const routes = (
         <Route path='advance' component={ require('./advance/demo') } />
         <Route path='others' component={ require('./others/demo') } />
         <Route path='complex' component={ require('./complex/demo') } />
+        <Route path='remote' component={ require('./remote/demo') } />
       </Route>
       <Route path='*' component={ PageNotFound }/>
     </Route>
