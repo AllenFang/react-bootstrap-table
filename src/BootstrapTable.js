@@ -125,6 +125,7 @@ class BootstrapTable extends Component {
         hidden: column.props.hidden,
         searchable: column.props.searchable,
         className: column.props.columnClassName,
+        columnTitle: column.props.columnTitle,
         width: column.props.width,
         text: column.props.children,
         sortFunc: column.props.sortFunc,

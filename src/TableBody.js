@@ -63,6 +63,7 @@ class TableBody extends Component {
         } else {
           // add by bluespring for className customize
           let columnChild = fieldValue;
+          let columnTitle = null;
           let tdClassName = column.className;
           if (isFun(column.className)) {
             tdClassName = column.className(fieldValue, data, r, i);
@@ -76,12 +77,16 @@ class TableBody extends Component {
               );
             } else {
               columnChild = formattedValue;
+              columnTitle = column.columnTitle ? formattedValue.toString() : null;
             }
+          } else {
+            columnTitle = column.columnTitle ? fieldValue.toString() : null;
           }
           return (
             <TableColumn key={ i }
               dataAlign={ column.align }
               className={ tdClassName }
+              columnTitle={ columnTitle }
               cellEdit={ this.props.cellEdit }
               hidden={ column.hidden }
               onEdit={ this.handleEditCell }
