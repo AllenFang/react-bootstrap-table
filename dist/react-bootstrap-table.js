@@ -156,6 +156,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _this.props.options.onSortChange(sortField, order, _this.props);
 	      }
 
+	      if (_this.isRemoteDataSource()) {
+	        _this.store.setSortInfo(order, sortField);
+	        return;
+	      }
+
 	      var result = _this.store.sort(order, sortField).get();
 	      _this.setState({
 	        data: result
@@ -169,15 +174,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        onPageChange(page, sizePerPage);
 	      }
 
+	      _this.setState({
+	        currPage: page,
+	        sizePerPage: sizePerPage
+	      });
+
 	      if (_this.isRemoteDataSource()) {
 	        return;
 	      }
 
 	      var result = _this.store.page(page, sizePerPage).get();
 	      _this.setState({
-	        data: result,
-	        currPage: page,
-	        sizePerPage: sizePerPage
+	        data: result
 	      });
 	    };
 
@@ -274,6 +282,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    this.handleAddRow = function (newObj) {
+	      var onAddRow = _this.props.options.onAddRow;
+
+	      if (onAddRow) {
+	        var colInfos = _this.store.getColInfos();
+	        onAddRow(newObj, colInfos);
+	      }
+
+	      if (_this.isRemoteDataSource()) {
+	        if (_this.props.options.afterInsertRow) {
+	          _this.props.options.afterInsertRow(newObj);
+	        }
+	        return null;
+	      }
+
 	      try {
 	        _this.store.add(newObj);
 	      } catch (e) {
@@ -312,6 +334,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    this.handleFilterData = function (filterObj) {
+	      var onFilterChange = _this.props.options.onFilterChange;
+
+	      if (onFilterChange) {
+	        var colInfos = _this.store.getColInfos();
+	        onFilterChange(filterObj, colInfos);
+	      }
+
+	      _this.setState({
+	        currPage: 1
+	      });
+
+	      if (_this.isRemoteDataSource()) {
+	        if (_this.props.options.afterColumnFilter) {
+	          _this.props.options.afterColumnFilter(filterObj, _this.store.getDataIgnoringPagination());
+	        }
+	        return;
+	      }
+
 	      _this.store.filter(filterObj);
 
 	      var sortObj = _this.store.getSortInfo();
@@ -333,23 +373,54 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _this.props.options.afterColumnFilter(filterObj, _this.store.getDataIgnoringPagination());
 	      }
 	      _this.setState({
-	        data: result,
-	        currPage: 1
+	        data: result
 	      });
 	    };
 
 	    this.handleExportCSV = function () {
-	      var result = _this.store.getDataIgnoringPagination();
+	      var result = {};
+
+	      var onExportToCSV = _this.props.options.onExportToCSV;
+
+	      if (onExportToCSV) {
+	        result = onExportToCSV();
+	      }
+
 	      var keys = [];
 	      _this.props.children.map(function (column) {
 	        if (column.props.hidden === false) {
 	          keys.push(column.props.dataField);
 	        }
 	      });
+
+	      if (_this.isRemoteDataSource()) {
+	        (0, _csv_export_util2['default'])(result, keys, _this.props.csvFileName);
+	        return;
+	      }
+
+	      result = _this.store.getDataIgnoringPagination();
 	      (0, _csv_export_util2['default'])(result, keys, _this.props.csvFileName);
 	    };
 
 	    this.handleSearch = function (searchText) {
+	      var onSearchChange = _this.props.options.onSearchChange;
+
+	      if (onSearchChange) {
+	        var colInfos = _this.store.getColInfos();
+	        onSearchChange(searchText, colInfos, _this.props.multiColumnSearch);
+	      }
+
+	      _this.setState({
+	        currPage: 1
+	      });
+
+	      if (_this.isRemoteDataSource()) {
+	        if (_this.props.options.afterSearch) {
+	          _this.props.options.afterSearch(searchText, _this.store.getDataIgnoringPagination());
+	        }
+	        return;
+	      }
+
 	      _this.store.search(searchText);
 	      var result = undefined;
 	      if (_this.props.pagination) {
@@ -363,8 +434,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _this.props.options.afterSearch(searchText, _this.store.getDataIgnoringPagination());
 	      }
 	      _this.setState({
-	        data: result,
-	        currPage: 1
+	        data: result
 	      });
 	    };
 
@@ -470,7 +540,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      });
 
-	      var colInfos = this.getColumnsDescription(props).reduce(function (prev, curr) {
+	      this.colInfos = this.getColumnsDescription(props).reduce(function (prev, curr) {
 	        prev[curr.name] = curr;
 	        return prev;
 	      }, {});
@@ -482,7 +552,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.store.setProps({
 	        isPagination: props.pagination,
 	        keyField: keyField,
-	        colInfos: colInfos,
+	        colInfos: this.colInfos,
 	        multiColumnSearch: props.multiColumnSearch,
 	        remote: this.isRemoteDataSource()
 	      });
@@ -551,22 +621,30 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.store.setData(nextProps.data.slice());
 	      var page = options.page || this.state.currPage;
-	      var sizePerPage = options.sizePerPage || this.state.sizePerPage;
 
-	      // #125
-	      if (!options.page && page >= Math.ceil(nextProps.data.length / sizePerPage)) {
-	        page = 1;
+	      if (this.isRemoteDataSource()) {
+	        this.setState({
+	          data: nextProps.data.slice(),
+	          currPage: page
+	        });
+	      } else {
+	        var sizePerPage = options.sizePerPage || this.state.sizePerPage;
+
+	        // #125
+	        if (!options.page && page >= Math.ceil(nextProps.data.length / sizePerPage)) {
+	          page = 1;
+	        }
+	        var sortInfo = this.store.getSortInfo();
+	        var sortField = options.sortName || (sortInfo ? sortInfo.sortField : undefined);
+	        var sortOrder = options.sortOrder || (sortInfo ? sortInfo.order : undefined);
+	        if (sortField && sortOrder) this.store.sort(sortOrder, sortField);
+	        var data = this.store.page(page, sizePerPage).get();
+	        this.setState({
+	          data: data,
+	          currPage: page,
+	          sizePerPage: sizePerPage
+	        });
 	      }
-	      var sortInfo = this.store.getSortInfo();
-	      var sortField = options.sortName || (sortInfo ? sortInfo.sortField : undefined);
-	      var sortOrder = options.sortOrder || (sortInfo ? sortInfo.order : undefined);
-	      if (sortField && sortOrder) this.store.sort(sortOrder, sortField);
-	      var data = this.store.page(page, sizePerPage).get();
-	      this.setState({
-	        data: data,
-	        currPage: page,
-	        sizePerPage: sizePerPage
-	      });
 
 	      if (selectRow && selectRow.selected) {
 	        // set default select rows to store.
@@ -776,10 +854,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'deleteRow',
 	    value: function deleteRow(dropRowKeys) {
-	      var result = undefined;
-	      this.store.remove(dropRowKeys); // remove selected Row
+	      var onDeleteRow = this.props.options.onDeleteRow;
+
+	      if (onDeleteRow) {
+	        onDeleteRow(dropRowKeys);
+	      }
+
 	      this.store.setSelectedRowKey([]); // clear selected row key
 
+	      if (this.isRemoteDataSource()) {
+	        if (this.props.options.afterDeleteRow) {
+	          this.props.options.afterDeleteRow(dropRowKeys);
+	        }
+	        return;
+	      }
+
+	      this.store.remove(dropRowKeys); // remove selected Row
+	      var result = undefined;
 	      if (this.props.pagination) {
 	        var sizePerPage = this.state.sizePerPage;
 
@@ -822,7 +913,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _react2['default'].createElement(_paginationPaginationList2['default'], {
 	            ref: 'pagination',
 	            currPage: this.state.currPage,
-	            changePage: this.handlePaginationData,
+	            changePage: this.handlePaginationData.bind(this),
 	            sizePerPage: this.state.sizePerPage,
 	            sizePerPageList: options.sizePerPageList || _Const2['default'].SIZE_PER_PAGE_LIST,
 	            paginationShowsTotal: options.paginationShowsTotal,
@@ -1001,6 +1092,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    onSortChange: _react.PropTypes.func,
 	    onPageChange: _react.PropTypes.func,
 	    onSizePerPageList: _react.PropTypes.func,
+	    onFilterChange: _react2['default'].PropTypes.func,
+	    onSearchChange: _react2['default'].PropTypes.func,
+	    onAddRow: _react2['default'].PropTypes.func,
+	    onExportToCSV: _react2['default'].PropTypes.func,
 	    noDataText: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object]),
 	    handleConfirmDeleteRow: _react.PropTypes.func,
 	    prePage: _react.PropTypes.string,
@@ -1094,7 +1189,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    dataTotalSize: 0
 	  },
 	  exportCSV: false,
-	  csvFileName: undefined
+	  csvFileName: 'spreadsheet.csv'
 	};
 
 	exports['default'] = BootstrapTable;
@@ -4787,12 +4882,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'setData',
 	    value: function setData(data) {
 	      this.data = data;
+	      if (this.remote) {
+	        return;
+	      }
+
 	      this._refresh();
+	    }
+	  }, {
+	    key: 'getColInfos',
+	    value: function getColInfos() {
+	      return this.colInfos;
 	    }
 	  }, {
 	    key: 'getSortInfo',
 	    value: function getSortInfo() {
 	      return this.sortObj;
+	    }
+	  }, {
+	    key: 'setSortInfo',
+	    value: function setSortInfo(order, sortField) {
+	      this.sortObj = {
+	        order: order,
+	        sortField: sortField
+	      };
 	    }
 	  }, {
 	    key: 'setSelectedRowKey',
@@ -4841,7 +4953,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'sort',
 	    value: function sort(order, sortField) {
-	      this.sortObj = { order: order, sortField: sortField };
+	      this.setSortInfo(order, sortField);
 
 	      var currentDisplayData = this.getCurrentDisplayData();
 	      if (!this.colInfos[sortField]) return this;
@@ -4957,6 +5069,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          var filterVal = undefined;
 	          for (var key in filterObj) {
 	            var targetVal = row[key];
+	            if (targetVal === null) return false;
 
 	            switch (filterObj[key].type) {
 	              case _Const2['default'].FILTER_TYPE.NUMBER:
@@ -5424,7 +5537,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var exportCSV = function exportCSV(data, keys, filename) {
 	  var dataString = toString(data, keys);
 	  if (typeof window !== 'undefined') {
-	    saveAs(new Blob([dataString], { type: 'text/plain;charset=utf-8' }), filename || 'spreadsheet.csv');
+	    saveAs(new Blob([dataString], { type: 'text/plain;charset=utf-8' }), filename);
 	  }
 	};
 
