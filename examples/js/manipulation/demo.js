@@ -89,6 +89,7 @@ class Demo extends React.Component {
             <div className='panel-heading'>Export CSV Example</div>
             <div className='panel-body'>
               <h5>Source in /examples/js/manipulation/export-csv-table.js</h5>
+              <h5><b>You can use <code>csvFormat</code> to format cell when exporting.</b></h5>
               <ExportCSVTable />
             </div>
           </div>

@@ -20,12 +20,17 @@ function addProducts(quantity) {
 addProducts(5);
 
 export default class ExportCSVTable extends React.Component {
+
+  csvFormatter(cell) {
+    return cell + ' USD';
+  }
+
   render() {
     return (
       <BootstrapTable data={ products } exportCSV={ true }>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
+          <TableHeaderColumn dataField='price' csvFormat={ this.csvFormatter }>Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
   }
