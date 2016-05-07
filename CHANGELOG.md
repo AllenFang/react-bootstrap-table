@@ -1,3 +1,12 @@
+<a name="v2.3.0"></a>
+# [v2.3.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.2.0...v2.3.0) (2016-05-04)
+### Bug fixes
+* Fix filters doesn't work when the column contains null values([2199431](https://github.com/AllenFang/react-bootstrap-table/commit/21994312daa042e0cfc1aea911d4811eb6909e8d))
+
+### Features
+* Support remote data([818f11b](https://github.com/AllenFang/react-bootstrap-table/commit/818f11befa5c30b3e9e1180d612c10aafa9e54bb))
+	* Check [examples](https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/remote)
+
 <a name="v2.2.0"></a>
 # [v2.2.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.1.5...v2.2.0) (2016-04-29)
 ### Bug fixes
