@@ -74,7 +74,10 @@ class TableColumn extends Component {
       }
     }
     return (
-      <td style={ tdStyle } className={ this.props.className } { ...opts }>
+      <td style={ tdStyle }
+          title={ this.props.columnTitle }
+          className={ this.props.className }
+          { ...opts }>
         { this.props.children }
       </td>
     );
@@ -84,6 +87,7 @@ TableColumn.propTypes = {
   dataAlign: PropTypes.string,
   hidden: PropTypes.bool,
   className: PropTypes.string,
+  columnTitle: PropTypes.string,
   children: PropTypes.node
 };
 

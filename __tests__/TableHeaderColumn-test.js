@@ -30,6 +30,7 @@ describe('TableHeaderColumn Test', function() {
     expect(idHeaderColumn.props.children).toEqual("Product ID");
     expect(idHeaderColumn.props.dataAlign).toEqual("left");
     expect(idHeaderColumn.props.dataSort).toEqual(false);
+    expect(idHeaderColumn.props.columnTitle).toEqual(false);
     expect(idHeaderColumn.props.dataFormat).toBe(undefined);
     expect(idHeaderColumn.props.isKey).toBe(true);
 
@@ -60,6 +61,7 @@ describe('TableHeaderColumn Test', function() {
     expect(idHeaderColumn.props.children).toEqual("Product ID");
     expect(idHeaderColumn.props.dataAlign).toEqual("center");
     expect(idHeaderColumn.props.dataSort).toEqual(false);
+    expect(idHeaderColumn.props.columnTitle).toEqual(false);
     expect(idHeaderColumn.props.dataFormat).toBe(undefined);
     expect(idHeaderColumn.props.isKey).toBe(false);
 
@@ -77,6 +79,7 @@ describe('TableHeaderColumn Test', function() {
     expect(idHeaderColumn.props.children).toEqual("Product ID");
     expect(idHeaderColumn.props.dataAlign).toEqual("left");
     expect(idHeaderColumn.props.dataSort).toEqual(false);
+    expect(idHeaderColumn.props.columnTitle).toEqual(false);
     expect(idHeaderColumn.props.dataFormat).toBe(undefined);
     expect(idHeaderColumn.props.isKey).toBe(true);
   });
@@ -94,10 +97,25 @@ describe('TableHeaderColumn Test', function() {
     expect(idHeaderColumn.props.children).toEqual("Product ID");
     expect(idHeaderColumn.props.dataAlign).toEqual("left");
     expect(idHeaderColumn.props.dataSort).toEqual(false);
+    expect(idHeaderColumn.props.columnTitle).toEqual(false);
     expect(idHeaderColumn.props.dataFormat).toEqual(priceFormatter);
     expect(idHeaderColumn.props.isKey).toBe(false);
   });
 
+  it('A columnTitle header column test', function(){
+    var idHeaderColumn = TestUtils.renderIntoDocument(
+      <TableHeaderColumn dataField="id" columnTitle={ true }>Product ID</TableHeaderColumn>
+    );
+
+    expect(idHeaderColumn.props.dataField).toEqual("id");
+    expect(idHeaderColumn.props.children).toEqual("Product ID");
+    expect(idHeaderColumn.props.dataAlign).toEqual("left");
+    expect(idHeaderColumn.props.dataSort).toEqual(false);
+    expect(idHeaderColumn.props.columnTitle).toEqual(true);
+    expect(idHeaderColumn.props.dataFormat).toEqual(undefined);
+    expect(idHeaderColumn.props.isKey).toBe(false);
+  });
+  
   it('A sort header column test', function(){
     var idHeaderColumn = TestUtils.renderIntoDocument(
       <TableHeaderColumn dataField="id" dataSort={true}>Product ID</TableHeaderColumn>
