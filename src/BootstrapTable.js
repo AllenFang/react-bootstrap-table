@@ -622,7 +622,10 @@ class BootstrapTable extends Component {
     const keys = [];
     this.props.children.map(function(column) {
       if (column.props.hidden === false) {
-        keys.push(column.props.dataField);
+        keys.push({
+          field: column.props.dataField,
+          format: column.props.csvFormat
+        });
       }
     });
 

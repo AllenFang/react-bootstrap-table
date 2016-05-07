@@ -13,11 +13,13 @@ function toString(data, keys) {
   let dataString = '';
   if (data.length === 0) return dataString;
 
-  dataString += keys.join(',') + '\n';
+  dataString += keys.map(x => x.field).join(',') + '\n';
 
   data.map(function(row) {
     keys.map(function(col, i) {
-      const cell = typeof row[col] !== 'undefined' ? ('"' + row[col] + '"') : '';
+      const { field, format } = col;
+      const value = typeof format !== 'undefined' ? format(row[field]) : row[field];
+      const cell = typeof value !== 'undefined' ? ('"' + value + '"') : '';
       dataString += cell;
       if (i + 1 < keys.length) dataString += ',';
     });
