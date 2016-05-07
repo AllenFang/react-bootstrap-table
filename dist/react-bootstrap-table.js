@@ -982,6 +982,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            exportCSVText: this.props.options.exportCSVText,
 	            insertText: this.props.options.insertText,
 	            deleteText: this.props.options.deleteText,
+							saveText: this.props.options.saveText,
+							closeText: this.props.options.closeText,
 	            ignoreEditable: this.props.options.ignoreEditable,
 	            onAddRow: this.handleAddRow,
 	            onDropRow: this.handleDropRow,
@@ -1107,6 +1109,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    exportCSVText: _react.PropTypes.string,
 	    insertText: _react.PropTypes.string,
 	    deleteText: _react.PropTypes.string,
+			saveText: _react.PropTypes.string,
+			closeText: _react.PropTypes.string,
 	    ignoreEditable: _react.PropTypes.bool
 	  }),
 	  fetchInfo: _react.PropTypes.shape({
@@ -1184,6 +1188,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    exportCSVText: _Const2['default'].EXPORT_CSV_TEXT,
 	    insertText: _Const2['default'].INSERT_BTN_TEXT,
 	    deleteText: _Const2['default'].DELETE_BTN_TEXT,
+			saveText: _Const2['default'].SAVE_BTN_TEXT,
+			closeText: _Const2['default'].CLOSE_BTN_TEXT,
 	    ignoreEditable: false
 	  },
 	  fetchInfo: {
@@ -1234,6 +1240,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  EXPORT_CSV_TEXT: 'Export to CSV',
 	  INSERT_BTN_TEXT: 'New',
 	  DELETE_BTN_TEXT: 'Delete',
+		SAVE_BTN_TEXT: 'Save',
+		CLOSE_BTN_TEXT: 'Close',
 	  FILTER_DELAY: 500,
 	  FILTER_TYPE: {
 	    TEXT: 'TextFilter',
@@ -4650,14 +4658,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                { type: 'button',
 	                  className: 'btn btn-default',
 	                  'data-dismiss': 'modal' },
-	                'Close'
+										this.props.closeText
 	              ),
 	              _react2['default'].createElement(
 	                'button',
 	                { type: 'button',
 	                  className: 'btn btn-info',
 	                  onClick: this.handleSaveBtnClick },
-	                'Save'
+										this.props.saveText
 	              )
 	            )
 	          )
@@ -4682,6 +4690,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  exportCSVText: _react.PropTypes.string,
 	  insertText: _react.PropTypes.string,
 	  deleteText: _react.PropTypes.string,
+		saveText: _react.PropTypes.string,
+		closeText: _react.PropTypes.string,
 	  clearSearch: _react.PropTypes.bool,
 	  ignoreEditable: _react.PropTypes.bool
 	};
@@ -4695,7 +4705,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  ignoreEditable: false,
 	  exportCSVText: _Const2['default'].EXPORT_CSV_TEXT,
 	  insertText: _Const2['default'].INSERT_BTN_TEXT,
-	  deleteText: _Const2['default'].DELETE_BTN_TEXT
+	  deleteText: _Const2['default'].DELETE_BTN_TEXT,
+		saveText: _Const2['default'].SAVE_BTN_TEXT,
+		closeText: _Const2['default'].CLOSE_BTN_TEXT
 	};
 
 	exports['default'] = ToolBar;
@@ -5610,7 +5622,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			return;
 		}
 		var doc = view.document,
-		   
+
 		// only get URL when necessary in case Blob.js hasn't overridden it yet
 		get_URL = function get_URL() {
 			return view.URL || view.webkitURL || view;
@@ -5631,7 +5643,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 		    force_saveable_type = "application/octet-stream",
 		    fs_min_size = 0,
-		   
+
 		// See https://code.google.com/p/chromium/issues/detail?id=375297#c7 and
 		// https://github.com/eligrey/FileSaver.js/commit/485930a#commitcomment-8768047
 		// for the reasoning behind the timeout and revocation flow
@@ -5687,7 +5699,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			    dispatch_all = function dispatch_all() {
 				dispatch(filesaver, "writestart progress write writeend".split(" "));
 			},
-			   
+
 			// on any filesys errors revert to saving with object URLs
 			fs_error = function fs_error() {
 				if (target_view && is_safari && typeof FileReader !== "undefined") {
