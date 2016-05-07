@@ -346,12 +346,12 @@ class ToolBar extends Component {
               <button type='button'
                 className='btn btn-default'
                 data-dismiss='modal'>
-                Close
+                { this.props.closeText }
               </button>
               <button type='button'
                 className='btn btn-info'
                 onClick={ this.handleSaveBtnClick }>
-                Save
+                { this.props.saveText }
               </button>
             </div>
           </div>
@@ -374,6 +374,8 @@ ToolBar.propTypes = {
   exportCSVText: PropTypes.string,
   insertText: PropTypes.string,
   deleteText: PropTypes.string,
+  saveText: PropTypes.string,
+  closeText: PropTypes.string,
   clearSearch: PropTypes.bool,
   ignoreEditable: PropTypes.bool
 };
@@ -387,7 +389,9 @@ ToolBar.defaultProps = {
   ignoreEditable: false,
   exportCSVText: Const.EXPORT_CSV_TEXT,
   insertText: Const.INSERT_BTN_TEXT,
-  deleteText: Const.DELETE_BTN_TEXT
+  deleteText: Const.DELETE_BTN_TEXT,
+  saveText: Const.SAVE_BTN_TEXT,
+  closeText: Const.CLOSE_BTN_TEXT
 };
 
 export default ToolBar;

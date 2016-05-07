@@ -21,6 +21,8 @@ export default {
   EXPORT_CSV_TEXT: 'Export to CSV',
   INSERT_BTN_TEXT: 'New',
   DELETE_BTN_TEXT: 'Delete',
+  SAVE_BTN_TEXT: 'Save',
+  CLOSE_BTN_TEXT: 'Close',
   FILTER_DELAY: 500,
   FILTER_TYPE: {
     TEXT: 'TextFilter',
