@@ -11,21 +11,19 @@ function _sort(arr, sortField, order, sortFunc, sortFuncExtraData) {
     if (sortFunc) {
       return sortFunc(a, b, order, sortField, sortFuncExtraData);
     } else {
+      const valueA = a[sortField] === null ? '' : a[sortField];
+      const valueB = b[sortField] === null ? '' : b[sortField];
       if (isDesc) {
-        if (b[sortField] === null) return false;
-        if (a[sortField] === null) return true;
-        if (typeof b[sortField] === 'string') {
-          return b[sortField].localeCompare(a[sortField]);
+        if (typeof valueB === 'string') {
+          return valueB.localeCompare(valueA);
         } else {
-          return a[sortField] > b[sortField] ? -1 : ((a[sortField] < b[sortField]) ? 1 : 0);
+          return valueA > valueB ? -1 : ((valueA < valueB) ? 1 : 0);
         }
       } else {
-        if (b[sortField] === null) return true;
-        if (a[sortField] === null) return false;
-        if (typeof a[sortField] === 'string') {
-          return a[sortField].localeCompare(b[sortField]);
+        if (typeof valueA === 'string') {
+          return valueA.localeCompare(valueB);
         } else {
-          return a[sortField] < b[sortField] ? -1 : ((a[sortField] > b[sortField]) ? 1 : 0);
+          return valueA < valueB ? -1 : ((valueA > valueB) ? 1 : 0);
         }
       }
     }
