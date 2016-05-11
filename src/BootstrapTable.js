@@ -147,7 +147,7 @@ class BootstrapTable extends Component {
     if (options.page !== 'undefined') {
       page = options.page;
     } else {
-      page = this.state.page;
+      page = this.state.currPage;
     }
 
     if (this.isRemoteDataSource()) {
