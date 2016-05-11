@@ -24,7 +24,9 @@ addProducts(5);
 const options = {
   exportCSVText: 'my_export',
   insertText: 'my_insert',
-  deleteText: 'my_delete'
+  deleteText: 'my_delete',
+  saveText: 'my_save',
+  closeText: 'my_close'
 };
 
 export default class InsertRowTable extends React.Component {
