@@ -32,7 +32,7 @@
     "react/sort-comp": 0,
     "react/jsx-no-bind": 0,
     "react/jsx-boolean-value": 0,
-
+    "eqeqeq": [2, "smart"],
     "quotes": [2, "single", "avoid-escape"],
     "jsx-quotes": [2, "prefer-single"],
     "comma-dangle": [2, "never"],

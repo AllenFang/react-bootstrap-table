@@ -144,7 +144,7 @@ class BootstrapTable extends Component {
     this.store.setData(nextProps.data.slice());
 
     let page;
-    if (options.page !== 'undefined') {
+    if (options.page != null) {
       page = options.page;
     } else {
       page = this.state.currPage;
@@ -399,7 +399,7 @@ class BootstrapTable extends Component {
         isSelected ? this.store.get() : []);
     }
 
-    if (typeof result === 'undefined' || result !== false) {
+    if (typeof result == 'undefined' || result !== false) {
       if (isSelected) {
         selectedRowKeys = this.store.getAllRowkey();
       }
