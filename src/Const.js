@@ -6,6 +6,7 @@ export default {
   LAST_PAGE: '>>',
   PRE_PAGE: '<',
   FIRST_PAGE: '<<',
+  PAGE_START_INDEX: 1,
   ROW_SELECT_BG_COLOR: '',
   ROW_SELECT_NONE: 'none',
   ROW_SELECT_SINGLE: 'radio',
