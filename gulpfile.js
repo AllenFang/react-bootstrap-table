@@ -70,6 +70,15 @@ gulp.task('example-server', function() {
     headers: {
       'Access-Control-Allow-Origin': '*'
     },
+    stats: {
+      assets: true,
+      colors: true,
+      version: false,
+      hash: false,
+      timings: true,
+      chunks: true,
+      chunkModules: false
+    },
     historyApiFallback: true
   }).listen(exampleConfig.serverConfig.port, 'localhost', function(err, result) {
     if (err) {
