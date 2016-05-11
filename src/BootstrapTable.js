@@ -699,7 +699,7 @@ class BootstrapTable extends Component {
           <PaginationList
             ref='pagination'
             currPage={ this.state.currPage }
-            changePage={ this.handlePaginationData.bind(this) }
+            changePage={ this.handlePaginationData }
             sizePerPage={ this.state.sizePerPage }
             sizePerPageList={ options.sizePerPageList || Const.SIZE_PER_PAGE_LIST }
             pageStartIndex={ options.pageStartIndex }
