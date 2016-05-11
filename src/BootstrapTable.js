@@ -142,7 +142,13 @@ class BootstrapTable extends Component {
     const { options, selectRow } = nextProps;
 
     this.store.setData(nextProps.data.slice());
-    let page = options.page || this.state.currPage;
+
+    let page;
+    if (options.page !== 'undefined') {
+      page = options.page;
+    } else {
+      page = this.state.page;
+    }
 
     if (this.isRemoteDataSource()) {
       this.setState({
