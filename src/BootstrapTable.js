@@ -39,7 +39,9 @@ class BootstrapTable extends Component {
 
     this.state = {
       data: this.getTableData(),
-      currPage: this.props.options.page || 1,
+      currPage: this.props.options.page ||
+                this.props.options.pageStartIndex ||
+                Const.PAGE_START_INDEX,
       sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
       selectedRowKeys: this.store.getSelectedRowKeys()
     };
@@ -411,7 +413,7 @@ class BootstrapTable extends Component {
     }
     this.setState({
       data: result,
-      currPage: 1
+      currPage: this.props.options.pageStartIndex || Const.PAGE_START_INDEX
     });
   }
 
@@ -585,7 +587,7 @@ class BootstrapTable extends Component {
     }
 
     this.setState({
-      currPage: 1
+      currPage: this.props.options.pageStartIndex || Const.PAGE_START_INDEX
     });
 
     if (this.isRemoteDataSource()) {
@@ -655,7 +657,7 @@ class BootstrapTable extends Component {
     }
 
     this.setState({
-      currPage: 1
+      currPage: this.props.options.pageStartIndex || Const.PAGE_START_INDEX
     });
 
     if (this.isRemoteDataSource()) {
