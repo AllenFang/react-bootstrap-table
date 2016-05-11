@@ -752,6 +752,8 @@ class BootstrapTable extends Component {
             exportCSVText={ this.props.options.exportCSVText }
             insertText={ this.props.options.insertText }
             deleteText={ this.props.options.deleteText }
+            saveText= { this.props.options.saveText }
+            closeText= { this.props.options.closeText }
             ignoreEditable={ this.props.options.ignoreEditable }
             onAddRow={ this.handleAddRow }
             onDropRow={ this.handleDropRow }
@@ -926,6 +928,8 @@ BootstrapTable.propTypes = {
     exportCSVText: PropTypes.string,
     insertText: PropTypes.string,
     deleteText: PropTypes.string,
+    saveText: PropTypes.string,
+    closeText: PropTypes.string,
     ignoreEditable: PropTypes.bool
   }),
   fetchInfo: PropTypes.shape({
@@ -1003,6 +1007,8 @@ BootstrapTable.defaultProps = {
     exportCSVText: Const.EXPORT_CSV_TEXT,
     insertText: Const.INSERT_BTN_TEXT,
     deleteText: Const.DELETE_BTN_TEXT,
+    saveText: Const.SAVE_BTN_TEXT,
+    closeText: Const.CLOSE_BTN_TEXT,
     ignoreEditable: false
   },
   fetchInfo: {
