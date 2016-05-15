@@ -1,3 +1,17 @@
+<a name="v2.3.1"></a>
+# [v2.3.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.0...v2.3.1) (2016-05-11)
+### Bug fixes
+* Unminified the index.js([9607b82](https://github.com/AllenFang/react-bootstrap-table/commit/9607b82de63cf26f6290898e34062ac65f21d2ad))
+
+### Features
+* Support column title([e77bd32](https://github.com/AllenFang/react-bootstrap-table/commit/e77bd32cec69e35de7bc588cbb64713a827674fa))
+	* Enable ```columnTitle``` on ```<TableHeaderColumn>```
+* Support csv format on column([acd12b1](https://github.com/AllenFang/react-bootstrap-table/commit/acd12b178d8dd46f1e06e6051ff16f829b6fff78))
+	* Because ```dataFormat``` is not appropriate on column when exporting csv file, so ```csvFormat``` been supported.
+	* Check [this](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/manipulation/export-csv-table.js#L33) example
+* Enable to custom the save and close button text in insert modal([072eeee](https://github.com/AllenFang/react-bootstrap-table/commit/072eeeef1e8ab9b374f4c225e6600dcdb0c3a700))
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/manipulation/custom-btn-text-table.js#L28-L29) on here
+
 <a name="v2.3.0"></a>
 # [v2.3.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.2.0...v2.3.0) (2016-05-04)
 ### Bug fixes
