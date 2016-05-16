@@ -25,6 +25,7 @@ export default class CustomPaginationTable extends React.Component {
       page: 2,  // which page you want to show as default
       sizePerPageList: [ 5, 10 ], // you can change the dropdown list for size per page
       sizePerPage: 5,  // which size per page you want to locate as default
+      pageStartIndex: 0, // where to start counting the pages
       paginationSize: 3,  // the pagination bar size.
       prePage: 'Prev', // Previous page button text
       nextPage: 'Next', // Next page button text

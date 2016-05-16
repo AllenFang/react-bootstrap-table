@@ -5,15 +5,24 @@ import Const from '../Const';
 class PaginationList extends Component {
 
   changePage = page => {
-    const { prePage, currPage, nextPage, lastPage, firstPage, sizePerPage } = this.props;
+    const {
+      pageStartIndex,
+      prePage,
+      currPage,
+      nextPage,
+      lastPage,
+      firstPage,
+      sizePerPage
+    } = this.props;
+
     if (page === prePage) {
-      page = currPage - 1 < 1 ? 1 : currPage - 1;
+      page = (currPage - 1) < pageStartIndex ? pageStartIndex : currPage - 1;
     } else if (page === nextPage) {
-      page = currPage + 1 > this.totalPages ? this.totalPages : currPage + 1;
+      page = (currPage + 1) > this.totalPages ? this.totalPages : currPage + 1;
     } else if (page === lastPage) {
       page = this.totalPages;
     } else if (page === firstPage) {
-      page = 1;
+      page = pageStartIndex;
     } else {
       page = parseInt(page, 10);
     }
@@ -40,7 +49,15 @@ class PaginationList extends Component {
   }
 
   render() {
-    const { currPage, dataSize, sizePerPage, sizePerPageList, paginationShowsTotal } = this.props;
+    const {
+      currPage,
+      dataSize,
+      sizePerPage,
+      sizePerPageList,
+      paginationShowsTotal,
+      pageStartIndex
+    } = this.props;
+
     this.totalPages = Math.ceil(dataSize / sizePerPage);
     const pageBtns = this.makePage();
     const pageListStyle = {
@@ -58,9 +75,11 @@ class PaginationList extends Component {
         </li>
       );
     });
+
+    const offset = Math.abs(Const.PAGE_START_INDEX - pageStartIndex);
     const total = paginationShowsTotal ? <span>
-      Showing rows { (currPage - 1) * sizePerPage + 1 } to&nbsp;
-      { Math.min(currPage * sizePerPage, dataSize) } of&nbsp;
+      Showing rows { ((currPage - pageStartIndex) * sizePerPage) } to&nbsp;
+      { Math.min((sizePerPage * (currPage + offset) - 1), dataSize) } of&nbsp;
       { dataSize }
     </span> : null;
 
@@ -113,7 +132,7 @@ class PaginationList extends Component {
       const isActive = page === this.props.currPage;
       let disabled = false;
       let hidden = false;
-      if (this.props.currPage === 1 &&
+      if (this.props.currPage === this.props.pageStartIndex &&
         (page === this.props.firstPage || page === this.props.prePage)) {
         disabled = true;
         hidden = true;
@@ -137,10 +156,11 @@ class PaginationList extends Component {
 
   getPages() {
     let pages;
-    let startPage = 1;
     let endPage = this.totalPages;
-
-    startPage = Math.max(this.props.currPage - Math.floor(this.props.paginationSize / 2), 1);
+    let startPage = Math.max(
+      this.props.currPage - Math.floor(this.props.paginationSize / 2),
+      this.props.pageStartIndex
+    );
     endPage = startPage + this.props.paginationSize - 1;
 
     if (endPage > this.totalPages) {
@@ -148,7 +168,7 @@ class PaginationList extends Component {
       startPage = endPage - this.props.paginationSize + 1;
     }
 
-    if (startPage !== 1 && this.totalPages > this.props.paginationSize) {
+    if (startPage !== this.props.pageStartIndex && this.totalPages > this.props.paginationSize) {
       pages = [ this.props.firstPage, this.props.prePage ];
     } else if (this.totalPages > 1) {
       pages = [ this.props.prePage ];
@@ -157,7 +177,7 @@ class PaginationList extends Component {
     }
 
     for (let i = startPage; i <= endPage; i++) {
-      if (i > 0) pages.push(i);
+      if (i >= this.props.pageStartIndex) pages.push(i);
     }
 
     if (endPage !== this.totalPages) {
@@ -179,11 +199,13 @@ PaginationList.propTypes = {
   paginationSize: PropTypes.number,
   remote: PropTypes.bool,
   onSizePerPageList: PropTypes.func,
-  prePage: PropTypes.string
+  prePage: PropTypes.string,
+  pageStartIndex: PropTypes.number
 };
 
 PaginationList.defaultProps = {
-  sizePerPage: Const.SIZE_PER_PAGE
+  sizePerPage: Const.SIZE_PER_PAGE,
+  pageStartIndex: Const.PAGE_START_INDEX
 };
 
 export default PaginationList;
