@@ -18,9 +18,9 @@ class PaginationList extends Component {
     if (page === prePage) {
       page = (currPage - 1) < pageStartIndex ? pageStartIndex : currPage - 1;
     } else if (page === nextPage) {
-      page = (currPage + 1) > this.totalPages ? this.totalPages : currPage + 1;
+      page = (currPage + 1) > this.lastPage ? this.lastPage : currPage + 1;
     } else if (page === lastPage) {
-      page = this.totalPages;
+      page = this.lastPage;
     } else if (page === firstPage) {
       page = pageStartIndex;
     } else {
@@ -39,8 +39,8 @@ class PaginationList extends Component {
     let { currPage } = this.props;
     if (selectSize !== this.props.sizePerPage) {
       this.totalPages = Math.ceil(this.props.dataSize / selectSize);
-      if (currPage > this.totalPages) currPage = this.totalPages;
-
+      this.lastPage = this.props.pageStartIndex + this.totalPages - 1;
+      if (currPage > this.lastPage) currPage = this.lastPage;
       this.props.changePage(currPage, selectSize);
       if (this.props.onSizePerPageList) {
         this.props.onSizePerPageList(selectSize);
@@ -59,6 +59,7 @@ class PaginationList extends Component {
     } = this.props;
 
     this.totalPages = Math.ceil(dataSize / sizePerPage);
+    this.lastPage = this.props.pageStartIndex + this.totalPages - 1;
     const pageBtns = this.makePage();
     const pageListStyle = {
       float: 'right',
@@ -137,7 +138,7 @@ class PaginationList extends Component {
         disabled = true;
         hidden = true;
       }
-      if (this.props.currPage === this.totalPages &&
+      if (this.props.currPage === this.lastPage &&
         (page === this.props.nextPage || page === this.props.lastPage)) {
         disabled = true;
         hidden = true;
@@ -155,6 +156,8 @@ class PaginationList extends Component {
   }
 
   getPages() {
+    console.log('start with totalPages ' + this.totalPages);
+    console.log('last page should be ' + this.lastPage);
     let pages;
     let endPage = this.totalPages;
     let startPage = Math.max(
@@ -162,12 +165,13 @@ class PaginationList extends Component {
       this.props.pageStartIndex
     );
     endPage = startPage + this.props.paginationSize - 1;
-
-    if (endPage > this.totalPages) {
-      endPage = this.totalPages;
+    console.log('end ' + endPage);
+    if (endPage > this.lastPage) {
+      endPage = this.lastPage;
       startPage = endPage - this.props.paginationSize + 1;
     }
 
+    console.log('end ' + endPage);
     if (startPage !== this.props.pageStartIndex && this.totalPages > this.props.paginationSize) {
       pages = [ this.props.firstPage, this.props.prePage ];
     } else if (this.totalPages > 1) {
@@ -180,12 +184,20 @@ class PaginationList extends Component {
       if (i >= this.props.pageStartIndex) pages.push(i);
     }
 
-    if (endPage !== this.totalPages) {
+    if (endPage < this.lastPage) {
       pages.push(this.props.nextPage);
       pages.push(this.props.lastPage);
-    } else if (this.totalPages > 1) {
+    } else if (endPage === this.lastPage && this.props.currPage !== this.lastPage) {
       pages.push(this.props.nextPage);
     }
+
+    // if (endPage !== lastPage) {
+    //   pages.push(this.props.nextPage);
+    //   pages.push(this.props.lastPage);
+    // } else if (this.totalPages > 1) {
+    //   pages.push(this.props.nextPage);
+    // }
+    console.log(pages);
     return pages;
   }
 }
