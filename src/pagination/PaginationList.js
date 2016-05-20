@@ -156,8 +156,6 @@ class PaginationList extends Component {
   }
 
   getPages() {
-    console.log('start with totalPages ' + this.totalPages);
-    console.log('last page should be ' + this.lastPage);
     let pages;
     let endPage = this.totalPages;
     let startPage = Math.max(
@@ -165,13 +163,12 @@ class PaginationList extends Component {
       this.props.pageStartIndex
     );
     endPage = startPage + this.props.paginationSize - 1;
-    console.log('end ' + endPage);
+
     if (endPage > this.lastPage) {
       endPage = this.lastPage;
       startPage = endPage - this.props.paginationSize + 1;
     }
 
-    console.log('end ' + endPage);
     if (startPage !== this.props.pageStartIndex && this.totalPages > this.props.paginationSize) {
       pages = [ this.props.firstPage, this.props.prePage ];
     } else if (this.totalPages > 1) {
@@ -191,13 +188,6 @@ class PaginationList extends Component {
       pages.push(this.props.nextPage);
     }
 
-    // if (endPage !== lastPage) {
-    //   pages.push(this.props.nextPage);
-    //   pages.push(this.props.lastPage);
-    // } else if (this.totalPages > 1) {
-    //   pages.push(this.props.nextPage);
-    // }
-    console.log(pages);
     return pages;
   }
 }
