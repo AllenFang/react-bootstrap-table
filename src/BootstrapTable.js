@@ -39,7 +39,9 @@ class BootstrapTable extends Component {
 
     this.state = {
       data: this.getTableData(),
-      currPage: this.props.options.page || 1,
+      currPage: this.props.options.page ||
+                this.props.options.pageStartIndex ||
+                Const.PAGE_START_INDEX,
       sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
       selectedRowKeys: this.store.getSelectedRowKeys()
     };
@@ -140,7 +142,13 @@ class BootstrapTable extends Component {
     const { options, selectRow } = nextProps;
 
     this.store.setData(nextProps.data.slice());
-    let page = options.page || this.state.currPage;
+
+    let page;
+    if (options.page != null) {
+      page = options.page;
+    } else {
+      page = this.state.currPage;
+    }
 
     if (this.isRemoteDataSource()) {
       this.setState({
@@ -323,7 +331,7 @@ class BootstrapTable extends Component {
   }
 
   handlePaginationData = (page, sizePerPage) => {
-    const { onPageChange } = this.props.options;
+    const { onPageChange, pageStartIndex } = this.props.options;
     if (onPageChange) {
       onPageChange(page, sizePerPage);
     }
@@ -337,10 +345,19 @@ class BootstrapTable extends Component {
       return;
     }
 
-    const result = this.store.page(page, sizePerPage).get();
-    this.setState({
-      data: result
-    });
+    // We calculate an offset here in order to properly fetch the indexed data,
+    // despite the page start index not always being 1
+    let normalizedPage;
+    if (pageStartIndex !== undefined) {
+      const offset = Math.abs(Const.PAGE_START_INDEX - pageStartIndex);
+      normalizedPage = page + offset;
+    } else {
+      normalizedPage = page;
+    }
+
+    const result = this.store.page(normalizedPage, sizePerPage).get();
+
+    this.setState({ data: result });
   }
 
   handleMouseLeave = () => {
@@ -382,7 +399,7 @@ class BootstrapTable extends Component {
         isSelected ? this.store.get() : []);
     }
 
-    if (typeof result === 'undefined' || result !== false) {
+    if (typeof result == 'undefined' || result !== false) {
       if (isSelected) {
         selectedRowKeys = this.store.getAllRowkey();
       }
@@ -402,7 +419,7 @@ class BootstrapTable extends Component {
     }
     this.setState({
       data: result,
-      currPage: 1
+      currPage: this.props.options.pageStartIndex || Const.PAGE_START_INDEX
     });
   }
 
@@ -576,7 +593,7 @@ class BootstrapTable extends Component {
     }
 
     this.setState({
-      currPage: 1
+      currPage: this.props.options.pageStartIndex || Const.PAGE_START_INDEX
     });
 
     if (this.isRemoteDataSource()) {
@@ -646,7 +663,7 @@ class BootstrapTable extends Component {
     }
 
     this.setState({
-      currPage: 1
+      currPage: this.props.options.pageStartIndex || Const.PAGE_START_INDEX
     });
 
     if (this.isRemoteDataSource()) {
@@ -688,9 +705,10 @@ class BootstrapTable extends Component {
           <PaginationList
             ref='pagination'
             currPage={ this.state.currPage }
-            changePage={ this.handlePaginationData.bind(this) }
+            changePage={ this.handlePaginationData }
             sizePerPage={ this.state.sizePerPage }
             sizePerPageList={ options.sizePerPageList || Const.SIZE_PER_PAGE_LIST }
+            pageStartIndex={ options.pageStartIndex }
             paginationShowsTotal={ options.paginationShowsTotal }
             paginationSize={ options.paginationSize || Const.PAGINATION_SIZE }
             remote={ this.isRemoteDataSource() }
@@ -907,6 +925,7 @@ BootstrapTable.propTypes = {
     afterColumnFilter: PropTypes.func,
     onRowClick: PropTypes.func,
     page: PropTypes.number,
+    pageStartIndex: PropTypes.number,
     paginationShowsTotal: PropTypes.bool,
     sizePerPageList: PropTypes.array,
     sizePerPage: PropTypes.number,
@@ -1003,6 +1022,7 @@ BootstrapTable.defaultProps = {
     nextPage: Const.NEXT_PAGE,
     firstPage: Const.FIRST_PAGE,
     lastPage: Const.LAST_PAGE,
+    pageStartIndex: undefined,
     searchDelayTime: undefined,
     exportCSVText: Const.EXPORT_CSV_TEXT,
     insertText: Const.INSERT_BTN_TEXT,
