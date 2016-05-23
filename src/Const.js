@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default {
   SORT_DESC: 'desc',
   SORT_ASC: 'asc',
@@ -18,9 +20,9 @@ export default {
   NO_DATA_TEXT: 'There is no data to display',
   SHOW_ONLY_SELECT: 'Show Selected Only',
   SHOW_ALL: 'Show All',
-  EXPORT_CSV_TEXT: 'Export to CSV',
-  INSERT_BTN_TEXT: 'New',
-  DELETE_BTN_TEXT: 'Delete',
+  EXPORT_CSV_TEXT: <span><i className='glyphicon glyphicon-export'></i> Export to CSV</span>,
+  INSERT_BTN_TEXT: <span><i className='glyphicon glyphicon-plus'></i> New</span>,
+  DELETE_BTN_TEXT: <span><i className='glyphicon glyphicon-trash'></i> Delete</span>,
   SAVE_BTN_TEXT: 'Save',
   CLOSE_BTN_TEXT: 'Close',
   FILTER_DELAY: 500,

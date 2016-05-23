@@ -192,7 +192,7 @@ class ToolBar extends Component {
           className='btn btn-info react-bs-table-add-btn'
           data-toggle='modal'
           data-target={ '.' + this.modalClassName }>
-          <i className='glyphicon glyphicon-plus'></i> { this.props.insertText }
+           { this.props.insertText }
         </button>
       );
     }
@@ -205,7 +205,7 @@ class ToolBar extends Component {
           data-placement='right'
           title='Drop selected row'
           onClick={ this.handleDropRowBtnClick }>
-          <i className='glyphicon glyphicon-trash'></i> { this.props.deleteText }
+           { this.props.deleteText }
         </button>
       );
     }
@@ -227,7 +227,7 @@ class ToolBar extends Component {
         <button type='button'
           className='btn btn-success'
           onClick={ this.handleExportCSV }>
-            <i className='glyphicon glyphicon-export'></i>{ this.props.exportCSVText }
+            { this.props.exportCSVText }
         </button>
       );
     }
