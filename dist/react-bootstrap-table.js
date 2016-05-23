@@ -168,7 +168,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    this.handlePaginationData = function (page, sizePerPage) {
-	      var onPageChange = _this.props.options.onPageChange;
+	      var _props$options = _this.props.options;
+	      var onPageChange = _props$options.onPageChange;
+	      var pageStartIndex = _props$options.pageStartIndex;
 
 	      if (onPageChange) {
 	        onPageChange(page, sizePerPage);
@@ -183,10 +185,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return;
 	      }
 
-	      var result = _this.store.page(page, sizePerPage).get();
-	      _this.setState({
-	        data: result
-	      });
+	      // We calculate an offset here in order to properly fetch the indexed data,
+	      // despite the page start index not always being 1
+	      var normalizedPage = undefined;
+	      if (pageStartIndex !== undefined) {
+	        var offset = Math.abs(_Const2['default'].PAGE_START_INDEX - pageStartIndex);
+	        normalizedPage = page + offset;
+	      } else {
+	        normalizedPage = page;
+	      }
+
+	      var result = _this.store.page(normalizedPage, sizePerPage).get();
+
+	      _this.setState({ data: result });
 	    };
 
 	    this.handleMouseLeave = function () {
@@ -227,7 +238,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        result = _this.props.selectRow.onSelectAll(isSelected, isSelected ? _this.store.get() : []);
 	      }
 
-	      if (typeof result === 'undefined' || result !== false) {
+	      if (typeof result == 'undefined' || result !== false) {
 	        if (isSelected) {
 	          selectedRowKeys = _this.store.getAllRowkey();
 	        }
@@ -247,7 +258,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      _this.setState({
 	        data: result,
-	        currPage: 1
+	        currPage: _this.props.options.pageStartIndex || _Const2['default'].PAGE_START_INDEX
 	      });
 	    };
 
@@ -342,7 +353,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      _this.setState({
-	        currPage: 1
+	        currPage: _this.props.options.pageStartIndex || _Const2['default'].PAGE_START_INDEX
 	      });
 
 	      if (_this.isRemoteDataSource()) {
@@ -414,7 +425,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      _this.setState({
-	        currPage: 1
+	        currPage: _this.props.options.pageStartIndex || _Const2['default'].PAGE_START_INDEX
 	      });
 
 	      if (_this.isRemoteDataSource()) {
@@ -511,7 +522,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    this.state = {
 	      data: this.getTableData(),
-	      currPage: this.props.options.page || 1,
+	      currPage: this.props.options.page || this.props.options.pageStartIndex || _Const2['default'].PAGE_START_INDEX,
 	      sizePerPage: this.props.options.sizePerPage || _Const2['default'].SIZE_PER_PAGE_LIST[0],
 	      selectedRowKeys: this.store.getSelectedRowKeys()
 	    };
@@ -624,7 +635,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var selectRow = nextProps.selectRow;
 
 	      this.store.setData(nextProps.data.slice());
-	      var page = options.page || this.state.currPage;
+
+	      var page = undefined;
+	      if (options.page != null) {
+	        page = options.page;
+	      } else {
+	        page = this.state.currPage;
+	      }
 
 	      if (this.isRemoteDataSource()) {
 	        this.setState({
@@ -738,6 +755,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _TableHeader2['default'],
 	            {
 	              ref: 'header',
+	              tableHeaderClass: this.props.tableHeaderClass,
 	              style: this.props.headerStyle,
 	              rowSelectType: this.props.selectRow.mode,
 	              hideSelectColumn: this.props.selectRow.hideSelectColumn,
@@ -753,6 +771,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.props.children
 	          ),
 	          _react2['default'].createElement(_TableBody2['default'], { ref: 'body',
+	            tableBodyClass: this.props.tableBodyClass,
 	            style: _extends({}, style, this.props.bodyStyle),
 	            data: this.state.data,
 	            columns: columns,
@@ -917,9 +936,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _react2['default'].createElement(_paginationPaginationList2['default'], {
 	            ref: 'pagination',
 	            currPage: this.state.currPage,
-	            changePage: this.handlePaginationData.bind(this),
+	            changePage: this.handlePaginationData,
 	            sizePerPage: this.state.sizePerPage,
 	            sizePerPageList: options.sizePerPageList || _Const2['default'].SIZE_PER_PAGE_LIST,
+	            pageStartIndex: options.pageStartIndex,
 	            paginationShowsTotal: options.paginationShowsTotal,
 	            paginationSize: options.paginationSize || _Const2['default'].PAGINATION_SIZE,
 	            remote: this.isRemoteDataSource(),
@@ -1077,6 +1097,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  containerStyle: _react.PropTypes.object,
 	  headerStyle: _react.PropTypes.object,
 	  bodyStyle: _react.PropTypes.object,
+	  tableHeaderClass: _react.PropTypes.string,
+	  tableBodyClass: _react.PropTypes.string,
 	  options: _react.PropTypes.shape({
 	    clearSearch: _react.PropTypes.bool,
 	    sortName: _react.PropTypes.string,
@@ -1091,6 +1113,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    afterColumnFilter: _react.PropTypes.func,
 	    onRowClick: _react.PropTypes.func,
 	    page: _react.PropTypes.number,
+	    pageStartIndex: _react.PropTypes.number,
 	    paginationShowsTotal: _react.PropTypes.bool,
 	    sizePerPageList: _react.PropTypes.array,
 	    sizePerPage: _react.PropTypes.number,
@@ -1158,6 +1181,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  containerStyle: undefined,
 	  headerStyle: undefined,
 	  bodyStyle: undefined,
+	  tableHeaderClass: null,
+	  tableBodyClass: null,
 	  options: {
 	    clearSearch: false,
 	    sortName: undefined,
@@ -1187,6 +1212,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    nextPage: _Const2['default'].NEXT_PAGE,
 	    firstPage: _Const2['default'].FIRST_PAGE,
 	    lastPage: _Const2['default'].LAST_PAGE,
+	    pageStartIndex: undefined,
 	    searchDelayTime: undefined,
 	    exportCSVText: _Const2['default'].EXPORT_CSV_TEXT,
 	    insertText: _Const2['default'].INSERT_BTN_TEXT,
@@ -1228,6 +1254,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  LAST_PAGE: '>>',
 	  PRE_PAGE: '<',
 	  FIRST_PAGE: '<<',
+	  PAGE_START_INDEX: 1,
 	  ROW_SELECT_BG_COLOR: '',
 	  ROW_SELECT_NONE: 'none',
 	  ROW_SELECT_SINGLE: 'radio',
@@ -1352,7 +1379,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var tableClasses = (0, _classnames2['default'])('table', 'table-hover', {
 	        'table-bordered': this.props.bordered,
 	        'table-condensed': this.props.condensed
-	      });
+	      }, this.props.tableHeaderClass);
 	      var selectRowHeaderCol = null;
 	      if (!this.props.hideSelectColumn) selectRowHeaderCol = this.renderSelectRowHeader();
 	      var i = 0;
@@ -1410,6 +1437,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react.Component);
 
 	TableHeader.propTypes = {
+	  tableHeaderClass: _react.PropTypes.string,
 	  style: _react.PropTypes.object,
 	  rowSelectType: _react.PropTypes.string,
 	  onSort: _react.PropTypes.func,
@@ -1685,7 +1713,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'table-bordered': this.props.bordered,
 	        'table-hover': this.props.hover,
 	        'table-condensed': this.props.condensed
-	      });
+	      }, this.props.tableBodyClass);
 
 	      var isSelectRowDefined = this._isSelectRowDefined();
 	      var tableHeader = this.renderTableHeader(isSelectRowDefined);
@@ -1877,7 +1905,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onRowClick: _react.PropTypes.func,
 	  onSelectRow: _react.PropTypes.func,
 	  noDataText: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object]),
-	  style: _react.PropTypes.object
+	  style: _react.PropTypes.object,
+	  tableBodyClass: _react.PropTypes.string
 	};
 	exports['default'] = TableBody;
 	module.exports = exports['default'];
@@ -3856,6 +3885,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    this.changePage = function (page) {
 	      var _props = _this.props;
+	      var pageStartIndex = _props.pageStartIndex;
 	      var prePage = _props.prePage;
 	      var currPage = _props.currPage;
 	      var nextPage = _props.nextPage;
@@ -3864,13 +3894,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var sizePerPage = _props.sizePerPage;
 
 	      if (page === prePage) {
-	        page = currPage - 1 < 1 ? 1 : currPage - 1;
+	        page = currPage - 1 < pageStartIndex ? pageStartIndex : currPage - 1;
 	      } else if (page === nextPage) {
-	        page = currPage + 1 > _this.totalPages ? _this.totalPages : currPage + 1;
+	        page = currPage + 1 > _this.lastPage ? _this.lastPage : currPage + 1;
 	      } else if (page === lastPage) {
-	        page = _this.totalPages;
+	        page = _this.lastPage;
 	      } else if (page === firstPage) {
-	        page = 1;
+	        page = pageStartIndex;
 	      } else {
 	        page = parseInt(page, 10);
 	      }
@@ -3888,8 +3918,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if (selectSize !== _this.props.sizePerPage) {
 	        _this.totalPages = Math.ceil(_this.props.dataSize / selectSize);
-	        if (currPage > _this.totalPages) currPage = _this.totalPages;
-
+	        _this.lastPage = _this.props.pageStartIndex + _this.totalPages - 1;
+	        if (currPage > _this.lastPage) currPage = _this.lastPage;
 	        _this.props.changePage(currPage, selectSize);
 	        if (_this.props.onSizePerPageList) {
 	          _this.props.onSizePerPageList(selectSize);
@@ -3909,8 +3939,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var sizePerPage = _props2.sizePerPage;
 	      var sizePerPageList = _props2.sizePerPageList;
 	      var paginationShowsTotal = _props2.paginationShowsTotal;
+	      var pageStartIndex = _props2.pageStartIndex;
 
 	      this.totalPages = Math.ceil(dataSize / sizePerPage);
+	      this.lastPage = this.props.pageStartIndex + this.totalPages - 1;
 	      var pageBtns = this.makePage();
 	      var pageListStyle = {
 	        float: 'right',
@@ -3931,13 +3963,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	          )
 	        );
 	      });
+
+	      var offset = Math.abs(_Const2['default'].PAGE_START_INDEX - pageStartIndex);
 	      var total = paginationShowsTotal ? _react2['default'].createElement(
 	        'span',
 	        null,
 	        'Showing rows ',
-	        (currPage - 1) * sizePerPage + 1,
+	        (currPage - pageStartIndex) * sizePerPage,
 	        ' to ',
-	        Math.min(currPage * sizePerPage, dataSize),
+	        Math.min(sizePerPage * (currPage + offset) - 1, dataSize),
 	        ' of ',
 	        dataSize
 	      ) : null;
@@ -4013,11 +4047,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var isActive = page === this.props.currPage;
 	        var disabled = false;
 	        var hidden = false;
-	        if (this.props.currPage === 1 && (page === this.props.firstPage || page === this.props.prePage)) {
+	        if (this.props.currPage === this.props.pageStartIndex && (page === this.props.firstPage || page === this.props.prePage)) {
 	          disabled = true;
 	          hidden = true;
 	        }
-	        if (this.props.currPage === this.totalPages && (page === this.props.nextPage || page === this.props.lastPage)) {
+	        if (this.props.currPage === this.lastPage && (page === this.props.nextPage || page === this.props.lastPage)) {
 	          disabled = true;
 	          hidden = true;
 	        }
@@ -4036,18 +4070,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'getPages',
 	    value: function getPages() {
 	      var pages = undefined;
-	      var startPage = 1;
 	      var endPage = this.totalPages;
-
-	      startPage = Math.max(this.props.currPage - Math.floor(this.props.paginationSize / 2), 1);
+	      var startPage = Math.max(this.props.currPage - Math.floor(this.props.paginationSize / 2), this.props.pageStartIndex);
 	      endPage = startPage + this.props.paginationSize - 1;
 
-	      if (endPage > this.totalPages) {
-	        endPage = this.totalPages;
+	      if (endPage > this.lastPage) {
+	        endPage = this.lastPage;
 	        startPage = endPage - this.props.paginationSize + 1;
 	      }
 
-	      if (startPage !== 1 && this.totalPages > this.props.paginationSize) {
+	      if (startPage !== this.props.pageStartIndex && this.totalPages > this.props.paginationSize) {
 	        pages = [this.props.firstPage, this.props.prePage];
 	      } else if (this.totalPages > 1) {
 	        pages = [this.props.prePage];
@@ -4056,15 +4088,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      for (var i = startPage; i <= endPage; i++) {
-	        if (i > 0) pages.push(i);
+	        if (i >= this.props.pageStartIndex) pages.push(i);
 	      }
 
-	      if (endPage !== this.totalPages) {
+	      if (endPage < this.lastPage) {
 	        pages.push(this.props.nextPage);
 	        pages.push(this.props.lastPage);
-	      } else if (this.totalPages > 1) {
+	      } else if (endPage === this.lastPage && this.props.currPage !== this.lastPage) {
 	        pages.push(this.props.nextPage);
 	      }
+
 	      return pages;
 	    }
 	  }]);
@@ -4082,11 +4115,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  paginationSize: _react.PropTypes.number,
 	  remote: _react.PropTypes.bool,
 	  onSizePerPageList: _react.PropTypes.func,
-	  prePage: _react.PropTypes.string
+	  prePage: _react.PropTypes.string,
+	  pageStartIndex: _react.PropTypes.number
 	};
 
 	PaginationList.defaultProps = {
-	  sizePerPage: _Const2['default'].SIZE_PER_PAGE
+	  sizePerPage: _Const2['default'].SIZE_PER_PAGE,
+	  pageStartIndex: _Const2['default'].PAGE_START_INDEX
 	};
 
 	exports['default'] = PaginationList;
@@ -4853,21 +4888,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (sortFunc) {
 	      return sortFunc(a, b, order, sortField, sortFuncExtraData);
 	    } else {
+	      var valueA = a[sortField] === null ? '' : a[sortField];
+	      var valueB = b[sortField] === null ? '' : b[sortField];
 	      if (isDesc) {
-	        if (b[sortField] === null) return false;
-	        if (a[sortField] === null) return true;
-	        if (typeof b[sortField] === 'string') {
-	          return b[sortField].localeCompare(a[sortField]);
+	        if (typeof valueB === 'string') {
+	          return valueB.localeCompare(valueA);
 	        } else {
-	          return a[sortField] > b[sortField] ? -1 : a[sortField] < b[sortField] ? 1 : 0;
+	          return valueA > valueB ? -1 : valueA < valueB ? 1 : 0;
 	        }
 	      } else {
-	        if (b[sortField] === null) return true;
-	        if (a[sortField] === null) return false;
-	        if (typeof a[sortField] === 'string') {
-	          return a[sortField].localeCompare(b[sortField]);
+	        if (typeof valueA === 'string') {
+	          return valueA.localeCompare(valueB);
 	        } else {
-	          return a[sortField] < b[sortField] ? -1 : a[sortField] > b[sortField] ? 1 : 0;
+	          return valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
 	        }
 	      }
 	    }
