@@ -25,7 +25,7 @@ class TableBody extends Component {
       'table-bordered': this.props.bordered,
       'table-hover': this.props.hover,
       'table-condensed': this.props.condensed
-    });
+    }, this.props.tableBodyClass);
 
     const isSelectRowDefined = this._isSelectRowDefined();
     const tableHeader = this.renderTableHeader(isSelectRowDefined);
@@ -283,6 +283,7 @@ TableBody.propTypes = {
   onRowClick: PropTypes.func,
   onSelectRow: PropTypes.func,
   noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
-  style: PropTypes.object
+  style: PropTypes.object,
+  tableBodyClass: PropTypes.string
 };
 export default TableBody;

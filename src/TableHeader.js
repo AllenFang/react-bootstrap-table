@@ -27,7 +27,7 @@ class TableHeader extends Component {
     const tableClasses = classSet('table', 'table-hover', {
       'table-bordered': this.props.bordered,
       'table-condensed': this.props.condensed
-    });
+    }, this.props.tableHeaderClass);
     let selectRowHeaderCol = null;
     if (!this.props.hideSelectColumn) selectRowHeaderCol = this.renderSelectRowHeader();
     let i = 0;
@@ -69,6 +69,7 @@ class TableHeader extends Component {
   }
 }
 TableHeader.propTypes = {
+  tableHeaderClass: PropTypes.string,
   style: PropTypes.object,
   rowSelectType: PropTypes.string,
   onSort: PropTypes.func,

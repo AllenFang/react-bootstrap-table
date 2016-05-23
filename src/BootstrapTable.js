@@ -250,6 +250,7 @@ class BootstrapTable extends Component {
             onMouseLeave={ this.handleMouseLeave }>
           <TableHeader
             ref='header'
+            tableHeaderClass={ this.props.tableHeaderClass }
             style={ this.props.headerStyle }
             rowSelectType={ this.props.selectRow.mode }
             hideSelectColumn={ this.props.selectRow.hideSelectColumn }
@@ -265,6 +266,7 @@ class BootstrapTable extends Component {
             { this.props.children }
           </TableHeader>
           <TableBody ref='body'
+            tableBodyClass={ this.props.tableBodyClass }
             style={ { ...style, ...this.props.bodyStyle } }
             data={ this.state.data }
             columns={ columns }
@@ -911,6 +913,8 @@ BootstrapTable.propTypes = {
   containerStyle: PropTypes.object,
   headerStyle: PropTypes.object,
   bodyStyle: PropTypes.object,
+  tableHeaderClass: PropTypes.string,
+  tableBodyClass: PropTypes.string,
   options: PropTypes.shape({
     clearSearch: PropTypes.bool,
     sortName: PropTypes.string,
@@ -993,6 +997,8 @@ BootstrapTable.defaultProps = {
   containerStyle: undefined,
   headerStyle: undefined,
   bodyStyle: undefined,
+  tableHeaderClass: null,
+  tableBodyClass: null,
   options: {
     clearSearch: false,
     sortName: undefined,
