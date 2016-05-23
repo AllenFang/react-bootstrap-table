@@ -29,3 +29,11 @@
     color: red;
     background-color: yellowgreen;
 }
+
+.my-header-class {
+  background-color: #0066FF;
+}
+
+.my-body-class {
+  background-color: #CC00FF;
+}

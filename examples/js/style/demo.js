@@ -6,11 +6,21 @@ import TrClassFunctionTable from './tr-class-function-table';
 import TdClassStringTable from './td-class-string-table';
 import TdClassFunctionTable from './td-class-function-table';
 import InlineStylingTable from './inline-style-table';
+import TableClassTable from './table-class-table';
 
 class Demo extends React.Component {
   render() {
     return (
       <div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Able to add class to &lt;table&gt; for header and body</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/style/table-class-table.js</h5>
+              <TableClassTable />
+            </div>
+          </div>
+        </div>
         <div className='col-md-offset-1 col-md-8'>
           <div className='panel panel-default'>
             <div className='panel-heading'>Set String as <code>trClassName</code> on &lt;BootstrapTable&gt;</div>
