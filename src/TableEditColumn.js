@@ -26,8 +26,8 @@ class TableEditColumn extends Component {
       this.props.completeEdit(
         null, this.props.rowIndex, this.props.colIndex);
     } else if ('click' === e.type) {
-      var value = _this.refs.inputRef.value;
-      _this.props.completeEdit(value, _this.props.rowIndex, _this.props.colIndex);
+      var value = this.refs.inputRef.value;
+      this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
     }
   }
 
