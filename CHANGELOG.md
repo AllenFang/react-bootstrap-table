@@ -1,3 +1,16 @@
+<a name="v2.3.2"></a>
+# [v2.3.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.1...v2.3.2) (2016-05-23)
+### Bug fixes
+* Fix sorting on null value([6a1c88b](https://github.com/AllenFang/react-bootstrap-table/commit/6a1c88bbdee921bd6373f713cb16e69676f2cda0))
+
+### Features
+* Support for pagination start index([98499b2](https://github.com/AllenFang/react-bootstrap-table/commit/98499b2d3de0149f27e85a75e753d948e25d32a7))
+	* Use ```pageStartIndex``` in ```options```
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/pagination/custom-pagination-table.js#L28)
+* Able to add classname on <table> tag([866e07d](https://github.com/AllenFang/react-bootstrap-table/commit/866e07d1fe3932557afcd87addd65c725c9023a5))
+	* ```tableHeaderClass``` for header table and ```tableBodyClass``` for body table
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/style/table-class-table.js)
+
 <a name="v2.3.1"></a>
 # [v2.3.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.0...v2.3.1) (2016-05-11)
 ### Bug fixes
