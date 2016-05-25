@@ -144,6 +144,16 @@
       <div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">remote :</font> <font class="attr-type">Bool</font></br>
+          <p>Default is false, if you enable <code>remote</code>, which means you want to handle the data filtering, sorting, adding or removing etc on your store.</p>
+          <p>Therefore, <code>react-bootstrap-table</code> support the following event hook so that you can interact to your server</p>
+          <p><code>onSortChange</code>, <code>onSearchChange</code>, <code>onPageChange</code>, <code>onSizePerPageList</code>, <code>onAddRow</code>, <code>onDeleteRow</code>, <code>onExportToCSV</code>, <code>onFilterChange</code></p>
+          <p>There are useful examples for <a href='https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/remote' target='_blank'>remote usage</a></p>
+        </div>
+      </div>
+      <div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">height :</font> <font class="attr-type">String</font></br>
           <p>Use <code>height</code> to set the height of table, default is 100%.</p>
         </div>
@@ -436,6 +446,15 @@
               <code>sortName</code>: The sort column name.</br>
               <code>sortOrder</code>: The sort ordering.</br>
             </div>
+            <font class="attr-lv1-title">onSearchChange</font> : <font class="attr-lv1-type">Function</font></br>
+            <p>Assign a callback function which will be called when search text change.</p>
+            <p>This function taking three argument: <code>searchText</code>, <code>colInfos</code> and <code>multiColumnSearch</code></p>
+            <p>In most case, you only need to use <code>searchText</code></p>
+            <div style="margin-left: 20px;">
+              <code>searchText</code>: The new search text that user key in.</br>
+              <code>colInfos</code>: it's an array which contain all the columns information</br>
+              <code>multiColumnSearch</code>: whether enable mulit column search</br>
+            </div>
             <font class="attr-lv1-title">afterSearch</font> : <font class="attr-lv1-type">Function</font></br>
             <p>Assign a callback function which will be called after trigger searching.</p>
             <p>This function taking two argument: <code>search</code> and <code>result</code>.</p>
@@ -450,6 +469,18 @@
               <code>filterConds</code>: It's an array object which contain all column filter conditions.</br>
               <code>result</code>: The results after filtering.</br>
             </div>
+            <font class="attr-lv1-title">onAddRow</font> : <font class="attr-lv1-type">Function</font></br>
+            <p>Assign a callback function which will be called when a row be added.</p>
+            <p>This function taking one argument: <code>row</code> which presented as the new row data.</p>
+            <font class="attr-lv1-title">onFilterChange</font> : <font class="attr-lv1-type">Function</font></br>
+            <p>Assign a callback function which will be called when a filter condition changing.</p>
+            <p>This function taking one argument: <code>filterObj</code> which is an object and keyed by column with the filter condition.</p>
+            <font class="attr-lv1-title">onExportToCSV</font> : <font class="attr-lv1-type">Function</font></br>
+            <p>Assign a callback function which will be called when click the export csv button.</p>
+            <p>In this function, you need to return the rows which need to be exported.</p>
+            <font class="attr-lv1-title">onDeleteRow</font> : <font class="attr-lv1-type">Function</font></br>
+            <p>Assign a callback function which will be called when a row been deleted.</p>
+            <p>This function taking one argument: <code>row</code> which presented as the deleted row.</p>
             <font class="attr-lv1-title">onRowClick</font> : <font class="attr-lv1-type">Function</font></br>
             <p>Assign a callback function which will be called after a row click.</p>
             <p>This function taking one argument: <code>row</code> which is the row data which you click on.</p>
