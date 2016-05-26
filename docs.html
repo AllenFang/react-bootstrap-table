@@ -439,6 +439,10 @@
             <p>Customize the text on insert button.</p>
             <font class="attr-lv1-title">deleteText</font> : <font class="attr-lv1-type">String</font></br>
             <p>Customize the text on delete button.</p>
+            <font class="attr-lv1-title">saveText</font> : <font class="attr-lv1-type">String</font></br>
+            <p>Customize the text on save button.</p>
+            <font class="attr-lv1-title">closeText</font> : <font class="attr-lv1-type">String</font></br>
+            <p>Customize the text on close button.</p>
             <font class="attr-lv1-title">onSortChange</font> : <font class="attr-lv1-type">Function</font></br>
             <p>Assign a callback function which will be called after trigger sorting.</p>
             <p>This function taking two argument: <code>sortName</code> and <code>sortOrder</code>.</p>
@@ -648,6 +652,11 @@
         </div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">csvFormat :</font> <font class="attr-type">Function</font></br>
+          <p>A chance to customize the column when export to csv file. This function taking two argument: <code>cell</code> and <code>row</code>.</p>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">hidden :</font> <font class="attr-type">Bool</font></br>
           <p>True to hide column.</p>
         </div>
@@ -655,6 +664,11 @@
           <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">searchable :</font> <font class="attr-type">Bool</font></br>
           <p>False to disable search functionality on column, default is true.</p>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">columnTitle :</font> <font class="attr-type">Bool</font></br>
+          <p>Show the title on each column, default is false.</p>
         </div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
