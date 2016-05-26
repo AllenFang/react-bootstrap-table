@@ -659,12 +659,18 @@
           <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">dataFormat :</font> <font class="attr-type">Function</font></br>
           <p>To customize the column. This callback function should return a String or a React Component.</p>
-          <p>In addition, this function taking two argument: <code>cell</code> and <code>row</code>.</p>
+          <p>In addition, this function taking three argument: <code>cell</code>, <code>row</code> and <code>formatExtraData</code>.</p>
+          <p>The <code>formatExtraData</code> will be the value which you assign <code>formatExtraData</code> on &ltTableHeaderColumn&gt</p>
         </div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">filterFormatted :</font> <font class="attr-type">Bool</font></br>
           <p>To to enable search or filter data on formatting. Default is false</p>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">formatExtraData :</font> <font class="attr-type">any</font></br>
+          <p>Used on <code>dataFormat</code>, you can give any data you want to apply in formatter</p>
         </div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
