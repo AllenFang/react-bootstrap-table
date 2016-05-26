@@ -213,85 +213,15 @@ export class TableDataStore {
       this.filteredData = null;
       this.isOnFilter = false;
       this.filterObj = null;
-      if (this.searchText !== null) this.search(this.searchText);
+      if (this.searchText) this._search(this.data);
     } else {
+      let source = this.data;
       this.filterObj = filterObj;
-      this.filteredData = this.data.filter( row => {
-        let valid = true;
-        let filterVal;
-        for (const key in filterObj) {
-          let targetVal = row[key];
-          if (targetVal === null) return false;
-
-          switch (filterObj[key].type) {
-          case Const.FILTER_TYPE.NUMBER: {
-            filterVal = filterObj[key].value.number;
-            break;
-          }
-          case Const.FILTER_TYPE.CUSTOM: {
-            filterVal = (typeof filterObj[key].value === 'object') ?
-              undefined :
-              (typeof filterObj[key].value === 'string') ?
-                filterObj[key].value.toLowerCase() :
-                filterObj[key].value;
-            break;
-          }
-          case Const.FILTER_TYPE.DATE: {
-            filterVal = filterObj[key].value.date;
-            break;
-          }
-          case Const.FILTER_TYPE.REGEX: {
-            filterVal = filterObj[key].value;
-            break;
-          }
-          default: {
-            filterVal = (typeof filterObj[key].value === 'string') ?
-              filterObj[key].value.toLowerCase() :
-              filterObj[key].value;
-            if (filterVal === undefined) {
-              // Support old filter
-              filterVal = filterObj[key].toLowerCase();
-            }
-            break;
-          }
-          }
-
-          if (this.colInfos[key]) {
-            const { format, filterFormatted, formatExtraData } = this.colInfos[key];
-            if (filterFormatted && format) {
-              targetVal = format(row[key], row, formatExtraData);
-            }
-          }
-
-          switch (filterObj[key].type) {
-          case Const.FILTER_TYPE.NUMBER: {
-            valid = this.filterNumber(targetVal, filterVal, filterObj[key].value.comparator);
-            break;
-          }
-          case Const.FILTER_TYPE.DATE: {
-            valid = this.filterDate(targetVal, filterVal, filterObj[key].value.comparator);
-            break;
-          }
-          case Const.FILTER_TYPE.REGEX: {
-            valid = this.filterRegex(targetVal, filterVal);
-            break;
-          }
-          case Const.FILTER_TYPE.CUSTOM: {
-            valid = this.filterCustom(targetVal, filterVal, filterObj[key].value);
-            break;
-          }
-          default: {
-            valid = this.filterText(targetVal, filterVal);
-            break;
-          }
-          }
-          if (!valid) {
-            break;
-          }
-        }
-        return valid;
-      });
-      this.isOnFilter = true;
+      if (this.searchText) {
+        this._search(source);
+        source = this.filteredData;
+      }
+      this._filter(source);
     }
   }
 
@@ -431,51 +361,134 @@ export class TableDataStore {
       this.filteredData = null;
       this.isOnFilter = false;
       this.searchText = null;
-      if (this.filterObj !== null) this.filter(this.filterObj);
+      if (this.filterObj) this._filter(this.data);
     } else {
+      let source = this.data;
       this.searchText = searchText;
-      let searchTextArray = [];
-
-      if (this.multiColumnSearch) {
-        searchTextArray = searchText.split(' ');
-      } else {
-        searchTextArray.push(searchText);
+      if (this.filterObj) {
+        this._filter(source);
+        source = this.filteredData;
       }
-      // Mark following code for fixing #363
-      // To avoid to search on a data which be searched or filtered
-      // But this solution have a poor performance, because I do a filter again
-      // const source = this.isOnFilter ? this.filteredData : this.data;
-      const source = this.filterObj !== null ? this.filter(this.filterObj) : this.data;
+      this._search(source);
+    }
+  }
 
-      this.filteredData = source.filter( row => {
-        const keys = Object.keys(row);
-        let valid = false;
-        // for loops are ugly, but performance matters here.
-        // And you cant break from a forEach.
-        // http://jsperf.com/for-vs-foreach/66
-        for (let i = 0, keysLength = keys.length; i < keysLength; i++) {
-          const key = keys[i];
-          if (this.colInfos[key] && row[key]) {
-            const { format, filterFormatted, formatExtraData, searchable } = this.colInfos[key];
-            let targetVal = row[key];
-            if (searchable) {
-              if (filterFormatted && format) {
-                targetVal = format(targetVal, row, formatExtraData);
-              }
-              for (let j = 0, textLength = searchTextArray.length; j < textLength; j++) {
-                const filterVal = searchTextArray[j].toLowerCase();
-                if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
-                  valid = true;
-                  break;
-                }
+  _filter(source) {
+    const filterObj = this.filterObj;
+    this.filteredData = source.filter( row => {
+      let valid = true;
+      let filterVal;
+      for (const key in filterObj) {
+        let targetVal = row[key];
+        if (targetVal === null) return false;
+
+        switch (filterObj[key].type) {
+        case Const.FILTER_TYPE.NUMBER: {
+          filterVal = filterObj[key].value.number;
+          break;
+        }
+        case Const.FILTER_TYPE.CUSTOM: {
+          filterVal = (typeof filterObj[key].value === 'object') ?
+            undefined :
+            (typeof filterObj[key].value === 'string') ?
+              filterObj[key].value.toLowerCase() :
+              filterObj[key].value;
+          break;
+        }
+        case Const.FILTER_TYPE.DATE: {
+          filterVal = filterObj[key].value.date;
+          break;
+        }
+        case Const.FILTER_TYPE.REGEX: {
+          filterVal = filterObj[key].value;
+          break;
+        }
+        default: {
+          filterVal = (typeof filterObj[key].value === 'string') ?
+            filterObj[key].value.toLowerCase() :
+            filterObj[key].value;
+          if (filterVal === undefined) {
+            // Support old filter
+            filterVal = filterObj[key].toLowerCase();
+          }
+          break;
+        }
+        }
+
+        if (this.colInfos[key]) {
+          const { format, filterFormatted, formatExtraData } = this.colInfos[key];
+          if (filterFormatted && format) {
+            targetVal = format(row[key], row, formatExtraData);
+          }
+        }
+
+        switch (filterObj[key].type) {
+        case Const.FILTER_TYPE.NUMBER: {
+          valid = this.filterNumber(targetVal, filterVal, filterObj[key].value.comparator);
+          break;
+        }
+        case Const.FILTER_TYPE.DATE: {
+          valid = this.filterDate(targetVal, filterVal, filterObj[key].value.comparator);
+          break;
+        }
+        case Const.FILTER_TYPE.REGEX: {
+          valid = this.filterRegex(targetVal, filterVal);
+          break;
+        }
+        case Const.FILTER_TYPE.CUSTOM: {
+          valid = this.filterCustom(targetVal, filterVal, filterObj[key].value);
+          break;
+        }
+        default: {
+          valid = this.filterText(targetVal, filterVal);
+          break;
+        }
+        }
+        if (!valid) {
+          break;
+        }
+      }
+      return valid;
+    });
+    this.isOnFilter = true;
+  }
+
+  _search(source) {
+    let searchTextArray = [];
+
+    if (this.multiColumnSearch) {
+      searchTextArray = this.searchText.split(' ');
+    } else {
+      searchTextArray.push(this.searchText);
+    }
+    this.filteredData = source.filter( row => {
+      const keys = Object.keys(row);
+      let valid = false;
+      // for loops are ugly, but performance matters here.
+      // And you cant break from a forEach.
+      // http://jsperf.com/for-vs-foreach/66
+      for (let i = 0, keysLength = keys.length; i < keysLength; i++) {
+        const key = keys[i];
+        if (this.colInfos[key] && row[key]) {
+          const { format, filterFormatted, formatExtraData, searchable } = this.colInfos[key];
+          let targetVal = row[key];
+          if (searchable) {
+            if (filterFormatted && format) {
+              targetVal = format(targetVal, row, formatExtraData);
+            }
+            for (let j = 0, textLength = searchTextArray.length; j < textLength; j++) {
+              const filterVal = searchTextArray[j].toLowerCase();
+              if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
+                valid = true;
+                break;
               }
             }
           }
         }
-        return valid;
-      });
-      this.isOnFilter = true;
-    }
+      }
+      return valid;
+    });
+    this.isOnFilter = true;
   }
 
   getDataIgnoringPagination() {
