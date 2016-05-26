@@ -157,14 +157,16 @@ class TableBody extends Component {
       }
     }
     const theader = this.props.columns.map(function(column, i) {
-      const width = column.width === null ? column.width : parseInt(column.width, 10);
       const style = {
-        display: column.hidden ? 'none' : null,
-        width: width,
-        minWidth: width
+        display: column.hidden ? 'none' : null
+      };
+      if (column.width) {
+        const width = parseInt(column.width, 10);
+        style.width = width;
         /** add min-wdth to fix user assign column width
         not eq offsetWidth in large column table **/
-      };
+        style.minWidth = width;
+      }
       return (<col style={ style } key={ i } className={ column.className }></col>);
     });
 
