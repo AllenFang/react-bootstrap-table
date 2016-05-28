@@ -78,11 +78,15 @@ class PaginationList extends Component {
     });
 
     const offset = Math.abs(Const.PAGE_START_INDEX - pageStartIndex);
-    const total = paginationShowsTotal ? <span>
-      Showing rows { ((currPage - pageStartIndex) * sizePerPage) } to&nbsp;
-      { Math.min((sizePerPage * (currPage + offset) - 1), dataSize) } of&nbsp;
-      { dataSize }
+    const start = ((currPage - pageStartIndex) * sizePerPage);
+    const to = Math.min((sizePerPage * (currPage + offset) - 1), dataSize);
+    let total = paginationShowsTotal ? <span>
+      Showing rows { start } to&nbsp;{ to } of&nbsp;{ dataSize }
     </span> : null;
+
+    if (typeof paginationShowsTotal === 'function') {
+      total = paginationShowsTotal(start, to, dataSize);
+    }
 
     return (
       <div className='row' style={ { marginTop: 15 } }>

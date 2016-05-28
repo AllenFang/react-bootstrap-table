@@ -930,7 +930,7 @@ BootstrapTable.propTypes = {
     onRowClick: PropTypes.func,
     page: PropTypes.number,
     pageStartIndex: PropTypes.number,
-    paginationShowsTotal: PropTypes.bool,
+    paginationShowsTotal: PropTypes.oneOfType([ PropTypes.bool, PropTypes.func ]),
     sizePerPageList: PropTypes.array,
     sizePerPage: PropTypes.number,
     paginationSize: PropTypes.number,
