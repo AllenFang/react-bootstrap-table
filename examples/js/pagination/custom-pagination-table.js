@@ -20,6 +20,15 @@ function addProducts(quantity) {
 addProducts(100);
 
 export default class CustomPaginationTable extends React.Component {
+
+  renderShowsTotal(start, to, total) {
+    return (
+      <p style={ { color: 'blue' } }>
+        From { start } to { to }, totals is { total }&nbsp;&nbsp;(its a customize text)
+      </p>
+    );
+  }
+
   render() {
     const options = {
       page: 2,  // which page you want to show as default
@@ -31,7 +40,7 @@ export default class CustomPaginationTable extends React.Component {
       nextPage: 'Next', // Next page button text
       firstPage: 'First', // First page button text
       lastPage: 'Last', // Last page button text
-      paginationShowsTotal: true
+      paginationShowsTotal: this.renderShowsTotal  // Accept bool or function
     };
 
     return (
