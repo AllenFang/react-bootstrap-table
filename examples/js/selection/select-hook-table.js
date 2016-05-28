@@ -31,11 +31,15 @@ function onRowSelect(row, isSelected, e) {
   alert(`is selected: ${isSelected}, ${rowStr}`);
 }
 
-function onSelectAll(isSelected, currentDisplayAndSelectedData) {
+function onSelectAll(isSelected, rows) {
   alert(`is select all: ${isSelected}`);
-  alert('Current display and selected data: ');
-  for (let i = 0; i < currentDisplayAndSelectedData.length; i++) {
-    alert(currentDisplayAndSelectedData[i]);
+  if (isSelected) {
+    alert('Current display and selected data: ');
+  } else {
+    alert('unselect rows: ');
+  }
+  for (let i = 0; i < rows.length; i++) {
+    alert(rows[i].id);
   }
 }
 
