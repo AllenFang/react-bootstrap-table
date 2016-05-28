@@ -399,7 +399,7 @@ class BootstrapTable extends Component {
     let result = true;
     if (this.props.selectRow.onSelectAll) {
       result = this.props.selectRow.onSelectAll(isSelected,
-        isSelected ? this.store.get() : []);
+        isSelected ? this.store.get() : this.store.getRowByKey(this.state.selectedRowKeys));
     }
 
     if (typeof result == 'undefined' || result !== false) {

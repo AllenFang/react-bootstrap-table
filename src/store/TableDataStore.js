@@ -85,6 +85,13 @@ export class TableDataStore {
     this.selected = selectedRowKeys;
   }
 
+  getRowByKey(keys) {
+    return keys.map(key => {
+      const result = this.data.filter(d => d[this.keyField] === key);
+      if (result.length !== 0) return result[0];
+    });
+  }
+
   getSelectedRowKeys() {
     return this.selected;
   }
