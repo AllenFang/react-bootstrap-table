@@ -125,6 +125,7 @@ class BootstrapTable extends Component {
         filterFormatted: column.props.filterFormatted,
         editable: column.props.editable,
         hidden: column.props.hidden,
+        hiddenOnInsert: column.props.hiddenOnInsert,
         searchable: column.props.searchable,
         className: column.props.columnClassName,
         columnTitle: column.props.columnTitle,
@@ -741,6 +742,7 @@ class BootstrapTable extends Component {
           return {
             name: props.children,
             field: props.dataField,
+            hiddenOnInsert: props.hiddenOnInsert,
             // when you want same auto generate value and not allow edit, example ID field
             autoValue: props.autoValue || false,
             // for create editor, no params for column.editable() indicate that editor for new row
@@ -754,7 +756,8 @@ class BootstrapTable extends Component {
         columns = [ {
           name: children.props.children,
           field: children.props.dataField,
-          editable: children.props.editable
+          editable: children.props.editable,
+          hiddenOnInsert: children.props.hiddenOnInsert
         } ];
       }
       return (

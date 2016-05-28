@@ -54,6 +54,8 @@ class ToolBar extends Component {
         tempValue = typeof column.autoValue === 'function' ?
           column.autoValue() :
           (`autovalue-${time}`);
+      } else if (column.hiddenOnInsert) {
+        tempValue = '';
       } else {
         const dom = this.refs[column.field + i];
         tempValue = dom.value;
@@ -291,13 +293,13 @@ class ToolBar extends Component {
     const validateState = this.state.validateState || {};
     const shakeEditor = this.state.shakeEditor;
     const inputField = this.props.columns.map((column, i) => {
-      const { editable, format, field, name, autoValue } = column;
+      const { editable, format, field, name, autoValue, hiddenOnInsert } = column;
       const attr = {
         ref: field + i,
         placeholder: editable.placeholder ? editable.placeholder : name
       };
 
-      if (autoValue) {
+      if (autoValue || hiddenOnInsert) {
         // when you want same auto generate value
         // and not allow edit, for example ID field
         return null;
