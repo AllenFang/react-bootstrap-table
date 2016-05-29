@@ -235,12 +235,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var selectedRowKeys = [];
 	      var result = true;
 	      if (_this.props.selectRow.onSelectAll) {
-	        result = _this.props.selectRow.onSelectAll(isSelected, isSelected ? _this.store.get() : []);
+	        result = _this.props.selectRow.onSelectAll(isSelected, isSelected ? _this.store.get() : _this.store.getRowByKey(_this.state.selectedRowKeys));
 	      }
 
 	      if (typeof result == 'undefined' || result !== false) {
 	        if (isSelected) {
-	          selectedRowKeys = _this.store.getAllRowkey();
+	          selectedRowKeys = Array.isArray(result) ? result : _this.store.getAllRowkey();
 	        }
 
 	        _this.store.setSelectedRowKey(selectedRowKeys);
@@ -616,6 +616,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          filterFormatted: column.props.filterFormatted,
 	          editable: column.props.editable,
 	          hidden: column.props.hidden,
+	          hiddenOnInsert: column.props.hiddenOnInsert,
 	          searchable: column.props.searchable,
 	          className: column.props.columnClassName,
 	          columnTitle: column.props.columnTitle,
@@ -973,6 +974,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return {
 	              name: props.children,
 	              field: props.dataField,
+	              hiddenOnInsert: props.hiddenOnInsert,
 	              // when you want same auto generate value and not allow edit, example ID field
 	              autoValue: props.autoValue || false,
 	              // for create editor, no params for column.editable() indicate that editor for new row
@@ -986,7 +988,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          columns = [{
 	            name: children.props.children,
 	            field: children.props.dataField,
-	            editable: children.props.editable
+	            editable: children.props.editable,
+	            hiddenOnInsert: children.props.hiddenOnInsert
 	          }];
 	        }
 	        return _react2['default'].createElement(
@@ -1114,7 +1117,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    onRowClick: _react.PropTypes.func,
 	    page: _react.PropTypes.number,
 	    pageStartIndex: _react.PropTypes.number,
-	    paginationShowsTotal: _react.PropTypes.bool,
+	    paginationShowsTotal: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.func]),
 	    sizePerPageList: _react.PropTypes.array,
 	    sizePerPage: _react.PropTypes.number,
 	    paginationSize: _react.PropTypes.number,
@@ -1846,14 +1849,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      }
 	      var theader = this.props.columns.map(function (column, i) {
-	        var width = column.width === null ? column.width : parseInt(column.width, 10);
 	        var style = {
-	          display: column.hidden ? 'none' : null,
-	          width: width,
-	          minWidth: width
+	          display: column.hidden ? 'none' : null
+	        };
+	        if (column.width) {
+	          var width = parseInt(column.width, 10);
+	          style.width = width;
 	          /** add min-wdth to fix user assign column width
 	          not eq offsetWidth in large column table **/
-	        };
+	          style.minWidth = width;
+	        }
 	        return _react2['default'].createElement('col', { style: style, key: i, className: column.className });
 	      });
 
@@ -3965,16 +3970,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 
 	      var offset = Math.abs(_Const2['default'].PAGE_START_INDEX - pageStartIndex);
+	      var start = (currPage - pageStartIndex) * sizePerPage;
+	      var to = Math.min(sizePerPage * (currPage + offset) - 1, dataSize);
 	      var total = paginationShowsTotal ? _react2['default'].createElement(
 	        'span',
 	        null,
 	        'Showing rows ',
-	        (currPage - pageStartIndex) * sizePerPage,
+	        start,
 	        ' to ',
-	        Math.min(sizePerPage * (currPage + offset) - 1, dataSize),
+	        to,
 	        ' of ',
 	        dataSize
 	      ) : null;
+
+	      if (typeof paginationShowsTotal === 'function') {
+	        total = paginationShowsTotal(start, to, dataSize);
+	      }
 
 	      return _react2['default'].createElement(
 	        'div',
@@ -4403,6 +4414,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          // when you want same auto generate value and not allow edit, example ID field
 	          var time = new Date().getTime();
 	          tempValue = typeof column.autoValue === 'function' ? column.autoValue() : 'autovalue-' + time;
+	        } else if (column.hiddenOnInsert) {
+	          tempValue = '';
 	        } else {
 	          var dom = this.refs[column.field + i];
 	          tempValue = dom.value;
@@ -4581,13 +4594,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var field = column.field;
 	        var name = column.name;
 	        var autoValue = column.autoValue;
+	        var hiddenOnInsert = column.hiddenOnInsert;
 
 	        var attr = {
 	          ref: field + i,
 	          placeholder: editable.placeholder ? editable.placeholder : name
 	        };
 
-	        if (autoValue) {
+	        if (autoValue || hiddenOnInsert) {
 	          // when you want same auto generate value
 	          // and not allow edit, for example ID field
 	          return null;
@@ -4970,6 +4984,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.selected = selectedRowKeys;
 	    }
 	  }, {
+	    key: 'getRowByKey',
+	    value: function getRowByKey(keys) {
+	      var _this = this;
+
+	      return keys.map(function (key) {
+	        var result = _this.data.filter(function (d) {
+	          return d[_this.keyField] === key;
+	        });
+	        if (result.length !== 0) return result[0];
+	      });
+	    }
+	  }, {
 	    key: 'getSelectedRowKeys',
 	    value: function getSelectedRowKeys() {
 	      return this.selected;
@@ -4993,14 +5019,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'ignoreNonSelected',
 	    value: function ignoreNonSelected() {
-	      var _this = this;
+	      var _this2 = this;
 
 	      this.showOnlySelected = !this.showOnlySelected;
 	      if (this.showOnlySelected) {
 	        this.isOnFilter = true;
 	        this.filteredData = this.data.filter(function (row) {
-	          var result = _this.selected.find(function (x) {
-	            return row[_this.keyField] === x;
+	          var result = _this2.selected.find(function (x) {
+	            return row[_this2.keyField] === x;
 	          });
 	          return typeof result !== 'undefined' ? true : false;
 	        });
@@ -5094,16 +5120,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'remove',
 	    value: function remove(rowKey) {
-	      var _this2 = this;
+	      var _this3 = this;
 
 	      var currentDisplayData = this.getCurrentDisplayData();
 	      var result = currentDisplayData.filter(function (row) {
-	        return rowKey.indexOf(row[_this2.keyField]) === -1;
+	        return rowKey.indexOf(row[_this3.keyField]) === -1;
 	      });
 
 	      if (this.isOnFilter) {
 	        this.data = this.data.filter(function (row) {
-	          return rowKey.indexOf(row[_this2.keyField]) === -1;
+	          return rowKey.indexOf(row[_this3.keyField]) === -1;
 	        });
 	        this.filteredData = result;
 	      } else {
@@ -5113,99 +5139,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'filter',
 	    value: function filter(filterObj) {
-	      var _this3 = this;
-
 	      if (Object.keys(filterObj).length === 0) {
 	        this.filteredData = null;
 	        this.isOnFilter = false;
 	        this.filterObj = null;
-	        if (this.searchText !== null) this.search(this.searchText);
+	        if (this.searchText) this._search(this.data);
 	      } else {
+	        var source = this.data;
 	        this.filterObj = filterObj;
-	        this.filteredData = this.data.filter(function (row) {
-	          var valid = true;
-	          var filterVal = undefined;
-	          for (var key in filterObj) {
-	            var targetVal = row[key];
-	            if (targetVal === null) return false;
-
-	            switch (filterObj[key].type) {
-	              case _Const2['default'].FILTER_TYPE.NUMBER:
-	                {
-	                  filterVal = filterObj[key].value.number;
-	                  break;
-	                }
-	              case _Const2['default'].FILTER_TYPE.CUSTOM:
-	                {
-	                  filterVal = typeof filterObj[key].value === 'object' ? undefined : typeof filterObj[key].value === 'string' ? filterObj[key].value.toLowerCase() : filterObj[key].value;
-	                  break;
-	                }
-	              case _Const2['default'].FILTER_TYPE.DATE:
-	                {
-	                  filterVal = filterObj[key].value.date;
-	                  break;
-	                }
-	              case _Const2['default'].FILTER_TYPE.REGEX:
-	                {
-	                  filterVal = filterObj[key].value;
-	                  break;
-	                }
-	              default:
-	                {
-	                  filterVal = typeof filterObj[key].value === 'string' ? filterObj[key].value.toLowerCase() : filterObj[key].value;
-	                  if (filterVal === undefined) {
-	                    // Support old filter
-	                    filterVal = filterObj[key].toLowerCase();
-	                  }
-	                  break;
-	                }
-	            }
-
-	            if (_this3.colInfos[key]) {
-	              var _colInfos$key = _this3.colInfos[key];
-	              var format = _colInfos$key.format;
-	              var filterFormatted = _colInfos$key.filterFormatted;
-	              var formatExtraData = _colInfos$key.formatExtraData;
-
-	              if (filterFormatted && format) {
-	                targetVal = format(row[key], row, formatExtraData);
-	              }
-	            }
-
-	            switch (filterObj[key].type) {
-	              case _Const2['default'].FILTER_TYPE.NUMBER:
-	                {
-	                  valid = _this3.filterNumber(targetVal, filterVal, filterObj[key].value.comparator);
-	                  break;
-	                }
-	              case _Const2['default'].FILTER_TYPE.DATE:
-	                {
-	                  valid = _this3.filterDate(targetVal, filterVal, filterObj[key].value.comparator);
-	                  break;
-	                }
-	              case _Const2['default'].FILTER_TYPE.REGEX:
-	                {
-	                  valid = _this3.filterRegex(targetVal, filterVal);
-	                  break;
-	                }
-	              case _Const2['default'].FILTER_TYPE.CUSTOM:
-	                {
-	                  valid = _this3.filterCustom(targetVal, filterVal, filterObj[key].value);
-	                  break;
-	                }
-	              default:
-	                {
-	                  valid = _this3.filterText(targetVal, filterVal);
-	                  break;
-	                }
-	            }
-	            if (!valid) {
-	              break;
-	            }
-	          }
-	          return valid;
-	        });
-	        this.isOnFilter = true;
+	        if (this.searchText) {
+	          this._search(source);
+	          source = this.filteredData;
+	        }
+	        this._filter(source);
 	      }
 	    }
 	  }, {
@@ -5362,64 +5308,157 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'search',
 	    value: function search(searchText) {
-	      var _this4 = this;
-
 	      if (searchText.trim() === '') {
 	        this.filteredData = null;
 	        this.isOnFilter = false;
 	        this.searchText = null;
-	        if (this.filterObj !== null) this.filter(this.filterObj);
+	        if (this.filterObj) this._filter(this.data);
 	      } else {
-	        (function () {
-	          _this4.searchText = searchText;
-	          var searchTextArray = [];
+	        var source = this.data;
+	        this.searchText = searchText;
+	        if (this.filterObj) {
+	          this._filter(source);
+	          source = this.filteredData;
+	        }
+	        this._search(source);
+	      }
+	    }
+	  }, {
+	    key: '_filter',
+	    value: function _filter(source) {
+	      var _this4 = this;
 
-	          if (_this4.multiColumnSearch) {
-	            searchTextArray = searchText.split(' ');
-	          } else {
-	            searchTextArray.push(searchText);
+	      var filterObj = this.filterObj;
+	      this.filteredData = source.filter(function (row) {
+	        var valid = true;
+	        var filterVal = undefined;
+	        for (var key in filterObj) {
+	          var targetVal = row[key];
+	          if (targetVal === null) return false;
+
+	          switch (filterObj[key].type) {
+	            case _Const2['default'].FILTER_TYPE.NUMBER:
+	              {
+	                filterVal = filterObj[key].value.number;
+	                break;
+	              }
+	            case _Const2['default'].FILTER_TYPE.CUSTOM:
+	              {
+	                filterVal = typeof filterObj[key].value === 'object' ? undefined : typeof filterObj[key].value === 'string' ? filterObj[key].value.toLowerCase() : filterObj[key].value;
+	                break;
+	              }
+	            case _Const2['default'].FILTER_TYPE.DATE:
+	              {
+	                filterVal = filterObj[key].value.date;
+	                break;
+	              }
+	            case _Const2['default'].FILTER_TYPE.REGEX:
+	              {
+	                filterVal = filterObj[key].value;
+	                break;
+	              }
+	            default:
+	              {
+	                filterVal = typeof filterObj[key].value === 'string' ? filterObj[key].value.toLowerCase() : filterObj[key].value;
+	                if (filterVal === undefined) {
+	                  // Support old filter
+	                  filterVal = filterObj[key].toLowerCase();
+	                }
+	                break;
+	              }
 	          }
-	          // Mark following code for fixing #363
-	          // To avoid to search on a data which be searched or filtered
-	          // But this solution have a poor performance, because I do a filter again
-	          // const source = this.isOnFilter ? this.filteredData : this.data;
-	          var source = _this4.filterObj !== null ? _this4.filter(_this4.filterObj) : _this4.data;
 
-	          _this4.filteredData = source.filter(function (row) {
-	            var keys = Object.keys(row);
-	            var valid = false;
-	            // for loops are ugly, but performance matters here.
-	            // And you cant break from a forEach.
-	            // http://jsperf.com/for-vs-foreach/66
-	            for (var i = 0, keysLength = keys.length; i < keysLength; i++) {
-	              var key = keys[i];
-	              if (_this4.colInfos[key] && row[key]) {
-	                var _colInfos$key2 = _this4.colInfos[key];
-	                var format = _colInfos$key2.format;
-	                var filterFormatted = _colInfos$key2.filterFormatted;
-	                var formatExtraData = _colInfos$key2.formatExtraData;
-	                var searchable = _colInfos$key2.searchable;
+	          if (_this4.colInfos[key]) {
+	            var _colInfos$key = _this4.colInfos[key];
+	            var format = _colInfos$key.format;
+	            var filterFormatted = _colInfos$key.filterFormatted;
+	            var formatExtraData = _colInfos$key.formatExtraData;
 
-	                var targetVal = row[key];
-	                if (searchable) {
-	                  if (filterFormatted && format) {
-	                    targetVal = format(targetVal, row, formatExtraData);
-	                  }
-	                  for (var j = 0, textLength = searchTextArray.length; j < textLength; j++) {
-	                    var filterVal = searchTextArray[j].toLowerCase();
-	                    if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
-	                      valid = true;
-	                      break;
-	                    }
-	                  }
+	            if (filterFormatted && format) {
+	              targetVal = format(row[key], row, formatExtraData);
+	            }
+	          }
+
+	          switch (filterObj[key].type) {
+	            case _Const2['default'].FILTER_TYPE.NUMBER:
+	              {
+	                valid = _this4.filterNumber(targetVal, filterVal, filterObj[key].value.comparator);
+	                break;
+	              }
+	            case _Const2['default'].FILTER_TYPE.DATE:
+	              {
+	                valid = _this4.filterDate(targetVal, filterVal, filterObj[key].value.comparator);
+	                break;
+	              }
+	            case _Const2['default'].FILTER_TYPE.REGEX:
+	              {
+	                valid = _this4.filterRegex(targetVal, filterVal);
+	                break;
+	              }
+	            case _Const2['default'].FILTER_TYPE.CUSTOM:
+	              {
+	                valid = _this4.filterCustom(targetVal, filterVal, filterObj[key].value);
+	                break;
+	              }
+	            default:
+	              {
+	                valid = _this4.filterText(targetVal, filterVal);
+	                break;
+	              }
+	          }
+	          if (!valid) {
+	            break;
+	          }
+	        }
+	        return valid;
+	      });
+	      this.isOnFilter = true;
+	    }
+	  }, {
+	    key: '_search',
+	    value: function _search(source) {
+	      var _this5 = this;
+
+	      var searchTextArray = [];
+
+	      if (this.multiColumnSearch) {
+	        searchTextArray = this.searchText.split(' ');
+	      } else {
+	        searchTextArray.push(this.searchText);
+	      }
+	      this.filteredData = source.filter(function (row) {
+	        var keys = Object.keys(row);
+	        var valid = false;
+	        // for loops are ugly, but performance matters here.
+	        // And you cant break from a forEach.
+	        // http://jsperf.com/for-vs-foreach/66
+	        for (var i = 0, keysLength = keys.length; i < keysLength; i++) {
+	          var key = keys[i];
+	          if (_this5.colInfos[key] && row[key]) {
+	            var _colInfos$key2 = _this5.colInfos[key];
+	            var format = _colInfos$key2.format;
+	            var filterFormatted = _colInfos$key2.filterFormatted;
+	            var formatExtraData = _colInfos$key2.formatExtraData;
+	            var searchable = _colInfos$key2.searchable;
+
+	            var targetVal = row[key];
+	            if (searchable) {
+	              if (filterFormatted && format) {
+	                targetVal = format(targetVal, row, formatExtraData);
+	              }
+	              for (var j = 0, textLength = searchTextArray.length; j < textLength; j++) {
+	                var filterVal = searchTextArray[j].toLowerCase();
+	                if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
+	                  valid = true;
+	                  break;
 	                }
 	              }
 	            }
-	            return valid;
-	          });
-	          _this4.isOnFilter = true;
-	        })();
-	      }
+	          }
+	        }
+	        return valid;
+	      });
+	      this.isOnFilter = true;
 	    }
 	  }, {
 	    key: 'getDataIgnoringPagination',
@@ -5467,10 +5506,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'getAllRowkey',
 	    value: function getAllRowkey() {
-	      var _this5 = this;
+	      var _this6 = this;
 
 	      return this.data.map(function (row) {
-	        return row[_this5.keyField];
+	        return row[_this6.keyField];
 	      });
 	    }
 	  }]);
@@ -6454,6 +6493,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  isKey: _react.PropTypes.bool,
 	  editable: _react.PropTypes.any,
 	  hidden: _react.PropTypes.bool,
+	  hiddenOnInsert: _react.PropTypes.bool,
 	  searchable: _react.PropTypes.bool,
 	  className: _react.PropTypes.string,
 	  width: _react.PropTypes.string,
@@ -6489,6 +6529,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  editable: true,
 	  onSort: undefined,
 	  hidden: false,
+	  hiddenOnInsert: false,
 	  searchable: true,
 	  className: '',
 	  columnTitle: false,
