@@ -404,7 +404,9 @@ class BootstrapTable extends Component {
 
     if (typeof result == 'undefined' || result !== false) {
       if (isSelected) {
-        selectedRowKeys = this.store.getAllRowkey();
+        selectedRowKeys = Array.isArray(result) ?
+          result :
+          this.store.getAllRowkey();
       }
 
       this.store.setSelectedRowKey(selectedRowKeys);
