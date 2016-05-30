@@ -1,3 +1,29 @@
+<a name="v2.3.3"></a>
+# [v2.3.3](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.2...v2.3.3) (2016-05-29)
+### Bug fixes
+* Fix warning: NaN is an invalid value for the width css style property([4018df5](https://github.com/AllenFang/react-bootstrap-table/commit/4018df53f1c65d8d072b28b52ce71f103a76d81b))
+* Fix uncaught TypeError: Cannot read property 'filter' of undefined([dc67221](https://github.com/AllenFang/react-bootstrap-table/commit/dc672211e32cfd10b83557418bd82c2956d41b3c))
+* Fix search then filter will ignore the search([dc67221](https://github.com/AllenFang/react-bootstrap-table/commit/dc672211e32cfd10b83557418bd82c2956d41b3c))
+
+### Features
+* Custom text for ```paginationShowsTotal```([07b3e7a](https://github.com/AllenFang/react-bootstrap-table/commit/07b3e7a59f1c8cf0b71fbdabdb95410f8d9fb5e0))
+	* ```paginationShowsTotal``` accept a bool value or a function, if a function given you need return the customize JSX.
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/pagination/custom-pagination-table.js#L43)
+* Support hide field in insert modal([9a7e93a](https://github.com/AllenFang/react-bootstrap-table/commit/9a7e93a7a87783e1405968cfae9970a3d55323c3))
+	* Use ```hiddenOnInsert``` on ```<TableHeaderColumn>```
+
+### Enhancement
+* Ability to return unselected rows in ```onSelectAll```([a23c290](https://github.com/AllenFang/react-bootstrap-table/commit/a23c2902a2ec33ca5f783fce6740892af359e74a))
+	* On select all, the second argument will be the current display rows on table.
+	* On unselect all, the second argument will be the unselect rows.
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/selection/select-hook-table.js#L34)
+
+* Improve the validation on ```onSelectAll```([4666523](https://github.com/AllenFang/react-bootstrap-table/commit/4666523c4ff87132655810bbdbfa5ef306a8cce8))
+	* If return true/false in ```onSelectAll```, means agree/disard this select all event.
+	* If return an array of rowKeys in ```onSelectAll```, means the final selected result for this select event.
+	* Check [select validation example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/selection/select-validation-table.js)
+
+
 <a name="v2.3.2"></a>
 # [v2.3.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.1...v2.3.2) (2016-05-23)
 ### Bug fixes
