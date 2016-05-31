@@ -162,6 +162,7 @@ class PaginationList extends Component {
   getPages() {
     let pages;
     let endPage = this.totalPages;
+    if (endPage <= 0) return [];
     let startPage = Math.max(
       this.props.currPage - Math.floor(this.props.paginationSize / 2),
       this.props.pageStartIndex
