@@ -544,7 +544,7 @@ class BootstrapTable extends Component {
         this.props.options.handleConfirmDeleteRow(() => {
           this.deleteRow(dropRowKeys);
         }, dropRowKeys);
-      } else if (confirm('Are you sure want delete?')) {
+      } else if (confirm('Are you sure you want to delete?')) {
         this.deleteRow(dropRowKeys);
       }
     }
