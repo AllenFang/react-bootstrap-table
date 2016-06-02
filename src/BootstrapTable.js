@@ -705,6 +705,8 @@ class BootstrapTable extends Component {
         dataSize = this.store.getDataNum();
       }
       const { options } = this.props;
+      if (Math.ceil(dataSize / this.state.sizePerPage) <= 1 &&
+        this.props.ignoreSinglePage) return null;
       return (
         <div className='react-bs-table-pagination'>
           <PaginationList
@@ -964,7 +966,8 @@ BootstrapTable.propTypes = {
     dataTotalSize: PropTypes.number
   }),
   exportCSV: PropTypes.bool,
-  csvFileName: PropTypes.string
+  csvFileName: PropTypes.string,
+  ignoreSinglePage: PropTypes.bool
 };
 BootstrapTable.defaultProps = {
   height: '100%',
@@ -1046,7 +1049,8 @@ BootstrapTable.defaultProps = {
     dataTotalSize: 0
   },
   exportCSV: false,
-  csvFileName: 'spreadsheet.csv'
+  csvFileName: 'spreadsheet.csv',
+  ignoreSinglePage: false
 };
 
 export default BootstrapTable;
