@@ -63,7 +63,7 @@ export class TableDataStore {
       return;
     }
 
-    this._refresh();
+    this._refresh(true);
   }
 
   getColInfos() {
@@ -101,12 +101,12 @@ export class TableDataStore {
     else return this.data;
   }
 
-  _refresh() {
+  _refresh(skipSorting) {
     if (this.isOnFilter) {
       if (this.filterObj !== null) this.filter(this.filterObj);
       if (this.searchText !== null) this.search(this.searchText);
     }
-    if (this.sortObj) {
+    if (!skipSorting && this.sortObj) {
       this.sort(this.sortObj.order, this.sortObj.sortField);
     }
   }
@@ -178,7 +178,7 @@ export class TableDataStore {
     if (this.isOnFilter) {
       this.data.unshift(newObj);
     }
-    this._refresh();
+    this._refresh(false);
   }
 
   add(newObj) {
@@ -196,7 +196,7 @@ export class TableDataStore {
     if (this.isOnFilter) {
       this.data.push(newObj);
     }
-    this._refresh();
+    this._refresh(false);
   }
 
   remove(rowKey) {
