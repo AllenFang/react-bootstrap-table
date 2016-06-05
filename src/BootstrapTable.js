@@ -646,7 +646,8 @@ class BootstrapTable extends Component {
       if (column.props.hidden === false) {
         keys.push({
           field: column.props.dataField,
-          format: column.props.csvFormat
+          format: column.props.csvFormat,
+          header: column.props.csvHeader || column.props.dataField
         });
       }
     });

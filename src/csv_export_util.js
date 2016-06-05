@@ -13,7 +13,7 @@ function toString(data, keys) {
   let dataString = '';
   if (data.length === 0) return dataString;
 
-  dataString += keys.map(x => x.field).join(',') + '\n';
+  dataString += keys.map(x => x.header).join(',') + '\n';
 
   data.map(function(row) {
     keys.map(function(col, i) {
