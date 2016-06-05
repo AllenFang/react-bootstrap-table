@@ -29,7 +29,7 @@ export default class ExportCSVTable extends React.Component {
     return (
       <BootstrapTable data={ products } exportCSV={ true }>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='name' csvHeader='product-name'>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price' csvFormat={ this.csvFormatter }>Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
