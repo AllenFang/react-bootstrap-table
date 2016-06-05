@@ -1938,6 +1938,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var _classnames = __webpack_require__(6);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -2001,7 +2005,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        style: {
 	          backgroundColor: this.props.isSelected ? this.props.selectRow.bgColor : null
 	        },
-	        className: (this.props.isSelected && this.props.selectRow.className ? this.props.selectRow.className : '') + (this.props.className || '')
+	        className: (0, _classnames2['default'])(this.props.isSelected ? this.props.selectRow.className : null, this.props.className)
 	      };
 
 	      if (this.props.selectRow && (this.props.selectRow.clickToSelect || this.props.selectRow.clickToSelectAndEditCell) || this.props.onRowClick) {
@@ -2995,6 +2999,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		if (val === null || val === undefined) {
 			throw new TypeError('Object.assign cannot be called with null or undefined');
 		}
+<<<<<<< HEAD
 
 		return Object(val);
 	}
@@ -3023,10 +3028,43 @@ return /******/ (function(modules) { // webpackBootstrap
 				return test2[n];
 			});
 			if (order2.join('') !== '0123456789') {
+=======
+
+		return Object(val);
+	}
+
+	function shouldUseNative() {
+		try {
+			if (!Object.assign) {
+				return false;
+			}
+
+			// Detect buggy property enumeration order in older V8 versions.
+
+			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
+			var test1 = new String('abc');  // eslint-disable-line
+			test1[5] = 'de';
+			if (Object.getOwnPropertyNames(test1)[0] === '5') {
+>>>>>>> 2d3d1cb527ca87de55dd2bfe0cf737395285ef3a
 				return false;
 			}
 
 			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+<<<<<<< HEAD
+=======
+			var test2 = {};
+			for (var i = 0; i < 10; i++) {
+				test2['_' + String.fromCharCode(i)] = i;
+			}
+			var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+				return test2[n];
+			});
+			if (order2.join('') !== '0123456789') {
+				return false;
+			}
+
+			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+>>>>>>> 2d3d1cb527ca87de55dd2bfe0cf737395285ef3a
 			var test3 = {};
 			'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
 				test3[letter] = letter;
@@ -3529,11 +3567,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	function detectEvents() {
 	  var animEnd = getVendorPrefixedEventName('animationend');
 	  var transEnd = getVendorPrefixedEventName('transitionend');
+<<<<<<< HEAD
 
 	  if (animEnd) {
 	    endEvents.push(animEnd);
 	  }
 
+=======
+
+	  if (animEnd) {
+	    endEvents.push(animEnd);
+	  }
+
+>>>>>>> 2d3d1cb527ca87de55dd2bfe0cf737395285ef3a
 	  if (transEnd) {
 	    endEvents.push(transEnd);
 	  }

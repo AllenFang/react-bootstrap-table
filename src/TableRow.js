@@ -1,3 +1,4 @@
+import classSet from 'classnames';
 import React, { Component, PropTypes } from 'react';
 
 class TableRow extends Component {
@@ -51,9 +52,10 @@ class TableRow extends Component {
       style: {
         backgroundColor: this.props.isSelected ? this.props.selectRow.bgColor : null
       },
-      className: (
-        this.props.isSelected && this.props.selectRow.className ?
-        this.props.selectRow.className : '') + (this.props.className || '')
+      className: classSet(
+        this.props.isSelected ? this.props.selectRow.className : null,
+        this.props.className
+      )
     };
 
     if (this.props.selectRow && (this.props.selectRow.clickToSelect ||
