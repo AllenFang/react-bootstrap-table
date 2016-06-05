@@ -55,7 +55,8 @@ class PaginationList extends Component {
       sizePerPage,
       sizePerPageList,
       paginationShowsTotal,
-      pageStartIndex
+      pageStartIndex,
+      hideSizePerPage
     } = this.props;
 
     this.totalPages = Math.ceil(dataSize / sizePerPage);
@@ -88,6 +89,10 @@ class PaginationList extends Component {
       total = paginationShowsTotal(start, to, dataSize);
     }
 
+    const dropDownStyle = {
+      visibility: hideSizePerPage ? 'hidden' : 'visible'
+    };
+
     return (
       <div className='row' style={ { marginTop: 15 } }>
         {
@@ -95,7 +100,7 @@ class PaginationList extends Component {
           ? <div>
               <div className='col-md-6'>
                 { total }{ ' ' }
-                <span className='dropdown'>
+                <span className='dropdown' style={ dropDownStyle }>
                   <button className='btn btn-default dropdown-toggle'
                     type='button' id='pageDropDown' data-toggle='dropdown'
                     aria-expanded='true'>
@@ -207,7 +212,8 @@ PaginationList.propTypes = {
   remote: PropTypes.bool,
   onSizePerPageList: PropTypes.func,
   prePage: PropTypes.string,
-  pageStartIndex: PropTypes.number
+  pageStartIndex: PropTypes.number,
+  hideSizePerPage: PropTypes.bool
 };
 
 PaginationList.defaultProps = {

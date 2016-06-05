@@ -724,7 +724,8 @@ class BootstrapTable extends Component {
             prePage={ options.prePage || Const.PRE_PAGE }
             nextPage={ options.nextPage || Const.NEXT_PAGE }
             firstPage={ options.firstPage || Const.FIRST_PAGE }
-            lastPage={ options.lastPage || Const.LAST_PAGE } />
+            lastPage={ options.lastPage || Const.LAST_PAGE }
+            hideSizePerPage={ options.hideSizePerPage }/>
         </div>
       );
     }
@@ -941,6 +942,7 @@ BootstrapTable.propTypes = {
     sizePerPageList: PropTypes.array,
     sizePerPage: PropTypes.number,
     paginationSize: PropTypes.number,
+    hideSizePerPage: PropTypes.bool,
     onSortChange: PropTypes.func,
     onPageChange: PropTypes.func,
     onSizePerPageList: PropTypes.func,
@@ -1029,6 +1031,7 @@ BootstrapTable.defaultProps = {
     sizePerPageList: Const.SIZE_PER_PAGE_LIST,
     sizePerPage: undefined,
     paginationSize: Const.PAGINATION_SIZE,
+    hideSizePerPage: false,
     onSizePerPageList: undefined,
     noDataText: undefined,
     handleConfirmDeleteRow: undefined,
