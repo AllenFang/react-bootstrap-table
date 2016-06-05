@@ -25,10 +25,18 @@ class TableEditColumn extends Component {
     } else if (e.keyCode === 27) {
       this.props.completeEdit(
         null, this.props.rowIndex, this.props.colIndex);
+    } else if (e.type === 'click') {  // textarea click save button
+      const value = e.target.parentElement.firstChild.value;
+      if (!this.validator(value)) {
+        return;
+      }
+      this.props.completeEdit(
+          value, this.props.rowIndex, this.props.colIndex);
     }
   }
 
   handleBlur = e => {
+    e.stopPropagation();
     if (this.props.blurToSave) {
       const value = e.currentTarget.type === 'checkbox' ?
                       this._getCheckBoxValue(e) : e.currentTarget.value;
