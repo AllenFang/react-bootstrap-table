@@ -26,7 +26,7 @@ gulp.task('clean', function() {
     './dist/*',
     './lib/**'
   ]);
-})
+});
 
 //------------
 // PROD
@@ -90,7 +90,7 @@ gulp.task('example-server', function() {
 
 });
 
-// TODO: consider droping browserify and just use webpack
+// TODO: consider dropping browserify and just use webpack
 //------------
 // DEMO
 // -----------
