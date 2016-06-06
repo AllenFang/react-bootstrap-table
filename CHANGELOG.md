@@ -1,3 +1,22 @@
+<a name="v2.3.4"></a>
+# [v2.3.4](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.3...v2.3.4) (2016-06-05)
+### Bug fixes
+* Fix a next page showing if there's no data([ddf7fc9](https://github.com/AllenFang/react-bootstrap-table/commit/ddf7fc9614e48ae3bfbd38c5dbc186db78db8fc7))
+* Fix the wrong class on selection row if a ```trClassName``` given([2d3d1cb](https://github.com/AllenFang/react-bootstrap-table/commit/2d3d1cb527ca87de55dd2bfe0cf737395285ef3a))
+	* Check [#488](https://github.com/AllenFang/react-bootstrap-table/issues/488)
+* Fix the save button doesn't work in textarea editing if disable ```blurToSave```([2e0eca5](https://github.com/AllenFang/react-bootstrap-table/commit/2e0eca5a4d326aa6ab2fdc24a1bb50ad60c39ce1))
+
+### Features
+* Able to hide the pagination if there's only one page([4739d43](https://github.com/AllenFang/react-bootstrap-table/commit/4739d433d873fbf0d5ede829ee878ab9965e3e81))
+	* Enable ```ignoreSinglePage``` on ```<BootstrapTable>```
+* Able to hide the sizePerPage doprdown([7c88a3b](https://github.com/AllenFang/react-bootstrap-table/commit/7c88a3bbf83e09810db24d684655071a91207f1a))
+	* Add ```hideSizePerPage``` in ```options``` props on ```<BootstrapTable>```
+* Support to customize the csv header text([ef11be9](https://github.com/AllenFang/react-bootstrap-table/commit/ef11be9e78b419c435bd9bc79a276fdf7e1e8bbe))
+	* Use ```csvHeader``` on ```<TableHeaderColumn>```
+
+### Enhancement
+* Fix confirm grammar for row delete([cd26ba9](https://github.com/AllenFang/react-bootstrap-table/commit/cd26ba98233b43b214a37a9c027d2760dbc5adc8))
+
 <a name="v2.3.3"></a>
 # [v2.3.3](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.2...v2.3.3) (2016-05-29)
 ### Bug fixes
