@@ -157,7 +157,12 @@ class BootstrapTable extends Component {
         currPage: page
       });
     } else {
-      const sizePerPage = options.sizePerPage || this.state.sizePerPage;
+      // #481
+      // const sizePerPage = options.sizePerPage || this.state.sizePerPage;
+      let sizePerPage = this.state.sizePerPage;
+      if (this.props.options.sizePerPage !== options.sizePerPage) {
+        sizePerPage = options.sizePerPage;
+      }
 
       // #125
       if (!options.page &&
