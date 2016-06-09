@@ -71,12 +71,22 @@ class TableHeaderColumn extends Component {
 
   render() {
     let defaultCaret;
+    const {
+      dataAlign,
+      headerAlign,
+      hidden,
+      sort,
+      dataSort,
+      sortIndicator,
+      children,
+      caretRender
+    } = this.props;
     const thStyle = {
-      textAlign: this.props.dataAlign,
-      display: this.props.hidden ? 'none' : null
+      textAlign: headerAlign || dataAlign,
+      display: hidden ? 'none' : null
     };
-    if (this.props.sortIndicator) {
-      defaultCaret = (!this.props.dataSort) ? null : (
+    if (sortIndicator) {
+      defaultCaret = (!dataSort) ? null : (
         <span className='order'>
           <span className='dropdown'>
             <span className='caret' style={ { margin: '10px 0 10px 5px', color: '#ccc' } }></span>
@@ -87,20 +97,20 @@ class TableHeaderColumn extends Component {
         </span>
       );
     }
-    let sortCaret = this.props.sort ? Util.renderReactSortCaret(this.props.sort) : defaultCaret;
-    if (this.props.caretRender) {
-      sortCaret = this.props.caretRender(this.props.sort);
+    let sortCaret = sort ? Util.renderReactSortCaret(sort) : defaultCaret;
+    if (caretRender) {
+      sortCaret = caretRender(sort);
     }
 
-    const classes = this.props.className + ' ' + (this.props.dataSort ? 'sort-column' : '');
-    const title = typeof this.props.children === 'string' ? { title: this.props.children } : null;
+    const classes = this.props.className + ' ' + (dataSort ? 'sort-column' : '');
+    const title = typeof children === 'string' ? { title: children } : null;
     return (
       <th ref='header-col'
           className={ classes }
           style={ thStyle }
           onClick={ this.handleColumnClick }
           { ...title }>
-        { this.props.children }{ sortCaret }
+        { children }{ sortCaret }
         <div onClick={ e => e.stopPropagation() }>
           { this.props.filter ? this.getFilters() : null }
         </div>
@@ -117,6 +127,7 @@ for (const key in Const.FILTER_TYPE) {
 TableHeaderColumn.propTypes = {
   dataField: PropTypes.string,
   dataAlign: PropTypes.string,
+  headerAlign: PropTypes.string,
   dataSort: PropTypes.bool,
   onSort: PropTypes.func,
   dataFormat: PropTypes.func,
@@ -155,6 +166,7 @@ TableHeaderColumn.propTypes = {
 
 TableHeaderColumn.defaultProps = {
   dataAlign: 'left',
+  headerAlign: undefined,
   dataSort: false,
   dataFormat: undefined,
   csvFormat: undefined,
