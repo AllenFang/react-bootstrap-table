@@ -638,11 +638,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.store.setData(nextProps.data.slice());
 
-	      var page = undefined;
-	      if (options.page != null) {
+	      // from #481
+	      var page = this.state.currPage;
+	      if (this.props.options.page !== options.page) {
 	        page = options.page;
-	      } else {
-	        page = this.state.currPage;
+	      }
+	      // from #481
+	      var sizePerPage = this.state.sizePerPage;
+	      if (this.props.options.sizePerPage !== options.sizePerPage) {
+	        sizePerPage = options.sizePerPage;
 	      }
 
 	      if (this.isRemoteDataSource()) {
@@ -651,8 +655,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          currPage: page
 	        });
 	      } else {
-	        var sizePerPage = options.sizePerPage || this.state.sizePerPage;
-
 	        // #125
 	        if (!options.page && page >= Math.ceil(nextProps.data.length / sizePerPage)) {
 	          page = 1;
@@ -1770,10 +1772,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                columnChild = _react2['default'].createElement('div', { dangerouslySetInnerHTML: { __html: formattedValue } });
 	              } else {
 	                columnChild = formattedValue;
-	                columnTitle = column.columnTitle ? formattedValue.toString() : null;
+	                columnTitle = column.columnTitle && formattedValue ? formattedValue.toString() : null;
 	              }
 	            } else {
-	              columnTitle = column.columnTitle ? fieldValue.toString() : null;
+	              columnTitle = column.columnTitle && fieldValue ? fieldValue.toString() : null;
 	            }
 	            return _react2['default'].createElement(
 	              _TableColumn2['default'],
@@ -6454,12 +6456,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'render',
 	    value: function render() {
 	      var defaultCaret = undefined;
+	      var _props = this.props;
+	      var dataAlign = _props.dataAlign;
+	      var headerAlign = _props.headerAlign;
+	      var hidden = _props.hidden;
+	      var sort = _props.sort;
+	      var dataSort = _props.dataSort;
+	      var sortIndicator = _props.sortIndicator;
+	      var children = _props.children;
+	      var caretRender = _props.caretRender;
+
 	      var thStyle = {
-	        textAlign: this.props.dataAlign,
-	        display: this.props.hidden ? 'none' : null
+	        textAlign: headerAlign || dataAlign,
+	        display: hidden ? 'none' : null
 	      };
-	      if (this.props.sortIndicator) {
-	        defaultCaret = !this.props.dataSort ? null : _react2['default'].createElement(
+	      if (sortIndicator) {
+	        defaultCaret = !dataSort ? null : _react2['default'].createElement(
 	          'span',
 	          { className: 'order' },
 	          _react2['default'].createElement(
@@ -6474,13 +6486,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	          )
 	        );
 	      }
-	      var sortCaret = this.props.sort ? _util2['default'].renderReactSortCaret(this.props.sort) : defaultCaret;
-	      if (this.props.caretRender) {
-	        sortCaret = this.props.caretRender(this.props.sort);
+	      var sortCaret = sort ? _util2['default'].renderReactSortCaret(sort) : defaultCaret;
+	      if (caretRender) {
+	        sortCaret = caretRender(sort);
 	      }
 
-	      var classes = this.props.className + ' ' + (this.props.dataSort ? 'sort-column' : '');
-	      var title = typeof this.props.children === 'string' ? { title: this.props.children } : null;
+	      var classes = this.props.className + ' ' + (dataSort ? 'sort-column' : '');
+	      var title = typeof children === 'string' ? { title: children } : null;
 	      return _react2['default'].createElement(
 	        'th',
 	        _extends({ ref: 'header-col',
@@ -6488,7 +6500,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          style: thStyle,
 	          onClick: this.handleColumnClick
 	        }, title),
-	        this.props.children,
+	        children,
 	        sortCaret,
 	        _react2['default'].createElement(
 	          'div',
@@ -6512,6 +6524,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	TableHeaderColumn.propTypes = {
 	  dataField: _react.PropTypes.string,
 	  dataAlign: _react.PropTypes.string,
+	  headerAlign: _react.PropTypes.string,
 	  dataSort: _react.PropTypes.bool,
 	  onSort: _react.PropTypes.func,
 	  dataFormat: _react.PropTypes.func,
@@ -6549,6 +6562,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	TableHeaderColumn.defaultProps = {
 	  dataAlign: 'left',
+	  headerAlign: undefined,
 	  dataSort: false,
 	  dataFormat: undefined,
 	  csvFormat: undefined,
