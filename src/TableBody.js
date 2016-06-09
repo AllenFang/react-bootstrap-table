@@ -77,10 +77,10 @@ class TableBody extends Component {
               );
             } else {
               columnChild = formattedValue;
-              columnTitle = column.columnTitle ? formattedValue.toString() : null;
+              columnTitle = column.columnTitle && formattedValue ? formattedValue.toString() : null;
             }
           } else {
-            columnTitle = column.columnTitle ? fieldValue.toString() : null;
+            columnTitle = column.columnTitle && fieldValue ? fieldValue.toString() : null;
           }
           return (
             <TableColumn key={ i }
