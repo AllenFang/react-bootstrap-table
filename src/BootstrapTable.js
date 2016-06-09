@@ -144,11 +144,15 @@ class BootstrapTable extends Component {
 
     this.store.setData(nextProps.data.slice());
 
-    let page;
-    if (options.page != null) {
+    // from #481
+    let page = this.state.currPage;
+    if (this.props.options.page !== options.page) {
       page = options.page;
-    } else {
-      page = this.state.currPage;
+    }
+    // from #481
+    let sizePerPage = this.state.sizePerPage;
+    if (this.props.options.sizePerPage !== options.sizePerPage) {
+      sizePerPage = options.sizePerPage;
     }
 
     if (this.isRemoteDataSource()) {
@@ -157,13 +161,6 @@ class BootstrapTable extends Component {
         currPage: page
       });
     } else {
-      // #481
-      // const sizePerPage = options.sizePerPage || this.state.sizePerPage;
-      let sizePerPage = this.state.sizePerPage;
-      if (this.props.options.sizePerPage !== options.sizePerPage) {
-        sizePerPage = options.sizePerPage;
-      }
-
       // #125
       if (!options.page &&
         page >= Math.ceil(nextProps.data.length / sizePerPage)) {
