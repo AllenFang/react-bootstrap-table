@@ -24,8 +24,8 @@ export default class ColumnAlignTable extends React.Component {
     return (
       <BootstrapTable data={ products }>
           <TableHeaderColumn dataField='id' isKey={ true } dataAlign='center'>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField='name' dataAlign='right'>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
+          <TableHeaderColumn dataField='name' headerAlign='right'>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='price' headerAlign='center' dataAlign='right'>Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
   }
