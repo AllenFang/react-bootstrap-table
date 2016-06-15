@@ -427,7 +427,7 @@ export class TableDataStore {
         if (this.colInfos[key]) {
           const { format, filterFormatted, formatExtraData } = this.colInfos[key];
           if (filterFormatted && format) {
-            targetVal = format(row[key], row, formatExtraData);
+            targetVal = format(targetVal, row, formatExtraData);
           }
         }
 
@@ -480,7 +480,9 @@ export class TableDataStore {
         const key = keys[i];
         if (this.colInfos[key] && row[key]) {
           const { format, filterFormatted, formatExtraData, searchable } = this.colInfos[key];
-          let targetVal = row[key];
+          let targetVal = typeof this.colInfos[key].dataAccess === 'function' ?
+            this.colInfos[key].dataAccess(row) :
+            row[key];
           if (searchable) {
             if (filterFormatted && format) {
               targetVal = format(targetVal, row, formatExtraData);

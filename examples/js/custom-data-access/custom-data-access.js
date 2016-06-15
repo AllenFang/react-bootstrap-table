@@ -15,7 +15,7 @@ function addProducts(quantity) {
       price: 2100 + i,
       category: {
         id: 20 + i,
-        name: 'Category name ' + i
+        name: 'Category name ' + (quantity + i)
       }
     });
   }
@@ -30,10 +30,10 @@ function categoryName(product) {
 export default class TrClassStringTable extends React.Component {
   render() {
     return (
-      <BootstrapTable data={ products }>
+      <BootstrapTable data={ products } search={ true } >
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField='price' dataAccess={ categoryName }>Category name</TableHeaderColumn>
+          <TableHeaderColumn dataField='price' dataAccess={ categoryName } filter={ { type: 'TextFilter' } }>Category name</TableHeaderColumn>
       </BootstrapTable>
     );
   }
