@@ -1,4 +1,15 @@
 <a name="v2.3.4"></a>
+# [v2.3.4](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.4...v2.3.5) (2016-06-11)
+### Bug fixes
+* Fix column title is null problem([4d25667](https://github.com/AllenFang/react-bootstrap-table/commit/4d25667facf23e6447b8a196d32ffe699e5573a2))
+* Fix sizePerPage always to be options value if setState([58540b3](https://github.com/AllenFang/react-bootstrap-table/commit/58540b37eccc3f15e92950e96dd890043d7fc1a6))
+* fix currPage always to be options value if setState([544cd26](https://github.com/AllenFang/react-bootstrap-table/commit/544cd261b8f1da42173f5cb00dc61f32fa7b04a7))
+
+### Enhancement
+* Support ```headerAlign``` for align header text only([e8930f6](https://github.com/AllenFang/react-bootstrap-table/commit/e8930f63a76fb54bcb4b36e39440ab757619490f))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column/column-align-table.js)
+
+<a name="v2.3.4"></a>
 # [v2.3.4](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.3...v2.3.4) (2016-06-05)
 ### Bug fixes
 * Fix a next page showing if there's no data([ddf7fc9](https://github.com/AllenFang/react-bootstrap-table/commit/ddf7fc9614e48ae3bfbd38c5dbc186db78db8fc7))
