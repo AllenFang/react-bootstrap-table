@@ -387,7 +387,9 @@ export class TableDataStore {
       let filterVal;
       for (const key in filterObj) {
         let targetVal = row[key];
-        if (targetVal === null) return false;
+        if (targetVal === null || targetVal === undefined) {
+          targetVal = '';
+        }
 
         switch (filterObj[key].type) {
         case Const.FILTER_TYPE.NUMBER: {
