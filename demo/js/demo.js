@@ -13,7 +13,9 @@ function addProducts(quantity) {
       price: 100 + i,
       supplierId: id+2,
       discount: "10%",
-      categoryId: "catorage-"+id+6
+      category: {
+        id: "catorage-"+id+6,
+      },
     });
   }
 }
@@ -92,7 +94,7 @@ React.render(
       <TableHeaderColumn dataField="price" width="100px" dataFormat={priceFormatter} editable={false}>Product Price</TableHeaderColumn>
       <TableHeaderColumn dataField="supplierId" editable={true}>Supplier ID</TableHeaderColumn>
       <TableHeaderColumn dataField="discount" editable={false}>Discount(Percentage)</TableHeaderColumn>
-      <TableHeaderColumn dataField="categoryId" editable={true}>Category ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="categoryId" dataAccess={(item) => item.category.id} editable={true}>Category ID</TableHeaderColumn>
   </BootstrapTable>,
 	document.getElementById("basic")
 );

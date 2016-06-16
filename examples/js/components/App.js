@@ -37,6 +37,9 @@ class App extends React.Component {
       text: 'Basic Table',
       href: 'basic'
     }, {
+      text: 'Custom Data Access',
+      href: 'custom-data-access'
+    }, {
       text: 'Work on Column',
       href: 'column'
     }, {

@@ -18,6 +18,7 @@ const routes = (
       <Route path='getting-started' component={ GettingStarted }/>
       <Route path='examples'>
         <Route path='basic' component={ require('./basic/demo') } />
+        <Route path='custom-data-access' component={ require('./custom-data-access/demo') } />
         <Route path='column' component={ require('./column/demo') } />
         <Route path='sort' component={ require('./sort/demo') } />
         <Route path='column-format' component={ require('./column-format/demo') } />
