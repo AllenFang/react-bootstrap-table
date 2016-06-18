@@ -13,11 +13,11 @@ class TableRow extends Component {
         e.target.tagName !== 'SELECT' &&
         e.target.tagName !== 'TEXTAREA') {
       const rowIndex = e.currentTarget.rowIndex + 1;
-      if (this.props.selectRow) {
-        if (this.props.selectRow.clickToSelect && !this.props.unselectableRow) {
-          this.props.onSelectRow(rowIndex, !this.props.isSelected, e);
-        } else if (this.props.selectRow.clickToSelectAndEditCell
-          && !this.props.unselectableRow) {
+      const { selectRow, unselectableRow, isSelected, onSelectRow } = this.props;
+      if (selectRow) {
+        if (selectRow.clickToSelect && !unselectableRow) {
+          onSelectRow(rowIndex, !isSelected, e);
+        } else if (selectRow.clickToSelectAndEditCell && !unselectableRow) {
           this.clickNum++;
           /** if clickToSelectAndEditCell is enabled,
            *  there should be a delay to prevent a selection changed when
@@ -25,7 +25,7 @@ class TableRow extends Component {
           **/
           setTimeout(() => {
             if (this.clickNum === 1) {
-              this.props.onSelectRow(rowIndex, !this.props.isSelected, e);
+              onSelectRow(rowIndex, !isSelected, e);
             }
             this.clickNum = 0;
           }, 200);
