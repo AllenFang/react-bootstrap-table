@@ -907,7 +907,8 @@ BootstrapTable.propTypes = {
     clickToSelect: PropTypes.bool,
     hideSelectColumn: PropTypes.bool,
     clickToSelectAndEditCell: PropTypes.bool,
-    showOnlySelected: PropTypes.bool
+    showOnlySelected: PropTypes.bool,
+    unselectable: PropTypes.array
   }),
   cellEdit: PropTypes.shape({
     mode: PropTypes.string,
@@ -992,7 +993,8 @@ BootstrapTable.defaultProps = {
     clickToSelect: false,
     hideSelectColumn: false,
     clickToSelectAndEditCell: false,
-    showOnlySelected: false
+    showOnlySelected: false,
+    unselectable: []
   },
   cellEdit: {
     mode: Const.CELL_EDIT_NONE,

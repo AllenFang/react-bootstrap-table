@@ -14,9 +14,10 @@ class TableRow extends Component {
         e.target.tagName !== 'TEXTAREA') {
       const rowIndex = e.currentTarget.rowIndex + 1;
       if (this.props.selectRow) {
-        if (this.props.selectRow.clickToSelect) {
+        if (this.props.selectRow.clickToSelect && !this.props.unselectableRow) {
           this.props.onSelectRow(rowIndex, !this.props.isSelected, e);
-        } else if (this.props.selectRow.clickToSelectAndEditCell) {
+        } else if (this.props.selectRow.clickToSelectAndEditCell
+          && !this.props.unselectableRow) {
           this.clickNum++;
           /** if clickToSelectAndEditCell is enabled,
            *  there should be a delay to prevent a selection changed when
@@ -79,7 +80,8 @@ TableRow.propTypes = {
   onRowClick: PropTypes.func,
   onSelectRow: PropTypes.func,
   onRowMouseOut: PropTypes.func,
-  onRowMouseOver: PropTypes.func
+  onRowMouseOver: PropTypes.func,
+  unselectableRow: PropTypes.bool
 };
 TableRow.defaultProps = {
   onRowClick: undefined
