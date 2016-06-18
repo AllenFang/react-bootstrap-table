@@ -2,6 +2,7 @@
 import React from 'react';
 import SingleSelectTable from './single-select-table';
 import MultiSelectTable from './multi-select-table';
+import UnSelectableTable from './unselectable-table';
 import ClickToSelectTable from './click-to-select-table';
 import DefaultSelectTable from './default-select-table';
 import SelectBgColorTable from './select-bgcolor-table';
@@ -31,6 +32,15 @@ class Demo extends React.Component {
             <div className='panel-body'>
               <h5>Source in /examples/js/selection/multi-select-table.js</h5>
               <MultiSelectTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>UnSelectable Example</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/selection/unselectable-table.js</h5>
+              <UnSelectableTable />
             </div>
           </div>
         </div>
