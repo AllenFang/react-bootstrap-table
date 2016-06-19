@@ -526,6 +526,10 @@ class BootstrapTable extends Component {
     return this.state.currPage;
   }
 
+  getTableDataIgnorePaging() {
+    return this.store.getCurrentDisplayData();
+  }
+
   getPageByRowKey = rowKey => {
     const { sizePerPage } = this.state;
     const currentData = this.store.getCurrentDisplayData();
