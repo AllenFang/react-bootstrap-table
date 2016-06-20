@@ -656,7 +656,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	      } else {
 	        // #125
-	        if (!options.page && page >= Math.ceil(nextProps.data.length / sizePerPage)) {
+	        if (!options.page && page > Math.ceil(nextProps.data.length / sizePerPage)) {
 	          page = 1;
 	        }
 	        var sortInfo = this.store.getSortInfo();
@@ -879,6 +879,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return this.state.currPage;
 	    }
 	  }, {
+	    key: 'getTableDataIgnorePaging',
+	    value: function getTableDataIgnorePaging() {
+	      return this.store.getCurrentDisplayData();
+	    }
+	  }, {
 	    key: 'deleteRow',
 	    value: function deleteRow(dropRowKeys) {
 	      var onDeleteRow = this.props.options.onDeleteRow;
@@ -1088,7 +1093,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    clickToSelect: _react.PropTypes.bool,
 	    hideSelectColumn: _react.PropTypes.bool,
 	    clickToSelectAndEditCell: _react.PropTypes.bool,
-	    showOnlySelected: _react.PropTypes.bool
+	    showOnlySelected: _react.PropTypes.bool,
+	    unselectable: _react.PropTypes.array
 	  }),
 	  cellEdit: _react.PropTypes.shape({
 	    mode: _react.PropTypes.string,
@@ -1173,7 +1179,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    clickToSelect: false,
 	    hideSelectColumn: false,
 	    clickToSelectAndEditCell: false,
-	    showOnlySelected: false
+	    showOnlySelected: false,
+	    unselectable: []
 	  },
 	  cellEdit: {
 	    mode: _Const2['default'].CELL_EDIT_NONE,
@@ -1727,8 +1734,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'table-condensed': this.props.condensed
 	      }, this.props.tableBodyClass);
 
+	      var unselectable = this.props.selectRow.unselectable || [];
 	      var isSelectRowDefined = this._isSelectRowDefined();
 	      var tableHeader = this.renderTableHeader(isSelectRowDefined);
+	      var inputType = this.props.selectRow.mode === _Const2['default'].ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
 
 	      var tableRows = this.props.data.map(function (data, r) {
 	        var tableColumns = this.props.columns.map(function (column, i) {
@@ -1791,9 +1800,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            );
 	          }
 	        }, this);
-
+	        var disable = unselectable.indexOf(data[this.props.keyField]) !== -1;
 	        var selected = this.props.selectedRowKeys.indexOf(data[this.props.keyField]) !== -1;
-	        var selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ? this.renderSelectRowColumn(selected) : null;
+	        var selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ? this.renderSelectRowColumn(selected, inputType, disable) : null;
 	        // add by bluespring for className customize
 	        var trClassName = this.props.trClassName;
 	        if (isFun(this.props.trClassName)) {
@@ -1807,7 +1816,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onRowClick: this.handleRowClick,
 	            onRowMouseOver: this.handleRowMouseOver,
 	            onRowMouseOut: this.handleRowMouseOut,
-	            onSelectRow: this.handleSelectRow },
+	            onSelectRow: this.handleSelectRow,
+	            unselectableRow: disable },
 	          selectRowColumn,
 	          tableColumns
 	        );
@@ -1880,22 +1890,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'renderSelectRowColumn',
-	    value: function renderSelectRowColumn(selected) {
-	      if (this.props.selectRow.mode === _Const2['default'].ROW_SELECT_SINGLE) {
-	        return _react2['default'].createElement(
-	          _TableColumn2['default'],
-	          { dataAlign: 'center' },
-	          _react2['default'].createElement('input', { type: 'radio', checked: selected,
-	            onChange: this.handleSelectRowColumChange })
-	        );
-	      } else {
-	        return _react2['default'].createElement(
-	          _TableColumn2['default'],
-	          { dataAlign: 'center' },
-	          _react2['default'].createElement('input', { type: 'checkbox', checked: selected,
-	            onChange: this.handleSelectRowColumChange })
-	        );
-	      }
+	    value: function renderSelectRowColumn(selected, inputType, disabled) {
+	      return _react2['default'].createElement(
+	        _TableColumn2['default'],
+	        { dataAlign: 'center' },
+	        _react2['default'].createElement('input', { type: inputType, checked: selected, disabled: disabled,
+	          onChange: this.handleSelectRowColumChange })
+	      );
 	    }
 	  }, {
 	    key: '_isSelectRowDefined',
@@ -1969,10 +1970,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT' && e.target.tagName !== 'TEXTAREA') {
 	        (function () {
 	          var rowIndex = e.currentTarget.rowIndex + 1;
-	          if (_this.props.selectRow) {
-	            if (_this.props.selectRow.clickToSelect) {
-	              _this.props.onSelectRow(rowIndex, !_this.props.isSelected, e);
-	            } else if (_this.props.selectRow.clickToSelectAndEditCell) {
+	          var _props = _this.props;
+	          var selectRow = _props.selectRow;
+	          var unselectableRow = _props.unselectableRow;
+	          var isSelected = _props.isSelected;
+	          var onSelectRow = _props.onSelectRow;
+
+	          if (selectRow) {
+	            if (selectRow.clickToSelect && !unselectableRow) {
+	              onSelectRow(rowIndex, !isSelected, e);
+	            } else if (selectRow.clickToSelectAndEditCell && !unselectableRow) {
 	              _this.clickNum++;
 	              /** if clickToSelectAndEditCell is enabled,
 	               *  there should be a delay to prevent a selection changed when
@@ -1980,7 +1987,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              **/
 	              setTimeout(function () {
 	                if (_this.clickNum === 1) {
-	                  _this.props.onSelectRow(rowIndex, !_this.props.isSelected, e);
+	                  onSelectRow(rowIndex, !isSelected, e);
 	                }
 	                _this.clickNum = 0;
 	              }, 200);
@@ -2045,7 +2052,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onRowClick: _react.PropTypes.func,
 	  onSelectRow: _react.PropTypes.func,
 	  onRowMouseOut: _react.PropTypes.func,
-	  onRowMouseOver: _react.PropTypes.func
+	  onRowMouseOver: _react.PropTypes.func,
+	  unselectableRow: _react.PropTypes.bool
 	};
 	TableRow.defaultProps = {
 	  onRowClick: undefined
@@ -5362,7 +5370,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var filterVal = undefined;
 	        for (var key in filterObj) {
 	          var targetVal = row[key];
-	          if (targetVal === null) return false;
+	          if (targetVal === null || targetVal === undefined) {
+	            targetVal = '';
+	          }
 
 	          switch (filterObj[key].type) {
 	            case _Const2['default'].FILTER_TYPE.NUMBER:
