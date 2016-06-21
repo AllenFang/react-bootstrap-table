@@ -2,6 +2,7 @@
 /* eslint guard-for-in: 0 */
 /* eslint no-console: 0 */
 /* eslint eqeqeq: 0 */
+/* eslint one-var: 0 */
 import Const from '../Const';
 
 function _sort(arr, sortField, order, sortFunc, sortFuncExtraData) {
@@ -423,9 +424,11 @@ export class TableDataStore {
           break;
         }
         }
-
+        let format, filterFormatted, formatExtraData;
         if (this.colInfos[key]) {
-          const { format, filterFormatted, formatExtraData } = this.colInfos[key];
+          format = this.colInfos[key].format;
+          filterFormatted = this.colInfos[key].filterFormatted;
+          formatExtraData = this.colInfos[key].formatExtraData;
           if (filterFormatted && format) {
             targetVal = format(row[key], row, formatExtraData);
           }
@@ -449,6 +452,10 @@ export class TableDataStore {
           break;
         }
         default: {
+          if (filterObj[key].type === Const.FILTER_TYPE.SELECT &&
+            filterFormatted && filterFormatted && format) {
+            filterVal = format(filterVal, row, formatExtraData);
+          }
           valid = this.filterText(targetVal, filterVal);
           break;
         }
