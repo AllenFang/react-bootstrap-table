@@ -1,5 +1,16 @@
-<a name="v2.3.4"></a>
-# [v2.3.4](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.4...v2.3.5) (2016-06-11)
+<a name="v2.3.5"></a>
+# [v2.3.5](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.5...v2.3.6) (2016-06-20)
+### Bug fixes
+* Fix filter null data([8a90468](https://github.com/AllenFang/react-bootstrap-table/commit/8a90468d80fb269612f1599dcaf18cb99dcf65ab))
+* Fix setState will cause changing to page one if selected row is on last page([7093d58](https://github.com/AllenFang/react-bootstrap-table/commit/7093d58aad53454e956b52862fed0a84cdb809bf))
+
+### Features
+* Support ```unselectable``` in ```selectRow``` props which can make some row unselectable([f5faef1](https://github.com/AllenFang/react-bootstrap-table/commit/f5faef1ede68d02bbfb50e424f80d0e2c188ad76))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/selection/unselectable-table.js#L25)
+* Expose ```getTableDataIgnorePaging``` function on ```<BootstrapTable>``` to allow user get the all data(include filtered)([34f3568](https://github.com/AllenFang/react-bootstrap-table/commit/34f3568657b1fb56fdc218041d47b00f09680345))
+
+<a name="v2.3.5"></a>
+# [v2.3.5](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.4...v2.3.5) (2016-06-11)
 ### Bug fixes
 * Fix column title is null problem([4d25667](https://github.com/AllenFang/react-bootstrap-table/commit/4d25667facf23e6447b8a196d32ffe699e5573a2))
 * Fix sizePerPage always to be options value if setState([58540b3](https://github.com/AllenFang/react-bootstrap-table/commit/58540b37eccc3f15e92950e96dd890043d7fc1a6))
