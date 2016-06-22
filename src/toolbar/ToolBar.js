@@ -351,7 +351,7 @@ class ToolBar extends Component {
                 { this.props.closeText }
               </button>
               <button type='button'
-                className='btn btn-info'
+                className='btn btn-success'
                 onClick={ this.handleSaveBtnClick }>
                 { this.props.saveText }
               </button>
