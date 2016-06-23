@@ -52,13 +52,13 @@ class TableBody extends Component {
                 completeEdit={ this.handleCompleteEditCell }
                 // add by bluespring for column editor customize
                 editable={ editable }
+                customEditor={ column.customEditor }
                 format={ column.format ? format : false }
                 key={ i }
                 blurToSave={ this.props.cellEdit.blurToSave }
                 rowIndex={ r }
-                colIndex={ i }>
-                { fieldValue }
-              </TableEditColumn>
+                colIndex={ i }
+                fieldValue={ fieldValue } />
             );
         } else {
           // add by bluespring for className customize

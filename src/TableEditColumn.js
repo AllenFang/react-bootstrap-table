@@ -48,6 +48,10 @@ class TableEditColumn extends Component {
     }
   }
 
+  handleCustomUpdate = value => {
+    this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
+  }
+
   validator(value) {
     const ts = this;
     if (ts.props.editable.validator) {
@@ -82,7 +86,7 @@ class TableEditColumn extends Component {
   }
 
   render() {
-    const { editable, format, children } = this.props;
+    const { editable, format, fieldValue, customEditor } = this.props;
     const { shakeEditor } = this.state;
     const attr = {
       ref: 'inputRef',
@@ -93,9 +97,15 @@ class TableEditColumn extends Component {
     editable.placeholder && (attr.placeholder = editable.placeholder);
 
     const editorClass = classSet({ 'animated': shakeEditor, 'shake': shakeEditor });
+    const CustomEditor = customEditor;
+    const cellEditor = CustomEditor ? <CustomEditor
+                                        {...attr}
+                                        defaultValue={ fieldValue || '' }
+                                        onUpdate={ this.handleCustomUpdate }/> :
+                                      editor(editable, attr, format, editorClass, fieldValue || '');
     return (
       <td ref='td' style={ { position: 'relative' } }>
-        { editor(editable, attr, format, editorClass, children || '') }
+        { cellEditor }
         <Notifier ref='notifier'/>
       </td>
     );
@@ -116,7 +126,12 @@ TableEditColumn.propTypes = {
   blurToSave: PropTypes.bool,
   editable: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
   format: PropTypes.oneOfType([ PropTypes.bool, PropTypes.func ]),
-  children: PropTypes.node
+  fieldValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+    PropTypes.number,
+    PropTypes.object
+  ])
 };
 
 
