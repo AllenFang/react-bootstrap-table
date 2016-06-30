@@ -397,18 +397,26 @@ class BootstrapTable extends Component {
 
   handleSelectAllRow = e => {
     const isSelected = e.currentTarget.checked;
+    const keyField = this.store.getKeyField();
+    const { selectRow: { onSelectAll, unselectable } } = this.props;
     let selectedRowKeys = [];
     let result = true;
-    if (this.props.selectRow.onSelectAll) {
+    let rows = this.store.get();
+
+    if (isSelected && unselectable && unselectable.length > 0) {
+      rows = rows.filter(r => unselectable.indexOf(r[keyField]) === -1);
+    }
+
+    if (onSelectAll) {
       result = this.props.selectRow.onSelectAll(isSelected,
-        isSelected ? this.store.get() : this.store.getRowByKey(this.state.selectedRowKeys));
+        isSelected ? rows : this.store.getRowByKey(this.state.selectedRowKeys));
     }
 
     if (typeof result == 'undefined' || result !== false) {
       if (isSelected) {
         selectedRowKeys = Array.isArray(result) ?
           result :
-          this.store.getAllRowkey();
+          rows.map(r => r[keyField]);
       }
 
       this.store.setSelectedRowKey(selectedRowKeys);
