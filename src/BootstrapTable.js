@@ -36,12 +36,16 @@ class BootstrapTable extends Component {
       const copy = this.props.selectRow.selected.slice();
       this.store.setSelectedRowKey(copy);
     }
+    let currPage = Const.PAGE_START_INDEX;
+    if (typeof this.props.options.page !== 'undefined') {
+      currPage = this.props.options.page;
+    } else if (typeof this.props.options.pageStartIndex !== 'undefined') {
+      currPage = this.props.options.pageStartIndex;
+    }
 
     this.state = {
       data: this.getTableData(),
-      currPage: this.props.options.page ||
-                this.props.options.pageStartIndex ||
-                Const.PAGE_START_INDEX,
+      currPage: currPage,
       sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
       selectedRowKeys: this.store.getSelectedRowKeys()
     };
