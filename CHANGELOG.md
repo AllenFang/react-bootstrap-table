@@ -1,5 +1,12 @@
-<a name="v2.3.5"></a>
-# [v2.3.5](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.5...v2.3.6) (2016-06-20)
+<a name="v2.3.7"></a>
+# [v2.3.7](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.6...v2.3.7) (2016-07-02)
+## Bug fixes
+* [#517](https://github.com/AllenFang/react-bootstrap-table/issues/517)([https://github.com/AllenFang/react-bootstrap-table/issues/517](https://github.com/AllenFang/react-bootstrap-table/commit/1c71289e0a6578a5c959ae2232ebda32e8080b10))
+* Fix unselctable is broken on selecting all([aa1db57](https://github.com/AllenFang/react-bootstrap-table/commit/aa1db57c021f43d5cf51ddb5cc11f8647cd46d51))
+
+
+<a name="v2.3.6"></a>
+# [v2.3.6](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.5...v2.3.6) (2016-06-20)
 ### Bug fixes
 * Fix filter null data([8a90468](https://github.com/AllenFang/react-bootstrap-table/commit/8a90468d80fb269612f1599dcaf18cb99dcf65ab))
 * Fix setState will cause changing to page one if selected row is on last page([7093d58](https://github.com/AllenFang/react-bootstrap-table/commit/7093d58aad53454e956b52862fed0a84cdb809bf))
