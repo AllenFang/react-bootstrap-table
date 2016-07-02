@@ -3,7 +3,7 @@
 ## Bug fixes
 * [#517](https://github.com/AllenFang/react-bootstrap-table/issues/517)([https://github.com/AllenFang/react-bootstrap-table/issues/517](https://github.com/AllenFang/react-bootstrap-table/commit/1c71289e0a6578a5c959ae2232ebda32e8080b10))
 * Fix unselctable is broken on selecting all([aa1db57](https://github.com/AllenFang/react-bootstrap-table/commit/aa1db57c021f43d5cf51ddb5cc11f8647cd46d51))
-
+* Fix current page not work correct from zero([edd5581](https://github.com/AllenFang/react-bootstrap-table/commit/edd55810d94ca6e0936e57f3430b067ce954ae12))
 
 <a name="v2.3.6"></a>
 # [v2.3.6](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.5...v2.3.6) (2016-06-20)
