@@ -232,15 +232,30 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    this.handleSelectAllRow = function (e) {
 	      var isSelected = e.currentTarget.checked;
+	      var keyField = _this.store.getKeyField();
+	      var _props$selectRow = _this.props.selectRow;
+	      var onSelectAll = _props$selectRow.onSelectAll;
+	      var unselectable = _props$selectRow.unselectable;
+
 	      var selectedRowKeys = [];
 	      var result = true;
-	      if (_this.props.selectRow.onSelectAll) {
-	        result = _this.props.selectRow.onSelectAll(isSelected, isSelected ? _this.store.get() : _this.store.getRowByKey(_this.state.selectedRowKeys));
+	      var rows = _this.store.get();
+
+	      if (isSelected && unselectable && unselectable.length > 0) {
+	        rows = rows.filter(function (r) {
+	          return unselectable.indexOf(r[keyField]) === -1;
+	        });
+	      }
+
+	      if (onSelectAll) {
+	        result = _this.props.selectRow.onSelectAll(isSelected, isSelected ? rows : _this.store.getRowByKey(_this.state.selectedRowKeys));
 	      }
 
 	      if (typeof result == 'undefined' || result !== false) {
 	        if (isSelected) {
-	          selectedRowKeys = Array.isArray(result) ? result : _this.store.getAllRowkey();
+	          selectedRowKeys = Array.isArray(result) ? result : rows.map(function (r) {
+	            return r[keyField];
+	          });
 	        }
 
 	        _this.store.setSelectedRowKey(selectedRowKeys);
@@ -520,10 +535,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var copy = this.props.selectRow.selected.slice();
 	      this.store.setSelectedRowKey(copy);
 	    }
+	    var currPage = _Const2['default'].PAGE_START_INDEX;
+	    if (typeof this.props.options.page !== 'undefined') {
+	      currPage = this.props.options.page;
+	    } else if (typeof this.props.options.pageStartIndex !== 'undefined') {
+	      currPage = this.props.options.pageStartIndex;
+	    }
 
 	    this.state = {
 	      data: this.getTableData(),
-	      currPage: this.props.options.page || this.props.options.pageStartIndex || _Const2['default'].PAGE_START_INDEX,
+	      currPage: currPage,
 	      sizePerPage: this.props.options.sizePerPage || _Const2['default'].SIZE_PER_PAGE_LIST[0],
 	      selectedRowKeys: this.store.getSelectedRowKeys()
 	    };
@@ -4915,6 +4936,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* eslint guard-for-in: 0 */
 	/* eslint no-console: 0 */
 	/* eslint eqeqeq: 0 */
+	/* eslint one-var: 0 */
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
@@ -5405,13 +5427,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                break;
 	              }
 	          }
-
+	          var format = undefined,
+	              filterFormatted = undefined,
+	              formatExtraData = undefined;
 	          if (_this4.colInfos[key]) {
-	            var _colInfos$key = _this4.colInfos[key];
-	            var format = _colInfos$key.format;
-	            var filterFormatted = _colInfos$key.filterFormatted;
-	            var formatExtraData = _colInfos$key.formatExtraData;
-
+	            format = _this4.colInfos[key].format;
+	            filterFormatted = _this4.colInfos[key].filterFormatted;
+	            formatExtraData = _this4.colInfos[key].formatExtraData;
 	            if (filterFormatted && format) {
 	              targetVal = format(row[key], row, formatExtraData);
 	            }
@@ -5440,6 +5462,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	              }
 	            default:
 	              {
+	                if (filterObj[key].type === _Const2['default'].FILTER_TYPE.SELECT && filterFormatted && filterFormatted && format) {
+	                  filterVal = format(filterVal, row, formatExtraData);
+	                }
 	                valid = _this4.filterText(targetVal, filterVal);
 	                break;
 	              }
@@ -5473,11 +5498,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        for (var i = 0, keysLength = keys.length; i < keysLength; i++) {
 	          var key = keys[i];
 	          if (_this5.colInfos[key] && row[key]) {
-	            var _colInfos$key2 = _this5.colInfos[key];
-	            var format = _colInfos$key2.format;
-	            var filterFormatted = _colInfos$key2.filterFormatted;
-	            var formatExtraData = _colInfos$key2.formatExtraData;
-	            var searchable = _colInfos$key2.searchable;
+	            var _colInfos$key = _this5.colInfos[key];
+	            var format = _colInfos$key.format;
+	            var filterFormatted = _colInfos$key.filterFormatted;
+	            var formatExtraData = _colInfos$key.formatExtraData;
+	            var searchable = _colInfos$key.searchable;
 
 	            var targetVal = row[key];
 	            if (searchable) {
