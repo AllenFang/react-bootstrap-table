@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import classSet from 'classnames';
+// import classSet from 'classnames';
 import Const from '../Const';
-import editor from '../Editor';
+// import editor from '../Editor';
 import Notifier from '../Notification.js';
+import InsertModal from './InsertModal';
 
 class ToolBar extends Component {
 
@@ -13,7 +14,7 @@ class ToolBar extends Component {
     this.timeouteClear = 0;
     this.modalClassName;
     this.state = {
-      isInsertRowTrigger: true,
+      isInsertModalOpen: false,
       validateState: null,
       shakeEditor: false,
       showSelected: false
@@ -291,74 +292,12 @@ class ToolBar extends Component {
 
   renderInsertRowModal() {
     const validateState = this.state.validateState || {};
-    const shakeEditor = this.state.shakeEditor;
-    const inputField = this.props.columns.map((column, i) => {
-      const { editable, format, field, name, autoValue, hiddenOnInsert } = column;
-      const attr = {
-        ref: field + i,
-        placeholder: editable.placeholder ? editable.placeholder : name
-      };
-
-      if (autoValue || hiddenOnInsert) {
-        // when you want same auto generate value
-        // and not allow edit, for example ID field
-        return null;
-      }
-      const error = validateState[field] ?
-        (<span className='help-block bg-danger'>{ validateState[field] }</span>) :
-        null;
-
-      // let editor = Editor(editable,attr,format);
-      // if(editor.props.type && editor.props.type == 'checkbox'){
-      return (
-        <div className='form-group' key={ field }>
-          <label>{ name }</label>
-          { editor(editable, attr, format, '', undefined, this.props.ignoreEditable) }
-          { error }
-        </div>
-      );
-    });
-    const modalClass = classSet('modal', 'fade', this.modalClassName, {
-      // hack prevent bootstrap modal hide by reRender
-      'in': shakeEditor || this.state.validateState
-    });
-    const dialogClass = classSet('modal-dialog', 'modal-sm', {
-      'animated': shakeEditor,
-      'shake': shakeEditor
-    });
     return (
-      <div ref='modal' className={ modalClass } tabIndex='-1' role='dialog'>
-        <div className={ dialogClass }>
-          <div className='modal-content'>
-            <div className='modal-header'>
-              <button type='button'
-                className='close'
-                data-dismiss='modal'
-                aria-label='Close'>
-                <span aria-hidden='true'>&times;</span>
-              </button>
-              <h4 className='modal-title'>New Record</h4>
-            </div>
-            <div className='modal-body'>
-              <form ref='form'>
-              { inputField }
-              </form>
-            </div>
-            <div className='modal-footer'>
-              <button type='button'
-                className='btn btn-default'
-                data-dismiss='modal'>
-                { this.props.closeText }
-              </button>
-              <button type='button'
-                className='btn btn-info'
-                onClick={ this.handleSaveBtnClick }>
-                { this.props.saveText }
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <InsertModal
+        columns={ this.props.columns }
+        validateState={ validateState }
+        ignoreEditable={ this.props.ignoreEditable }
+        isOpen={ this.state.isInsertModalOpen } />
     );
   }
 }
