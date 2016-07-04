@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Modal from 'react-modal';
 // import classSet from 'classnames';
 import Const from '../Const';
 // import editor from '../Editor';
@@ -193,8 +194,7 @@ class ToolBar extends Component {
       insertBtn = (
         <button type='button'
           className='btn btn-info react-bs-table-add-btn'
-          data-toggle='modal'
-          data-target={ '.' + this.modalClassName }>
+          onClick={ () => this.setState({ isInsertModalOpen: !this.state.isInsertModalOpen }) }>
           <i className='glyphicon glyphicon-plus'></i> { this.props.insertText }
         </button>
       );
@@ -293,11 +293,13 @@ class ToolBar extends Component {
   renderInsertRowModal() {
     const validateState = this.state.validateState || {};
     return (
-      <InsertModal
-        columns={ this.props.columns }
-        validateState={ validateState }
-        ignoreEditable={ this.props.ignoreEditable }
-        isOpen={ this.state.isInsertModalOpen } />
+      <Modal className='react-bs-insert-modal modal-dialog'
+        isOpen={ this.state.isInsertModalOpen }>
+        <InsertModal
+          columns={ this.props.columns }
+          validateState={ validateState }
+          ignoreEditable={ this.props.ignoreEditable }/>
+      </Modal>
     );
   }
 }
