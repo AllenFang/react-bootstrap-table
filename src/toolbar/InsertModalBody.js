@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 
 import editor from '../Editor';
 
-const InsertModalBody = ({ columns, validateState, ignoreEditable }) => {
+const InsertModalBody = ({ columns, validateState, ignoreEditable }) =>
   <div>
     {
       columns.map((column, i) => {
@@ -38,7 +38,6 @@ const InsertModalBody = ({ columns, validateState, ignoreEditable }) => {
       })
     }
   </div>;
-};
 
 InsertModalBody.propTypes = {
   columns: PropTypes.array,
