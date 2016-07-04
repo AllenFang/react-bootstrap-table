@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const InsertModalHeader = ({ title, onModalClose }) => {
+const InsertModalHeader = ({ title, onModalClose }) =>
   <div>
     <button type='button' className='close' onClick={ onModalClose }>
       <span aria-hidden='true'>&times;</span>
@@ -8,7 +8,6 @@ const InsertModalHeader = ({ title, onModalClose }) => {
     </button>
     <h4 className='modal-title'>{ title }</h4>
   </div>;
-};
 
 InsertModalHeader.propTypes = {
   title: PropTypes.string,

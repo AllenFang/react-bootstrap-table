@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Const from '../Const';
-const InsertModalFooter = ({ onModalClose, onSave }) => {
+const InsertModalFooter = ({ onModalClose, onSave }) =>
   <div>
     <button
       type='button'
@@ -11,7 +11,6 @@ const InsertModalFooter = ({ onModalClose, onSave }) => {
       className='btn btn-primary'
       onClick={ onSave }>Save</button>
   </div>;
-};
 
 InsertModalFooter.propTypes = {
   saveBtnText: PropTypes.string,
