@@ -22,7 +22,7 @@ addProducts(5);
 const selectRowProp = {
   mode: 'checkbox',
   clickToSelect: true,
-  unselectable: [ 1, 3, 5 ] // give rowkeys for unselectable row
+  unselectable: [ 1, 3 ] // give rowkeys for unselectable row
 };
 
 export default class UnSelectableTable extends React.Component {
