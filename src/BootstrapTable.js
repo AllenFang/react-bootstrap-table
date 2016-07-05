@@ -758,7 +758,8 @@ class BootstrapTable extends Component {
       || insertRow
       || deleteRow
       || search
-      || this.props.exportCSV) {
+      || this.props.exportCSV
+      || this.props.customButtons.length > 0) {
       let columns;
       if (Array.isArray(children)) {
         columns = children.map(function(column) {
@@ -806,7 +807,9 @@ class BootstrapTable extends Component {
             onDropRow={ this.handleDropRow }
             onSearch={ this.handleSearch }
             onExportCSV={ this.handleExportCSV }
-            onShowOnlySelected={ this.handleShowOnlySelected }/>
+            onShowOnlySelected={ this.handleShowOnlySelected }
+            customButtons={ this.props.customButtons } />
+
         </div>
       );
     } else {
@@ -989,7 +992,13 @@ BootstrapTable.propTypes = {
   }),
   exportCSV: PropTypes.bool,
   csvFileName: PropTypes.string,
-  ignoreSinglePage: PropTypes.bool
+  ignoreSinglePage: PropTypes.bool,
+  customButtons: React.PropTypes.arrayOf(React.PropTypes.shape({
+    text: React.PropTypes.string.isRequired,
+    icon: React.PropTypes.string,
+    bsStyle: React.PropTypes.string,
+    handler: React.PropTypes.func.isRequired
+  }))
 };
 BootstrapTable.defaultProps = {
   height: '100%',
@@ -1074,7 +1083,8 @@ BootstrapTable.defaultProps = {
   },
   exportCSV: false,
   csvFileName: 'spreadsheet.csv',
-  ignoreSinglePage: false
+  ignoreSinglePage: false,
+  customButtons: []
 };
 
 export default BootstrapTable;

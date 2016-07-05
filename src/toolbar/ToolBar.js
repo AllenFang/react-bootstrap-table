@@ -1,3 +1,4 @@
+/* eslint no-console: 0 */
 import React, { Component, PropTypes } from 'react';
 import classSet from 'classnames';
 import Const from '../Const';
@@ -187,6 +188,7 @@ class ToolBar extends Component {
     let deleteBtn = null;
     let exportCSV = null;
     let showSelectedOnlyBtn = null;
+    let customButtons = null;
 
     if (this.props.enableInsert) {
       insertBtn = (
@@ -233,6 +235,17 @@ class ToolBar extends Component {
         </button>
       );
     }
+    if (this.props.customButtons.length > 0) {
+      customButtons = this.props.customButtons.map((b, i) => (
+          <button type='button'
+            key={ i }
+            className={ 'btn btn-' + (b.bsStyle ? b.bsStyle : 'primary') }
+            onClick={ b.handler }>
+            { b.icon ? (<i className={ 'glyphicon glyphicon-' + b.icon }></i>) : null }
+            { b.text }
+          </button>
+      ));
+    }
 
     const searchTextInput = this.renderSearchPanel();
     const modal = this.props.enableInsert ? this.renderInsertRowModal() : null;
@@ -244,6 +257,7 @@ class ToolBar extends Component {
             { exportCSV }
             { insertBtn }
             { deleteBtn }
+            { customButtons }
             { showSelectedOnlyBtn }
           </div>
         </div>
@@ -379,7 +393,13 @@ ToolBar.propTypes = {
   saveText: PropTypes.string,
   closeText: PropTypes.string,
   clearSearch: PropTypes.bool,
-  ignoreEditable: PropTypes.bool
+  ignoreEditable: PropTypes.bool,
+  customButtons: React.PropTypes.arrayOf(React.PropTypes.shape({
+    text: React.PropTypes.string.isRequired,
+    icon: React.PropTypes.string,
+    bsStyle: React.PropTypes.string,
+    handler: React.PropTypes.func.isRequired
+  }))
 };
 
 ToolBar.defaultProps = {
