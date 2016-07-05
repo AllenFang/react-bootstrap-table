@@ -98,8 +98,9 @@ class TableBody extends Component {
           );
         }
       }, this);
-      const disable = unselectable.indexOf(data[this.props.keyField]) !== -1;
-      const selected = this.props.selectedRowKeys.indexOf(data[this.props.keyField]) !== -1;
+      const key = data[this.props.keyField];
+      const disable = unselectable.indexOf(key) !== -1;
+      const selected = this.props.selectedRowKeys.indexOf(key) !== -1;
       const selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ?
                               this.renderSelectRowColumn(selected, inputType, disable) : null;
       // add by bluespring for className customize
@@ -108,7 +109,7 @@ class TableBody extends Component {
         trClassName = this.props.trClassName(data, r);
       }
       return (
-        <TableRow isSelected={ selected } key={ r } className={ trClassName }
+        <TableRow isSelected={ selected } key={ key } className={ trClassName }
           selectRow={ isSelectRowDefined ? this.props.selectRow : undefined }
           enableCellEdit={ this.props.cellEdit.mode !== Const.CELL_EDIT_NONE }
           onRowClick={ this.handleRowClick }
