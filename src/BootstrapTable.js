@@ -3,6 +3,7 @@
 import React, { Component, PropTypes } from 'react';
 import Const from './Const';
 import TableHeader from './TableHeader';
+import TableFooter from './TableFooter';
 import TableBody from './TableBody';
 import PaginationList from './pagination/PaginationList';
 import ToolBar from './toolbar/ToolBar';
@@ -291,6 +292,23 @@ class BootstrapTable extends Component {
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
             noDataText={ this.props.options.noDataText } />
+          <TableFooter
+            ref='footer'
+            tableHeaderClass={ this.props.tableHeaderClass }
+            style={ this.props.headerStyle }
+            rowSelectType={ this.props.selectRow.mode }
+            hideSelectColumn={ this.props.selectRow.hideSelectColumn }
+            sortName={ sortInfo ? sortInfo.sortField : undefined }
+            sortOrder={ sortInfo ? sortInfo.order : undefined }
+            sortIndicator={ sortIndicator }
+            onSort={ this.handleSort }
+            onSelectAllRow={ this.handleSelectAllRow }
+            bordered={ this.props.bordered }
+            condensed={ this.props.condensed }
+            isFiltered={ this.filter ? true : false }
+            isSelectAll={ isSelectAll }>
+            { this.props.children }
+          </TableFooter>
         </div>
         { tableFilter }
         { pagination }
