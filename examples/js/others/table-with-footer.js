@@ -25,7 +25,7 @@ export default class BasicTable extends React.Component {
     return (
       <BootstrapTable data={ products } showFooter={ true }>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField='name' footerText={ 'Total' }>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='name' footerText='Total'>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price' footerText={ total }>Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
