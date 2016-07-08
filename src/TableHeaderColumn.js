@@ -161,7 +161,8 @@ TableHeaderColumn.propTypes = {
     getElement: PropTypes.func,
     customFilterParameters: PropTypes.object
   }),
-  sortIndicator: PropTypes.bool
+  sortIndicator: PropTypes.bool,
+  footerText: PropTypes.string
 };
 
 TableHeaderColumn.defaultProps = {
@@ -187,7 +188,8 @@ TableHeaderColumn.defaultProps = {
   formatExtraData: undefined,
   sortFuncExtraData: undefined,
   filter: undefined,
-  sortIndicator: true
+  sortIndicator: true,
+  footerText: undefined
 };
 
 export default TableHeaderColumn;

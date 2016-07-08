@@ -246,6 +246,7 @@ class BootstrapTable extends Component {
     const sortInfo = this.store.getSortInfo();
     const pagination = this.renderPagination();
     const toolBar = this.renderToolBar();
+    const tableFooter = this.renderTableFooter();
     const tableFilter = this.renderTableFilter(columns);
     const isSelectAll = this.isSelectAll();
     let sortIndicator = this.props.options.sortIndicator;
@@ -292,23 +293,7 @@ class BootstrapTable extends Component {
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
             noDataText={ this.props.options.noDataText } />
-          <TableFooter
-            ref='footer'
-            tableHeaderClass={ this.props.tableHeaderClass }
-            style={ this.props.headerStyle }
-            rowSelectType={ this.props.selectRow.mode }
-            hideSelectColumn={ this.props.selectRow.hideSelectColumn }
-            sortName={ sortInfo ? sortInfo.sortField : undefined }
-            sortOrder={ sortInfo ? sortInfo.order : undefined }
-            sortIndicator={ sortIndicator }
-            onSort={ this.handleSort }
-            onSelectAllRow={ this.handleSelectAllRow }
-            bordered={ this.props.bordered }
-            condensed={ this.props.condensed }
-            isFiltered={ this.filter ? true : false }
-            isSelectAll={ isSelectAll }>
-            { this.props.children }
-          </TableFooter>
+          { tableFooter }
         </div>
         { tableFilter }
         { pagination }
@@ -844,6 +829,23 @@ class BootstrapTable extends Component {
     }
   }
 
+  renderTableFooter() {
+    if (this.props.showFooter) {
+      return (
+        <TableFooter
+          ref='footer'
+          tableFooterClass={ this.props.tableFooterClass }
+          style={ this.props.headerStyle }
+          hideSelectColumn={ this.props.selectRow.hideSelectColumn }
+          bordered={ this.props.bordered }
+          condensed={ this.props.condensed }
+          isFiltered={ this.filter ? true : false }>
+          { this.props.children }
+        </TableFooter>);
+    }
+    return null;
+  }
+
   _scrollHeader = (e) => {
     this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
   }
@@ -961,6 +963,7 @@ BootstrapTable.propTypes = {
   bodyStyle: PropTypes.object,
   tableHeaderClass: PropTypes.string,
   tableBodyClass: PropTypes.string,
+  tableFooterClass: PropTypes.string,
   options: PropTypes.shape({
     clearSearch: PropTypes.bool,
     sortName: PropTypes.string,
@@ -1007,7 +1010,8 @@ BootstrapTable.propTypes = {
   }),
   exportCSV: PropTypes.bool,
   csvFileName: PropTypes.string,
-  ignoreSinglePage: PropTypes.bool
+  ignoreSinglePage: PropTypes.bool,
+  showFooter: PropTypes.bool
 };
 BootstrapTable.defaultProps = {
   height: '100%',
@@ -1048,6 +1052,7 @@ BootstrapTable.defaultProps = {
   bodyStyle: undefined,
   tableHeaderClass: null,
   tableBodyClass: null,
+  tableFooterClass: null,
   options: {
     clearSearch: false,
     sortName: undefined,
@@ -1092,7 +1097,8 @@ BootstrapTable.defaultProps = {
   },
   exportCSV: false,
   csvFileName: 'spreadsheet.csv',
-  ignoreSinglePage: false
+  ignoreSinglePage: false,
+  showFooter: false
 };
 
 export default BootstrapTable;

@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import classSet from 'classnames';
+import Const from './Const';
+import SelectRowHeaderColumn from './SelectRowHeaderColumn';
 
 class TableHeader extends Component {
 
@@ -8,16 +10,19 @@ class TableHeader extends Component {
     const tableClasses = classSet('table', 'table-hover', {
       'table-bordered': this.props.bordered,
       'table-condensed': this.props.condensed
-    }, this.props.tableHeaderClass);
+    }, this.props.tableFooterClass);
+    let selectRowHeaderCol = null;
+    if (!this.props.hideSelectColumn) selectRowHeaderCol = this.renderSelectRowHeader();
     return (
       <div ref='container' className={ containerClasses } style={ this.props.style }>
         <table className={ tableClasses }>
           <tfoot>
             <tr ref='footer'>
+              { selectRowHeaderCol }
               {
                 this.props.children.map( child => {
                   console.log('child ', child);
-                  return <td>{ child.props.footer || child.props.children }</td>;
+                  return <td>{ child.props.footerText || child.props.children }</td>;
                 })
               }
             </tr>
@@ -26,20 +31,21 @@ class TableHeader extends Component {
       </div>
     );
   }
+  renderSelectRowHeader() {
+    if (this.props.rowSelectType === Const.ROW_SELECT_SINGLE) {
+      return (<SelectRowHeaderColumn />);
+    } else {
+      return null;
+    }
+  }
 }
 TableHeader.propTypes = {
   tableHeaderClass: PropTypes.string,
   style: PropTypes.object,
-  rowSelectType: PropTypes.string,
-  onSort: PropTypes.func,
-  onSelectAllRow: PropTypes.func,
-  sortName: PropTypes.string,
-  sortOrder: PropTypes.string,
   hideSelectColumn: PropTypes.bool,
   bordered: PropTypes.bool,
   condensed: PropTypes.bool,
   isFiltered: PropTypes.bool,
-  isSelectAll: PropTypes.oneOf([ true, 'indeterminate', false ]),
   sortIndicator: PropTypes.bool
 };
 
