@@ -2,6 +2,7 @@ import React from 'react';
 import MouseEventTable from './mouse-event-table';
 import TableInTabs from './table-in-tabs';
 import GetPageNumByKeyTable from './expose-api-table';
+import TableWithFooter from './table-with-footer';
 import { Col, Panel } from 'react-bootstrap';
 
 class Demo extends React.Component {
@@ -22,6 +23,11 @@ class Demo extends React.Component {
           <h5>Source in /examples/js/others/expose-api-table.js</h5>
           <h5>Use expose API by BootstrapTable to get page number by rowkey</h5>
           <GetPageNumByKeyTable/>
+        </Panel>
+        <Panel header={ 'Add a footer' }>
+          <h5>Source in /examples/js/others/table-with-footer.js</h5>
+          <h5>Add a footer to the table.  If the string is not specified uses the same as the header.</h5>
+          <TableWithFooter/>
         </Panel>
       </Col>
     );
