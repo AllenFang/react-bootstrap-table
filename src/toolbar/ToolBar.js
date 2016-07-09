@@ -42,45 +42,23 @@ class ToolBar extends Component {
     }
   }
 
-  checkAndParseForm() {
-    const newObj = {};
+  validateNewRow(newRow) {
     const validateState = {};
     let isValid = true;
-    let tempValue;
     let tempMsg;
 
-    this.props.columns.forEach(function(column, i) {
-      if (column.autoValue) {
-        // when you want same auto generate value and not allow edit, example ID field
-        const time = new Date().getTime();
-        tempValue = typeof column.autoValue === 'function' ?
-          column.autoValue() :
-          (`autovalue-${time}`);
-      } else if (column.hiddenOnInsert) {
-        tempValue = '';
-      } else {
-        const dom = this.refs[column.field + i];
-        tempValue = dom.value;
-
-        if (column.editable && column.editable.type === 'checkbox') {
-          const values = tempValue.split(':');
-          tempValue = dom.checked ? values[0] : values[1];
-        }
-
-        if (column.editable && column.editable.validator) { // process validate
-          tempMsg = column.editable.validator(tempValue);
-          if (tempMsg !== true) {
-            isValid = false;
-            validateState[column.field] = tempMsg;
-          }
+    this.props.columns.forEach(column => {
+      if (column.editable && column.editable.validator) { // process validate
+        tempMsg = column.editable.validator(newRow[column.field]);
+        if (tempMsg !== true) {
+          isValid = false;
+          validateState[column.field] = tempMsg;
         }
       }
-
-      newObj[column.field] = tempValue;
-    }, this);
+    });
 
     if (isValid) {
-      return newObj;
+      return true;
     } else {
       this.clearTimeout();
       // show error in form and shake it
@@ -98,12 +76,11 @@ class ToolBar extends Component {
     }
   }
 
-  handleSaveBtnClick = () => {
-    const newObj = this.checkAndParseForm();
-    if (!newObj) { // validate errors
+  handleSaveBtnClick = (newRow) => {
+    if (!this.validateNewRow()) { // validation fail
       return;
     }
-    const msg = this.props.onAddRow(newObj);
+    const msg = this.props.onAddRow(newRow);
     if (msg) {
       this.refs.notifier.notice('error', msg, 'Pressed ESC can cancel');
       this.clearTimeout();
@@ -120,10 +97,8 @@ class ToolBar extends Component {
       // reset state and hide modal hide
       this.setState({
         validateState: null,
-        shakeEditor: false
-      }, () => {
-        document.querySelector('.modal-backdrop').click();
-        document.querySelector('.' + this.modalClassName).click();
+        shakeEditor: false,
+        isInsertModalOpen: false
       });
       // reset form
       this.refs.form.reset();
@@ -298,7 +273,9 @@ class ToolBar extends Component {
         <InsertModal
           columns={ this.props.columns }
           validateState={ validateState }
-          ignoreEditable={ this.props.ignoreEditable }/>
+          ignoreEditable={ this.props.ignoreEditable }
+          onModalClose={ () => this.setState({ isInsertModalOpen: false }) }
+          onSave={ this.handleSaveBtnClick }/>
       </Modal>
     );
   }
