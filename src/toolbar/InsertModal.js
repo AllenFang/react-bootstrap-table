@@ -18,8 +18,8 @@ export default class InsertModal extends Component {
   }
 
   render() {
+    let { headerComponent } = this.props;
     const {
-      headerComponent,
       bodyComponent,
       footerComponent,
       columns,
@@ -31,6 +31,11 @@ export default class InsertModal extends Component {
 
     let body = bodyComponent || <InsertModalBody { ...bodyAttr }/>;
     body = React.cloneElement(body, { ref: 'body' });
+
+    console.log(headerComponent);
+    if (headerComponent && headerComponent.type.name === InsertModalHeader.name) {
+      headerComponent = React.cloneElement(headerComponent, { onModalClose });
+    }
 
     return (
       <div className='modal-content'>
