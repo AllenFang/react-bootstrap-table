@@ -810,7 +810,11 @@ class BootstrapTable extends Component {
             onDropRow={ this.handleDropRow }
             onSearch={ this.handleSearch }
             onExportCSV={ this.handleExportCSV }
-            onShowOnlySelected={ this.handleShowOnlySelected }/>
+            onShowOnlySelected={ this.handleShowOnlySelected }
+            insertModalHeader={ this.props.options.insertModalHeader }
+            insertModalFooter={ this.props.options.insertModalFooter }
+            insertModalBody={ this.props.options.insertModalBody }
+            insertModal={ this.props.options.insertModal }/>
         </div>
       );
     } else {
@@ -986,7 +990,11 @@ BootstrapTable.propTypes = {
     deleteText: PropTypes.string,
     saveText: PropTypes.string,
     closeText: PropTypes.string,
-    ignoreEditable: PropTypes.bool
+    ignoreEditable: PropTypes.bool,
+    insertModalHeader: PropTypes.func,
+    insertModalBody: PropTypes.func,
+    insertModalFooter: PropTypes.func,
+    insertModal: PropTypes.func
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1071,7 +1079,11 @@ BootstrapTable.defaultProps = {
     deleteText: Const.DELETE_BTN_TEXT,
     saveText: Const.SAVE_BTN_TEXT,
     closeText: Const.CLOSE_BTN_TEXT,
-    ignoreEditable: false
+    ignoreEditable: false,
+    insertModalHeader: undefined,
+    insertModalBody: undefined,
+    insertModalFooter: undefined,
+    insertModal: undefined
   },
   fetchInfo: {
     dataTotalSize: 0
