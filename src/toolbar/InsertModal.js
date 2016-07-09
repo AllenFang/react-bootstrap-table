@@ -6,6 +6,17 @@ import InsertModalBody from './InsertModalBody';
 
 export default class InsertModal extends Component {
 
+  handleSave = () => {
+    const bodyRefs = this.refs.body;
+    if (bodyRefs.getFieldValue) {
+      this.props.onSave(bodyRefs.getFieldValue());
+    } else {
+      console.error(`Custom InsertModalBody should implement getFieldValue function
+        which should return a object presented as the new row
+        that user input.`);
+    }
+  }
+
   render() {
     const {
       headerComponent,
@@ -14,10 +25,12 @@ export default class InsertModal extends Component {
       columns,
       validateState,
       ignoreEditable,
-      onModalClose,
-      onSave
+      onModalClose
     } = this.props;
     const bodyAttr = { columns, validateState, ignoreEditable };
+
+    let body = bodyComponent || <InsertModalBody { ...bodyAttr }/>;
+    body = React.cloneElement(body, { ref: 'body' });
 
     return (
       <div className='modal-content'>
@@ -29,17 +42,14 @@ export default class InsertModal extends Component {
           }
         </div>
         <div className='modal-body'>
-          {
-            bodyComponent ||
-            (<InsertModalBody { ...bodyAttr }/>)
-          }
+          { body }
         </div>
         <div className='modal-footer'>
           {
             footerComponent ||
             (<InsertModalFooter
               onModalClose={ onModalClose }
-              onSave={ onSave }/>)
+              onSave={ this.handleSave }/>)
           }
         </div>
       </div>
