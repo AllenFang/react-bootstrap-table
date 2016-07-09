@@ -105,6 +105,10 @@ class ToolBar extends Component {
     }
   }
 
+  handleModalClose = () => {
+    this.setState({ isInsertModalOpen: false });
+  }
+
   handleShowOnlyToggle = () => {
     this.setState({
       showSelected: !this.state.showSelected
@@ -267,15 +271,30 @@ class ToolBar extends Component {
 
   renderInsertRowModal() {
     const validateState = this.state.validateState || {};
+    const {
+      columns,
+      ignoreEditable,
+      insertModalHeader,
+      insertModalBody,
+      insertModalFooter
+    } = this.props;
+
+    const headerComponent = insertModalHeader && insertModalHeader(
+      this.handleModalClose, this.handleSaveBtnClick
+    );
+
     return (
       <Modal className='react-bs-insert-modal modal-dialog'
         isOpen={ this.state.isInsertModalOpen }>
         <InsertModal
-          columns={ this.props.columns }
+          columns={ columns }
           validateState={ validateState }
-          ignoreEditable={ this.props.ignoreEditable }
-          onModalClose={ () => this.setState({ isInsertModalOpen: false }) }
-          onSave={ this.handleSaveBtnClick }/>
+          ignoreEditable={ ignoreEditable }
+          onModalClose={ this.handleModalClose }
+          onSave={ this.handleSaveBtnClick }
+          headerComponent={ headerComponent }
+          bodyComponent={ insertModalBody && insertModalBody() }
+          footerComponent={ insertModalFooter && insertModalBody() }/>
       </Modal>
     );
   }
@@ -297,7 +316,11 @@ ToolBar.propTypes = {
   saveText: PropTypes.string,
   closeText: PropTypes.string,
   clearSearch: PropTypes.bool,
-  ignoreEditable: PropTypes.bool
+  ignoreEditable: PropTypes.bool,
+  insertModalHeader: PropTypes.func,
+  insertModalBody: PropTypes.func,
+  insertModalFooter: PropTypes.func,
+  insertModal: PropTypes.func
 };
 
 ToolBar.defaultProps = {
