@@ -279,14 +279,6 @@ class ToolBar extends Component {
       insertModalFooter
     } = this.props;
 
-    const headerComponent = insertModalHeader && insertModalHeader(
-      this.handleModalClose, this.handleSaveBtnClick
-    );
-
-    const footerComponent = insertModalFooter && insertModalFooter(
-      this.handleModalClose, this.handleSaveBtnClick
-    );
-
     return (
       <Modal className='react-bs-insert-modal modal-dialog'
         isOpen={ this.state.isInsertModalOpen }>
@@ -296,9 +288,9 @@ class ToolBar extends Component {
           ignoreEditable={ ignoreEditable }
           onModalClose={ this.handleModalClose }
           onSave={ this.handleSaveBtnClick }
-          headerComponent={ headerComponent }
+          headerComponent={ insertModalHeader }
           bodyComponent={ insertModalBody && insertModalBody() }
-          footerComponent={ footerComponent }/>
+          footerComponent={ insertModalFooter }/>
       </Modal>
     );
   }
