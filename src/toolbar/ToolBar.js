@@ -289,7 +289,7 @@ class ToolBar extends Component {
           onModalClose={ this.handleModalClose }
           onSave={ this.handleSaveBtnClick }
           headerComponent={ insertModalHeader }
-          bodyComponent={ insertModalBody && insertModalBody() }
+          bodyComponent={ insertModalBody }
           footerComponent={ insertModalFooter }/>
       </Modal>
     );
