@@ -6,6 +6,7 @@ import DefaultCustomInsertModalHeaderTable from './insert-modal/default-custom-i
 import FullyCustomInsertModalHeaderTable from './insert-modal/fully-custom-insert-modal-header';
 import DefaultCustomInsertModalFooterTable from './insert-modal/default-custom-insert-modal-footer';
 import FullyCustomInsertModalFooterTable from './insert-modal/fully-custom-insert-modal-footer';
+import CustomInsertModalBodyTable from './insert-modal/custom-insert-modal-body';
 
 import { Col, Panel } from 'react-bootstrap';
 
@@ -28,6 +29,10 @@ class Demo extends React.Component {
         <Panel header={ 'Fully Custom for Insert Modal Footer Demo' }>
           { renderLinks('custom/insert-modal/fully-custom-insert-modal-footer.js') }
           <FullyCustomInsertModalFooterTable/>
+        </Panel>
+        <Panel header={ 'Custom for Insert Modal Body Demo' }>
+          { renderLinks('custom/insert-modal/custom-insert-modal-body.js') }
+          <CustomInsertModalBodyTable/>
         </Panel>
       </Col>
     );
