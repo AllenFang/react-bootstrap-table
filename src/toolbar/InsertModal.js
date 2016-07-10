@@ -38,7 +38,9 @@ export default class InsertModal extends Component {
     }
 
     if (headerComponent && headerComponent.type.name === InsertModalHeader.name) {
-      headerComponent = React.cloneElement(headerComponent, { onModalClose });
+      headerComponent = React.cloneElement(headerComponent, {
+        onModalClose, onSave: this.handleSave
+      });
     }
 
     if (footerComponent && footerComponent.type.name === InsertModalFooter.name) {
