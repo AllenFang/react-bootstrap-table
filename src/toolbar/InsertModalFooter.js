@@ -1,26 +1,44 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Const from '../Const';
-const InsertModalFooter = ({
-  saveBtnText,
-  closeBtnText,
-  closeBtnContextual,
-  saveBtnContextual,
-  closeBtnClass,
-  saveBtnClass,
-  onModalClose,
-  onSave
-}) =>
-  <div>
-    <button
-      type='button'
-      className={ `btn ${closeBtnContextual} ${closeBtnClass}` }
-      onClick={ onModalClose }>{ closeBtnText }</button>
-    <button
-      type='button'
-      className={ `btn ${saveBtnContextual} ${saveBtnClass}` }
-      onClick={ onSave }>{ saveBtnText }</button>
-  </div>;
 
+class InsertModalFooter extends Component {
+
+  handleCloseBtnClick = e => {
+    const { beforeClose, onModalClose } = this.props;
+    beforeClose && beforeClose(e);
+    onModalClose();
+  }
+
+  handleSaveBtnClick = e => {
+    const { beforeSave, onSave } = this.props;
+    beforeSave && beforeSave(e);
+    onSave();
+  }
+
+  render() {
+    const {
+      saveBtnText,
+      closeBtnText,
+      closeBtnContextual,
+      saveBtnContextual,
+      closeBtnClass,
+      saveBtnClass
+    } = this.props;
+
+    return (
+      <div>
+        <button
+          type='button'
+          className={ `btn ${closeBtnContextual} ${closeBtnClass}` }
+          onClick={ this.handleCloseBtnClick }>{ closeBtnText }</button>
+        <button
+          type='button'
+          className={ `btn ${saveBtnContextual} ${saveBtnClass}` }
+          onClick={ this.handleSaveBtnClick }>{ saveBtnText }</button>
+      </div>
+    );
+  }
+}
 InsertModalFooter.propTypes = {
   saveBtnText: PropTypes.string,
   closeBtnText: PropTypes.string,
@@ -28,6 +46,8 @@ InsertModalFooter.propTypes = {
   saveBtnContextual: PropTypes.string,
   closeBtnClass: PropTypes.string,
   saveBtnClass: PropTypes.string,
+  beforeClose: PropTypes.func,
+  beforeSave: PropTypes.func,
   onSave: PropTypes.func,
   onModalClose: PropTypes.func
 };
@@ -38,8 +58,8 @@ InsertModalFooter.defaultProps = {
   saveBtnContextual: 'btn-primary',
   closeBtnClass: '',
   saveBtnClass: '',
-  onSave: PropTypes.func,
-  onModalClose: PropTypes.func
+  beforeClose: undefined,
+  beforeSave: undefined
 };
 
 export default InsertModalFooter;
