@@ -18,10 +18,9 @@ export default class InsertModal extends Component {
   }
 
   render() {
-    let { headerComponent } = this.props;
+    let { headerComponent, footerComponent } = this.props;
     const {
       bodyComponent,
-      footerComponent,
       columns,
       validateState,
       ignoreEditable,
@@ -32,9 +31,18 @@ export default class InsertModal extends Component {
     let body = bodyComponent || <InsertModalBody { ...bodyAttr }/>;
     body = React.cloneElement(body, { ref: 'body' });
 
-    console.log(headerComponent);
+    headerComponent = headerComponent && headerComponent(onModalClose, this.handleSave);
+
+    footerComponent = footerComponent && footerComponent(onModalClose, this.handleSave);
+
     if (headerComponent && headerComponent.type.name === InsertModalHeader.name) {
       headerComponent = React.cloneElement(headerComponent, { onModalClose });
+    }
+
+    if (footerComponent && footerComponent.type.name === InsertModalFooter.name) {
+      footerComponent = React.cloneElement(footerComponent, {
+        onModalClose, onSave: this.handleSave
+      });
     }
 
     return (
@@ -65,9 +73,9 @@ InsertModal.propTypes = {
   columns: PropTypes.array.isRequired,
   validateState: PropTypes.object.isRequired,
   ignoreEditable: PropTypes.bool,
-  headerComponent: PropTypes.element,
+  headerComponent: PropTypes.func,
   bodyComponent: PropTypes.element,
-  footerComponent: PropTypes.element,
+  footerComponent: PropTypes.func,
   onModalClose: PropTypes.func,
   onSave: PropTypes.func
 };
