@@ -12,8 +12,7 @@ export default class InsertModal extends Component {
       this.props.onSave(bodyRefs.getFieldValue());
     } else {
       console.error(`Custom InsertModalBody should implement getFieldValue function
-        which should return a object presented as the new row
-        that user input.`);
+        and should return an object presented as the new row that user input.`);
     }
   }
 
