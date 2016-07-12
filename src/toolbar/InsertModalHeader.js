@@ -11,7 +11,7 @@ class InsertModalHeader extends Component {
   render() {
     const { title, hideClose } = this.props;
     return (
-      <div>
+      <div className='modal-header'>
         {
           hideClose ? null : (
             <button type='button'
