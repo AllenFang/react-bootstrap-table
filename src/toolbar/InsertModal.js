@@ -40,6 +40,10 @@ export default class InsertModal extends Component {
       headerComponent = React.cloneElement(headerComponent, {
         onModalClose, onSave: this.handleSave
       });
+    } else if (headerComponent && headerComponent.type.name !== InsertModalHeader.name) {
+      if (headerComponent.props.className.indexOf('modal-header') === -1) {
+        headerComponent = (<div className='modal-header'>{ headerComponent }</div>);
+      }
     }
 
     if (footerComponent && footerComponent.type.name === InsertModalFooter.name) {
@@ -50,13 +54,11 @@ export default class InsertModal extends Component {
 
     return (
       <div className='modal-content'>
-        <div className='modal-header'>
-          {
-            headerComponent ||
-            (<InsertModalHeader
-              onModalClose={ onModalClose }/>)
-          }
-        </div>
+        {
+          headerComponent ||
+          (<InsertModalHeader
+            onModalClose={ onModalClose }/>)
+        }
         <div className='modal-body'>
           {
             bodyComponent ||
