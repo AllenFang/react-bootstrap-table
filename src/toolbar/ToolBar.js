@@ -276,12 +276,21 @@ class ToolBar extends Component {
       ignoreEditable,
       insertModalHeader,
       insertModalBody,
-      insertModalFooter
+      insertModalFooter,
+      insertModal
     } = this.props;
 
-    return (
-      <Modal className='react-bs-insert-modal modal-dialog'
-        isOpen={ this.state.isInsertModalOpen }>
+    let modal;
+    modal = insertModal && insertModal(
+      this.handleModalClose,
+      this.handleSaveBtnClick,
+      columns,
+      validateState,
+      ignoreEditable
+    );
+
+    if (!modal) {
+      modal = (
         <InsertModal
           columns={ columns }
           validateState={ validateState }
@@ -291,6 +300,13 @@ class ToolBar extends Component {
           headerComponent={ insertModalHeader }
           bodyComponent={ insertModalBody }
           footerComponent={ insertModalFooter }/>
+      );
+    }
+
+    return (
+      <Modal className='react-bs-insert-modal modal-dialog'
+        isOpen={ this.state.isInsertModalOpen }>
+        { modal }
       </Modal>
     );
   }
