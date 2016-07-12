@@ -30,7 +30,7 @@ export default class FullyCustomInsertModalHeaderTable extends React.Component {
       backgroundColor: '#eeeeee'
     };
     return (
-      <div style={ headerStyle }>
+      <div className='modal-header' style={ headerStyle }>
         <h3>That is my custom header</h3>
         <button className='btn btn-info' onClick={ onClose }>Close it!</button>
       </div>
