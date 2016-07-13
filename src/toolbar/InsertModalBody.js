@@ -34,7 +34,7 @@ class InsertModalBody extends Component {
   render() {
     const { columns, validateState, ignoreEditable } = this.props;
     return (
-      <div>
+      <div className='modal-body'>
         {
           columns.map((column, i) => {
             const {
