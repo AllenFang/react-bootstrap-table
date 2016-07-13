@@ -26,7 +26,7 @@ class InsertModalFooter extends Component {
     } = this.props;
 
     return (
-      <div>
+      <div className='modal-footer'>
         <button
           type='button'
           className={ `btn ${closeBtnContextual} ${closeBtnClass}` }
