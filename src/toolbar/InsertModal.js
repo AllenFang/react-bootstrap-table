@@ -50,6 +50,10 @@ export default class InsertModal extends Component {
       footerComponent = React.cloneElement(footerComponent, {
         onModalClose, onSave: this.handleSave
       });
+    } else if (footerComponent && footerComponent.type.name !== InsertModalFooter.name) {
+      if (footerComponent.props.className.indexOf('modal-footer') === -1) {
+        footerComponent = (<div className='modal-footer'>{ footerComponent }</div>);
+      }
     }
 
     return (
@@ -63,14 +67,12 @@ export default class InsertModal extends Component {
           bodyComponent ||
           (<InsertModalBody ref='body' { ...bodyAttr }/>)
         }
-        <div className='modal-footer'>
-          {
-            footerComponent ||
-            (<InsertModalFooter
-              onModalClose={ onModalClose }
-              onSave={ this.handleSave }/>)
-          }
-        </div>
+        {
+          footerComponent ||
+          (<InsertModalFooter
+            onModalClose={ onModalClose }
+            onSave={ this.handleSave }/>)
+        }
       </div>
     );
   }
