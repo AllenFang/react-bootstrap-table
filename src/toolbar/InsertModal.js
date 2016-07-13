@@ -41,7 +41,8 @@ export default class InsertModal extends Component {
         onModalClose, onSave: this.handleSave
       });
     } else if (headerComponent && headerComponent.type.name !== InsertModalHeader.name) {
-      if (headerComponent.props.className.indexOf('modal-header') === -1) {
+      const { className } = headerComponent.props;
+      if (typeof className === 'undefined' || className.indexOf('modal-header') === -1) {
         headerComponent = (<div className='modal-header'>{ headerComponent }</div>);
       }
     }
@@ -51,7 +52,8 @@ export default class InsertModal extends Component {
         onModalClose, onSave: this.handleSave
       });
     } else if (footerComponent && footerComponent.type.name !== InsertModalFooter.name) {
-      if (footerComponent.props.className.indexOf('modal-footer') === -1) {
+      const { className } = footerComponent.props;
+      if (typeof className === 'undefined' || className.indexOf('modal-footer') === -1) {
         footerComponent = (<div className='modal-footer'>{ footerComponent }</div>);
       }
     }
