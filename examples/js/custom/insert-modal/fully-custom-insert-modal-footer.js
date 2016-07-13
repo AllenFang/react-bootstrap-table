@@ -28,7 +28,7 @@ export default class DefaultCustomInsertModalFooterTable extends React.Component
       backgroundColor: '#ffffff'
     };
     return (
-      <div style={ style }>
+      <div className='modal-footer' style={ style }>
         <h3>Its a Custom footer</h3>
         <button className='btn btn-xs btn-info' onClick={ onClose }>Leave</button>
         <button className='btn btn-xs btn-danger' onClick={ onSave }>Confirm</button>
