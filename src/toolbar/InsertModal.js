@@ -59,12 +59,10 @@ export default class InsertModal extends Component {
           (<InsertModalHeader
             onModalClose={ onModalClose }/>)
         }
-        <div className='modal-body'>
-          {
-            bodyComponent ||
-            (<InsertModalBody ref='body' { ...bodyAttr }/>)
-          }
-        </div>
+        {
+          bodyComponent ||
+          (<InsertModalBody ref='body' { ...bodyAttr }/>)
+        }
         <div className='modal-footer'>
           {
             footerComponent ||
