@@ -34,7 +34,7 @@ class MyCustomBody extends Component {
   render() {
     const { columns, validateState } = this.props;
     return (
-      <div>
+      <div className='modal-body'>
         <h2 style={ { color: 'red' } }>Custom body</h2>
         <div>
           {
