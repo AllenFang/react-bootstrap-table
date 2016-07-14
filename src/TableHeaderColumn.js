@@ -69,6 +69,10 @@ class TableHeaderColumn extends Component {
     this.refs['header-col'].setAttribute('data-field', this.props.dataField);
   }
 
+  componentWillUnmount() {
+    this.handleFilter();
+  }
+
   render() {
     let defaultCaret;
     const {
