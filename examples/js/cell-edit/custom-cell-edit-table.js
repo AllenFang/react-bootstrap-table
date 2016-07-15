@@ -50,7 +50,6 @@ class PriceEditor extends React.Component {
       <span>
         <input
           ref='inputRef'
-          { ...this.props }
           className={ ( this.props.editorClass || '') + ' form-control editor edit-text' }
           style={ { display: 'inline', width: '50%' } }
           type='text'
@@ -122,6 +121,9 @@ function priceFormatter(cell, row) {
 
 const regionsFormatter = (cell, row) => (<span>{ (cell || []).join(',') }</span>);
 
+const createPriceEditor = (onUpdate, props) => (<PriceEditor onUpdate={ onUpdate } {...props}/>);
+const createRegionsEditor = (onUpdate, props) => (<RegionsEditor onUpdate={ onUpdate } {...props}/>);
+
 export default class CustomCellEditTable extends React.Component {
   render() {
     return (
@@ -131,13 +133,13 @@ export default class CustomCellEditTable extends React.Component {
           <TableHeaderColumn
             dataField='price'
             dataFormat={ priceFormatter }
-            customEditor={ PriceEditor }>
+            customEditor={ { getElement: createPriceEditor, customEditorParameters: { currencies: currencies } } }>
             Product Price
           </TableHeaderColumn>
           <TableHeaderColumn
             dataField='regions'
             dataFormat={ regionsFormatter }
-            customEditor={ RegionsEditor }>
+            customEditor={ { getElement: createRegionsEditor } }>
             Regions
           </TableHeaderColumn>
       </BootstrapTable>

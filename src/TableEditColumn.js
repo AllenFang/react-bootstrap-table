@@ -97,12 +97,18 @@ class TableEditColumn extends Component {
     editable.placeholder && (attr.placeholder = editable.placeholder);
 
     const editorClass = classSet({ 'animated': shakeEditor, 'shake': shakeEditor });
-    const CustomEditor = customEditor;
-    const cellEditor = CustomEditor ? <CustomEditor
-                                        {...attr}
-                                        defaultValue={ fieldValue || '' }
-                                        onUpdate={ this.handleCustomUpdate }/> :
-                                      editor(editable, attr, format, editorClass, fieldValue || '');
+    let cellEditor;
+    if (customEditor) {
+      const customEditorProps = {
+        ...attr,
+        defaultValue: fieldValue || '',
+        ...customEditor.customEditorParameters
+      };
+      cellEditor = customEditor.getElement(this.handleCustomUpdate, customEditorProps);
+    } else {
+      cellEditor = editor(editable, attr, format, editorClass, fieldValue || '');
+    }
+
     return (
       <td ref='td' style={ { position: 'relative' } }>
         { cellEditor }
@@ -130,6 +136,7 @@ TableEditColumn.propTypes = {
     PropTypes.string,
     PropTypes.bool,
     PropTypes.number,
+    PropTypes.array,
     PropTypes.object
   ])
 };
