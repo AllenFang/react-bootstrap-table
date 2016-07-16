@@ -26,13 +26,19 @@ class TableBody extends Component {
     this.editing = false;
   }
 
-  componentDidMount() {
-    this.refs.container.addEventListener('scroll', (e) => {
-      this.setState({
-        scrollTop: e.target.scrollTop,
-        availableHeight: e.target.clientHeight
-      });
+  _handleTableScroll = (e) => {
+    this.setState({
+      scrollTop: e.target.scrollTop,
+      availableHeight: e.target.clientHeight
     });
+  }
+
+  componentDidMount() {
+    this.refs.container.addEventListener('scroll', this._handleTableScroll);
+  }
+
+  componentWillUnmount() {
+    this.refs.container.removeEventListener('scroll', this._handleTableScroll);
   }
 
   render() {
