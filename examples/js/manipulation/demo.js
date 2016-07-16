@@ -103,7 +103,7 @@ class Demo extends React.Component {
               <h5>Source in /examples/js/manipulation/export-csv-column-table.js</h5>
               <h5><b>Use <code>export</code> to ask <code>react-bootstrap-table</code> to export hidden column</b></h5>
               <h5><b>The ID column is hidden, but can be exported by assigning <code>export</code></b></h5>
-              <h5><b>Use <code>noExport</code> to change the header text in csv.</b></h5>
+              <h5><b>You can also give <code>export={false}</code> to ignore this column on exporting</b></h5>
               <ExportCSVColumnTable />
             </div>
           </div>
