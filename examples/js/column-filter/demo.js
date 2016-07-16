@@ -2,6 +2,7 @@
 import React from 'react';
 import TextFilter from './text-filter';
 import TextFilterWithDefaultValue from './text-filter-with-default-value';
+import TextFilterCustomHandler from './text-filter-custom-handler';
 import RegexFilter from './regex-filter';
 import SelectFilter from './select-filter';
 import SelectFilterWithDefaultValue from './select-filter-with-default-value';
@@ -35,6 +36,15 @@ class Demo extends React.Component {
                     <div className='panel-body'>
                         <h5>Source in /examples/js/column-filter/text-filter-with-default-value.js</h5>
                         <TextFilterWithDefaultValue />
+                    </div>
+                </div>
+            </div>
+            <div className='col-md-offset-1 col-md-8'>
+                <div className='panel panel-default'>
+                    <div className='panel-heading'>Text Filter With Custom Handler Example ( clear filter input text, exposed api for dynamic params )</div>
+                    <div className='panel-body'>
+                        <h5>Source in /examples/js/column-filter/text-filter-custom-handler.js</h5>
+                        <TextFilterCustomHandler />
                     </div>
                 </div>
             </div>
