@@ -12,6 +12,7 @@ import SelectValidationTable from './select-validation-table';
 import RowClickTable from './row-click-table';
 import OnlySelectedTable from './only-show-selected-table';
 import ExternallyManagedSelection from './externally-managed-selection';
+import BigRowSelectTable from './big-row-select-table';
 
 class Demo extends React.Component {
   render() {
@@ -123,6 +124,15 @@ class Demo extends React.Component {
             <div className='panel-body'>
               <h5>Source in externally-managed-selection.js</h5>
               <ExternallyManagedSelection />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Handle big data row select (Maybe > 1000)</div>
+            <div className='panel-body'>
+              <h5>Source in big-row-select-table.js</h5>
+              <BigRowSelectTable />
             </div>
           </div>
         </div>
