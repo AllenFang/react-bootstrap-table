@@ -215,7 +215,13 @@ class ToolBar extends Component {
     }
 
     const searchTextInput = this.renderSearchPanel();
-    const modal = this.props.enableInsert ? this.renderInsertRowModal() : null;
+    let modal = this.props.enableInsert ? this.renderInsertRowModal() : null;
+
+    if (this.props.enableInsert) {
+      modal = React.cloneElement(modal, {
+        onRequestClose: this.handleModalClose
+      });
+    }
 
     return (
       <div className='row'>
@@ -305,7 +311,7 @@ class ToolBar extends Component {
 
     return (
       <Modal className='react-bs-insert-modal modal-dialog'
-        isOpen={ this.state.isInsertModalOpen }>
+        isOpen={ this.state.isInsertModalOpen } >
         { modal }
       </Modal>
     );
