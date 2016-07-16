@@ -159,10 +159,11 @@ TableHeaderColumn.propTypes = {
     emitter: PropTypes.object,
     placeholder: PropTypes.string,
     getElement: PropTypes.func,
-    customFilterParameters: PropTypes.object
+    customFilterParameters: PropTypes.object,
+    customHandleTextFilter: PropTypes.func,
+    clearFilter: PropTypes.bool
   }),
-  sortIndicator: PropTypes.bool,
-  export: PropTypes.bool
+  sortIndicator: PropTypes.bool
 };
 
 TableHeaderColumn.defaultProps = {
