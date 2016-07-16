@@ -662,7 +662,10 @@ class BootstrapTable extends Component {
 
     const keys = [];
     this.props.children.map(function(column) {
-      if (column.props.hidden === false || column.props.export === true) {
+      console.log(column.props.export);
+      if (column.props.export === true ||
+        (typeof column.props.export === 'undefined' &&
+        column.props.hidden === false)) {
         keys.push({
           field: column.props.dataField,
           format: column.props.csvFormat,
