@@ -6,6 +6,7 @@ import SearchTable from './search-table';
 import ColumnFilterTable from './filter-table';
 import MultiSearchTable from './multi-search-table';
 import ExportCSVTable from './export-csv-table';
+import ExportCSVColumnTable from './export-csv-column-table';
 import DeleteRowCustomComfirmTable from './del-row-custom-confirm';
 import SearchClearTable from './search-clear-table';
 import DebounceSearchTable from './debounce-search-table';
@@ -92,6 +93,18 @@ class Demo extends React.Component {
               <h5><b>Use <code>csvFormat</code> to format cell when exporting.</b></h5>
               <h5><b>Use <code>csvHeader</code> to change the header text in csv.</b></h5>
               <ExportCSVTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Export CSV Column Example</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/manipulation/export-csv-column-table.js</h5>
+              <h5><b>Use <code>export</code> to ask <code>react-bootstrap-table</code> to export hidden column</b></h5>
+              <h5><b>The ID column is hidden, but can be exported by assigning <code>export</code></b></h5>
+              <h5><b>Use <code>noExport</code> to change the header text in csv.</b></h5>
+              <ExportCSVColumnTable />
             </div>
           </div>
         </div>
