@@ -109,6 +109,12 @@ class ToolBar extends Component {
     this.setState({ isInsertModalOpen: false });
   }
 
+  handleModalRequestClose = (modal) => {
+    return React.cloneElement(modal, {
+      onRequestClose: this.handleModalClose
+    });
+  }
+
   handleShowOnlyToggle = () => {
     this.setState({
       showSelected: !this.state.showSelected
@@ -215,7 +221,11 @@ class ToolBar extends Component {
     }
 
     const searchTextInput = this.renderSearchPanel();
-    const modal = this.props.enableInsert ? this.renderInsertRowModal() : null;
+    let modal = this.props.enableInsert ? this.renderInsertRowModal() : null;
+
+    if (this.props.enableInsert) {
+      modal = this.handleModalRequestClose(modal);
+    }
 
     return (
       <div className='row'>
