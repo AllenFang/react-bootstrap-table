@@ -62,6 +62,10 @@ class FilterTextInput extends Component {
 
     const filterValue = event.target.value;
     this.timeout = setTimeout(() => {
+      // if user want to clear filter input text
+      if (this.props.onClearFilter) {
+        this._clearFilterText(this.props.onClearFilter);
+      }
       // exposed the filterHandler method for user to search by dynamic paprams.
       if (this.props.onCustomHandleTextFilter) {
         this.props.onCustomHandleTextFilter(this.props.filterHandler, filterValue);
