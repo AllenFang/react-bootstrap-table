@@ -1,4 +1,14 @@
+<a name="v2.3.8"></a>
+# [v2.3.8](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.7...v2.3.8) (2016-07-16)
+## Bug fixes
+* Fix [#550](https://github.com/AllenFang/react-bootstrap-table/issues/550), a unselectable list issues after refresh([5a85f06](https://github.com/AllenFang/react-bootstrap-table/commit/5a85f06a70e3c00d093dfbf574bc50e5d66aa1e2))
 <a name="v2.3.7"></a>
+
+## Enhancement
+* Add ```export``` on ```<TableHeaderColumn>```([aa4dfc3](https://github.com/AllenFang/react-bootstrap-table/commit/aa4dfc36b60de587325816a27c57a5dc2dfc5e89))
+	* You can add ```export={true}``` to tell ```react-bootstra-table``` exporting this column if it is hidden
+	* Also, you can add ```export={false}``` to tell ```react-bootstra-table``` don't export this column
+
 # [v2.3.7](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.6...v2.3.7) (2016-07-02)
 ## Bug fixes
 * [#517](https://github.com/AllenFang/react-bootstrap-table/issues/517)([https://github.com/AllenFang/react-bootstrap-table/issues/517](https://github.com/AllenFang/react-bootstrap-table/commit/1c71289e0a6578a5c959ae2232ebda32e8080b10))
