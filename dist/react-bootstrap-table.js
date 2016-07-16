@@ -414,7 +414,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var keys = [];
 	      _this.props.children.map(function (column) {
-	        if (column.props.hidden === false) {
+	        console.log(column.props['export']);
+	        if (column.props['export'] === true || typeof column.props['export'] === 'undefined' && column.props.hidden === false) {
 	          keys.push({
 	            field: column.props.dataField,
 	            format: column.props.csvFormat,
@@ -646,6 +647,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          text: column.props.children,
 	          sortFunc: column.props.sortFunc,
 	          sortFuncExtraData: column.props.sortFuncExtraData,
+	          'export': column.props['export'],
 	          index: i
 	        };
 	      });
@@ -1821,8 +1823,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            );
 	          }
 	        }, this);
-	        var disable = unselectable.indexOf(data[this.props.keyField]) !== -1;
-	        var selected = this.props.selectedRowKeys.indexOf(data[this.props.keyField]) !== -1;
+	        var key = data[this.props.keyField];
+	        var disable = unselectable.indexOf(key) !== -1;
+	        var selected = this.props.selectedRowKeys.indexOf(key) !== -1;
 	        var selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ? this.renderSelectRowColumn(selected, inputType, disable) : null;
 	        // add by bluespring for className customize
 	        var trClassName = this.props.trClassName;
@@ -1831,7 +1834,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        return _react2['default'].createElement(
 	          _TableRow2['default'],
-	          { isSelected: selected, key: r, className: trClassName,
+	          { isSelected: selected, key: key, className: trClassName,
 	            selectRow: isSelectRowDefined ? this.props.selectRow : undefined,
 	            enableCellEdit: this.props.cellEdit.mode !== _Const2['default'].CELL_EDIT_NONE,
 	            onRowClick: this.handleRowClick,
@@ -6592,7 +6595,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    getElement: _react.PropTypes.func,
 	    customFilterParameters: _react.PropTypes.object
 	  }),
-	  sortIndicator: _react.PropTypes.bool
+	  sortIndicator: _react.PropTypes.bool,
+	  'export': _react.PropTypes.bool
 	};
 
 	TableHeaderColumn.defaultProps = {
