@@ -137,6 +137,7 @@ class BootstrapTable extends Component {
         text: column.props.children,
         sortFunc: column.props.sortFunc,
         sortFuncExtraData: column.props.sortFuncExtraData,
+        export: column.props.export,
         index: i
       };
     });
@@ -661,7 +662,7 @@ class BootstrapTable extends Component {
 
     const keys = [];
     this.props.children.map(function(column) {
-      if (column.props.hidden === false) {
+      if (column.props.hidden === false || column.props.export === true) {
         keys.push({
           field: column.props.dataField,
           format: column.props.csvFormat,

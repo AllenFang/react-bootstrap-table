@@ -161,7 +161,8 @@ TableHeaderColumn.propTypes = {
     getElement: PropTypes.func,
     customFilterParameters: PropTypes.object
   }),
-  sortIndicator: PropTypes.bool
+  sortIndicator: PropTypes.bool,
+  export: PropTypes.bool
 };
 
 TableHeaderColumn.defaultProps = {
