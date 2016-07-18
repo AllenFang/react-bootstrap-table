@@ -5,6 +5,7 @@ import Const from '../Const';
 // import editor from '../Editor';
 import Notifier from '../Notification.js';
 import InsertModal from './InsertModal';
+import InsertButton from './InsertButton';
 
 class ToolBar extends Component {
 
@@ -109,6 +110,10 @@ class ToolBar extends Component {
     this.setState({ isInsertModalOpen: false });
   }
 
+  handleModalOpen = () => {
+    this.setState({ isInsertModalOpen: true });
+  }
+
   handleShowOnlyToggle = () => {
     this.setState({
       showSelected: !this.state.showSelected
@@ -170,13 +175,17 @@ class ToolBar extends Component {
     let showSelectedOnlyBtn = null;
 
     if (this.props.enableInsert) {
-      insertBtn = (
-        <button type='button'
-          className='btn btn-info react-bs-table-add-btn'
-          onClick={ () => this.setState({ isInsertModalOpen: !this.state.isInsertModalOpen }) }>
-          <i className='glyphicon glyphicon-plus'></i> { this.props.insertText }
-        </button>
-      );
+      if (this.props.insertBtn) {
+        insertBtn = this.props.insertBtn(this.handleModalOpen);
+        insertBtn = React.cloneElement(insertBtn, {
+          onClick: this.handleModalOpen
+        });
+      } else {
+        insertBtn = (
+          <InsertButton btnText={ this.props.insertText }
+            onClick={ this.handleModalOpen }/>
+        );
+      }
     }
 
     if (this.props.enableDelete) {
@@ -333,7 +342,8 @@ ToolBar.propTypes = {
   insertModalHeader: PropTypes.func,
   insertModalBody: PropTypes.func,
   insertModalFooter: PropTypes.func,
-  insertModal: PropTypes.func
+  insertModal: PropTypes.func,
+  insertBtn: PropTypes.func
 };
 
 ToolBar.defaultProps = {
