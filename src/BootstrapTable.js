@@ -658,6 +658,8 @@ class BootstrapTable extends Component {
     const { onExportToCSV } = this.props.options;
     if (onExportToCSV) {
       result = onExportToCSV();
+    } else {
+      result = this.store.getDataIgnoringPagination();
     }
 
     const keys = [];
@@ -674,12 +676,6 @@ class BootstrapTable extends Component {
       }
     });
 
-    if (this.isRemoteDataSource()) {
-      exportCSV(result, keys, this.props.csvFileName);
-      return;
-    }
-
-    result = this.store.getDataIgnoringPagination();
     exportCSV(result, keys, this.props.csvFileName);
   }
 
