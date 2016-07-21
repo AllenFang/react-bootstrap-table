@@ -664,7 +664,6 @@ class BootstrapTable extends Component {
 
     const keys = [];
     this.props.children.map(function(column) {
-      console.log(column.props.export);
       if (column.props.export === true ||
         (typeof column.props.export === 'undefined' &&
         column.props.hidden === false)) {
