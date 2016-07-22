@@ -810,7 +810,12 @@ class BootstrapTable extends Component {
             onDropRow={ this.handleDropRow }
             onSearch={ this.handleSearch }
             onExportCSV={ this.handleExportCSV }
-            onShowOnlySelected={ this.handleShowOnlySelected }/>
+            onShowOnlySelected={ this.handleShowOnlySelected }
+            insertModalHeader={ this.props.options.insertModalHeader }
+            insertModalFooter={ this.props.options.insertModalFooter }
+            insertModalBody={ this.props.options.insertModalBody }
+            insertModal={ this.props.options.insertModal }
+            insertBtn={ this.props.options.insertBtn }/>
         </div>
       );
     } else {
@@ -872,6 +877,8 @@ class BootstrapTable extends Component {
   }
 
   _adjustHeight = () => {
+    if (typeof this.props.height === 'number' && !isNaN(this.props.height)) return this.props.height;
+
     if (this.props.height.indexOf('%') === -1) {
       this.refs.body.refs.container.style.height =
         parseFloat(this.props.height, 10) - this.refs.header.refs.container.offsetHeight + 'px';
@@ -904,7 +911,7 @@ class BootstrapTable extends Component {
 
 BootstrapTable.propTypes = {
   keyField: PropTypes.string,
-  height: PropTypes.string,
+  height: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   maxHeight: PropTypes.string,
   data: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
   remote: PropTypes.bool, // remote data, default is false
@@ -986,7 +993,12 @@ BootstrapTable.propTypes = {
     deleteText: PropTypes.string,
     saveText: PropTypes.string,
     closeText: PropTypes.string,
-    ignoreEditable: PropTypes.bool
+    ignoreEditable: PropTypes.bool,
+    insertModalHeader: PropTypes.func,
+    insertModalBody: PropTypes.func,
+    insertModalFooter: PropTypes.func,
+    insertModal: PropTypes.func,
+    insertBtn: PropTypes.func
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1071,7 +1083,12 @@ BootstrapTable.defaultProps = {
     deleteText: Const.DELETE_BTN_TEXT,
     saveText: Const.SAVE_BTN_TEXT,
     closeText: Const.CLOSE_BTN_TEXT,
-    ignoreEditable: false
+    ignoreEditable: false,
+    insertModalHeader: undefined,
+    insertModalBody: undefined,
+    insertModalFooter: undefined,
+    insertModal: undefined,
+    insertBtn: undefined
   },
   fetchInfo: {
     dataTotalSize: 0
