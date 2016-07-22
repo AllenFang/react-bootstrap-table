@@ -912,7 +912,7 @@ class BootstrapTable extends Component {
 BootstrapTable.propTypes = {
   keyField: PropTypes.string,
   height: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
-  maxHeight: PropTypes.string,
+  maxHeight: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   data: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
   remote: PropTypes.bool, // remote data, default is false
   striped: PropTypes.bool,
