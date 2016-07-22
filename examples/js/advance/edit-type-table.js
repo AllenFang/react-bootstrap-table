@@ -33,7 +33,7 @@ export default class EditTypeTable extends React.Component {
         <TableHeaderColumn dataField='id' isKey={ true }>Job ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name' editable={ { type: 'textarea' } }>Job Name</TableHeaderColumn>
         <TableHeaderColumn dataField='type' editable={ { type: 'select', options: { values: jobTypes } } }>Job Type</TableHeaderColumn>
-        <TableHeaderColumn dataField='active' editable={ { type: 'checkbox', options: { values: 'Y:N' } } }>Active</TableHeaderColumn>
+        <TableHeaderColumn dataField='datetime' editable={ { type: 'datetime' } }>Date Time</TableHeaderColumn>
       </BootstrapTable>
     );
   }

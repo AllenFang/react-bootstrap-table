@@ -92,6 +92,10 @@ const editor = function(editable, attr, format, editorClass, defaultValue, ignor
         <input { ...attr } type='checkbox'
           value={ values } defaultChecked={ checked }/>
       );
+    } else if (editable.type === 'datetime') {
+      return (
+        <input { ...attr } type='datetime-local' defaultValue={ defaultValue }/>
+      );
     } else {// process other input type. as password,url,email...
       return (
         <input { ...attr } type='text' defaultValue={ defaultValue }/>
