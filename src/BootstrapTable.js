@@ -250,7 +250,7 @@ class BootstrapTable extends Component {
     const isSelectAll = this.isSelectAll();
     let sortIndicator = this.props.options.sortIndicator;
     if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
-    const paginationPosition = this.props.options.paginationPosition || Const.PAGINATION_POS_BOTTOM;
+    const { paginationPosition = Const.PAGINATION_POS_BOTTOM } = this.props.options;
     const showPaginationOnTop = paginationPosition !== Const.PAGINATION_POS_BOTTOM;
     const showPaginationOnBottom = paginationPosition !== Const.PAGINATION_POS_TOP;
     return (
@@ -970,6 +970,11 @@ BootstrapTable.propTypes = {
     sizePerPageList: PropTypes.array,
     sizePerPage: PropTypes.number,
     paginationSize: PropTypes.number,
+    paginationPosition: PropTypes.oneOf([
+      Const.PAGINATION_POS_TOP,
+      Const.PAGINATION_POS_BOTTOM,
+      Const.PAGINATION_POS_BOTH
+    ]),
     hideSizePerPage: PropTypes.bool,
     onSortChange: PropTypes.func,
     onPageChange: PropTypes.func,
@@ -1060,11 +1065,7 @@ BootstrapTable.defaultProps = {
     sizePerPageList: Const.SIZE_PER_PAGE_LIST,
     sizePerPage: undefined,
     paginationSize: Const.PAGINATION_SIZE,
-    paginationPosition: PropTypes.oneOf([
-      Const.PAGINATION_POS_TOP,
-      Const.PAGINATION_POS_BOTTOM,
-      Const.PAGINATION_POS_BOTH
-    ]),
+    paginationPosition: Const.PAGINATION_POS_BOTTOM,
     hideSizePerPage: false,
     onSizePerPageList: undefined,
     noDataText: undefined,
