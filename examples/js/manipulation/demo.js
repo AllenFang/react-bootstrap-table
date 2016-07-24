@@ -70,6 +70,10 @@ class Demo extends React.Component {
           <div className='panel panel-default'>
             <div className='panel-heading'>Search for custom format data</div>
             <div className='panel-body'>
+              <h5>You can custom the filter value by giving <code>filterValue</code> when searching or filtering</h5>
+              <h5>For example, the second field is formatted from an object, and you can searh on its type by keying Cloud, Mail, Insert, Modify, Money</h5>
+              <h5>You can also search or filter the column after formatted, just enable <code>filterFormatted</code></h5>
+              <br/>
               <h5>Source in /examples/js/manipulation/search-format-table.js</h5>
               <SearchFormatTable />
             </div>
