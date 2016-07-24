@@ -9,6 +9,7 @@ import ExportCSVTable from './export-csv-table';
 import ExportCSVColumnTable from './export-csv-column-table';
 import DeleteRowCustomComfirmTable from './del-row-custom-confirm';
 import SearchClearTable from './search-clear-table';
+import SearchFormatTable from './search-format-table';
 import DebounceSearchTable from './debounce-search-table';
 import CustomButtonTextTable from './custom-btn-text-table';
 
@@ -62,6 +63,15 @@ class Demo extends React.Component {
               <h5>Source in /examples/js/manipulation/multi-search-table.js</h5>
               <h5>The Product ID has <code>searchable</code> set to <code>false</code>.</h5>
               <MultiSearchTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Search for custom format data</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/manipulation/search-format-table.js</h5>
+              <SearchFormatTable />
             </div>
           </div>
         </div>
