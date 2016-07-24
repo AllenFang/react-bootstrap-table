@@ -127,6 +127,7 @@ class BootstrapTable extends Component {
         format: column.props.dataFormat,
         formatExtraData: column.props.formatExtraData,
         filterFormatted: column.props.filterFormatted,
+        filterValue: column.props.filterValue,
         editable: column.props.editable,
         hidden: column.props.hidden,
         hiddenOnInsert: column.props.hiddenOnInsert,
