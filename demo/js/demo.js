@@ -1,4 +1,6 @@
 import React from 'react';
+import { render } from 'react-dom';
+
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 var products = [];
@@ -84,7 +86,7 @@ function priceFormatter(cell, row){
   return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
 }
 
-React.render(
+render(
   <BootstrapTable data={products} striped={true} hover={true} pagination={true} selectRow={selectRowProp} cellEdit={cellEditProp}
                   insertRow={true} deleteRow={true} search={true} columnFilter={true} options={options}>
       <TableHeaderColumn dataField="id" dataAlign="center" dataSort={true} isKey={true}>Product ID</TableHeaderColumn>
