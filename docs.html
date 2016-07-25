@@ -724,10 +724,10 @@
           <p>you can do more customization when editing cell. This object have following properties:</p>
           <pre>
 {
-  type: //edit type, avaiable value is textarea, select, checkbox
-  validator: //give function for validation and taking only one "cell value" as argument. This function should return Bool.
+  type: //edit type, available values are textarea, select, checkbox, and datetime
+  validator: //give a function for validation that takes only one "cell value" as an argument. This function should return a boolean.
   options:{
-    values: //values means data in select or checkbox.If checkbox, use ':'(colon) to separate value, ex: Y:N
+    values: //values means the data in select or checkbox. If it's checkbox, use a ':' (colon) to separate the values, e.g. Y:N.
   }
 }
           </pre>
