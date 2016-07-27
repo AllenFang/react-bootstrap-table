@@ -177,9 +177,11 @@ class ToolBar extends Component {
     if (this.props.enableInsert) {
       if (this.props.insertBtn) {
         insertBtn = this.props.insertBtn(this.handleModalOpen);
-        insertBtn = React.cloneElement(insertBtn, {
-          onClick: this.handleModalOpen
-        });
+        if (insertBtn.type.name === InsertButton.name) {
+          insertBtn = React.cloneElement(insertBtn, {
+            onClick: this.handleModalOpen
+          });
+        }
       } else {
         insertBtn = (
           <InsertButton btnText={ this.props.insertText }
