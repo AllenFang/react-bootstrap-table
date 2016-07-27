@@ -21,7 +21,7 @@ function addProducts(quantity) {
 
 addProducts(5);
 
-export default class DefaultCustomInsertButtonTable extends React.Component {
+export default class FullyCustomInsertButtonTable extends React.Component {
 
   createCustomInsertButton = (openModal) => {
     return (
