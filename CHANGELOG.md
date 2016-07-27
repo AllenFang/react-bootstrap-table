@@ -1,3 +1,17 @@
+<a name="v2.3.9"></a>
+# [v2.3.9](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.8...v2.3.9) (2016-07-25)
+## Bug fixes
+* Fix ```csvFormat``` doesn't pass the second argument([6d51a26](https://github.com/AllenFang/react-bootstrap-table/commit/6d51a2607569ffb28db55dba42531b4939ca56f3))
+
+## Features
+* Support to filter or search on nest object([3c6467d](https://github.com/AllenFang/react-bootstrap-table/commit/3c6467d2e7b96cf5942bd5821175c9202419762f))
+	* Assign  ```filterValue``` on ```<TableHeaderColumn>```
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/manipulation/search-format-table.js#L51)
+
+## Enhancement
+* Avoid ```onExportToCSV``` only work on ```remote``` condition([c201793](https://github.com/AllenFang/react-bootstrap-table/commit/c20179369ff89bcd05cd6d8a8f4a2e6e7e9add91))
+* Use ReactDOM.render instead of React.render([d45cb97](https://github.com/AllenFang/react-bootstrap-table/commit/d45cb97d44407474f275e048d381bbaa7e9355b2))
+
 <a name="v2.3.8"></a>
 # [v2.3.8](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.7...v2.3.8) (2016-07-16)
 ## Bug fixes

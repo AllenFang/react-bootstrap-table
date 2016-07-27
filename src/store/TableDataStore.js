@@ -424,13 +424,16 @@ export class TableDataStore {
           break;
         }
         }
-        let format, filterFormatted, formatExtraData;
+        let format, filterFormatted, formatExtraData, filterValue;
         if (this.colInfos[key]) {
           format = this.colInfos[key].format;
           filterFormatted = this.colInfos[key].filterFormatted;
           formatExtraData = this.colInfos[key].formatExtraData;
+          filterValue = this.colInfos[key].filterValue;
           if (filterFormatted && format) {
             targetVal = format(row[key], row, formatExtraData);
+          } else if (filterValue) {
+            targetVal = filterValue(row[key], row);
           }
         }
 
@@ -486,11 +489,20 @@ export class TableDataStore {
       for (let i = 0, keysLength = keys.length; i < keysLength; i++) {
         const key = keys[i];
         if (this.colInfos[key] && row[key]) {
-          const { format, filterFormatted, formatExtraData, searchable } = this.colInfos[key];
+          const {
+            format,
+            filterFormatted,
+            filterValue,
+            formatExtraData,
+            searchable
+          } = this.colInfos[key];
           let targetVal = row[key];
           if (searchable) {
             if (filterFormatted && format) {
               targetVal = format(targetVal, row, formatExtraData);
+            } else if (filterValue) {
+              console.log('inin');
+              targetVal = filterValue(targetVal, row);
             }
             for (let j = 0, textLength = searchTextArray.length; j < textLength; j++) {
               const filterVal = searchTextArray[j].toLowerCase();

@@ -410,11 +410,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if (onExportToCSV) {
 	        result = onExportToCSV();
+	      } else {
+	        result = _this.store.getDataIgnoringPagination();
 	      }
 
 	      var keys = [];
 	      _this.props.children.map(function (column) {
-	        console.log(column.props['export']);
 	        if (column.props['export'] === true || typeof column.props['export'] === 'undefined' && column.props.hidden === false) {
 	          keys.push({
 	            field: column.props.dataField,
@@ -424,12 +425,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      });
 
-	      if (_this.isRemoteDataSource()) {
-	        (0, _csv_export_util2['default'])(result, keys, _this.props.csvFileName);
-	        return;
-	      }
-
-	      result = _this.store.getDataIgnoringPagination();
 	      (0, _csv_export_util2['default'])(result, keys, _this.props.csvFileName);
 	    };
 
@@ -637,6 +632,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          format: column.props.dataFormat,
 	          formatExtraData: column.props.formatExtraData,
 	          filterFormatted: column.props.filterFormatted,
+	          filterValue: column.props.filterValue,
 	          editable: column.props.editable,
 	          hidden: column.props.hidden,
 	          hiddenOnInsert: column.props.hiddenOnInsert,
@@ -5432,13 +5428,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	          var format = undefined,
 	              filterFormatted = undefined,
-	              formatExtraData = undefined;
+	              formatExtraData = undefined,
+	              filterValue = undefined;
 	          if (_this4.colInfos[key]) {
 	            format = _this4.colInfos[key].format;
 	            filterFormatted = _this4.colInfos[key].filterFormatted;
 	            formatExtraData = _this4.colInfos[key].formatExtraData;
+	            filterValue = _this4.colInfos[key].filterValue;
 	            if (filterFormatted && format) {
 	              targetVal = format(row[key], row, formatExtraData);
+	            } else if (filterValue) {
+	              targetVal = filterValue(row[key], row);
 	            }
 	          }
 
@@ -5504,6 +5504,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _colInfos$key = _this5.colInfos[key];
 	            var format = _colInfos$key.format;
 	            var filterFormatted = _colInfos$key.filterFormatted;
+	            var filterValue = _colInfos$key.filterValue;
 	            var formatExtraData = _colInfos$key.formatExtraData;
 	            var searchable = _colInfos$key.searchable;
 
@@ -5511,6 +5512,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (searchable) {
 	              if (filterFormatted && format) {
 	                targetVal = format(targetVal, row, formatExtraData);
+	              } else if (filterValue) {
+	                console.log('inin');
+	                targetVal = filterValue(targetVal, row);
 	              }
 	              for (var j = 0, textLength = searchTextArray.length; j < textLength; j++) {
 	                var filterVal = searchTextArray[j].toLowerCase();
@@ -5691,7 +5695,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var field = col.field;
 	      var format = col.format;
 
-	      var value = typeof format !== 'undefined' ? format(row[field]) : row[field];
+	      var value = typeof format !== 'undefined' ? format(row[field], row) : row[field];
 	      var cell = typeof value !== 'undefined' ? '"' + value + '"' : '';
 	      dataString += cell;
 	      if (i + 1 < keys.length) dataString += ',';
@@ -6580,6 +6584,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  columnClassName: _react.PropTypes.any,
 	  columnTitle: _react.PropTypes.bool,
 	  filterFormatted: _react.PropTypes.bool,
+	  filterValue: _react.PropTypes.func,
 	  sort: _react.PropTypes.string,
 	  caretRender: _react.PropTypes.func,
 	  formatExtraData: _react.PropTypes.any,
@@ -6618,6 +6623,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  sortFunc: undefined,
 	  columnClassName: '',
 	  filterFormatted: false,
+	  filterValue: undefined,
 	  sort: undefined,
 	  formatExtraData: undefined,
 	  sortFuncExtraData: undefined,

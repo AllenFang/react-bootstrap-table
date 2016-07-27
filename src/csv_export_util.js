@@ -18,7 +18,7 @@ function toString(data, keys) {
   data.map(function(row) {
     keys.map(function(col, i) {
       const { field, format } = col;
-      const value = typeof format !== 'undefined' ? format(row[field]) : row[field];
+      const value = typeof format !== 'undefined' ? format(row[field], row) : row[field];
       const cell = typeof value !== 'undefined' ? ('"' + value + '"') : '';
       dataString += cell;
       if (i + 1 < keys.length) dataString += ',';

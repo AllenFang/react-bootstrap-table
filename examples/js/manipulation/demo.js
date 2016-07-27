@@ -9,6 +9,7 @@ import ExportCSVTable from './export-csv-table';
 import ExportCSVColumnTable from './export-csv-column-table';
 import DeleteRowCustomComfirmTable from './del-row-custom-confirm';
 import SearchClearTable from './search-clear-table';
+import SearchFormatTable from './search-format-table';
 import DebounceSearchTable from './debounce-search-table';
 import CustomButtonTextTable from './custom-btn-text-table';
 
@@ -67,6 +68,19 @@ class Demo extends React.Component {
         </div>
         <div className='col-md-offset-1 col-md-8'>
           <div className='panel panel-default'>
+            <div className='panel-heading'>Search for custom format data</div>
+            <div className='panel-body'>
+              <h5>You can custom the filter value by giving <code>filterValue</code> when searching or filtering</h5>
+              <h5>For example, the second field is formatted from an object, and you can searh on its type by keying Cloud, Mail, Insert, Modify, Money</h5>
+              <h5>You can also search or filter the column after formatted, just enable <code>filterFormatted</code></h5>
+              <br/>
+              <h5>Source in /examples/js/manipulation/search-format-table.js</h5>
+              <SearchFormatTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
             <div className='panel-heading'>Debounce Search Table Example(Use searchDelayTime props to set your search delay time)</div>
             <div className='panel-body'>
               <h5>Source in /examples/js/manipulation/debounce-search-table.js</h5>
@@ -102,8 +116,8 @@ class Demo extends React.Component {
             <div className='panel-body'>
               <h5>Source in /examples/js/manipulation/export-csv-column-table.js</h5>
               <h5><b>Use <code>export</code> to ask <code>react-bootstrap-table</code> to export hidden column</b></h5>
-              <h5><b>The ID column is hidden, but can be exported by assigning <code>export</code></b></h5>
-              <h5><b>You can also give <code>export={ false }</code> to ignore this column on exporting</b></h5>
+              <h5><b>For example, The ID column is hidden, but can be exported by assigning <code>export</code></b></h5>
+              <h5><b>You can also give <code>export=false</code> to ignore this column on exporting</b></h5>
               <ExportCSVColumnTable />
             </div>
           </div>

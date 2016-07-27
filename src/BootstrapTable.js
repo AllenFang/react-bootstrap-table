@@ -127,6 +127,7 @@ class BootstrapTable extends Component {
         format: column.props.dataFormat,
         formatExtraData: column.props.formatExtraData,
         filterFormatted: column.props.filterFormatted,
+        filterValue: column.props.filterValue,
         editable: column.props.editable,
         hidden: column.props.hidden,
         hiddenOnInsert: column.props.hiddenOnInsert,
@@ -658,11 +659,12 @@ class BootstrapTable extends Component {
     const { onExportToCSV } = this.props.options;
     if (onExportToCSV) {
       result = onExportToCSV();
+    } else {
+      result = this.store.getDataIgnoringPagination();
     }
 
     const keys = [];
     this.props.children.map(function(column) {
-      console.log(column.props.export);
       if (column.props.export === true ||
         (typeof column.props.export === 'undefined' &&
         column.props.hidden === false)) {
@@ -674,12 +676,6 @@ class BootstrapTable extends Component {
       }
     });
 
-    if (this.isRemoteDataSource()) {
-      exportCSV(result, keys, this.props.csvFileName);
-      return;
-    }
-
-    result = this.store.getDataIgnoringPagination();
     exportCSV(result, keys, this.props.csvFileName);
   }
 
