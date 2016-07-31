@@ -18,6 +18,12 @@ class TextFilter extends Component {
     }, this.props.delay);
   }
 
+  cleanFiltered() {
+    const value = this.props.defaultValue ? this.props.defaultValue : '';
+    this.refs.inputText.value = value;
+    this.props.filterHandler(value, Const.FILTER_TYPE.TEXT);
+  }
+
   componentDidMount() {
     const defaultValue = this.refs.inputText.value;
     if (defaultValue) {
