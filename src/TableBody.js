@@ -9,14 +9,36 @@ const isFun = function(obj) {
   return obj && (typeof obj === 'function');
 };
 
+const emptyTableRowHeight = {
+  height: 37,
+  visibility: 'hidden'
+};
+
 class TableBody extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      currEditCell: null
+      currEditCell: null,
+      scrollTop: 0,
+      availableHeight: 0
     };
     this.editing = false;
+  }
+
+  _handleTableScroll = (e) => {
+    this.setState({
+      scrollTop: e.target.scrollTop,
+      availableHeight: e.target.clientHeight
+    });
+  }
+
+  componentDidMount() {
+    this.refs.container.addEventListener('scroll', this._handleTableScroll);
+  }
+
+  componentWillUnmount() {
+    this.refs.container.removeEventListener('scroll', this._handleTableScroll);
   }
 
   render() {
@@ -32,7 +54,17 @@ class TableBody extends Component {
     const tableHeader = this.renderTableHeader(isSelectRowDefined);
     const inputType = this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
 
+    const rowHeight = 37;
+    const numRows = this.props.data.length;
+    const scrollBottom = this.state.scrollTop + this.state.availableHeight;
+    const startIndex = Math.max(0, Math.floor(this.state.scrollTop / rowHeight));
+    const RowEndIndex = Math.min(numRows, Math.ceil(scrollBottom / rowHeight) + 10);
+    const RowIndex = startIndex;
+
     const tableRows = this.props.data.map(function(data, r) {
+      if (r < RowIndex || r > RowEndIndex) {
+        return <tr style={ emptyTableRowHeight } key={ r }><td></td></tr>;
+      }
       const tableColumns = this.props.columns.map(function(column, i) {
         const fieldValue = data[column.name];
         if (this.editing &&
