@@ -9,7 +9,7 @@ module.exports = {
     vendors: ['webpack-dev-server/client?http://localhost:3004', 'webpack/hot/only-dev-server']
   },
   debug: true,
-  devtool: 'eval-source-map',
+  devtool: '#eval-source-map',
   output: {
     path: path.join(__dirname, 'examples'),
     filename: '[name].bundle.js'
