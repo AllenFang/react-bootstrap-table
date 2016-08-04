@@ -1,6 +1,10 @@
 /* eslint max-len: 0 */
+/* eslint no-alert: 0 */
+/* eslint guard-for-in: 0 */
+/* eslint no-console: 0 */
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+
 
 const products = [];
 
@@ -16,73 +20,29 @@ function addProducts(quantity) {
   }
 }
 
-addProducts(100);
+addProducts(50);
 
-const options = {
-  sizePerPageList: [ 5, 10, 15, 20 ],
-  sizePerPage: 10,
-  sortName: 'id',
-  sortOrder: 'desc'
-};
-const selectRowProp = {
-  mode: 'checkbox',
-  clickToSelect: true,
-  bgColor: 'rgb(238, 193, 213)'
-};
-const filterOptions = {
-  type: 'TextFilter',
-  placeholder: 'Product Name'
-};
+export default class SelectAllOnCurrPage extends React.Component {
 
-export default class SelectAll extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: [],
-      filteredProducts: products
-    };
-  }
-
-  onSelect(row, isSelected) {
-    const selectedProducts = this.state.selected;
+  onSelectAll = (isSelected) => {
     if (isSelected) {
-      selectedProducts.push(row.id);
-    } else {
-      const index = selectedProducts
-        .indexOf(row.universalId);
-      selectedProducts.splice(index, 1);
+      return this.refs.table.state.data.map(row => row.id);
     }
-    this.setState({ selected: selectedProducts });
-  }
-
-  onSelectAll(isSelected) {
-    const items = isSelected
-        ? this.state.filteredProducts.map(product => product.id)
-        : [];
-    this.setState({ selected: items });
-  }
-
-  afterColumnFilter(filterConds, result) {
-    this.setState({ filteredProducts: result });
   }
 
   render() {
-    Object.assign(selectRowProp, {
-      selected: this.state.selected,
-      onSelect: this.onSelect.bind(this),
-      onSelectAll: this.onSelectAll.bind(this) });
-    Object.assign(options, {
-      afterColumnFilter: this.afterColumnFilter.bind(this) });
+    const selectRowProp = {
+      mode: 'checkbox',
+      clickToSelect: true,
+      onSelectAll: this.onSelectAll
+    };
 
     return (
-      <div>
-        <div>Product selected: { this.state.selected.length }</div>
-        <BootstrapTable ref='table' selectRow={ selectRowProp } data={ products } pagination={ true } options={ options }>
+      <BootstrapTable ref='table' data={ products } selectRow={ selectRowProp } pagination>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField='name' filter={ filterOptions }>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
-        </BootstrapTable>
-      </div>
-   );
+      </BootstrapTable>
+    );
   }
 }
