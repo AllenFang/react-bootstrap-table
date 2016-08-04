@@ -761,7 +761,7 @@ class BootstrapTable extends Component {
       || this.props.exportCSV) {
       let columns;
       if (Array.isArray(children)) {
-        columns = children.map(function(column) {
+        columns = children.map((column, r) => {
           const { props } = column;
           return {
             name: props.children,
@@ -772,7 +772,7 @@ class BootstrapTable extends Component {
             // for create editor, no params for column.editable() indicate that editor for new row
             editable: props.editable && (typeof props.editable === 'function') ? props.editable() : props.editable,
             format: props.dataFormat ? function(value) {
-              return props.dataFormat(value, null, props.formatExtraData).replace(/<.*?>/g, '');
+              return props.dataFormat(value, null, props.formatExtraData, r).replace(/<.*?>/g, '');
             } : false
           };
         });
