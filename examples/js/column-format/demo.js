@@ -3,6 +3,7 @@ import React from 'react';
 import HtmlColumnFormatTable from './html-column-format-table';
 import ReactColumnFormatTable from './react-column-format-table';
 import ExtraDataColumnFormatTable from './extra-data-column-format-table';
+import GetRowIndexTable from './get-row-index-table';
 
 class Demo extends React.Component {
   render() {
@@ -32,6 +33,16 @@ class Demo extends React.Component {
 							<div className='panel-body'>
 								<h5>Source in /examples/js/column-format/extra-data-column-format-table.js</h5>
 								<ExtraDataColumnFormatTable />
+							</div>
+						</div>
+					</div>
+          <div className='col-md-offset-1 col-md-8'>
+						<div className='panel panel-default'>
+							<div className='panel-heading'>Get Row Index Example</div>
+              <h5><b>Use the <code>fourth</code> argument to get the row index</b>. Check the browser console</h5>
+							<div className='panel-body'>
+								<h5>Source in /examples/js/column-format/get-row-index-table.js</h5>
+								<GetRowIndexTable />
 							</div>
 						</div>
 					</div>
