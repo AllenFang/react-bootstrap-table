@@ -1,5 +1,6 @@
 /* eslint max-len: 0 */
 /* eslint no-unused-vars: 0*/
+/* eslint no-console: 0*/
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
