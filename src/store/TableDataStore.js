@@ -383,7 +383,7 @@ export class TableDataStore {
 
   _filter(source) {
     const filterObj = this.filterObj;
-    this.filteredData = source.filter( row => {
+    this.filteredData = source.filter((row, r) => {
       let valid = true;
       let filterVal;
       for (const key in filterObj) {
@@ -431,7 +431,7 @@ export class TableDataStore {
           formatExtraData = this.colInfos[key].formatExtraData;
           filterValue = this.colInfos[key].filterValue;
           if (filterFormatted && format) {
-            targetVal = format(row[key], row, formatExtraData);
+            targetVal = format(row[key], row, formatExtraData, r);
           } else if (filterValue) {
             targetVal = filterValue(row[key], row);
           }
@@ -457,7 +457,7 @@ export class TableDataStore {
         default: {
           if (filterObj[key].type === Const.FILTER_TYPE.SELECT &&
             filterFormatted && filterFormatted && format) {
-            filterVal = format(filterVal, row, formatExtraData);
+            filterVal = format(filterVal, row, formatExtraData, r);
           }
           valid = this.filterText(targetVal, filterVal);
           break;
@@ -480,7 +480,7 @@ export class TableDataStore {
     } else {
       searchTextArray.push(this.searchText);
     }
-    this.filteredData = source.filter( row => {
+    this.filteredData = source.filter((row, r) => {
       const keys = Object.keys(row);
       let valid = false;
       // for loops are ugly, but performance matters here.
@@ -499,7 +499,7 @@ export class TableDataStore {
           let targetVal = row[key];
           if (searchable) {
             if (filterFormatted && format) {
-              targetVal = format(targetVal, row, formatExtraData);
+              targetVal = format(targetVal, row, formatExtraData, r);
             } else if (filterValue) {
               console.log('inin');
               targetVal = filterValue(targetVal, row);
