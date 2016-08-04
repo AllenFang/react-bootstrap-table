@@ -303,9 +303,6 @@ export class TableDataStore {
       break;
     }
     case '>=': {
-      // console.log(targetVal);
-      // console.log(filterVal);
-      // console.log(filterVal.getDate());
       if (targetVal < filterVal) {
         valid = false;
       }
@@ -501,7 +498,6 @@ export class TableDataStore {
             if (filterFormatted && format) {
               targetVal = format(targetVal, row, formatExtraData, r);
             } else if (filterValue) {
-              console.log('inin');
               targetVal = filterValue(targetVal, row);
             }
             for (let j = 0, textLength = searchTextArray.length; j < textLength; j++) {
