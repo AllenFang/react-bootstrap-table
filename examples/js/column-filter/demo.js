@@ -151,6 +151,8 @@ class Demo extends React.Component {
                     <div className='panel-heading'>All Types of Filters Example</div>
                     <div className='panel-body'>
                         <h5>Source in /examples/js/column-filter/all-filters.js</h5>
+                        <h5>This example also show you how to clean filter programmatic :</h5>
+                        <h5>You can call <code>cleanFiltered</code> which exposed by <code>TableHeaderColumn</code></h5>
                         <AllFilter />
                     </div>
                 </div>

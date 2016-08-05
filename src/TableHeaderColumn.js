@@ -30,31 +30,31 @@ class TableHeaderColumn extends Component {
     switch (this.props.filter.type) {
     case Const.FILTER_TYPE.TEXT: {
       return (
-        <TextFilter { ...this.props.filter }
+        <TextFilter ref='textFilter' { ...this.props.filter }
           columnName={ this.props.children } filterHandler={ this.handleFilter } />
       );
     }
     case Const.FILTER_TYPE.REGEX: {
       return (
-        <RegexFilter { ...this.props.filter }
+        <RegexFilter ref='regexFilter' { ...this.props.filter }
           columnName={ this.props.children } filterHandler={ this.handleFilter } />
       );
     }
     case Const.FILTER_TYPE.SELECT: {
       return (
-        <SelectFilter { ...this.props.filter }
+        <SelectFilter ref='selectFilter' { ...this.props.filter }
           columnName={ this.props.children } filterHandler={ this.handleFilter } />
       );
     }
     case Const.FILTER_TYPE.NUMBER: {
       return (
-        <NumberFilter { ...this.props.filter }
+        <NumberFilter ref='numberFilter' { ...this.props.filter }
           columnName={ this.props.children } filterHandler={ this.handleFilter } />
       );
     }
     case Const.FILTER_TYPE.DATE: {
       return (
-        <DateFilter { ...this.props.filter }
+        <DateFilter ref='dateFilter' { ...this.props.filter }
           columnName={ this.props.children } filterHandler={ this.handleFilter } />
       );
     }
@@ -116,6 +116,35 @@ class TableHeaderColumn extends Component {
         </div>
       </th>
     );
+  }
+
+  cleanFiltered() {
+    if (this.props.filter === undefined) {
+      return;
+    }
+
+    switch (this.props.filter.type) {
+    case Const.FILTER_TYPE.TEXT: {
+      this.refs.textFilter.cleanFiltered();
+      break;
+    }
+    case Const.FILTER_TYPE.REGEX: {
+      this.refs.regexFilter.cleanFiltered();
+      break;
+    }
+    case Const.FILTER_TYPE.SELECT: {
+      this.refs.selectFilter.cleanFiltered();
+      break;
+    }
+    case Const.FILTER_TYPE.NUMBER: {
+      this.refs.numberFilter.cleanFiltered();
+      break;
+    }
+    case Const.FILTER_TYPE.DATE: {
+      this.refs.dateFilter.cleanFiltered();
+      break;
+    }
+    }
   }
 }
 
