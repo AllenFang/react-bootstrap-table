@@ -44,15 +44,27 @@ const satisfaction = [ 0, 1, 2, 3, 4, 5 ];
 export default class AllFilters extends React.Component {
   render() {
     return (
-      <BootstrapTable data={ products }>
-        <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
-        <TableHeaderColumn dataField='name' filter={ { type: 'TextFilter', placeholder: 'Please enter a value' } }>Product Name</TableHeaderColumn>
-        <TableHeaderColumn dataField='name' filter={ { type: 'RegexFilter', placeholder: 'Please enter a regex' } }>Product Name</TableHeaderColumn>
-        <TableHeaderColumn dataField='quality' filter={ { type: 'SelectFilter', options: qualityType } } dataFormat={ enumFormatter } formatExtraData={ qualityType }>Product Quality</TableHeaderColumn>
-        <TableHeaderColumn dataField='price' filter={ { type: 'NumberFilter', delay: 1000 } }>Product Price</TableHeaderColumn>
-        <TableHeaderColumn dataField='satisfaction' filter={ { type: 'NumberFilter', options: satisfaction } }>Buyer Satisfaction</TableHeaderColumn>
-        <TableHeaderColumn dataField='inStockDate' filter={ { type: 'DateFilter' } } dataFormat={ dateFormatter }>In Stock From</TableHeaderColumn>
+      <BootstrapTable ref='table' data={ products }>
+        <TableHeaderColumn dataField='id' isKey={ true }>
+          Product ID
+          <br/><a onClick={ this.handlerClickCleanFiltered.bind(this) } style={ { cursor: 'pointer' } }>clear filters</a>
+        </TableHeaderColumn>
+        <TableHeaderColumn ref='name1' dataField='name' filter={ { type: 'TextFilter', placeholder: 'Please enter a value' } }>Product Name</TableHeaderColumn>
+        <TableHeaderColumn ref='name2' dataField='name' filter={ { type: 'RegexFilter', placeholder: 'Please enter a regex' } }>Product Name</TableHeaderColumn>
+        <TableHeaderColumn ref='quality' dataField='quality' filter={ { type: 'SelectFilter', options: qualityType } } dataFormat={ enumFormatter } formatExtraData={ qualityType }>Product Quality</TableHeaderColumn>
+        <TableHeaderColumn ref='price' dataField='price' filter={ { type: 'NumberFilter', delay: 1000 } }>Product Price</TableHeaderColumn>
+        <TableHeaderColumn ref='satisfaction' dataField='satisfaction' filter={ { type: 'NumberFilter', options: satisfaction } }>Buyer Satisfaction</TableHeaderColumn>
+        <TableHeaderColumn ref='inStockDate' dataField='inStockDate' filter={ { type: 'DateFilter' } } dataFormat={ dateFormatter }>In Stock From</TableHeaderColumn>
       </BootstrapTable>
     );
+  }
+
+  handlerClickCleanFiltered() {
+    this.refs.name1.cleanFiltered();
+    this.refs.name2.cleanFiltered();
+    this.refs.quality.cleanFiltered();
+    this.refs.price.cleanFiltered();
+    this.refs.satisfaction.cleanFiltered();
+    this.refs.inStockDate.cleanFiltered();
   }
 }
