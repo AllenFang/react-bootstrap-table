@@ -141,7 +141,7 @@ $ gulp example-server #after start, open browser and go to http://localhost:3004
 
 ### Thanks
 **[luqin](https://github.com/luqin)**  
-Help this project to integrate a better examples demo, add travis & badge, code formatting, give a lot of suggestions and bugs report.
+Help this project to integrate a better examples demo, add travis & badge, code formatting, give a lot of suggestions and bugs report.   
 **[Whien](https://github.com/madeinfree)**  
 Implement a lots of awesome new feature and also fix some bugs and enhancements.   
 **[khinlatt](https://github.com/khinlatt)**  
