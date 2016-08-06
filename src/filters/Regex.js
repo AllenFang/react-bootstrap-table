@@ -18,6 +18,12 @@ class RegexFilter extends Component {
     }, this.props.delay);
   }
 
+  cleanFiltered() {
+    const value = this.props.defaultValue ? this.props.defaultValue : '';
+    this.refs.inputText.value = value;
+    this.props.filterHandler(value, Const.FILTER_TYPE.TEXT);
+  }
+
   componentDidMount() {
     const value = this.refs.inputText.value;
     if (value) {

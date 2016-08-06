@@ -43,7 +43,7 @@ class TableBody extends Component {
           this.state.currEditCell.cid === i) {
           let editable = column.editable;
           const format = column.format ? function(value) {
-            return column.format(value, data, column.formatExtraData).replace(/<.*?>/g, '');
+            return column.format(value, data, column.formatExtraData, r).replace(/<.*?>/g, '');
           } : false;
           if (isFun(column.editable)) {
             editable = column.editable(fieldValue, data, r, i);
@@ -72,7 +72,7 @@ class TableBody extends Component {
           }
 
           if (typeof column.format !== 'undefined') {
-            const formattedValue = column.format(fieldValue, data, column.formatExtraData);
+            const formattedValue = column.format(fieldValue, data, column.formatExtraData, r);
             if (!React.isValidElement(formattedValue)) {
               columnChild = (
                 <div dangerouslySetInnerHTML={ { __html: formattedValue } }></div>

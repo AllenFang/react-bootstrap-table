@@ -53,6 +53,15 @@ class NumberFilter extends Component {
     this.props.filterHandler({ number: value, comparator }, Const.FILTER_TYPE.NUMBER);
   }
 
+  cleanFiltered() {
+    const value = (this.props.defaultValue) ? this.props.defaultValue.number : '';
+    const comparator = (this.props.defaultValue) ? this.props.defaultValue.comparator : '';
+    this.setState({ isPlaceholderSelected: (value === '') });
+    this.refs.numberFilterComparator.value = comparator;
+    this.refs.numberFilter.value = value;
+    this.props.filterHandler({ number: value, comparator }, Const.FILTER_TYPE.NUMBER);
+  }
+
   getComparatorOptions() {
     const optionTags = [];
     optionTags.push(<option key='-1'></option>);
