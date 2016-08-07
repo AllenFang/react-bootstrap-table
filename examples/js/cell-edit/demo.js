@@ -5,6 +5,7 @@ import DbClickToEditTable from './dbclick-to-edit-table';
 import BlurToSaveTable from './blur-to-save-table';
 import CellEditHookTable from './cell-edit-hook-table';
 import NonEditableTable from './non-editable-table';
+import CustomCellEditTable from './custom-cell-edit-table';
 
 class Demo extends React.Component {
   render() {
@@ -56,6 +57,15 @@ class Demo extends React.Component {
             <div className='panel-body'>
               <h5>Source in /examples/js/cell-edit/cell-edit-hook-table.js</h5>
               <CellEditHookTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Custom Cell Editor Example</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/cell-edit/custom-cell-edit-table.js</h5>
+              <CustomCellEditTable />
             </div>
           </div>
         </div>
