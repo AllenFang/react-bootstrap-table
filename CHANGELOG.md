@@ -1,3 +1,18 @@
+<a name="v2.4.0"></a>
+# [v2.4.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.9...v2.4.0) (2016-08-06)
+## Features
+* Enable to clear filter by calling ```cleanFiltered``` which exposed by ```<TableHeaderColumn>```([bda6ff4](https://github.com/AllenFang/react-bootstrap-table/commit/bda6ff4979f28e6f2fe692d122fa93a249daf7fd))
+* Support cell edit customization([b162b52](https://github.com/AllenFang/react-bootstrap-table/commit/b162b526fcffab6edd455ed2727fb69b79da8635))
+	* Apply ```customEditor``` on ```<TableHeaderColumn>```
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/cell-edit/custom-cell-edit-table.js)
+
+## Enhancement
+* Fix wrong devtool for webpack on example([ff1da38](https://github.com/AllenFang/react-bootstrap-table/commit/ff1da38da3950b365a3f8873d80f7f07a8b17914))
+* Use ```btn-primary``` for save button([a7923b4](https://github.com/AllenFang/react-bootstrap-table/commit/a7923b428c0e0ee8d955e20afe499aeec20b84c3))
+* Pass row index as fourth arguments for ```dataFormat```([eae2f23](https://github.com/AllenFang/react-bootstrap-table/commit/eae2f2322ef5299a6e25fbd080e3609918c6b141))
+* Add example for showing how to make select all only work on current page([ff31b0d](https://github.com/AllenFang/react-bootstrap-table/commit/ff31b0d0feed9105c911e0db23cc79e9990c93e1))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/selection/all-select.js)
+
 <a name="v2.3.9"></a>
 # [v2.3.9](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.8...v2.3.9) (2016-07-25)
 ## Bug fixes
