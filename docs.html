@@ -280,6 +280,13 @@
       <div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">ignoreSinglePage :</font> <font class="attr-type">Bool</font></br>
+          <p>Enable to ignore the pagination if only one page, default is false.</p>
+        </div>
+      </div>
+      <div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">containerStyle :</font> <font class="attr-type">Object</font></br>
           <p>Add your own styles to the class of <code>react-bs-table-container</code></p>
         </div>
@@ -338,6 +345,9 @@
             <font class="attr-lv1-title">selected</font> : <font class="attr-lv1-type">Array</font></br>
             <p>Give an array data to perform which rows you want to be selected when table loading.</p>
             <p>The content of array should be the rowkey which you want to be selected.</p>
+            <font class="attr-lv1-title">unselectable</font> : <font class="attr-lv1-type">Array</font></br>
+            <p>Give an array data to perform which rows you want not to be selected.</p>
+            <p>The content of array should be the rowkey which you want not to be selected.</p>
             <font class="attr-lv1-title">hideSelectColumn</font> : <font class="attr-lv1-type">Bool</font></br>
             <p>if true, the radio/checkbox column will be hide.</p>
             <p>You can enable this attribute if you enable <code>clickToSelect</code> and you don't want to show the selection column.</p>
@@ -354,12 +364,14 @@
             <p>If return value of this function is false, the select or deselect action will not be applied.</p>
             <font class="attr-lv1-title">onSelectAll</font> : <font class="attr-lv1-type">Function</font></br>
             <p>Accept a custom callback function, if click select all checkbox, this function will be called.</p>
-            <p>This callback function taking two arguments <code>isSelected</code> and <code>currentSelectedAndDisplayData</code>:</p>
+            <p>This callback function taking two arguments <code>isSelected</code> and <code>rows</code>:</p>
             <div style="margin-left: 20px;">
               <code>isSelected</code>: it's a boolean value means "whether or not that row will be selected?".</br>
-              <code>currentSelectedAndDisplayData</code>: If pagination enabled, this result is the data which in a page. In contrast, this is all data in table.</br>
+              <code>rows</code>: The rows which be selected or unselected.</br>
             </div>
             <p>If return value of this function is false, the select all or deselect all action will not be applied.</p>
+            <p>If return value of this function is an array of rowkeys, this array will be applied as selection row when select all trigger.</p>
+            <p>It's useful when you have a validation to filter some rows on selecting all.</p>
           </div>
         </div>
       </div>
@@ -432,8 +444,16 @@
             <p>Means the size per page you want to locate as default.</p>
             <font class="attr-lv1-title">paginationSize</font> : <font class="attr-lv1-type">Number</font></br>
             <p>To define the pagination bar length, default is 5.</p>
-            <font class="attr-lv1-title">paginationShowsTotal</font> : <font class="attr-lv1-type">bool</font></br>
+            <font class="attr-lv1-title">hideSizePerPage</font> : <font class="attr-lv1-type">Bool</font></br>
+            <p>Enable to hide the dropdown list for size per page, default is false.</p>
+            <font class="attr-lv1-title">paginationShowsTotal</font> : <font class="attr-lv1-type">Bool or Function</font></br>
             <p>Display a short text the total number of element and current lines displayed, default is true.</p>
+            <p>If you want to custom this short text, you can give a function, and this function take three arguments: <code>start</code>, <code>to</code>, <code>total</code></p>
+            <div style="margin-left: 20px;">
+              <code>start</code>: Current start index.</br>
+              <code>to</code>: Current end index.</br>
+              <code>total</code>: The total data volume.</br>
+            </div>
             <font class="attr-lv1-title">pageStartIndex</font> : <font class="attr-lv1-type">bool</font></br>
             <p>A chance to modify the start page number, default is start from page one.</p>
             <font class="attr-lv1-title">onPageChange</font> : <font class="attr-lv1-type">Function</font></br>
@@ -642,7 +662,13 @@
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">dataAlign :</font> <font class="attr-type">String</font></br>
-          <p>Set align in column, value is left, center, right, start and end.</p>
+          <p>Set align in column, available value is left, center, right, start and end.</p>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">headerAlign :</font> <font class="attr-type">String</font></br>
+          <p>Set align in header, available value is left, center, right, start and end.</p>
+          <p>If you don't set the <code>headerAlign</code>, default is follow <code>dataAlign</code>.</p>
         </div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
@@ -659,13 +685,19 @@
           <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">dataFormat :</font> <font class="attr-type">Function</font></br>
           <p>To customize the column. This callback function should return a String or a React Component.</p>
-          <p>In addition, this function taking three argument: <code>cell</code>, <code>row</code> and <code>formatExtraData</code>.</p>
+          <p>In addition, this function taking four argument: <code>cell</code>, <code>row</code>, <code>formatExtraData</code>, <code>rowIdx</code></p>
           <p>The <code>formatExtraData</code> will be the value which you assign <code>formatExtraData</code> on &ltTableHeaderColumn&gt</p>
         </div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">filterFormatted :</font> <font class="attr-type">Bool</font></br>
           <p>To to enable search or filter data on formatting. Default is false</p>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">filterValue :</font> <font class="attr-type">Function</font></br>
+          <p>Return the value you want to be filtered on that column. It's useful when you column data is an object</p>
+          <p>You can also check this <a target='_blank' href='https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/manipulation/search-format-table.js'>example</a></p>
         </div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
@@ -676,11 +708,28 @@
           <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">csvFormat :</font> <font class="attr-type">Function</font></br>
           <p>A chance to customize the column when export to csv file. This function taking two argument: <code>cell</code> and <code>row</code>.</p>
+          <p>Currently, <code>csvFormat</code> only accept return the string.</p>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">csvHeader :</font> <font class="attr-type">String</font></br>
+          <p>The display text on header for csv file</p>
         </div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">hidden :</font> <font class="attr-type">Bool</font></br>
           <p>True to hide column.</p>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">export :</font> <font class="attr-type">Bool</font></br>
+          <p><code>export={true}</code> usually be used when you want to export a column which is hidden. Because hidden column can't be export to csv.</p>
+          <p><code>export={false}</code> to specify <code>react-bootstrap-table</code> do not export this column on exporting csv..</p>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">hiddenOnInsert :</font> <font class="attr-type">Bool</font></br>
+          <p>True to hide input field of column in inert modal.</p>
         </div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
@@ -720,7 +769,7 @@
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
           <font class="attr-title">editable :</font> <font class="attr-type">Bool or Object</font></br>
-          <p>AddTrue to set column editable, false is non-editable. If give Object,</p>
+          <p>True to set column editable, false is non-editable. If give Object,</p>
           <p>you can do more customization when editing cell. This object have following properties:</p>
           <pre>
 {
@@ -731,6 +780,16 @@
   }
 }
           </pre>
+        </div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">customEditor :</font> <font class="attr-type">Object</font></br>
+          <p>Give an Object like following to able to customize your own editing component. This Object should contain one property: </p>
+          <div style="margin-left: 20px;">
+            <code>getElement</code><span class="lv1-required">(required)</span>: Accept a function and take two arguments: <code>onUpdate</code> and <code>props</code>.</br>
+            <code>customEditorParameters</code>: Another extra data for custom cell edit component.</br>
+          </div>
+          <p><a target='_blank' href='https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/cell-edit/custom-cell-edit-table.js'>This</a> is a good example for showing how to use custom cell editing.</p>
         </div>
         <div class="member">
           <a href="#" class="side"><span>&nbsp;</span></a>
@@ -760,7 +819,17 @@
           <p>Check <a href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column-filter/custom-filter.js">this</a> for a custom filter.</p>
         </div>
       </div>
-      <hr>
+
+      <h3>
+      <a id="the-attributes-in-tableheadercolumn" class="anchor" href="#the-attributes-in-tableheadercolumn" aria-hidden="true"><span class="octicon octicon-link"></span></a>The expose function on &lt;BootstrapTable&gt;:</h3>
+      <div>
+        <div class="member">
+          <a href="#" class="side"><span>&nbsp;</span></a>
+          <font class="attr-title">cleanFiltered :</font> <font class="attr-type"></font></br>
+          <p>Call this function to clear the filter.</p>
+        </div>
+      </div>
+
       <span class="site-footer-owner"><a href="https://github.com/AllenFang/react-bootstrap-table">React-bootstrap-table</a> is maintained by <a href="https://github.com/AllenFang">AllenFang</a>.</span>
 
       <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
