@@ -662,6 +662,7 @@ class BootstrapTable extends Component {
   handleExportCSV = () => {
     let result = {};
 
+    let { csvFileName } = this.props;
     const { onExportToCSV } = this.props.options;
     if (onExportToCSV) {
       result = onExportToCSV();
@@ -682,7 +683,11 @@ class BootstrapTable extends Component {
       }
     });
 
-    exportCSV(result, keys, this.props.csvFileName);
+    if (typeof csvFileName === 'function') {
+      csvFileName = csvFileName();
+    }
+
+    exportCSV(result, keys, csvFileName);
   }
 
   handleSearch = searchText => {
@@ -996,7 +1001,7 @@ BootstrapTable.propTypes = {
     dataTotalSize: PropTypes.number
   }),
   exportCSV: PropTypes.bool,
-  csvFileName: PropTypes.string,
+  csvFileName: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
   ignoreSinglePage: PropTypes.bool
 };
 BootstrapTable.defaultProps = {
