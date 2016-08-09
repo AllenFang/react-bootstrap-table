@@ -12,6 +12,7 @@ import SearchClearTable from './search-clear-table';
 import SearchFormatTable from './search-format-table';
 import DebounceSearchTable from './debounce-search-table';
 import CustomButtonTextTable from './custom-btn-text-table';
+import DefaultSearchTable from './default-search-table';
 
 class Demo extends React.Component {
   render() {
@@ -86,6 +87,15 @@ class Demo extends React.Component {
               <h5>Source in /examples/js/manipulation/debounce-search-table.js</h5>
               <h5>use <code>searchDelayTime</code> for <code>options</code> object to set delay time in search input and default is 0.</h5>
               <DebounceSearchTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Default Search Table</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/manipulation/default-search-table.js</h5>
+              <DefaultSearchTable />
             </div>
           </div>
         </div>

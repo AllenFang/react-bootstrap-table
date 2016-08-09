@@ -97,8 +97,13 @@ class BootstrapTable extends Component {
     const { options, pagination } = this.props;
     const sortName = options.defaultSortName || options.sortName;
     const sortOrder = options.defaultSortOrder || options.sortOrder;
+    const searchText = options.defaultSearch;
     if (sortName && sortOrder) {
       this.store.sort(sortOrder, sortName);
+    }
+
+    if (searchText) {
+      this.store.search(searchText);
     }
 
     if (pagination) {
@@ -788,6 +793,7 @@ class BootstrapTable extends Component {
       return (
         <div className='react-bs-table-tool-bar'>
           <ToolBar
+            defaultSearch={ this.props.options.defaultSearch }
             clearSearch={ this.props.options.clearSearch }
             searchDelayTime={ this.props.options.searchDelayTime }
             enableInsert={ insertRow }
@@ -989,6 +995,7 @@ BootstrapTable.propTypes = {
     saveText: PropTypes.string,
     closeText: PropTypes.string,
     ignoreEditable: PropTypes.bool,
+    defaultSearch: PropTypes.string,
     insertModalHeader: PropTypes.func,
     insertModalBody: PropTypes.func,
     insertModalFooter: PropTypes.func,
@@ -1079,6 +1086,7 @@ BootstrapTable.defaultProps = {
     saveText: Const.SAVE_BTN_TEXT,
     closeText: Const.CLOSE_BTN_TEXT,
     ignoreEditable: false,
+    defaultSearch: '',
     insertModalHeader: undefined,
     insertModalBody: undefined,
     insertModalFooter: undefined,
