@@ -279,6 +279,7 @@ class ToolBar extends Component {
           <input ref='seachInput'
             className='form-control'
             type='text'
+            defaultValue={ this.props.defaultSearch }
             placeholder={ this.props.searchPlaceholder ? this.props.searchPlaceholder : 'Search' }
             onKeyUp={ this.handleKeyUp }/>
             { clearBtn }
@@ -379,7 +380,8 @@ ToolBar.propTypes = {
   saveText: PropTypes.string,
   closeText: PropTypes.string,
   clearSearch: PropTypes.bool,
-  ignoreEditable: PropTypes.bool
+  ignoreEditable: PropTypes.bool,
+  defaultSearch: PropTypes.string
 };
 
 ToolBar.defaultProps = {
