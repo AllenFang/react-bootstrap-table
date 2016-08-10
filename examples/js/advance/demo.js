@@ -14,7 +14,7 @@ class Demo extends React.Component {
   render() {
     return (
       <Col md={ 8 } mdOffset={ 1 }>
-        <Panel header={ 'Cell Edit Type Example(text, textarea, select, checkbox)' }>
+        <Panel header={ 'Cell Edit Type Example(text, textarea, select, checkbox, datetime)' }>
           { renderLinks('advance/edit-type-table.js') }
           <EditTypeTable/>
         </Panel>
