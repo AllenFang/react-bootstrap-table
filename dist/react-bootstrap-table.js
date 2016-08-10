@@ -406,6 +406,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.handleExportCSV = function () {
 	      var result = {};
 
+	      var csvFileName = _this.props.csvFileName;
 	      var onExportToCSV = _this.props.options.onExportToCSV;
 
 	      if (onExportToCSV) {
@@ -425,7 +426,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      });
 
-	      (0, _csv_export_util2['default'])(result, keys, _this.props.csvFileName);
+	      if (typeof csvFileName === 'function') {
+	        csvFileName = csvFileName();
+	      }
+
+	      (0, _csv_export_util2['default'])(result, keys, csvFileName);
 	    };
 
 	    this.handleSearch = function (searchText) {
@@ -506,7 +511,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    this._adjustHeight = function () {
-	      if (_this.props.height.indexOf('%') === -1) {
+	      if (typeof _this.props.height === 'number' && !isNaN(_this.props.height) || _this.props.height.indexOf('%') === -1) {
 	        _this.refs.body.refs.container.style.height = parseFloat(_this.props.height, 10) - _this.refs.header.refs.container.offsetHeight + 'px';
 	      }
 	    };
@@ -599,8 +604,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var sortName = options.defaultSortName || options.sortName;
 	      var sortOrder = options.defaultSortOrder || options.sortOrder;
+	      var searchText = options.defaultSearch;
 	      if (sortName && sortOrder) {
 	        this.store.sort(sortOrder, sortName);
+	      }
+
+	      if (searchText) {
+	        this.store.search(searchText);
 	      }
 
 	      if (pagination) {
@@ -1026,6 +1036,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          'div',
 	          { className: 'react-bs-table-tool-bar' },
 	          _react2['default'].createElement(_toolbarToolBar2['default'], {
+	            defaultSearch: this.props.options.defaultSearch,
 	            clearSearch: this.props.options.clearSearch,
 	            searchDelayTime: this.props.options.searchDelayTime,
 	            enableInsert: insertRow,
@@ -1094,8 +1105,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	BootstrapTable.propTypes = {
 	  keyField: _react.PropTypes.string,
-	  height: _react.PropTypes.string,
-	  maxHeight: _react.PropTypes.string,
+	  height: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
+	  maxHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
 	  data: _react.PropTypes.oneOfType([_react.PropTypes.array, _react.PropTypes.object]),
 	  remote: _react.PropTypes.bool, // remote data, default is false
 	  striped: _react.PropTypes.bool,
@@ -1172,13 +1183,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    deleteText: _react.PropTypes.string,
 	    saveText: _react.PropTypes.string,
 	    closeText: _react.PropTypes.string,
-	    ignoreEditable: _react.PropTypes.bool
+	    ignoreEditable: _react.PropTypes.bool,
+	    defaultSearch: _react.PropTypes.string
 	  }),
 	  fetchInfo: _react.PropTypes.shape({
 	    dataTotalSize: _react.PropTypes.number
 	  }),
 	  exportCSV: _react.PropTypes.bool,
-	  csvFileName: _react.PropTypes.string,
+	  csvFileName: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
 	  ignoreSinglePage: _react.PropTypes.bool
 	};
 	BootstrapTable.defaultProps = {
@@ -1257,7 +1269,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    deleteText: _Const2['default'].DELETE_BTN_TEXT,
 	    saveText: _Const2['default'].SAVE_BTN_TEXT,
 	    closeText: _Const2['default'].CLOSE_BTN_TEXT,
-	    ignoreEditable: false
+	    ignoreEditable: false,
+	    defaultSearch: ''
 	  },
 	  fetchInfo: {
 	    dataTotalSize: 0
@@ -2523,6 +2536,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return _react2['default'].createElement('input', _extends({}, attr, { type: 'checkbox',
 	        value: values, defaultChecked: checked }));
+	    } else if (editable.type === 'datetime') {
+	      return _react2['default'].createElement('input', _extends({}, attr, { type: 'datetime-local', defaultValue: defaultValue }));
 	    } else {
 	      // process other input type. as password,url,email...
 	      return _react2['default'].createElement('input', _extends({}, attr, { type: 'text', defaultValue: defaultValue }));
@@ -4645,6 +4660,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _react2['default'].createElement('input', { ref: 'seachInput',
 	            className: 'form-control',
 	            type: 'text',
+	            defaultValue: this.props.defaultSearch,
 	            placeholder: this.props.searchPlaceholder ? this.props.searchPlaceholder : 'Search',
 	            onKeyUp: this.handleKeyUp }),
 	          clearBtn
@@ -4788,7 +4804,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  saveText: _react.PropTypes.string,
 	  closeText: _react.PropTypes.string,
 	  clearSearch: _react.PropTypes.bool,
-	  ignoreEditable: _react.PropTypes.bool
+	  ignoreEditable: _react.PropTypes.bool,
+	  defaultSearch: _react.PropTypes.string
 	};
 
 	ToolBar.defaultProps = {
