@@ -880,9 +880,8 @@ class BootstrapTable extends Component {
   }
 
   _adjustHeight = () => {
-    if (typeof this.props.height === 'number' && !isNaN(this.props.height)) return this.props.height;
-
-    if (this.props.height.indexOf('%') === -1) {
+    if ((typeof this.props.height === 'number' && !isNaN(this.props.height)) ||
+      this.props.height.indexOf('%') === -1) {
       this.refs.body.refs.container.style.height =
         parseFloat(this.props.height, 10) - this.refs.header.refs.container.offsetHeight + 'px';
     }
