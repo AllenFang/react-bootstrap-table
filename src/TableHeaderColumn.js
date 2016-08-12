@@ -146,6 +146,16 @@ class TableHeaderColumn extends Component {
     }
     }
   }
+
+  applyFilter(val) {
+    if (this.props.filter === undefined) return;
+    switch (this.props.filter.type) {
+    case Const.FILTER_TYPE.TEXT: {
+      this.refs.textFilter.applyFilter(val);
+      break;
+    }
+    }
+  }
 }
 
 const filterTypeArray = [];
