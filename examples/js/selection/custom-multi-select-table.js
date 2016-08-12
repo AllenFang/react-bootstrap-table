@@ -1,5 +1,6 @@
 /* eslint max-len: 0 */
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 require('../../customMultiSelect.css');
 
@@ -19,24 +20,31 @@ function addProducts(quantity) {
 
 addProducts(5);
 
+class Checkbox extends React.Component {
+  componentDidMount() { this.update(this.props.checked); }
+  componentWillReceiveProps(props) { this.update(props.checked); }
+  update(checked) {
+    ReactDOM.findDOMNode(this).indeterminate = checked === 'indeterminate';
+  }
+  render() {
+    return (
+      <input className='react-bs-select-all'
+        type='checkbox'
+        name={ 'checkbox' + this.props.rowIndex }
+        id={ 'checkbox' + this.props.rowIndex }
+        checked={ this.props.checked }
+        onChange={ this.props.onChange } />
+    );
+  }
+}
+
 export default class CustomMultiSelectTable extends React.Component {
   customMultiSelect(props) {
     const { type, checked, disabled, onChange, rowIndex } = props;
     if (rowIndex === 'Header') {
       return (
         <th className='checkbox-personalized remove-padding'>
-          <input
-            type={ type }
-            name={ 'checkbox' + rowIndex }
-            id={ 'checkbox' + rowIndex }
-            checked={ checked }
-            disabled={ disabled }
-            onChange={ e=> onChange(e, rowIndex) }
-            ref={ input => {
-              if (input) {
-                input.indeterminate = props.indeterminate;
-              }
-            } }/>
+          <Checkbox {...props}/>
           <label htmlFor={ 'checkbox' + rowIndex }>
             <div className='check'></div>
           </label>
