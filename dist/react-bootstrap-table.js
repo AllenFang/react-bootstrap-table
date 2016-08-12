@@ -1117,7 +1117,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  pagination: _react.PropTypes.bool,
 	  searchPlaceholder: _react.PropTypes.string,
 	  selectRow: _react.PropTypes.shape({
-	    mode: _react.PropTypes.oneOf([_Const2['default'].ROW_SELECT_NONE, _Const2['default'].ROW_SELECT_SINGLE, _Const2['default'].ROW_SELECT_MULTI, _Const2['default'].ROW_SELECT_CUSTOM]),
+	    mode: _react.PropTypes.oneOf([_Const2['default'].ROW_SELECT_NONE, _Const2['default'].ROW_SELECT_SINGLE, _Const2['default'].ROW_SELECT_MULTI]),
 	    customComponent: _react.PropTypes.func,
 	    bgColor: _react.PropTypes.string,
 	    selected: _react.PropTypes.array,
@@ -1314,7 +1314,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  ROW_SELECT_NONE: 'none',
 	  ROW_SELECT_SINGLE: 'radio',
 	  ROW_SELECT_MULTI: 'checkbox',
-	  ROW_SELECT_CUSTOM: 'custom',
 	  CELL_EDIT_NONE: 'none',
 	  CELL_EDIT_CLICK: 'click',
 	  CELL_EDIT_DBCLICK: 'dbclick',
