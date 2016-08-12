@@ -2,6 +2,7 @@
 import React from 'react';
 import TextFilter from './text-filter';
 import TextFilterWithDefaultValue from './text-filter-with-default-value';
+import ProgrammaticallyTextFilter from './text-filter-programmatically';
 import RegexFilter from './regex-filter';
 import SelectFilter from './select-filter';
 import SelectFilterWithDefaultValue from './select-filter-with-default-value';
@@ -35,6 +36,15 @@ class Demo extends React.Component {
                     <div className='panel-body'>
                         <h5>Source in /examples/js/column-filter/text-filter-with-default-value.js</h5>
                         <TextFilterWithDefaultValue />
+                    </div>
+                </div>
+            </div>
+            <div className='col-md-offset-1 col-md-8'>
+                <div className='panel panel-default'>
+                    <div className='panel-heading'>Set Text Filter Programmatically</div>
+                    <div className='panel-body'>
+                        <h5>Source in /examples/js/column-filter/text-filter-programmatically.js</h5>
+                        <ProgrammaticallyTextFilter />
                     </div>
                 </div>
             </div>
