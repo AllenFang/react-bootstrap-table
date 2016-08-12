@@ -4,6 +4,7 @@ import TextFilter from './text-filter';
 import TextFilterWithDefaultValue from './text-filter-with-default-value';
 import ProgrammaticallyTextFilter from './text-filter-programmatically';
 import RegexFilter from './regex-filter';
+import ProgrammaticallyRegexFilter from './regex-filter-programmatically';
 import SelectFilter from './select-filter';
 import SelectFilterWithDefaultValue from './select-filter-with-default-value';
 import SelectFilterWithSort from './select-filter-with-sort';
@@ -54,6 +55,15 @@ class Demo extends React.Component {
                     <div className='panel-body'>
                         <h5>Source in /examples/js/column-filter/regex-filter.js</h5>
                         <RegexFilter />
+                    </div>
+                </div>
+            </div>
+            <div className='col-md-offset-1 col-md-8'>
+                <div className='panel panel-default'>
+                    <div className='panel-heading'>Set Regex Filter Programmatically</div>
+                    <div className='panel-body'>
+                        <h5>Source in /examples/js/column-filter/regex-filter-programmatically.js</h5>
+                        <ProgrammaticallyRegexFilter />
                     </div>
                 </div>
             </div>
