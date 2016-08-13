@@ -69,6 +69,14 @@ class DateFilter extends Component {
     this.props.filterHandler({ date: new Date(value), comparator }, Const.FILTER_TYPE.DATE);
   }
 
+  applyFilter(filterDateObj) {
+    const { date, comparator } = filterDateObj;
+    this.setState({ isPlaceholderSelected: (date === '') });
+    this.refs.dateFilterComparator.value = comparator;
+    this.refs.inputDate.value = dateParser(date);
+    this.props.filterHandler({ date, comparator }, Const.FILTER_TYPE.DATE);
+  }
+
   componentDidMount() {
     const comparator = this.refs.dateFilterComparator.value;
     const dateValue = this.refs.inputDate.value;
