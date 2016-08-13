@@ -54,3 +54,7 @@
 .react-bs-table .react-bs-container-body > table > tbody > tr > td:first-child {
   padding: 0 !important;
 }
+
+.react-bs-table .react-bs-container-header > table > thead > tr > th:first-child {
+  padding: 0 !important;
+}
