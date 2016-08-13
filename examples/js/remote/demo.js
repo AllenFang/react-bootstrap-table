@@ -5,6 +5,7 @@ import RemoteStoreSearch from './remote-store-search';
 import RemoteStorePaging from './remote-store-paging';
 import RemoteStoreInsertRow from './remote-store-insert-row';
 import RemoteStoreDeleteRow from './remote-store-delete-row';
+import RemoteStoreCellEdit from './remote-store-cell-edit';
 import RemoteStoreExportCSV from './remote-store-export-csv';
 import RemoteStoreAll from './remote-store-all';
 
@@ -69,6 +70,16 @@ class Demo extends React.Component {
               <h5>Source in /examples/js/remote/remote-store-delete-row.js and
                 /examples/js/remote/remote-delete-row.js</h5>
               <RemoteStoreDeleteRow />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Remote Cell Edit Example</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/remote/remote-store-cell-edit.js and
+                /examples/js/remote/remote-cell-edit.js</h5>
+              <RemoteStoreCellEdit />
             </div>
           </div>
         </div>
