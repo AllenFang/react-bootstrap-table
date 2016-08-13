@@ -662,6 +662,7 @@ class BootstrapTable extends Component {
   handleExportCSV = () => {
     let result = {};
 
+    let { csvFileName } = this.props;
     const { onExportToCSV } = this.props.options;
     if (onExportToCSV) {
       result = onExportToCSV();
@@ -682,7 +683,11 @@ class BootstrapTable extends Component {
       }
     });
 
-    exportCSV(result, keys, this.props.csvFileName);
+    if (typeof csvFileName === 'function') {
+      csvFileName = csvFileName();
+    }
+
+    exportCSV(result, keys, csvFileName);
   }
 
   handleSearch = searchText => {
@@ -880,7 +885,8 @@ class BootstrapTable extends Component {
   }
 
   _adjustHeight = () => {
-    if (this.props.height.indexOf('%') === -1) {
+    if ((typeof this.props.height === 'number' && !isNaN(this.props.height)) ||
+      this.props.height.indexOf('%') === -1) {
       this.refs.body.refs.container.style.height =
         parseFloat(this.props.height, 10) - this.refs.header.refs.container.offsetHeight + 'px';
     }
@@ -912,8 +918,8 @@ class BootstrapTable extends Component {
 
 BootstrapTable.propTypes = {
   keyField: PropTypes.string,
-  height: PropTypes.string,
-  maxHeight: PropTypes.string,
+  height: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
+  maxHeight: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   data: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
   remote: PropTypes.bool, // remote data, default is false
   striped: PropTypes.bool,
@@ -1006,7 +1012,7 @@ BootstrapTable.propTypes = {
     dataTotalSize: PropTypes.number
   }),
   exportCSV: PropTypes.bool,
-  csvFileName: PropTypes.string,
+  csvFileName: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
   ignoreSinglePage: PropTypes.bool
 };
 BootstrapTable.defaultProps = {

@@ -62,6 +62,14 @@ class NumberFilter extends Component {
     this.props.filterHandler({ number: value, comparator }, Const.FILTER_TYPE.NUMBER);
   }
 
+  applyFilter(filterObj) {
+    const { number, comparator } = filterObj;
+    this.setState({ isPlaceholderSelected: (number === '') });
+    this.refs.numberFilterComparator.value = comparator;
+    this.refs.numberFilter.value = number;
+    this.props.filterHandler({ number, comparator }, Const.FILTER_TYPE.NUMBER);
+  }
+
   getComparatorOptions() {
     const optionTags = [];
     optionTags.push(<option key='-1'></option>);

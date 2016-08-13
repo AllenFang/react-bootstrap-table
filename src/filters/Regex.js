@@ -24,6 +24,11 @@ class RegexFilter extends Component {
     this.props.filterHandler(value, Const.FILTER_TYPE.TEXT);
   }
 
+  applyFilter(filterRegx) {
+    this.refs.inputText.value = filterRegx;
+    this.props.filterHandler(filterRegx, Const.FILTER_TYPE.REGEX);
+  }
+
   componentDidMount() {
     const value = this.refs.inputText.value;
     if (value) {

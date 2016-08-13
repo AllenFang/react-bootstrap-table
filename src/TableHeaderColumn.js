@@ -146,6 +146,32 @@ class TableHeaderColumn extends Component {
     }
     }
   }
+
+  applyFilter(val) {
+    if (this.props.filter === undefined) return;
+    switch (this.props.filter.type) {
+    case Const.FILTER_TYPE.TEXT: {
+      this.refs.textFilter.applyFilter(val);
+      break;
+    }
+    case Const.FILTER_TYPE.REGEX: {
+      this.refs.regexFilter.applyFilter(val);
+      break;
+    }
+    case Const.FILTER_TYPE.SELECT: {
+      this.refs.selectFilter.applyFilter(val);
+      break;
+    }
+    case Const.FILTER_TYPE.NUMBER: {
+      this.refs.numberFilter.applyFilter(val);
+      break;
+    }
+    case Const.FILTER_TYPE.DATE: {
+      this.refs.dateFilter.applyFilter(val);
+      break;
+    }
+    }
+  }
 }
 
 const filterTypeArray = [];

@@ -25,6 +25,13 @@ class SelectFilter extends Component {
     this.props.filterHandler(value, Const.FILTER_TYPE.SELECT);
   }
 
+  applyFilter(filterOption) {
+    filterOption = filterOption + '';
+    this.setState({ isPlaceholderSelected: (filterOption === '') });
+    this.refs.selectInput.value = filterOption;
+    this.props.filterHandler(filterOption, Const.FILTER_TYPE.SELECT);
+  }
+
   getOptions() {
     const optionTags = [];
     const { options, placeholder, columnName } = this.props;

@@ -44,47 +44,47 @@
   width: 100%;
 }
 
-.table-bordered {
+.react-bs-table .table-bordered {
     border: 0px;
 }
-.table-bordered > thead > tr > th,
-.table-bordered > thead > tr > td {
+.react-bs-table .table-bordered > thead > tr > th,
+.react-bs-table .table-bordered > thead > tr > td {
   border-bottom-width: 2px;
 }
-.table-bordered > tfoot > tr > th,
-.table-bordered > tfoot > tr > td {
+.react-bs-table .table-bordered > tfoot > tr > th,
+.react-bs-table .table-bordered > tfoot > tr > td {
   border-top-width: 2px;
 }
-.table-bordered > tfoot > tr > th,
-.table-bordered > tfoot > tr > td {
+.react-bs-table .table-bordered > tfoot > tr > th,
+.react-bs-table .table-bordered > tfoot > tr > td {
   border-bottom-width: 0px;
 }
 /*Esquerda*/
-.table-bordered > thead > tr > th:first-child,
-.table-bordered > tbody > tr > th:first-child,
-.table-bordered > tfoot > tr > th:first-child,
-.table-bordered > thead > tr > td:first-child,
-.table-bordered > tbody > tr > td:first-child,
-.table-bordered > tfoot > tr > td:first-child {
+.react-bs-table .table-bordered > thead > tr > th:first-child,
+.react-bs-table .table-bordered > tbody > tr > th:first-child,
+.react-bs-table .table-bordered > tfoot > tr > th:first-child,
+.react-bs-table .table-bordered > thead > tr > td:first-child,
+.react-bs-table .table-bordered > tbody > tr > td:first-child,
+.react-bs-table .table-bordered > tfoot > tr > td:first-child {
   border-left-width: 0px;
 }
 /*Direita*/
-.table-bordered > thead > tr > th:last-child,
-.table-bordered > tbody > tr > th:last-child,
-.table-bordered > tfoot > tr > th:last-child,
-.table-bordered > thead > tr > td:last-child,
-.table-bordered > tbody > tr > td:last-child,
-.table-bordered > tfoot > tr > td:last-child {
+.react-bs-table .table-bordered > thead > tr > th:last-child,
+.react-bs-table .table-bordered > tbody > tr > th:last-child,
+.react-bs-table .table-bordered > tfoot > tr > th:last-child,
+.react-bs-table .table-bordered > thead > tr > td:last-child,
+.react-bs-table .table-bordered > tbody > tr > td:last-child,
+.react-bs-table .table-bordered > tfoot > tr > td:last-child {
   border-right-width: 0px;
 }
 /*Topo*/
-.table-bordered > thead > tr:first-child > th,
-.table-bordered > thead > tr:first-child > td {
+.react-bs-table .table-bordered > thead > tr:first-child > th,
+.react-bs-table .table-bordered > thead > tr:first-child > td {
   border-top-width: 0px;
 }
 /*Baixo*/
-.table-bordered > tfoot > tr:last-child > th,
-.table-bordered > tfoot > tr:last-child > td {
+.react-bs-table .table-bordered > tfoot > tr:last-child > th,
+.react-bs-table .table-bordered > tfoot > tr:last-child > td {
   border-bottom-width: 0px;
 }
 
