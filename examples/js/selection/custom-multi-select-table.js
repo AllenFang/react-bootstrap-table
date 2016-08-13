@@ -79,7 +79,8 @@ export default class CustomMultiSelectTable extends React.Component {
       customComponent: this.customMultiSelect
     };
     return (
-      <BootstrapTable data={ products } selectRow={ selectRowProp }>
+      <BootstrapTable data={ products } selectRow={ selectRowProp }
+        tableHeaderClass='custom-select-header-class' tableBodyClass='custom-select-body-class'>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>

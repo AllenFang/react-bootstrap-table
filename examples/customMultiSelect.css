@@ -51,10 +51,10 @@
   transform: rotate(90deg);
 }
 
-.react-bs-table .react-bs-container-body > table > tbody > tr > td:first-child {
+.custom-select-body-class > tbody > tr > td:first-child {
   padding: 0 !important;
 }
 
-.react-bs-table .react-bs-container-header > table > thead > tr > th:first-child {
+.custom-select-header-class > thead > tr > th:first-child {
   padding: 0 !important;
 }
