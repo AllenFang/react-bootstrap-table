@@ -158,6 +158,10 @@ class TableHeaderColumn extends Component {
       this.refs.regexFilter.applyFilter(val);
       break;
     }
+    case Const.FILTER_TYPE.SELECT: {
+      this.refs.selectFilter.applyFilter(val);
+      break;
+    }
     }
   }
 }
