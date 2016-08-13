@@ -479,6 +479,7 @@ class BootstrapTable extends Component {
   }
 
   handleEditCell(newVal, rowIndex, colIndex) {
+    const { onCellEdit } = this.props.options;
     const { beforeSaveCell, afterSaveCell } = this.props.cellEdit;
     let fieldName;
     React.Children.forEach(this.props.children, function(column, i) {
@@ -496,6 +497,17 @@ class BootstrapTable extends Component {
         });
         return;
       }
+    }
+
+    if (onCellEdit) {
+      onCellEdit(this.state.data[rowIndex], fieldName, newVal);
+    }
+
+    if (this.isRemoteDataSource()) {
+      if (afterSaveCell) {
+        afterSaveCell(this.state.data[rowIndex], fieldName, newVal);
+      }
+      return;
     }
 
     const result = this.store.edit(newVal, rowIndex, fieldName).get();
@@ -880,7 +892,6 @@ class BootstrapTable extends Component {
     } else {
       React.Children.forEach(this.props.children, (child, i) => {
         if (child.props.width) {
-          console.log('yayay');
           header.childNodes[i].style.width = `${child.props.width}px`;
           header.childNodes[i].style.minWidth = `${child.props.width}px`;
         }
@@ -993,6 +1004,7 @@ BootstrapTable.propTypes = {
     onSearchChange: React.PropTypes.func,
     onAddRow: React.PropTypes.func,
     onExportToCSV: React.PropTypes.func,
+    onCellEdit: React.PropTypes.func,
     noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
     handleConfirmDeleteRow: PropTypes.func,
     prePage: PropTypes.string,
