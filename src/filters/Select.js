@@ -15,7 +15,6 @@ class SelectFilter extends Component {
   filter(event) {
     const { value } = event.target;
     this.setState({ isPlaceholderSelected: (value === '') });
-    alert(value);
     this.props.filterHandler(value, Const.FILTER_TYPE.SELECT);
   }
 
