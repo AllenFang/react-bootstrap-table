@@ -877,6 +877,14 @@ class BootstrapTable extends Component {
         header.childNodes[i].style.width = result;
         header.childNodes[i].style.minWidth = result;
       }
+    } else {
+      React.Children.forEach(this.props.children, (child, i) => {
+        if (child.props.width) {
+          console.log('yayay');
+          header.childNodes[i].style.width = `${child.props.width}px`;
+          header.childNodes[i].style.minWidth = `${child.props.width}px`;
+        }
+      });
     }
   }
 
