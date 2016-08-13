@@ -41,6 +41,9 @@ class Checkbox extends React.Component {
 export default class CustomMultiSelectTable extends React.Component {
   customMultiSelect(props) {
     const { type, checked, disabled, onChange, rowIndex } = props;
+    /*
+    * If rowIndex is 'Header', means this rendering is for header selection column.
+    */
     if (rowIndex === 'Header') {
       return (
         <div className='checkbox-personalized'>
