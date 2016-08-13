@@ -51,6 +51,6 @@
   transform: rotate(90deg);
 }
 
-.remove-padding {
+.react-bs-table .react-bs-container-body > table > tbody > tr > td:first-child {
   padding: 0 !important;
 }
