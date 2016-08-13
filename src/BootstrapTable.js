@@ -268,6 +268,7 @@ class BootstrapTable extends Component {
             tableHeaderClass={ this.props.tableHeaderClass }
             style={ this.props.headerStyle }
             rowSelectType={ this.props.selectRow.mode }
+            customComponent={ this.props.selectRow.customComponent }
             hideSelectColumn={ this.props.selectRow.hideSelectColumn }
             sortName={ sortInfo ? sortInfo.sortField : undefined }
             sortOrder={ sortInfo ? sortInfo.order : undefined }
@@ -929,6 +930,7 @@ BootstrapTable.propTypes = {
       Const.ROW_SELECT_SINGLE,
       Const.ROW_SELECT_MULTI
     ]),
+    customComponent: PropTypes.func,
     bgColor: PropTypes.string,
     selected: PropTypes.array,
     onSelect: PropTypes.func,
@@ -1024,7 +1026,8 @@ BootstrapTable.defaultProps = {
     hideSelectColumn: false,
     clickToSelectAndEditCell: false,
     showOnlySelected: false,
-    unselectable: []
+    unselectable: [],
+    customComponent: undefined
   },
   cellEdit: {
     mode: Const.CELL_EDIT_NONE,
