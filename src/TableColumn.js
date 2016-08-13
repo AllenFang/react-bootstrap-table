@@ -62,8 +62,7 @@ class TableColumn extends Component {
   render() {
     const tdStyle = {
       textAlign: this.props.dataAlign,
-      display: this.props.hidden ? 'none' : null,
-      padding: this.props.padding ? this.props.padding : '8px'
+      display: this.props.hidden ? 'none' : null
     };
 
     const opts = {};

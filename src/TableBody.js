@@ -257,7 +257,7 @@ class TableBody extends Component {
 
   renderSelectRowColumn(selected, inputType, disabled, CustomComponent = null, rowIndex = null) {
     return (
-      <TableColumn dataAlign='center' padding='0px'>
+      <TableColumn dataAlign='center'>
       { CustomComponent ?
         <CustomComponent type={ inputType } checked={ selected } disabled={ disabled }
           rowIndex={ rowIndex }
