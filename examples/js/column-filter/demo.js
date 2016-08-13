@@ -11,6 +11,7 @@ import ProgrammaticallySelectFilter from './select-filter-programmatically';
 import SelectFilterWithSort from './select-filter-with-sort';
 import NumberFilter from './number-filter';
 import NumberFilterWithDefaultValue from './number-filter-with-default-value';
+import ProgrammaticallyNumberFilter from './number-filter-programmatically';
 import NumberOptionsFilter from './number-options-filter';
 import NumberOptionsFilterWithDefaultValue from './number-options-filter-with-default-value';
 import DateFilter from './date-filter';
@@ -129,6 +130,15 @@ class Demo extends React.Component {
                     <div className='panel-body'>
                         <h5>Source in /examples/js/column-filter/number-filter-with-default-value.js</h5>
                         <NumberFilterWithDefaultValue />
+                    </div>
+                </div>
+            </div>
+            <div className='col-md-offset-1 col-md-8'>
+                <div className='panel panel-default'>
+                    <div className='panel-heading'>Set Number Filter Programmatically</div>
+                    <div className='panel-body'>
+                        <h5>Source in /examples/js/column-filter/number-filter-programmatically.js</h5>
+                        <ProgrammaticallyNumberFilter />
                     </div>
                 </div>
             </div>
