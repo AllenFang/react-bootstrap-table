@@ -162,6 +162,10 @@ class TableHeaderColumn extends Component {
       this.refs.selectFilter.applyFilter(val);
       break;
     }
+    case Const.FILTER_TYPE.NUMBER: {
+      this.refs.numberFilter.applyFilter(val);
+      break;
+    }
     case Const.FILTER_TYPE.DATE: {
       this.refs.dateFilter.applyFilter(val);
       break;
