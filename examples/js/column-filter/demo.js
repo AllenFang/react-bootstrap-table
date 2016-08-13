@@ -15,6 +15,7 @@ import NumberOptionsFilter from './number-options-filter';
 import NumberOptionsFilterWithDefaultValue from './number-options-filter-with-default-value';
 import DateFilter from './date-filter';
 import DateFilterWithDefaultValue from './date-filter-with-default-value';
+import ProgrammaticallyDateFilter from './date-filter-programmatically';
 import CustomFilter from './custom-filter';
 import AllFilter from './all-filters';
 import FloatFilter from './float-filter';
@@ -164,6 +165,15 @@ class Demo extends React.Component {
                     <div className='panel-body'>
                         <h5>Source in /examples/js/column-filter/date-filter-with-default-value.js</h5>
                         <DateFilterWithDefaultValue />
+                    </div>
+                </div>
+            </div>
+            <div className='col-md-offset-1 col-md-8'>
+                <div className='panel panel-default'>
+                    <div className='panel-heading'>Set Date Filter Programmatically</div>
+                    <div className='panel-body'>
+                        <h5>Source in /examples/js/column-filter/date-filter-programmatically.js</h5>
+                        <ProgrammaticallyDateFilter />
                     </div>
                 </div>
             </div>
