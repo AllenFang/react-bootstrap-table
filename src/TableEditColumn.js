@@ -100,6 +100,7 @@ class TableEditColumn extends Component {
     let cellEditor;
     if (customEditor) {
       const customEditorProps = {
+        row: this.props.row,
         ...attr,
         defaultValue: fieldValue || '',
         ...customEditor.customEditorParameters
@@ -132,6 +133,7 @@ TableEditColumn.propTypes = {
   blurToSave: PropTypes.bool,
   editable: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
   format: PropTypes.oneOfType([ PropTypes.bool, PropTypes.func ]),
+  row: PropTypes.any,
   fieldValue: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,

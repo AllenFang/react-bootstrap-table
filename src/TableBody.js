@@ -61,6 +61,7 @@ class TableBody extends Component {
                 blurToSave={ this.props.cellEdit.blurToSave }
                 rowIndex={ r }
                 colIndex={ i }
+                row={ data }
                 fieldValue={ fieldValue } />
             );
         } else {
