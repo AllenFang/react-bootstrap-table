@@ -43,12 +43,12 @@ export default class CustomMultiSelectTable extends React.Component {
     const { type, checked, disabled, onChange, rowIndex } = props;
     if (rowIndex === 'Header') {
       return (
-        <th className='checkbox-personalized remove-padding'>
+        <div className='checkbox-personalized'>
           <Checkbox {...props}/>
           <label htmlFor={ 'checkbox' + rowIndex }>
             <div className='check'></div>
           </label>
-        </th>);
+        </div>);
     } else {
       return (
         <div className='checkbox-personalized'>

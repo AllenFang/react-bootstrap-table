@@ -55,9 +55,13 @@ class TableHeader extends Component {
   renderSelectRowHeader() {
     if (this.props.customComponent) {
       const CustomComponent = this.props.customComponent;
-      return (<CustomComponent type='checkbox' checked={ this.props.isSelectAll }
-        indeterminate={ this.props.isSelectAll === 'indeterminate' } disabled={ false }
-        onChange={ this.props.onSelectAllRow } rowIndex='Header'/>);
+      return (
+        <SelectRowHeaderColumn>
+          <CustomComponent type='checkbox' checked={ this.props.isSelectAll }
+            indeterminate={ this.props.isSelectAll === 'indeterminate' } disabled={ false }
+            onChange={ this.props.onSelectAllRow } rowIndex='Header'/>
+        </SelectRowHeaderColumn>
+      );
     } else if (this.props.rowSelectType === Const.ROW_SELECT_SINGLE) {
       return (<SelectRowHeaderColumn />);
     } else if (this.props.rowSelectType === Const.ROW_SELECT_MULTI) {
