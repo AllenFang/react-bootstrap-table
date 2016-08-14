@@ -121,6 +121,11 @@ function priceFormatter(cell, row) {
 
 const regionsFormatter = (cell, row) => (<span>{ (cell || []).join(',') }</span>);
 
+/*
+  The getElement function take two arguments,
+  1. onUpdate: if you want to apply the modified data, call this function
+  2. props: contain customEditorParameters, whole row data, defaultValue and attrs
+*/
 const createPriceEditor = (onUpdate, props) => (<PriceEditor onUpdate={ onUpdate } {...props}/>);
 const createRegionsEditor = (onUpdate, props) => (<RegionsEditor onUpdate={ onUpdate } {...props}/>);
 

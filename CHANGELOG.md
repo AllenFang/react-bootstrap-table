@@ -1,3 +1,30 @@
+<a name="v2.4.2"></a>
+# [v2.4.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.4.1...v2.4.2) (2016-08-13)
+## Bug fixes
+* Fix the column width broken if table is empty([9172656](https://github.com/AllenFang/react-bootstrap-table/commit/9172656b5a495e46ad9a17c23758486d5c29a2de))
+
+## Features
+* Support to call ```applyFilter``` exposed by ```<TableHeaderColumn>``` for set filter value dynamically([e30f86c](https://github.com/AllenFang/react-bootstrap-table/commit/e30f86ccfb3c36c095cfc03874aae021a3fce5d9))
+* Support to customize the selection column([c5875d5](https://github.com/AllenFang/react-bootstrap-table/commit/c5875d5bd56d0130a9dd78beb729a16e633d6a17))
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/selection/custom-multi-select-table.js)
+* Support cell edit on ```remote``` mode([f399e87](https://github.com/AllenFang/react-bootstrap-table/commit/f399e878102322f3da68f95c1265b5c27e1eba1b))
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/commit/f399e878102322f3da68f95c1265b5c27e1eba1b)
+
+## Enhancement
+* Pass the ```row``` in props at second arguments for ```customEditor.getElement```([2de6c5c](https://github.com/AllenFang/react-bootstrap-table/commit/2de6c5c59f44c7e91f733d58991ce3ec65e14ad9))
+
+<a name="v2.4.1"></a>
+# [v2.4.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.4.0...v2.4.1) (2016-08-06)
+## Features
+* Support default search([825ca76](https://github.com/AllenFang/react-bootstrap-table/commit/825ca76fef341caa969d52a3bca02c2e0df92ac0))
+	* Assign ```defaultSearch``` in ```options``` props
+* Support the date picker for cell edit([a861890](https://github.com/AllenFang/react-bootstrap-table/commit/a86189088b54a889c4a8d7a03fcbc9c072d0864a))
+
+## Enhancement
+* Avoid to overwrite the ```.table-bordered``` class.([0a678ed](https://github.com/AllenFang/react-bootstrap-table/commit/0a678ed54d9a119a461c9349a086c1f2a6820ae2))
+* Allow ```csvFileName``` accept a function to generate file name dynamically([a730833](https://github.com/AllenFang/react-bootstrap-table/commit/a730833bf8b8aa6c4856ecf02a42dd8544140ed8))
+* Allow ```height``` to accept number or string([7f3ac47](https://github.com/AllenFang/react-bootstrap-table/commit/7f3ac47f775706c2b245181a8c7eaca280fca234))
+
 <a name="v2.4.0"></a>
 # [v2.4.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.9...v2.4.0) (2016-08-06)
 ## Features

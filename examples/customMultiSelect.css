@@ -1,0 +1,60 @@
+.checkbox-personalized * {
+  box-sizing: border-box;
+}
+.checkbox-personalized input[type=checkbox] {
+  display: none;
+}
+.checkbox-personalized label {
+  margin: 0 auto;
+  display: block;
+  padding: 5px 0;
+}
+.checkbox-personalized label .check {
+  margin: 3px 5px;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #999;
+  border-radius: 2px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+.checkbox-personalized input[type=checkbox]:checked + label .check {
+  background: #1e95fb;
+  transition: all 0.2s ease-in;
+  border: 1px solid #1e95fb;
+}
+.checkbox-personalized input[type=checkbox]:checked + label .check:after {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 11px;
+    border: solid #FFF;
+    margin: 2px 7px;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+.checkbox-personalized input[type=checkbox]:indeterminate + label .check {
+  background: #939ba2;
+  transition: all 0.2s ease-in;
+  border: 1px solid #939ba2;
+}
+.checkbox-personalized input[type=checkbox]:indeterminate + label .check:after {
+  content: '';
+  display: block;
+  height: 11px;
+  border: solid #FFF;
+  margin: 2px 7px;
+  border-width: 0 2px 0 0;
+  transform: rotate(90deg);
+}
+
+.custom-select-body-class > tbody > tr > td:first-child {
+  padding: 0 !important;
+}
+
+.custom-select-header-class > thead > tr > th:first-child {
+  padding: 0 !important;
+}

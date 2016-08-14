@@ -31,6 +31,7 @@ class TableBody extends Component {
     const isSelectRowDefined = this._isSelectRowDefined();
     const tableHeader = this.renderTableHeader(isSelectRowDefined);
     const inputType = this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
+    const CustomComponent = this.props.selectRow.customComponent;
 
     const tableRows = this.props.data.map(function(data, r) {
       const tableColumns = this.props.columns.map(function(column, i) {
@@ -60,6 +61,7 @@ class TableBody extends Component {
                 blurToSave={ this.props.cellEdit.blurToSave }
                 rowIndex={ r }
                 colIndex={ i }
+                row={ data }
                 fieldValue={ fieldValue } />
             );
         } else {
@@ -102,7 +104,7 @@ class TableBody extends Component {
       const disable = unselectable.indexOf(key) !== -1;
       const selected = this.props.selectedRowKeys.indexOf(key) !== -1;
       const selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ?
-                              this.renderSelectRowColumn(selected, inputType, disable) : null;
+              this.renderSelectRowColumn(selected, inputType, disable, CustomComponent, r) : null;
       // add by bluespring for className customize
       let trClassName = this.props.trClassName;
       if (isFun(this.props.trClassName)) {
@@ -214,11 +216,11 @@ class TableBody extends Component {
     onSelectRow(selectedRow, isSelected, e);
   }
 
-  handleSelectRowColumChange = e => {
+  handleSelectRowColumChange = (e, rowIndex) => {
     if (!this.props.selectRow.clickToSelect ||
       !this.props.selectRow.clickToSelectAndEditCell) {
       this.handleSelectRow(
-        e.currentTarget.parentElement.parentElement.rowIndex + 1,
+        rowIndex + 1,
         e.currentTarget.checked,
         e);
     }
@@ -254,11 +256,18 @@ class TableBody extends Component {
     }
   }
 
-  renderSelectRowColumn(selected, inputType, disabled) {
+  renderSelectRowColumn(selected, inputType, disabled, CustomComponent = null, rowIndex = null) {
     return (
       <TableColumn dataAlign='center'>
+      { CustomComponent ?
+        <CustomComponent type={ inputType } checked={ selected } disabled={ disabled }
+          rowIndex={ rowIndex }
+          onChange={ e=>this.handleSelectRowColumChange(e,
+            e.currentTarget.parentElement.parentElement.parentElement.rowIndex) }/> :
         <input type={ inputType } checked={ selected } disabled={ disabled }
-          onChange={ this.handleSelectRowColumChange }/>
+          onChange={ e=>this.handleSelectRowColumChange(e,
+            e.currentTarget.parentElement.parentElement.rowIndex) }/>
+      }
       </TableColumn>
     );
   }

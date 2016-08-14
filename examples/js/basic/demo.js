@@ -6,6 +6,7 @@ import HoverStripedTable from './hover-striped-table';
 import BorderlessTable from './borderless-table';
 import ScrollTable from './scroll-table';
 import LargeColumnTable from './large-column-table';
+import NoDataTable from './no-data-table';
 
 import renderLinks from '../utils';
 
@@ -18,6 +19,10 @@ class Demo extends React.Component {
         <Panel header={ 'A basic react-bootstrap-table' }>
           { renderLinks('basic/basic-table.js') }
           <BasicTable/>
+        </Panel>
+        <Panel header={ 'Empty Table Example' }>
+          { renderLinks('basic/no-data-table.js') }
+          <NoDataTable/>
         </Panel>
         <Panel header={ 'A Single Column react-bootstrap-table' }>
           { renderLinks('basic/single-column-table.js') }
