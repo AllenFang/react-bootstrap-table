@@ -1,4 +1,16 @@
 <a name="v2.4.0"></a>
+# [v2.4.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.4.0...v2.4.1) (2016-08-06)
+## Features
+* Support default search([825ca76](https://github.com/AllenFang/react-bootstrap-table/commit/825ca76fef341caa969d52a3bca02c2e0df92ac0))
+	* Assign ```defaultSearch``` in ```options``` props
+* Support the date picker for cell edit([a861890](https://github.com/AllenFang/react-bootstrap-table/commit/a86189088b54a889c4a8d7a03fcbc9c072d0864a))
+
+## Enhancement
+* Avoid to overwrite the ```.table-bordered``` class.([0a678ed](https://github.com/AllenFang/react-bootstrap-table/commit/0a678ed54d9a119a461c9349a086c1f2a6820ae2))
+* Allow ```csvFileName``` accept a function to generate file name dynamically([a730833](https://github.com/AllenFang/react-bootstrap-table/commit/a730833bf8b8aa6c4856ecf02a42dd8544140ed8))
+* Allow ```height``` to accept number or string([7f3ac47](https://github.com/AllenFang/react-bootstrap-table/commit/7f3ac47f775706c2b245181a8c7eaca280fca234))
+
+<a name="v2.4.0"></a>
 # [v2.4.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.3.9...v2.4.0) (2016-08-06)
 ## Features
 * Enable to clear filter by calling ```cleanFiltered``` which exposed by ```<TableHeaderColumn>```([bda6ff4](https://github.com/AllenFang/react-bootstrap-table/commit/bda6ff4979f28e6f2fe692d122fa93a249daf7fd))
