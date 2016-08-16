@@ -10,6 +10,8 @@ import CustomInsertModalBodyTable from './insert-modal/custom-insert-modal-body'
 import CustomInsertModalTable from './insert-modal/custom-insert-modal';
 import DefaultCustomInsertButtonTable from './insert-button/default-custom-insert-button';
 import FullyCustomInsertButtonTable from './insert-button/fully-custom-insert-button';
+import DefaultCustomDeleteButtonTable from './delete-button/default-custom-delete-button';
+import FullyCustomDeleteButtonTable from './delete-button/fully-custom-delete-button';
 
 import { Col, Panel } from 'react-bootstrap';
 
@@ -48,6 +50,14 @@ class Demo extends React.Component {
         <Panel header={ 'Fully Custom for Insert Button Demo' }>
           { renderLinks('custom/insert-button/fully-custom-insert-button.js') }
           <FullyCustomInsertButtonTable/>
+        </Panel>
+        <Panel header={ 'Default Custom for Delete Button Demo' }>
+          { renderLinks('custom/delete-button/default-custom-delete-button.js') }
+          <DefaultCustomDeleteButtonTable/>
+        </Panel>
+        <Panel header={ 'Fully Custom for Delete Button Demo' }>
+          { renderLinks('custom/delete-button/fully-custom-delete-button.js') }
+          <FullyCustomDeleteButtonTable/>
         </Panel>
       </Col>
     );
