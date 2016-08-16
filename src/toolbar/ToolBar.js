@@ -6,6 +6,7 @@ import Const from '../Const';
 import Notifier from '../Notification.js';
 import InsertModal from './InsertModal';
 import InsertButton from './InsertButton';
+import DeleteButton from './DeleteButton';
 
 class ToolBar extends Component {
 
@@ -191,16 +192,19 @@ class ToolBar extends Component {
     }
 
     if (this.props.enableDelete) {
-      deleteBtn = (
-        <button type='button'
-          className='btn btn-warning react-bs-table-del-btn'
-          data-toggle='tooltip'
-          data-placement='right'
-          title='Drop selected row'
-          onClick={ this.handleDropRowBtnClick }>
-          <i className='glyphicon glyphicon-trash'></i> { this.props.deleteText }
-        </button>
-      );
+      if (this.props.deleteBtn) {
+        deleteBtn = this.props.deleteBtn(this.handleDropRowBtnClick);
+        if (deleteBtn.type.name === DeleteButton.name) {
+          deleteBtn = React.cloneElement(deleteBtn, {
+            onClick: this.handleDropRowBtnClick
+          });
+        }
+      } else {
+        deleteBtn = (
+          <DeleteButton btnText={ this.props.deleteText }
+            onClick={ this.handleDropRowBtnClick }/>
+        );
+      }
     }
 
     if (this.props.enableShowOnlySelected) {
@@ -347,7 +351,8 @@ ToolBar.propTypes = {
   insertModalBody: PropTypes.func,
   insertModalFooter: PropTypes.func,
   insertModal: PropTypes.func,
-  insertBtn: PropTypes.func
+  insertBtn: PropTypes.func,
+  deleteBtn: PropTypes.func
 };
 
 ToolBar.defaultProps = {
