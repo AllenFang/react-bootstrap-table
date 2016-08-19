@@ -500,7 +500,7 @@ class BootstrapTable extends Component {
     }
 
     if (onCellEdit) {
-      onCellEdit(this.state.data[rowIndex], fieldName, newVal);
+      newVal = onCellEdit(this.state.data[rowIndex], fieldName, newVal);
     }
 
     if (this.isRemoteDataSource()) {
