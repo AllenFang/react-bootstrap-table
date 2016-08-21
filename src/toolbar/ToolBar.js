@@ -227,7 +227,7 @@ class ToolBar extends Component {
     if (this.props.enableExportCSV) {
       exportCSV = (
         <button type='button'
-          className='btn btn-success'
+          className='btn btn-success hidden-print'
           onClick={ this.handleExportCSV }>
             <i className='glyphicon glyphicon-export'></i>{ this.props.exportCSVText }
         </button>
