@@ -723,6 +723,13 @@ class BootstrapTable extends Component {
 
 
     this.store.search(searchText);
+
+    const sortObj = this.store.getSortInfo();
+
+    if (sortObj) {
+      this.store.sort(sortObj.order, sortObj.sortField);
+    }
+
     let result;
     if (this.props.pagination) {
       const { sizePerPage } = this.state;
