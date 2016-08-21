@@ -453,6 +453,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      _this.store.search(searchText);
+
+	      var sortObj = _this.store.getSortInfo();
+
+	      if (sortObj) {
+	        _this.store.sort(sortObj.order, sortObj.sortField);
+	      }
+
 	      var result = undefined;
 	      if (_this.props.pagination) {
 	        var sizePerPage = _this.state.sizePerPage;
@@ -889,7 +896,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      if (onCellEdit) {
-	        onCellEdit(this.state.data[rowIndex], fieldName, newVal);
+	        newVal = onCellEdit(this.state.data[rowIndex], fieldName, newVal);
 	      }
 
 	      if (this.isRemoteDataSource()) {
@@ -2416,7 +2423,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props = this.props;
 	      var editable = _props.editable;
 	      var format = _props.format;
-	      var fieldValue = _props.fieldValue;
 	      var customEditor = _props.customEditor;
 	      var shakeEditor = this.state.shakeEditor;
 
@@ -2425,6 +2431,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        onKeyDown: this.handleKeyPress,
 	        onBlur: this.handleBlur
 	      };
+	      var fieldValue = this.props.fieldValue;
+
 	      // put placeholder if exist
 	      editable.placeholder && (attr.placeholder = editable.placeholder);
 
@@ -2438,6 +2446,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }, customEditor.customEditorParameters);
 	        cellEditor = customEditor.getElement(this.handleCustomUpdate, customEditorProps);
 	      } else {
+	        fieldValue = fieldValue === 0 ? '0' : fieldValue;
 	        cellEditor = (0, _Editor2['default'])(editable, attr, format, editorClass, fieldValue || '');
 	      }
 
@@ -4257,7 +4266,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  dataSize: _react.PropTypes.number,
 	  changePage: _react.PropTypes.func,
 	  sizePerPageList: _react.PropTypes.array,
-	  paginationShowsTotal: _react.PropTypes.bool,
+	  paginationShowsTotal: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.func]),
 	  paginationSize: _react.PropTypes.number,
 	  remote: _react.PropTypes.bool,
 	  onSizePerPageList: _react.PropTypes.func,
@@ -4647,7 +4656,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        exportCSV = _react2['default'].createElement(
 	          'button',
 	          { type: 'button',
-	            className: 'btn btn-success',
+	            className: 'btn btn-success hidden-print',
 	            onClick: this.handleExportCSV },
 	          _react2['default'].createElement('i', { className: 'glyphicon glyphicon-export' }),
 	          this.props.exportCSVText
@@ -5788,7 +5797,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var exportCSV = function exportCSV(data, keys, filename) {
 	  var dataString = toString(data, keys);
 	  if (typeof window !== 'undefined') {
-	    saveAs(new Blob([dataString], { type: 'text/plain;charset=utf-8' }), filename);
+	    saveAs(new Blob([dataString], { type: 'text/plain;charset=utf-8' }), filename, true);
 	  }
 	};
 

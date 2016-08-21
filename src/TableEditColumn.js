@@ -86,13 +86,14 @@ class TableEditColumn extends Component {
   }
 
   render() {
-    const { editable, format, fieldValue, customEditor } = this.props;
+    const { editable, format, customEditor } = this.props;
     const { shakeEditor } = this.state;
     const attr = {
       ref: 'inputRef',
       onKeyDown: this.handleKeyPress,
       onBlur: this.handleBlur
     };
+    let { fieldValue } = this.props;
     // put placeholder if exist
     editable.placeholder && (attr.placeholder = editable.placeholder);
 
@@ -107,6 +108,7 @@ class TableEditColumn extends Component {
       };
       cellEditor = customEditor.getElement(this.handleCustomUpdate, customEditorProps);
     } else {
+      fieldValue = fieldValue === 0 ? '0' : fieldValue;
       cellEditor = editor(editable, attr, format, editorClass, fieldValue || '');
     }
 
