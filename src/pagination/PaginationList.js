@@ -145,12 +145,16 @@ class PaginationList extends Component {
       if (this.props.currPage === this.props.pageStartIndex &&
         (page === this.props.firstPage || page === this.props.prePage)) {
         disabled = true;
-        hidden = true;
+        if (!this.props.alwaysShowAllBtns) {
+          hidden = true;
+        }
       }
       if (this.props.currPage === this.lastPage &&
         (page === this.props.nextPage || page === this.props.lastPage)) {
         disabled = true;
-        hidden = true;
+        if (!this.props.alwaysShowAllBtns) {
+          hidden = true;
+        }
       }
       return (
         <PageButton key={ page }
@@ -179,7 +183,9 @@ class PaginationList extends Component {
       startPage = endPage - this.props.paginationSize + 1;
     }
 
-    if (startPage !== this.props.pageStartIndex && this.totalPages > this.props.paginationSize) {
+    if (startPage !== this.props.pageStartIndex
+      && this.totalPages > this.props.paginationSize
+      && this.props.withFirstAndLast) {
       pages = [ this.props.firstPage, this.props.prePage ];
     } else if (this.totalPages > 1) {
       pages = [ this.props.prePage ];
@@ -191,12 +197,17 @@ class PaginationList extends Component {
       if (i >= this.props.pageStartIndex) pages.push(i);
     }
 
-    if (endPage < this.lastPage) {
-      pages.push(this.props.nextPage);
-      pages.push(this.props.lastPage);
-    } else if (endPage === this.lastPage && this.props.currPage !== this.lastPage) {
+    if (endPage <= this.lastPage) {
       pages.push(this.props.nextPage);
     }
+    if (endPage !== this.totalPages && this.props.withFirstAndLast) {
+      pages.push(this.props.lastPage);
+    }
+    /*
+    else if (endPage === this.lastPage && this.props.currPage !== this.lastPage) {
+      pages.push(this.props.nextPage);
+    }
+    */
 
     return pages;
   }
@@ -218,7 +229,9 @@ PaginationList.propTypes = {
 
 PaginationList.defaultProps = {
   sizePerPage: Const.SIZE_PER_PAGE,
-  pageStartIndex: Const.PAGE_START_INDEX
+  pageStartIndex: Const.PAGE_START_INDEX,
+  alwaysShowAllBtns: false,
+  withFirstAndLast: true
 };
 
 export default PaginationList;

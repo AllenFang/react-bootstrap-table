@@ -47,7 +47,9 @@ class BootstrapTable extends Component {
       data: this.getTableData(),
       currPage: currPage,
       sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
-      selectedRowKeys: this.store.getSelectedRowKeys()
+      selectedRowKeys: this.store.getSelectedRowKeys(),
+      alwaysShowAllBtns: this.props.options.alwaysShowAllBtns,
+      withFirstAndLast: this.props.options.withFirstAndLast
     };
   }
 
@@ -761,6 +763,8 @@ class BootstrapTable extends Component {
         <div className='react-bs-table-pagination'>
           <PaginationList
             ref='pagination'
+            withFirstAndLast={ this.state.withFirstAndLast }
+            alwaysShowAllBtns={ this.state.alwaysShowAllBtns }
             currPage={ this.state.currPage }
             changePage={ this.handlePaginationData }
             sizePerPage={ this.state.sizePerPage }
