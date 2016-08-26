@@ -187,7 +187,7 @@ class PaginationList extends Component {
       && this.totalPages > this.props.paginationSize
       && this.props.withFirstAndLast) {
       pages = [ this.props.firstPage, this.props.prePage ];
-    } else if (this.totalPages > 1) {
+    } else if (this.totalPages > 1 || this.props.alwaysShowAllBtns) {
       pages = [ this.props.prePage ];
     } else {
       pages = [];
@@ -203,11 +203,6 @@ class PaginationList extends Component {
     if (endPage !== this.totalPages && this.props.withFirstAndLast) {
       pages.push(this.props.lastPage);
     }
-    /*
-    else if (endPage === this.lastPage && this.props.currPage !== this.lastPage) {
-      pages.push(this.props.nextPage);
-    }
-    */
 
     return pages;
   }
