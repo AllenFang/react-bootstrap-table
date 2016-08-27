@@ -2,9 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { IndexRoute, Router, Route } from 'react-router';
-import createHistory from 'history/lib/createHashHistory';
-
-const history = createHistory( { queryKey: false } );
 
 import App from './components/App';
 import Home from './components/Home';
@@ -12,7 +9,7 @@ import GettingStarted from './components/GettingStarted';
 import PageNotFound from './components/PageNotFound';
 
 const routes = (
-  <Router history={ history }>
+  <Router>
     <Route path='/' component={ App }>
       <IndexRoute component={ Home } />
       <Route path='getting-started' component={ GettingStarted }/>
