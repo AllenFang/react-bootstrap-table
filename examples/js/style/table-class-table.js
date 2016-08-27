@@ -20,7 +20,7 @@ function addProducts(quantity) {
 
 addProducts(5);
 
-export default class TrClassStringTable extends React.Component {
+export default class TableClassTable extends React.Component {
   render() {
     return (
       <BootstrapTable data={ products } tableHeaderClass='my-header-class' tableBodyClass='my-body-class'>
