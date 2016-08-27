@@ -66,7 +66,7 @@ class TableBody extends Component {
             );
         } else {
           // add by bluespring for className customize
-          let columnChild = fieldValue;
+          let columnChild = fieldValue && fieldValue.toString();
           let columnTitle = null;
           let tdClassName = column.className;
           if (isFun(column.className)) {
