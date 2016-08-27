@@ -89,7 +89,7 @@ class App extends React.Component {
                   <a href='https://github.com/AllenFang/react-bootstrap-table'>Github</a>
                 </li>
                 <li className='dropdown'>
-                  <a href='#' className='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Dropdown <span className='caret'></span></a>
+                  <a href='#' className='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Examples <span className='caret'></span></a>
                   <ul className='dropdown-menu'>
                     { exampleMenuItems }
                   </ul>
