@@ -98,7 +98,7 @@ Finally, you need to import the css file to your app, there are two css file you
 ```react-bootstrap-table-all.min.css``` include toastr.</br>```react-bootstrap-table.min.css``` doesn't include toastr.</br>
 **Notes: react-bootstrap-table use toastr to alarm some message to user.**
 ```html
-<link rel="stylesheet" href="./css/react-bootstrap-table-all.min.css">
+<link rel="stylesheet" href="./dist/react-bootstrap-table-all.min.css">
 ```
 The CSS files you can find in the css folder.
 
