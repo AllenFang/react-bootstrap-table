@@ -1,3 +1,17 @@
+<a name="v2.4.3"></a>
+# [v2.4.3](https://github.com/AllenFang/react-bootstrap-table/compare/v2.4.2...v2.4.3) (2016-08-21)
+## Bug fixes
+* Editable converts zero (0) to empty string on first editing([422d6f8](https://github.com/AllenFang/react-bootstrap-table/commit/422d6f84fb35ebe66422087806d11983a43e5255))
+* Fix a wrong sorting result after apply search([7e5a726](https://github.com/AllenFang/react-bootstrap-table/commit/7e5a726d2ffaf4c1654d235b3fe5e80be59addba))
+	* [#634](https://github.com/AllenFang/react-bootstrap-table/issues/634)
+* Fix ```paginationShowsTotal``` propTypes is invalid([cc5dd7f](https://github.com/AllenFang/react-bootstrap-table/commit/cc5dd7fdb508e184fec005c006804f3ddd78ed41))
+	* [#592](https://github.com/AllenFang/react-bootstrap-table/issues/592)
+
+## Enhancement
+* Disable DOM on exported CSV file([48b9a98](https://github.com/AllenFang/react-bootstrap-table/pull/640/commits/48b9a9889a3516411d03b8daddc890693c2202f7))
+* Hide export csv button when printing([cc625a0](https://github.com/AllenFang/react-bootstrap-table/pull/645/commits/cc625a06396be3192f4dcbb19659b23e800e7218))
+* Allow ```onCellEdit``` return a value which present as the new value for editing.([f0030f0](https://github.com/AllenFang/react-bootstrap-table/pull/646/commits/f0030f0e87465d47141bbb0545b5c596c4238443))
+
 <a name="v2.4.2"></a>
 # [v2.4.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.4.1...v2.4.2) (2016-08-13)
 ## Bug fixes
