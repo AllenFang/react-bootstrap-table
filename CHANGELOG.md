@@ -1,3 +1,7 @@
+<a name="v2.5.0"></a>
+# [v2.5.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.4.4...v2.5.0) (2016-08-28)
+*** Upgrade minor version ***
+
 <a name="v2.4.4"></a>
 # [v2.4.4](https://github.com/AllenFang/react-bootstrap-table/compare/v2.4.3...v2.4.4) (2016-08-27)
 ## Bug fixes
