@@ -1,3 +1,23 @@
+<a name="v2.5.0"></a>
+# [v2.5.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.4.4...v2.5.0) (2016-08-28)
+*** Upgrade minor version ***
+
+<a name="v2.4.4"></a>
+# [v2.4.4](https://github.com/AllenFang/react-bootstrap-table/compare/v2.4.3...v2.4.4) (2016-08-27)
+## Bug fixes
+* Fix SelectFilter can't display boolean value([b84861c](https://github.com/AllenFang/react-bootstrap-table/commit/b84861ca0eb2f4d966c32d3a6eb1b8ee1be5c622))
+* Fix boolean can't be populate to table column([ecc6a16](https://github.com/AllenFang/react-bootstrap-table/commit/ecc6a16b4aa97f83ac476f3342b3b0bdac706614))
+* Fix unknown props warnings by ```react-toastr```([16cb7ef](https://github.com/AllenFang/react-bootstrap-table/commit/16cb7effeffe505f38d52c6e37a68dd21483faba))
+
+## Enhancement
+* Move css files to ```dist``` folder([ffb8031](https://github.com/AllenFang/react-bootstrap-table/commit/ffb8031768f6c5d139837ce350e540db3326f580))
+* Allow to apply className to following elements([b426974](https://github.com/AllenFang/react-bootstrap-table/commit/b426974f3973a0499bed08bdb8b64b2a83dbad66))
+	1. ```react-bs-table-container```, use ```containerClass``` to set className
+	2. ```react-bs-table```, use ```tableContainerClass``` to set className
+	3. ```react-bs-container-header```, use ```headerContainerClass``` to set className
+	4. ```react-bs-container-body```, use ```bodyContainerClass``` to set className
+
+
 <a name="v2.4.3"></a>
 # [v2.4.3](https://github.com/AllenFang/react-bootstrap-table/compare/v2.4.2...v2.4.3) (2016-08-21)
 ## Bug fixes

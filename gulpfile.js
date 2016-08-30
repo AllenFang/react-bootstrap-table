@@ -45,11 +45,11 @@ gulp.task('prod', ['umdBuild'], function() {
   gulp.src('./css/react-bootstrap-table.css')
     .pipe(concatCss("./react-bootstrap-table.min.css"))
     .pipe(cssmin())
-    .pipe(gulp.dest('./css'));
+    .pipe(gulp.dest('./dist'));
   gulp.src(['./css/react-bootstrap-table.css', './css/toastr.css'])
     .pipe(concatCss('./react-bootstrap-table-all.min.css'))
     .pipe(cssmin())
-    .pipe(gulp.dest('./css'));
+    .pipe(gulp.dest('./dist'));
 });
 
 // build umd bundles for https://npmcdn.com/ and for browser <script> tag

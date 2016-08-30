@@ -37,3 +37,11 @@
 .my-body-class {
   background-color: #CC00FF;
 }
+
+.my-container-class {
+  border: #0000FF 2.5px solid;
+}
+
+.my-table-container-class {
+  border: #FFBB73 5px solid;
+}

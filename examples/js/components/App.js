@@ -1,19 +1,8 @@
 /* eslint max-len: 0 */
 import React from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-
-// import 'bootstrap/dist/css/bootstrap.css';
 import 'toastr/build/toastr.min.css';
 import '../../../css/react-bootstrap-table.css';
-// import 'jquery';
-// import 'bootstrap';
 import {
-  Navbar,
-  NavBrand,
-  Nav,
-  NavItem,
-  NavDropdown,
-  MenuItem,
   Grid,
   Row,
   Col
@@ -80,27 +69,38 @@ class App extends React.Component {
       href: 'custom'
     } ];
 
-    const exampleMenuItems = examples.map((item, idx) => {
+    const exampleMenuItems = examples.map((item) => {
       return (
-        <LinkContainer key={ idx } to={ '/examples/' + item.href }>
-          <MenuItem key={ idx }>{ item.text }</MenuItem>
-        </LinkContainer>
+        <li key={ item.href }>
+          <a href={ `#/examples/${item.href}` }>{ item.text }</a>
+        </li>
       );
     });
     return (
       <div>
-        <Navbar inverse toggleNavKey={ 0 }>
-          <NavBrand><a href='#'>react-bootstrap-table</a></NavBrand>
-          <Nav>
-            <LinkContainer to='/getting-started'>
-              <NavItem>Getting started</NavItem>
-            </LinkContainer>
-            <NavDropdown title='Examples' id='collapsible-navbar-dropdown'>
-              { exampleMenuItems }
-            </NavDropdown>
-            <NavItem href='https://github.com/AllenFang/react-bootstrap-table' target='_blank'>GitHub</NavItem>
-          </Nav>
-        </Navbar>
+        <nav className='navbar navbar-inverse'>
+          <div className='container-fluid'>
+            <div className='navbar-header'>
+              <a className='navbar-brand' href='#'>react-bootstrap-table</a>
+            </div>
+            <div className='collapse navbar-collapse'>
+              <ul className='nav navbar-nav'>
+                <li>
+                  <a href='#/getting-started'>Getting Started</a>
+                </li>
+                <li>
+                  <a href='https://github.com/AllenFang/react-bootstrap-table'>Github</a>
+                </li>
+                <li className='dropdown'>
+                  <a href='#' className='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Examples <span className='caret'></span></a>
+                  <ul className='dropdown-menu'>
+                    { exampleMenuItems }
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
         <Grid fluid>
           <Row>
             <Col md={ 12 }>

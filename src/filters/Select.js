@@ -39,7 +39,7 @@ class SelectFilter extends Component {
       <option key='-1' value=''>{ placeholder || `Select ${columnName}...` }</option>
     ));
     Object.keys(options).map(key => {
-      optionTags.push(<option key={ key } value={ key }>{ options[key] }</option>);
+      optionTags.push(<option key={ key } value={ key }>{ options[key] + '' }</option>);
     });
     return optionTags;
   }

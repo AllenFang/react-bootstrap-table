@@ -1,6 +1,7 @@
 /* eslint no-alert: 0 */
 /* eslint max-len: 0 */
 import React, { Component, PropTypes } from 'react';
+import classSet from 'classnames';
 import Const from './Const';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
@@ -258,13 +259,17 @@ class BootstrapTable extends Component {
     let sortIndicator = this.props.options.sortIndicator;
     if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
     return (
-      <div className='react-bs-table-container' style={ this.props.containerStyle }>
+      <div className={ classSet('react-bs-table-container', this.props.containerClass) }
+        style={ this.props.containerStyle }>
         { toolBar }
-        <div className='react-bs-table' ref='table' style={ { ...style, ...this.props.tableStyle } }
+        <div ref='table'
+            className={ classSet('react-bs-table', this.props.tableContainerClass) }
+            style={ { ...style, ...this.props.tableStyle } }
             onMouseEnter={ this.handleMouseEnter }
             onMouseLeave={ this.handleMouseLeave }>
           <TableHeader
             ref='header'
+            headerContainerClass={ this.props.headerContainerClass }
             tableHeaderClass={ this.props.tableHeaderClass }
             style={ this.props.headerStyle }
             rowSelectType={ this.props.selectRow.mode }
@@ -282,6 +287,7 @@ class BootstrapTable extends Component {
             { this.props.children }
           </TableHeader>
           <TableBody ref='body'
+            bodyContainerClass={ this.props.bodyContainerClass }
             tableBodyClass={ this.props.tableBodyClass }
             style={ { ...style, ...this.props.bodyStyle } }
             data={ this.state.data }
@@ -988,6 +994,10 @@ BootstrapTable.propTypes = {
   containerStyle: PropTypes.object,
   headerStyle: PropTypes.object,
   bodyStyle: PropTypes.object,
+  containerClass: PropTypes.string,
+  tableContainerClass: PropTypes.string,
+  headerContainerClass: PropTypes.string,
+  bodyContainerClass: PropTypes.string,
   tableHeaderClass: PropTypes.string,
   tableBodyClass: PropTypes.string,
   options: PropTypes.shape({
@@ -1084,6 +1094,10 @@ BootstrapTable.defaultProps = {
   containerStyle: undefined,
   headerStyle: undefined,
   bodyStyle: undefined,
+  containerClass: null,
+  tableContainerClass: null,
+  headerContainerClass: null,
+  bodyContainerClass: null,
   tableHeaderClass: null,
   tableBodyClass: null,
   options: {

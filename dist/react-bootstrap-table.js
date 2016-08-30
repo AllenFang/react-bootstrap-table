@@ -7,7 +7,7 @@
 		exports["ReactBootstrapTable"] = factory(require("react"), require("react-dom"));
 	else
 		root["ReactBootstrapTable"] = factory(root["React"], root["ReactDOM"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_5__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_6__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -105,11 +105,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(3);
+	var _classnames = __webpack_require__(3);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
-	var _TableHeader = __webpack_require__(4);
+	var _TableHeader = __webpack_require__(5);
 
 	var _TableHeader2 = _interopRequireDefault(_TableHeader);
 
@@ -792,17 +796,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
 	      return _react2['default'].createElement(
 	        'div',
-	        { className: 'react-bs-table-container', style: this.props.containerStyle },
+	        { className: (0, _classnames2['default'])('react-bs-table-container', this.props.containerClass),
+	          style: this.props.containerStyle },
 	        toolBar,
 	        _react2['default'].createElement(
 	          'div',
-	          { className: 'react-bs-table', ref: 'table', style: _extends({}, style, this.props.tableStyle),
+	          { ref: 'table',
+	            className: (0, _classnames2['default'])('react-bs-table', this.props.tableContainerClass),
+	            style: _extends({}, style, this.props.tableStyle),
 	            onMouseEnter: this.handleMouseEnter,
 	            onMouseLeave: this.handleMouseLeave },
 	          _react2['default'].createElement(
 	            _TableHeader2['default'],
 	            {
 	              ref: 'header',
+	              headerContainerClass: this.props.headerContainerClass,
 	              tableHeaderClass: this.props.tableHeaderClass,
 	              style: this.props.headerStyle,
 	              rowSelectType: this.props.selectRow.mode,
@@ -820,6 +828,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.props.children
 	          ),
 	          _react2['default'].createElement(_TableBody2['default'], { ref: 'body',
+	            bodyContainerClass: this.props.bodyContainerClass,
 	            tableBodyClass: this.props.tableBodyClass,
 	            style: _extends({}, style, this.props.bodyStyle),
 	            data: this.state.data,
@@ -1170,6 +1179,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  containerStyle: _react.PropTypes.object,
 	  headerStyle: _react.PropTypes.object,
 	  bodyStyle: _react.PropTypes.object,
+	  containerClass: _react.PropTypes.string,
+	  tableContainerClass: _react.PropTypes.string,
+	  headerContainerClass: _react.PropTypes.string,
+	  bodyContainerClass: _react.PropTypes.string,
 	  tableHeaderClass: _react.PropTypes.string,
 	  tableBodyClass: _react.PropTypes.string,
 	  options: _react.PropTypes.shape({
@@ -1260,6 +1273,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  containerStyle: undefined,
 	  headerStyle: undefined,
 	  bodyStyle: undefined,
+	  containerClass: null,
+	  tableContainerClass: null,
+	  headerContainerClass: null,
+	  bodyContainerClass: null,
 	  tableHeaderClass: null,
 	  tableBodyClass: null,
 	  options: {
@@ -1321,6 +1338,60 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+
+	(function () {
+		'use strict';
+
+		var hasOwn = {}.hasOwnProperty;
+
+		function classNames () {
+			var classes = [];
+
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+
+				var argType = typeof arg;
+
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+
+			return classes.join(' ');
+		}
+
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
+
+/***/ },
+/* 4 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1367,7 +1438,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1390,15 +1461,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(5);
+	var _reactDom = __webpack_require__(6);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _Const = __webpack_require__(3);
+	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
-	var _classnames = __webpack_require__(6);
+	var _classnames = __webpack_require__(3);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -1457,7 +1528,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function render() {
 	      var _this = this;
 
-	      var containerClasses = (0, _classnames2['default'])('react-bs-container-header', 'table-header-wrapper');
+	      var containerClasses = (0, _classnames2['default'])('react-bs-container-header', 'table-header-wrapper', this.props.headerContainerClass);
 	      var tableClasses = (0, _classnames2['default'])('table', 'table-hover', {
 	        'table-bordered': this.props.bordered,
 	        'table-condensed': this.props.condensed
@@ -1528,6 +1599,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react.Component);
 
 	TableHeader.propTypes = {
+	  headerContainerClass: _react.PropTypes.string,
 	  tableHeaderClass: _react.PropTypes.string,
 	  style: _react.PropTypes.object,
 	  rowSelectType: _react.PropTypes.string,
@@ -1548,64 +1620,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  Copyright (c) 2016 Jed Watson.
-	  Licensed under the MIT License (MIT), see
-	  http://jedwatson.github.io/classnames
-	*/
-	/* global define */
-
-	(function () {
-		'use strict';
-
-		var hasOwn = {}.hasOwnProperty;
-
-		function classNames () {
-			var classes = [];
-
-			for (var i = 0; i < arguments.length; i++) {
-				var arg = arguments[i];
-				if (!arg) continue;
-
-				var argType = typeof arg;
-
-				if (argType === 'string' || argType === 'number') {
-					classes.push(arg);
-				} else if (Array.isArray(arg)) {
-					classes.push(classNames.apply(null, arg));
-				} else if (argType === 'object') {
-					for (var key in arg) {
-						if (hasOwn.call(arg, key) && arg[key]) {
-							classes.push(key);
-						}
-					}
-				}
-			}
-
-			return classes.join(' ');
-		}
-
-		if (typeof module !== 'undefined' && module.exports) {
-			module.exports = classNames;
-		} else if (true) {
-			// register as 'classnames', consistent with npm package name
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-				return classNames;
-			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-		} else {
-			window.classNames = classNames;
-		}
-	}());
-
+	module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
 
 /***/ },
 /* 7 */
@@ -1684,7 +1702,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(3);
+	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -1700,7 +1718,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _TableEditColumn2 = _interopRequireDefault(_TableEditColumn);
 
-	var _classnames = __webpack_require__(6);
+	var _classnames = __webpack_require__(3);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -1841,7 +1859,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              fieldValue: fieldValue });
 	          } else {
 	            // add by bluespring for className customize
-	            var columnChild = fieldValue;
+	            var columnChild = fieldValue && fieldValue.toString();
 	            var columnTitle = null;
 	            var tdClassName = column.className;
 	            if (isFun(column.className)) {
@@ -1914,7 +1932,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return _react2['default'].createElement(
 	        'div',
-	        { ref: 'container', className: 'react-bs-container-body', style: this.props.style },
+	        { ref: 'container',
+	          className: (0, _classnames2['default'])('react-bs-container-body', this.props.bodyContainerClass),
+	          style: this.props.style },
 	        _react2['default'].createElement(
 	          'table',
 	          { className: tableClasses },
@@ -2006,7 +2026,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onSelectRow: _react.PropTypes.func,
 	  noDataText: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object]),
 	  style: _react.PropTypes.object,
-	  tableBodyClass: _react.PropTypes.string
+	  tableBodyClass: _react.PropTypes.string,
+	  bodyContainerClass: _react.PropTypes.string
 	};
 	exports['default'] = TableBody;
 	module.exports = exports['default'];
@@ -2033,7 +2054,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _classnames = __webpack_require__(6);
+	var _classnames = __webpack_require__(3);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -2172,7 +2193,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(3);
+	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -2312,7 +2333,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _NotificationJs2 = _interopRequireDefault(_NotificationJs);
 
-	var _classnames = __webpack_require__(6);
+	var _classnames = __webpack_require__(3);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -3266,7 +3287,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
 
-	var _classnames = __webpack_require__(6);
+	var _classnames = __webpack_require__(3);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -3397,7 +3418,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _ReactTransitionEvents2 = _interopRequireDefault(_ReactTransitionEvents);
 
-	var _reactDom = __webpack_require__(5);
+	var _reactDom = __webpack_require__(6);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -3901,7 +3922,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	var _reactDom = __webpack_require__(5);
+	var _reactDom = __webpack_require__(6);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -4012,7 +4033,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _PageButtonJs2 = _interopRequireDefault(_PageButtonJs);
 
-	var _Const = __webpack_require__(3);
+	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -4307,7 +4328,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(6);
+	var _classnames = __webpack_require__(3);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -4385,11 +4406,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(6);
+	var _classnames = __webpack_require__(3);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _Const = __webpack_require__(3);
+	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -4907,11 +4928,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(3);
+	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
-	var _classnames = __webpack_require__(6);
+	var _classnames = __webpack_require__(3);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -5039,7 +5060,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var _Const = __webpack_require__(3);
+	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -5692,11 +5713,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(3);
+	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
-	var _classnames = __webpack_require__(6);
+	var _classnames = __webpack_require__(3);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -6107,7 +6128,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _Const = __webpack_require__(3);
+	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -6489,7 +6510,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(3);
+	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -6814,7 +6835,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(3);
+	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -6996,7 +7017,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(3);
+	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -7109,7 +7130,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(3);
+	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -7222,11 +7243,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(6);
+	var _classnames = __webpack_require__(3);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _Const = __webpack_require__(3);
+	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -7285,7 +7306,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        optionTags.push(_react2['default'].createElement(
 	          'option',
 	          { key: key, value: key },
-	          options[key]
+	          options[key] + ''
 	        ));
 	      });
 	      return optionTags;
@@ -7351,11 +7372,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(6);
+	var _classnames = __webpack_require__(3);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _Const = __webpack_require__(3);
+	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
 

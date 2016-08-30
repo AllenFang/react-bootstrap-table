@@ -66,7 +66,7 @@ class TableBody extends Component {
             );
         } else {
           // add by bluespring for className customize
-          let columnChild = fieldValue;
+          let columnChild = fieldValue && fieldValue.toString();
           let columnTitle = null;
           let tdClassName = column.className;
           if (isFun(column.className)) {
@@ -139,7 +139,9 @@ class TableBody extends Component {
     this.editing = false;
 
     return (
-      <div ref='container' className='react-bs-container-body' style={ this.props.style }>
+      <div ref='container'
+        className={ classSet('react-bs-container-body', this.props.bodyContainerClass) }
+        style={ this.props.style }>
         <table className={ tableClasses }>
           { tableHeader }
           <tbody ref='tbody'>
@@ -290,6 +292,7 @@ TableBody.propTypes = {
   onSelectRow: PropTypes.func,
   noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
   style: PropTypes.object,
-  tableBodyClass: PropTypes.string
+  tableBodyClass: PropTypes.string,
+  bodyContainerClass: PropTypes.string
 };
 export default TableBody;

@@ -20,10 +20,16 @@ function addProducts(quantity) {
 
 addProducts(5);
 
-export default class TrClassStringTable extends React.Component {
+export default class TableClassTable extends React.Component {
   render() {
     return (
-      <BootstrapTable data={ products } tableHeaderClass='my-header-class' tableBodyClass='my-body-class'>
+      <BootstrapTable data={ products } insertRow exportCSV
+          tableHeaderClass='my-header-class'
+          tableBodyClass='my-body-class'
+          containerClass='my-container-class'
+          tableContainerClass='my-table-container-class'
+          headerContainerClass='my-header-container-class'
+          bodyContainerClass='my-body-container-class'>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>

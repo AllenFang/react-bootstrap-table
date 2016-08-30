@@ -23,7 +23,10 @@ class Checkbox extends Component {
 class TableHeader extends Component {
 
   render() {
-    const containerClasses = classSet('react-bs-container-header', 'table-header-wrapper');
+    const containerClasses = classSet(
+      'react-bs-container-header',
+      'table-header-wrapper',
+      this.props.headerContainerClass);
     const tableClasses = classSet('table', 'table-hover', {
       'table-bordered': this.props.bordered,
       'table-condensed': this.props.condensed
@@ -78,6 +81,7 @@ class TableHeader extends Component {
   }
 }
 TableHeader.propTypes = {
+  headerContainerClass: PropTypes.string,
   tableHeaderClass: PropTypes.string,
   style: PropTypes.object,
   rowSelectType: PropTypes.string,
