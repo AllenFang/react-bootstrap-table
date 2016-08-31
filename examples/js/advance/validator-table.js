@@ -33,13 +33,13 @@ function jobNameValidator(value) {
   if (!value) {
     response.isValid = false;
     response.notification.type = 'error';
-    response.notification.msg = 'Il valore deve essere inserito';
-    response.notification.title = 'Valore obbligatorio';
+    response.notification.msg = 'Value must be inserted';
+    response.notification.title = 'Requested Value';
   } else if (value.length < 10) {
     response.isValid = false;
     response.notification.type = 'error';
-    response.notification.msg = 'Il valore deve essere così';
-    response.notification.title = 'Valore non ammissibile';
+    response.notification.msg = 'Value must have 10+ characters';
+    response.notification.title = 'Invalid Value';
   }
   return response;
 }
