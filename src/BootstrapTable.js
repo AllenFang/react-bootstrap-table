@@ -171,7 +171,8 @@ class BootstrapTable extends Component {
     if (this.isRemoteDataSource()) {
       this.setState({
         data: nextProps.data.slice(),
-        currPage: page
+        currPage: page,
+        sizePerPage: nextProps.options.sizePerPage
       });
     } else {
       // #125
