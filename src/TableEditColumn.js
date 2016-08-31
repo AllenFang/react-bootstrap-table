@@ -52,25 +52,47 @@ class TableEditColumn extends Component {
     this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
   }
 
+  // modified by iuculanop
+  // BEGIN
   validator(value) {
     const ts = this;
     if (ts.props.editable.validator) {
-      const valid = ts.props.editable.validator(value);
-      if (valid !== true) {
-        ts.refs.notifier.notice('error', valid, 'Pressed ESC can cancel');
-        const input = ts.refs.inputRef;
-        // animate input
-        ts.clearTimeout();
-        ts.setState({ shakeEditor: true });
-        ts.timeouteClear = setTimeout(() => {
-          ts.setState({ shakeEditor: false });
-        }, 300);
-        input.focus();
-        return false;
+      const checkVal = ts.props.editable.validator(value);
+      const responseType = typeof checkVal;
+      if (responseType !== 'object') {
+        if (checkVal !== true) {
+          ts.refs.notifier.notice('error', checkVal, 'Pressed ESC can cancel');
+          const input = ts.refs.inputRef;
+          // animate input
+          ts.clearTimeout();
+          ts.setState({ shakeEditor: true });
+          ts.timeouteClear = setTimeout(() => {
+            ts.setState({ shakeEditor: false });
+          }, 300);
+          input.focus();
+          return false;
+        }
+      } else {
+        if (checkVal.isValid !== true ) {
+          ts.refs.notifier.notice(checkVal.notification.type,
+                                  checkVal.notification.msg,
+                                  checkVal.notification.title);
+          const input = ts.refs.inputRef;
+          // animate input
+          ts.clearTimeout();
+          ts.setState({ shakeEditor: true });
+          ts.timeouteClear = setTimeout(() => {
+            ts.setState({ shakeEditor: false });
+          }, 300);
+          input.focus();
+          return false;
+        }
       }
     }
     return true;
   }
+  // END
+
   clearTimeout() {
     if (this.timeouteClear !== 0) {
       clearTimeout(this.timeouteClear);
