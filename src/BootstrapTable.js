@@ -172,7 +172,7 @@ class BootstrapTable extends Component {
       this.setState({
         data: nextProps.data.slice(),
         currPage: page,
-        sizePerPage: nextProps.options.sizePerPage
+        sizePerPage
       });
     } else {
       // #125
