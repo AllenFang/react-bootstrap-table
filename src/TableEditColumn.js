@@ -25,7 +25,7 @@ class TableEditColumn extends Component {
     } else if (e.keyCode === 27) {
       this.props.completeEdit(
         null, this.props.rowIndex, this.props.colIndex);
-    } else if (e.type === 'click') {  // textarea click save button
+    } else if (e.type === 'click' && !this.props.blurToSave) {  // textarea click save button
       const value = e.target.parentElement.firstChild.value;
       if (!this.validator(value)) {
         return;
@@ -52,13 +52,25 @@ class TableEditColumn extends Component {
     this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
   }
 
+  // modified by iuculanop
+  // BEGIN
   validator(value) {
     const ts = this;
+    let valid = true;
     if (ts.props.editable.validator) {
-      const valid = ts.props.editable.validator(value);
-      if (valid !== true) {
-        ts.refs.notifier.notice('error', valid, 'Pressed ESC can cancel');
-        const input = ts.refs.inputRef;
+      const input = ts.refs.inputRef;
+      const checkVal = ts.props.editable.validator(value);
+      const responseType = typeof checkVal;
+      if (responseType !== 'object' && checkVal !== true) {
+        valid = false;
+        ts.refs.notifier.notice('error', checkVal, 'Pressed ESC can cancel');
+      } else if (responseType === 'object' && checkVal.isValid !== true) {
+        valid = false;
+        ts.refs.notifier.notice(checkVal.notification.type,
+                                checkVal.notification.msg,
+                                checkVal.notification.title);
+      }
+      if (!valid) {
         // animate input
         ts.clearTimeout();
         ts.setState({ shakeEditor: true });
@@ -66,11 +78,13 @@ class TableEditColumn extends Component {
           ts.setState({ shakeEditor: false });
         }, 300);
         input.focus();
-        return false;
+        return valid;
       }
     }
-    return true;
+    return valid;
   }
+  // END
+
   clearTimeout() {
     if (this.timeouteClear !== 0) {
       clearTimeout(this.timeouteClear);

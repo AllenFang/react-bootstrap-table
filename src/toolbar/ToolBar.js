@@ -40,12 +40,15 @@ class ToolBar extends Component {
     }
   }
 
+  // modified by iuculanop
+  // BEGIN
   checkAndParseForm() {
     const newObj = {};
     const validateState = {};
     let isValid = true;
+    let checkVal;
+    let responseType;
     let tempValue;
-    let tempMsg;
 
     this.props.columns.forEach(function(column, i) {
       if (column.autoValue) {
@@ -66,10 +69,22 @@ class ToolBar extends Component {
         }
 
         if (column.editable && column.editable.validator) { // process validate
-          tempMsg = column.editable.validator(tempValue);
-          if (tempMsg !== true) {
+          checkVal = column.editable.validator(tempValue);
+          responseType = typeof checkVal;
+          if (responseType !== 'object' && checkVal !== true) {
+            this.refs.notifier.notice(
+              'error',
+              'Form validate errors, please checking!',
+              'Pressed ESC can cancel');
             isValid = false;
-            validateState[column.field] = tempMsg;
+            validateState[column.field] = checkVal;
+          } else if (responseType === 'object' && checkVal.isValid !== true) {
+            this.refs.notifier.notice(
+              checkVal.notification.type,
+              checkVal.notification.msg,
+              checkVal.notification.title);
+            isValid = false;
+            validateState[column.field] = checkVal.notification.msg;
           }
         }
       }
@@ -83,18 +98,13 @@ class ToolBar extends Component {
       this.clearTimeout();
       // show error in form and shake it
       this.setState({ validateState, shakeEditor: true });
-      // notifier error
-      this.refs.notifier.notice(
-        'error',
-        'Form validate errors, please checking!',
-        'Pressed ESC can cancel');
-      // clear animate class
       this.timeouteClear = setTimeout(() => {
         this.setState({ shakeEditor: false });
       }, 300);
       return null;
     }
   }
+  // END
 
   handleSaveBtnClick = () => {
     const newObj = this.checkAndParseForm();
