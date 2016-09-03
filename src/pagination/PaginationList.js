@@ -98,7 +98,7 @@ class PaginationList extends Component {
         {
           sizePerPageList.length > 1
           ? <div>
-              <div className='col-md-6'>
+              <div className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
                 { total }{ ' ' }
                 <span className='dropdown' style={ dropDownStyle }>
                   <button className='btn btn-default dropdown-toggle'
@@ -115,17 +115,17 @@ class PaginationList extends Component {
                   </ul>
                 </span>
               </div>
-              <div className='col-md-6'>
+              <div className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
                 <ul className='pagination' style={ pageListStyle }>
                   { pageBtns }
                 </ul>
               </div>
             </div>
           : <div>
-              <div className='col-md-6'>
+              <div className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
                 { total }
               </div>
-              <div className='col-md-6'>
+              <div className='col-md-6 col-xs-6'>
                 <ul className='pagination' style={ pageListStyle }>
                   { pageBtns }
                 </ul>
