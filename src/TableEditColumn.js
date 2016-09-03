@@ -56,40 +56,32 @@ class TableEditColumn extends Component {
   // BEGIN
   validator(value) {
     const ts = this;
+    let valid = true;
     if (ts.props.editable.validator) {
+      const input = ts.refs.inputRef;
       const checkVal = ts.props.editable.validator(value);
       const responseType = typeof checkVal;
-      if (responseType !== 'object') {
-        if (checkVal !== true) {
-          ts.refs.notifier.notice('error', checkVal, 'Pressed ESC can cancel');
-          const input = ts.refs.inputRef;
-          // animate input
-          ts.clearTimeout();
-          ts.setState({ shakeEditor: true });
-          ts.timeouteClear = setTimeout(() => {
-            ts.setState({ shakeEditor: false });
-          }, 300);
-          input.focus();
-          return false;
-        }
-      } else {
-        if (checkVal.isValid !== true ) {
-          ts.refs.notifier.notice(checkVal.notification.type,
-                                  checkVal.notification.msg,
-                                  checkVal.notification.title);
-          const input = ts.refs.inputRef;
-          // animate input
-          ts.clearTimeout();
-          ts.setState({ shakeEditor: true });
-          ts.timeouteClear = setTimeout(() => {
-            ts.setState({ shakeEditor: false });
-          }, 300);
-          input.focus();
-          return false;
-        }
+      if (responseType !== 'object' && checkVal !== true) {
+        valid = false;
+        ts.refs.notifier.notice('error', checkVal, 'Pressed ESC can cancel');
+      } else if (responseType === 'object' && checkVal.isValid !== true) {
+        valid = false;
+        ts.refs.notifier.notice(checkVal.notification.type,
+                                checkVal.notification.msg,
+                                checkVal.notification.title);
+      }
+      if (!valid) {
+        // animate input
+        ts.clearTimeout();
+        ts.setState({ shakeEditor: true });
+        ts.timeouteClear = setTimeout(() => {
+          ts.setState({ shakeEditor: false });
+        }, 300);
+        input.focus();
+        return valid;
       }
     }
-    return true;
+    return valid;
   }
   // END
 
