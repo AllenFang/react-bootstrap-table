@@ -82,7 +82,7 @@ class PaginationList extends Component {
     const start = ((currPage - pageStartIndex) * sizePerPage);
     const to = Math.min((sizePerPage * (currPage + offset) - 1), dataSize);
     let total = paginationShowsTotal ? <span>
-      Showing rows { start } to&nbsp;{ to } of&nbsp;{ dataSize }
+      Showing rows { start + 1 } to&nbsp;{ to + 1 } of&nbsp;{ dataSize }
     </span> : null;
 
     if (typeof paginationShowsTotal === 'function') {
