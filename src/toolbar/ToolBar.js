@@ -71,16 +71,20 @@ class ToolBar extends Component {
         if (column.editable && column.editable.validator) { // process validate
           checkVal = column.editable.validator(tempValue);
           responseType = typeof checkVal;
-          if (responseType !== 'object') {
-            if (checkVal !== true) {
-              isValid = false;
-              validateState[column.field] = checkVal;
-            }
-          } else {
-            if (checkVal.isValid !== true) {
-              isValid = false;
-              validateState[column.field] = checkVal.notification.msg;
-            }
+          if (responseType !== 'object' && checkVal !== true) {
+            this.refs.notifier.notice(
+              'error',
+              'Form validate errors, please checking!',
+              'Pressed ESC can cancel');
+            isValid = false;
+            validateState[column.field] = checkVal;
+          } else if (responseType === 'object' && checkVal.isValid !== true) {
+            this.refs.notifier.notice(
+              checkVal.notification.type,
+              checkVal.notification.msg,
+              checkVal.notification.title);
+            isValid = false;
+            validateState[column.field] = checkVal.notification.msg;
           }
         }
       }
@@ -88,42 +92,16 @@ class ToolBar extends Component {
       newObj[column.field] = tempValue;
     }, this);
 
-    if (responseType !== 'object') {
-      if (isValid) {
-        return newObj;
-      } else {
-        this.clearTimeout();
-        // show error in form and shake it
-        this.setState({ validateState, shakeEditor: true });
-        // notifier error
-        this.refs.notifier.notice(
-          'error',
-          'Form validate errors, please checking!',
-          'Pressed ESC can cancel');
-        // clear animate class
-        this.timeouteClear = setTimeout(() => {
-          this.setState({ shakeEditor: false });
-        }, 300);
-        return null;
-      }
+    if (isValid) {
+      return newObj;
     } else {
-      if (isValid) {
-        return newObj;
-      } else {
-        this.clearTimeout();
-        // show error in form and shake it
-        this.setState({ validateState, shakeEditor: true });
-        // notifier error
-        this.refs.notifier.notice(
-          checkVal.notification.type,
-          checkVal.notification.msg,
-          checkVal.notification.title);
-        // clear animate class
-        this.timeouteClear = setTimeout(() => {
-          this.setState({ shakeEditor: false });
-        }, 300);
-        return null;
-      }
+      this.clearTimeout();
+      // show error in form and shake it
+      this.setState({ validateState, shakeEditor: true });
+      this.timeouteClear = setTimeout(() => {
+        this.setState({ shakeEditor: false });
+      }, 300);
+      return null;
     }
   }
   // END
