@@ -25,7 +25,7 @@ class TableEditColumn extends Component {
     } else if (e.keyCode === 27) {
       this.props.completeEdit(
         null, this.props.rowIndex, this.props.colIndex);
-    } else if (e.type === 'click') {  // textarea click save button
+    } else if (e.type === 'click' && !this.props.blurToSave) {  // textarea click save button
       const value = e.target.parentElement.firstChild.value;
       if (!this.validator(value)) {
         return;
