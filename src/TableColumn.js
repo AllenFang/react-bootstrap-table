@@ -8,7 +8,6 @@ class TableColumn extends Component {
   }
   /* eslint no-unused-vars: [0, { "args": "after-used" }] */
   shouldComponentUpdate(nextProps, nextState) {
-    console.log('@@');
     const { children } = this.props;
     let shouldUpdated = this.props.width !== nextProps.width
       || this.props.className !== nextProps.className
@@ -44,10 +43,6 @@ class TableColumn extends Component {
       return shouldUpdated
         || this.props.cellEdit.mode !== nextProps.cellEdit.mode;
     }
-  }
-
-  componentWillUpdate() {
-    console.log('update column');
   }
 
   handleCellEdit = e => {
