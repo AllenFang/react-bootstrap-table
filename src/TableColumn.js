@@ -8,6 +8,7 @@ class TableColumn extends Component {
   }
   /* eslint no-unused-vars: [0, { "args": "after-used" }] */
   shouldComponentUpdate(nextProps, nextState) {
+    console.log('@@');
     const { children } = this.props;
     let shouldUpdated = this.props.width !== nextProps.width
       || this.props.className !== nextProps.className
@@ -24,7 +25,8 @@ class TableColumn extends Component {
       if (children.props.type === 'checkbox' || children.props.type === 'radio') {
         shouldUpdated = shouldUpdated ||
           children.props.type !== nextProps.children.props.type ||
-          children.props.checked !== nextProps.children.props.checked;
+          children.props.checked !== nextProps.children.props.checked ||
+          children.props.disabled !== nextProps.children.props.disabled;
       } else {
         shouldUpdated = true;
       }
@@ -42,6 +44,10 @@ class TableColumn extends Component {
       return shouldUpdated
         || this.props.cellEdit.mode !== nextProps.cellEdit.mode;
     }
+  }
+
+  componentWillUpdate() {
+    console.log('update column');
   }
 
   handleCellEdit = e => {
