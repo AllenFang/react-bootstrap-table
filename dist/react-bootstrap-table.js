@@ -700,7 +700,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (this.isRemoteDataSource()) {
 	        this.setState({
 	          data: nextProps.data.slice(),
-	          currPage: page
+	          currPage: page,
+	          sizePerPage: sizePerPage
 	        });
 	      } else {
 	        // #125
@@ -2235,7 +2236,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if (typeof children === 'object' && children !== null && children.props !== null) {
 	        if (children.props.type === 'checkbox' || children.props.type === 'radio') {
-	          shouldUpdated = shouldUpdated || children.props.type !== nextProps.children.props.type || children.props.checked !== nextProps.children.props.checked;
+	          shouldUpdated = shouldUpdated || children.props.type !== nextProps.children.props.type || children.props.checked !== nextProps.children.props.checked || children.props.disabled !== nextProps.children.props.disabled;
 	        } else {
 	          shouldUpdated = true;
 	        }
@@ -2358,7 +2359,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _this.props.completeEdit(value, _this.props.rowIndex, _this.props.colIndex);
 	      } else if (e.keyCode === 27) {
 	        _this.props.completeEdit(null, _this.props.rowIndex, _this.props.colIndex);
-	      } else if (e.type === 'click') {
+	      } else if (e.type === 'click' && !_this.props.blurToSave) {
 	        // textarea click save button
 	        var value = e.target.parentElement.firstChild.value;
 	        if (!_this.validator(value)) {
@@ -2391,13 +2392,24 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  _createClass(TableEditColumn, [{
 	    key: 'validator',
+
+	    // modified by iuculanop
+	    // BEGIN
 	    value: function validator(value) {
 	      var ts = this;
+	      var valid = true;
 	      if (ts.props.editable.validator) {
-	        var valid = ts.props.editable.validator(value);
-	        if (valid !== true) {
-	          ts.refs.notifier.notice('error', valid, 'Pressed ESC can cancel');
-	          var input = ts.refs.inputRef;
+	        var input = ts.refs.inputRef;
+	        var checkVal = ts.props.editable.validator(value);
+	        var responseType = typeof checkVal;
+	        if (responseType !== 'object' && checkVal !== true) {
+	          valid = false;
+	          ts.refs.notifier.notice('error', checkVal, 'Pressed ESC can cancel');
+	        } else if (responseType === 'object' && checkVal.isValid !== true) {
+	          valid = false;
+	          ts.refs.notifier.notice(checkVal.notification.type, checkVal.notification.msg, checkVal.notification.title);
+	        }
+	        if (!valid) {
 	          // animate input
 	          ts.clearTimeout();
 	          ts.setState({ shakeEditor: true });
@@ -2405,11 +2417,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            ts.setState({ shakeEditor: false });
 	          }, 300);
 	          input.focus();
-	          return false;
+	          return valid;
 	        }
 	      }
-	      return true;
+	      return valid;
 	    }
+
+	    // END
+
 	  }, {
 	    key: 'clearTimeout',
 	    value: (function (_clearTimeout) {
@@ -4136,9 +4151,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'span',
 	        null,
 	        'Showing rows ',
-	        start,
+	        start + 1,
 	        ' to ',
-	        to,
+	        to + 1,
 	        ' of ',
 	        dataSize
 	      ) : null;
@@ -4564,6 +4579,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.timeouteClear = 0;
 	      }
 	    })
+
+	    // modified by iuculanop
+	    // BEGIN
 	  }, {
 	    key: 'checkAndParseForm',
 	    value: function checkAndParseForm() {
@@ -4572,8 +4590,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var newObj = {};
 	      var validateState = {};
 	      var isValid = true;
+	      var checkVal = undefined;
+	      var responseType = undefined;
 	      var tempValue = undefined;
-	      var tempMsg = undefined;
 
 	      this.props.columns.forEach(function (column, i) {
 	        if (column.autoValue) {
@@ -4593,10 +4612,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	          if (column.editable && column.editable.validator) {
 	            // process validate
-	            tempMsg = column.editable.validator(tempValue);
-	            if (tempMsg !== true) {
+	            checkVal = column.editable.validator(tempValue);
+	            responseType = typeof checkVal;
+	            if (responseType !== 'object' && checkVal !== true) {
+	              this.refs.notifier.notice('error', 'Form validate errors, please checking!', 'Pressed ESC can cancel');
 	              isValid = false;
-	              validateState[column.field] = tempMsg;
+	              validateState[column.field] = checkVal;
+	            } else if (responseType === 'object' && checkVal.isValid !== true) {
+	              this.refs.notifier.notice(checkVal.notification.type, checkVal.notification.msg, checkVal.notification.title);
+	              isValid = false;
+	              validateState[column.field] = checkVal.notification.msg;
 	            }
 	          }
 	        }
@@ -4610,15 +4635,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.clearTimeout();
 	        // show error in form and shake it
 	        this.setState({ validateState: validateState, shakeEditor: true });
-	        // notifier error
-	        this.refs.notifier.notice('error', 'Form validate errors, please checking!', 'Pressed ESC can cancel');
-	        // clear animate class
 	        this.timeouteClear = setTimeout(function () {
 	          _this3.setState({ shakeEditor: false });
 	        }, 300);
 	        return null;
 	      }
 	    }
+
+	    // END
+
 	  }, {
 	    key: 'handleCloseBtn',
 	    value: function handleCloseBtn() {
