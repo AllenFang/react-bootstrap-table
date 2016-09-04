@@ -86,13 +86,13 @@ In the `dist` folder you have a UMD bundle with source maps (`react-bootstrap-ta
 <script/>
 ```
 
-The UMD build is also available on [npmcdn](https://npmcdn.com):
+The UMD build is also available on [unpkg](https://unpkg.com):
 
 ```html
-// source maps: https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.js.map
-<script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.js"></script>
+// source maps: https://unpkg.com/react-bootstrap-table/dist/react-bootstrap-table.js.map
+<script src="https://unpkg.com/react-bootstrap-table/dist/react-bootstrap-table.js"></script>
 // or use the min version
-<script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.min.js"></script>
+<script src="https://unpkg.com/react-bootstrap-table/dist/react-bootstrap-table.min.js"></script>
 ```
 
 ### c.Import CSS
