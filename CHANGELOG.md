@@ -1,3 +1,14 @@
+<a name="v2.5.1"></a>
+# [v2.5.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.0...v2.5.1) (2016-09-03)
+## Bug fixes
+* Fix update sizePerPage through componentWillReceiveProps does not update select list([5740871](https://github.com/doshisunny/react-bootstrap-table/commit/574087141de30ba235f3f2e49ebffb1b0f22946a))
+* Fix table didn't reflect changes of unselectable prop when passed array changes dynamically([85000f8](https://github.com/AllenFang/react-bootstrap-table/commit/85000f800fa74ef67da21ee492bde27fad8616c6))
+
+## Enhancement
+* Showing rows for paginationShowsTotal should start at 1 instead of 0([271cf10](https://github.com/AllenFang/react-bootstrap-table/commit/271cf10061b8936da19717c4c4c98169dfc70d1a))
+* Enable customized for notification messages after validation([e2d924f](https://github.com/AllenFang/react-bootstrap-table/commit/e2d924f7805c69634b8cdaae1f295b2bea90448b))
+	* check [this](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/advance/validator-table.js#L31) example
+
 <a name="v2.5.0"></a>
 # [v2.5.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.4.4...v2.5.0) (2016-08-28)
 *** Upgrade minor version ***
