@@ -6,7 +6,7 @@ const products = [];
 
 const qualityType = {
   0: 'good',
-  1: 'bad',
+  1: 'Bad',
   2: 'unknown'
 };
 

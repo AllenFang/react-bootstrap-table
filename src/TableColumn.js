@@ -24,7 +24,8 @@ class TableColumn extends Component {
       if (children.props.type === 'checkbox' || children.props.type === 'radio') {
         shouldUpdated = shouldUpdated ||
           children.props.type !== nextProps.children.props.type ||
-          children.props.checked !== nextProps.children.props.checked;
+          children.props.checked !== nextProps.children.props.checked ||
+          children.props.disabled !== nextProps.children.props.disabled;
       } else {
         shouldUpdated = true;
       }

@@ -48,13 +48,26 @@ class ToolBar extends Component {
     const validateState = {};
     let isValid = true;
     let tempMsg;
+    let responseType;
 
     this.props.columns.forEach(column => {
       if (column.editable && column.editable.validator) { // process validate
         tempMsg = column.editable.validator(newRow[column.field]);
-        if (tempMsg !== true) {
+        responseType = typeof tempMsg;
+        if (responseType !== 'object' && tempMsg !== true) {
+          this.refs.notifier.notice(
+              'error',
+              'Form validate errors, please checking!',
+              'Pressed ESC can cancel');
           isValid = false;
           validateState[column.field] = tempMsg;
+        } else if (responseType === 'object' && tempMsg.isValid !== true) {
+          this.refs.notifier.notice(
+              tempMsg.notification.type,
+              tempMsg.notification.msg,
+              tempMsg.notification.title);
+          isValid = false;
+          validateState[column.field] = tempMsg.notification.msg;
         }
       }
     });
@@ -65,12 +78,6 @@ class ToolBar extends Component {
       this.clearTimeout();
       // show error in form and shake it
       this.setState({ validateState, shakeEditor: true });
-      // notifier error
-      this.refs.notifier.notice(
-        'error',
-        'Form validate errors, please checking!',
-        'Pressed ESC can cancel');
-      // clear animate class
       this.timeouteClear = setTimeout(() => {
         this.setState({ shakeEditor: false });
       }, 300);
@@ -79,7 +86,7 @@ class ToolBar extends Component {
   }
 
   handleSaveBtnClick = (newRow) => {
-    if (!this.validateNewRow()) { // validation fail
+    if (!this.validateNewRow(newRow)) { // validation fail
       return;
     }
     const msg = this.props.onAddRow(newRow);

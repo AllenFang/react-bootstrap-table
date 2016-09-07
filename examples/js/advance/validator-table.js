@@ -29,12 +29,19 @@ const cellEditProp = {
 
 // validator function pass the user input value and should return true|false.
 function jobNameValidator(value) {
+  const response = { isValid: true, notification: { type: 'success', msg: '', title: '' } };
   if (!value) {
-    return 'Job Name is required!';
+    response.isValid = false;
+    response.notification.type = 'error';
+    response.notification.msg = 'Value must be inserted';
+    response.notification.title = 'Requested Value';
   } else if (value.length < 10) {
-    return 'Job Name length must great 10 char';
+    response.isValid = false;
+    response.notification.type = 'error';
+    response.notification.msg = 'Value must have 10+ characters';
+    response.notification.title = 'Invalid Value';
   }
-  return true;
+  return response;
 }
 
 function jobStatusValidator(value) {

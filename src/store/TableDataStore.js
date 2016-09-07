@@ -352,7 +352,9 @@ export class TableDataStore {
   }
 
   filterText(targetVal, filterVal) {
-    if (targetVal.toString().toLowerCase().indexOf(filterVal) === -1) {
+    targetVal = targetVal.toString().toLowerCase();
+    filterVal = filterVal.toString().toLowerCase();
+    if (targetVal.indexOf(filterVal) === -1) {
       return false;
     }
     return true;
