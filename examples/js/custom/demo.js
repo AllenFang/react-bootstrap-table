@@ -12,6 +12,8 @@ import DefaultCustomInsertButtonTable from './insert-button/default-custom-inser
 import FullyCustomInsertButtonTable from './insert-button/fully-custom-insert-button';
 import DefaultCustomDeleteButtonTable from './delete-button/default-custom-delete-button';
 import FullyCustomDeleteButtonTable from './delete-button/fully-custom-delete-button';
+import DefaultCustomShowSelectButtonTable from './show-only-select-button/default-custom-show-select-button';
+import FullyCustomShowSelectButtonTable from './show-only-select-button/fully-custom-show-select-button';
 
 import { Col, Panel } from 'react-bootstrap';
 
@@ -58,6 +60,14 @@ class Demo extends React.Component {
         <Panel header={ 'Fully Custom for Delete Button Demo' }>
           { renderLinks('custom/delete-button/fully-custom-delete-button.js') }
           <FullyCustomDeleteButtonTable/>
+        </Panel>
+        <Panel header={ 'Default Custom for Show Only Select Button Demo' }>
+          { renderLinks('custom/show-only-select-button/default-custom-show-select-button.js') }
+          <DefaultCustomShowSelectButtonTable/>
+        </Panel>
+        <Panel header={ 'Fully Custom for Show Only Select Button Demo' }>
+          { renderLinks('custom/show-only-select-button/fully-custom-show-select-button.js') }
+          <FullyCustomShowSelectButtonTable/>
         </Panel>
       </Col>
     );
