@@ -856,7 +856,8 @@ class BootstrapTable extends Component {
             insertModalBody={ this.props.options.insertModalBody }
             insertModal={ this.props.options.insertModal }
             insertBtn={ this.props.options.insertBtn }
-            deleteBtn={ this.props.options.deleteBtn }/>
+            deleteBtn={ this.props.options.deleteBtn }
+            showSelectedOnlyBtn={ this.props.options.showSelectedOnlyBtn }/>
         </div>
       );
     } else {
@@ -1058,7 +1059,8 @@ BootstrapTable.propTypes = {
     insertModalFooter: PropTypes.func,
     insertModal: PropTypes.func,
     insertBtn: PropTypes.func,
-    deleteBtn: PropTypes.func
+    deleteBtn: PropTypes.func,
+    showSelectedOnlyBtn: PropTypes.func
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1156,7 +1158,8 @@ BootstrapTable.defaultProps = {
     insertModalFooter: undefined,
     insertModal: undefined,
     insertBtn: undefined,
-    deleteBtn: undefined
+    deleteBtn: undefined,
+    showSelectedOnlyBtn: undefined
   },
   fetchInfo: {
     dataTotalSize: 0
