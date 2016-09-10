@@ -7,6 +7,7 @@ import Notifier from '../Notification.js';
 import InsertModal from './InsertModal';
 import InsertButton from './InsertButton';
 import DeleteButton from './DeleteButton';
+import ShowSelectedOnlyButton from './ShowSelectedOnlyButton';
 
 class ToolBar extends Component {
 
@@ -215,15 +216,21 @@ class ToolBar extends Component {
     }
 
     if (this.props.enableShowOnlySelected) {
-      showSelectedOnlyBtn = (
-        <button type='button'
-          onClick={ this.handleShowOnlyToggle }
-          className='btn btn-primary'
-          data-toggle='button'
-          aria-pressed='false'>
-          { this.state.showSelected ? Const.SHOW_ALL : Const.SHOW_ONLY_SELECT }
-        </button>
-      );
+      if (this.props.showSelectedOnlyBtn) {
+        showSelectedOnlyBtn = this.props.showSelectedOnlyBtn(
+          this.handleShowOnlyToggle, this.state.showSelected);
+        if (showSelectedOnlyBtn.type.name === ShowSelectedOnlyButton.name) {
+          showSelectedOnlyBtn = React.cloneElement(showSelectedOnlyBtn, {
+            onClick: this.handleShowOnlyToggle,
+            toggle: this.state.showSelected
+          });
+        }
+      } else {
+        showSelectedOnlyBtn = (
+          <ShowSelectedOnlyButton toggle={ this.state.showSelected }
+            onClick={ this.handleShowOnlyToggle }/>
+        );
+      }
     }
 
     if (this.props.enableExportCSV) {
@@ -359,7 +366,8 @@ ToolBar.propTypes = {
   insertModalFooter: PropTypes.func,
   insertModal: PropTypes.func,
   insertBtn: PropTypes.func,
-  deleteBtn: PropTypes.func
+  deleteBtn: PropTypes.func,
+  showSelectedOnlyBtn: PropTypes.func
 };
 
 ToolBar.defaultProps = {
