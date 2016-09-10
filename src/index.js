@@ -5,6 +5,7 @@ import InsertModalBody from './toolbar/InsertModalBody';
 import InsertModalFooter from './toolbar/InsertModalFooter';
 import InsertButton from './toolbar/InsertButton';
 import DeleteButton from './toolbar/DeleteButton';
+import ShowSelectedOnlyButton from './toolbar/ShowSelectedOnlyButton';
 
 if (typeof window !== 'undefined') {
   window.BootstrapTable = BootstrapTable;
@@ -14,6 +15,7 @@ if (typeof window !== 'undefined') {
   window.InsertModalFooter = InsertModalFooter;
   window.InsertButton = InsertButton;
   window.DeleteButton = DeleteButton;
+  window.ShowSelectedOnlyButton = ShowSelectedOnlyButton;
 }
 export {
   BootstrapTable,
@@ -22,5 +24,6 @@ export {
   InsertModalBody,
   InsertModalFooter,
   InsertButton,
-  DeleteButton
+  DeleteButton,
+  ShowSelectedOnlyButton
 };
