@@ -35,7 +35,7 @@ class PaginationList extends Component {
   changeSizePerPage = e => {
     e.preventDefault();
 
-    const selectSize = parseInt(e.currentTarget.text, 10);
+    const selectSize = parseInt(e.currentTarget.getAttribute('data-page'), 10);
     let { currPage } = this.props;
     if (selectSize !== this.props.sizePerPage) {
       this.totalPages = Math.ceil(this.props.dataSize / selectSize);
@@ -69,11 +69,14 @@ class PaginationList extends Component {
     };
 
     const sizePerPageOptions = sizePerPageList.map((_sizePerPage) => {
+      const pageText = _sizePerPage.text || _sizePerPage;
+      const pageNum = _sizePerPage.value || _sizePerPage;
       return (
-        <li key={ _sizePerPage } role='presentation'>
+        <li key={ pageText } role='presentation'>
           <a role='menuitem'
             tabIndex='-1' href='#'
-            onClick={ this.changeSizePerPage }>{ _sizePerPage }</a>
+            data-page={ pageNum }
+            onClick={ this.changeSizePerPage }>{ pageText }</a>
         </li>
       );
     });
