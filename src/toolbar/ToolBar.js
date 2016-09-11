@@ -7,6 +7,7 @@ import Notifier from '../Notification.js';
 import InsertModal from './InsertModal';
 import InsertButton from './InsertButton';
 import DeleteButton from './DeleteButton';
+import ExportCSVButton from './ExportCSVButton';
 import ShowSelectedOnlyButton from './ShowSelectedOnlyButton';
 
 class ToolBar extends Component {
@@ -180,7 +181,7 @@ class ToolBar extends Component {
     this.modalClassName = 'bs-table-modal-sm' + ToolBar.modalSeq++;
     let insertBtn = null;
     let deleteBtn = null;
-    let exportCSV = null;
+    let exportCSVBtn = null;
     let showSelectedOnlyBtn = null;
 
     if (this.props.enableInsert) {
@@ -234,13 +235,19 @@ class ToolBar extends Component {
     }
 
     if (this.props.enableExportCSV) {
-      exportCSV = (
-        <button type='button'
-          className='btn btn-success hidden-print'
-          onClick={ this.handleExportCSV }>
-            <i className='glyphicon glyphicon-export'></i>{ this.props.exportCSVText }
-        </button>
-      );
+      if (this.props.exportCSVBtn) {
+        exportCSVBtn = this.props.exportCSVBtn(this.handleExportCSV);
+        if (exportCSVBtn.type.name === ExportCSVButton.name) {
+          exportCSVBtn = React.cloneElement(exportCSVBtn, {
+            onClick: this.handleExportCSV
+          });
+        }
+      } else {
+        exportCSVBtn = (
+          <ExportCSVButton btnText={ this.props.exportCSVText }
+            onClick={ this.handleExportCSV }/>
+        );
+      }
     }
 
     const searchTextInput = this.renderSearchPanel();
@@ -250,7 +257,7 @@ class ToolBar extends Component {
       <div className='row'>
         <div className='col-xs-12 col-sm-6 col-md-6 col-lg-8'>
           <div className='btn-group btn-group-sm' role='group'>
-            { exportCSV }
+            { exportCSVBtn }
             { insertBtn }
             { deleteBtn }
             { showSelectedOnlyBtn }
@@ -367,7 +374,8 @@ ToolBar.propTypes = {
   insertModal: PropTypes.func,
   insertBtn: PropTypes.func,
   deleteBtn: PropTypes.func,
-  showSelectedOnlyBtn: PropTypes.func
+  showSelectedOnlyBtn: PropTypes.func,
+  exportCSVBtn: PropTypes.func
 };
 
 ToolBar.defaultProps = {
