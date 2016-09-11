@@ -94,48 +94,48 @@ gulp.task('example-server', function() {
 //------------
 // DEMO
 // -----------
-gulp.task("dev", function() {
-  watching = true;
-  buildDemoCode();
-});
+// gulp.task("dev", function() {
+//   watching = true;
+//   buildDemoCode();
+// });
 
-function buildDemoCode() {
-  demo = true;
-  browserifing("./demo/js/demo.js", "demo.bundle.js", "./demo/js");
-}
+// function buildDemoCode() {
+//   demo = true;
+//   browserifing("./demo/js/demo.js", "demo.bundle.js", "./demo/js");
+// }
 
-function browserifing(main, bundleName, dest) {
-  var b = browserify({
-    entries: [main],
-    transform: ["babelify"],
-    cache: {},
-    debug: true,
-    packageCache: {},
-    fullPaths: true,
-  });
+// function browserifing(main, bundleName, dest) {
+//   var b = browserify({
+//     entries: [main],
+//     transform: ["babelify"],
+//     cache: {},
+//     debug: true,
+//     packageCache: {},
+//     fullPaths: true,
+//   });
+//
+//   if (demo)
+//     b = b.require(require.resolve('./src/index.js'), {
+//       expose: 'react-bootstrap-table'
+//     });
+//
+//   if (watching) {
+//     b = watchify(b);
+//     b.on('update', function() {
+//       bundle(b, bundleName, dest);
+//     });
+//   }
+//   bundle(b, bundleName, dest);
+// }
 
-  if (demo)
-    b = b.require(require.resolve('./src/index.js'), {
-      expose: 'react-bootstrap-table'
-    });
-
-  if (watching) {
-    b = watchify(b);
-    b.on('update', function() {
-      bundle(b, bundleName, dest);
-    });
-  }
-  bundle(b, bundleName, dest);
-}
-
-function bundle(b, bundleName, dest) {
-  b.bundle()
-    .on('error', function(err) {
-      console.log(err.message);
-    })
-    .on('end', function() {
-      console.log("building success.");
-    })
-    .pipe(source(bundleName))
-    .pipe(gulp.dest(dest));
-}
+// function bundle(b, bundleName, dest) {
+//   b.bundle()
+//     .on('error', function(err) {
+//       console.log(err.message);
+//     })
+//     .on('end', function() {
+//       console.log("building success.");
+//     })
+//     .pipe(source(bundleName))
+//     .pipe(gulp.dest(dest));
+// }

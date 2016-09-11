@@ -926,10 +926,19 @@ class BootstrapTable extends Component {
   }
 
   _adjustHeight = () => {
-    if ((typeof this.props.height === 'number' && !isNaN(this.props.height)) ||
-      this.props.height.indexOf('%') === -1) {
+    const { height } = this.props;
+    let { maxHeight } = this.props;
+    if ((typeof height === 'number' && !isNaN(height)) || height.indexOf('%') === -1) {
       this.refs.body.refs.container.style.height =
-        parseFloat(this.props.height, 10) - this.refs.header.refs.container.offsetHeight + 'px';
+        parseFloat(height, 10) - this.refs.header.refs.container.offsetHeight + 'px';
+    }
+    if (maxHeight) {
+      maxHeight = typeof maxHeight === 'number' ?
+        maxHeight :
+        parseInt(maxHeight.replace('px', ''), 10);
+
+      this.refs.body.refs.container.style.maxHeight =
+        maxHeight - this.refs.header.refs.container.offsetHeight + 'px';
     }
   }
 
