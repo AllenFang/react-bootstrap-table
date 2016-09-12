@@ -1,3 +1,13 @@
+<a name="v2.5.2"></a>
+# [v2.5.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.1...v2.5.2) (2016-09-11)
+## Bug fixes
+* Fix select filter not working as expected([1d3960c](https://github.com/AllenFang/react-bootstrap-table/commit/1d3960c97cadb636be74a42111cae53a12b2f587))
+	* Check [#589](https://github.com/AllenFang/react-bootstrap-table/issues/589)
+* Fix pagination covers table when setting maxheight([dcc54d2](https://github.com/AllenFang/react-bootstrap-table/commit/dcc54d2e3b9aa542459f4c023ae48bacff478aec))
+
+## Enhancement
+* Allow ```sizePerPageList``` accept an object which follow this format ```{ text: '10', value: 10 }```([635b838](https://github.com/AllenFang/react-bootstrap-table/commit/635b83837e991d418c47eab9b7d375d2c5162950))
+
 <a name="v2.5.1"></a>
 # [v2.5.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.0...v2.5.1) (2016-09-03)
 ## Bug fixes
