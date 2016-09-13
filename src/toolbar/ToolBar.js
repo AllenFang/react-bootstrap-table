@@ -179,6 +179,7 @@ class ToolBar extends Component {
 
   render() {
     this.modalClassName = 'bs-table-modal-sm' + ToolBar.modalSeq++;
+    let toolbar = null;
     let insertBtn = null;
     let deleteBtn = null;
     let exportCSVBtn = null;
@@ -253,23 +254,41 @@ class ToolBar extends Component {
     const searchTextInput = this.renderSearchPanel();
     const modal = this.props.enableInsert ? this.renderInsertRowModal() : null;
 
-    return (
-      <div className='row'>
-        <div className='col-xs-12 col-sm-6 col-md-6 col-lg-8'>
-          <div className='btn-group btn-group-sm' role='group'>
-            { exportCSVBtn }
-            { insertBtn }
-            { deleteBtn }
-            { showSelectedOnlyBtn }
+    if (this.props.toolBar) {
+      toolbar = this.props.toolBar({
+        exportCSVBtn,
+        insertBtn,
+        deleteBtn,
+        showSelectedOnlyBtn,
+        searchTextInput
+      });
+      console.log(toolbar);
+
+      // TODO
+      // How to append JSX into another JSX
+      // Should we use findDOMNode and operate the dom directly?
+      toolbar = React.cloneElement(toolbar, { children: (<p>HelloWord</p>) });
+    } else {
+      toolbar = (
+        <div className='row'>
+          <div className='col-xs-12 col-sm-6 col-md-6 col-lg-8'>
+            <div className='btn-group btn-group-sm' role='group'>
+              { exportCSVBtn }
+              { insertBtn }
+              { deleteBtn }
+              { showSelectedOnlyBtn }
+            </div>
           </div>
+          <div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+            { searchTextInput }
+          </div>
+          <Notifier ref='notifier' />
+          { modal }
         </div>
-        <div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-          { searchTextInput }
-        </div>
-        <Notifier ref='notifier' />
-        { modal }
-      </div>
-    );
+      );
+    }
+
+    return toolbar;
   }
 
   renderSearchPanel() {
@@ -375,7 +394,8 @@ ToolBar.propTypes = {
   insertBtn: PropTypes.func,
   deleteBtn: PropTypes.func,
   showSelectedOnlyBtn: PropTypes.func,
-  exportCSVBtn: PropTypes.func
+  exportCSVBtn: PropTypes.func,
+  toolBar: PropTypes.func
 };
 
 ToolBar.defaultProps = {

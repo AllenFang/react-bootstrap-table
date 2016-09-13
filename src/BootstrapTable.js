@@ -858,7 +858,8 @@ class BootstrapTable extends Component {
             insertBtn={ this.props.options.insertBtn }
             deleteBtn={ this.props.options.deleteBtn }
             showSelectedOnlyBtn={ this.props.options.showSelectedOnlyBtn }
-            exportCSVBtn={ this.props.options.exportCSVBtn }/>
+            exportCSVBtn={ this.props.options.exportCSVBtn }
+            toolBar={ this.props.options.toolBar }/>
         </div>
       );
     } else {
@@ -1071,7 +1072,8 @@ BootstrapTable.propTypes = {
     insertBtn: PropTypes.func,
     deleteBtn: PropTypes.func,
     showSelectedOnlyBtn: PropTypes.func,
-    exportCSVBtn: PropTypes.func
+    exportCSVBtn: PropTypes.func,
+    toolBar: PropTypes.func
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1171,7 +1173,8 @@ BootstrapTable.defaultProps = {
     insertBtn: undefined,
     deleteBtn: undefined,
     showSelectedOnlyBtn: undefined,
-    exportCSVBtn: undefined
+    exportCSVBtn: undefined,
+    toolBar: undefined
   },
   fetchInfo: {
     dataTotalSize: 0
