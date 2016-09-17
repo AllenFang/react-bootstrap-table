@@ -83,7 +83,8 @@ class PaginationList extends Component {
 
     const offset = Math.abs(Const.PAGE_START_INDEX - pageStartIndex);
     const start = ((currPage - pageStartIndex) * sizePerPage);
-    const to = Math.min((sizePerPage * (currPage + offset) - 1), dataSize);
+    let to = Math.min((sizePerPage * (currPage + offset) - 1), dataSize);
+    if (to >= dataSize) to--;
     let total = paginationShowsTotal ? <span>
       Showing rows { start + 1 } to&nbsp;{ to + 1 } of&nbsp;{ dataSize }
     </span> : null;
