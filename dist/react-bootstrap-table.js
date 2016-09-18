@@ -240,19 +240,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props$selectRow = _this.props.selectRow;
 	      var onSelectAll = _props$selectRow.onSelectAll;
 	      var unselectable = _props$selectRow.unselectable;
+	      var selected = _props$selectRow.selected;
 
 	      var selectedRowKeys = [];
 	      var result = true;
-	      var rows = _this.store.get();
+	      var rows = isSelected ? _this.store.get() : _this.store.getRowByKey(_this.state.selectedRowKeys);
 
-	      if (isSelected && unselectable && unselectable.length > 0) {
-	        rows = rows.filter(function (r) {
-	          return unselectable.indexOf(r[keyField]) === -1;
-	        });
+	      if (unselectable && unselectable.length > 0) {
+	        if (isSelected) {
+	          rows = rows.filter(function (r) {
+	            return unselectable.indexOf(r[keyField]) === -1 || selected && selected.indexOf(r[keyField]) !== -1;
+	          });
+	        } else {
+	          rows = rows.filter(function (r) {
+	            return unselectable.indexOf(r[keyField]) === -1;
+	          });
+	        }
 	      }
 
 	      if (onSelectAll) {
-	        result = _this.props.selectRow.onSelectAll(isSelected, isSelected ? rows : _this.store.getRowByKey(_this.state.selectedRowKeys));
+	        result = _this.props.selectRow.onSelectAll(isSelected, rows);
 	      }
 
 	      if (typeof result == 'undefined' || result !== false) {
@@ -260,6 +267,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	          selectedRowKeys = Array.isArray(result) ? result : rows.map(function (r) {
 	            return r[keyField];
 	          });
+	        } else {
+	          if (unselectable && selected) {
+	            selectedRowKeys = selected.filter(function (r) {
+	              return unselectable.indexOf(r) > -1;
+	            });
+	          }
 	        }
 
 	        _this.store.setSelectedRowKey(selectedRowKeys);
@@ -865,19 +878,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'isSelectAll',
 	    value: function isSelectAll() {
 	      if (this.store.isEmpty()) return false;
-
+	      var unselectable = this.props.selectRow.unselectable;
 	      var defaultSelectRowKeys = this.store.getSelectedRowKeys();
 	      var allRowKeys = this.store.getAllRowkey();
 
 	      if (defaultSelectRowKeys.length === 0) return false;
 	      var match = 0;
 	      var noFound = 0;
+	      var unSelectableCnt = 0;
 	      defaultSelectRowKeys.forEach(function (selected) {
 	        if (allRowKeys.indexOf(selected) !== -1) match++;else noFound++;
+	        if (unselectable && unselectable.indexOf(selected) !== -1) unSelectableCnt++;
 	      });
 
 	      if (noFound === defaultSelectRowKeys.length) return false;
-	      return match === allRowKeys.length ? true : 'indeterminate';
+	      if (match === allRowKeys.length) {
+	        return true;
+	      } else {
+	        if (unselectable && match <= unSelectableCnt && unSelectableCnt === unselectable.length) return false;else return 'indeterminate';
+	      }
+	      // return (match === allRowKeys.length) ? true : 'indeterminate';
 	    }
 	  }, {
 	    key: 'cleanSelected',
@@ -21096,6 +21116,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var offset = Math.abs(_Const2['default'].PAGE_START_INDEX - pageStartIndex);
 	      var start = (currPage - pageStartIndex) * sizePerPage;
 	      var to = Math.min(sizePerPage * (currPage + offset) - 1, dataSize);
+	      if (to >= dataSize) to--;
 	      var total = paginationShowsTotal ? _react2['default'].createElement(
 	        'span',
 	        null,
