@@ -54,9 +54,11 @@ class PriceEditor extends React.Component {
           style={ { display: 'inline', width: '50%' } }
           type='text'
           value={ this.state.amount }
+          onKeyDown={ this.props.onKeyDown }
           onChange={ (ev) => { this.setState({ amount: parseInt(ev.currentTarget.value, 10) }); } } />
         <select
           value={ this.state.currency }
+          onKeyDown={ this.props.onKeyDown }
           onChange={ (ev) => { this.setState({ currency: ev.currentTarget.value }); } } >
           { currencies.map(currency => (<option key={ currency } value={ currency }>{ currency }</option>)) }
         </select>
@@ -98,6 +100,7 @@ class RegionsEditor extends React.Component {
           key={ region }
           name={ region }
           checked={ this.state.regions.indexOf(region) > -1 }
+          onKeyDown={ this.props.onKeyDown }
           onChange={ this.onToggleRegion } />
         <label key={ `label-${region}` } htmlFor={ region }>{ region }</label>
       </span>
