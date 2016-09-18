@@ -22441,7 +22441,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      try {
 	        return new RegExp(filterVal, 'i').test(targetVal);
 	      } catch (e) {
-	        console.error('Invalid regular expression');
 	        return true;
 	      }
 	    }
