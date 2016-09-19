@@ -1,3 +1,12 @@
+<a name="v2.5.3"></a>
+# [v2.5.3](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.2...v2.5.3) (2016-09-18)
+## Bug fixes
+* Fix wrong text for pagination show totals([62ce772](https://github.com/AllenFang/react-bootstrap-table/commit/62ce7727f2dba0e1edf0c1c7fcc6b0fb795b1d40))
+* Should not deselect disabled checked checkbox on click on unselected all([41e3723](https://github.com/AllenFang/react-bootstrap-table/commit/41e3723b967a4793cf5428e66c621309ce030207))
+
+## Enhancement
+* Avoid console error for invalid regex in regex-filter([ef15ce0](https://github.com/AllenFang/react-bootstrap-table/pull/711/commits/ef15ce0cad9dee2df111485cf59c96dec65eaf97))
+
 <a name="v2.5.2"></a>
 # [v2.5.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.1...v2.5.2) (2016-09-11)
 ## Bug fixes
