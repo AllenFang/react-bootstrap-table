@@ -9,6 +9,7 @@ import InsertButton from './InsertButton';
 import DeleteButton from './DeleteButton';
 import ExportCSVButton from './ExportCSVButton';
 import ShowSelectedOnlyButton from './ShowSelectedOnlyButton';
+import SearchField from './SearchField';
 
 class ToolBar extends Component {
 
@@ -311,11 +312,9 @@ class ToolBar extends Component {
 
       return (
         <div className={ classNames }>
-          <input ref='seachInput'
-            className='form-control'
-            type='text'
+          <SearchField
             defaultValue={ this.props.defaultSearch }
-            placeholder={ this.props.searchPlaceholder ? this.props.searchPlaceholder : 'Search' }
+            placeholder={ this.props.searchPlaceholder }
             onKeyUp={ this.handleKeyUp }/>
             { clearBtn }
         </div>
