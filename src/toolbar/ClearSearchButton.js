@@ -9,7 +9,7 @@ class ClearSearchButton extends Component {
       btnContextual,
       wrapperClass,
       btnClass,
-      onClick
+      onClick,
       btnText
     } = this.props;
     return (

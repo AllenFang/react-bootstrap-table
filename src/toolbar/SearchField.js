@@ -1,14 +1,24 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 
 class SearchField extends Component {
+
+  getValue() {
+    return ReactDOM.findDOMNode(this).value;
+  }
+
+  setValue(value) {
+    ReactDOM.findDOMNode(this).value = value;
+  }
+
   render() {
     return (
-      <input ref='seachInput'
+      <input
         className={ `form-control ${this.props.className}` }
         type='text'
         defaultValue={ this.props.defaultValue }
         placeholder={ this.props.placeholder || SearchField.defaultProps.placeholder }
-        onKeyUp={ this.onKeyUp }/>
+        onKeyUp={ this.props.onKeyUp }/>
     );
   }
 }
