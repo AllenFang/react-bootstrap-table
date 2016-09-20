@@ -10,6 +10,7 @@ import DeleteButton from './DeleteButton';
 import ExportCSVButton from './ExportCSVButton';
 import ShowSelectedOnlyButton from './ShowSelectedOnlyButton';
 import SearchField from './SearchField';
+import ClearSearchButton from './ClearSearchButton';
 
 class ToolBar extends Component {
 
@@ -298,14 +299,7 @@ class ToolBar extends Component {
       let clearBtn = null;
       if (this.props.clearSearch) {
         clearBtn = (
-          <span className='input-group-btn'>
-            <button
-              className='btn btn-default'
-              type='button'
-              onClick={ this.handleClearBtnClick }>
-              Clear
-            </button>
-          </span>
+          <ClearSearchButton onClick={ this.handleClearBtnClick }/>
         );
         classNames += ' input-group input-group-sm';
       }
