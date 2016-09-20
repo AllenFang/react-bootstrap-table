@@ -21,17 +21,18 @@ class TableEditColumn extends Component {
       if (!this.validator(value)) {
         return;
       }
-      this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
+      this.props.completeEdit(
+        value, this.props.sectionKey, this.props.rowIndex, this.props.colIndex);
     } else if (e.keyCode === 27) {
       this.props.completeEdit(
-        null, this.props.rowIndex, this.props.colIndex);
+        null, this.props.sectionKey, this.props.rowIndex, this.props.colIndex);
     } else if (e.type === 'click' && !this.props.blurToSave) {  // textarea click save button
       const value = e.target.parentElement.firstChild.value;
       if (!this.validator(value)) {
         return;
       }
       this.props.completeEdit(
-          value, this.props.rowIndex, this.props.colIndex);
+          value, this.props.sectionKey, this.props.rowIndex, this.props.colIndex);
     }
   }
 
@@ -44,12 +45,13 @@ class TableEditColumn extends Component {
         return;
       }
       this.props.completeEdit(
-          value, this.props.rowIndex, this.props.colIndex);
+          value, this.props.sectionKey, this.props.rowIndex, this.props.colIndex);
     }
   }
 
   handleCustomUpdate = value => {
-    this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
+    this.props.completeEdit(
+      value, this.props.sectionKey, this.props.rowIndex, this.props.colIndex);
   }
 
   // modified by iuculanop
@@ -144,6 +146,7 @@ class TableEditColumn extends Component {
 
 TableEditColumn.propTypes = {
   completeEdit: PropTypes.func,
+  sectionKey: PropTypes.string,
   rowIndex: PropTypes.number,
   colIndex: PropTypes.number,
   blurToSave: PropTypes.bool,
@@ -159,5 +162,8 @@ TableEditColumn.propTypes = {
   ])
 };
 
+TableEditColumn.defaultProps = {
+  sectionKey: 'default'
+};
 
 export default TableEditColumn;

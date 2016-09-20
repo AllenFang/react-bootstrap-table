@@ -36,7 +36,12 @@ function _sort(arr, sortField, order, sortFunc, sortFuncExtraData) {
 export class TableDataStore {
 
   constructor(data) {
-    this.data = data;
+    if (Array.isArray(this.data)) {
+      this.data = data.slice();
+    } else {
+      this.data = data;
+    }
+
     this.colInfos = null;
     this.filteredData = null;
     this.isOnFilter = false;
@@ -59,7 +64,12 @@ export class TableDataStore {
   }
 
   setData(data) {
-    this.data = data;
+    if (Array.isArray(this.data)) {
+      this.data = data.slice();
+    } else {
+      this.data = data;
+    }
+
     if (this.remote) {
       return;
     }
@@ -83,7 +93,11 @@ export class TableDataStore {
   }
 
   setSelectedRowKey(selectedRowKeys) {
-    this.selected = selectedRowKeys;
+    if (Array.isArray(this.data)) {
+      this.selected = selectedRowKeys.slice();
+    } else {
+      // return [] TODO
+    }
   }
 
   getRowByKey(keys) {
@@ -155,6 +169,28 @@ export class TableDataStore {
     }
     if (this.isOnFilter) {
       this.data.forEach(function(row) {
+        if (row[this.keyField] === rowKeyCache) {
+          row[fieldName] = newVal;
+        }
+      }, this);
+      if (this.filterObj !== null) this.filter(this.filterObj);
+      if (this.searchText !== null) this.search(this.searchText);
+    }
+    return this;
+  }
+
+  edit(newVal, rowIndex, fieldName, sectionKey) {
+    const currentDisplayData = this.getCurrentDisplayData();
+    let rowKeyCache;
+    if (!this.enablePagination) {
+      currentDisplayData[sectionKey][rowIndex][fieldName] = newVal;
+      rowKeyCache = currentDisplayData[sectionKey][rowIndex][this.keyField];
+    } else {
+      currentDisplayData[sectionKey][this.pageObj.start + rowIndex][fieldName] = newVal;
+      rowKeyCache = currentDisplayData[sectionKey][this.pageObj.start + rowIndex][this.keyField];
+    }
+    if (this.isOnFilter) {
+      this.data[sectionKey].forEach(function(row) {
         if (row[this.keyField] === rowKeyCache) {
           row[fieldName] = newVal;
         }
@@ -556,8 +592,12 @@ export class TableDataStore {
   }
 
   getAllRowkey() {
-    return this.data.map(row => {
-      return row[this.keyField];
-    });
+    if (Array.isArray(this.data)) {
+      return this.data.map(row => {
+        return row[this.keyField];
+      });
+    } else {
+      // return [] TODO
+    }
   }
 }

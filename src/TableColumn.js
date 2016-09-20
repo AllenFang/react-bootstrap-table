@@ -55,6 +55,7 @@ class TableColumn extends Component {
       }
     }
     this.props.onEdit(
+      this.props.sectionKey,
       e.currentTarget.parentElement.rowIndex + 1,
       e.currentTarget.cellIndex,
       e);
@@ -85,6 +86,7 @@ class TableColumn extends Component {
   }
 }
 TableColumn.propTypes = {
+  sectionKey: PropTypes.string,
   dataAlign: PropTypes.string,
   hidden: PropTypes.bool,
   className: PropTypes.string,
@@ -93,6 +95,7 @@ TableColumn.propTypes = {
 };
 
 TableColumn.defaultProps = {
+  sectionKey: 'default',
   dataAlign: 'left',
   hidden: false,
   className: ''

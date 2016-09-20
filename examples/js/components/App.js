@@ -26,6 +26,9 @@ class App extends React.Component {
       text: 'Basic Table',
       href: 'basic'
     }, {
+      text: 'Table with sections',
+      href: 'sections'
+    }, {
       text: 'Work on Column',
       href: 'column'
     }, {
