@@ -16,6 +16,8 @@ import DefaultCustomShowSelectButtonTable from './show-only-select-button/defaul
 import FullyCustomShowSelectButtonTable from './show-only-select-button/fully-custom-show-select-button';
 import DefaultCustomExportCSVButtonTable from './csv-button/default-custom-csv-button';
 import FullyCustomExportCSVButtonTable from './csv-button/fully-custom-csv-button';
+import DefaultCustomClearButtonTable from './search/default-custom-search-clear-button';
+import FullyCustomClearButtonTable from './search/fully-custom-search-clear-button';
 
 import { Col, Panel } from 'react-bootstrap';
 
@@ -78,6 +80,14 @@ class Demo extends React.Component {
         <Panel header={ 'Fully Custom for Show Only Select Button Demo' }>
           { renderLinks('custom/show-only-select-button/fully-custom-show-select-button.js') }
           <FullyCustomShowSelectButtonTable/>
+        </Panel>
+        <Panel header={ 'Default Custom for Clear Search Button Demo' }>
+          { renderLinks('custom/search/default-custom-search-clear-button.js') }
+          <DefaultCustomClearButtonTable/>
+        </Panel>
+        <Panel header={ 'Fully Custom for Clear Search Button Demo' }>
+          { renderLinks('custom/search/fully-custom-search-clear-button.js') }
+          <FullyCustomClearButtonTable/>
         </Panel>
       </Col>
     );
