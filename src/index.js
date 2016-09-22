@@ -7,6 +7,7 @@ import InsertButton from './toolbar/InsertButton';
 import DeleteButton from './toolbar/DeleteButton';
 import ExportCSVButton from './toolbar/ExportCSVButton';
 import ShowSelectedOnlyButton from './toolbar/ShowSelectedOnlyButton';
+import ClearSearchButton from './toolbar/ClearSearchButton';
 
 if (typeof window !== 'undefined') {
   window.BootstrapTable = BootstrapTable;
@@ -18,6 +19,7 @@ if (typeof window !== 'undefined') {
   window.DeleteButton = DeleteButton;
   window.ShowSelectedOnlyButton = ShowSelectedOnlyButton;
   window.ExportCSVButton = ExportCSVButton;
+  window.ClearSearchButton = ClearSearchButton;
 }
 export {
   BootstrapTable,
@@ -28,5 +30,6 @@ export {
   InsertButton,
   DeleteButton,
   ShowSelectedOnlyButton,
-  ExportCSVButton
+  ExportCSVButton,
+  ClearSearchButton
 };

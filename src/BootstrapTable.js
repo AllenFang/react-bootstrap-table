@@ -859,6 +859,7 @@ class BootstrapTable extends Component {
             deleteBtn={ this.props.options.deleteBtn }
             showSelectedOnlyBtn={ this.props.options.showSelectedOnlyBtn }
             exportCSVBtn={ this.props.options.exportCSVBtn }
+            clearSearchBtn={ this.props.options.clearSearchBtn }
             toolBar={ this.props.options.toolBar }/>
         </div>
       );
@@ -1073,6 +1074,7 @@ BootstrapTable.propTypes = {
     deleteBtn: PropTypes.func,
     showSelectedOnlyBtn: PropTypes.func,
     exportCSVBtn: PropTypes.func,
+    clearSearchBtn: PropTypes.func,
     toolBar: PropTypes.func
   }),
   fetchInfo: PropTypes.shape({
@@ -1174,6 +1176,7 @@ BootstrapTable.defaultProps = {
     deleteBtn: undefined,
     showSelectedOnlyBtn: undefined,
     exportCSVBtn: undefined,
+    clearSearchBtn: undefined,
     toolBar: undefined
   },
   fetchInfo: {
