@@ -298,9 +298,18 @@ class ToolBar extends Component {
       let classNames = 'form-group form-group-sm react-bs-table-search-form';
       let clearBtn = null;
       if (this.props.clearSearch) {
-        clearBtn = (
-          <ClearSearchButton onClick={ this.handleClearBtnClick }/>
-        );
+        if (this.props.clearSearchBtn) {
+          clearBtn = this.props.clearSearchBtn(this.handleClearBtnClick);
+          if (clearBtn.type.name === ClearSearchButton.name) {
+            clearBtn = React.cloneElement(clearBtn, {
+              onClick: this.handleClearBtnClick
+            });
+          }
+        } else {
+          clearBtn = (
+            <ClearSearchButton onClick={ this.handleClearBtnClick }/>
+          );
+        }
         classNames += ' input-group input-group-sm';
       }
 
@@ -310,7 +319,7 @@ class ToolBar extends Component {
             defaultValue={ this.props.defaultSearch }
             placeholder={ this.props.searchPlaceholder }
             onKeyUp={ this.handleKeyUp }/>
-            { clearBtn }
+          { clearBtn }
         </div>
       );
     } else {
@@ -388,6 +397,7 @@ ToolBar.propTypes = {
   deleteBtn: PropTypes.func,
   showSelectedOnlyBtn: PropTypes.func,
   exportCSVBtn: PropTypes.func,
+  clearSearchBtn: PropTypes.func,
   toolBar: PropTypes.func
 };
 
