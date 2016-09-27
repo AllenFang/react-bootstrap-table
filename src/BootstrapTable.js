@@ -23,7 +23,7 @@ class BootstrapTable extends Component {
       this.isIE = document.documentMode;
     }
 
-    this.store = new TableDataStore(this.props.data.slice());
+    this.store = new TableDataStore(this.props.data);
 
     this.initTable(this.props);
 
@@ -155,7 +155,7 @@ class BootstrapTable extends Component {
     this.initTable(nextProps);
     const { options, selectRow } = nextProps;
 
-    this.store.setData(nextProps.data.slice());
+    this.store.setData(nextProps.data);
 
     // from #481
     let page = this.state.currPage;
@@ -170,7 +170,7 @@ class BootstrapTable extends Component {
 
     if (this.isRemoteDataSource()) {
       this.setState({
-        data: nextProps.data.slice(),
+        data: nextProps.data,
         currPage: page,
         sizePerPage
       });
@@ -205,12 +205,12 @@ class BootstrapTable extends Component {
   componentDidMount() {
     this._adjustTable();
     window.addEventListener('resize', this._adjustTable);
-    this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader);
+    this.refs.body0.refs.container.addEventListener('scroll', this._scrollHeader);
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this._adjustTable);
-    this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader);
+    this.refs.body0.refs.container.removeEventListener('scroll', this._scrollHeader);
     if (this.filter) {
       this.filter.removeAllListeners('onFilterChange');
     }
@@ -257,8 +257,65 @@ class BootstrapTable extends Component {
     const toolBar = this.renderToolBar();
     const tableFilter = this.renderTableFilter(columns);
     const isSelectAll = this.isSelectAll();
+    const tableBodies = [];
     let sortIndicator = this.props.options.sortIndicator;
     if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
+
+    if (this.props.sections === true) {
+      Object.keys(this.props.data).forEach(function(key, i) {
+        const tableBodyRef = 'body' + i;
+        tableBodies.push(
+          <TableBody ref={ tableBodyRef }
+            key= { key }
+            sectionKey = { key }
+            sections= { true }
+            sectionFormat={ this.props.sectionFormat }
+            bodyContainerClass={ this.props.bodyContainerClass }
+            tableBodyClass={ this.props.tableBodyClass }
+            style={ { ...style, ...this.props.bodyStyle } }
+            data={ this.props.data[key] }
+            columns={ columns }
+            trClassName={ this.props.trClassName }
+            striped={ this.props.striped }
+            bordered={ this.props.bordered }
+            hover={ this.props.hover }
+            keyField={ this.store.getKeyField() }
+            condensed={ this.props.condensed }
+            selectRow={ this.props.selectRow }
+            cellEdit={ this.props.cellEdit }
+            selectedRowKeys={ this.state.selectedRowKeys }
+            onRowClick={ this.handleRowClick }
+            onRowMouseOver={ this.handleRowMouseOver }
+            onRowMouseOut={ this.handleRowMouseOut }
+            onSelectRow={ this.handleSelectRow }
+            noDataText={ this.props.options.noDataText } />
+        );
+      }, this);
+    } else {
+      tableBodies.push(
+        <TableBody ref='body0'
+          bodyContainerClass={ this.props.bodyContainerClass }
+          tableBodyClass={ this.props.tableBodyClass }
+          style={ { ...style, ...this.props.bodyStyle } }
+          data={ this.props.data }
+          columns={ columns }
+          trClassName={ this.props.trClassName }
+          striped={ this.props.striped }
+          bordered={ this.props.bordered }
+          hover={ this.props.hover }
+          keyField={ this.store.getKeyField() }
+          condensed={ this.props.condensed }
+          selectRow={ this.props.selectRow }
+          cellEdit={ this.props.cellEdit }
+          selectedRowKeys={ this.state.selectedRowKeys }
+          onRowClick={ this.handleRowClick }
+          onRowMouseOver={ this.handleRowMouseOver }
+          onRowMouseOut={ this.handleRowMouseOut }
+          onSelectRow={ this.handleSelectRow }
+          noDataText={ this.props.options.noDataText } />
+      );
+    }
+
     return (
       <div className={ classSet('react-bs-table-container', this.props.containerClass) }
         style={ this.props.containerStyle }>
@@ -287,26 +344,7 @@ class BootstrapTable extends Component {
             isSelectAll={ isSelectAll }>
             { this.props.children }
           </TableHeader>
-          <TableBody ref='body'
-            bodyContainerClass={ this.props.bodyContainerClass }
-            tableBodyClass={ this.props.tableBodyClass }
-            style={ { ...style, ...this.props.bodyStyle } }
-            data={ this.state.data }
-            columns={ columns }
-            trClassName={ this.props.trClassName }
-            striped={ this.props.striped }
-            bordered={ this.props.bordered }
-            hover={ this.props.hover }
-            keyField={ this.store.getKeyField() }
-            condensed={ this.props.condensed }
-            selectRow={ this.props.selectRow }
-            cellEdit={ this.props.cellEdit }
-            selectedRowKeys={ this.state.selectedRowKeys }
-            onRowClick={ this.handleRowClick }
-            onRowMouseOver={ this.handleRowMouseOver }
-            onRowMouseOut={ this.handleRowMouseOut }
-            onSelectRow={ this.handleSelectRow }
-            noDataText={ this.props.options.noDataText } />
+          { tableBodies }
         </div>
         { tableFilter }
         { pagination }
@@ -507,9 +545,10 @@ class BootstrapTable extends Component {
     }
   }
 
-  handleEditCell(newVal, rowIndex, colIndex) {
+  handleEditCell(newVal, rowIndex, colIndex, sectionKey = null) {
     const { onCellEdit } = this.props.options;
     const { beforeSaveCell, afterSaveCell } = this.props.cellEdit;
+    let data;
     let fieldName;
     React.Children.forEach(this.props.children, function(column, i) {
       if (i === colIndex) {
@@ -518,8 +557,14 @@ class BootstrapTable extends Component {
       }
     });
 
+    if (sectionKey) {
+      data = this.state.data[sectionKey];
+    } else {
+      data = this.state.data;
+    }
+
     if (beforeSaveCell) {
-      const isValid = beforeSaveCell(this.state.data[rowIndex], fieldName, newVal);
+      const isValid = beforeSaveCell(data[rowIndex], fieldName, newVal, sectionKey);
       if (!isValid && typeof isValid !== 'undefined') {
         this.setState({
           data: this.store.get()
@@ -529,23 +574,23 @@ class BootstrapTable extends Component {
     }
 
     if (onCellEdit) {
-      newVal = onCellEdit(this.state.data[rowIndex], fieldName, newVal);
+      newVal = onCellEdit(data[rowIndex], fieldName, newVal, sectionKey);
     }
 
     if (this.isRemoteDataSource()) {
       if (afterSaveCell) {
-        afterSaveCell(this.state.data[rowIndex], fieldName, newVal);
+        afterSaveCell(data[rowIndex], fieldName, newVal, sectionKey);
       }
       return;
     }
 
-    const result = this.store.edit(newVal, rowIndex, fieldName).get();
+    const result = this.store.edit(newVal, rowIndex, fieldName, sectionKey).get();
     this.setState({
       data: result
     });
 
     if (afterSaveCell) {
-      afterSaveCell(this.state.data[rowIndex], fieldName, newVal);
+      afterSaveCell(data[rowIndex], fieldName, newVal, sectionKey);
     }
   }
 
@@ -899,7 +944,7 @@ class BootstrapTable extends Component {
   _adjustHeaderWidth = () => {
     const header = this.refs.header.refs.header;
     const headerContainer = this.refs.header.refs.container;
-    const tbody = this.refs.body.refs.tbody;
+    const tbody = this.refs.body0.refs.tbody;
     const firstRow = tbody.childNodes[0];
     const isScroll = headerContainer.offsetWidth !== tbody.parentNode.offsetWidth;
     const scrollBarWidth = isScroll ? Util.getScrollBarWidth() : 0;
@@ -939,7 +984,7 @@ class BootstrapTable extends Component {
     const { height } = this.props;
     let { maxHeight } = this.props;
     if ((typeof height === 'number' && !isNaN(height)) || height.indexOf('%') === -1) {
-      this.refs.body.refs.container.style.height =
+      this.refs.body0.refs.container.style.height =
         parseFloat(height, 10) - this.refs.header.refs.container.offsetHeight + 'px';
     }
     if (maxHeight) {
@@ -947,7 +992,7 @@ class BootstrapTable extends Component {
         maxHeight :
         parseInt(maxHeight.replace('px', ''), 10);
 
-      this.refs.body.refs.container.style.maxHeight =
+      this.refs.body0.refs.container.style.maxHeight =
         maxHeight - this.refs.header.refs.container.offsetHeight + 'px';
     }
   }
@@ -974,9 +1019,15 @@ class BootstrapTable extends Component {
       this.props.options.afterInsertRow(newObj);
     }
   }
+
+  _objectValues(obj) {
+    return Object.keys(obj).map(k => obj[k]);
+  }
+
 }
 
 BootstrapTable.propTypes = {
+  sectionFormat: PropTypes.func,
   keyField: PropTypes.string,
   height: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   maxHeight: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
@@ -1077,6 +1128,7 @@ BootstrapTable.propTypes = {
   ignoreSinglePage: PropTypes.bool
 };
 BootstrapTable.defaultProps = {
+  sections: false,
   height: '100%',
   maxHeight: undefined,
   striped: false,

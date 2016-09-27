@@ -93,7 +93,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -505,7 +505,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this._adjustHeaderWidth = function () {
 	      var header = _this.refs.header.refs.header;
 	      var headerContainer = _this.refs.header.refs.container;
-	      var tbody = _this.refs.body.refs.tbody;
+	      var tbody = _this.refs.body0.refs.tbody;
 	      var firstRow = tbody.childNodes[0];
 	      var isScroll = headerContainer.offsetWidth !== tbody.parentNode.offsetWidth;
 	      var scrollBarWidth = isScroll ? _util2['default'].getScrollBarWidth() : 0;
@@ -546,12 +546,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var maxHeight = _this.props.maxHeight;
 
 	      if (typeof height === 'number' && !isNaN(height) || height.indexOf('%') === -1) {
-	        _this.refs.body.refs.container.style.height = parseFloat(height, 10) - _this.refs.header.refs.container.offsetHeight + 'px';
+	        _this.refs.body0.refs.container.style.height = parseFloat(height, 10) - _this.refs.header.refs.container.offsetHeight + 'px';
 	      }
 	      if (maxHeight) {
 	        maxHeight = typeof maxHeight === 'number' ? maxHeight : parseInt(maxHeight.replace('px', ''), 10);
 
-	        _this.refs.body.refs.container.style.maxHeight = maxHeight - _this.refs.header.refs.container.offsetHeight + 'px';
+	        _this.refs.body0.refs.container.style.maxHeight = maxHeight - _this.refs.header.refs.container.offsetHeight + 'px';
 	      }
 	    };
 
@@ -561,7 +561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.isIE = document.documentMode;
 	    }
 
-	    this.store = new _storeTableDataStore.TableDataStore(this.props.data.slice());
+	    this.store = new _storeTableDataStore.TableDataStore(this.props.data);
 
 	    this.initTable(this.props);
 
@@ -705,7 +705,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var options = nextProps.options;
 	      var selectRow = nextProps.selectRow;
 
-	      this.store.setData(nextProps.data.slice());
+	      this.store.setData(nextProps.data);
 
 	      // from #481
 	      var page = this.state.currPage;
@@ -720,7 +720,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if (this.isRemoteDataSource()) {
 	        this.setState({
-	          data: nextProps.data.slice(),
+	          data: nextProps.data,
 	          currPage: page,
 	          sizePerPage: sizePerPage
 	        });
@@ -755,13 +755,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function componentDidMount() {
 	      this._adjustTable();
 	      window.addEventListener('resize', this._adjustTable);
-	      this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader);
+	      this.refs.body0.refs.container.addEventListener('scroll', this._scrollHeader);
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      window.removeEventListener('resize', this._adjustTable);
-	      this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader);
+	      this.refs.body0.refs.container.removeEventListener('scroll', this._scrollHeader);
 	      if (this.filter) {
 	        this.filter.removeAllListeners('onFilterChange');
 	      }
@@ -814,8 +814,61 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var toolBar = this.renderToolBar();
 	      var tableFilter = this.renderTableFilter(columns);
 	      var isSelectAll = this.isSelectAll();
+	      var tableBodies = [];
 	      var sortIndicator = this.props.options.sortIndicator;
 	      if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
+
+	      if (this.props.sections === true) {
+	        Object.keys(this.props.data).forEach(function (key, i) {
+	          var tableBodyRef = 'body' + i;
+	          tableBodies.push(_react2['default'].createElement(_TableBody2['default'], { ref: tableBodyRef,
+	            key: key,
+	            sectionKey: key,
+	            sections: true,
+	            sectionFormat: this.props.sectionFormat,
+	            bodyContainerClass: this.props.bodyContainerClass,
+	            tableBodyClass: this.props.tableBodyClass,
+	            style: _extends({}, style, this.props.bodyStyle),
+	            data: this.props.data[key],
+	            columns: columns,
+	            trClassName: this.props.trClassName,
+	            striped: this.props.striped,
+	            bordered: this.props.bordered,
+	            hover: this.props.hover,
+	            keyField: this.store.getKeyField(),
+	            condensed: this.props.condensed,
+	            selectRow: this.props.selectRow,
+	            cellEdit: this.props.cellEdit,
+	            selectedRowKeys: this.state.selectedRowKeys,
+	            onRowClick: this.handleRowClick,
+	            onRowMouseOver: this.handleRowMouseOver,
+	            onRowMouseOut: this.handleRowMouseOut,
+	            onSelectRow: this.handleSelectRow,
+	            noDataText: this.props.options.noDataText }));
+	        }, this);
+	      } else {
+	        tableBodies.push(_react2['default'].createElement(_TableBody2['default'], { ref: 'body0',
+	          bodyContainerClass: this.props.bodyContainerClass,
+	          tableBodyClass: this.props.tableBodyClass,
+	          style: _extends({}, style, this.props.bodyStyle),
+	          data: this.props.data,
+	          columns: columns,
+	          trClassName: this.props.trClassName,
+	          striped: this.props.striped,
+	          bordered: this.props.bordered,
+	          hover: this.props.hover,
+	          keyField: this.store.getKeyField(),
+	          condensed: this.props.condensed,
+	          selectRow: this.props.selectRow,
+	          cellEdit: this.props.cellEdit,
+	          selectedRowKeys: this.state.selectedRowKeys,
+	          onRowClick: this.handleRowClick,
+	          onRowMouseOver: this.handleRowMouseOver,
+	          onRowMouseOut: this.handleRowMouseOut,
+	          onSelectRow: this.handleSelectRow,
+	          noDataText: this.props.options.noDataText }));
+	      }
+
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: (0, _classnames2['default'])('react-bs-table-container', this.props.containerClass),
@@ -849,26 +902,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              isSelectAll: isSelectAll },
 	            this.props.children
 	          ),
-	          _react2['default'].createElement(_TableBody2['default'], { ref: 'body',
-	            bodyContainerClass: this.props.bodyContainerClass,
-	            tableBodyClass: this.props.tableBodyClass,
-	            style: _extends({}, style, this.props.bodyStyle),
-	            data: this.state.data,
-	            columns: columns,
-	            trClassName: this.props.trClassName,
-	            striped: this.props.striped,
-	            bordered: this.props.bordered,
-	            hover: this.props.hover,
-	            keyField: this.store.getKeyField(),
-	            condensed: this.props.condensed,
-	            selectRow: this.props.selectRow,
-	            cellEdit: this.props.cellEdit,
-	            selectedRowKeys: this.state.selectedRowKeys,
-	            onRowClick: this.handleRowClick,
-	            onRowMouseOver: this.handleRowMouseOver,
-	            onRowMouseOut: this.handleRowMouseOut,
-	            onSelectRow: this.handleSelectRow,
-	            noDataText: this.props.options.noDataText })
+	          tableBodies
 	        ),
 	        tableFilter,
 	        pagination
@@ -910,11 +944,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'handleEditCell',
 	    value: function handleEditCell(newVal, rowIndex, colIndex) {
+	      var sectionKey = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
 	      var onCellEdit = this.props.options.onCellEdit;
 	      var _props$cellEdit = this.props.cellEdit;
 	      var beforeSaveCell = _props$cellEdit.beforeSaveCell;
 	      var afterSaveCell = _props$cellEdit.afterSaveCell;
 
+	      var data = undefined;
 	      var fieldName = undefined;
 	      _react2['default'].Children.forEach(this.props.children, function (column, i) {
 	        if (i === colIndex) {
@@ -923,8 +959,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      });
 
+	      if (sectionKey) {
+	        data = this.state.data[sectionKey];
+	      } else {
+	        data = this.state.data;
+	      }
+
 	      if (beforeSaveCell) {
-	        var isValid = beforeSaveCell(this.state.data[rowIndex], fieldName, newVal);
+	        var isValid = beforeSaveCell(data[rowIndex], fieldName, newVal, sectionKey);
 	        if (!isValid && typeof isValid !== 'undefined') {
 	          this.setState({
 	            data: this.store.get()
@@ -934,23 +976,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      if (onCellEdit) {
-	        newVal = onCellEdit(this.state.data[rowIndex], fieldName, newVal);
+	        newVal = onCellEdit(data[rowIndex], fieldName, newVal, sectionKey);
 	      }
 
 	      if (this.isRemoteDataSource()) {
 	        if (afterSaveCell) {
-	          afterSaveCell(this.state.data[rowIndex], fieldName, newVal);
+	          afterSaveCell(data[rowIndex], fieldName, newVal, sectionKey);
 	        }
 	        return;
 	      }
 
-	      var result = this.store.edit(newVal, rowIndex, fieldName).get();
+	      var result = this.store.edit(newVal, rowIndex, fieldName, sectionKey).get();
 	      this.setState({
 	        data: result
 	      });
 
 	      if (afterSaveCell) {
-	        afterSaveCell(this.state.data[rowIndex], fieldName, newVal);
+	        afterSaveCell(data[rowIndex], fieldName, newVal, sectionKey);
 	      }
 	    }
 	  }, {
@@ -1163,12 +1205,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.props.options.afterInsertRow(newObj);
 	      }
 	    }
+	  }, {
+	    key: '_objectValues',
+	    value: function _objectValues(obj) {
+	      return Object.keys(obj).map(function (k) {
+	        return obj[k];
+	      });
+	    }
 	  }]);
 
 	  return BootstrapTable;
 	})(_react.Component);
 
 	BootstrapTable.propTypes = {
+	  sectionFormat: _react.PropTypes.func,
 	  keyField: _react.PropTypes.string,
 	  height: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
 	  maxHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
@@ -1265,6 +1315,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  ignoreSinglePage: _react.PropTypes.bool
 	};
 	BootstrapTable.defaultProps = {
+	  sections: false,
 	  height: '100%',
 	  maxHeight: undefined,
 	  striped: false,
@@ -1719,7 +1770,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var _get = function get(_x3, _x4, _x5) { var _again = true; _function: while (_again) { var object = _x3, property = _x4, receiver = _x5; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x3 = parent; _x4 = property; _x5 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x5, _x6, _x7) { var _again = true; _function: while (_again) { var object = _x5, property = _x6, receiver = _x7; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x5 = parent; _x6 = property; _x7 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -1766,16 +1817,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _get(Object.getPrototypeOf(TableBody.prototype), 'constructor', this).call(this, props);
 
 	    this.handleRowMouseOut = function (rowIndex, event) {
+	      rowIndex = _this._fixRowIndex(rowIndex);
 	      var targetRow = _this.props.data[rowIndex];
 	      _this.props.onRowMouseOut(targetRow, event);
 	    };
 
 	    this.handleRowMouseOver = function (rowIndex, event) {
+	      rowIndex = _this._fixRowIndex(rowIndex);
 	      var targetRow = _this.props.data[rowIndex];
 	      _this.props.onRowMouseOver(targetRow, event);
 	    };
 
 	    this.handleRowClick = function (rowIndex) {
+	      rowIndex = _this._fixRowIndex(rowIndex);
 	      var selectedRow = undefined;
 	      var _props = _this.props;
 	      var data = _props.data;
@@ -1790,6 +1844,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    this.handleSelectRow = function (rowIndex, isSelected, e) {
+	      rowIndex = _this._fixRowIndex(rowIndex);
 	      var selectedRow = undefined;
 	      var _props2 = _this.props;
 	      var data = _props2.data;
@@ -1805,12 +1860,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    this.handleSelectRowColumChange = function (e, rowIndex) {
+	      rowIndex = _this._fixRowIndex(rowIndex);
 	      if (!_this.props.selectRow.clickToSelect || !_this.props.selectRow.clickToSelectAndEditCell) {
 	        _this.handleSelectRow(rowIndex + 1, e.currentTarget.checked, e);
 	      }
 	    };
 
-	    this.handleEditCell = function (rowIndex, columnIndex, e) {
+	    this.handleEditCell = function (sectionKey, rowIndex, columnIndex, e) {
+	      rowIndex = _this._fixRowIndex(rowIndex);
 	      _this.editing = true;
 	      if (_this._isSelectRowDefined()) {
 	        columnIndex--;
@@ -1819,6 +1876,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      rowIndex--;
 	      var stateObj = {
 	        currEditCell: {
+	          sk: sectionKey,
 	          rid: rowIndex,
 	          cid: columnIndex
 	        }
@@ -1831,22 +1889,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _this.setState(stateObj);
 	    };
 
-	    this.handleCompleteEditCell = function (newVal, rowIndex, columnIndex) {
+	    this.handleCompleteEditCell = function (newVal, sectionKey, rowIndex, columnIndex) {
 	      _this.setState({ currEditCell: null });
 	      if (newVal !== null) {
-	        _this.props.cellEdit.__onCompleteEdit__(newVal, rowIndex, columnIndex);
+	        _this.props.cellEdit.__onCompleteEdit__(newVal, rowIndex, columnIndex, sectionKey);
 	      }
 	    };
 
 	    this.state = {
 	      currEditCell: null
 	    };
+
 	    this.editing = false;
 	  }
 
 	  _createClass(TableBody, [{
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
 	      var tableClasses = (0, _classnames2['default'])('table', {
 	        'table-striped': this.props.striped,
 	        'table-bordered': this.props.bordered,
@@ -1859,90 +1920,69 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var tableHeader = this.renderTableHeader(isSelectRowDefined);
 	      var inputType = this.props.selectRow.mode === _Const2['default'].ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
 	      var CustomComponent = this.props.selectRow.customComponent;
+	      var tableRows = [];
 
-	      var tableRows = this.props.data.map(function (data, r) {
-	        var tableColumns = this.props.columns.map(function (column, i) {
-	          var fieldValue = data[column.name];
-	          if (this.editing && column.name !== this.props.keyField && // Key field can't be edit
-	          column.editable && // column is editable? default is true, user can set it false
-	          this.state.currEditCell !== null && this.state.currEditCell.rid === r && this.state.currEditCell.cid === i) {
-	            var editable = column.editable;
-	            var format = column.format ? function (value) {
-	              return column.format(value, data, column.formatExtraData, r).replace(/<.*?>/g, '');
-	            } : false;
-	            if (isFun(column.editable)) {
-	              editable = column.editable(fieldValue, data, r, i);
-	            }
+	      if (this.props.sections === true) {
+	        var headerKey = this.props.sectionKey + '-' + 'header';
+	        var headerContent = undefined;
 
-	            return _react2['default'].createElement(_TableEditColumn2['default'], {
-	              completeEdit: this.handleCompleteEditCell,
-	              // add by bluespring for column editor customize
-	              editable: editable,
-	              customEditor: column.customEditor,
-	              format: column.format ? format : false,
-	              key: i,
-	              blurToSave: this.props.cellEdit.blurToSave,
-	              rowIndex: r,
-	              colIndex: i,
-	              row: data,
-	              fieldValue: fieldValue });
-	          } else {
-	            // add by bluespring for className customize
-	            var columnChild = fieldValue && fieldValue.toString();
-	            var columnTitle = null;
-	            var tdClassName = column.className;
-	            if (isFun(column.className)) {
-	              tdClassName = column.className(fieldValue, data, r, i);
-	            }
-
-	            if (typeof column.format !== 'undefined') {
-	              var formattedValue = column.format(fieldValue, data, column.formatExtraData, r);
-	              if (!_react2['default'].isValidElement(formattedValue)) {
-	                columnChild = _react2['default'].createElement('div', { dangerouslySetInnerHTML: { __html: formattedValue } });
-	              } else {
-	                columnChild = formattedValue;
-	                columnTitle = column.columnTitle && formattedValue ? formattedValue.toString() : null;
-	              }
-	            } else {
-	              columnTitle = column.columnTitle && fieldValue ? fieldValue.toString() : null;
-	            }
-	            return _react2['default'].createElement(
-	              _TableColumn2['default'],
-	              { key: i,
-	                dataAlign: column.align,
-	                className: tdClassName,
-	                columnTitle: columnTitle,
-	                cellEdit: this.props.cellEdit,
-	                hidden: column.hidden,
-	                onEdit: this.handleEditCell,
-	                width: column.width },
-	              columnChild
-	            );
-	          }
-	        }, this);
-	        var key = data[this.props.keyField];
-	        var disable = unselectable.indexOf(key) !== -1;
-	        var selected = this.props.selectedRowKeys.indexOf(key) !== -1;
-	        var selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ? this.renderSelectRowColumn(selected, inputType, disable, CustomComponent, r) : null;
-	        // add by bluespring for className customize
-	        var trClassName = this.props.trClassName;
-	        if (isFun(this.props.trClassName)) {
-	          trClassName = this.props.trClassName(data, r);
+	        if (this.props.sectionFormat) {
+	          headerContent = this.props.sectionFormat(this.props.sectionKey);
+	        } else {
+	          headerContent = _react2['default'].createElement(
+	            'td',
+	            { colSpan: this.props.columns.length + (isSelectRowDefined ? 1 : 0),
+	              style: { textAlign: 'center' } },
+	            _react2['default'].createElement(
+	              'strong',
+	              null,
+	              this.props.sectionKey
+	            )
+	          );
 	        }
-	        return _react2['default'].createElement(
+
+	        tableRows.push(_react2['default'].createElement(
 	          _TableRow2['default'],
-	          { isSelected: selected, key: key, className: trClassName,
-	            selectRow: isSelectRowDefined ? this.props.selectRow : undefined,
-	            enableCellEdit: this.props.cellEdit.mode !== _Const2['default'].CELL_EDIT_NONE,
-	            onRowClick: this.handleRowClick,
-	            onRowMouseOver: this.handleRowMouseOver,
-	            onRowMouseOut: this.handleRowMouseOut,
-	            onSelectRow: this.handleSelectRow,
-	            unselectableRow: disable },
-	          selectRowColumn,
-	          tableColumns
-	        );
-	      }, this);
+	          { key: headerKey },
+	          headerContent
+	        ));
+
+	        this.props.data.map(function (data, r) {
+	          var rowKey = data[this.props.keyField];
+	          var baseKey = this.props.sectionKey + '-' + (rowKey || tableRows.length - 1);
+	          rowKey = baseKey + '-' + 'row';
+
+	          var tableColumns = this.props.columns.map(function (column, i) {
+	            var fieldValue = data[column.name];
+	            var columnKey = baseKey + '-' + column.name + '-' + 'column';
+	            if (this.editing && column.name !== rowKey && // Key field can't be edit
+	            column.editable && // column is editable? default is true, user can set it false
+	            this.state.currEditCell !== null && this.state.currEditCell.sk === this.props.sectionKey && this.state.currEditCell.rid === r && this.state.currEditCell.cid === i) {
+	              return this.renderTableEditColumn(column, data, r, fieldValue, i, columnKey);
+	            } else {
+	              return this.renderTableColumn(column, data, r, fieldValue, i, columnKey);
+	            }
+	          }, this);
+	          tableRows.push(this.renderTableRow(data, tableColumns, r, unselectable, isSelectRowDefined, CustomComponent, rowKey, inputType));
+	        }, this);
+	      } else {
+	        (function () {
+	          var rowKey = _this2.props.data[_this2.props.keyField];
+	          tableRows = _this2.props.data.map(function (data, r) {
+	            var tableColumns = this.props.columns.map(function (column, i) {
+	              var fieldValue = data[column.name];
+	              if (this.editing && column.name !== this.props.keyField && // Key field can't be edit
+	              column.editable && // column is editable? default is true, user can set it false
+	              this.state.currEditCell !== null && this.state.currEditCell.rid === r && this.state.currEditCell.cid === i) {
+	                return this.renderTableEditColumn(column, data, r, fieldValue, i);
+	              } else {
+	                return this.renderTableColumn(column, data, r, fieldValue, i);
+	              }
+	            }, this);
+	            return this.renderTableRow(data, tableColumns, r, unselectable, isSelectRowDefined, CustomComponent, rowKey, inputType);
+	          }, _this2);
+	        })();
+	      }
 
 	      if (tableRows.length === 0) {
 	        tableRows.push(_react2['default'].createElement(
@@ -1959,6 +1999,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.editing = false;
 
+	      var tbodyKey = this.props.sectionKey + '-' + 'tbody';
+
 	      return _react2['default'].createElement(
 	        'div',
 	        { ref: 'container',
@@ -1970,10 +2012,103 @@ return /******/ (function(modules) { // webpackBootstrap
 	          tableHeader,
 	          _react2['default'].createElement(
 	            'tbody',
-	            { ref: 'tbody' },
+	            { key: tbodyKey, ref: 'tbody' },
 	            tableRows
 	          )
 	        )
+	      );
+	    }
+	  }, {
+	    key: 'renderTableEditColumn',
+	    value: function renderTableEditColumn(column, data, r, fieldValue, i) {
+	      var key = arguments.length <= 5 || arguments[5] === undefined ? null : arguments[5];
+
+	      var editable = column.editable;
+	      var format = column.format ? function (value) {
+	        return column.format(value, data, column.formatExtraData, r).replace(/<.*?>/g, '');
+	      } : false;
+	      if (isFun(column.editable)) {
+	        editable = column.editable(fieldValue, data, r, i);
+	      }
+
+	      return _react2['default'].createElement(_TableEditColumn2['default'], {
+	        completeEdit: this.handleCompleteEditCell,
+	        // add by bluespring for column editor customize
+	        editable: editable,
+	        customEditor: column.customEditor,
+	        format: column.format ? format : false,
+	        key: key || i,
+	        sectionKey: this.props.sectionKey,
+	        blurToSave: this.props.cellEdit.blurToSave,
+	        rowIndex: r,
+	        colIndex: i,
+	        row: data,
+	        fieldValue: fieldValue });
+	    }
+	  }, {
+	    key: 'renderTableColumn',
+	    value: function renderTableColumn(column, data, r, fieldValue, i) {
+	      var key = arguments.length <= 5 || arguments[5] === undefined ? null : arguments[5];
+
+	      var columnChild = fieldValue && fieldValue.toString();
+	      var columnTitle = null;
+	      var tdClassName = column.className;
+	      if (isFun(column.className)) {
+	        tdClassName = column.className(fieldValue, data, r, i);
+	      }
+
+	      if (typeof column.format !== 'undefined') {
+	        var formattedValue = column.format(fieldValue, data, column.formatExtraData, r);
+	        if (!_react2['default'].isValidElement(formattedValue)) {
+	          columnChild = _react2['default'].createElement('div', { dangerouslySetInnerHTML: { __html: formattedValue } });
+	        } else {
+	          columnChild = formattedValue;
+	          columnTitle = column.columnTitle && formattedValue ? formattedValue.toString() : null;
+	        }
+	      } else {
+	        columnTitle = column.columnTitle && fieldValue ? fieldValue.toString() : null;
+	      }
+	      return _react2['default'].createElement(
+	        _TableColumn2['default'],
+	        { key: key || i,
+	          sectionKey: this.props.sectionKey,
+	          dataAlign: column.align,
+	          className: tdClassName,
+	          columnTitle: columnTitle,
+	          cellEdit: this.props.cellEdit,
+	          hidden: column.hidden,
+	          onEdit: this.handleEditCell,
+	          width: column.width },
+	        columnChild
+	      );
+	    }
+	  }, {
+	    key: 'renderTableRow',
+	    value: function renderTableRow(data, tableColumns, r, unselectable, isSelectRowDefined, CustomComponent, key, inputType) {
+	      if (CustomComponent === undefined) CustomComponent = null;
+
+	      var disable = unselectable.indexOf(key) !== -1;
+	      var selected = this.props.selectedRowKeys.indexOf(key) !== -1;
+	      var selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ? this.renderSelectRowColumn(selected, inputType, disable, CustomComponent, r) : null;
+	      // add by bluespring for className customize
+	      var trClassName = this.props.trClassName;
+	      if (isFun(this.props.trClassName)) {
+	        trClassName = this.props.trClassName(data, r);
+	      }
+	      return _react2['default'].createElement(
+	        _TableRow2['default'],
+	        { key: key,
+	          className: trClassName,
+	          isSelected: selected,
+	          selectRow: isSelectRowDefined ? this.props.selectRow : undefined,
+	          enableCellEdit: this.props.cellEdit.mode !== _Const2['default'].CELL_EDIT_NONE,
+	          onRowClick: this.handleRowClick,
+	          onRowMouseOver: this.handleRowMouseOver,
+	          onRowMouseOut: this.handleRowMouseOut,
+	          onSelectRow: this.handleSelectRow,
+	          unselectableRow: disable },
+	        selectRowColumn,
+	        tableColumns
 	      );
 	    }
 	  }, {
@@ -2014,7 +2149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'renderSelectRowColumn',
 	    value: function renderSelectRowColumn(selected, inputType, disabled) {
-	      var _this2 = this;
+	      var _this3 = this;
 
 	      var CustomComponent = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
 	      var rowIndex = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
@@ -2025,10 +2160,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        CustomComponent ? _react2['default'].createElement(CustomComponent, { type: inputType, checked: selected, disabled: disabled,
 	          rowIndex: rowIndex,
 	          onChange: function (e) {
-	            return _this2.handleSelectRowColumChange(e, e.currentTarget.parentElement.parentElement.parentElement.rowIndex);
+	            return _this3.handleSelectRowColumChange(e, e.currentTarget.parentElement.parentElement.parentElement.rowIndex);
 	          } }) : _react2['default'].createElement('input', { type: inputType, checked: selected, disabled: disabled,
 	          onChange: function (e) {
-	            return _this2.handleSelectRowColumChange(e, e.currentTarget.parentElement.parentElement.rowIndex);
+	            return _this3.handleSelectRowColumChange(e, e.currentTarget.parentElement.parentElement.rowIndex);
 	          } })
 	      );
 	    }
@@ -2037,12 +2172,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function _isSelectRowDefined() {
 	      return this.props.selectRow.mode === _Const2['default'].ROW_SELECT_SINGLE || this.props.selectRow.mode === _Const2['default'].ROW_SELECT_MULTI;
 	    }
+	  }, {
+	    key: '_fixRowIndex',
+	    value: function _fixRowIndex(rowIndex) {
+	      if (this.props.sections === true) {
+	        rowIndex--;
+	      }
+	      return rowIndex;
+	    }
 	  }]);
 
 	  return TableBody;
 	})(_react.Component);
 
 	TableBody.propTypes = {
+	  sectionKey: _react.PropTypes.string,
+	  sections: _react.PropTypes.bool,
+	  sectionFormat: _react.PropTypes.func,
 	  data: _react.PropTypes.array,
 	  columns: _react.PropTypes.array,
 	  striped: _react.PropTypes.bool,
@@ -2058,6 +2204,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  tableBodyClass: _react.PropTypes.string,
 	  bodyContainerClass: _react.PropTypes.string
 	};
+
+	TableBody.defaultProps = {
+	  sectionKey: 'default'
+	};
+
 	exports['default'] = TableBody;
 	module.exports = exports['default'];
 
@@ -2245,7 +2396,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          sel.removeAllRanges();
 	        }
 	      }
-	      _this.props.onEdit(e.currentTarget.parentElement.rowIndex + 1, e.currentTarget.cellIndex, e);
+	      _this.props.onEdit(_this.props.sectionKey, e.currentTarget.parentElement.rowIndex + 1, e.currentTarget.cellIndex, e);
 	    };
 	  }
 
@@ -2313,6 +2464,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react.Component);
 
 	TableColumn.propTypes = {
+	  sectionKey: _react.PropTypes.string,
 	  dataAlign: _react.PropTypes.string,
 	  hidden: _react.PropTypes.bool,
 	  className: _react.PropTypes.string,
@@ -2321,6 +2473,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	TableColumn.defaultProps = {
+	  sectionKey: 'default',
 	  dataAlign: 'left',
 	  hidden: false,
 	  className: ''
@@ -2384,16 +2537,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (!_this.validator(value)) {
 	          return;
 	        }
-	        _this.props.completeEdit(value, _this.props.rowIndex, _this.props.colIndex);
+	        _this.props.completeEdit(value, _this.props.sectionKey, _this.props.rowIndex, _this.props.colIndex);
 	      } else if (e.keyCode === 27) {
-	        _this.props.completeEdit(null, _this.props.rowIndex, _this.props.colIndex);
+	        _this.props.completeEdit(null, _this.props.sectionKey, _this.props.rowIndex, _this.props.colIndex);
 	      } else if (e.type === 'click' && !_this.props.blurToSave) {
 	        // textarea click save button
 	        var value = e.target.parentElement.firstChild.value;
 	        if (!_this.validator(value)) {
 	          return;
 	        }
-	        _this.props.completeEdit(value, _this.props.rowIndex, _this.props.colIndex);
+	        _this.props.completeEdit(value, _this.props.sectionKey, _this.props.rowIndex, _this.props.colIndex);
 	      }
 	    };
 
@@ -2404,12 +2557,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (!_this.validator(value)) {
 	          return;
 	        }
-	        _this.props.completeEdit(value, _this.props.rowIndex, _this.props.colIndex);
+	        _this.props.completeEdit(value, _this.props.sectionKey, _this.props.rowIndex, _this.props.colIndex);
 	      }
 	    };
 
 	    this.handleCustomUpdate = function (value) {
-	      _this.props.completeEdit(value, _this.props.rowIndex, _this.props.colIndex);
+	      _this.props.completeEdit(value, _this.props.sectionKey, _this.props.rowIndex, _this.props.colIndex);
 	    };
 
 	    this.timeouteClear = 0;
@@ -2536,6 +2689,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	TableEditColumn.propTypes = {
 	  completeEdit: _react.PropTypes.func,
+	  sectionKey: _react.PropTypes.string,
 	  rowIndex: _react.PropTypes.number,
 	  colIndex: _react.PropTypes.number,
 	  blurToSave: _react.PropTypes.bool,
@@ -2543,6 +2697,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  format: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.func]),
 	  row: _react.PropTypes.any,
 	  fieldValue: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.bool, _react.PropTypes.number, _react.PropTypes.array, _react.PropTypes.object])
+	};
+
+	TableEditColumn.defaultProps = {
+	  sectionKey: 'default'
 	};
 
 	exports['default'] = TableEditColumn;
@@ -4248,7 +4406,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var undefined;
 
 	  /** Used as the semantic version number. */
-	  var VERSION = '4.15.0';
+	  var VERSION = '4.16.0';
 
 	  /** Used as the size to enable large array optimizations. */
 	  var LARGE_ARRAY_SIZE = 200;
@@ -4258,6 +4416,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  /** Used to stand-in for `undefined` hash values. */
 	  var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+	  /** Used as the maximum memoize cache size. */
+	  var MAX_MEMOIZE_SIZE = 500;
 
 	  /** Used as the internal argument placeholder. */
 	  var PLACEHOLDER = '__lodash_placeholder__';
@@ -4283,7 +4444,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      DEFAULT_TRUNC_OMISSION = '...';
 
 	  /** Used to detect hot functions by number of calls within a span of milliseconds. */
-	  var HOT_COUNT = 150,
+	  var HOT_COUNT = 500,
 	      HOT_SPAN = 16;
 
 	  /** Used to indicate the type of lazy iteratees. */
@@ -4399,9 +4560,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  /** Used to match `RegExp` flags from their coerced string values. */
 	  var reFlags = /\w*$/;
-
-	  /** Used to detect hexadecimal string values. */
-	  var reHasHexPrefix = /^0x/i;
 
 	  /** Used to detect bad signed hexadecimal string values. */
 	  var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
@@ -4597,7 +4755,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    '\u017a': 'z',  '\u017c': 'z', '\u017e': 'z',
 	    '\u0132': 'IJ', '\u0133': 'ij',
 	    '\u0152': 'Oe', '\u0153': 'oe',
-	    '\u0149': "'n", '\u017f': 'ss'
+	    '\u0149': "'n", '\u017f': 's'
 	  };
 
 	  /** Used to map characters to HTML entities. */
@@ -4606,8 +4764,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    '<': '&lt;',
 	    '>': '&gt;',
 	    '"': '&quot;',
-	    "'": '&#39;',
-	    '`': '&#96;'
+	    "'": '&#39;'
 	  };
 
 	  /** Used to map HTML entities to characters. */
@@ -4616,8 +4773,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    '&lt;': '<',
 	    '&gt;': '>',
 	    '&quot;': '"',
-	    '&#39;': "'",
-	    '&#96;': '`'
+	    '&#39;': "'"
 	  };
 
 	  /** Used to escape characters for inclusion in compiled string literals. */
@@ -5058,18 +5214,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @returns {number} Returns the index of the matched value, else `-1`.
 	   */
 	  function baseIndexOf(array, value, fromIndex) {
-	    if (value !== value) {
-	      return baseFindIndex(array, baseIsNaN, fromIndex);
-	    }
-	    var index = fromIndex - 1,
-	        length = array.length;
-
-	    while (++index < length) {
-	      if (array[index] === value) {
-	        return index;
-	      }
-	    }
-	    return -1;
+	    return value === value
+	      ? strictIndexOf(array, value, fromIndex)
+	      : baseFindIndex(array, baseIsNaN, fromIndex);
 	  }
 
 	  /**
@@ -5274,7 +5421,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  /**
-	   * Checks if a cache value for `key` exists.
+	   * Checks if a `cache` value for `key` exists.
 	   *
 	   * @private
 	   * @param {Object} cache The cache to query.
@@ -5332,7 +5479,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    while (length--) {
 	      if (array[length] === placeholder) {
-	        result++;
+	        ++result;
 	      }
 	    }
 	    return result;
@@ -5400,25 +5547,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	   */
 	  function hasUnicodeWord(string) {
 	    return reHasUnicodeWord.test(string);
-	  }
-
-	  /**
-	   * Checks if `value` is a host object in IE < 9.
-	   *
-	   * @private
-	   * @param {*} value The value to check.
-	   * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
-	   */
-	  function isHostObject(value) {
-	    // Many host objects are `Object` objects that can coerce to strings
-	    // despite having improperly defined `toString` methods.
-	    var result = false;
-	    if (value != null && typeof value.toString != 'function') {
-	      try {
-	        result = !!(value + '');
-	      } catch (e) {}
-	    }
-	    return result;
 	  }
 
 	  /**
@@ -5529,6 +5657,48 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  /**
+	   * A specialized version of `_.indexOf` which performs strict equality
+	   * comparisons of values, i.e. `===`.
+	   *
+	   * @private
+	   * @param {Array} array The array to inspect.
+	   * @param {*} value The value to search for.
+	   * @param {number} fromIndex The index to search from.
+	   * @returns {number} Returns the index of the matched value, else `-1`.
+	   */
+	  function strictIndexOf(array, value, fromIndex) {
+	    var index = fromIndex - 1,
+	        length = array.length;
+
+	    while (++index < length) {
+	      if (array[index] === value) {
+	        return index;
+	      }
+	    }
+	    return -1;
+	  }
+
+	  /**
+	   * A specialized version of `_.lastIndexOf` which performs strict equality
+	   * comparisons of values, i.e. `===`.
+	   *
+	   * @private
+	   * @param {Array} array The array to inspect.
+	   * @param {*} value The value to search for.
+	   * @param {number} fromIndex The index to search from.
+	   * @returns {number} Returns the index of the matched value, else `-1`.
+	   */
+	  function strictLastIndexOf(array, value, fromIndex) {
+	    var index = fromIndex + 1;
+	    while (index--) {
+	      if (array[index] === value) {
+	        return index;
+	      }
+	    }
+	    return index;
+	  }
+
+	  /**
 	   * Gets the number of symbols in `string`.
 	   *
 	   * @private
@@ -5573,7 +5743,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function unicodeSize(string) {
 	    var result = reUnicode.lastIndex = 0;
 	    while (reUnicode.test(string)) {
-	      result++;
+	      ++result;
 	    }
 	    return result;
 	  }
@@ -5627,13 +5797,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * // => false
 	   * lodash.isFunction(lodash.bar);
 	   * // => true
-	   *
-	   * // Use `context` to stub `Date#getTime` use in `_.now`.
-	   * var stubbed = _.runInContext({
-	   *   'Date': function() {
-	   *     return { 'getTime': stubGetTime };
-	   *   }
-	   * });
 	   *
 	   * // Create a suped-up `defer` in Node.js.
 	   * var defer = _.runInContext({ 'setTimeout': setImmediate }).defer;
@@ -5698,6 +5861,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var Buffer = moduleExports ? context.Buffer : undefined,
 	        Symbol = context.Symbol,
 	        Uint8Array = context.Uint8Array,
+	        defineProperty = Object.defineProperty,
 	        getPrototype = overArg(Object.getPrototypeOf, Object),
 	        iteratorSymbol = Symbol ? Symbol.iterator : undefined,
 	        objectCreate = Object.create,
@@ -5720,6 +5884,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        nativeKeys = overArg(Object.keys, Object),
 	        nativeMax = Math.max,
 	        nativeMin = Math.min,
+	        nativeNow = Date.now,
 	        nativeParseInt = context.parseInt,
 	        nativeRandom = Math.random,
 	        nativeReverse = arrayProto.reverse;
@@ -5730,21 +5895,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        Promise = getNative(context, 'Promise'),
 	        Set = getNative(context, 'Set'),
 	        WeakMap = getNative(context, 'WeakMap'),
-	        nativeCreate = getNative(Object, 'create');
-
-	    /* Used to set `toString` methods. */
-	    var defineProperty = (function() {
-	      var func = getNative(Object, 'defineProperty'),
-	          name = getNative.name;
-
-	      return (name && name.length > 2) ? func : undefined;
-	    }());
+	        nativeCreate = getNative(Object, 'create'),
+	        nativeDefineProperty = getNative(Object, 'defineProperty');
 
 	    /** Used to store function metadata. */
 	    var metaMap = WeakMap && new WeakMap;
-
-	    /** Detect if properties shadowing those on `Object.prototype` are non-enumerable. */
-	    var nonEnumShadows = !propertyIsEnumerable.call({ 'valueOf': 1 }, 'valueOf');
 
 	    /** Used to lookup unminified function names. */
 	    var realNames = {};
@@ -6133,6 +6288,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    function hashClear() {
 	      this.__data__ = nativeCreate ? nativeCreate(null) : {};
+	      this.size = 0;
 	    }
 
 	    /**
@@ -6146,7 +6302,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
 	     */
 	    function hashDelete(key) {
-	      return this.has(key) && delete this.__data__[key];
+	      var result = this.has(key) && delete this.__data__[key];
+	      this.size -= result ? 1 : 0;
+	      return result;
 	    }
 
 	    /**
@@ -6193,6 +6351,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    function hashSet(key, value) {
 	      var data = this.__data__;
+	      this.size += this.has(key) ? 0 : 1;
 	      data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
 	      return this;
 	    }
@@ -6233,6 +6392,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    function listCacheClear() {
 	      this.__data__ = [];
+	      this.size = 0;
 	    }
 
 	    /**
@@ -6257,6 +6417,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } else {
 	        splice.call(data, index, 1);
 	      }
+	      --this.size;
 	      return true;
 	    }
 
@@ -6304,6 +6465,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          index = assocIndexOf(data, key);
 
 	      if (index < 0) {
+	        ++this.size;
 	        data.push([key, value]);
 	      } else {
 	        data[index][1] = value;
@@ -6346,6 +6508,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @memberOf MapCache
 	     */
 	    function mapCacheClear() {
+	      this.size = 0;
 	      this.__data__ = {
 	        'hash': new Hash,
 	        'map': new (Map || ListCache),
@@ -6363,7 +6526,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
 	     */
 	    function mapCacheDelete(key) {
-	      return getMapData(this, key)['delete'](key);
+	      var result = getMapData(this, key)['delete'](key);
+	      this.size -= result ? 1 : 0;
+	      return result;
 	    }
 
 	    /**
@@ -6403,7 +6568,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @returns {Object} Returns the map cache instance.
 	     */
 	    function mapCacheSet(key, value) {
-	      getMapData(this, key).set(key, value);
+	      var data = getMapData(this, key),
+	          size = data.size;
+
+	      data.set(key, value);
+	      this.size += data.size == size ? 0 : 1;
 	      return this;
 	    }
 
@@ -6476,7 +6645,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Array} [entries] The key-value pairs to cache.
 	     */
 	    function Stack(entries) {
-	      this.__data__ = new ListCache(entries);
+	      var data = this.__data__ = new ListCache(entries);
+	      this.size = data.size;
 	    }
 
 	    /**
@@ -6488,6 +6658,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    function stackClear() {
 	      this.__data__ = new ListCache;
+	      this.size = 0;
 	    }
 
 	    /**
@@ -6500,7 +6671,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
 	     */
 	    function stackDelete(key) {
-	      return this.__data__['delete'](key);
+	      var data = this.__data__,
+	          result = data['delete'](key);
+
+	      this.size = data.size;
+	      return result;
 	    }
 
 	    /**
@@ -6540,16 +6715,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @returns {Object} Returns the stack cache instance.
 	     */
 	    function stackSet(key, value) {
-	      var cache = this.__data__;
-	      if (cache instanceof ListCache) {
-	        var pairs = cache.__data__;
+	      var data = this.__data__;
+	      if (data instanceof ListCache) {
+	        var pairs = data.__data__;
 	        if (!Map || (pairs.length < LARGE_ARRAY_SIZE - 1)) {
 	          pairs.push([key, value]);
+	          this.size = ++data.size;
 	          return this;
 	        }
-	        cache = this.__data__ = new MapCache(pairs);
+	        data = this.__data__ = new MapCache(pairs);
 	      }
-	      cache.set(key, value);
+	      data.set(key, value);
+	      this.size = data.size;
 	      return this;
 	    }
 
@@ -6590,6 +6767,44 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
+	     * A specialized version of `_.sample` for arrays without support for iteratee
+	     * shorthands.
+	     *
+	     * @private
+	     * @param {Array} array The array to sample.
+	     * @returns {*} Returns the random element.
+	     */
+	    function arraySample(array) {
+	      var length = array.length;
+	      return length ? array[baseRandom(0, length - 1)] : undefined;
+	    }
+
+	    /**
+	     * A specialized version of `_.sampleSize` for arrays.
+	     *
+	     * @private
+	     * @param {Array} array The array to sample.
+	     * @param {number} n The number of elements to sample.
+	     * @returns {Array} Returns the random elements.
+	     */
+	    function arraySampleSize(array, n) {
+	      var result = arrayShuffle(array);
+	      result.length = baseClamp(n, 0, result.length);
+	      return result;
+	    }
+
+	    /**
+	     * A specialized version of `_.shuffle` for arrays.
+	     *
+	     * @private
+	     * @param {Array} array The array to shuffle.
+	     * @returns {Array} Returns the new shuffled array.
+	     */
+	    function arrayShuffle(array) {
+	      return shuffleSelf(copyArray(array));
+	    }
+
+	    /**
 	     * Used by `_.defaults` to customize its `_.assignIn` use.
 	     *
 	     * @private
@@ -6619,7 +6834,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function assignMergeValue(object, key, value) {
 	      if ((value !== undefined && !eq(object[key], value)) ||
 	          (typeof key == 'number' && value === undefined && !(key in object))) {
-	        object[key] = value;
+	        baseAssignValue(object, key, value);
 	      }
 	    }
 
@@ -6637,7 +6852,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var objValue = object[key];
 	      if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) ||
 	          (value === undefined && !(key in object))) {
-	        object[key] = value;
+	        baseAssignValue(object, key, value);
 	      }
 	    }
 
@@ -6688,6 +6903,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    function baseAssign(object, source) {
 	      return object && copyObject(source, keys(source), object);
+	    }
+
+	    /**
+	     * The base implementation of `assignValue` and `assignMergeValue` without
+	     * value checks.
+	     *
+	     * @private
+	     * @param {Object} object The object to modify.
+	     * @param {string} key The key of the property to assign.
+	     * @param {*} value The value to assign.
+	     */
+	    function baseAssignValue(object, key, value) {
+	      if (key == '__proto__' && defineProperty) {
+	        defineProperty(object, key, {
+	          'configurable': true,
+	          'enumerable': true,
+	          'value': value,
+	          'writable': true
+	        });
+	      } else {
+	        object[key] = value;
+	      }
 	    }
 
 	    /**
@@ -6770,9 +7007,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          return cloneBuffer(value, isDeep);
 	        }
 	        if (tag == objectTag || tag == argsTag || (isFunc && !object)) {
-	          if (isHostObject(value)) {
-	            return object ? value : {};
-	          }
 	          result = initCloneObject(isFunc ? {} : value);
 	          if (!isDeep) {
 	            return copySymbols(value, baseAssign(result, value));
@@ -7416,8 +7650,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        othTag = getTag(other);
 	        othTag = othTag == argsTag ? objectTag : othTag;
 	      }
-	      var objIsObj = objTag == objectTag && !isHostObject(object),
-	          othIsObj = othTag == objectTag && !isHostObject(other),
+	      var objIsObj = objTag == objectTag,
+	          othIsObj = othTag == objectTag,
 	          isSameTag = objTag == othTag;
 
 	      if (isSameTag && !objIsObj) {
@@ -7522,7 +7756,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (!isObject(value) || isMasked(value)) {
 	        return false;
 	      }
-	      var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
+	      var pattern = isFunction(value) ? reIsNative : reIsHostCtor;
 	      return pattern.test(toSource(value));
 	    }
 
@@ -7880,7 +8114,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            value = object[key];
 
 	        if (predicate(value, key)) {
-	          result[key] = value;
+	          baseAssignValue(result, key, value);
 	        }
 	      }
 	      return result;
@@ -8046,24 +8280,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @returns {Function} Returns the new function.
 	     */
 	    function baseRest(func, start) {
-	      start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
-	      return function() {
-	        var args = arguments,
-	            index = -1,
-	            length = nativeMax(args.length - start, 0),
-	            array = Array(length);
-
-	        while (++index < length) {
-	          array[index] = args[start + index];
-	        }
-	        index = -1;
-	        var otherArgs = Array(start + 1);
-	        while (++index < start) {
-	          otherArgs[index] = args[index];
-	        }
-	        otherArgs[start] = array;
-	        return apply(func, this, otherArgs);
-	      };
+	      return setToString(overRest(func, start, identity), func + '');
 	    }
 
 	    /**
@@ -8107,7 +8324,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * The base implementation of `setData` without support for hot loop detection.
+	     * The base implementation of `setData` without support for hot loop shorting.
 	     *
 	     * @private
 	     * @param {Function} func The function to associate metadata with.
@@ -8117,6 +8334,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var baseSetData = !metaMap ? identity : function(func, data) {
 	      metaMap.set(func, data);
 	      return func;
+	    };
+
+	    /**
+	     * The base implementation of `setToString` without support for hot loop shorting.
+	     *
+	     * @private
+	     * @param {Function} func The function to modify.
+	     * @param {Function} string The `toString` result.
+	     * @returns {Function} Returns `func`.
+	     */
+	    var baseSetToString = !nativeDefineProperty ? identity : function(func, string) {
+	      return nativeDefineProperty(func, 'toString', {
+	        'configurable': true,
+	        'enumerable': false,
+	        'value': constant(string),
+	        'writable': true
+	      });
 	    };
 
 	    /**
@@ -8534,6 +8768,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
+	     * A `baseRest` alias which can be replaced with `identity` by module
+	     * replacement plugins.
+	     *
+	     * @private
+	     * @type {Function}
+	     * @param {Function} func The function to apply a rest parameter to.
+	     * @returns {Function} Returns the new function.
+	     */
+	    var castRest = baseRest;
+
+	    /**
 	     * Casts `array` to a slice if it's needed.
 	     *
 	     * @private
@@ -8847,6 +9092,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @returns {Object} Returns `object`.
 	     */
 	    function copyObject(source, props, object, customizer) {
+	      var isNew = !object;
 	      object || (object = {});
 
 	      var index = -1,
@@ -8859,7 +9105,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	          ? customizer(object[key], source[key], key, object, source)
 	          : undefined;
 
-	        assignValue(object, key, newValue === undefined ? source[key] : newValue);
+	        if (newValue === undefined) {
+	          newValue = source[key];
+	        }
+	        if (isNew) {
+	          baseAssignValue(object, key, newValue);
+	        } else {
+	          assignValue(object, key, newValue);
+	        }
 	      }
 	      return object;
 	    }
@@ -9138,9 +9391,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @returns {Function} Returns the new flow function.
 	     */
 	    function createFlow(fromRight) {
-	      return baseRest(function(funcs) {
-	        funcs = baseFlatten(funcs, 1);
-
+	      return flatRest(function(funcs) {
 	        var length = funcs.length,
 	            index = length,
 	            prereq = LodashWrapper.prototype.thru;
@@ -9323,11 +9574,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @returns {Function} Returns the new over function.
 	     */
 	    function createOver(arrayFunc) {
-	      return baseRest(function(iteratees) {
-	        iteratees = (iteratees.length == 1 && isArray(iteratees[0]))
-	          ? arrayMap(iteratees[0], baseUnary(getIteratee()))
-	          : arrayMap(baseFlatten(iteratees, 1), baseUnary(getIteratee()));
-
+	      return flatRest(function(iteratees) {
+	        iteratees = arrayMap(iteratees, baseUnary(getIteratee()));
 	        return baseRest(function(args) {
 	          var thisArg = this;
 	          return arrayFunc(iteratees, function(iteratee) {
@@ -9670,9 +9918,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // Recursively compare arrays (susceptible to call stack limits).
 	        if (seen) {
 	          if (!arraySome(other, function(othValue, othIndex) {
-	                if (!seen.has(othIndex) &&
+	                if (!cacheHas(seen, othIndex) &&
 	                    (arrValue === othValue || equalFunc(arrValue, othValue, customizer, bitmask, stack))) {
-	                  return seen.add(othIndex);
+	                  return seen.push(othIndex);
 	                }
 	              })) {
 	            result = false;
@@ -9853,6 +10101,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
+	     * A specialized version of `baseRest` which flattens the rest array.
+	     *
+	     * @private
+	     * @param {Function} func The function to apply a rest parameter to.
+	     * @returns {Function} Returns the new function.
+	     */
+	    function flatRest(func) {
+	      return setToString(overRest(func, undefined, flatten), func + '');
+	    }
+
+	    /**
 	     * Creates an array of own enumerable property names and symbols of `object`.
 	     *
 	     * @private
@@ -10020,8 +10279,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    var getTag = baseGetTag;
 
-	    // Fallback for data views, maps, sets, and weak maps in IE 11,
-	    // for data views in Edge < 14, and promises in Node.js.
+	    // Fallback for data views, maps, sets, and weak maps in IE 11 and promises in Node.js < 6.
 	    if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
 	        (Map && getTag(new Map) != mapTag) ||
 	        (Promise && getTag(Promise.resolve()) != promiseTag) ||
@@ -10097,9 +10355,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function hasPath(object, path, hasFunc) {
 	      path = isKey(path, object) ? [path] : castPath(path);
 
-	      var result,
-	          index = -1,
-	          length = path.length;
+	      var index = -1,
+	          length = path.length,
+	          result = false;
 
 	      while (++index < length) {
 	        var key = toKey(path[index]);
@@ -10108,10 +10366,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        object = object[key];
 	      }
-	      if (result) {
+	      if (result || ++index != length) {
 	        return result;
 	      }
-	      var length = object ? object.length : 0;
+	      length = object ? object.length : 0;
 	      return !!length && isLength(length) && isIndex(key, length) &&
 	        (isArray(object) || isArguments(object));
 	    }
@@ -10206,9 +10464,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @returns {string} Returns the modified source.
 	     */
 	    function insertWrapDetails(source, details) {
-	      var length = details.length,
-	          lastIndex = length - 1;
-
+	      var length = details.length;
+	      if (!length) {
+	        return source;
+	      }
+	      var lastIndex = length - 1;
 	      details[lastIndex] = (length > 1 ? '& ' : '') + details[lastIndex];
 	      details = details.join(length > 2 ? ', ' : ' ');
 	      return source.replace(reWrapComment, '{\n/* [wrapped with ' + details + '] */\n');
@@ -10388,6 +10648,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
+	     * A specialized version of `_.memoize` which clears the memoized function's
+	     * cache when it exceeds `MAX_MEMOIZE_SIZE`.
+	     *
+	     * @private
+	     * @param {Function} func The function to have its output memoized.
+	     * @returns {Function} Returns the new memoized function.
+	     */
+	    function memoizeCapped(func) {
+	      var result = memoize(func, function(key) {
+	        if (cache.size === MAX_MEMOIZE_SIZE) {
+	          cache.clear();
+	        }
+	        return key;
+	      });
+
+	      var cache = result.cache;
+	      return result;
+	    }
+
+	    /**
 	     * Merges the function metadata of `source` into `data`.
 	     *
 	     * Merging metadata reduces the number of wrappers used to invoke a function.
@@ -10501,6 +10781,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
+	     * A specialized version of `baseRest` which transforms the rest array.
+	     *
+	     * @private
+	     * @param {Function} func The function to apply a rest parameter to.
+	     * @param {number} [start=func.length-1] The start position of the rest parameter.
+	     * @param {Function} transform The rest array transform.
+	     * @returns {Function} Returns the new function.
+	     */
+	    function overRest(func, start, transform) {
+	      start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
+	      return function() {
+	        var args = arguments,
+	            index = -1,
+	            length = nativeMax(args.length - start, 0),
+	            array = Array(length);
+
+	        while (++index < length) {
+	          array[index] = args[start + index];
+	        }
+	        index = -1;
+	        var otherArgs = Array(start + 1);
+	        while (++index < start) {
+	          otherArgs[index] = args[index];
+	        }
+	        otherArgs[start] = transform(array);
+	        return apply(func, this, otherArgs);
+	      };
+	    }
+
+	    /**
 	     * Gets the parent value at `path` of `object`.
 	     *
 	     * @private
@@ -10548,25 +10858,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {*} data The metadata.
 	     * @returns {Function} Returns `func`.
 	     */
-	    var setData = (function() {
-	      var count = 0,
-	          lastCalled = 0;
-
-	      return function(key, value) {
-	        var stamp = now(),
-	            remaining = HOT_SPAN - (stamp - lastCalled);
-
-	        lastCalled = stamp;
-	        if (remaining > 0) {
-	          if (++count >= HOT_COUNT) {
-	            return key;
-	          }
-	        } else {
-	          count = 0;
-	        }
-	        return baseSetData(key, value);
-	      };
-	    }());
+	    var setData = shortOut(baseSetData);
 
 	    /**
 	     * A simple wrapper around the global [`setTimeout`](https://mdn.io/setTimeout).
@@ -10581,6 +10873,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    /**
+	     * Sets the `toString` method of `func` to return `string`.
+	     *
+	     * @private
+	     * @param {Function} func The function to modify.
+	     * @param {Function} string The `toString` result.
+	     * @returns {Function} Returns `func`.
+	     */
+	    var setToString = shortOut(baseSetToString);
+
+	    /**
 	     * Sets the `toString` method of `wrapper` to mimic the source of `reference`
 	     * with wrapper details in a comment at the top of the source body.
 	     *
@@ -10590,14 +10892,61 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
 	     * @returns {Function} Returns `wrapper`.
 	     */
-	    var setWrapToString = !defineProperty ? identity : function(wrapper, reference, bitmask) {
+	    function setWrapToString(wrapper, reference, bitmask) {
 	      var source = (reference + '');
-	      return defineProperty(wrapper, 'toString', {
-	        'configurable': true,
-	        'enumerable': false,
-	        'value': constant(insertWrapDetails(source, updateWrapDetails(getWrapDetails(source), bitmask)))
-	      });
-	    };
+	      return setToString(wrapper, insertWrapDetails(source, updateWrapDetails(getWrapDetails(source), bitmask)));
+	    }
+
+	    /**
+	     * Creates a function that'll short out and invoke `identity` instead
+	     * of `func` when it's called `HOT_COUNT` or more times in `HOT_SPAN`
+	     * milliseconds.
+	     *
+	     * @private
+	     * @param {Function} func The function to restrict.
+	     * @returns {Function} Returns the new shortable function.
+	     */
+	    function shortOut(func) {
+	      var count = 0,
+	          lastCalled = 0;
+
+	      return function() {
+	        var stamp = nativeNow(),
+	            remaining = HOT_SPAN - (stamp - lastCalled);
+
+	        lastCalled = stamp;
+	        if (remaining > 0) {
+	          if (++count >= HOT_COUNT) {
+	            return arguments[0];
+	          }
+	        } else {
+	          count = 0;
+	        }
+	        return func.apply(undefined, arguments);
+	      };
+	    }
+
+	    /**
+	     * A specialized version of `arrayShuffle` which mutates `array`.
+	     *
+	     * @private
+	     * @param {Array} array The array to shuffle.
+	     * @returns {Array} Returns `array`.
+	     */
+	    function shuffleSelf(array) {
+	      var index = -1,
+	          length = array.length,
+	          lastIndex = length - 1;
+
+	      while (++index < length) {
+	        var rand = baseRandom(index, lastIndex),
+	            value = array[rand];
+
+	        array[rand] = array[index];
+	        array[index] = value;
+	      }
+	      return array;
+	    }
 
 	    /**
 	     * Converts `string` to a property path array.
@@ -10606,7 +10955,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {string} string The string to convert.
 	     * @returns {Array} Returns the property path array.
 	     */
-	    var stringToPath = memoize(function(string) {
+	    var stringToPath = memoizeCapped(function(string) {
 	      string = toString(string);
 
 	      var result = [];
@@ -10785,24 +11134,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * // => [1]
 	     */
 	    function concat() {
-	      var length = arguments.length,
-	          args = Array(length ? length - 1 : 0),
+	      var length = arguments.length;
+	      if (!length) {
+	        return [];
+	      }
+	      var args = Array(length - 1),
 	          array = arguments[0],
 	          index = length;
 
 	      while (index--) {
 	        args[index - 1] = arguments[index];
 	      }
-	      return length
-	        ? arrayPush(isArray(array) ? copyArray(array) : [array], baseFlatten(args, 1))
-	        : [];
+	      return arrayPush(isArray(array) ? copyArray(array) : [array], baseFlatten(args, 1));
 	    }
 
 	    /**
 	     * Creates an array of `array` values not included in the other given arrays
 	     * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-	     * for equality comparisons. The order of result values is determined by the
-	     * order they occur in the first array.
+	     * for equality comparisons. The order and references of result values are
+	     * determined by the first array.
 	     *
 	     * **Note:** Unlike `_.pullAll`, this method returns a new array.
 	     *
@@ -10828,8 +11178,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * This method is like `_.difference` except that it accepts `iteratee` which
 	     * is invoked for each element of `array` and `values` to generate the criterion
-	     * by which they're compared. Result values are chosen from the first array.
-	     * The iteratee is invoked with one argument: (value).
+	     * by which they're compared. The order and references of result values are
+	     * determined by the first array. The iteratee is invoked with one argument:
+	     * (value).
 	     *
 	     * **Note:** Unlike `_.pullAllBy`, this method returns a new array.
 	     *
@@ -10862,9 +11213,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * This method is like `_.difference` except that it accepts `comparator`
-	     * which is invoked to compare elements of `array` to `values`. Result values
-	     * are chosen from the first array. The comparator is invoked with two arguments:
-	     * (arrVal, othVal).
+	     * which is invoked to compare elements of `array` to `values`. The order and
+	     * references of result values are determined by the first array. The comparator
+	     * is invoked with two arguments: (arrVal, othVal).
 	     *
 	     * **Note:** Unlike `_.pullAllWith`, this method returns a new array.
 	     *
@@ -11358,8 +11709,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Creates an array of unique values that are included in all given arrays
 	     * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-	     * for equality comparisons. The order of result values is determined by the
-	     * order they occur in the first array.
+	     * for equality comparisons. The order and references of result values are
+	     * determined by the first array.
 	     *
 	     * @static
 	     * @memberOf _
@@ -11382,8 +11733,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * This method is like `_.intersection` except that it accepts `iteratee`
 	     * which is invoked for each element of each `arrays` to generate the criterion
-	     * by which they're compared. Result values are chosen from the first array.
-	     * The iteratee is invoked with one argument: (value).
+	     * by which they're compared. The order and references of result values are
+	     * determined by the first array. The iteratee is invoked with one argument:
+	     * (value).
 	     *
 	     * @static
 	     * @memberOf _
@@ -11417,9 +11769,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * This method is like `_.intersection` except that it accepts `comparator`
-	     * which is invoked to compare elements of `arrays`. Result values are chosen
-	     * from the first array. The comparator is invoked with two arguments:
-	     * (arrVal, othVal).
+	     * which is invoked to compare elements of `arrays`. The order and references
+	     * of result values are determined by the first array. The comparator is
+	     * invoked with two arguments: (arrVal, othVal).
 	     *
 	     * @static
 	     * @memberOf _
@@ -11517,21 +11869,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var index = length;
 	      if (fromIndex !== undefined) {
 	        index = toInteger(fromIndex);
-	        index = (
-	          index < 0
-	            ? nativeMax(length + index, 0)
-	            : nativeMin(index, length - 1)
-	        ) + 1;
+	        index = index < 0 ? nativeMax(length + index, 0) : nativeMin(index, length - 1);
 	      }
-	      if (value !== value) {
-	        return baseFindIndex(array, baseIsNaN, index - 1, true);
-	      }
-	      while (index--) {
-	        if (array[index] === value) {
-	          return index;
-	        }
-	      }
-	      return -1;
+	      return value === value
+	        ? strictLastIndexOf(array, value, index)
+	        : baseFindIndex(array, baseIsNaN, index, true);
 	    }
 
 	    /**
@@ -11693,9 +12035,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * console.log(pulled);
 	     * // => ['b', 'd']
 	     */
-	    var pullAt = baseRest(function(array, indexes) {
-	      indexes = baseFlatten(indexes, 1);
-
+	    var pullAt = flatRest(function(array, indexes) {
 	      var length = array ? array.length : 0,
 	          result = baseAt(array, indexes);
 
@@ -12270,8 +12610,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Creates a duplicate-free version of an array, using
 	     * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-	     * for equality comparisons, in which only the first occurrence of each
-	     * element is kept.
+	     * for equality comparisons, in which only the first occurrence of each element
+	     * is kept. The order of result values is determined by the order they occur
+	     * in the array.
 	     *
 	     * @static
 	     * @memberOf _
@@ -12293,7 +12634,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * This method is like `_.uniq` except that it accepts `iteratee` which is
 	     * invoked for each element in `array` to generate the criterion by which
-	     * uniqueness is computed. The iteratee is invoked with one argument: (value).
+	     * uniqueness is computed. The order of result values is determined by the
+	     * order they occur in the array. The iteratee is invoked with one argument:
+	     * (value).
 	     *
 	     * @static
 	     * @memberOf _
@@ -12320,8 +12663,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * This method is like `_.uniq` except that it accepts `comparator` which
-	     * is invoked to compare elements of `array`. The comparator is invoked with
-	     * two arguments: (arrVal, othVal).
+	     * is invoked to compare elements of `array`. The order of result values is
+	     * determined by the order they occur in the array.The comparator is invoked
+	     * with two arguments: (arrVal, othVal).
 	     *
 	     * @static
 	     * @memberOf _
@@ -12463,8 +12807,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * This method is like `_.xor` except that it accepts `iteratee` which is
 	     * invoked for each element of each `arrays` to generate the criterion by
-	     * which by which they're compared. The iteratee is invoked with one argument:
-	     * (value).
+	     * which by which they're compared. The order of result values is determined
+	     * by the order they occur in the arrays. The iteratee is invoked with one
+	     * argument: (value).
 	     *
 	     * @static
 	     * @memberOf _
@@ -12493,8 +12838,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * This method is like `_.xor` except that it accepts `comparator` which is
-	     * invoked to compare elements of `arrays`. The comparator is invoked with
-	     * two arguments: (arrVal, othVal).
+	     * invoked to compare elements of `arrays`. The order of result values is
+	     * determined by the order they occur in the arrays. The comparator is invoked
+	     * with two arguments: (arrVal, othVal).
 	     *
 	     * @static
 	     * @memberOf _
@@ -12711,8 +13057,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * _(object).at(['a[0].b.c', 'a[1]']).value();
 	     * // => [3, 4]
 	     */
-	    var wrapperAt = baseRest(function(paths) {
-	      paths = baseFlatten(paths, 1);
+	    var wrapperAt = flatRest(function(paths) {
 	      var length = paths.length,
 	          start = length ? paths[0] : 0,
 	          value = this.__wrapped__,
@@ -12977,7 +13322,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * // => { '3': 2, '5': 1 }
 	     */
 	    var countBy = createAggregator(function(result, value, key) {
-	      hasOwnProperty.call(result, key) ? ++result[key] : (result[key] = 1);
+	      if (hasOwnProperty.call(result, key)) {
+	        ++result[key];
+	      } else {
+	        baseAssignValue(result, key, 1);
+	      }
 	    });
 
 	    /**
@@ -13232,7 +13581,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @see _.forEachRight
 	     * @example
 	     *
-	     * _([1, 2]).forEach(function(value) {
+	     * _.forEach([1, 2], function(value) {
 	     *   console.log(value);
 	     * });
 	     * // => Logs `1` then `2`.
@@ -13300,7 +13649,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (hasOwnProperty.call(result, key)) {
 	        result[key].push(value);
 	      } else {
-	        result[key] = [value];
+	        baseAssignValue(result, key, [value]);
 	      }
 	    });
 
@@ -13413,7 +13762,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * // => { 'left': { 'dir': 'left', 'code': 97 }, 'right': { 'dir': 'right', 'code': 100 } }
 	     */
 	    var keyBy = createAggregator(function(result, value, key) {
-	      result[key] = value;
+	      baseAssignValue(result, key, value);
 	    });
 
 	    /**
@@ -13673,10 +14022,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * // => 2
 	     */
 	    function sample(collection) {
-	      var array = isArrayLike(collection) ? collection : values(collection),
-	          length = array.length;
-
-	      return length > 0 ? array[baseRandom(0, length - 1)] : undefined;
+	      return arraySample(isArrayLike(collection) ? collection : values(collection));
 	    }
 
 	    /**
@@ -13700,25 +14046,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * // => [2, 3, 1]
 	     */
 	    function sampleSize(collection, n, guard) {
-	      var index = -1,
-	          result = toArray(collection),
-	          length = result.length,
-	          lastIndex = length - 1;
-
 	      if ((guard ? isIterateeCall(collection, n, guard) : n === undefined)) {
 	        n = 1;
 	      } else {
-	        n = baseClamp(toInteger(n), 0, length);
+	        n = toInteger(n);
 	      }
-	      while (++index < n) {
-	        var rand = baseRandom(index, lastIndex),
-	            value = result[rand];
-
-	        result[rand] = result[index];
-	        result[index] = value;
-	      }
-	      result.length = n;
-	      return result;
+	      return arraySampleSize(isArrayLike(collection) ? collection : values(collection), n);
 	    }
 
 	    /**
@@ -13737,7 +14070,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * // => [4, 1, 3, 2]
 	     */
 	    function shuffle(collection) {
-	      return sampleSize(collection, MAX_ARRAY_LENGTH);
+	      return shuffleSelf(isArrayLike(collection)
+	        ? copyArray(collection)
+	        : values(collection)
+	      );
 	    }
 
 	    /**
@@ -13842,16 +14178,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	     *   { 'user': 'barney', 'age': 34 }
 	     * ];
 	     *
-	     * _.sortBy(users, function(o) { return o.user; });
+	     * _.sortBy(users, [function(o) { return o.user; }]);
 	     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 40]]
 	     *
 	     * _.sortBy(users, ['user', 'age']);
 	     * // => objects for [['barney', 34], ['barney', 36], ['fred', 40], ['fred', 48]]
-	     *
-	     * _.sortBy(users, 'user', function(o) {
-	     *   return Math.floor(o.age / 10);
-	     * });
-	     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 40]]
 	     */
 	    var sortBy = baseRest(function(collection, iteratees) {
 	      if (collection == null) {
@@ -14366,7 +14697,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * _.defer(function(text) {
 	     *   console.log(text);
 	     * }, 'deferred');
-	     * // => Logs 'deferred' after one or more milliseconds.
+	     * // => Logs 'deferred' after one millisecond.
 	     */
 	    var defer = baseRest(function(func, args) {
 	      return baseDelay(func, 1, args);
@@ -14474,14 +14805,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	          return cache.get(key);
 	        }
 	        var result = func.apply(this, args);
-	        memoized.cache = cache.set(key, result);
+	        memoized.cache = cache.set(key, result) || cache;
 	        return result;
 	      };
 	      memoized.cache = new (memoize.Cache || MapCache);
 	      return memoized;
 	    }
 
-	    // Assign cache to `_.memoize`.
+	    // Expose `MapCache`.
 	    memoize.Cache = MapCache;
 
 	    /**
@@ -14573,7 +14904,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * func(10, 5);
 	     * // => [100, 10]
 	     */
-	    var overArgs = baseRest(function(func, transforms) {
+	    var overArgs = castRest(function(func, transforms) {
 	      transforms = (transforms.length == 1 && isArray(transforms[0]))
 	        ? arrayMap(transforms[0], baseUnary(getIteratee()))
 	        : arrayMap(baseFlatten(transforms, 1), baseUnary(getIteratee()));
@@ -14687,8 +15018,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * rearged('b', 'c', 'a')
 	     * // => ['a', 'b', 'c']
 	     */
-	    var rearg = baseRest(function(func, indexes) {
-	      return createWrap(func, REARG_FLAG, undefined, undefined, undefined, baseFlatten(indexes, 1));
+	    var rearg = flatRest(function(func, indexes) {
+	      return createWrap(func, REARG_FLAG, undefined, undefined, undefined, indexes);
 	    });
 
 	    /**
@@ -15364,7 +15695,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * // => false
 	     */
 	    function isElement(value) {
-	      return !!value && value.nodeType === 1 && isObjectLike(value) && !isPlainObject(value);
+	      return value != null && value.nodeType === 1 && isObjectLike(value) && !isPlainObject(value);
 	    }
 
 	    /**
@@ -15410,7 +15741,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (tag == mapTag || tag == setTag) {
 	        return !value.size;
 	      }
-	      if (nonEnumShadows || isPrototype(value)) {
+	      if (isPrototype(value)) {
 	        return !nativeKeys(value).length;
 	      }
 	      for (var key in value) {
@@ -15659,7 +15990,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    function isObject(value) {
 	      var type = typeof value;
-	      return !!value && (type == 'object' || type == 'function');
+	      return value != null && (type == 'object' || type == 'function');
 	    }
 
 	    /**
@@ -15687,7 +16018,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * // => false
 	     */
 	    function isObjectLike(value) {
-	      return !!value && typeof value == 'object';
+	      return value != null && typeof value == 'object';
 	    }
 
 	    /**
@@ -15951,8 +16282,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * // => true
 	     */
 	    function isPlainObject(value) {
-	      if (!isObjectLike(value) ||
-	          objectToString.call(value) != objectTag || isHostObject(value)) {
+	      if (!isObjectLike(value) || objectToString.call(value) != objectTag) {
 	        return false;
 	      }
 	      var proto = getPrototype(value);
@@ -16509,7 +16839,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * // => { 'a': 1, 'c': 3 }
 	     */
 	    var assign = createAssigner(function(object, source) {
-	      if (nonEnumShadows || isPrototype(source) || isArrayLike(source)) {
+	      if (isPrototype(source) || isArrayLike(source)) {
 	        copyObject(source, keys(source), object);
 	        return;
 	      }
@@ -16637,9 +16967,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * _.at(object, ['a[0].b.c', 'a[1]']);
 	     * // => [3, 4]
 	     */
-	    var at = baseRest(function(object, paths) {
-	      return baseAt(object, baseFlatten(paths, 1));
-	    });
+	    var at = flatRest(baseAt);
 
 	    /**
 	     * Creates an object that inherits from the `prototype` object. If a
@@ -17242,7 +17570,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      iteratee = getIteratee(iteratee, 3);
 
 	      baseForOwn(object, function(value, key, object) {
-	        result[iteratee(value, key, object)] = value;
+	        baseAssignValue(result, iteratee(value, key, object), value);
 	      });
 	      return result;
 	    }
@@ -17280,7 +17608,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      iteratee = getIteratee(iteratee, 3);
 
 	      baseForOwn(object, function(value, key, object) {
-	        result[key] = iteratee(value, key, object);
+	        baseAssignValue(result, key, iteratee(value, key, object));
 	      });
 	      return result;
 	    }
@@ -17324,7 +17652,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * This method is like `_.merge` except that it accepts `customizer` which
 	     * is invoked to produce the merged values of the destination and source
 	     * properties. If `customizer` returns `undefined`, merging is handled by the
-	     * method instead. The `customizer` is invoked with seven arguments:
+	     * method instead. The `customizer` is invoked with six arguments:
 	     * (objValue, srcValue, key, object, source, stack).
 	     *
 	     * **Note:** This method mutates `object`.
@@ -17374,11 +17702,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * _.omit(object, ['a', 'c']);
 	     * // => { 'b': '2' }
 	     */
-	    var omit = baseRest(function(object, props) {
+	    var omit = flatRest(function(object, props) {
 	      if (object == null) {
 	        return {};
 	      }
-	      props = arrayMap(baseFlatten(props, 1), toKey);
+	      props = arrayMap(props, toKey);
 	      return basePick(object, baseDifference(getAllKeysIn(object), props));
 	    });
 
@@ -17423,8 +17751,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * _.pick(object, ['a', 'c']);
 	     * // => { 'a': 1, 'c': 3 }
 	     */
-	    var pick = baseRest(function(object, props) {
-	      return object == null ? {} : basePick(object, arrayMap(baseFlatten(props, 1), toKey));
+	    var pick = flatRest(function(object, props) {
+	      return object == null ? {} : basePick(object, arrayMap(props, toKey));
 	    });
 
 	    /**
@@ -18078,8 +18406,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * Converts the characters "&", "<", ">", '"', "'", and "\`" in `string` to
-	     * their corresponding HTML entities.
+	     * Converts the characters "&", "<", ">", '"', and "'" in `string` to their
+	     * corresponding HTML entities.
 	     *
 	     * **Note:** No other characters are escaped. To escape additional
 	     * characters use a third-party library like [_he_](https://mths.be/he).
@@ -18089,12 +18417,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * unless they're part of a tag or unquoted attribute value. See
 	     * [Mathias Bynens's article](https://mathiasbynens.be/notes/ambiguous-ampersands)
 	     * (under "semi-related fun fact") for more details.
-	     *
-	     * Backticks are escaped because in IE < 9, they can break out of
-	     * attribute values or HTML comments. See [#59](https://html5sec.org/#59),
-	     * [#102](https://html5sec.org/#102), [#108](https://html5sec.org/#108), and
-	     * [#133](https://html5sec.org/#133) of the
-	     * [HTML5 Security Cheatsheet](https://html5sec.org/) for more details.
 	     *
 	     * When working with HTML you should always
 	     * [quote attribute values](http://wonko.com/post/html-escaping) to reduce
@@ -18338,15 +18660,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * // => [6, 8, 10]
 	     */
 	    function parseInt(string, radix, guard) {
-	      // Chrome fails to trim leading <BOM> whitespace characters.
-	      // See https://bugs.chromium.org/p/v8/issues/detail?id=3109 for more details.
 	      if (guard || radix == null) {
 	        radix = 0;
 	      } else if (radix) {
 	        radix = +radix;
 	      }
-	      string = toString(string).replace(reTrim, '');
-	      return nativeParseInt(string, radix || (reHasHexPrefix.test(string) ? 16 : 10));
+	      return nativeParseInt(toString(string), radix || 0);
 	    }
 
 	    /**
@@ -18585,7 +18904,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * compiled({ 'user': 'barney' });
 	     * // => 'hello barney!'
 	     *
-	     * // Use the ES delimiter as an alternative to the default "interpolate" delimiter.
+	     * // Use the ES template literal delimiter as an "interpolate" delimiter.
+	     * // Disable support by replacing the "interpolate" delimiter.
 	     * var compiled = _.template('hello ${ user }!');
 	     * compiled({ 'user': 'pebbles' });
 	     * // => 'hello pebbles!'
@@ -18986,7 +19306,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * The inverse of `_.escape`; this method converts the HTML entities
-	     * `&amp;`, `&lt;`, `&gt;`, `&quot;`, `&#39;`, and `&#96;` in `string` to
+	     * `&amp;`, `&lt;`, `&gt;`, `&quot;`, and `&#39;` in `string` to
 	     * their corresponding characters.
 	     *
 	     * **Note:** No other HTML entities are unescaped. To unescape additional
@@ -19140,10 +19460,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * jQuery(element).on('click', view.click);
 	     * // => Logs 'clicked docs' when clicked.
 	     */
-	    var bindAll = baseRest(function(object, methodNames) {
-	      arrayEach(baseFlatten(methodNames, 1), function(key) {
+	    var bindAll = flatRest(function(object, methodNames) {
+	      arrayEach(methodNames, function(key) {
 	        key = toKey(key);
-	        object[key] = bind(object[key], object);
+	        baseAssignValue(object, key, bind(object[key], object));
 	      });
 	      return object;
 	    });
@@ -22091,7 +22411,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function TableDataStore(data) {
 	    _classCallCheck(this, TableDataStore);
 
-	    this.data = data;
+	    if (Array.isArray(this.data)) {
+	      this.data = data.slice();
+	    } else {
+	      this.data = data;
+	    }
+
 	    this.colInfos = null;
 	    this.filteredData = null;
 	    this.isOnFilter = false;
@@ -22117,7 +22442,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'setData',
 	    value: function setData(data) {
-	      this.data = data;
+	      if (Array.isArray(this.data)) {
+	        this.data = data.slice();
+	      } else {
+	        this.data = data;
+	      }
+
 	      if (this.remote) {
 	        return;
 	      }
@@ -22145,7 +22475,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'setSelectedRowKey',
 	    value: function setSelectedRowKey(selectedRowKeys) {
-	      this.selected = selectedRowKeys;
+	      if (Array.isArray(this.data)) {
+	        this.selected = selectedRowKeys.slice();
+	      } else {
+	        // return [] TODO
+	      }
 	    }
 	  }, {
 	    key: 'getRowByKey',
@@ -22235,6 +22569,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      if (this.isOnFilter) {
 	        this.data.forEach(function (row) {
+	          if (row[this.keyField] === rowKeyCache) {
+	            row[fieldName] = newVal;
+	          }
+	        }, this);
+	        if (this.filterObj !== null) this.filter(this.filterObj);
+	        if (this.searchText !== null) this.search(this.searchText);
+	      }
+	      return this;
+	    }
+	  }, {
+	    key: 'edit',
+	    value: function edit(newVal, rowIndex, fieldName, sectionKey) {
+	      var currentDisplayData = this.getCurrentDisplayData();
+	      var rowKeyCache = undefined;
+	      if (!this.enablePagination) {
+	        currentDisplayData[sectionKey][rowIndex][fieldName] = newVal;
+	        rowKeyCache = currentDisplayData[sectionKey][rowIndex][this.keyField];
+	      } else {
+	        currentDisplayData[sectionKey][this.pageObj.start + rowIndex][fieldName] = newVal;
+	        rowKeyCache = currentDisplayData[sectionKey][this.pageObj.start + rowIndex][this.keyField];
+	      }
+	      if (this.isOnFilter) {
+	        this.data[sectionKey].forEach(function (row) {
 	          if (row[this.keyField] === rowKeyCache) {
 	            row[fieldName] = newVal;
 	          }
@@ -22682,9 +23039,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function getAllRowkey() {
 	      var _this6 = this;
 
-	      return this.data.map(function (row) {
-	        return row[_this6.keyField];
-	      });
+	      if (Array.isArray(this.data)) {
+	        return this.data.map(function (row) {
+	          return row[_this6.keyField];
+	        });
+	      } else {
+	        // return [] TODO
+	      }
 	    }
 	  }]);
 
@@ -23237,12 +23598,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      er = arguments[1];
 	      if (er instanceof Error) {
 	        throw er; // Unhandled 'error' event
-	      } else {
-	        // At least give some kind of context to the user
-	        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
-	        err.context = er;
-	        throw err;
 	      }
+	      throw TypeError('Uncaught, unspecified "error" event.');
 	    }
 	  }
 
@@ -23265,11 +23622,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        break;
 	      // slower
 	      default:
-	        args = Array.prototype.slice.call(arguments, 1);
+	        len = arguments.length;
+	        args = new Array(len - 1);
+	        for (i = 1; i < len; i++)
+	          args[i - 1] = arguments[i];
 	        handler.apply(this, args);
 	    }
 	  } else if (isObject(handler)) {
-	    args = Array.prototype.slice.call(arguments, 1);
+	    len = arguments.length;
+	    args = new Array(len - 1);
+	    for (i = 1; i < len; i++)
+	      args[i - 1] = arguments[i];
+
 	    listeners = handler.slice();
 	    len = listeners.length;
 	    for (i = 0; i < len; i++)
@@ -23307,6 +23671,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  // Check for listener leak
 	  if (isObject(this._events[type]) && !this._events[type].warned) {
+	    var m;
 	    if (!isUndefined(this._maxListeners)) {
 	      m = this._maxListeners;
 	    } else {
@@ -23428,7 +23793,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  if (isFunction(listeners)) {
 	    this.removeListener(type, listeners);
-	  } else if (listeners) {
+	  } else {
 	    // LIFO order
 	    while (listeners.length)
 	      this.removeListener(type, listeners[listeners.length - 1]);
@@ -23449,20 +23814,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return ret;
 	};
 
-	EventEmitter.prototype.listenerCount = function(type) {
-	  if (this._events) {
-	    var evlistener = this._events[type];
-
-	    if (isFunction(evlistener))
-	      return 1;
-	    else if (evlistener)
-	      return evlistener.length;
-	  }
-	  return 0;
-	};
-
 	EventEmitter.listenerCount = function(emitter, type) {
-	  return emitter.listenerCount(type);
+	  var ret;
+	  if (!emitter._events || !emitter._events[type])
+	    ret = 0;
+	  else if (isFunction(emitter._events[type]))
+	    ret = 1;
+	  else
+	    ret = emitter._events[type].length;
+	  return ret;
 	};
 
 	function isFunction(arg) {
