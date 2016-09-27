@@ -176,8 +176,8 @@ class BootstrapTable extends Component {
       });
     } else {
       // #125
-      if (!options.page &&
-        page > Math.ceil(nextProps.data.length / sizePerPage)) {
+      // remove !options.page for #709
+      if (page > Math.ceil(nextProps.data.length / sizePerPage)) {
         page = 1;
       }
       const sortInfo = this.store.getSortInfo();
