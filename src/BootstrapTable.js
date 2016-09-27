@@ -809,7 +809,8 @@ class BootstrapTable extends Component {
             nextPage={ options.nextPage || Const.NEXT_PAGE }
             firstPage={ options.firstPage || Const.FIRST_PAGE }
             lastPage={ options.lastPage || Const.LAST_PAGE }
-            hideSizePerPage={ options.hideSizePerPage }/>
+            hideSizePerPage={ options.hideSizePerPage }
+            open={ false }/>
         </div>
       );
     }

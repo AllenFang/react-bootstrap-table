@@ -4,6 +4,17 @@ import Const from '../Const';
 
 class PaginationList extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: this.props.open
+    };
+  }
+
+  componentWillReceiveProps() {
+    this.setState({ open: false });
+  }
+
   changePage = page => {
     const {
       pageStartIndex,
@@ -45,7 +56,15 @@ class PaginationList extends Component {
       if (this.props.onSizePerPageList) {
         this.props.onSizePerPageList(selectSize);
       }
+    } else {
+      this.setState({ open: false });
     }
+  }
+
+  toggleDropDown = () => {
+    this.setState({
+      open: !this.state.open
+    });
   }
 
   render() {
@@ -97,6 +116,7 @@ class PaginationList extends Component {
     const dropDownStyle = {
       visibility: hideSizePerPage ? 'hidden' : 'visible'
     };
+    const open = this.state.open ? 'open' : '';
 
     return (
       <div className='row' style={ { marginTop: 15 } }>
@@ -105,10 +125,11 @@ class PaginationList extends Component {
           ? <div>
               <div className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
                 { total }{ ' ' }
-                <span className='dropdown' style={ dropDownStyle }>
+                <span className={ `dropdown ${open}` } style={ dropDownStyle }>
                   <button className='btn btn-default dropdown-toggle'
-                    type='button' id='pageDropDown' data-toggle='dropdown'
-                    aria-expanded='true'>
+                    id='pageDropDown' data-toggle='dropdown'
+                    aria-expanded={ this.state.open }
+                    onClick={ this.toggleDropDown }>
                     { sizePerPage }
                     <span>
                       { ' ' }
