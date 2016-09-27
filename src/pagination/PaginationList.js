@@ -82,11 +82,12 @@ class PaginationList extends Component {
     });
 
     const offset = Math.abs(Const.PAGE_START_INDEX - pageStartIndex);
-    const start = ((currPage - pageStartIndex) * sizePerPage);
+    let start = ((currPage - pageStartIndex) * sizePerPage);
+    start = dataSize === 0 ? 0 : start + 1;
     let to = Math.min((sizePerPage * (currPage + offset) - 1), dataSize);
     if (to >= dataSize) to--;
     let total = paginationShowsTotal ? <span>
-      Showing rows { start + 1 } to&nbsp;{ to + 1 } of&nbsp;{ dataSize }
+      Showing rows { start } to&nbsp;{ to + 1 } of&nbsp;{ dataSize }
     </span> : null;
 
     if (typeof paginationShowsTotal === 'function') {
