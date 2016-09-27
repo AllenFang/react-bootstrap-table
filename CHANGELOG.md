@@ -1,3 +1,22 @@
+<a name="v2.5.3"></a>
+# [v2.5.3](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.2...v2.5.3) (2016-09-18)
+## Bug fixes
+* Fix wrong text for pagination show totals([62ce772](https://github.com/AllenFang/react-bootstrap-table/commit/62ce7727f2dba0e1edf0c1c7fcc6b0fb795b1d40))
+* Should not deselect disabled checked checkbox on click on unselected all([41e3723](https://github.com/AllenFang/react-bootstrap-table/commit/41e3723b967a4793cf5428e66c621309ce030207))
+
+## Enhancement
+* Avoid console error for invalid regex in regex-filter([ef15ce0](https://github.com/AllenFang/react-bootstrap-table/pull/711/commits/ef15ce0cad9dee2df111485cf59c96dec65eaf97))
+
+<a name="v2.5.2"></a>
+# [v2.5.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.1...v2.5.2) (2016-09-11)
+## Bug fixes
+* Fix select filter not working as expected([1d3960c](https://github.com/AllenFang/react-bootstrap-table/commit/1d3960c97cadb636be74a42111cae53a12b2f587))
+	* Check [#589](https://github.com/AllenFang/react-bootstrap-table/issues/589)
+* Fix pagination covers table when setting maxheight([dcc54d2](https://github.com/AllenFang/react-bootstrap-table/commit/dcc54d2e3b9aa542459f4c023ae48bacff478aec))
+
+## Enhancement
+* Allow ```sizePerPageList``` accept an object which follow this format ```{ text: '10', value: 10 }```([635b838](https://github.com/AllenFang/react-bootstrap-table/commit/635b83837e991d418c47eab9b7d375d2c5162950))
+
 <a name="v2.5.1"></a>
 # [v2.5.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.0...v2.5.1) (2016-09-03)
 ## Bug fixes

@@ -176,8 +176,8 @@ class BootstrapTable extends Component {
       });
     } else {
       // #125
-      if (!options.page &&
-        page > Math.ceil(nextProps.data.length / sizePerPage)) {
+      // remove !options.page for #709
+      if (page > Math.ceil(nextProps.data.length / sizePerPage)) {
         page = 1;
       }
       const sortInfo = this.store.getSortInfo();
@@ -321,20 +321,30 @@ class BootstrapTable extends Component {
 
   isSelectAll() {
     if (this.store.isEmpty()) return false;
-
+    const unselectable = this.props.selectRow.unselectable;
     const defaultSelectRowKeys = this.store.getSelectedRowKeys();
     const allRowKeys = this.store.getAllRowkey();
 
     if (defaultSelectRowKeys.length === 0) return false;
     let match = 0;
     let noFound = 0;
+    let unSelectableCnt = 0;
     defaultSelectRowKeys.forEach(selected => {
       if (allRowKeys.indexOf(selected) !== -1) match++;
       else noFound++;
+      if (unselectable &&
+        unselectable.indexOf(selected) !== -1) unSelectableCnt++;
     });
 
     if (noFound === defaultSelectRowKeys.length) return false;
-    return (match === allRowKeys.length) ? true : 'indeterminate';
+    if (match === allRowKeys.length) {
+      return true;
+    } else {
+      if (unselectable && match <= unSelectableCnt &&
+        unSelectableCnt === unselectable.length) return false;
+      else return 'indeterminate';
+    }
+    // return (match === allRowKeys.length) ? true : 'indeterminate';
   }
 
   cleanSelected() {
@@ -423,18 +433,26 @@ class BootstrapTable extends Component {
   handleSelectAllRow = e => {
     const isSelected = e.currentTarget.checked;
     const keyField = this.store.getKeyField();
-    const { selectRow: { onSelectAll, unselectable } } = this.props;
+    const { selectRow: { onSelectAll, unselectable, selected } } = this.props;
     let selectedRowKeys = [];
     let result = true;
-    let rows = this.store.get();
+    let rows = isSelected ?
+      this.store.get() :
+      this.store.getRowByKey(this.state.selectedRowKeys);
 
-    if (isSelected && unselectable && unselectable.length > 0) {
-      rows = rows.filter(r => unselectable.indexOf(r[keyField]) === -1);
+    if (unselectable && unselectable.length > 0) {
+      if (isSelected) {
+        rows = rows.filter(r => {
+          return unselectable.indexOf(r[keyField]) === -1 ||
+            (selected && selected.indexOf(r[keyField]) !== -1);
+        });
+      } else {
+        rows = rows.filter(r => unselectable.indexOf(r[keyField]) === -1);
+      }
     }
 
     if (onSelectAll) {
-      result = this.props.selectRow.onSelectAll(isSelected,
-        isSelected ? rows : this.store.getRowByKey(this.state.selectedRowKeys));
+      result = this.props.selectRow.onSelectAll(isSelected, rows);
     }
 
     if (typeof result == 'undefined' || result !== false) {
@@ -442,6 +460,10 @@ class BootstrapTable extends Component {
         selectedRowKeys = Array.isArray(result) ?
           result :
           rows.map(r => r[keyField]);
+      } else {
+        if (unselectable && selected) {
+          selectedRowKeys = selected.filter(r => unselectable.indexOf(r) > -1 );
+        }
       }
 
       this.store.setSelectedRowKey(selectedRowKeys);
