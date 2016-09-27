@@ -726,7 +726,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	      } else {
 	        // #125
-	        if (!options.page && page > Math.ceil(nextProps.data.length / sizePerPage)) {
+	        // remove !options.page for #709
+	        if (page > Math.ceil(nextProps.data.length / sizePerPage)) {
 	          page = 1;
 	        }
 	        var sortInfo = this.store.getSortInfo();
@@ -1811,7 +1812,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    this.handleEditCell = function (rowIndex, columnIndex, e) {
-	      _this.editing = true;
 	      if (_this._isSelectRowDefined()) {
 	        columnIndex--;
 	        if (_this.props.selectRow.hideSelectColumn) columnIndex++;
@@ -1841,7 +1841,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.state = {
 	      currEditCell: null
 	    };
-	    this.editing = false;
 	  }
 
 	  _createClass(TableBody, [{
@@ -1863,7 +1862,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var tableRows = this.props.data.map(function (data, r) {
 	        var tableColumns = this.props.columns.map(function (column, i) {
 	          var fieldValue = data[column.name];
-	          if (this.editing && column.name !== this.props.keyField && // Key field can't be edit
+	          if (column.name !== this.props.keyField && // Key field can't be edit
 	          column.editable && // column is editable? default is true, user can set it false
 	          this.state.currEditCell !== null && this.state.currEditCell.rid === r && this.state.currEditCell.cid === i) {
 	            var editable = column.editable;
@@ -1956,8 +1955,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          )
 	        ));
 	      }
-
-	      this.editing = false;
 
 	      return _react2['default'].createElement(
 	        'div',
@@ -21115,13 +21112,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var offset = Math.abs(_Const2['default'].PAGE_START_INDEX - pageStartIndex);
 	      var start = (currPage - pageStartIndex) * sizePerPage;
+	      start = dataSize === 0 ? 0 : start + 1;
 	      var to = Math.min(sizePerPage * (currPage + offset) - 1, dataSize);
 	      if (to >= dataSize) to--;
 	      var total = paginationShowsTotal ? _react2['default'].createElement(
 	        'span',
 	        null,
 	        'Showing rows ',
-	        start + 1,
+	        start,
 	        ' to ',
 	        to + 1,
 	        ' of ',
