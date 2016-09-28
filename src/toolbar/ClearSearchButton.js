@@ -7,20 +7,17 @@ class ClearSearchButton extends Component {
   render() {
     const {
       btnContextual,
-      wrapperClass,
       btnClass,
       onClick,
       btnText
     } = this.props;
     return (
-      <span className={ `input-group-btn ${wrapperClass}` }>
-        <button ref='btn'
-          className={ `btn ${btnContextual} ${btnClass} ${clearBtnDefaultClass}` }
-          type='button'
-          onClick={ onClick }>
-          { btnText }
-        </button>
-      </span>
+      <button ref='btn'
+        className={ `btn ${btnContextual} ${btnClass} ${clearBtnDefaultClass}` }
+        type='button'
+        onClick={ onClick }>
+        { btnText }
+      </button>
     );
   }
 }
@@ -29,15 +26,13 @@ ClearSearchButton.propTypes = {
   btnContextual: PropTypes.string,
   btnClass: PropTypes.string,
   btnText: PropTypes.string,
-  onClick: PropTypes.func,
-  wrapperClass: PropTypes.string
+  onClick: PropTypes.func
 };
 ClearSearchButton.defaultProps = {
   btnContextual: 'btn-default',
   btnClass: '',
   btnText: 'Clear',
-  onClick: undefined,
-  wrapperClass: ''
+  onClick: undefined
 };
 
 export default ClearSearchButton;

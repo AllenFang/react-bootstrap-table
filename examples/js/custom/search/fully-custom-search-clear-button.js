@@ -25,7 +25,7 @@ export default class FullyCustomClearButtonTable extends React.Component {
 
   createCustomClearButton = (onClick) => {
     return (
-      <button style={ { color: 'blue' } } onClick={ onClick }>Clean</button>
+      <button className='btn btn-warning' onClick={ onClick }>Clean</button>
     );
   }
 

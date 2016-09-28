@@ -28,8 +28,7 @@ export default class DefaultCustomClearButtonTable extends React.Component {
       <ClearSearchButton
         btnText='MyClear'
         btnContextual='btn-warning'
-        btnClass='my-custom-class'
-        wrapperClass='my-span-wrapper-class'/>
+        btnClass='my-custom-class'/>
     );
   }
 

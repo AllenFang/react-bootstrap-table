@@ -342,7 +342,9 @@ class ToolBar extends Component {
       return (
         <div className={ classNames }>
           { searchField }
-          { clearBtn }
+          <span className='input-group-btn'>
+            { clearBtn }
+          </span>
         </div>
       );
     } else {
