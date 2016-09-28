@@ -316,7 +316,7 @@ class ToolBar extends Component {
 
       if (this.props.searchField) {
         searchField = this.props.searchField({
-          onKeyUp: this.handleKeyUp,
+          search: this.handleKeyUp,
           defaultValue: this.props.defaultSearch,
           placeholder: this.props.searchPlaceholder
         });
@@ -422,6 +422,7 @@ ToolBar.propTypes = {
   exportCSVBtn: PropTypes.func,
   clearSearchBtn: PropTypes.func,
   searchField: PropTypes.func,
+  searchPanel: PropTypes.func,
   toolBar: PropTypes.func
 };
 

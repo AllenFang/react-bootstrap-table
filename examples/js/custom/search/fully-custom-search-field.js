@@ -40,7 +40,7 @@ class MySearchField extends React.Component {
         type='text'
         defaultValue={ this.props.defaultValue }
         placeholder={ this.props.placeholder }
-        onKeyUp={ this.props.onKeyUp }/>
+        onKeyUp={ this.props.search }/>
     );
   }
 }
