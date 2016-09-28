@@ -18,6 +18,8 @@ import DefaultCustomExportCSVButtonTable from './csv-button/default-custom-csv-b
 import FullyCustomExportCSVButtonTable from './csv-button/fully-custom-csv-button';
 import DefaultCustomClearButtonTable from './search/default-custom-search-clear-button';
 import FullyCustomClearButtonTable from './search/fully-custom-search-clear-button';
+import DefaultCustomSearchFieldTable from './search/default-custom-search-field';
+import FullyCustomSearchFieldTable from './search/fully-custom-search-field';
 
 import { Col, Panel } from 'react-bootstrap';
 
@@ -88,6 +90,14 @@ class Demo extends React.Component {
         <Panel header={ 'Fully Custom for Clear Search Button Demo' }>
           { renderLinks('custom/search/fully-custom-search-clear-button.js') }
           <FullyCustomClearButtonTable/>
+        </Panel>
+        <Panel header={ 'Default Custom for Search Field Demo' }>
+          { renderLinks('custom/search/default-custom-search-field.js') }
+          <DefaultCustomSearchFieldTable/>
+        </Panel>
+        <Panel header={ 'Fully Custom for Search Field Demo' }>
+          { renderLinks('custom/search/fully-custom-search-field.js') }
+            <FullyCustomSearchFieldTable/>
         </Panel>
       </Col>
     );
