@@ -297,6 +297,7 @@ class ToolBar extends Component {
     if (this.props.enableSearch) {
       let classNames = 'form-group form-group-sm react-bs-table-search-form';
       let clearBtn = null;
+      let searchField = null;
       if (this.props.clearSearch) {
         if (this.props.clearSearchBtn) {
           clearBtn = this.props.clearSearchBtn(this.handleClearBtnClick);
@@ -313,12 +314,34 @@ class ToolBar extends Component {
         classNames += ' input-group input-group-sm';
       }
 
-      return (
-        <div className={ classNames }>
+      if (this.props.searchField) {
+        searchField = this.props.searchField({
+          onKeyUp: this.handleKeyUp,
+          defaultValue: this.props.defaultSearch,
+          placeholder: this.props.searchPlaceholder
+        });
+        if (searchField.type.name === SearchField.name) {
+          searchField = React.cloneElement(searchField, {
+            ref: 'seachInput',
+            onKeyUp: this.handleKeyUp
+          });
+        } else {
+          searchField = React.cloneElement(searchField, {
+            ref: 'seachInput'
+          });
+        }
+      } else {
+        searchField = (
           <SearchField ref='seachInput'
             defaultValue={ this.props.defaultSearch }
             placeholder={ this.props.searchPlaceholder }
             onKeyUp={ this.handleKeyUp }/>
+        );
+      }
+
+      return (
+        <div className={ classNames }>
+          { searchField }
           { clearBtn }
         </div>
       );
@@ -398,6 +421,7 @@ ToolBar.propTypes = {
   showSelectedOnlyBtn: PropTypes.func,
   exportCSVBtn: PropTypes.func,
   clearSearchBtn: PropTypes.func,
+  searchField: PropTypes.func,
   toolBar: PropTypes.func
 };
 
