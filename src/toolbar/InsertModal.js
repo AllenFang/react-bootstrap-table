@@ -1,3 +1,5 @@
+/* eslint no-console: 0 */
+
 import React, { Component, PropTypes } from 'react';
 
 import InsertModalHeader from './InsertModalHeader';
