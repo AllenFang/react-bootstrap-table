@@ -203,7 +203,7 @@ class ToolBar extends Component {
         <button type='button'
           className='btn btn-info react-bs-table-add-btn'
           data-toggle='modal'
-          data-target={ '.' + this.modalClassName }>
+          data-target='#insert-modal'>
           <i className='glyphicon glyphicon-plus'></i> { this.props.insertText }
         </button>
       );
@@ -338,7 +338,7 @@ class ToolBar extends Component {
       'shake': shakeEditor
     });
     return (
-      <div ref='modal' className={ modalClass } tabIndex='-1' role='dialog'>
+      <div id='#insert-modal' ref='modal' className={ modalClass } tabIndex='-1' role='dialog'>
         <div className={ dialogClass }>
           <div className='modal-content'>
             <div className='modal-header'>
