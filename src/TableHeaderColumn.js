@@ -74,7 +74,7 @@ class TableHeaderColumn extends Component {
     let defaultCaret;
     const {
       dataAlign,
-      dataField
+      dataField,
       headerAlign,
       hidden,
       sort,
