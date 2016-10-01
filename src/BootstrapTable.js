@@ -884,6 +884,7 @@ class BootstrapTable extends Component {
             exportCSVBtn={ this.props.options.exportCSVBtn }
             clearSearchBtn={ this.props.options.clearSearchBtn }
             searchField={ this.props.options.searchField }
+            searchPanel={ this.props.options.searchPanel }
             toolBar={ this.props.options.toolBar }/>
         </div>
       );
@@ -1100,6 +1101,7 @@ BootstrapTable.propTypes = {
     exportCSVBtn: PropTypes.func,
     clearSearchBtn: PropTypes.func,
     searchField: PropTypes.func,
+    searchPanel: PropTypes.func,
     toolBar: PropTypes.func
   }),
   fetchInfo: PropTypes.shape({
@@ -1203,6 +1205,7 @@ BootstrapTable.defaultProps = {
     exportCSVBtn: undefined,
     clearSearchBtn: undefined,
     searchField: undefined,
+    searchPanel: undefined,
     toolBar: undefined
   },
   fetchInfo: {

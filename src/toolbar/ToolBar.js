@@ -298,6 +298,7 @@ class ToolBar extends Component {
       let classNames = 'form-group form-group-sm react-bs-table-search-form';
       let clearBtn = null;
       let searchField = null;
+      let searchPanel = null;
       if (this.props.clearSearch) {
         if (this.props.clearSearchBtn) {
           clearBtn = this.props.clearSearchBtn(this.handleClearBtnClick);
@@ -338,15 +339,25 @@ class ToolBar extends Component {
             onKeyUp={ this.handleKeyUp }/>
         );
       }
-
-      return (
-        <div className={ classNames }>
-          { searchField }
-          <span className='input-group-btn'>
-            { clearBtn }
-          </span>
-        </div>
-      );
+      if (this.props.searchPanel) {
+        searchPanel = this.props.searchPanel({
+          searchField, clearBtn,
+          search: this.props.onSearch,
+          defaultValue: this.props.defaultSearch,
+          placeholder: this.props.searchPlaceholder,
+          clearBtnClick: this.handleClearBtnClick
+        });
+      } else {
+        searchPanel = (
+          <div className={ classNames }>
+            { searchField }
+            <span className='input-group-btn'>
+              { clearBtn }
+            </span>
+          </div>
+        );
+      }
+      return searchPanel;
     } else {
       return null;
     }
