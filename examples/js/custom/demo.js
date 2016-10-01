@@ -20,6 +20,8 @@ import DefaultCustomClearButtonTable from './search/default-custom-search-clear-
 import FullyCustomClearButtonTable from './search/fully-custom-search-clear-button';
 import DefaultCustomSearchFieldTable from './search/default-custom-search-field';
 import FullyCustomSearchFieldTable from './search/fully-custom-search-field';
+import CustomSearchPanel1 from './search/custom-search-panel-1';
+import CustomSearchPanel2 from './search/custom-search-panel-2';
 
 import { Col, Panel } from 'react-bootstrap';
 
@@ -98,6 +100,14 @@ class Demo extends React.Component {
         <Panel header={ 'Fully Custom for Search Field Demo' }>
           { renderLinks('custom/search/fully-custom-search-field.js') }
             <FullyCustomSearchFieldTable/>
+        </Panel>
+        <Panel header={ 'Custom for Search Panel Demo' }>
+          { renderLinks('custom/search/custom-search-panel-1.js') }
+            <CustomSearchPanel1/>
+        </Panel>
+        <Panel header={ 'Custom for Search Panel Demo' }>
+          { renderLinks('custom/search/custom-search-panel-2.js') }
+            <CustomSearchPanel2/>
         </Panel>
       </Col>
     );

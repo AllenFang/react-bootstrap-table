@@ -23,44 +23,51 @@ function addProducts(quantity) {
 addProducts(5);
 
 class MySearchPanel extends React.Component {
+
+  cleanBtnClick = () => {
+    this.refs.seachInput.value = '';
+    this.props.search('');
+  }
+
+  seachBanana = () => {
+    this.refs.seachInput.value = 'banana';
+    this.props.search('banana');
+  }
+
   render() {
     return (
       <div className='input-group'>
         <span className='input-group-btn'>
           <button
-            className='btn btn-primary'
-            type='button'>
-            CustomButton1
+            className='btn btn-default'
+            type='button'
+            onClick={ this.cleanBtnClick }>
+            Clean
           </button>
-          { this.props.clearBtn }
           <button
-            className='btn btn-warning'
-            type='button'>
-            CustomButton2
+            className='btn btn-default'
+            type='button'
+            onClick={ this.seachBanana }>
+            Banana
           </button>
         </span>
-        { this.props.searchField }
+        <input
+          ref='seachInput'
+          className='form-control'
+          type='text'
+          disabled
+          defaultValue={ this.props.defaultValue }
+          placeholder={ this.props.placeholder }/>
       </div>
     );
   }
 }
 
-export default class CustomSearchFieldTable1 extends React.Component {
-
-  renderCustomClearSearch = (onClick) => {
-    return (
-      <button
-        className='btn btn-success'
-        onClick={ onClick }>
-        Empty
-      </button>
-    );
-  }
+export default class CustomSearchFieldTable2 extends React.Component {
 
   render() {
     const options = {
       clearSearch: true,
-      clearSearchBtn: this.renderCustomClearSearch,
       searchPanel: (props) => (<MySearchPanel { ...props }/>)
     };
     return (
