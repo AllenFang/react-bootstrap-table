@@ -21337,14 +21337,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var classes = (0, _classnames2['default'])({
 	        'active': this.props.active,
 	        'disabled': this.props.disable,
-	        'hidden': this.props.hidden
+	        'hidden': this.props.hidden,
+	        'page-item': true
 	      });
 	      return _react2['default'].createElement(
 	        'li',
 	        { className: classes },
 	        _react2['default'].createElement(
 	          'a',
-	          { href: '#', onClick: this.pageBtnClick },
+	          { href: '#', onClick: this.pageBtnClick, className: 'page-link' },
 	          this.props.children
 	        )
 	      );
@@ -23508,6 +23509,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _classnames = __webpack_require__(3);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
 	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
@@ -23606,6 +23611,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var defaultCaret = undefined;
 	      var _props = this.props;
 	      var dataAlign = _props.dataAlign;
+	      var dataField = _props.dataField;
 	      var headerAlign = _props.headerAlign;
 	      var hidden = _props.hidden;
 	      var sort = _props.sort;
@@ -23613,6 +23619,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var sortIndicator = _props.sortIndicator;
 	      var children = _props.children;
 	      var caretRender = _props.caretRender;
+	      var className = _props.className;
 
 	      var thStyle = {
 	        textAlign: headerAlign || dataAlign,
@@ -23636,10 +23643,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      var sortCaret = sort ? _util2['default'].renderReactSortCaret(sort) : defaultCaret;
 	      if (caretRender) {
-	        sortCaret = caretRender(sort);
+	        sortCaret = caretRender(sort, dataField);
 	      }
+	      var classes = (0, _classnames2['default'])(typeof className === 'function' ? className() : className, dataSort ? 'sort-column' : '');
 
-	      var classes = this.props.className + ' ' + (dataSort ? 'sort-column' : '');
 	      var title = typeof children === 'string' ? { title: children } : null;
 	      return _react2['default'].createElement(
 	        'th',
@@ -23750,7 +23757,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  hidden: _react.PropTypes.bool,
 	  hiddenOnInsert: _react.PropTypes.bool,
 	  searchable: _react.PropTypes.bool,
-	  className: _react.PropTypes.string,
+	  className: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
 	  width: _react.PropTypes.string,
 	  sortFunc: _react.PropTypes.func,
 	  sortFuncExtraData: _react.PropTypes.any,
