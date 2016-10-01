@@ -1,6 +1,7 @@
 /* eslint default-case: 0 */
 /* eslint guard-for-in: 0 */
 import React, { Component, PropTypes } from 'react';
+import classSet from 'classnames';
 import Const from './Const';
 import Util from './util';
 import DateFilter from './filters/Date';
@@ -79,7 +80,8 @@ class TableHeaderColumn extends Component {
       dataSort,
       sortIndicator,
       children,
-      caretRender
+      caretRender,
+      className
     } = this.props;
     const thStyle = {
       textAlign: headerAlign || dataAlign,
@@ -101,8 +103,10 @@ class TableHeaderColumn extends Component {
     if (caretRender) {
       sortCaret = caretRender(sort);
     }
+    const classes = classSet(
+      typeof className === 'function' ? className() : className,
+      dataSort ? 'sort-column' : '');
 
-    const classes = this.props.className + ' ' + (dataSort ? 'sort-column' : '');
     const title = typeof children === 'string' ? { title: children } : null;
     return (
       <th ref='header-col'
@@ -193,7 +197,10 @@ TableHeaderColumn.propTypes = {
   hidden: PropTypes.bool,
   hiddenOnInsert: PropTypes.bool,
   searchable: PropTypes.bool,
-  className: PropTypes.string,
+  className: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func
+  ]),
   width: PropTypes.string,
   sortFunc: PropTypes.func,
   sortFuncExtraData: PropTypes.any,
