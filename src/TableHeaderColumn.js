@@ -74,6 +74,7 @@ class TableHeaderColumn extends Component {
     let defaultCaret;
     const {
       dataAlign,
+      dataField
       headerAlign,
       hidden,
       sort,
@@ -101,7 +102,7 @@ class TableHeaderColumn extends Component {
     }
     let sortCaret = sort ? Util.renderReactSortCaret(sort) : defaultCaret;
     if (caretRender) {
-      sortCaret = caretRender(sort);
+      sortCaret = caretRender(sort, dataField);
     }
     const classes = classSet(
       typeof className === 'function' ? className() : className,
