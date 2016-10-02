@@ -34,21 +34,48 @@ class TableHeader extends Component {
     let selectRowHeaderCol = null;
     if (!this.props.hideSelectColumn) selectRowHeaderCol = this.renderSelectRowHeader();
     let i = 0;
+
+    let rowCount = 0;
+    React.Children.forEach(this.props.children, (elm) => {
+      if (Number(elm.props.row) > rowCount) {
+        rowCount = Number(elm.props.row);
+      }
+    });
+    const rows = [];
+    React.Children.forEach(this.props.children, (elm) => {
+      const { sortIndicator, sortName, sortOrder, onSort } = this.props;
+      const { dataField, dataSort } = elm.props;
+      const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
+      const rowIndex = elm.props.row ? Number(elm.props.row) : 0;
+      const rowSpan = elm.props.rowSpan ? Number(elm.props.rowSpan) : 1;
+      if (rows[rowIndex] === undefined) {
+        rows[rowIndex] = [];
+      }
+      if ((rowSpan + rowIndex) === (rowCount + 1)) {
+        rows[rowIndex].push(React.cloneElement(
+          elm, { key: i++, onSort, sort, sortIndicator, isOnlyHead: false }
+          ));
+      } else {
+        rows[rowIndex].push(React.cloneElement(
+          elm, { key: i++, isOnlyHead: true }
+          ));
+      }
+    });
+
+    const trs = rows.map((row, indexRow)=>{
+      return (
+        <tr key={ indexRow }>
+          { row }
+        </tr>
+      );
+    });
+
     return (
       <div ref='container' className={ containerClasses } style={ this.props.style }>
         <table className={ tableClasses }>
-          <thead>
-            <tr ref='header'>
-              { selectRowHeaderCol }
-              {
-                React.Children.map(this.props.children, (elm) => {
-                  const { sortIndicator, sortName, sortOrder, onSort } = this.props;
-                  const { dataField, dataSort } = elm.props;
-                  const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
-                  return React.cloneElement(elm, { key: i++, onSort, sort, sortIndicator });
-                })
-              }
-            </tr>
+          <thead ref='header'>
+            { selectRowHeaderCol }
+            { trs }
           </thead>
         </table>
       </div>

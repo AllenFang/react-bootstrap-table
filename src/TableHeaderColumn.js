@@ -114,6 +114,9 @@ class TableHeaderColumn extends Component {
           className={ classes }
           style={ thStyle }
           onClick={ this.handleColumnClick }
+          rowSpan={ this.props.rowSpan }
+          colSpan={ this.props.colSpan }
+          data-is-only-head={ this.props.isOnlyHead }
           { ...title }>
         { children }{ sortCaret }
         <div onClick={ e => e.stopPropagation() }>

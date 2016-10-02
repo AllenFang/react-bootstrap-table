@@ -511,7 +511,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    this._adjustHeaderWidth = function () {
-	      var header = _this.refs.header.refs.header;
+	      var header = _this.refs.header.refs.header.querySelectorAll('[data-is-only-head=false]');
 	      var headerContainer = _this.refs.header.refs.container;
 	      var tbody = _this.refs.body.refs.tbody;
 	      var firstRow = tbody.childNodes[0];
@@ -536,14 +536,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            cell.width = width + lastPadding + 'px';
 	          }
 	          var result = width + lastPadding + 'px';
-	          header.childNodes[i].style.width = result;
-	          header.childNodes[i].style.minWidth = result;
+	          header[i].style.width = result;
+	          header[i].style.minWidth = result;
 	        }
 	      } else {
 	        _react2['default'].Children.forEach(_this.props.children, function (child, i) {
 	          if (child.props.width) {
-	            header.childNodes[i].style.width = child.props.width + 'px';
-	            header.childNodes[i].style.minWidth = child.props.width + 'px';
+	            header[i].style.width = child.props.width + 'px';
+	            header[i].style.minWidth = child.props.width + 'px';
 	          }
 	        });
 	      }
@@ -681,29 +681,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function getColumnsDescription(_ref) {
 	      var children = _ref.children;
 
+	      var rowCount = 0;
+	      _react2['default'].Children.forEach(children, function (column) {
+	        if (Number(column.props.row) > rowCount) {
+	          rowCount = Number(column.props.row);
+	        }
+	      });
 	      return _react2['default'].Children.map(children, function (column, i) {
-	        return {
-	          name: column.props.dataField,
-	          align: column.props.dataAlign,
-	          sort: column.props.dataSort,
-	          format: column.props.dataFormat,
-	          formatExtraData: column.props.formatExtraData,
-	          filterFormatted: column.props.filterFormatted,
-	          filterValue: column.props.filterValue,
-	          editable: column.props.editable,
-	          customEditor: column.props.customEditor,
-	          hidden: column.props.hidden,
-	          hiddenOnInsert: column.props.hiddenOnInsert,
-	          searchable: column.props.searchable,
-	          className: column.props.columnClassName,
-	          columnTitle: column.props.columnTitle,
-	          width: column.props.width,
-	          text: column.props.children,
-	          sortFunc: column.props.sortFunc,
-	          sortFuncExtraData: column.props.sortFuncExtraData,
-	          'export': column.props['export'],
-	          index: i
-	        };
+	        var rowIndex = column.props.row ? Number(column.props.row) : 0;
+	        var rowSpan = column.props.rowSpan ? Number(column.props.rowSpan) : 1;
+	        if (rowSpan + rowIndex === rowCount + 1) {
+	          return {
+	            name: column.props.dataField,
+	            align: column.props.dataAlign,
+	            sort: column.props.dataSort,
+	            format: column.props.dataFormat,
+	            formatExtraData: column.props.formatExtraData,
+	            filterFormatted: column.props.filterFormatted,
+	            filterValue: column.props.filterValue,
+	            editable: column.props.editable,
+	            customEditor: column.props.customEditor,
+	            hidden: column.props.hidden,
+	            hiddenOnInsert: column.props.hiddenOnInsert,
+	            searchable: column.props.searchable,
+	            className: column.props.columnClassName,
+	            columnTitle: column.props.columnTitle,
+	            width: column.props.width,
+	            text: column.props.children,
+	            sortFunc: column.props.sortFunc,
+	            sortFuncExtraData: column.props.sortFuncExtraData,
+	            'export': column.props['export'],
+	            index: i
+	          };
+	        }
 	      });
 	    }
 	  }, {
@@ -1579,6 +1589,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var selectRowHeaderCol = null;
 	      if (!this.props.hideSelectColumn) selectRowHeaderCol = this.renderSelectRowHeader();
 	      var i = 0;
+
+	      var rowCount = 0;
+	      _react2['default'].Children.forEach(this.props.children, function (elm) {
+	        if (Number(elm.props.row) > rowCount) {
+	          rowCount = Number(elm.props.row);
+	        }
+	      });
+	      var rows = [];
+	      _react2['default'].Children.forEach(this.props.children, function (elm) {
+	        var _props = _this.props;
+	        var sortIndicator = _props.sortIndicator;
+	        var sortName = _props.sortName;
+	        var sortOrder = _props.sortOrder;
+	        var onSort = _props.onSort;
+	        var _elm$props = elm.props;
+	        var dataField = _elm$props.dataField;
+	        var dataSort = _elm$props.dataSort;
+
+	        var sort = dataSort && dataField === sortName ? sortOrder : undefined;
+	        var rowIndex = elm.props.row ? Number(elm.props.row) : 0;
+	        var rowSpan = elm.props.rowSpan ? Number(elm.props.rowSpan) : 1;
+	        if (rows[rowIndex] === undefined) {
+	          rows[rowIndex] = [];
+	        }
+	        if (rowSpan + rowIndex === rowCount + 1) {
+	          rows[rowIndex].push(_react2['default'].cloneElement(elm, { key: i++, onSort: onSort, sort: sort, sortIndicator: sortIndicator, isOnlyHead: false }));
+	        } else {
+	          rows[rowIndex].push(_react2['default'].cloneElement(elm, { key: i++, isOnlyHead: true }));
+	        }
+	      });
+
+	      var trs = rows.map(function (row, indexRow) {
+	        return _react2['default'].createElement(
+	          'tr',
+	          { key: indexRow },
+	          row
+	        );
+	      });
+
 	      return _react2['default'].createElement(
 	        'div',
 	        { ref: 'container', className: containerClasses, style: this.props.style },
@@ -1587,25 +1636,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          { className: tableClasses },
 	          _react2['default'].createElement(
 	            'thead',
-	            null,
-	            _react2['default'].createElement(
-	              'tr',
-	              { ref: 'header' },
-	              selectRowHeaderCol,
-	              _react2['default'].Children.map(this.props.children, function (elm) {
-	                var _props = _this.props;
-	                var sortIndicator = _props.sortIndicator;
-	                var sortName = _props.sortName;
-	                var sortOrder = _props.sortOrder;
-	                var onSort = _props.onSort;
-	                var _elm$props = elm.props;
-	                var dataField = _elm$props.dataField;
-	                var dataSort = _elm$props.dataSort;
-
-	                var sort = dataSort && dataField === sortName ? sortOrder : undefined;
-	                return _react2['default'].cloneElement(elm, { key: i++, onSort: onSort, sort: sort, sortIndicator: sortIndicator });
-	              })
-	            )
+	            { ref: 'header' },
+	            selectRowHeaderCol,
+	            trs
 	          )
 	        )
 	      );
@@ -23701,7 +23734,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _extends({ ref: 'header-col',
 	          className: classes,
 	          style: thStyle,
-	          onClick: this.handleColumnClick
+	          onClick: this.handleColumnClick,
+	          rowSpan: this.props.rowSpan,
+	          colSpan: this.props.colSpan,
+	          'data-is-only-head': this.props.isOnlyHead
 	        }, title),
 	        children,
 	        sortCaret,
