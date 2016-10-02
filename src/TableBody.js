@@ -16,7 +16,6 @@ class TableBody extends Component {
     this.state = {
       currEditCell: null
     };
-    this.editing = false;
   }
 
   render() {
@@ -36,8 +35,7 @@ class TableBody extends Component {
     const tableRows = this.props.data.map(function(data, r) {
       const tableColumns = this.props.columns.map(function(column, i) {
         const fieldValue = data[column.name];
-        if (this.editing &&
-          column.name !== this.props.keyField && // Key field can't be edit
+        if (column.name !== this.props.keyField && // Key field can't be edit
           column.editable && // column is editable? default is true, user can set it false
           this.state.currEditCell !== null &&
           this.state.currEditCell.rid === r &&
@@ -136,8 +134,6 @@ class TableBody extends Component {
       );
     }
 
-    this.editing = false;
-
     return (
       <div ref='container'
         className={ classSet('react-bs-container-body', this.props.bodyContainerClass) }
@@ -229,7 +225,6 @@ class TableBody extends Component {
   }
 
   handleEditCell = (rowIndex, columnIndex, e) => {
-    this.editing = true;
     if (this._isSelectRowDefined()) {
       columnIndex--;
       if (this.props.selectRow.hideSelectColumn) columnIndex++;

@@ -240,19 +240,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props$selectRow = _this.props.selectRow;
 	      var onSelectAll = _props$selectRow.onSelectAll;
 	      var unselectable = _props$selectRow.unselectable;
+	      var selected = _props$selectRow.selected;
 
 	      var selectedRowKeys = [];
 	      var result = true;
-	      var rows = _this.store.get();
+	      var rows = isSelected ? _this.store.get() : _this.store.getRowByKey(_this.state.selectedRowKeys);
 
-	      if (isSelected && unselectable && unselectable.length > 0) {
-	        rows = rows.filter(function (r) {
-	          return unselectable.indexOf(r[keyField]) === -1;
-	        });
+	      if (unselectable && unselectable.length > 0) {
+	        if (isSelected) {
+	          rows = rows.filter(function (r) {
+	            return unselectable.indexOf(r[keyField]) === -1 || selected && selected.indexOf(r[keyField]) !== -1;
+	          });
+	        } else {
+	          rows = rows.filter(function (r) {
+	            return unselectable.indexOf(r[keyField]) === -1;
+	          });
+	        }
 	      }
 
 	      if (onSelectAll) {
-	        result = _this.props.selectRow.onSelectAll(isSelected, isSelected ? rows : _this.store.getRowByKey(_this.state.selectedRowKeys));
+	        result = _this.props.selectRow.onSelectAll(isSelected, rows);
 	      }
 
 	      if (typeof result == 'undefined' || result !== false) {
@@ -260,6 +267,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	          selectedRowKeys = Array.isArray(result) ? result : rows.map(function (r) {
 	            return r[keyField];
 	          });
+	        } else {
+	          if (unselectable && selected) {
+	            selectedRowKeys = selected.filter(function (r) {
+	              return unselectable.indexOf(r) > -1;
+	            });
+	          }
 	        }
 
 	        _this.store.setSelectedRowKey(selectedRowKeys);
@@ -723,7 +736,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	      } else {
 	        // #125
-	        if (!options.page && page > Math.ceil(nextProps.data.length / sizePerPage)) {
+	        // remove !options.page for #709
+	        if (page > Math.ceil(nextProps.data.length / sizePerPage)) {
 	          page = 1;
 	        }
 	        var sortInfo = this.store.getSortInfo();
@@ -875,19 +889,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'isSelectAll',
 	    value: function isSelectAll() {
 	      if (this.store.isEmpty()) return false;
-
+	      var unselectable = this.props.selectRow.unselectable;
 	      var defaultSelectRowKeys = this.store.getSelectedRowKeys();
 	      var allRowKeys = this.store.getAllRowkey();
 
 	      if (defaultSelectRowKeys.length === 0) return false;
 	      var match = 0;
 	      var noFound = 0;
+	      var unSelectableCnt = 0;
 	      defaultSelectRowKeys.forEach(function (selected) {
 	        if (allRowKeys.indexOf(selected) !== -1) match++;else noFound++;
+	        if (unselectable && unselectable.indexOf(selected) !== -1) unSelectableCnt++;
 	      });
 
 	      if (noFound === defaultSelectRowKeys.length) return false;
-	      return match === allRowKeys.length ? true : 'indeterminate';
+	      if (match === allRowKeys.length) {
+	        return true;
+	      } else {
+	        if (unselectable && match <= unSelectableCnt && unSelectableCnt === unselectable.length) return false;else return 'indeterminate';
+	      }
+	      // return (match === allRowKeys.length) ? true : 'indeterminate';
 	    }
 	  }, {
 	    key: 'cleanSelected',
@@ -1824,7 +1845,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    this.handleEditCell = function (rowIndex, columnIndex, e) {
-	      _this.editing = true;
 	      if (_this._isSelectRowDefined()) {
 	        columnIndex--;
 	        if (_this.props.selectRow.hideSelectColumn) columnIndex++;
@@ -1854,7 +1874,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.state = {
 	      currEditCell: null
 	    };
-	    this.editing = false;
 	  }
 
 	  _createClass(TableBody, [{
@@ -1876,7 +1895,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var tableRows = this.props.data.map(function (data, r) {
 	        var tableColumns = this.props.columns.map(function (column, i) {
 	          var fieldValue = data[column.name];
-	          if (this.editing && column.name !== this.props.keyField && // Key field can't be edit
+	          if (column.name !== this.props.keyField && // Key field can't be edit
 	          column.editable && // column is editable? default is true, user can set it false
 	          this.state.currEditCell !== null && this.state.currEditCell.rid === r && this.state.currEditCell.cid === i) {
 	            var editable = column.editable;
@@ -1969,8 +1988,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          )
 	        ));
 	      }
-
-	      this.editing = false;
 
 	      return _react2['default'].createElement(
 	        'div',
@@ -21128,12 +21145,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var offset = Math.abs(_Const2['default'].PAGE_START_INDEX - pageStartIndex);
 	      var start = (currPage - pageStartIndex) * sizePerPage;
+	      start = dataSize === 0 ? 0 : start + 1;
 	      var to = Math.min(sizePerPage * (currPage + offset) - 1, dataSize);
+	      if (to >= dataSize) to--;
 	      var total = paginationShowsTotal ? _react2['default'].createElement(
 	        'span',
 	        null,
 	        'Showing rows ',
-	        start + 1,
+	        start,
 	        ' to ',
 	        to + 1,
 	        ' of ',
@@ -21351,14 +21370,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var classes = (0, _classnames2['default'])({
 	        'active': this.props.active,
 	        'disabled': this.props.disable,
-	        'hidden': this.props.hidden
+	        'hidden': this.props.hidden,
+	        'page-item': true
 	      });
 	      return _react2['default'].createElement(
 	        'li',
 	        { className: classes },
 	        _react2['default'].createElement(
 	          'a',
-	          { href: '#', onClick: this.pageBtnClick },
+	          { href: '#', onClick: this.pageBtnClick, className: 'page-link' },
 	          this.props.children
 	        )
 	      );
@@ -22453,7 +22473,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      try {
 	        return new RegExp(filterVal, 'i').test(targetVal);
 	      } catch (e) {
-	        console.error('Invalid regular expression');
 	        return true;
 	      }
 	    }
@@ -23523,6 +23542,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _classnames = __webpack_require__(3);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
 	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
@@ -23621,6 +23644,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var defaultCaret = undefined;
 	      var _props = this.props;
 	      var dataAlign = _props.dataAlign;
+	      var dataField = _props.dataField;
 	      var headerAlign = _props.headerAlign;
 	      var hidden = _props.hidden;
 	      var sort = _props.sort;
@@ -23628,6 +23652,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var sortIndicator = _props.sortIndicator;
 	      var children = _props.children;
 	      var caretRender = _props.caretRender;
+	      var className = _props.className;
 
 	      var thStyle = {
 	        textAlign: headerAlign || dataAlign,
@@ -23651,10 +23676,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      var sortCaret = sort ? _util2['default'].renderReactSortCaret(sort) : defaultCaret;
 	      if (caretRender) {
-	        sortCaret = caretRender(sort);
+	        sortCaret = caretRender(sort, dataField);
 	      }
+	      var classes = (0, _classnames2['default'])(typeof className === 'function' ? className() : className, dataSort ? 'sort-column' : '');
 
-	      var classes = this.props.className + ' ' + (dataSort ? 'sort-column' : '');
 	      var title = typeof children === 'string' ? { title: children } : null;
 	      return _react2['default'].createElement(
 	        'th',
@@ -23768,7 +23793,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  hidden: _react.PropTypes.bool,
 	  hiddenOnInsert: _react.PropTypes.bool,
 	  searchable: _react.PropTypes.bool,
-	  className: _react.PropTypes.string,
+	  className: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
 	  width: _react.PropTypes.string,
 	  sortFunc: _react.PropTypes.func,
 	  sortFuncExtraData: _react.PropTypes.any,

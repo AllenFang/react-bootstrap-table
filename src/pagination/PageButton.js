@@ -16,11 +16,12 @@ class PageButton extends Component {
     const classes = classSet({
       'active': this.props.active,
       'disabled': this.props.disable,
-      'hidden': this.props.hidden
+      'hidden': this.props.hidden,
+      'page-item': true
     });
     return (
       <li className={ classes }>
-        <a href='#' onClick={ this.pageBtnClick }>{ this.props.children }</a>
+        <a href='#' onClick={ this.pageBtnClick } className='page-link'>{ this.props.children }</a>
       </li>
     );
   }
