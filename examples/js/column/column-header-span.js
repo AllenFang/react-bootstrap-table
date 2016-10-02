@@ -23,10 +23,10 @@ export default class ColumnHeaderSpan extends React.Component {
   render() {
     return (
       <BootstrapTable data={ products }>
-        <TableHeaderColumn row='0' rowSpan='2' dataField='id' isKey={ true } >Product ID</TableHeaderColumn>
-        <TableHeaderColumn row='0' colSpan='2' dataField='name'>Product Name</TableHeaderColumn>
-        <TableHeaderColumn row='1' dataField='name'>Product Name</TableHeaderColumn>
-        <TableHeaderColumn row='1' dataField='price'>Product Price</TableHeaderColumn>
+        <TableHeaderColumn row='0' rowSpan='2' dataField='id' isKey={ true } >ID</TableHeaderColumn>
+        <TableHeaderColumn row='0' colSpan='2'>Product</TableHeaderColumn>
+        <TableHeaderColumn row='1' dataField='name'>Name</TableHeaderColumn>
+        <TableHeaderColumn row='1' dataField='price'>Price</TableHeaderColumn>
       </BootstrapTable>
     );
   }
