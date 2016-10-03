@@ -1,3 +1,10 @@
+<a name="v2.5.5"></a>
+# [v2.5.5](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.4...v2.5.5) (2016-10-01)
+## Enhancement
+* A popup editor for cell editing example([0fb4494](https://github.com/AllenFang/react-bootstrap-table/commit/0fb4494c5c4f58ea12f596950405f027b7df3139))
+* The ```className``` on ```<TableHeaderColumn>``` accept a string or function((35d9d1e)[https://github.com/AllenFang/react-bootstrap-table/commit/35d9d1efe90f3d9f7113f3c18c8691f799bf7ccd])
+* Pass ```dataField``` as the second argument for ```caretRender```([e75c7be](https://github.com/AllenFang/react-bootstrap-table/commit/e75c7be774f3244213ae028131c2cf2c3bf65dab))
+
 <a name="v2.5.4"></a>
 # [v2.5.4](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.3...v2.5.4) (2016-09-27)
 ## Bug fixes
