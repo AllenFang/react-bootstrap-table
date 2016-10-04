@@ -21,28 +21,19 @@ function addProducts(quantity) {
 
 addProducts(5);
 
-export default class CustomToolBarTable extends React.Component {
+export default class CustomToolBarTable1 extends React.Component {
 
-  createCustomToolBar = ({
-    exportCSVBtn,
-    insertBtn,
-    deleteBtn,
-    showSelectedOnlyBtn,
-    searchTextInput
-   }) => {
-    // return null;
+  createCustomToolBar = props => {
     return (
-      <div className='row'>
-        <div className='col-xs-12 col-sm-6 col-md-6 col-lg-8'>
-          <div className='btn-group btn-group-sm' role='group'>
-            { exportCSVBtn }
-            { insertBtn }
-            { deleteBtn }
-            { showSelectedOnlyBtn }
-          </div>
+      <div style={ { margin: '15px' } }>
+        <div className='btn-group btn-group-sm' role='group'>
+          { props.components.exportCSVBtn }
+          { props.components.insertBtn }
+          { props.components.deleteBtn }
+          { props.components.showSelectedOnlyBtn }
         </div>
-        <div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-          { searchTextInput }
+        <div className='col-xs-8 col-sm-4 col-md-4 col-lg-2'>
+          { props.components.searchPanel }
         </div>
       </div>
     );

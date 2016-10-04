@@ -22,6 +22,7 @@ import DefaultCustomSearchFieldTable from './search/default-custom-search-field'
 import FullyCustomSearchFieldTable from './search/fully-custom-search-field';
 import CustomSearchPanel1 from './search/custom-search-panel-1';
 import CustomSearchPanel2 from './search/custom-search-panel-2';
+import CustomToolBar1 from './toolbar/custom-toolbar-1';
 
 import { Col, Panel } from 'react-bootstrap';
 
@@ -108,6 +109,10 @@ class Demo extends React.Component {
         <Panel header={ 'Custom for Search Panel Demo' }>
           { renderLinks('custom/search/custom-search-panel-2.js') }
             <CustomSearchPanel2/>
+        </Panel>
+        <Panel header={ 'Custom for Tool Bar Demo' }>
+          { renderLinks('custom/toolbar/custom-toolbar-1.js') }
+            <CustomToolBar1/>
         </Panel>
       </Col>
     );
