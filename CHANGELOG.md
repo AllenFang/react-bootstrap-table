@@ -1,3 +1,20 @@
+<a name="v2.5.5"></a>
+# [v2.5.5](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.4...v2.5.5) (2016-10-01)
+## Enhancement
+* A popup editor for cell editing example([0fb4494](https://github.com/AllenFang/react-bootstrap-table/commit/0fb4494c5c4f58ea12f596950405f027b7df3139))
+* The ```className``` on ```<TableHeaderColumn>``` accept a string or function((35d9d1e)[https://github.com/AllenFang/react-bootstrap-table/commit/35d9d1efe90f3d9f7113f3c18c8691f799bf7ccd])
+* Pass ```dataField``` as the second argument for ```caretRender```([e75c7be](https://github.com/AllenFang/react-bootstrap-table/commit/e75c7be774f3244213ae028131c2cf2c3bf65dab))
+
+<a name="v2.5.4"></a>
+# [v2.5.4](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.3...v2.5.4) (2016-09-27)
+## Bug fixes
+* Fixed the incorrect page number for ```paginationShowsTotal``` when data is empty([ba524f9](https://github.com/AllenFang/react-bootstrap-table/commit/ba524f964a06f182bf60cb105a53a18861fea747))
+* Fixed Cannot read property 'name' of undefined during option change if a given page bigger than total pages count([96c35aa](https://github.com/AllenFang/react-bootstrap-table/commit/96c35aad2183036dbefa68bd4cc6b2faec4bf7df))
+
+## Enhancement
+* Make pagination button compatible with Bootstrap@4([1c0e9f5](https://github.com/AllenFang/react-bootstrap-table/commit/1c0e9f59fbb07698aa643d421e2b56d6139016b4))
+* Keep cell editing stay if table re-rendering([6777a72](https://github.com/AllenFang/react-bootstrap-table/commit/6777a72904b7410e8ea613caa17df10e7035319c))
+
 <a name="v2.5.3"></a>
 # [v2.5.3](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.2...v2.5.3) (2016-09-18)
 ## Bug fixes
