@@ -253,26 +253,36 @@ class ToolBar extends Component {
       }
     }
 
-    const searchTextInput = this.renderSearchPanel();
+    const searchPanel = this.renderSearchPanel();
     const modal = this.props.enableInsert ? this.renderInsertRowModal() : null;
 
     if (this.props.toolBar) {
       toolbar = this.props.toolBar({
-        exportCSVBtn,
-        insertBtn,
-        deleteBtn,
-        showSelectedOnlyBtn,
-        searchTextInput
+        components: {
+          exportCSVBtn,
+          insertBtn,
+          deleteBtn,
+          showSelectedOnlyBtn,
+          searchPanel
+        },
+        event: {
+          openInsertModal: this.handleModalOpen,
+          closeInsertModal: this.handleModalClose,
+          dropRow: this.handleDropRowBtnClick,
+          showOnlyToogle: this.handleShowOnlyToggle,
+          exportCSV: this.handleExportCSV,
+          search: this.props.onSearch
+        }
       });
       console.log(toolbar);
 
       // TODO
       // How to append JSX into another JSX
       // Should we use findDOMNode and operate the dom directly?
-      toolbar = React.cloneElement(toolbar, { children: (<p>HelloWord</p>) });
+      // toolbar = React.cloneElement(toolbar, { children: (<p>HelloWord</p>) });
     } else {
       toolbar = (
-        <div className='row'>
+        <div>
           <div className='col-xs-12 col-sm-6 col-md-6 col-lg-8'>
             <div className='btn-group btn-group-sm' role='group'>
               { exportCSVBtn }
@@ -282,15 +292,19 @@ class ToolBar extends Component {
             </div>
           </div>
           <div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-            { searchTextInput }
+            { searchPanel }
           </div>
-          <Notifier ref='notifier' />
-          { modal }
         </div>
       );
     }
 
-    return toolbar;
+    return (
+      <div className='row'>
+        { toolbar }
+        <Notifier ref='notifier' />
+        { modal }
+      </div>
+    );
   }
 
   renderSearchPanel() {
