@@ -26,12 +26,7 @@ export default class CustomToolBarTable1 extends React.Component {
   createCustomToolBar = props => {
     return (
       <div style={ { margin: '15px' } }>
-        <div className='btn-group btn-group-sm' role='group'>
-          { props.components.exportCSVBtn }
-          { props.components.insertBtn }
-          { props.components.deleteBtn }
-          { props.components.showSelectedOnlyBtn }
-        </div>
+        { props.components.btnGroup }
         <div className='col-xs-8 col-sm-4 col-md-4 col-lg-2'>
           { props.components.searchPanel }
         </div>
