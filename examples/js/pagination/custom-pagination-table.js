@@ -49,6 +49,8 @@ export default class CustomPaginationTable extends React.Component {
       paginationShowsTotal: this.renderShowsTotal,  // Accept bool or function
       paginationPosition: 'top'  // default is bottom, top and both is all available
       // hideSizePerPage: true > You can hide the dropdown for sizePerPage
+      // alwaysShowAllBtns: true // Always show next and previous button
+      // withFirstAndLast: false > Hide the going to First and Last page button
     };
 
     return (

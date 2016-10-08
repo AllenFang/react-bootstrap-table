@@ -29,10 +29,6 @@ export default class DefaultPaginationTable extends React.Component {
       <div>
         <BootstrapTable
           data={ products }
-          options={ {
-            alwaysShowAllBtns: true,
-            withFirstAndLast: false
-          } }
           pagination>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
