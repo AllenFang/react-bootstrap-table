@@ -245,14 +245,14 @@ PaginationList.propTypes = {
   onSizePerPageList: PropTypes.func,
   prePage: PropTypes.string,
   pageStartIndex: PropTypes.number,
-  hideSizePerPage: PropTypes.bool
+  hideSizePerPage: PropTypes.bool,
+  alwaysShowAllBtns: PropTypes.bool,
+  withFirstAndLast: PropTypes.bool
 };
 
 PaginationList.defaultProps = {
   sizePerPage: Const.SIZE_PER_PAGE,
-  pageStartIndex: Const.PAGE_START_INDEX,
-  alwaysShowAllBtns: false,
-  withFirstAndLast: true
+  pageStartIndex: Const.PAGE_START_INDEX
 };
 
 export default PaginationList;
