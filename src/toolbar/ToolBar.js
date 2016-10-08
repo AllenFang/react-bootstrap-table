@@ -191,7 +191,7 @@ class ToolBar extends Component {
     if (this.props.enableInsert) {
       if (this.props.insertBtn) {
         insertBtn = this.props.insertBtn(this.handleModalOpen);
-        if (insertBtn.type.name === InsertButton.name) {
+        if (insertBtn.type.name === InsertButton.name && !insertBtn.props.onClick) {
           insertBtn = React.cloneElement(insertBtn, {
             onClick: this.handleModalOpen
           });
@@ -207,7 +207,7 @@ class ToolBar extends Component {
     if (this.props.enableDelete) {
       if (this.props.deleteBtn) {
         deleteBtn = this.props.deleteBtn(this.handleDropRowBtnClick);
-        if (deleteBtn.type.name === DeleteButton.name) {
+        if (deleteBtn.type.name === DeleteButton.name && !deleteBtn.props.onClick) {
           deleteBtn = React.cloneElement(deleteBtn, {
             onClick: this.handleDropRowBtnClick
           });
@@ -224,7 +224,8 @@ class ToolBar extends Component {
       if (this.props.showSelectedOnlyBtn) {
         showSelectedOnlyBtn = this.props.showSelectedOnlyBtn(
           this.handleShowOnlyToggle, this.state.showSelected);
-        if (showSelectedOnlyBtn.type.name === ShowSelectedOnlyButton.name) {
+        if (showSelectedOnlyBtn.type.name === ShowSelectedOnlyButton.name &&
+          !showSelectedOnlyBtn.props.onClick) {
           showSelectedOnlyBtn = React.cloneElement(showSelectedOnlyBtn, {
             onClick: this.handleShowOnlyToggle,
             toggle: this.state.showSelected
@@ -241,7 +242,7 @@ class ToolBar extends Component {
     if (this.props.enableExportCSV) {
       if (this.props.exportCSVBtn) {
         exportCSVBtn = this.props.exportCSVBtn(this.handleExportCSV);
-        if (exportCSVBtn.type.name === ExportCSVButton.name) {
+        if (exportCSVBtn.type.name === ExportCSVButton.name && !exportCSVBtn.props.onClick) {
           exportCSVBtn = React.cloneElement(exportCSVBtn, {
             onClick: this.handleExportCSV
           });
@@ -325,7 +326,7 @@ class ToolBar extends Component {
       if (this.props.clearSearch) {
         if (this.props.clearSearchBtn) {
           clearBtn = this.props.clearSearchBtn(this.handleClearBtnClick);
-          if (clearBtn.type.name === ClearSearchButton.name) {
+          if (clearBtn.type.name === ClearSearchButton.name && !clearBtn.props.onClick) {
             clearBtn = React.cloneElement(clearBtn, {
               onClick: this.handleClearBtnClick
             });
