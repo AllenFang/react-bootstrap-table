@@ -9,14 +9,17 @@ class ClearSearchButton extends Component {
       btnContextual,
       btnClass,
       onClick,
-      btnText
+      btnText,
+      children
     } = this.props;
+    const content = children ||
+      (<span>{ btnText }</span>);
     return (
       <button ref='btn'
         className={ `btn ${btnContextual} ${btnClass} ${clearBtnDefaultClass}` }
         type='button'
         onClick={ onClick }>
-        { btnText }
+        { content }
       </button>
     );
   }

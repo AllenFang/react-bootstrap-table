@@ -5,12 +5,14 @@ const deleteBtnDefaultClass = 'react-bs-table-del-btn';
 
 class DeleteButton extends Component {
   render() {
-    const { btnContextual, btnClass, onClick, btnGlyphicon, btnText } = this.props;
+    const { btnContextual, btnClass, onClick, btnGlyphicon, btnText, children } = this.props;
+    const content = children ||
+      (<span><i className={ `glyphicon ${btnGlyphicon}` }></i> { btnText }</span>);
     return (
       <button type='button'
         className={ `btn ${btnContextual} ${deleteBtnDefaultClass} ${btnClass}` }
         onClick={ onClick }>
-        <i className={ `glyphicon ${btnGlyphicon}` }></i> { btnText }
+        { content }
       </button>
     );
   }

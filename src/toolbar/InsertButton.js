@@ -5,12 +5,14 @@ const insertBtnDefaultClass = 'react-bs-table-add-btn';
 
 class InsertButton extends Component {
   render() {
-    const { btnContextual, btnClass, onClick, btnGlyphicon, btnText } = this.props;
+    const { btnContextual, btnClass, onClick, btnGlyphicon, btnText, children } = this.props;
+    const content = children ||
+      (<span><i className={ `glyphicon ${btnGlyphicon}` }></i>{ btnText }</span>);
     return (
       <button type='button'
         className={ `btn ${btnContextual} ${insertBtnDefaultClass} ${btnClass}` }
         onClick={ onClick }>
-        <i className={ `glyphicon ${btnGlyphicon}` }></i> { btnText }
+        { content }
       </button>
     );
   }

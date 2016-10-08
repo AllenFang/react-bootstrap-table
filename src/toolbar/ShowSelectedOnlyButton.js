@@ -11,15 +11,18 @@ class ShowSelectedOnlyButton extends Component {
       onClick,
       toggle,
       showAllText,
-      showOnlySelectText
+      showOnlySelectText,
+      children
     } = this.props;
+    const content = children ||
+      (<span>{ toggle ? showOnlySelectText : showAllText }</span>);
     return (
       <button type='button'
         aria-pressed='false'
         data-toggle='button'
         className={ `btn ${btnContextual} ${showSelectedOnlyBtnDefaultClass} ${btnClass}` }
         onClick={ onClick }>
-        { toggle ? showOnlySelectText : showAllText }
+        { content }
       </button>
     );
   }
