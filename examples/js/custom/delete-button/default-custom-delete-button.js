@@ -39,6 +39,16 @@ export default class DefaultCustomInsertButtonTable extends React.Component {
         btnGlyphicon='glyphicon-edit'
         onClick={ e => this.handleDeleteButtonClick(onClick) }/>
     );
+    // If you want have more power to custom the child of DeleteButton,
+    // you can do it like following
+    // return (
+    //   <DeleteButton
+    //     btnContextual='btn-warning'
+    //     btnClass='my-custom-class'
+    //     onClick={ () => this.handleDeleteButtonClick(onClick) }>
+    //     { ... }
+    //   </DeleteButton>
+    // );
   }
 
   render() {

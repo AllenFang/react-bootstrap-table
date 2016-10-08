@@ -39,6 +39,16 @@ export default class DefaultCustomInsertButtonTable extends React.Component {
         btnGlyphicon='glyphicon-edit'
         onClick={ () => this.handleInsertButtonClick(onClick) }/>
     );
+    // If you want have more power to custom the child of InsertButton,
+    // you can do it like following
+    // return (
+    //   <InsertButton
+    //     btnContextual='btn-warning'
+    //     btnClass='my-custom-class'
+    //     onClick={ () => this.handleInsertButtonClick(onClick) }>
+    //     { ... }
+    //   </InsertButton>
+    // );
   }
 
   render() {

@@ -21,7 +21,7 @@ function addProducts(quantity) {
 
 addProducts(5);
 
-export default class DefaultCustomInsertButtonTable extends React.Component {
+export default class DefaultCustomExportButtonTable extends React.Component {
 
   handleExportCSVButtonClick = (onClick) => {
     // Custom your onClick event here,
@@ -39,6 +39,16 @@ export default class DefaultCustomInsertButtonTable extends React.Component {
         btnGlyphicon='glyphicon-edit'
         onClick={ e => this.handleExportCSVButtonClick(onClick) }/>
     );
+    // If you want have more power to custom the child of ExportCSVButton,
+    // you can do it like following
+    // return (
+    //   <ExportCSVButton
+    //     btnContextual='btn-warning'
+    //     btnClass='my-custom-class'
+    //     onClick={ () => this.handleExportCSVButtonClick(onClick) }>
+    //     { ... }
+    //   </ExportCSVButton>
+    // );
   }
 
   render() {

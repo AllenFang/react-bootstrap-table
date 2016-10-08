@@ -31,7 +31,6 @@ export default class DefaultCustomShowSelectButtonTable extends React.Component 
   }
 
   createCustomShowSelectButton = (onClick, showSelected) => {
-    console.log(showSelected);
     return (
       <ShowSelectedOnlyButton
         showAllText='custom all'
@@ -40,6 +39,16 @@ export default class DefaultCustomShowSelectButtonTable extends React.Component 
         btnClass='my-custom-class'
         onClick={ e => this.handleShowSelectButtonClick(onClick) }/>
     );
+    // If you want have more power to custom the child of ShowSelectedOnlyButton,
+    // you can do it like following
+    // return (
+    //   <ShowSelectedOnlyButton
+    //     btnContextual='btn-warning'
+    //     btnClass='my-custom-class'
+    //     onClick={ () => this.handleShowSelectButtonClick(onClick) }>
+    //     { ... }
+    //   </ShowSelectedOnlyButton>
+    // );
   }
 
   render() {
