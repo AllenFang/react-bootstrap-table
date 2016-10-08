@@ -23,13 +23,21 @@ addProducts(5);
 
 export default class DefaultCustomInsertButtonTable extends React.Component {
 
-  createCustomDeleteButton = () => {
+  handleDeleteButtonClick = (onClick) => {
+    // Custom your onClick event here,
+    // it's not necessary to implement this function if you have no any process before onClick
+    console.log('This is my custom function for DeleteButton click event');
+    onClick();
+  }
+
+  createCustomDeleteButton = (onClick) => {
     return (
       <DeleteButton
         btnText='CustomDeleteText'
         btnContextual='btn-success'
         btnClass='my-custom-class'
-        btnGlyphicon='glyphicon-edit'/>
+        btnGlyphicon='glyphicon-edit'
+        onClick={ e => this.handleDeleteButtonClick(onClick) }/>
     );
   }
 

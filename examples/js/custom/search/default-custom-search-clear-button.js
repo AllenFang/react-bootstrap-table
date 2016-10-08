@@ -23,12 +23,21 @@ addProducts(5);
 
 export default class DefaultCustomClearButtonTable extends React.Component {
 
-  createCustomClearButton = () => {
+  handleClearButtonClick = (onClick) => {
+    // Custom your onClick event here,
+    // it's not necessary to implement this function if you have no any process before onClick
+    console.log('This is my custom function for ClearSearchButton click event');
+    onClick();
+  }
+
+
+  createCustomClearButton = (onClick) => {
     return (
       <ClearSearchButton
         btnText='MyClear'
         btnContextual='btn-warning'
-        btnClass='my-custom-class'/>
+        btnClass='my-custom-class'
+        onClick={ e => this.handleClearButtonClick(onClick) }/>
     );
   }
 

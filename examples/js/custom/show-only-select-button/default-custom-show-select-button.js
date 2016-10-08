@@ -23,13 +23,22 @@ addProducts(5);
 
 export default class DefaultCustomShowSelectButtonTable extends React.Component {
 
-  createCustomShowSelectButton = () => {
+  handleShowSelectButtonClick = (onClick) => {
+    // Custom your onClick event here,
+    // it's not necessary to implement this function if you have no any process before onClick
+    console.log('This is my custom function for ShowSelectedOnlyButton click event');
+    onClick();
+  }
+
+  createCustomShowSelectButton = (onClick, showSelected) => {
+    console.log(showSelected);
     return (
       <ShowSelectedOnlyButton
         showAllText='custom all'
         showOnlySelectText='custom show only select'
         btnContextual='btn-info'
-        btnClass='my-custom-class'/>
+        btnClass='my-custom-class'
+        onClick={ e => this.handleShowSelectButtonClick(onClick) }/>
     );
   }
 

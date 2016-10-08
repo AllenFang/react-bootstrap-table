@@ -23,13 +23,21 @@ addProducts(5);
 
 export default class DefaultCustomInsertButtonTable extends React.Component {
 
-  createCustomExportCSVButton = () => {
+  handleExportCSVButtonClick = (onClick) => {
+    // Custom your onClick event here,
+    // it's not necessary to implement this function if you have no any process before onClick
+    console.log('This is my custom function for ExportCSVButton click event');
+    onClick();
+  }
+
+  createCustomExportCSVButton = (onClick) => {
     return (
       <ExportCSVButton
         btnText='CustomExportText'
         btnContextual='btn-danger'
         btnClass='my-custom-class'
-        btnGlyphicon='glyphicon-edit'/>
+        btnGlyphicon='glyphicon-edit'
+        onClick={ e => this.handleExportCSVButtonClick(onClick) }/>
     );
   }
 

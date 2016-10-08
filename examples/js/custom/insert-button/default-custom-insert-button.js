@@ -23,13 +23,21 @@ addProducts(5);
 
 export default class DefaultCustomInsertButtonTable extends React.Component {
 
-  createCustomInsertButton = () => {
+  handleInsertButtonClick = (onClick) => {
+    // Custom your onClick event here,
+    // it's not necessary to implement this function if you have no any process before onClick
+    console.log('This is my custom function for InserButton click event');
+    onClick();
+  }
+
+  createCustomInsertButton = (onClick) => {
     return (
       <InsertButton
         btnText='CustomInsertText'
         btnContextual='btn-warning'
         btnClass='my-custom-class'
-        btnGlyphicon='glyphicon-edit'/>
+        btnGlyphicon='glyphicon-edit'
+        onClick={ () => this.handleInsertButtonClick(onClick) }/>
     );
   }
 
