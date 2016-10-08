@@ -795,6 +795,8 @@ class BootstrapTable extends Component {
         <div className='react-bs-table-pagination'>
           <PaginationList
             ref='pagination'
+            withFirstAndLast={ options.withFirstAndLast }
+            alwaysShowAllBtns={ options.alwaysShowAllBtns }
             currPage={ this.state.currPage }
             changePage={ this.handlePaginationData }
             sizePerPage={ this.state.sizePerPage }
@@ -1070,6 +1072,8 @@ BootstrapTable.propTypes = {
       Const.PAGINATION_POS_BOTH
     ]),
     hideSizePerPage: PropTypes.bool,
+    alwaysShowAllBtns: PropTypes.bool,
+    withFirstAndLast: PropTypes.bool,
     onSortChange: PropTypes.func,
     onPageChange: PropTypes.func,
     onSizePerPageList: PropTypes.func,
@@ -1181,6 +1185,8 @@ BootstrapTable.defaultProps = {
     paginationSize: Const.PAGINATION_SIZE,
     paginationPosition: Const.PAGINATION_POS_BOTTOM,
     hideSizePerPage: false,
+    alwaysShowAllBtns: false,
+    withFirstAndLast: true,
     onSizePerPageList: undefined,
     noDataText: undefined,
     handleConfirmDeleteRow: undefined,
