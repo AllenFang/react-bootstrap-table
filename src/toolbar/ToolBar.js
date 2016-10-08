@@ -190,12 +190,8 @@ class ToolBar extends Component {
 
     if (this.props.enableInsert) {
       if (this.props.insertBtn) {
-        insertBtn = this.props.insertBtn(this.handleModalOpen);
-        if (insertBtn.type.name === InsertButton.name && !insertBtn.props.onClick) {
-          insertBtn = React.cloneElement(insertBtn, {
-            onClick: this.handleModalOpen
-          });
-        }
+        insertBtn = this.renderCustomBtn(this.props.insertBtn,
+          [ this.handleModalOpen ], InsertButton.name, 'onClick', this.handleModalOpen);
       } else {
         insertBtn = (
           <InsertButton btnText={ this.props.insertText }
@@ -206,12 +202,8 @@ class ToolBar extends Component {
 
     if (this.props.enableDelete) {
       if (this.props.deleteBtn) {
-        deleteBtn = this.props.deleteBtn(this.handleDropRowBtnClick);
-        if (deleteBtn.type.name === DeleteButton.name && !deleteBtn.props.onClick) {
-          deleteBtn = React.cloneElement(deleteBtn, {
-            onClick: this.handleDropRowBtnClick
-          });
-        }
+        deleteBtn = this.renderCustomBtn(this.props.deleteBtn,
+          [ this.handleDropRowBtnClick ], DeleteButton.name, 'onClick', this.handleDropRowBtnClick);
       } else {
         deleteBtn = (
           <DeleteButton btnText={ this.props.deleteText }
@@ -222,15 +214,9 @@ class ToolBar extends Component {
 
     if (this.props.enableShowOnlySelected) {
       if (this.props.showSelectedOnlyBtn) {
-        showSelectedOnlyBtn = this.props.showSelectedOnlyBtn(
-          this.handleShowOnlyToggle, this.state.showSelected);
-        if (showSelectedOnlyBtn.type.name === ShowSelectedOnlyButton.name &&
-          !showSelectedOnlyBtn.props.onClick) {
-          showSelectedOnlyBtn = React.cloneElement(showSelectedOnlyBtn, {
-            onClick: this.handleShowOnlyToggle,
-            toggle: this.state.showSelected
-          });
-        }
+        showSelectedOnlyBtn = this.renderCustomBtn(this.props.showSelectedOnlyBtn,
+          [ this.handleShowOnlyToggle, this.state.showSelected ], ShowSelectedOnlyButton.name,
+          'onClick', this.handleShowOnlyToggle);
       } else {
         showSelectedOnlyBtn = (
           <ShowSelectedOnlyButton toggle={ this.state.showSelected }
@@ -241,12 +227,8 @@ class ToolBar extends Component {
 
     if (this.props.enableExportCSV) {
       if (this.props.exportCSVBtn) {
-        exportCSVBtn = this.props.exportCSVBtn(this.handleExportCSV);
-        if (exportCSVBtn.type.name === ExportCSVButton.name && !exportCSVBtn.props.onClick) {
-          exportCSVBtn = React.cloneElement(exportCSVBtn, {
-            onClick: this.handleExportCSV
-          });
-        }
+        exportCSVBtn = this.renderCustomBtn(this.props.exportCSVBtn,
+          [ this.handleExportCSV ], ExportCSVButton.name, 'onClick', this.handleExportCSV);
       } else {
         exportCSVBtn = (
           <ExportCSVButton btnText={ this.props.exportCSVText }
@@ -325,12 +307,8 @@ class ToolBar extends Component {
       let searchPanel = null;
       if (this.props.clearSearch) {
         if (this.props.clearSearchBtn) {
-          clearBtn = this.props.clearSearchBtn(this.handleClearBtnClick);
-          if (clearBtn.type.name === ClearSearchButton.name && !clearBtn.props.onClick) {
-            clearBtn = React.cloneElement(clearBtn, {
-              onClick: this.handleClearBtnClick
-            });
-          }
+          clearBtn = this.renderCustomBtn(this.props.clearSearchBtn,
+            [ this.handleClearBtnClick ], ClearSearchButton.name, 'onClick', this.handleClearBtnClick);
         } else {
           clearBtn = (
             <ClearSearchButton onClick={ this.handleClearBtnClick }/>
@@ -428,6 +406,16 @@ class ToolBar extends Component {
         { modal }
       </Modal>
     );
+  }
+
+  renderCustomBtn(cb, params, componentName, eventName, event) {
+    let element = cb.apply(null, params);
+    if (element.type.name === componentName && !element.props[eventName]) {
+      const props = {};
+      props[eventName] = event;
+      element = React.cloneElement(element, props);
+    }
+    return element;
   }
 }
 
