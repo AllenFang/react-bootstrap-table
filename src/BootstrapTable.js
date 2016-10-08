@@ -885,6 +885,7 @@ class BootstrapTable extends Component {
             clearSearchBtn={ this.props.options.clearSearchBtn }
             searchField={ this.props.options.searchField }
             searchPanel={ this.props.options.searchPanel }
+            btnGroup={ this.props.options.btnGroup }
             toolBar={ this.props.options.toolBar }/>
         </div>
       );
@@ -1102,6 +1103,7 @@ BootstrapTable.propTypes = {
     clearSearchBtn: PropTypes.func,
     searchField: PropTypes.func,
     searchPanel: PropTypes.func,
+    btnGroup: PropTypes.func,
     toolBar: PropTypes.func
   }),
   fetchInfo: PropTypes.shape({
@@ -1206,6 +1208,7 @@ BootstrapTable.defaultProps = {
     clearSearchBtn: undefined,
     searchField: undefined,
     searchPanel: undefined,
+    btnGroup: undefined,
     toolBar: undefined
   },
   fetchInfo: {

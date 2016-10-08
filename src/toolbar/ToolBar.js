@@ -182,6 +182,7 @@ class ToolBar extends Component {
   render() {
     this.modalClassName = 'bs-table-modal-sm' + ToolBar.modalSeq++;
     let toolbar = null;
+    let btnGroup = null;
     let insertBtn = null;
     let deleteBtn = null;
     let exportCSVBtn = null;
@@ -253,16 +254,26 @@ class ToolBar extends Component {
       }
     }
 
+    if (this.props.btnGroup) {
+      btnGroup = this.props.btnGroup({
+        exportCSVBtn,
+        insertBtn,
+        deleteBtn,
+        showSelectedOnlyBtn
+      });
+    } else {
+      btnGroup = (
+        <div className='btn-group btn-group-sm' role='group'>
+          { exportCSVBtn }
+          { insertBtn }
+          { deleteBtn }
+          { showSelectedOnlyBtn }
+        </div>
+      );
+    }
+
     const searchPanel = this.renderSearchPanel();
     const modal = this.props.enableInsert ? this.renderInsertRowModal() : null;
-    const btnGroup = (
-      <div className='btn-group btn-group-sm' role='group'>
-        { exportCSVBtn }
-        { insertBtn }
-        { deleteBtn }
-        { showSelectedOnlyBtn }
-      </div>
-    );
 
     if (this.props.toolBar) {
       toolbar = this.props.toolBar({
@@ -448,6 +459,7 @@ ToolBar.propTypes = {
   clearSearchBtn: PropTypes.func,
   searchField: PropTypes.func,
   searchPanel: PropTypes.func,
+  btnGroup: PropTypes.func,
   toolBar: PropTypes.func
 };
 
