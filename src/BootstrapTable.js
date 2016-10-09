@@ -857,6 +857,7 @@ class BootstrapTable extends Component {
           <ToolBar
             defaultSearch={ this.props.options.defaultSearch }
             clearSearch={ this.props.options.clearSearch }
+            searchPosition={ this.props.options.searchPosition }
             searchDelayTime={ this.props.options.searchDelayTime }
             enableInsert={ insertRow }
             enableDelete={ deleteRow }
@@ -1108,7 +1109,8 @@ BootstrapTable.propTypes = {
     searchField: PropTypes.func,
     searchPanel: PropTypes.func,
     btnGroup: PropTypes.func,
-    toolBar: PropTypes.func
+    toolBar: PropTypes.func,
+    searchPosition: PropTypes.string
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1215,7 +1217,8 @@ BootstrapTable.defaultProps = {
     searchField: undefined,
     searchPanel: undefined,
     btnGroup: undefined,
-    toolBar: undefined
+    toolBar: undefined,
+    searchPosition: 'right'
   },
   fetchInfo: {
     dataTotalSize: 0

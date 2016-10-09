@@ -283,10 +283,10 @@ class ToolBar extends Component {
       toolbar = (
         <div>
           <div className='col-xs-6 col-sm-6 col-md-6 col-lg-8'>
-            { btnGroup }
+            { this.props.searchPosition === 'left' ? searchPanel : btnGroup }
           </div>
           <div className='col-xs-6 col-sm-6 col-md-6 col-lg-4'>
-            { searchPanel }
+            { this.props.searchPosition === 'left' ? btnGroup : searchPanel }
           </div>
         </div>
       );
@@ -451,7 +451,8 @@ ToolBar.propTypes = {
   searchField: PropTypes.func,
   searchPanel: PropTypes.func,
   btnGroup: PropTypes.func,
-  toolBar: PropTypes.func
+  toolBar: PropTypes.func,
+  searchPosition: PropTypes.string
 };
 
 ToolBar.defaultProps = {
