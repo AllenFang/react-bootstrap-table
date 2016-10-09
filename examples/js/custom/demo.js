@@ -24,6 +24,7 @@ import CustomSearchPanel1 from './search/custom-search-panel-1';
 import CustomSearchPanel2 from './search/custom-search-panel-2';
 import CustomButtonGroup from './toolbar/custom-button-group';
 import CustomToolBar1 from './toolbar/custom-toolbar-1';
+import LeftSearchPanel from './toolbar/left-search-panel';
 
 import { Col, Panel } from 'react-bootstrap';
 
@@ -114,6 +115,10 @@ class Demo extends React.Component {
         <Panel header={ 'Custom Button Group Demo' }>
           { renderLinks('custom/toolbar/custom-button-group.js') }
             <CustomButtonGroup/>
+        </Panel>
+        <Panel header={ 'Left Search Panel Demo' }>
+          { renderLinks('custom/toolbar/left-search-panel.js') }
+            <LeftSearchPanel/>
         </Panel>
         <Panel header={ 'Custom for Tool Bar Demo' }>
           { renderLinks('custom/toolbar/custom-toolbar-1.js') }
