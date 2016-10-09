@@ -255,7 +255,7 @@ class ToolBar extends Component {
       );
     }
 
-    const searchPanel = this.renderSearchPanel();
+    const [ searchPanel, searchField, clearBtn ] = this.renderSearchPanel();
     const modal = this.props.enableInsert ? this.renderInsertRowModal() : null;
 
     if (this.props.toolBar) {
@@ -266,7 +266,9 @@ class ToolBar extends Component {
           deleteBtn,
           showSelectedOnlyBtn,
           searchPanel,
-          btnGroup
+          btnGroup,
+          searchField,
+          clearBtn
         },
         event: {
           openInsertModal: this.handleModalOpen,
@@ -359,9 +361,9 @@ class ToolBar extends Component {
           </div>
         );
       }
-      return searchPanel;
+      return [ searchPanel, searchField, clearBtn ];
     } else {
-      return null;
+      return [];
     }
   }
 
