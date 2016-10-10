@@ -24,7 +24,12 @@ class InsertModalHeader extends Component {
       </button>
     );
 
-    const content = children || (
+    const content = (
+      <span>
+        { closeBtn }
+        { children }
+      </span>
+    ) || (
       <span>
         { closeBtn }
         <h4 className='modal-title'>{ title }</h4>
@@ -50,8 +55,8 @@ InsertModalHeader.defaultProps = {
   className: '',
   title: 'Add Row',
   onModalClose: undefined,
-  disableClose: false,
-  hideClose: undefined
+  hideClose: false,
+  beforeClose: undefined
 };
 
 export default InsertModalHeader;
