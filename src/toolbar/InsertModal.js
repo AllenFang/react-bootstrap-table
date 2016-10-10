@@ -71,6 +71,7 @@ export default class InsertModal extends Component {
         {
           headerComponent ||
           (<InsertModalHeader
+            className='react-bs-table-inser-modal-header'
             onModalClose={ onModalClose }/>)
         }
         {
@@ -80,6 +81,7 @@ export default class InsertModal extends Component {
         {
           footerComponent ||
           (<InsertModalFooter
+            className='react-bs-table-inser-modal-footer'
             onModalClose={ onModalClose }
             onSave={ this.handleSave }/>)
         }
