@@ -48,6 +48,7 @@ export default class DefaultCustomInsertModalFooterTable extends React.Component
   createCustomModalFooter = (closeModal, save) => {
     return (
       <InsertModalFooter
+        className='my-custom-class'
         saveBtnText='CustomSaveText'
         closeBtnText='CustomCloseText'
         closeBtnContextual='btn-warning'

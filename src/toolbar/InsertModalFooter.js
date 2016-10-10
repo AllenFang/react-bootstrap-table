@@ -17,6 +17,7 @@ class InsertModalFooter extends Component {
 
   render() {
     const {
+      className,
       saveBtnText,
       closeBtnText,
       closeBtnContextual,
@@ -40,13 +41,14 @@ class InsertModalFooter extends Component {
       );
 
     return (
-      <div className='modal-footer'>
+      <div className={ `modal-footer ${className}` }>
         { content }
       </div>
     );
   }
 }
 InsertModalFooter.propTypes = {
+  className: PropTypes.string,
   saveBtnText: PropTypes.string,
   closeBtnText: PropTypes.string,
   closeBtnContextual: PropTypes.string,
@@ -59,6 +61,7 @@ InsertModalFooter.propTypes = {
   onModalClose: PropTypes.func
 };
 InsertModalFooter.defaultProps = {
+  className: '',
   saveBtnText: Const.SAVE_BTN_TEXT,
   closeBtnText: Const.CLOSE_BTN_TEXT,
   closeBtnContextual: 'btn-default',

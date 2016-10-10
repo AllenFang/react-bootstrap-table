@@ -37,6 +37,7 @@ export default class DefaultCustomInsertModalHeaderTable extends React.Component
   createCustomModalHeader = (closeModal, save) => {
     return (
       <InsertModalHeader
+        className='my-custom-class'
         title='This is my custom title'
         beforeClose={ this.beforeClose }
         onModalClose={ () => this.handleModalClose(closeModal) }/>

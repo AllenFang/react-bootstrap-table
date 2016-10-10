@@ -12,6 +12,7 @@ class InsertModalHeader extends Component {
     const {
       title,
       hideClose,
+      className,
       children
     } = this.props;
 
@@ -31,7 +32,7 @@ class InsertModalHeader extends Component {
     );
 
     return (
-      <div className='modal-header'>
+      <div className={ `modal-header ${className}` }>
         { content }
       </div>
     );
@@ -39,12 +40,14 @@ class InsertModalHeader extends Component {
 }
 
 InsertModalHeader.propTypes = {
+  className: PropTypes.string,
   title: PropTypes.string,
   onModalClose: PropTypes.func,
   hideClose: PropTypes.bool,
   beforeClose: PropTypes.func
 };
 InsertModalHeader.defaultProps = {
+  className: '',
   title: 'Add Row',
   onModalClose: undefined,
   disableClose: false,
