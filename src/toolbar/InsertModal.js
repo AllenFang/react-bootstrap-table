@@ -4,6 +4,8 @@ import InsertModalHeader from './InsertModalHeader';
 import InsertModalFooter from './InsertModalFooter';
 import InsertModalBody from './InsertModalBody';
 
+const defaultModalClassName = 'react-bs-table-insert-modal';
+
 export default class InsertModal extends Component {
 
   handleSave = () => {
@@ -59,7 +61,7 @@ export default class InsertModal extends Component {
     }
 
     return (
-      <div className='modal-content'>
+      <div className={ `modal-content ${defaultModalClassName}` }>
         {
           headerComponent ||
           (<InsertModalHeader
