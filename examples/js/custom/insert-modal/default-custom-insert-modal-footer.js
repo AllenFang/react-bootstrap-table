@@ -59,6 +59,16 @@ export default class DefaultCustomInsertModalFooterTable extends React.Component
         onModalClose={ () => this.handleModalClose(closeModal) }
         onSave={ () => this.handleSave(save) }/>
     );
+
+    // If you want have more power to custom the child of InsertModalFooter,
+    // you can do it like following
+    // return (
+    //   <InsertModalFooter
+    //     onModalClose={ () => this.handleModalClose(closeModal) }
+    //     onSave={ () => this.handleSave(save) }>
+    //     { ... }
+    //   </InsertModalFooter>
+    // );
   }
 
   render() {

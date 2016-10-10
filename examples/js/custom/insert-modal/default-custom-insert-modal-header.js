@@ -42,6 +42,16 @@ export default class DefaultCustomInsertModalHeaderTable extends React.Component
         onModalClose={ () => this.handleModalClose(closeModal) }/>
         // hideClose={ true } to hide the close button
     );
+
+    // If you want have more power to custom the child of InsertModalHeader,
+    // you can do it like following
+    // return (
+    //   <InsertModalHeader
+    //     beforeClose={ this.beforeClose }
+    //     onModalClose={ () => this.handleModalClose(closeModal) }>
+    //     { ... }
+    //   </InsertModalHeader>
+    // );
   }
 
   render() {

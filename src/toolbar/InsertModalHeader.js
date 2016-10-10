@@ -9,19 +9,30 @@ class InsertModalHeader extends Component {
   }
 
   render() {
-    const { title, hideClose } = this.props;
+    const {
+      title,
+      hideClose,
+      children
+    } = this.props;
+
+    const closeBtn = hideClose ? null : (
+      <button type='button'
+        className='close' onClick={ this.handleCloseBtnClick }>
+        <span aria-hidden='true'>&times;</span>
+        <span className='sr-only'>Close</span>
+      </button>
+    );
+
+    const content = children || (
+      <span>
+        { closeBtn }
+        <h4 className='modal-title'>{ title }</h4>
+      </span>
+    );
+
     return (
       <div className='modal-header'>
-        {
-          hideClose ? null : (
-            <button type='button'
-              className='close' onClick={ this.handleCloseBtnClick }>
-              <span aria-hidden='true'>&times;</span>
-              <span className='sr-only'>Close</span>
-            </button>
-          )
-        }
-        <h4 className='modal-title'>{ title }</h4>
+        { content }
       </div>
     );
   }
