@@ -24,14 +24,22 @@ addProducts(5);
 export default class DefaultCustomInsertModalHeaderTable extends React.Component {
 
   beforeClose(e) {
-    alert(`[Custom Event]: Modal close event triggered!`);
+    alert(`[Custom Event]: Before modal close event triggered!`);
   }
 
-  createCustomModalHeader = () => {
+  handleModalClose(closeModal) {
+    // Custom your onCloseModal event here,
+    // it's not necessary to implement this function if you have no any process before modal close
+    console.log('This is my custom function for modal close event');
+    closeModal();
+  }
+
+  createCustomModalHeader = (closeModal, save) => {
     return (
       <InsertModalHeader
         title='This is my custom title'
-        beforeClose={ this.beforeClose }/>
+        beforeClose={ this.beforeClose }
+        onModalClose={ () => this.handleModalClose(closeModal) }/>
         // hideClose={ true } to hide the close button
     );
   }

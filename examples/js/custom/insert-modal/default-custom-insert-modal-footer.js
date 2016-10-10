@@ -31,7 +31,21 @@ export default class DefaultCustomInsertModalFooterTable extends React.Component
     alert(`[Custom Event]: Modal save event triggered!`);
   }
 
-  createCustomModalFooter = () => {
+  handleModalClose(closeModal) {
+    // Custom your onCloseModal event here,
+    // it's not necessary to implement this function if you have no any process before modal close
+    console.log('This is my custom function for modal close event');
+    closeModal();
+  }
+
+  handleSave(save) {
+    // Custom your onSave event here,
+    // it's not necessary to implement this function if you have no any process before save
+    console.log('This is my custom function for save event');
+    save();
+  }
+
+  createCustomModalFooter = (closeModal, save) => {
     return (
       <InsertModalFooter
         saveBtnText='CustomSaveText'
@@ -41,7 +55,9 @@ export default class DefaultCustomInsertModalFooterTable extends React.Component
         closeBtnClass='my-close-btn-class'
         saveBtnClass='my-save-btn-class'
         beforeClose={ this.beforeClose }
-        beforeSave={ this.beforeSave }/>
+        beforeSave={ this.beforeSave }
+        onModalClose={ () => this.handleModalClose(closeModal) }
+        onSave={ () => this.handleSave(save) }/>
     );
   }
 

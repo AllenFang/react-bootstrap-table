@@ -39,9 +39,12 @@ export default class InsertModal extends Component {
     }
 
     if (headerComponent && headerComponent.type.name === InsertModalHeader.name) {
-      headerComponent = React.cloneElement(headerComponent, {
-        onModalClose, onSave: this.handleSave
-      });
+      const eventProps = {};
+      if (!headerComponent.props.onModalClose) eventProps.onModalClose = onModalClose;
+      if (!headerComponent.props.onSave) eventProps.onSave = this.handleSave;
+      if (Object.keys(eventProps).length > 0) {
+        headerComponent = React.cloneElement(headerComponent, eventProps);
+      }
     } else if (headerComponent && headerComponent.type.name !== InsertModalHeader.name) {
       const { className } = headerComponent.props;
       if (typeof className === 'undefined' || className.indexOf('modal-header') === -1) {
@@ -50,9 +53,12 @@ export default class InsertModal extends Component {
     }
 
     if (footerComponent && footerComponent.type.name === InsertModalFooter.name) {
-      footerComponent = React.cloneElement(footerComponent, {
-        onModalClose, onSave: this.handleSave
-      });
+      const eventProps = {};
+      if (!footerComponent.props.onModalClose) eventProps.onModalClose = onModalClose;
+      if (!footerComponent.props.onSave) eventProps.onSave = this.handleSave;
+      if (Object.keys(eventProps).length > 0) {
+        footerComponent = React.cloneElement(footerComponent, eventProps);
+      }
     } else if (footerComponent && footerComponent.type.name !== InsertModalFooter.name) {
       const { className } = footerComponent.props;
       if (typeof className === 'undefined' || className.indexOf('modal-footer') === -1) {
