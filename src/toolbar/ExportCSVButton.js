@@ -7,7 +7,7 @@ class ExportCSVButton extends Component {
   render() {
     const {
       btnContextual,
-      btnClass,
+      className,
       onClick,
       btnGlyphicon,
       btnText,
@@ -18,7 +18,7 @@ class ExportCSVButton extends Component {
       (<span><i className={ `glyphicon ${btnGlyphicon}` }></i> { btnText }</span>);
     return (
       <button type='button'
-        className={ `btn ${btnContextual} ${exportCsvBtnDefaultClass} ${btnClass} hidden-print` }
+        className={ `btn ${btnContextual} ${exportCsvBtnDefaultClass} ${className} hidden-print` }
         onClick={ onClick }
         { ...rest }>
         { content }
@@ -30,14 +30,14 @@ class ExportCSVButton extends Component {
 ExportCSVButton.propTypes = {
   btnText: PropTypes.string,
   btnContextual: PropTypes.string,
-  btnClass: PropTypes.string,
+  className: PropTypes.string,
   onClick: PropTypes.func,
   btnGlyphicon: PropTypes.string
 };
 ExportCSVButton.defaultProps = {
   btnText: Const.EXPORT_CSV_TEXT,
   btnContextual: 'btn-success',
-  btnClass: '',
+  className: '',
   onClick: undefined,
   btnGlyphicon: 'glyphicon-export'
 };

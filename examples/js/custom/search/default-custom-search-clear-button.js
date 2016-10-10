@@ -36,7 +36,7 @@ export default class DefaultCustomClearButtonTable extends React.Component {
       <ClearSearchButton
         btnText='MyClear'
         btnContextual='btn-warning'
-        btnClass='my-custom-class'
+        className='my-custom-class'
         onClick={ e => this.handleClearButtonClick(onClick) }/>
     );
     // If you want have more power to custom the child of ClearSearchButton,
@@ -44,7 +44,7 @@ export default class DefaultCustomClearButtonTable extends React.Component {
     // return (
     //   <ClearSearchButton
     //     btnContextual='btn-warning'
-    //     btnClass='my-custom-class'
+    //     className='my-custom-class'
     //     onClick={ () => this.handleClearButtonClick(onClick) }>
     //     { ... }
     //   </ClearSearchButton>

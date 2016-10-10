@@ -35,7 +35,7 @@ export default class DefaultCustomInsertButtonTable extends React.Component {
       <InsertButton
         btnText='CustomInsertText'
         btnContextual='btn-warning'
-        btnClass='my-custom-class'
+        className='my-custom-class'
         btnGlyphicon='glyphicon-edit'
         onClick={ () => this.handleInsertButtonClick(onClick) }/>
     );
@@ -44,7 +44,7 @@ export default class DefaultCustomInsertButtonTable extends React.Component {
     // return (
     //   <InsertButton
     //     btnContextual='btn-warning'
-    //     btnClass='my-custom-class'
+    //     className='my-custom-class'
     //     onClick={ () => this.handleInsertButtonClick(onClick) }>
     //     { ... }
     //   </InsertButton>

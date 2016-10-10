@@ -7,7 +7,7 @@ class DeleteButton extends Component {
   render() {
     const {
       btnContextual,
-      btnClass,
+      className,
       onClick,
       btnGlyphicon,
       btnText,
@@ -18,7 +18,7 @@ class DeleteButton extends Component {
       (<span><i className={ `glyphicon ${btnGlyphicon}` }></i> { btnText }</span>);
     return (
       <button type='button'
-        className={ `btn ${btnContextual} ${deleteBtnDefaultClass} ${btnClass}` }
+        className={ `btn ${btnContextual} ${deleteBtnDefaultClass} ${className}` }
         onClick={ onClick }
         { ...rest }>
         { content }
@@ -30,14 +30,14 @@ class DeleteButton extends Component {
 DeleteButton.propTypes = {
   btnText: PropTypes.string,
   btnContextual: PropTypes.string,
-  btnClass: PropTypes.string,
+  className: PropTypes.string,
   onClick: PropTypes.func,
   btnGlyphicon: PropTypes.string
 };
 DeleteButton.defaultProps = {
   btnText: Const.DELETE_BTN_TEXT,
   btnContextual: 'btn-warning',
-  btnClass: '',
+  className: '',
   onClick: undefined,
   btnGlyphicon: 'glyphicon-trash'
 };

@@ -7,7 +7,7 @@ class ShowSelectedOnlyButton extends Component {
   render() {
     const {
       btnContextual,
-      btnClass,
+      className,
       onClick,
       toggle,
       showAllText,
@@ -21,7 +21,7 @@ class ShowSelectedOnlyButton extends Component {
       <button type='button'
         aria-pressed='false'
         data-toggle='button'
-        className={ `btn ${btnContextual} ${showSelectedOnlyBtnDefaultClass} ${btnClass}` }
+        className={ `btn ${btnContextual} ${showSelectedOnlyBtnDefaultClass} ${className}` }
         onClick={ onClick }
         { ...rest }>
         { content }
@@ -35,7 +35,7 @@ ShowSelectedOnlyButton.propTypes = {
   showOnlySelectText: PropTypes.string,
   toggle: PropTypes.bool,
   btnContextual: PropTypes.string,
-  btnClass: PropTypes.string,
+  className: PropTypes.string,
   onClick: PropTypes.func
 };
 ShowSelectedOnlyButton.defaultProps = {
@@ -44,7 +44,7 @@ ShowSelectedOnlyButton.defaultProps = {
   toggle: false,
   btnText: Const.DELETE_BTN_TEXT,
   btnContextual: 'btn-primary',
-  btnClass: '',
+  className: '',
   onClick: undefined
 };
 

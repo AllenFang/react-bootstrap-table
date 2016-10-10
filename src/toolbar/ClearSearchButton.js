@@ -7,7 +7,7 @@ class ClearSearchButton extends Component {
   render() {
     const {
       btnContextual,
-      btnClass,
+      className,
       onClick,
       btnText,
       children,
@@ -17,7 +17,7 @@ class ClearSearchButton extends Component {
       (<span>{ btnText }</span>);
     return (
       <button ref='btn'
-        className={ `btn ${btnContextual} ${btnClass} ${clearBtnDefaultClass}` }
+        className={ `btn ${btnContextual} ${className} ${clearBtnDefaultClass}` }
         type='button'
         onClick={ onClick }
         { ...rest }>
@@ -29,13 +29,13 @@ class ClearSearchButton extends Component {
 
 ClearSearchButton.propTypes = {
   btnContextual: PropTypes.string,
-  btnClass: PropTypes.string,
+  className: PropTypes.string,
   btnText: PropTypes.string,
   onClick: PropTypes.func
 };
 ClearSearchButton.defaultProps = {
   btnContextual: 'btn-default',
-  btnClass: '',
+  className: '',
   btnText: 'Clear',
   onClick: undefined
 };

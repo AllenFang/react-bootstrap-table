@@ -35,7 +35,7 @@ export default class DefaultCustomInsertButtonTable extends React.Component {
       <DeleteButton
         btnText='CustomDeleteText'
         btnContextual='btn-success'
-        btnClass='my-custom-class'
+        className='my-custom-class'
         btnGlyphicon='glyphicon-edit'
         onClick={ e => this.handleDeleteButtonClick(onClick) }/>
     );
@@ -44,7 +44,7 @@ export default class DefaultCustomInsertButtonTable extends React.Component {
     // return (
     //   <DeleteButton
     //     btnContextual='btn-warning'
-    //     btnClass='my-custom-class'
+    //     className='my-custom-class'
     //     onClick={ () => this.handleDeleteButtonClick(onClick) }>
     //     { ... }
     //   </DeleteButton>
