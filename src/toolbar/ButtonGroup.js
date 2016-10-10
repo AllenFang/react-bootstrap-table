@@ -2,9 +2,15 @@ import React, { Component, PropTypes } from 'react';
 
 class ButtonGroup extends Component {
   render() {
+    const {
+      className,
+      sizeClass,
+      children,
+      ...rest
+    } = this.props;
     return (
-      <div className={ `btn-group ${this.props.sizeClass} ${this.props.className}` } role='group'>
-        { this.props.children }
+      <div className={ `btn-group ${sizeClass} ${className}` } role='group' { ...rest }>
+        { children }
       </div>
     );
   }

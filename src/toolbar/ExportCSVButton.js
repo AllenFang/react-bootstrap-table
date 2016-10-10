@@ -5,13 +5,22 @@ const exportCsvBtnDefaultClass = 'react-bs-table-csv-btn';
 
 class ExportCSVButton extends Component {
   render() {
-    const { btnContextual, btnClass, onClick, btnGlyphicon, btnText, children } = this.props;
+    const {
+      btnContextual,
+      btnClass,
+      onClick,
+      btnGlyphicon,
+      btnText,
+      children,
+      ...rest
+    } = this.props;
     const content = children ||
       (<span><i className={ `glyphicon ${btnGlyphicon}` }></i> { btnText }</span>);
     return (
       <button type='button'
         className={ `btn ${btnContextual} ${exportCsvBtnDefaultClass} ${btnClass} hidden-print` }
-        onClick={ onClick }>
+        onClick={ onClick }
+        { ...rest }>
         { content }
       </button>
     );

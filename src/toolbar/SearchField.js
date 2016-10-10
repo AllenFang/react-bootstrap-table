@@ -12,13 +12,21 @@ class SearchField extends Component {
   }
 
   render() {
+    const {
+      className,
+      defaultValue,
+      placeholder,
+      onKeyUp,
+      ...rest
+    } = this.props;
     return (
       <input
-        className={ `form-control ${this.props.className}` }
+        className={ `form-control ${className}` }
         type='text'
-        defaultValue={ this.props.defaultValue }
-        placeholder={ this.props.placeholder || SearchField.defaultProps.placeholder }
-        onKeyUp={ this.props.onKeyUp }/>
+        defaultValue={ defaultValue }
+        placeholder={ placeholder || SearchField.defaultProps.placeholder }
+        onKeyUp={ onKeyUp }
+        { ...rest }/>
     );
   }
 }
