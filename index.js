@@ -16,7 +16,7 @@ for(var i=0;i<60;i++){
 var selectRowProp = {
   mode: "checkbox",
   clickToSelect: true,
-  bgColor: "rgb(238, 193, 213)"
+  bgColor: "#B0E0E6"
 };
 
 function priceFormatter(cell, row){
@@ -25,7 +25,7 @@ function priceFormatter(cell, row){
 
 React.render(
   <BootstrapTable data={productLong} striped={true} hover={true} condensed={false} pagination={true} selectRow={selectRowProp}
-    insertRow={true} deleteRow={true} columnFilter={true} search={true}>
+    insertRow={true} deleteRow={true} search={true}>
       <TableHeaderColumn dataField="id" isKey={true} dataAlign="right" dataSort={true}>Product ID</TableHeaderColumn>
       <TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
       <TableHeaderColumn dataField="price" dataAlign="center" dataFormat={priceFormatter}>Product Price</TableHeaderColumn>
