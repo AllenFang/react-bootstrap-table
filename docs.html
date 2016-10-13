@@ -1,844 +1,869 @@
+
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>React Bootstrap Table - documents</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="List all API and attribute supported by react-bootstrap-table.">
-    <meta name="keywords" content="react, Bootstrap, table, react.js, component, frontend, web development">
-    <meta name="author" content="AllenFang">
-    <meta http-equiv="cache-control" content="max-age=0" />
-    <meta http-equiv="cache-control" content="no-cache" />
-    <meta http-equiv="expires" content="0" />
-    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
-    <meta http-equiv="pragma" content="no-cache" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <style>
-      .main-content p {
-        margin-bottom: 0.2em
-      }
-      .required {
-        color: white;
-        background-color: #aaa;
-        font-weight: bold;
-        text-transform: uppercase;
-        font-size: 1em;
-        border-radius: 2px;
-        margin-left: 5px;
-        padding: 0 3px;
-      }
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>React Bootstrap Table - Documents</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="React-bootstrap-table is a Bootstrap table component rebuilt by React.js. We introduce the first tutorial for react-bootstrap-table.">
+  <meta name="keywords" content="react, Bootstrap, table, react.js, component, frontend, web development">
+  <meta name="author" content="AllenFang">
+  <meta http-equiv="cache-control" content="max-age=0" />
+  <meta http-equiv="cache-control" content="no-cache" />
+  <meta http-equiv="expires" content="0" />
+  <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+  <meta http-equiv="pragma" content="no-cache" />
 
-      .lv1-required {
-        color: white;
-        background-color: #aaa;
-        font-weight: bold;
-        text-transform: uppercase;
-        font-size: 0.75em;
-        border-radius: 2px;
-        margin-left: 5px;
-        padding: 0 3px;
-      }
+  <!--
+	//////////////////////////////////////////////////////
 
-      .attr-type {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #0464bb;
-      }
+	FREE HTML5 TEMPLATE
+	DESIGNED & DEVELOPED by FREEHTML5.CO
 
-      .attr-title {
-        font-size: 1.5rem;
-        font-weight: bold;
-      }
+	Website: 		http://freehtml5.co/
+	Email: 			info@freehtml5.co
+	Twitter: 		http://twitter.com/fh5co
+	Facebook: 		https://www.facebook.com/fh5co
 
-      .attr-lv1-type {
-        font-size: 1.25rem;
-        font-weight: bold;
-        color: #0464bb;
-      }
+	//////////////////////////////////////////////////////
+	 -->
 
-      .attr-lv1-title {
-        font-size: 1.25rem;
-        font-weight: bold;
-      }
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
 
-      .member {
-        display: block;
-        border-width: 1px 0;
-        position: relative;
-        min-height: 2.0em;
-        border-style: solid;
-        border-color: #e0e0e0;
-        padding: 10px 22px;
-      }
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="shortcut icon" href="favicon.ico">
 
-      .side {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        cursor: default!important;
-        text-decoration: none;
-      }
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,300' rel='stylesheet' type='text/css'>
 
-      pre {
-        background-color: transparent;
-        border: none;
-      }
-    </style>
-  </head>
-  <body>
-    <a href="https://github.com/AllenFang/react-bootstrap-table"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
-    <nav class="navbar-default" style="background-color: #222;margin-bottom:0;border-style:hidden;border-radius:0px">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <a class="navbar-brand" href="index.html">ReactBsTable</a>
-    </div>
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Superfish -->
+	<link rel="stylesheet" href="css/superfish.css">
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="start.html">Getting Start</a></li>
-        <li><a href="example.html">Example</a></li>
-        <li><a href="docs.html">Docs</a></li>
-        <li><a href="advance.html">Advance</a></li>
-        <li><a href="contributor.html">Contributor</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-    <section class="page-header" style="margin: 0 0 0 0;">
-      <h1 class="project-name" style="color:#61dafb;">react-bootstrap-table</h1>
-    </section>
+	<link rel="stylesheet" href="css/style.css">
 
-    <section class="main-content">
-      <h2>
-      <a id="api--attributes" class="anchor" href="#api--attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>API &amp; Attributes</strong>
-      </h2>
+  <link rel="stylesheet" href="css/simple-sidebar.css">
 
-      <h3>
-      <a id="the-attributes-in-bootstraptable" class="anchor" href="#the-attributes-in-bootstraptable" aria-hidden="true"><span class="octicon octicon-link"></span></a>The attributes in &lt;BootstrapTable&gt;:</h3>
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/atelier-estuary-light.min.css">
+  <script src='js/highlight.pack.js'></script>
+  <script>hljs.initHighlightingOnLoad();</script>
 
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">data :</font> <font class="attr-type">Array</font>&nbsp;<span class="required">(required)</span></br>
-          <p>Use <code>data</code> to specify the data that you want to display on table.</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">keyField :</font> <font class="attr-type">String</font>&nbsp;<span class="required">(OPTION)</span></br>
-          <p>Use <code>keyField</code> to tell table which column is unique. This is same as <code>isKey</code> in <code>&lt;TableHeaderColumn&gt;</code></p>
-          <p>Tips: You need choose one configuration to set key field: <code>keyField</code> or <code>isKey</code> in <code>&lt;TableHeaderColumn&gt;</code></p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">remote :</font> <font class="attr-type">Bool</font></br>
-          <p>Default is false, if you enable <code>remote</code>, which means you want to handle the data filtering, sorting, adding or removing etc on your store.</p>
-          <p>Therefore, <code>react-bootstrap-table</code> support the following event hook so that you can interact to your server</p>
-          <p><code>onSortChange</code>, <code>onSearchChange</code>, <code>onPageChange</code>, <code>onSizePerPageList</code>, <code>onAddRow</code>, <code>onDeleteRow</code>, <code>onExportToCSV</code>, <code>onFilterChange</code></p>
-          <p>There are useful examples for <a href='https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/remote' target='_blank'>remote usage</a></p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">height :</font> <font class="attr-type">String</font></br>
-          <p>Use <code>height</code> to set the height of table, default is 100%.</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">maxHeight :</font> <font class="attr-type">String(Pixels)</font></br>
-          <p>Set the max height of table.</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">striped :</font> <font class="attr-type">Bool</font></br>
-          <p>Enable striped by setting <code>striped</code> to true. Same as Bootstrap table class <code>.table-striped</code>, default is false.</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">hover :</font> <font class="attr-type">Bool</font></br>
-          <p>Enable hover by setting <code>hover</code> to true. Same as Bootstrap table class <code>.table-hover</code>, default is false.</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">condensed :</font> <font class="attr-type">Bool</font></br>
-          <p>Enable condensed by setting <code>condensed</code> to true. Same as Bootstrap table class <code>.table-condensed</code>, default is false.</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">bordered :</font> <font class="attr-type">Bool</font></br>
-          <p>Become a borderless table by setting <code>bordered</code> to false, default is true.</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">pagination :</font> <font class="attr-type">Bool</font></br>
-          <p>Enable pagination by setting <code>pagination</code> to true, default is false.</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">trClassName :</font> <font class="attr-type">String or Function</font></br>
-          <p>Assign the class name of row(tr). This attribute accept a string or function and function is a better way to do more customization.</p>
-          <p>If a string given, means the value will be presented as the row class.</p>
-          <p>If a function given, will pass <code>rowData</code> and <code>rowIndex</code> as params and should return string for presenting class. for examples:</p>
-          <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> trClassFormat(rowData,rowIndex){
-   <span style="color: #AA22FF; font-weight: bold">return</span> rowIndex<span style="color: #666666">%2==0?</span><span style="color: #BB4444">&quot;tr-odd&quot;</span><span style="color: #666666">:</span><span style="color: #BB4444">&quot;tr-even&quot;</span>;  <span style="color: #008800; font-style: italic">//return a class name.</span>
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+	<style>
+  	.feature-text h3 {
+  		text-transform: none !important;
+  	}
+	</style>
+	</head>
+	<body>
+		<div id="fh5co-wrapper">
+		<div id="fh5co-page">
+      <div id="fh5co-header">
+  			<header id="fh5co-header-section">
+  				<div class="container">
+  					<div class="nav-header">
+  						<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
+  						<h1 id="fh5co-logo"><a href="index.html">react-bootstrap-table</a></h1>
+  						<!-- START #fh5co-menu-wrap -->
+  						<nav id="fh5co-menu-wrap" role="navigation">
+  							<ul class="sf-menu" id="fh5co-primary-menu">
+  								<li class="active">
+  									<a href="index.html">Home</a>
+  								</li>
+  								<li><a href="start.html">Getting Started</a></li>
+  								<li>
+  									<a href="example.html" class="fh5co-sub-ddown">Example</a>
+  									<ul class="fh5co-sub-menu">
+  										<li><a href="http://freehtml5.co/preview/?item=build-free-html5-bootstrap-template" target="_blank">Build</a></li>
+  										<li><a href="http://freehtml5.co/preview/?item=work-free-html5-template-bootstrap" target="_blank">Work</a></li>
+  										<li><a href="http://freehtml5.co/preview/?item=light-free-html5-template-bootstrap" target="_blank">Light</a></li>
+  										<li><a href="http://freehtml5.co/preview/?item=relic-free-html5-template-using-bootstrap" target="_blank">Relic</a></li>
+  										<li><a href="http://freehtml5.co/preview/?item=display-free-html5-template-using-bootstrap" target="_blank">Display</a></li>
+  										<li><a href="http://freehtml5.co/preview/?item=sprint-free-html5-template-bootstrap" target="_blank">Sprint</a></li>
+  									</ul>
+  								</li>
+  								<li><a href="docs.html">Docs</a></li>
+  								<li><a href="advance.html">Advanced</a></li>
+  							</ul>
+  						</nav>
+  					</div>
+  				</div>
+  			</header>
+
+  		</div>
+
+		<div class="fh5co-hero fh5co-hero-2" style="height: 87px;">
+			<div class="fh5co-overlay"></div>
+		</div>
+		<!-- end:header-top -->
+
+		<div id="fh5co-about" style="padding: 0px;">
+			<div class="row">
+				<div class="col-md-12 animate-box">
+          <div id="wrapper" style="height: 1024px">
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav nav nav-tabs" id="sidebar-nav">
+                    <li class="sidebar-brand">
+                      <a href="#">
+                          Props in &lt;BootstrapTable&gt;
+                      </a>
+                    </li>
+                    <li class="active"><a href="#data">data</a></li>
+                    <li><a href="#keyField">keyField</a></li>
+                    <li><a href="#remote">remote</a></li>
+                    <li><a href="#height">height</a></li>
+                    <li><a href="#maxHeight">maxHeight</a></li>
+                    <li><a href="#striped">striped</a></li>
+                    <li><a href="#hover">hover</a></li>
+                    <li><a href="#condensed">condensed</a></li>
+                    <li><a href="#bordered">bordered</a></li>
+                    <li><a href="#pagination">pagination</a></li>
+                    <li><a href="#trClassName">trClassName</a></li>
+                    <li><a href="#insertRow">insertRow</a></li>
+                    <li><a href="#deleteRow">deleteRow</a></li>
+                    <li><a href="#columnFilter">columnFilter</a></li>
+                    <li><a href="#search">search</a></li>
+                    <li><a href="#searchPlaceholder">searchPlaceholder</a></li>
+                    <li><a href="#multiColumnSearch">multiColumnSearch</a></li>
+                    <li><a href="#exportCSV">exportCSV</a></li>
+                    <li><a href="#csvFileName">csvFileName</a></li>
+                    <li><a href="#ignoreSinglePage">ignoreSinglePage</a></li>
+                    <li><a href="#containerStyle">containerStyle</a></li>
+                    <li><a href="#tableStyle">tableStyle</a></li>
+                    <li><a href="#headerStyle">headerStyle</a></li>
+                    <li><a href="#bodyStyle">bodyStyle</a></li>
+                    <li><a href="#tableHeaderClass">tableHeaderClass</a></li>
+                    <li><a href="#tableBodyClass">tableBodyClass</a></li>
+                    <li><a href="#selectRow">selectRow</a></li>
+                    <li><a href="#selectRow">selectRow</a></li>
+                </ul>
+            </div>
+            <!-- /#sidebar-wrapper -->
+            <div class="tab-content">
+              <div class="tab-pane active" id="data">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#data'>data : Array</a></h1>
+                            <span>
+                              Use <code>data</code> to specify the data that you want to display on the table.</br>
+                              This prop is required and you should give it an array</br></br>
+                            </span>
+<pre>
+<code class="html">// with es6
+const data = [ ... ];
+//...
+&lt;BootstrapTable data={ data }&gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane" id="keyField">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                              <h1><a href='#keyField'>keyField : String</a></h1>
+                              <span>
+                              Use <code>keyField</code> to tell table which column is unique. This is same as <code>isKey</code> in <code>&lt;TableHeaderColumn&gt;</code></br>
+                              <strong>Tips</strong>: <code>react-bootstrap-table</code> support data manipulation(CRUD) so that we need to fetch correct row by a unique column.</br></br>
+                              </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ data } keyField='account'&gt;
+  &lt;TableHeaderColumn dataField='account'&gt;Account&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name'&gt;Name&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                              <span>
+                                As mentioned, following is equivalent</br></br>
+                              </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ data }&gt;
+  &lt;TableHeaderColumn isKey dataField='account'&gt;Account&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name'&gt;Name&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane" id="remote">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                              <h1><a href='#remote'>remote</a></h1>
+                              <span>
+                                <code>react-bootstrap-table</code> default handle the data changing(like sorting, filtering insert or pagination etc) in a data store, call <code><a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/src/store/TableDataStore.js">TableDataStore</a></code>.</br>
+                                So this prop is <code>false</code> by default, if you enable <code>remote</code>, which means you need to handle these all data manipulation on your code(flux implement or something like that).</br>
+                                Therefore, <code>react-bootstrap-table</code> support following event hooks so that you can interact to your server or local store with the data changing</br>
+                                <ul>
+                                  <li><code>onSortChange</code></li>
+                                  <li><code>onSearchChange</code></li>
+                                  <li><code>onPageChange</code></li>
+                                  <li><code>onSizePerPageList</code></li>
+                                  <li><code>onAddRow</code></li>
+                                  <li><code>onDeleteRow</code></li>
+                                  <li><code>onExportToCSV</code></li>
+                                  <li><code>onFilterChange</code></li>
+                                  <li><code>onCellEdit</code></li>
+                                </ul>
+                                </br>
+                                These all are the useful <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/remote">examples</a> for usage of <code>remote</code>
+                              </span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="height">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#height'>height : String | Number</a></h1>
+                            <span>
+                              Use <code>height</code> to adjust the height of table. You can give a string or a number value like following:</br>
+                              <strong>Tips</strong>: <code>react-bootstrap-table</code> will add pixels as default unit, so there's no need to add it when you assign the <code>height</code></br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ data } height='120'&gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+<pre>
+<code class="html">&lt;BootstrapTable data={ data } height={ 120 }&gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="maxHeight">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#maxHeight'>maxHeight : String | Number</a></h1>
+                            <span>
+                              Use <code>maxHeight</code> to set the maximum height of table. You can give a string or a number value like <code>height</code>:</br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ data } maxHeight='120'&gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+<pre>
+<code class="html">&lt;BootstrapTable data={ data } maxHeight={ 120 }&gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="striped">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#striped'>striped : Bool</a></h1>
+                            <span>
+                              Same as the Bootstrap table class: <a target="_blank" href="http://getbootstrap.com/css/#tables-striped">.table-striped</a>, default is false.</br>
+                              You can enable this feature by the following example: </br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ data } striped&gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="hover">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#hover'>hover : Bool</a></h1>
+                            <span>
+                              Same as the Bootstrap table class: <a target="_blank" href="http://getbootstrap.com/css/#tables-hover-rows">.table-hover</a>, default is false.</br>
+                              You can enable this feature by the following example: </br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ data } hover&gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="condensed">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#condensed'>condensed : Bool</a></h1>
+                            <span>
+                              Same as the Bootstrap table class: <a target="_blank" href="http://getbootstrap.com/css/#tables-condensed">.table-condensed</a>, default is false.</br>
+                              You can enable this feature by the following example: </br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ data } condensed&gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="bordered">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#bordered'>bordered : Bool</a></h1>
+                            <span>
+                              Similar like Bootstrap table class: <a target="_blank" href="http://getbootstrap.com/css/#tables-bordered">.table-bordered</a>, default is true.</br>
+                              You can disable this feature by the following example: </br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ data } bordered={ false }&gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="pagination">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#pagination'>pagination : Bool</a></h1>
+                            <span>
+                              Enable pagination by setting <code>pagination</code> to true, default is false.</br>
+                              Default pagination have a dropdown for choosing size per page and a pages list with next and previous page button</br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ data } pagination &gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          <span>
+                            Following is the default pagination view:</br>
+                            <img src='./images/pagination-sample-view.png' alt='pagination view'/>
+                          </span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="trClassName">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#trClassName'>trClassName : String | Function</a></h1>
+                            <span>
+                              Assign the class name of row(tr). This attribute accept a string or callback function. However, a callback function have more ability to customize.</br>
+                              If a string given, means this string value will be presented as the row class.</br>
+                              If a function given, will pass <code>row</code> and <code>rowIndex</code> as arguments and should return a string for the presenting class. for examples:
+                            </span>
+<pre>
+<code class="javascript">trClassFormat(row, rowIndex) {
+   // row is the current row data
+   return rowIndex % 2 === 0 ? "tr-odd" : "tr-even";  //return class name.
 }
-</pre></div>
 
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">insertRow :</font> <font class="attr-type">Bool</font></br>
-          <p>Enable row insertion by setting <code>insertRow</code> to true, default is false.</p>
-          <p>If you enable row insertion, there's a <img height="22" width="52" src="./images/add-btn.png"/> button on the upper left side of table.</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">deleteRow :</font> <font class="attr-type">Bool</font></br>
-          <p>Enable row deletion by setting <code>deleteRow</code> to true, default is false.</p>
-          <p>If you enable row deletion, there's a <img height="22" width="52" src="./images/delete-btn.png"/> button on the upper left side of table.</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">columnFilter :</font> <font class="attr-type">Bool</font></br>
-          <p>Enable column filter by setting <code>columnFilter</code> to true, default is false.</p>
-          <p>If enabled, there're input text field per column under the table, user can input your filter condition by each column.</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">search :</font> <font class="attr-type">Bool</font></br>
-          <p>Enable search by setting <code>search</code> to true, default is false.</p>
-          <p>If enabled, there is a on the upper left side of the table. The default place holder is <b>Search</b></p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">searchPlaceholder :</font> <font class="attr-type">String</font></br>
-          <p>Set <code>searchPlaceholder</code> to change the placeholder in search field, default is <b>Search</b>.</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">multiColumnSearch :</font> <font class="attr-type">Bool</font></br>
-          <p>Enable multi search by <code>multiColumnSearch</code>, default is false.</p>
-          <p>If you want to use multi search, you must enable <code>search</code> at first.</p>
-          <p>Tips: Use <b>space</b> to delimited search text. EX: <b>3 4</b>, which means match all <b>3</b> or <b>4</b> datas in table.</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">exportCSV :</font> <font class="attr-type">Bool</font></br>
-          <p>Enable export csv function, default is false.</p>
-          <p>If you enable, there's a <img height="22" width="82" src="./images/export-btn.png"/> button on the upper left side of table.</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">csvFileName :</font> <font class="attr-type">String</font></br>
-          <p>Set CSV filename (e.g. items.csv). Default is spreadsheet.csv</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">ignoreSinglePage :</font> <font class="attr-type">Bool</font></br>
-          <p>Enable to ignore the pagination if only one page, default is false.</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">containerStyle :</font> <font class="attr-type">Object</font></br>
-          <p>Add your own styles to the class of <code>react-bs-table-container</code></p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">tableStyle :</font> <font class="attr-type">Object</font></br>
-          <p>Add your own styles to the class of <code>react-bs-table</code></p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">headerStyle :</font> <font class="attr-type">Object</font></br>
-          <p>Add your own styles to the class of <code>react-bs-container-header</code></p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">bodyStyle :</font> <font class="attr-type">Object</font></br>
-          <p>Add your own styles to the class of <code>react-bs-container-body</code></p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">tableHeaderClass :</font> <font class="attr-type">String</font></br>
-          <p>Add your own class to the &lt;table&gt; on header</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">tableBodyClass :</font> <font class="attr-type">String</font></br>
-          <p>Add your own class to the &lt;table&gt; on body</p>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">selectRow :</font> <font class="attr-type">Object</font></br>
-          <p>Enable row selection on table. <code>selectRow</code> accept an object which have the following properties</p>
-          <div style="margin-left: 20px;">
-            <font class="attr-lv1-title">mode</font> : <font class="attr-lv1-type">String(radio/checkbox)</font>&nbsp;<span class="lv1-required">(required)</span></br>
-            <p>For specifing the selection is single(radio) or multiple(checkbox).</p>
-            <font class="attr-lv1-title">clickToSelect</font> : <font class="attr-lv1-type">Bool</font></br>
-            <p>Click the row will trigger selection on that row if enable <code>clickToSelect</code>, default is false.</p>
-            <font class="attr-lv1-title">clickToSelectAndEditCell</font> : <font class="attr-lv1-type">Bool</font></br>
-            <p>If true, click the row will trigger selection on that row and also trigger cell editing if you enabled cell edit. Default is false.</p>
-            <font class="attr-lv1-title">bgColor</font> : <font class="attr-lv1-type">String</font></br>
-            <p>You can assign the background color of row which be selected.</p>
-            <font class="attr-lv1-title">className</font> : <font class="attr-lv1-type">String</font></br>
-            <p>You can assign the class name of row which be selected.</p>
-            <font class="attr-lv1-title">selected</font> : <font class="attr-lv1-type">Array</font></br>
-            <p>Give an array data to perform which rows you want to be selected when table loading.</p>
-            <p>The content of array should be the rowkey which you want to be selected.</p>
-            <font class="attr-lv1-title">unselectable</font> : <font class="attr-lv1-type">Array</font></br>
-            <p>Give an array data to perform which rows you want not to be selected.</p>
-            <p>The content of array should be the rowkey which you want not to be selected.</p>
-            <font class="attr-lv1-title">hideSelectColumn</font> : <font class="attr-lv1-type">Bool</font></br>
-            <p>if true, the radio/checkbox column will be hide.</p>
-            <p>You can enable this attribute if you enable <code>clickToSelect</code> and you don't want to show the selection column.</p>
-            <font class="attr-lv1-title">showOnlySelected</font> : <font class="attr-lv1-type">Bool</font></br>
-            <p>Default is false, if enabled, there will be a button on top of table for toggling selected rows only.</p>
-            <font class="attr-lv1-title">onSelect</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Accept a custom callback function, if a row be selected or unselected, this function will be called.</p>
-            <p>This callback function taking three arguments <code>row</code>, <code>isSelected</code> and <code>event</code>:</p>
-            <div style="margin-left: 20px;">
-              <code>row</code>: is the row data which you wanted to select or unselect.</br>
-              <code>isSelected</code>: it's a boolean value means "whether or not that row will be selected?".</br>
-              <code>event</code>: The event target object.</br>
+render() {
+    return (
+      &lt;BootstrapTable data={ data } trClassName={ this.trClassFormat }&gt;
+        //...
+      &lt;/BootstrapTable&gt;
+    );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="insertRow">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#insertRow'>insertRow : Bool</a></h1>
+                            <span>
+                              Enable the row insertion by setting <code>insertRow</code> to true, default is false.
+                              <code>react-bootstrap-table</code> support a row insert feature by a pop modal.</br>
+                              If you enable row insertion, there's a <img height="22" width="52" src='./images/add-btn.png'/> button on the upper left side of table.</br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ data } inserRow &gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          <span>
+                            Following is the pop modal for row insertion: </br>
+                            <img src='./images/insert-pop-modal.png' alt='row insert pop modal'/>
+                          </span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="deleteRow">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#deleteRow'>deleteRow : Bool</a></h1>
+                            <span>
+                              Enable the row insertion by setting <code>deleteRow</code> to true, default is false.
+                              <code>react-bootstrap-table</code> support a row deletion feature but you need to enable the row selection by <code>selectRow</code>
+                              .Because <code>react-bootstrap-table</code> will drop rows the according to the selected row by user select.</br>
+                              If you enable row dropping, there's a <img height="22" width="52" src='./images/delete-btn.png' alt='delete row button'/> button on the upper left side of table.</br></br>
+                            </span>
+<pre>
+<code class="javascript">
+render() {
+  const selectRow = {
+    mode: 'radio' //radio or checkbox
+  };
+  return (
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }
+      deleteRow&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="columnFilter">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#columnFilter'>columnFilter : Bool</a></h1>
+                            <span>
+                              Enable column filter by setting columnFilter to true, default is false. It's a very simple filter functionality supported by <code>react-bootstrap-table</code>
+                              If enabled, there're input text fields per column under the table, user can input your filter condition by each column.
+                              However, <code>react-bootstrap-table</code> have a better column filter which have multiple filter type. You can check <a target="=_blank" href="https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/column-filter">this</a>
+                            </br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ data } columnFilter &gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="search">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#search'>search : Bool</a></h1>
+                            <span>
+                              Enable search functionality by setting <code>search</code> to true, default is false.
+                              If enabled, there is a input field on the upper left side of the table and user can type their search text on it.
+                            </br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ data } search &gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="searchPlaceholder">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#searchPlaceholder'>searchPlaceholder : String</a></h1>
+                            <span>
+                              Use <code>searchPlaceholder</code> to change the placeholder in search field, default is Search
+                            </br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable
+  data={ data }
+  search
+  searchPlaceholder='input something...' &gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="multiColumnSearch">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#multiColumnSearch'>multiColumnSearch : Bool</a></h1>
+                            <span>
+                              Enable multi search by <code>multiColumnSearch</code>, default is false.
+                              If you want to use multi search, you must enable <code>search</code> at first.</br>
+                              <strong>Tips:</strong> Use space to delimited search text. EX: 3 4, which means match all 3 or 4 datas in table.
+                            </br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable
+  data={ data }
+  search
+  multiColumnSearch&gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="exportCSV">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#exportCSV'>exportCSV : Bool</a></h1>
+                            <span>
+                              Enable export csv functionality by setting <code>exportCSV</code> as true, default is false.
+                              If you enable, there's a <img height="22" width="52" src="./images/export-btn.png" alt="export csv button"/> button on the upper left side of table.
+                            </br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable
+  data={ data }
+  exportCSV&gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="csvFileName">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#csvFileName'>csvFileName : String | Function</a></h1>
+                            <span>
+                              Set the CSV filename (e.g. items.csv). Default is spreadsheet.csv.
+                              If a function given, you should return a file name as a string type.</br>
+                              If you enable, there's a <img height="22" width="92" src="./images/export-btn.png" alt="export csv button"/> button on the upper left side of table.
+                            </br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable
+  data={ data }
+  exportCSV
+  csvFileName='table-export'&gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="ignoreSinglePage">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#ignoreSinglePage'>ignoreSinglePage : Bool</a></h1>
+                            <span>
+                              Give true will ignore the pagination if only one page, default is false.
+                            </br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable
+  data={ data }
+  pagination
+  ignoreSinglePage&gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="containerStyle">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#containerStyle'>containerStyle : Object</a></h1>
+                            <span>
+                              Add your own styles object to the class of <code>react-bs-table-container</code>
+                            </br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable
+  data={ data }
+  containerStyle={ { background: '#00ff00' } }&gt;
+  //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="tableStyle">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#tableStyle'>tableStyle : Object</a></h1>
+                            <span>
+                              Add your own styles object to the class of <code>react-bs-table</code>
+                            </br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable
+  data={ data }
+  tableStyle={ { background: '#00ff00' } }&gt;
+  //...
+  &lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="headerStyle">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#headerStyle'>headerStyle : Object</a></h1>
+                            <span>
+                              Add your own styles object to the class of <code>react-bs-container-header</code>
+                            </br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable
+  data={ data }
+  headerStyle={ { background: '#00ff00' } }&gt;
+  //...
+  &lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="bodyStyle">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#bodyStyle'>bodyStyle : Object</a></h1>
+                            <span>
+                              Add your own styles object to the class of <code>react-bs-container-body</code>
+                            </br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable
+  data={ data }
+  bodyStyle={ { background: '#00ff00' } }&gt;
+  //...
+  &lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="tableHeaderClass">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#tableHeaderClass'>tableHeaderClass : String</a></h1>
+                            <span>
+                              <code>react-bootstrap-table</code> separate two <code>table</code> element as header and body. So the
+                              <code>tableHeaderClass</code> is for the <code>table</code> element in the header.
+                            </br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable
+  data={ data }
+  tableHeaderClass='my-custom-class'&gt;
+  //...
+  &lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="tableBodyClass">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#tableBodyClass'>tableBodyClass : String</a></h1>
+                            <span>
+                              <code>react-bootstrap-table</code> separate two <code>table</code> element as header and body. So the
+                              <code>tableBodyClass</code> is for the <code>table</code> element in the body.
+                            </br></br>
+                            </span>
+<pre>
+<code class="html">&lt;BootstrapTable
+  data={ data }
+  tableBodyClass='my-custom-class'&gt;
+  //...
+  &lt;/BootstrapTable&gt;
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="selectRow">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#selectRow'>selectRow : Object</a></h1>
+                            <span>
+                              Enable row selection on table. <code>selectRow</code> accept an object which have the following props:
+                              <ul>
+                                <li><a href='#'>mode</a></li>
+                                <li><a href='#'>clickToSelect</a></li>
+                                <li><a href='#'>clickToSelectAndEditCell</a></li>
+                                <li><a href='#'>bgColor</a></li>
+                                <li><a href='#'>className</a></li>
+                                <li><a href='#'>selected</a></li>
+                                <li><a href='#'>unselectable</a></li>
+                                <li><a href='#'>hideSelectColumn</a></li>
+                                <li><a href='#'>showOnlySelected</a></li>
+                                <li><a href='#'>onSelect</a></li>
+                                <li><a href='#'>onSelectAll</a></li>
+                              </ul>
+                            Following is a most simple example for configuring the <code>selectRow</code>
+                            </br></br>
+                            </span>
+<pre>
+<code class="javascript">render() {
+  const selectRow = {
+    mode: 'radio' // or checkbox
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
             </div>
-            <p>If return value of this function is false, the select or deselect action will not be applied.</p>
-            <font class="attr-lv1-title">onSelectAll</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Accept a custom callback function, if click select all checkbox, this function will be called.</p>
-            <p>This callback function taking two arguments <code>isSelected</code> and <code>rows</code>:</p>
-            <div style="margin-left: 20px;">
-              <code>isSelected</code>: it's a boolean value means "whether or not that row will be selected?".</br>
-              <code>rows</code>: The rows which be selected or unselected.</br>
-            </div>
-            <p>If return value of this function is false, the select all or deselect all action will not be applied.</p>
-            <p>If return value of this function is an array of rowkeys, this array will be applied as selection row when select all trigger.</p>
-            <p>It's useful when you have a validation to filter some rows on selecting all.</p>
           </div>
-        </div>
-      </div>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">cellEdit :</font> <font class="attr-type">Object</font></br>
-          <p>Enable cell editing on table. <code>cellEdit</code> accept an object which have the following properties</p>
-          <div style="margin-left: 20px;">
-            <font class="attr-lv1-title">mode</font> : <font class="attr-lv1-type">String(click/dbclick)</font>&nbsp;<span class="lv1-required">(required)</span></br>
-            <p>To spectify which condition will trigger cell editing.(click or dbclick)</p>
-            <font class="attr-lv1-title">blurToSave</font> : <font class="attr-lv1-type">Bool</font></br>
-            <p>Enable <code>blurToSave</code> will trigger a saving event on cell when mouse blur on the input field. Default is false.</p>
-            <p>In the default condition, you need to press <code>ENTER</code> to save the cell.</p>
-            <font class="attr-lv1-title">beforeSaveCell</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Accept a custom callback function, before cell saving, this function will be called.</p>
-            <p>This callback function taking three arguments:<code>row</code>, <code>cellName</code> and <code>cellValue</code></p>
-            <p>It's necessary to return a bool value which whether apply this cell editing.</p>
-            <font class="attr-lv1-title">afterSaveCell</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Accept a custom callback function, after cell saving, this function will be called.</p>
-            <p>This callback function taking three arguments:<code>row</code>, <code>cellName</code> and <code>cellValue</code></p>
-          </div>
-        </div>
-      </div>
-
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">options :</font> <font class="attr-type">Object</font></br>
-          <p>For some options setting on this component, you can set the options attribute and give an object which contain following properties</p>
-          <div style="margin-left: 20px;">
-            <font class="attr-lv1-title">sortName</font> : <font class="attr-lv1-type">String</font></br>
-            <p>Manage sort field by yourself</p>
-            <font class="attr-lv1-title">sortOrder</font> : <font class="attr-lv1-type">String(asc/desc)</font></br>
-            <p>Manage sort order by yourself</p>
-            <font class="attr-lv1-title">defaultSortName</font> : <font class="attr-lv1-type">String</font></br>
-            <p>Assign a default sort field.</p>
-            <font class="attr-lv1-title">defaultSortOrder</font> : <font class="attr-lv1-type">String(asc/desc)</font></br>
-            <p>Assign a default sort ordering.</p>
-            <font class="attr-lv1-title">sortIndicator</font> : <font class="attr-lv1-type">Bool</font></br>
-            <p>False to disable sort indicator on header column, default is true.</p>
-            <font class="attr-lv1-title">noDataText</font> : <font class="attr-lv1-type">String or JSX</font></br>
-            <p>Change the displaying text on table if data is empty.</p>
-            <font class="attr-lv1-title">searchDelayTime</font> : <font class="attr-lv1-type">Number(millisecond)</font></br>
-            <p>A delay for trigger search after a keyup</p>
-            <font class="attr-lv1-title">ignoreEditable</font> : <font class="attr-lv1-type">Bool</font></br>
-            <p>Default is false, if true means you want to ignore any <code>editable</code> configuration when row insert.</p>
-            <font class="attr-lv1-title">clearSearch</font> : <font class="attr-lv1-type">Bool</font></br>
-            <p>Only work on enable search. If true, there will be a button beside search input field for clear search field text. </p>
-            <font class="attr-lv1-title">afterTableComplete</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called after table update.</p>
-            <font class="attr-lv1-title">afterDeleteRow</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called after row delete.</p>
-            <p>This function taking one argument: <code>rowKeys</code>, which means the row key you dropped.</p>
-            <font class="attr-lv1-title">afterInsertRow</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called after row insert.</p>
-            <p>This function taking one argument: <code>row</code>, which means the whole row data you added.</p>
-            <font class="attr-lv1-title">prePage</font> : <font class="attr-lv1-type">String</font></br>
-            <p>Customize the text of previouse page button</p>
-            <font class="attr-lv1-title">nextPage</font> : <font class="attr-lv1-type">String</font></br>
-            <p>Customize the text of next page button</p>
-            <font class="attr-lv1-title">firstPage</font> : <font class="attr-lv1-type">String</font></br>
-            <p>Customize the text of first page button</p>
-            <font class="attr-lv1-title">lastPage</font> : <font class="attr-lv1-type">String</font></br>
-            <p>Customize the text of last page button</p>
-            <font class="attr-lv1-title">page</font> : <font class="attr-lv1-type">Number</font></br>
-            <p>Accept a number, which means the page you want to show as default.</p>
-            <font class="attr-lv1-title">sizePerPageList</font> : <font class="attr-lv1-type">Array</font></br>
-            <p>You can change the dropdown list for size per page if you enable <code>pagination</code>.</p>
-            <font class="attr-lv1-title">sizePerPage</font> : <font class="attr-lv1-type">Number</font></br>
-            <p>Means the size per page you want to locate as default.</p>
-            <font class="attr-lv1-title">paginationSize</font> : <font class="attr-lv1-type">Number</font></br>
-            <p>To define the pagination bar length, default is 5.</p>
-            <font class="attr-lv1-title">hideSizePerPage</font> : <font class="attr-lv1-type">Bool</font></br>
-            <p>Enable to hide the dropdown list for size per page, default is false.</p>
-            <font class="attr-lv1-title">paginationShowsTotal</font> : <font class="attr-lv1-type">Bool or Function</font></br>
-            <p>Display a short text the total number of element and current lines displayed, default is false.</p>
-            <p>If you want to custom this short text, you can give a function, and this function take three arguments: <code>start</code>, <code>to</code>, <code>total</code></p>
-            <div style="margin-left: 20px;">
-              <code>start</code>: Current start index.</br>
-              <code>to</code>: Current end index.</br>
-              <code>total</code>: The total data volume.</br>
-            </div>
-            <font class="attr-lv1-title">pageStartIndex</font> : <font class="attr-lv1-type">bool</font></br>
-            <p>A chance to modify the start page number, default is start from page one.</p>
-            <font class="attr-lv1-title">onPageChange</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called after page changed.</p>
-            <p>This function taking two argument: <code>page</code> and <code>sizePerPage</code>.</p>
-            <div style="margin-left: 20px;">
-              <code>page</code>: Current page.</br>
-              <code>sizePerPage</code>: The data size which in one page.</br>
-            </div>
-            <font class="attr-lv1-title">onSizePerPageList</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called after size per page dropdown changed.</p>
-            <p>This function taking one argument: <code>sizePerPage</code>.</p>
-            <div style="margin-left: 20px;">
-              <code>sizePerPage</code>: The data size which in one page.</br>
-            </div>
-            <font class="attr-lv1-title">insertText</font> : <font class="attr-lv1-type">String</font></br>
-            <p>Customize the text on insert button.</p>
-            <font class="attr-lv1-title">deleteText</font> : <font class="attr-lv1-type">String</font></br>
-            <p>Customize the text on delete button.</p>
-            <font class="attr-lv1-title">saveText</font> : <font class="attr-lv1-type">String</font></br>
-            <p>Customize the text on save button.</p>
-            <font class="attr-lv1-title">closeText</font> : <font class="attr-lv1-type">String</font></br>
-            <p>Customize the text on close button.</p>
-            <font class="attr-lv1-title">exportCSVText</font> : <font class="attr-lv1-type">String</font></br>
-            <p>A custom text on export csv button</p>
-            <font class="attr-lv1-title">onSortChange</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called after trigger sorting.</p>
-            <p>This function taking two argument: <code>sortName</code> and <code>sortOrder</code>.</p>
-            <div style="margin-left: 20px;">
-              <code>sortName</code>: The sort column name.</br>
-              <code>sortOrder</code>: The sort ordering.</br>
-            </div>
-            <font class="attr-lv1-title">defaultSearch</font> : <font class="attr-lv1-type">String</font></br>
-            <p>Manage search text by yourself.</p>
-            <font class="attr-lv1-title">onSearchChange</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called when search text change.</p>
-            <p>This function taking three argument: <code>searchText</code>, <code>colInfos</code> and <code>multiColumnSearch</code></p>
-            <p>In most case, you only need to use <code>searchText</code></p>
-            <div style="margin-left: 20px;">
-              <code>searchText</code>: The new search text that user key in.</br>
-              <code>colInfos</code>: it's an array which contain all the columns information</br>
-              <code>multiColumnSearch</code>: whether enable mulit column search</br>
-            </div>
-            <font class="attr-lv1-title">afterSearch</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called after trigger searching.</p>
-            <p>This function taking two argument: <code>search</code> and <code>result</code>.</p>
-            <div style="margin-left: 20px;">
-              <code>search</code>: The search text which user input.</br>
-              <code>result</code>: The results after searching.</br>
-            </div>
-            <font class="attr-lv1-title">afterColumnFilter</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called after trigger column filtering.</p>
-            <p>This function taking two argument: <code>filterConds</code> and <code>result</code>.</p>
-            <div style="margin-left: 20px;">
-              <code>filterConds</code>: It's an array object which contain all column filter conditions.</br>
-              <code>result</code>: The results after filtering.</br>
-            </div>
-            <font class="attr-lv1-title">onAddRow</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called when a row be added.</p>
-            <p>This function taking one argument: <code>row</code> which presented as the new row data.</p>
-            <font class="attr-lv1-title">onFilterChange</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called when a filter condition changing.</p>
-            <p>This function taking one argument: <code>filterObj</code> which is an object and keyed by column with the filter condition.</p>
-            <font class="attr-lv1-title">onExportToCSV</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called when click the export csv button.</p>
-            <p>In this function, you need to return the rows which need to be exported.</p>
-            <font class="attr-lv1-title">onDeleteRow</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called when a row been deleted.</p>
-            <p>This function taking one argument: <code>row</code> which presented as the deleted row.</p>
-            <font class="attr-lv1-title">onRowClick</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called after a row click.</p>
-            <p>This function taking one argument: <code>row</code> which is the row data which you click on.</p>
-            <font class="attr-lv1-title">onMouseEnter</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called when mouse enter into the table.</p>
-            <font class="attr-lv1-title">onMouseLeave</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called when mouse leave from the table.</p>
-            <font class="attr-lv1-title">onRowMouseOver</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called when mouse over a row in table.</p>
-            <p>This function taking one argument: <code>row</code> which is the row data which mouse over.</p>
-            <font class="attr-lv1-title">onRowMouseOut</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called when mouse leave from a row in table.</p>
-            <p>This function taking one argument: <code>row</code> which is the row data which mouse out.</p>
-            <font class="attr-lv1-title">handleConfirmDeleteRow</font> : <font class="attr-lv1-type">Function</font></br>
-            <p>Assign a callback function which will be called when row dropping.</p>
-            <p>It give you a chance to customize your confirmation for row deletion.</p>
-            <p>This function taking two argument: <code>next</code> and <code>rowKeys</code>:</p>
-            <div style="margin-left: 20px;">
-              <code>next</code>: If you confirm to drop row, call next() to continue the process</br>
-              <code>rowKeys</code> is the row keys which been deleted, you can call next function to apply this deletion.</br>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <h3>
-      <a id="the-attributes-in-tableheadercolumn" class="anchor" href="#the-attributes-in-tableheadercolumn" aria-hidden="true"><span class="octicon octicon-link"></span></a>The expose function on &lt;BootstrapTable&gt;:</h3>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">handleAddRow :</font> <font class="attr-type">Object</font></br>
-          <p>Call this function to insert an new row to table.</p>
-          <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> fakeRow <span style="color: #666666">=</span> {
-      id<span style="color: #666666">:</span> <span style="color: #666666">10</span>,
-      name<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;Product one &quot;</span>,
-      price<span style="color: #666666">:</span> <span style="color: #666666">240</span>
-};
-<span style="color: #008800; font-style: italic">// insert a new row</span>
-<span style="color: #AA22FF; font-weight: bold">var</span> result <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">this</span>.refs.table.handleAddRow(fakeRow);
-<span style="color: #AA22FF; font-weight: bold">if</span>(result){  <span style="color: #008800; font-style: italic">//some error happen, ex: doesn&#39;t assign row key or row key duplicated</span>
-      console.log(result);
-}
-</pre></div>
-
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">handleAddRowAtBegin :</font> <font class="attr-type">Object</font></br>
-          <p>Call this function to insert an new row as first row on table.</p>
-          <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> fakeRow <span style="color: #666666">=</span> {
-      id<span style="color: #666666">:</span> <span style="color: #666666">10</span>,
-      name<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;Product one &quot;</span>,
-      price<span style="color: #666666">:</span> <span style="color: #666666">240</span>
-};
-<span style="color: #008800; font-style: italic">// insert a new row at begin</span>
-<span style="color: #AA22FF; font-weight: bold">var</span> result <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">this</span>.refs.table.handleAddRowAtBegin(fakeRow);
-<span style="color: #AA22FF; font-weight: bold">if</span>(result){  <span style="color: #008800; font-style: italic">//some error happen, ex: doesn&#39;t assign row key or row key duplicated</span>
-      console.log(result);
-}
-</pre></div>
-
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">handleDropRow :</font> <font class="attr-type">Array</font></br>
-          <p>Call this function to drop rows in table.</p>
-          <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-style: italic">//Drop row key 2 &amp; 3</span>
-<span style="color: #AA22FF; font-weight: bold">this</span>.refs.table.handleDropRow([<span style="color: #666666">2</span>,<span style="color: #666666">3</span>]);
-</pre></div>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">handleFilterData :</font> <font class="attr-type">Object</font></br>
-          <p>Call this function to do column filtering on table.</p>
-          <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-style: italic">// find name eq &#39;Allen&#39; &amp;&amp; age eq 26</span>
-<span style="color: #AA22FF; font-weight: bold">this</span>.refs.table.handleFilterData({
-    name<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;Allen&quot;</span>,
-    age<span style="color: #666666">:</span> <span style="color: #666666">26</span>
-});
-</pre></div>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">handleSearch :</font> <font class="attr-type">String</font></br>
-          <p>Call this function with search text for fully searching.</p>
-          <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-style: italic">// Search table for &#39;React.js&#39;</span>
-<span style="color: #AA22FF; font-weight: bold">this</span>.refs.table.handleSearch(<span style="color: #BB4444">&#39;React.js&#39;</span>);
-</pre></div>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">handleSort :</font> <font class="attr-type">String, String</font></br>
-          <p>Call this function to sort table.</p>
-          <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-style: italic">// Force a sort for product_id field by desc</span>
-<span style="color: #AA22FF; font-weight: bold">this</span>.refs.table.handleSort(<span style="color: #BB4444">&#39;desc&#39;</span>, <span style="color: #BB4444">&#39;product_id&#39;</span>);
-</pre></div>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">getPageByRowKey :</font> <font class="attr-type">String</font></br>
-          <p>Call this function to get the page by a rowkey</p>
-          <!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-style: italic">// Find page of product_id</span>
-<span style="color: #AA22FF; font-weight: bold">this</span>.refs.table.getPageByRowKey(<span style="color: #BB4444">&#39;product_id&#39;</span>);
-</pre></div>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">handleExportCSV :</font> <font class="attr-type">None</font></br>
-          <p>Call this function to export table as csv.</p>
-        </div>
-
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">cleanSelected :</font> <font class="attr-type">None</font></br>
-          <p>Clean all the selection state on table.</p>
-        </div>
-      </div>
-
-      <h3>
-      <a id="the-attributes-in-tableheadercolumn" class="anchor" href="#the-attributes-in-tableheadercolumn" aria-hidden="true"><span class="octicon octicon-link"></span></a>The attributes in &lt;TableHeaderColumn&gt;:</h3>
-
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">dataField :</font> <font class="attr-type">String</font>&nbsp;<span class="required">(required)</span></br>
-          <p>The field of data you want to show on column.</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">isKey :</font> <font class="attr-type">String</font>&nbsp;<span class="required">(option)</span></br>
-          <p>Use <code>isKey</code> to tell table which column is unique. This is same as <code>keyField</code> in <code>&lt;BootstrapTable&gt;</code></p>
-          <p>Tips: You need choose one configuration to set key field: <code>isKey</code> or <code>keyField</code> in <code>&lt;BootstrapTable&gt;</code></p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">width :</font> <font class="attr-type">String(Pixels)</font></br>
-          <p>Set the column width. ex: 150, it's means 150px</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">dataAlign :</font> <font class="attr-type">String</font></br>
-          <p>Set align in column, available value is left, center, right, start and end.</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">headerAlign :</font> <font class="attr-type">String</font></br>
-          <p>Set align in header, available value is left, center, right, start and end.</p>
-          <p>If you don't set the <code>headerAlign</code>, default is follow <code>dataAlign</code>.</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">dataSort :</font> <font class="attr-type">Bool</font></br>
-          <p>True to enable table sorting. Default is disabled.</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">caretRender :</font> <font class="attr-type">Function</font></br>
-          <p>Allow user to render a custom sort caret. You should give a function and should return a JSX.</p>
-          <p>This function taking one arguments: <code>order</code> which present the sort order currently.</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">dataFormat :</font> <font class="attr-type">Function</font></br>
-          <p>To customize the column. This callback function should return a String or a React Component.</p>
-          <p>In addition, this function taking four argument: <code>cell</code>, <code>row</code>, <code>formatExtraData</code>, <code>rowIdx</code></p>
-          <p>The <code>formatExtraData</code> will be the value which you assign <code>formatExtraData</code> on &ltTableHeaderColumn&gt</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">filterFormatted :</font> <font class="attr-type">Bool</font></br>
-          <p>To to enable search or filter data on formatting. Default is false</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">filterValue :</font> <font class="attr-type">Function</font></br>
-          <p>Return the value you want to be filtered on that column. It's useful when you column data is an object</p>
-          <p>You can also check this <a target='_blank' href='https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/manipulation/search-format-table.js'>example</a></p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">formatExtraData :</font> <font class="attr-type">any</font></br>
-          <p>Used on <code>dataFormat</code>, you can give any data you want to apply in formatter</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">csvFormat :</font> <font class="attr-type">Function</font></br>
-          <p>A chance to customize the column when export to csv file. This function taking two argument: <code>cell</code> and <code>row</code>.</p>
-          <p>Currently, <code>csvFormat</code> only accept return the string.</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">csvHeader :</font> <font class="attr-type">String</font></br>
-          <p>The display text on header for csv file</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">hidden :</font> <font class="attr-type">Bool</font></br>
-          <p>True to hide column.</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">export :</font> <font class="attr-type">Bool</font></br>
-          <p><code>export={true}</code> usually be used when you want to export a column which is hidden. Because hidden column can't be export to csv.</p>
-          <p><code>export={false}</code> to specify <code>react-bootstrap-table</code> do not export this column on exporting csv..</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">hiddenOnInsert :</font> <font class="attr-type">Bool</font></br>
-          <p>True to hide input field of column in inert modal.</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">searchable :</font> <font class="attr-type">Bool</font></br>
-          <p>False to disable search functionality on column, default is true.</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">columnTitle :</font> <font class="attr-type">Bool</font></br>
-          <p>Show the title on each column, default is false.</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">sortFunc :</font> <font class="attr-type">Function</font></br>
-          <p>Give a customize function for data sorting.</p>
-          <p>This function taking four arguments: <code>a</code>, <code>b</code>, <code>order</code>, <code>sortField</code>, <code>extraData</code></p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">sortFuncExtraData :</font> <font class="attr-type">Any</font></br>
-          <p>It's a extra data for custom sort function, if defined, this data will be pass as fifth argument in <code>sortFunc</code>.</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">className :</font> <font class="attr-type">String or Function</font></br>
-          <p>Add custom css class on <b>table header</b> column, this attribute only accept String or Function.</p>
-          <p>If Function, it taking four arguments: <code>cell</code>, <code>row</code>, <code>rowIndex</code>, <code>columnIndex</code>.</p>
-          <p>In addition, this function should return a String which is the class name you want to add on.</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">columnClassName :</font> <font class="attr-type">String or Function</font></br>
-          <p>Add custom css class on <b>table body column</b>, this attribute only accept String or Function.</p>
-          <p>If Function, it taking four arguments: <code>cell</code>, <code>row</code>, <code>rowIndex</code>, <code>columnIndex</code>.</p>
-          <p>In addition, this function should return a String which is the class name you want to add on.</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">editable :</font> <font class="attr-type">Bool or Object</font></br>
-          <p>True to set column editable, false is non-editable. If give Object,</p>
-          <p>you can do more customization when editing cell. This object have following properties:</p>
-          <pre>
-{
-  type: //edit type, available values are textarea, select, checkbox, and datetime
-  validator: //give a function for validation that takes only one "cell value" as an argument. This function should return a boolean.
-  options:{
-    values: //values means the data in select or checkbox. If it's checkbox, use a ':' (colon) to separate the values, e.g. Y:N.
-  }
-}
-          </pre>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">customEditor :</font> <font class="attr-type">Object</font></br>
-          <p>Give an Object like following to able to customize your own editing component. This Object should contain one property: </p>
-          <div style="margin-left: 20px;">
-            <code>getElement</code><span class="lv1-required">(required)</span>: Accept a function and take two arguments: <code>onUpdate</code> and <code>props</code>.</br>
-            <code>customEditorParameters</code>: Another extra data for custom cell edit component.</br>
-          </div>
-          <p><a target='_blank' href='https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/cell-edit/custom-cell-edit-table.js'>This</a> is a good example for showing how to use custom cell editing.</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">autoValue :</font> <font class="attr-type">Bool</font></br>
-          <p>It only work when you enable <code>insertRow</code> and be assign on rowKey column.</p>
-          <p>If true, the row key will be generated automatically after a row insertion.</p>
-        </div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">filter :</font> <font class="attr-type">Object</font></br>
-          <p>To Enable a column filter within header column.</p>
-          <p>This feature support a lots of filter type and condition. Please check <a href='https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/column-filter'>example</a></p>
-          <p>Following is the format for <code>filter</code></p>
-          <pre>
-{
-  type: "TextFilter"||"SelectFilter"||"NumberFilter"||"DateFilter"||"RegexFilter"||"YOUR_CUSTOM_FILTER".
-  defaultValue: //Default value on filter. If type is NumberFilter or DateFilter, this value will like { number||date: xxx, comparator: '>' }
-  delay: //Assign a millisecond for delay when trigger filtering, default is 500.
-  placeholder: //Only work on TextFilter. Assign the placeholder text on text and regex filter
-  numberComparators: //Only work on NumberFilter. Accept an array which conatin the filter condition, like: ['<','>','=']
-  options:
-  // Only work on SelectFilter or NumberFilter.
-  // For SelectFilter, you can assign the selection option by a object which presented as { 0: 'good', 1: 'bad' ... }
-  // For NumberFilter, you can assign the number range by an array which presented as [1,2,3,4...]
-}
-          </pre>
-          <p>Check <a href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column-filter/custom-filter.js">this</a> for a custom filter.</p>
-        </div>
-      </div>
-
-      <h3>
-      <a id="the-attributes-in-tableheadercolumn" class="anchor" href="#the-attributes-in-tableheadercolumn" aria-hidden="true"><span class="octicon octicon-link"></span></a>The expose function on &lt;BootstrapTable&gt;:</h3>
-      <div>
-        <div class="member">
-          <a href="#" class="side"><span>&nbsp;</span></a>
-          <font class="attr-title">cleanFiltered :</font> <font class="attr-type"></font></br>
-          <p>Call this function to clear the filter.</p>
-        </div>
-      </div>
-
-      <span class="site-footer-owner"><a href="https://github.com/AllenFang/react-bootstrap-table">React-bootstrap-table</a> is maintained by <a href="https://github.com/AllenFang">AllenFang</a>.</span>
-
-      <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+				</div>
+			</div>
+		</div>
 
 
-    </section>
+
+		<footer>
+			<div id="footer">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3 text-center">
+							<p class="fh5co-social-icons">
+								<a href="#"><i class="icon-twitter2"></i></a>
+								<a href="#"><i class="icon-facebook2"></i></a>
+								<a href="#"><i class="icon-instagram"></i></a>
+								<a href="#"><i class="icon-dribbble2"></i></a>
+								<a href="#"><i class="icon-youtube"></i></a>
+							</p>
+							<p>Copyright 2016 Free Html5 <a href="#">Pentagon</a>. All Rights Reserved. <br>Made with <i class="icon-heart3"></i> by <a href="http://freehtml5.co/" target="_blank">Freehtml5.co</a> / Demo Images: <a href="https://unsplash.com/" target="_blank">Unsplash</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
 
 
-  </body>
+	</div>
+	<!-- END fh5co-page -->
+
+	</div>
+	<!-- END fh5co-wrapper -->
+
+	<!-- jQuery -->
+
+
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Stellar -->
+	<script src="js/jquery.stellar.min.js"></script>
+	<!-- Superfish -->
+	<script src="js/hoverIntent.js"></script>
+	<script src="js/superfish.js"></script>
+
+	<!-- Main JS (Do not remove) -->
+	<script src="js/main.js"></script>
+  <script>
+
+  $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+  });
+  $('#sidebar-nav a').click(function (e) {
+    // e.preventDefault();
+    $(this).tab('show');
+  })
+  </script>
+
+	</body>
 </html>
