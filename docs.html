@@ -76,6 +76,9 @@
   	.feature-text h3 {
   		text-transform: none !important;
   	}
+    .sub-prop {
+      padding-left: 40px !important;
+    }
 	</style>
 	</head>
 	<body>
@@ -128,11 +131,11 @@
             <div id="sidebar-wrapper">
                 <ul class="sidebar-nav nav nav-tabs" id="sidebar-nav">
                     <li class="sidebar-brand">
-                      <a href="#">
+                      <a class="active" id="propsOnBootstrapTable" href="#propsOnBootstrapTable">
                           Props in &lt;BootstrapTable&gt;
                       </a>
                     </li>
-                    <li class="active"><a href="#data">data</a></li>
+                    <li><a id="default-show" href="#data">data</a></li>
                     <li><a href="#keyField">keyField</a></li>
                     <li><a href="#remote">remote</a></li>
                     <li><a href="#height">height</a></li>
@@ -159,12 +162,27 @@
                     <li><a href="#tableHeaderClass">tableHeaderClass</a></li>
                     <li><a href="#tableBodyClass">tableBodyClass</a></li>
                     <li><a href="#selectRow">selectRow</a></li>
-                    <li><a href="#selectRow">selectRow</a></li>
+                    <li><a href="#mode" class="sub-prop">mode</a></li>
+                    <li><a href="#clickToSelect" class="sub-prop">clickToSelect</a></li>
+                    <li><a href="#clickToSelectAndEditCell" class="sub-prop">clickToSelectAndEditCell</a></li>
+                    <li><a href="#clickToSelectAndEditCell" class="sub-prop">clickToSelectAndEditCell</a></li>
                 </ul>
             </div>
             <!-- /#sidebar-wrapper -->
             <div class="tab-content">
-              <div class="tab-pane active" id="data">
+              <div class="tab-pane active" id="propsOnBootstrapTable">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#propsOnBootstrapTable'>Test</a></h1>
+                            <span>
+                              Test
+                            </span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane" id="data">
                   <div class="container-fluid">
                       <div class="row">
                           <div class="col-lg-12">
@@ -765,7 +783,9 @@ render() {
                           <div class="col-lg-12">
                             <h1><a href='#selectRow'>selectRow : Object</a></h1>
                             <span>
-                              Enable row selection on table. <code>selectRow</code> accept an object which have the following props:
+                              <code>react-bootstrap-table</code> support the row selection feature, when you enable this feature,
+                              <code>react-bootstrap-table</code> will add a selection column at first position.
+                              <code>selectRow</code> accept an object which have the following props:
                               <ul>
                                 <li><a href='#'>mode</a></li>
                                 <li><a href='#'>clickToSelect</a></li>
@@ -779,6 +799,7 @@ render() {
                                 <li><a href='#'>onSelect</a></li>
                                 <li><a href='#'>onSelectAll</a></li>
                               </ul>
+                            Be carefully, when you enable <code>selectRow</code>, you should tell <code>react-bootstrap-table</code> which the <a href='#mode'>mode</a> you wanted.
                             Following is a most simple example for configuring the <code>selectRow</code>
                             </br></br>
                             </span>
@@ -786,6 +807,109 @@ render() {
 <code class="javascript">render() {
   const selectRow = {
     mode: 'radio' // or checkbox
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="mode">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#mode'>selectRow: mode : String</a></h1>
+                            <span>
+                              Specifing the row selection for single(radio) or multiple(checkbox).
+                              If <code>radio</code> assigned, there's a radio button in the selection column; likewise, the <code>checkbox</code> is same.
+                            </br></br>
+                            </span>
+<pre>
+<code class="javascript">render() {
+  const selectRow = {
+    mode: 'radio'  // single select
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+<pre>
+<code class="javascript">render() {
+  const selectRow = {
+    mode: 'checkout'  // multi select
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="clickToSelect">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#clickToSelect'>selectRow: clickToSelect : Bool</a></h1>
+                            <span>
+                              If true, click the row will trigger selection on that row and also trigger cell editing if you enabled cell edit. Default is false.
+                              This feature is very useful that user dont move their mouse on the radio button or checkbox, they can just click on the row to select it.
+                            </br></br>
+                            </span>
+<pre>
+<code class="javascript">render() {
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    clickToSelect: true
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="clickToSelectAndEditCell">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#clickToSelectAndEditCell'>selectRow: clickToSelectAndEditCell : Bool</a></h1>
+                            <span>
+                              If true, click the row will trigger selection and cell editing if you enabled cell edit. Default is false.
+                            </br></br>
+                            </span>
+<pre>
+<code class="javascript">render() {
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    clickToSelectAndEditCell: true
   };
   return(
     &lt;BootstrapTable
@@ -861,8 +985,10 @@ render() {
   });
   $('#sidebar-nav a').click(function (e) {
     // e.preventDefault();
+    console.log(this);
     $(this).tab('show');
   })
+  $("#default-show").tab('show');
   </script>
 
 	</body>
