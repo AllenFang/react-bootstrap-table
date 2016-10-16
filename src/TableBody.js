@@ -113,6 +113,7 @@ class TableBody extends Component {
           selectRow={ isSelectRowDefined ? this.props.selectRow : undefined }
           enableCellEdit={ this.props.cellEdit.mode !== Const.CELL_EDIT_NONE }
           onRowClick={ this.handleRowClick }
+          onRowDoubleClick={ this.handleRowDoubleClick }
           onRowMouseOver={ this.handleRowMouseOver }
           onRowMouseOut={ this.handleRowMouseOut }
           onSelectRow={ this.handleSelectRow }
@@ -202,6 +203,17 @@ class TableBody extends Component {
     onRowClick(selectedRow);
   }
 
+  handleRowDoubleClick = rowIndex => {
+    let selectedRow;
+    const { data, onRowDoubleClick } = this.props;
+    data.forEach((row, i) => {
+        if (i === rowIndex - 1) {
+            selectedRow = row;
+        }
+    });
+    onRowDoubleClick(selectedRow);
+  }
+
   handleSelectRow = (rowIndex, isSelected, e) => {
     let selectedRow;
     const { data, onSelectRow } = this.props;
@@ -284,6 +296,7 @@ TableBody.propTypes = {
   keyField: PropTypes.string,
   selectedRowKeys: PropTypes.array,
   onRowClick: PropTypes.func,
+  onRowDoubleClick: PropTypes.func,
   onSelectRow: PropTypes.func,
   noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
   style: PropTypes.object,
