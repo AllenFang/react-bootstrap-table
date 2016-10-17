@@ -36,7 +36,7 @@ export default class DefaultCustomInsertButtonTable extends React.Component {
         btnText='CustomDeleteText'
         btnContextual='btn-success'
         className='my-custom-class'
-        btnGlyphicon='glyphicon-edit'
+        btnFAwesome='fa-edit'
         onClick={ e => this.handleDeleteButtonClick(onClick) }/>
     );
     // If you want have more power to custom the child of DeleteButton,

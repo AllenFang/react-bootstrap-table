@@ -9,13 +9,13 @@ class ExportCSVButton extends Component {
       btnContextual,
       className,
       onClick,
-      btnGlyphicon,
+      btnFAwesome,
       btnText,
       children,
       ...rest
     } = this.props;
     const content = children ||
-      (<span><i className={ `glyphicon ${btnGlyphicon}` }></i> { btnText }</span>);
+      (<span><i className={ `fa ${btnFAwesome}` }></i> { btnText }</span>);
     return (
       <button type='button'
         className={ `btn ${btnContextual} ${exportCsvBtnDefaultClass} ${className} hidden-print` }
@@ -32,14 +32,14 @@ ExportCSVButton.propTypes = {
   btnContextual: PropTypes.string,
   className: PropTypes.string,
   onClick: PropTypes.func,
-  btnGlyphicon: PropTypes.string
+  btnFAwesome: PropTypes.string
 };
 ExportCSVButton.defaultProps = {
   btnText: Const.EXPORT_CSV_TEXT,
   btnContextual: 'btn-success',
   className: '',
   onClick: undefined,
-  btnGlyphicon: 'glyphicon-export'
+  btnFAwesome: 'fa-arrow-circle-down'
 };
 
 export default ExportCSVButton;

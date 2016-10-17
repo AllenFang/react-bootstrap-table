@@ -118,7 +118,7 @@ var products = [{
   },........];
 // It's a data format example.
 function priceFormatter(cell, row){
-  return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
+  return '<i class="fa fa-usd"></i> ' + cell;
 }
 
 React.render(

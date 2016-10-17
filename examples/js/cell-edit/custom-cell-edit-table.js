@@ -165,7 +165,7 @@ class RegionsEditor extends React.Component {
 }
 
 function priceFormatter(cell, row) {
-  return `<i class='glyphicon glyphicon-${cell.currency.toLowerCase()}'></i> ${cell.amount}`;
+  return `<i class='fa fa-${cell.currency.toLowerCase()}'></i> ${cell.amount}`;
 }
 
 const regionsFormatter = (cell, row) => (<span>{ (cell || []).join(',') }</span>);
