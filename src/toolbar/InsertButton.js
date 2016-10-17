@@ -15,7 +15,7 @@ class InsertButton extends Component {
       ...rest
     } = this.props;
     const content = children ||
-      (<span><i className={ `fa ${btnFAwesome}` }></i>{ btnText }</span>);
+      (<span><i className={ `fa ${btnFAwesome}` }></i> { btnText }</span>);
     return (
       <button type='button'
         className={ `btn ${btnContextual} ${insertBtnDefaultClass} ${className}` }
