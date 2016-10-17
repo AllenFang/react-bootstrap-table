@@ -157,40 +157,26 @@ export class TableDataStore {
     return this;
   }
 
-  edit(newVal, rowIndex, fieldName) {
-    const currentDisplayData = this.getCurrentDisplayData();
-    let rowKeyCache;
-    if (!this.enablePagination) {
-      currentDisplayData[rowIndex][fieldName] = newVal;
-      rowKeyCache = currentDisplayData[rowIndex][this.keyField];
-    } else {
-      currentDisplayData[this.pageObj.start + rowIndex][fieldName] = newVal;
-      rowKeyCache = currentDisplayData[this.pageObj.start + rowIndex][this.keyField];
-    }
-    if (this.isOnFilter) {
-      this.data.forEach(function(row) {
-        if (row[this.keyField] === rowKeyCache) {
-          row[fieldName] = newVal;
-        }
-      }, this);
-      if (this.filterObj !== null) this.filter(this.filterObj);
-      if (this.searchText !== null) this.search(this.searchText);
-    }
-    return this;
-  }
-
   edit(newVal, rowIndex, fieldName, sectionKey) {
     const currentDisplayData = this.getCurrentDisplayData();
+    let offset;
+
+    if (!Array.isArray(this.data)) {
+      offset = currentDisplayData[sectionKey];
+    } else {
+      offset = currentDisplayData;
+    }
+
     let rowKeyCache;
     if (!this.enablePagination) {
-      currentDisplayData[sectionKey][rowIndex][fieldName] = newVal;
-      rowKeyCache = currentDisplayData[sectionKey][rowIndex][this.keyField];
+      offset[rowIndex][fieldName] = newVal;
+      rowKeyCache = offset[rowIndex][this.keyField];
     } else {
-      currentDisplayData[sectionKey][this.pageObj.start + rowIndex][fieldName] = newVal;
-      rowKeyCache = currentDisplayData[sectionKey][this.pageObj.start + rowIndex][this.keyField];
+      offset[this.pageObj.start + rowIndex][fieldName] = newVal;
+      rowKeyCache = offset[this.pageObj.start + rowIndex][this.keyField];
     }
     if (this.isOnFilter) {
-      this.data[sectionKey].forEach(function(row) {
+      offset.forEach(function(row) {
         if (row[this.keyField] === rowKeyCache) {
           row[fieldName] = newVal;
         }

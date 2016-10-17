@@ -557,7 +557,7 @@ class BootstrapTable extends Component {
       }
     });
 
-    if (sectionKey) {
+    if (!Array.isArray(this.state.data)) {
       data = this.state.data[sectionKey];
     } else {
       data = this.state.data;
