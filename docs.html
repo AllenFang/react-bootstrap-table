@@ -79,6 +79,9 @@
     .sub-prop {
       padding-left: 40px !important;
     }
+    #sidebar-wrapper {
+      height: 90% !important;
+    }
 	</style>
 	</head>
 	<body>
@@ -91,28 +94,6 @@
   						<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
   						<h1 id="fh5co-logo"><a href="index.html">react-bootstrap-table</a></h1>
   						<!-- START #fh5co-menu-wrap -->
-  						<nav id="fh5co-menu-wrap" role="navigation">
-  							<ul class="sf-menu" id="fh5co-primary-menu">
-  								<li class="active">
-  									<a href="index.html">Home</a>
-  								</li>
-  								<li><a href="start.html">Getting Started</a></li>
-  								<li>
-  									<a href="example.html" class="fh5co-sub-ddown">Example</a>
-  									<ul class="fh5co-sub-menu">
-  										<li><a href="http://freehtml5.co/preview/?item=build-free-html5-bootstrap-template" target="_blank">Build</a></li>
-  										<li><a href="http://freehtml5.co/preview/?item=work-free-html5-template-bootstrap" target="_blank">Work</a></li>
-  										<li><a href="http://freehtml5.co/preview/?item=light-free-html5-template-bootstrap" target="_blank">Light</a></li>
-  										<li><a href="http://freehtml5.co/preview/?item=relic-free-html5-template-using-bootstrap" target="_blank">Relic</a></li>
-  										<li><a href="http://freehtml5.co/preview/?item=display-free-html5-template-using-bootstrap" target="_blank">Display</a></li>
-  										<li><a href="http://freehtml5.co/preview/?item=sprint-free-html5-template-bootstrap" target="_blank">Sprint</a></li>
-  									</ul>
-  								</li>
-  								<li><a href="docs.html">Docs</a></li>
-  								<li><a href="advance.html">Advanced</a></li>
-  							</ul>
-  						</nav>
-  					</div>
   				</div>
   			</header>
 
@@ -126,7 +107,7 @@
 		<div id="fh5co-about" style="padding: 0px;">
 			<div class="row">
 				<div class="col-md-12 animate-box">
-          <div id="wrapper" style="height: 1024px">
+          <div id="wrapper" style="">
             <!-- Sidebar -->
             <div id="sidebar-wrapper">
                 <ul class="sidebar-nav nav nav-tabs" id="sidebar-nav">
@@ -165,10 +146,15 @@
                     <li><a href="#mode" class="sub-prop">mode</a></li>
                     <li><a href="#clickToSelect" class="sub-prop">clickToSelect</a></li>
                     <li><a href="#clickToSelectAndEditCell" class="sub-prop">clickToSelectAndEditCell</a></li>
-                    <li><a href="#clickToSelectAndEditCell" class="sub-prop">clickToSelectAndEditCell</a></li>
+                    <li><a href="#bgColor" class="sub-prop">bgColor</a></li>
+                    <li><a href="#select-className" class="sub-prop">className</a></li>
+                    <li><a href="#selected" class="sub-prop">selected</a></li>
+                    <li><a href="#unselectable" class="sub-prop">unselectable</a></li>
+                    <li><a href="#unselectable" class="sub-prop">unselectable</a></li>
                 </ul>
             </div>
             <!-- /#sidebar-wrapper -->
+            <div id="page-content-wrapper">
             <div class="tab-content">
               <div class="tab-pane active" id="propsOnBootstrapTable">
                   <div class="container-fluid">
@@ -925,6 +911,125 @@ render() {
                       </div>
                   </div>
               </div>
+              <div class="tab-pane active" id="bgColor">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#bgColor'>selectRow: bgColor : Bool</a></h1>
+                            <span>
+                              You can assign the background color of row which be selected.
+                            </br></br>
+                            </span>
+<pre>
+<code class="javascript">render() {
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    bgColor: '#fefefe'
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="select-className">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#select-className'>selectRow: className : String</a></h1>
+                            <span>
+                              You can assign the class name of row which be selected.
+                            </br></br>
+                            </span>
+<pre>
+<code class="javascript">render() {
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    className: 'custom-select-class'
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="selected">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#selected'>selectRow: selected : Array</a></h1>
+                            <span>
+                              Give an array data to perform which rows you want to be selected when table loading.
+                              The content of array should be the rowkeys which you want to be selected.
+                            </br></br>
+                            </span>
+<pre>
+<code class="javascript">render() {
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    selected: [ 'row1', 'row3' ]
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="unselectable">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#unselectable'>selectRow: unselectable : Array</a></h1>
+                            <span>
+                              Give an array data to perform which rows you hope not to be selected.
+                              The content of array should be the rowkeys.
+                            </br></br>
+                            </span>
+<pre>
+<code class="javascript">render() {
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    unselectable: [ 'row4', 'row5' ]
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
             </div>
           </div>
 				</div>
@@ -932,8 +1037,7 @@ render() {
 		</div>
 
 
-
-		<footer>
+		<!--<footer>
 			<div id="footer">
 				<div class="container">
 					<div class="row">
@@ -950,7 +1054,7 @@ render() {
 					</div>
 				</div>
 			</div>
-		</footer>
+		</footer>-->
 
 
 	</div>
