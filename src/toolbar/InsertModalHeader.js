@@ -24,12 +24,7 @@ class InsertModalHeader extends Component {
       </button>
     );
 
-    const content = (
-      <span>
-        { closeBtn }
-        { children }
-      </span>
-    ) || (
+    const content = children || (
       <span>
         { closeBtn }
         <h4 className='modal-title'>{ title }</h4>
