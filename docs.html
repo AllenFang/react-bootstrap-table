@@ -79,9 +79,15 @@
     .sub-prop {
       padding-left: 40px !important;
     }
-    #sidebar-wrapper {
-      height: 90% !important;
+
+    #fh5co-wrapper {
+      position: inherit;
     }
+
+    #fh5co-page {
+      position: inherit !important;
+    }
+    
 	</style>
 	</head>
 	<body>
@@ -104,12 +110,10 @@
 		</div>
 		<!-- end:header-top -->
 
-		<div id="fh5co-about" style="padding: 0px;">
-			<div class="row">
-				<div class="col-md-12 animate-box">
-          <div id="wrapper" style="">
+		
+          <div id="wrapper">
             <!-- Sidebar -->
-            <div id="sidebar-wrapper">
+            <div id="sidebar-wrapper" style="position: absolute;">
                 <ul class="sidebar-nav nav nav-tabs" id="sidebar-nav">
                     <li class="sidebar-brand">
                       <a class="active" id="propsOnBootstrapTable" href="#propsOnBootstrapTable">
@@ -1400,9 +1404,6 @@ render() {
             </div>
             </div>
           </div>
-				</div>
-			</div>
-		</div>
 
 
 		<!--<footer>
