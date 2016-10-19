@@ -27,12 +27,6 @@ class BootstrapTable extends Component {
 
     this.initTable(this.props);
 
-    if (this.filter) {
-      this.filter.on('onFilterChange', (currentFilter) => {
-        this.handleFilterData(currentFilter);
-      });
-    }
-
     if (this.props.selectRow && this.props.selectRow.selected) {
       const copy = this.props.selectRow.selected.slice();
       this.store.setSelectedRowKey(copy);
@@ -73,6 +67,13 @@ class BootstrapTable extends Component {
         column.props.filter.emitter = this.filter;
       }
     });
+    
+    if (this.filter) {
+      this.filter.removeAllListeners('onFilterChange');
+      this.filter.on('onFilterChange', (currentFilter) => {
+        this.handleFilterData(currentFilter);
+      });
+    }
 
     this.colInfos = this.getColumnsDescription(props).reduce(( prev, curr ) => {
       prev[curr.name] = curr;
