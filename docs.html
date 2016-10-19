@@ -143,14 +143,22 @@
                     <li><a href="#tableHeaderClass">tableHeaderClass</a></li>
                     <li><a href="#tableBodyClass">tableBodyClass</a></li>
                     <li><a href="#selectRow">selectRow</a></li>
-                    <li><a href="#mode" class="sub-prop">mode</a></li>
+                    <li><a href="#select-mode" class="sub-prop">mode</a></li>
                     <li><a href="#clickToSelect" class="sub-prop">clickToSelect</a></li>
                     <li><a href="#clickToSelectAndEditCell" class="sub-prop">clickToSelectAndEditCell</a></li>
                     <li><a href="#bgColor" class="sub-prop">bgColor</a></li>
                     <li><a href="#select-className" class="sub-prop">className</a></li>
                     <li><a href="#selected" class="sub-prop">selected</a></li>
                     <li><a href="#unselectable" class="sub-prop">unselectable</a></li>
-                    <li><a href="#unselectable" class="sub-prop">unselectable</a></li>
+                    <li><a href="#hideSelectColumn" class="sub-prop">hideSelectColumn</a></li>
+                    <li><a href="#showOnlySelected" class="sub-prop">showOnlySelected</a></li>
+                    <li><a href="#onSelect" class="sub-prop">onSelect</a></li>
+                    <li><a href="#onSelectAll" class="sub-prop">onSelectAll</a></li>
+                    <li><a href="#cellEdit">cellEdit</a></li>
+                    <li><a href="#edit-mode" class="sub-prop">mode</a></li>
+                    <li><a href="#beforeSaveCell" class="sub-prop">beforeSaveCell</a></li>
+                    <li><a href="#afterSaveCell" class="sub-prop">afterSaveCell</a></li>
+                    <li><a href="#options">options</a></li>
                 </ul>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -773,19 +781,19 @@ render() {
                               <code>react-bootstrap-table</code> will add a selection column at first position.
                               <code>selectRow</code> accept an object which have the following props:
                               <ul>
-                                <li><a href='#'>mode</a></li>
-                                <li><a href='#'>clickToSelect</a></li>
-                                <li><a href='#'>clickToSelectAndEditCell</a></li>
-                                <li><a href='#'>bgColor</a></li>
-                                <li><a href='#'>className</a></li>
-                                <li><a href='#'>selected</a></li>
-                                <li><a href='#'>unselectable</a></li>
-                                <li><a href='#'>hideSelectColumn</a></li>
-                                <li><a href='#'>showOnlySelected</a></li>
-                                <li><a href='#'>onSelect</a></li>
-                                <li><a href='#'>onSelectAll</a></li>
+                                <li><a href='#select-mode'>mode</a></li>
+                                <li><a href='#clickToSelect'>clickToSelect</a></li>
+                                <li><a href='#clickToSelectAndEditCell'>clickToSelectAndEditCell</a></li>
+                                <li><a href='#bgColor'>bgColor</a></li>
+                                <li><a href='#select-className'>className</a></li>
+                                <li><a href='#selected'>selected</a></li>
+                                <li><a href='#unselectable'>unselectable</a></li>
+                                <li><a href='#hideSelectColumn'>hideSelectColumn</a></li>
+                                <li><a href='#showOnlySelected'>showOnlySelected</a></li>
+                                <li><a href='#onSelect'>onSelect</a></li>
+                                <li><a href='#onSelectAll'>onSelectAll</a></li>
                               </ul>
-                            Be carefully, when you enable <code>selectRow</code>, you should tell <code>react-bootstrap-table</code> which the <a href='#mode'>mode</a> you wanted.
+                            Be carefully, when you enable <code>selectRow</code>, you should tell <code>react-bootstrap-table</code> which the <a href='#select-mode'>mode</a> you wanted.
                             Following is a most simple example for configuring the <code>selectRow</code>
                             </br></br>
                             </span>
@@ -808,11 +816,11 @@ render() {
                       </div>
                   </div>
               </div>
-              <div class="tab-pane active" id="mode">
+              <div class="tab-pane active" id="select-mode">
                   <div class="container-fluid">
                       <div class="row">
                           <div class="col-lg-12">
-                            <h1><a href='#mode'>selectRow: mode : String</a></h1>
+                            <h1><a href='#select-mode'>selectRow: mode : String</a></h1>
                             <span>
                               Specifing the row selection for single(radio) or multiple(checkbox).
                               If <code>radio</code> assigned, there's a radio button in the selection column; likewise, the <code>checkbox</code> is same.
@@ -1025,6 +1033,366 @@ render() {
 }
 </code>
 </pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="hideSelectColumn">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#hideSelectColumn'>selectRow: hideSelectColumn : Bool</a></h1>
+                            <span>
+                              Default is false. If true, the radio/checkbox column will be hide.
+                              You can enable this attribute if you enable <code>clickToSelect</code> and you don't want to show the selection column.
+                            </br></br>
+                            </span>
+<pre>
+<code class="javascript">render() {
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    hideSelectColumn: true
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="showOnlySelected">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#showOnlySelected'>selectRow: showOnlySelected : Bool</a></h1>
+                            <span>
+                              Default is false. If enabled, there will be a button on top of table for toggling selected rows only.
+                            </br></br>
+                            </span>
+<pre>
+<code class="javascript">render() {
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    showOnlySelected: true
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="onSelect">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#onSelect'>selectRow: onSelect : Function</a></h1>
+                            <span>
+                              Accept a custom callback function, if a row be selected or unselected, this function will be called.
+                              This callback function taking three arguments:
+                              <ul>
+                                <li>row</li>
+                                <li>isSelected</li>
+                                <li>event</li>
+                              </ul>
+<code>row</code> is the row data which you wanted to select or unselect.<br/>
+<code>isSelected</code>is a boolean value which means "whether or not that row will be selected?".<br/>
+<code>event</code>is the event target object.<br/>
+                              <strong>Tips</strong>: If the return value of this function is <code>false</code>, 
+                              the select or deselect action will not be applied.
+                            </br></br>
+                            </span>
+<pre>
+<code class="javascript">handleRowSelect(row, isSelected, e) {
+  // ...
+}
+
+render() {
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    onSelect: this.handleRowSelect
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active" id="onSelectAll">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#onSelectAll'>selectRow: onSelectAll : Function</a></h1>
+                            <span>
+                              Accept a custom callback function, if click select all checkbox, this function will be called.
+                              This callback function taking two arguments: 
+                              <ul>
+                                <li>isSelected</li>
+                                <li>rows</li>
+                              </ul>
+<code>isSelected</code>is a boolean value which means "whether or not that row will be selected?".<br/>
+<code>rows</code> is the rows which be selected or unselected.<br/><br/>
+                              <strong>Tips</strong>: <br/>
+                              <span><b>If return value of this function is false, the select all or deselect all action will not be applied.<br/>
+                              If return value of this function is an array of rowkeys, this array will be applied as selection row when select all trigger.<br/>
+                              It's useful when you have a validation to filter some rows on selecting all.</b></span>
+                            </br></br>
+                            </span>
+<pre>
+<code class="javascript">handleRowSelect(isSelected, rows) {
+  // ...
+}
+
+render() {
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    onSelectAll: this.handleSelectAll
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane" id="cellEdit">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#cellEdit'>cellEdit : Object</a></h1>
+                            <span>
+                              <code>react-bootstrap-table</code> support the cell editing feature, when you enable this feature,
+                              <code>react-bootstrap-table</code> will make the target cell as editable by clicking or dbclicking.
+                              <code>cellEdit</code> accept an object which have the following props:
+                              <ul>
+                                <li><a href='#edit-mode'>mode</a></li>
+                                <li><a href='#blurToSave'>blurToSave</a></li>
+                                <li><a href='#beforeSaveCell'>beforeSaveCell</a></li>
+                                <li><a href='#bgColor'>bgColor</a></li>
+                                <li><a href='#afterSaveCell'>afterSaveCell</a></li>
+                              </ul>
+                            Be carefully, when you enable <code>cellEdit</code>, you should tell <code>react-bootstrap-table</code> which the <a href='#edit-mode'>mode</a> you wanted.
+                            Following is a most simple example for configuring the <code>cellEdit</code>
+                            </br></br>
+                            </span>
+<pre>
+<code class="javascript">render() {
+  const cellEdit = {
+    mode: 'click' // click cell to edit
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      cellEdit={ cellEdit }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane" id="edit-mode">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#edit-mode'>cellEdit: mode : String</a></h1>
+                            <span>
+                              Spectify the condition that will trigger cell editing.(<code>click</code> or <code>dbclick</code>)
+                            </br></br>
+                            </span>
+<pre>
+<code class="javascript">render() {
+  const cellEdit = {
+    mode: 'click' // click cell to edit
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      cellEdit={ cellEdit }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+<pre>
+<code class="javascript">render() {
+  const cellEdit = {
+    mode: 'dbclick' // double click cell to edit
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      cellEdit={ cellEdit }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane" id="blurToSave">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#blurToSave'>cellEdit: blurToSave : Bool</a></h1>
+                            <span>
+                              Enable <code>blurToSave</code> will trigger a saving event on cell when mouse blur on the input field. Default is false.
+                              In the default condition, you need to press <code>ENTER</code> to save the cell.
+                            </br></br>
+                            </span>
+<pre>
+<code class="javascript">render() {
+  const cellEdit = {
+    mode: 'click', // click cell to edit
+    blurToSave: true,
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      cellEdit={ cellEdit }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane" id="beforeSaveCell">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#beforeSaveCell'>cellEdit: beforeSaveCell : Function</a></h1>
+                            <span>
+                              Accept a callback function, before cell saving, this function will be called.
+                              This callback function taking three arguments:
+                              <ul>
+                                <li>row</li>
+                                <li>cellName</li>
+                                <li>cellValue</li>
+                              </ul>
+                              <strong>Tips</strong>: It's necessary to return a bool value which means whether apply this cell editing or not.
+                            </br></br>
+                            </span>
+<pre>
+<code class="javascript">beforeSaveCell(row, cellName, cellValue) {
+  // if you dont want to save this editing, just return false to cancel it.
+}
+
+render() {
+  const cellEdit = {
+    mode: 'click', // click cell to edit
+    beforeSaveCell: this.beforeSaveCell,
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      cellEdit={ cellEdit }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane" id="afterSaveCell">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#afterSaveCell'>cellEdit: afterSaveCell : Function</a></h1>
+                            <span>
+                              Accept a custom callback function, after saving cell, this function will be called.
+                              This callback function taking three arguments:
+                              <ul>
+                                <li>row</li>
+                                <li>cellName</li>
+                                <li>cellValue</li>
+                              </ul>
+                            </br></br>
+                            </span>
+<pre>
+<code class="javascript">afterSaveCell(row, cellName, cellValue) {
+  // do your stuff...
+}
+
+render() {
+  const cellEdit = {
+    mode: 'click', // click cell to edit
+    afterSaveCell: this.afterSaveCell,
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      cellEdit={ cellEdit }&gt;
+    //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane" id="options">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-lg-12">
+                            <h1><a href='#options'>options : Object</a></h1>
+                            <span>
+                              <code>react-bootstrap-table</code> support a lotf of feature, you can configure some options for table.
+                              <code>options</code> accept an object which have the following props:
+                              <strong><b>Following is all about configuring table sort</b></strong>
+                              <ul>
+                                <li><a href='#sortName'>sortName</a></li>
+                                <li><a href='#sortOrder'>sortOrder</a></li>
+                                <li><a href='#defaultSortName'>defaultSortName</a></li>
+                                <li><a href='#defaultSortOrder'>defaultSortOrder</a></li>
+                                <li><a href='#sortIndicator'>sortIndicator</a></li>
+                              </ul>
+                            </br></br>
+                            </span>
                           </div>
                       </div>
                   </div>
