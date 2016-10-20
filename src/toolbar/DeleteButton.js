@@ -9,13 +9,13 @@ class DeleteButton extends Component {
       btnContextual,
       className,
       onClick,
-      btnGlyphicon,
+      btnFAwesome,
       btnText,
       children,
       ...rest
     } = this.props;
     const content = children ||
-      (<span><i className={ `glyphicon ${btnGlyphicon}` }></i> { btnText }</span>);
+      (<span><i className={ `fa ${btnFAwesome}` }></i> { btnText }</span>);
     return (
       <button type='button'
         className={ `btn ${btnContextual} ${deleteBtnDefaultClass} ${className}` }
@@ -32,14 +32,14 @@ DeleteButton.propTypes = {
   btnContextual: PropTypes.string,
   className: PropTypes.string,
   onClick: PropTypes.func,
-  btnGlyphicon: PropTypes.string
+  btnFAwesome: PropTypes.string
 };
 DeleteButton.defaultProps = {
   btnText: Const.DELETE_BTN_TEXT,
   btnContextual: 'btn-warning',
   className: '',
   onClick: undefined,
-  btnGlyphicon: 'glyphicon-trash'
+  btnFAwesome: 'fa-trash'
 };
 
 export default DeleteButton;

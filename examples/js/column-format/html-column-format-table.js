@@ -22,7 +22,7 @@ addProducts(5);
 
 
 function priceFormatter(cell, row) {
-  return `<i class='glyphicon glyphicon-usd'></i> ${cell}`;
+  return `<i class='fa fa-usd'></i> ${cell}`;
 }
 
 

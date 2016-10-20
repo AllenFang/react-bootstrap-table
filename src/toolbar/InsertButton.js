@@ -9,13 +9,13 @@ class InsertButton extends Component {
       btnContextual,
       className,
       onClick,
-      btnGlyphicon,
+      btnFAwesome,
       btnText,
       children,
       ...rest
     } = this.props;
     const content = children ||
-      (<span><i className={ `glyphicon ${btnGlyphicon}` }></i>{ btnText }</span>);
+      (<span><i className={ `fa ${btnFAwesome}` }></i> { btnText }</span>);
     return (
       <button type='button'
         className={ `btn ${btnContextual} ${insertBtnDefaultClass} ${className}` }
@@ -32,14 +32,14 @@ InsertButton.propTypes = {
   btnContextual: PropTypes.string,
   className: PropTypes.string,
   onClick: PropTypes.func,
-  btnGlyphicon: PropTypes.string
+  btnFAwesome: PropTypes.string
 };
 InsertButton.defaultProps = {
   btnText: Const.INSERT_BTN_TEXT,
   btnContextual: 'btn-info',
   className: '',
   onClick: undefined,
-  btnGlyphicon: 'glyphicon-plus'
+  btnFAwesome: 'fa-plus'
 };
 
 export default InsertButton;

@@ -104,6 +104,13 @@ Finally, you need to import the css file to your app, there are two css file you
 ```
 The CSS files you can find in the css folder.
 
+### d.Font Awesome js
+The package uses since v 3.0 [Font Awesome](http://fontawesome.io/) for icons. In order to install you must get a CDN [by registering](http://fontawesome.io/get-started/) or use the [font-awesome package](https://www.npmjs.com/package/font-awesome). Then in the header you need to add (use your own js-link instead of the `???`):
+
+```html
+   <script src="https://use.fontawesome.com/???.js"></script>
+```
+
 ### Quick Demo
 ```js
 // products will be presented by react-bootstrap-table
@@ -118,7 +125,7 @@ var products = [{
   },........];
 // It's a data format example.
 function priceFormatter(cell, row){
-  return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
+  return '<i class="fa fa-usd"></i> ' + cell;
 }
 
 React.render(

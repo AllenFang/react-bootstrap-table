@@ -36,7 +36,7 @@ export default class DefaultCustomExportButtonTable extends React.Component {
         btnText='CustomExportText'
         btnContextual='btn-danger'
         className='my-custom-class'
-        btnGlyphicon='glyphicon-edit'
+        btnFAwesome='fa-edit'
         onClick={ e => this.handleExportCSVButtonClick(onClick) }/>
     );
     // If you want have more power to custom the child of ExportCSVButton,

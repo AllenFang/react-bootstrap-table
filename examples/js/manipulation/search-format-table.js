@@ -10,7 +10,7 @@ const products = [];
 function addProducts(quantity) {
   const startId = products.length;
   const pname = [ 'Cloud Service', 'Message Service', 'Add Service', 'Edit Service', 'Money' ];
-  const icons = [ 'glyphicon-cloud', 'glyphicon-envelope', 'glyphicon-plus', 'glyphicon-pencil', 'glyphicon-euro' ];
+  const icons = [ 'fa-cloud', 'fa-envelope', 'fa-plus', 'fa-pencil', 'fa-euro' ];
   const types = [ 'Cloud', 'Mail', 'Insert', 'Modify', 'Money' ];
   const years = [ 2005, 2006, 2008, 2001, 2015 ];
   for (let i = 0; i < quantity; i++) {
@@ -36,7 +36,7 @@ function filterType(cell, row) {
 }
 
 function nameFormatter(cell) {
-  return `<p><span class='glyphicons ${cell.icon}' aria-hidden='true'></span> ${cell.pname}, from ${cell.year}</p>`;
+  return `<p><i class='fa fa-${cell.icon}'></i> ${cell.pname}, from ${cell.year}</p>`;
 }
 
 function priceFormatter(cell) {
