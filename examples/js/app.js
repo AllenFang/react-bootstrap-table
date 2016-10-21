@@ -19,6 +19,7 @@ const routes = (
         <Route path='sort' component={ require('./sort/demo') } />
         <Route path='column-format' component={ require('./column-format/demo') } />
         <Route path='column-filter' component={ require('./column-filter/demo') } />
+        <Route path='column-header-span' component={ require('./column-header-span/demo') } />
         <Route path='selection' component={ require('./selection/demo') } />
         <Route path='pagination' component={ require('./pagination/demo') } />
         <Route path='manipulation' component={ require('./manipulation/demo') } />
