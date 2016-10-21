@@ -35,6 +35,17 @@ class TableRow extends Component {
     }
   }
 
+  rowDoubleClick = e => {
+    if (e.target.tagName !== 'INPUT' &&
+        e.target.tagName !== 'SELECT' &&
+        e.target.tagName !== 'TEXTAREA') {
+        const rowIndex = e.currentTarget.rowIndex + 1;
+      if (this.props.onRowDoubleClick) {
+        this.props.onRowDoubleClick(rowIndex);
+      }
+    }
+  }
+
   rowMouseOut = e => {
     if (this.props.onRowMouseOut) {
       this.props.onRowMouseOut(e.currentTarget.rowIndex, e);
@@ -60,12 +71,13 @@ class TableRow extends Component {
     };
 
     if (this.props.selectRow && (this.props.selectRow.clickToSelect ||
-      this.props.selectRow.clickToSelectAndEditCell) || this.props.onRowClick) {
+      this.props.selectRow.clickToSelectAndEditCell) || (this.props.onRowClick || this.props.onRowDoubleClick)) {
       return (
         <tr { ...trCss }
             onMouseOver={ this.rowMouseOver }
             onMouseOut={ this.rowMouseOut }
-            onClick={ this.rowClick }>{ this.props.children }</tr>
+            onClick={ this.rowClick }
+            onDoubleClick={ this.rowDoubleClick }>{ this.props.children }</tr>
       );
     } else {
       return (
@@ -78,12 +90,14 @@ TableRow.propTypes = {
   isSelected: PropTypes.bool,
   enableCellEdit: PropTypes.bool,
   onRowClick: PropTypes.func,
+  onRowDoubleClick: PropTypes.func,
   onSelectRow: PropTypes.func,
   onRowMouseOut: PropTypes.func,
   onRowMouseOver: PropTypes.func,
   unselectableRow: PropTypes.bool
 };
 TableRow.defaultProps = {
-  onRowClick: undefined
+  onRowClick: undefined,
+  onRowDoubleClick: undefined
 };
 export default TableRow;
