@@ -303,6 +303,7 @@ class BootstrapTable extends Component {
             cellEdit={ this.props.cellEdit }
             selectedRowKeys={ this.state.selectedRowKeys }
             onRowClick={ this.handleRowClick }
+            onRowDoubleClick={ this.handleRowDoubleClick }
             onRowMouseOver={ this.handleRowMouseOver }
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
@@ -422,6 +423,12 @@ class BootstrapTable extends Component {
   handleRowClick = row => {
     if (this.props.options.onRowClick) {
       this.props.options.onRowClick(row);
+    }
+  }
+
+  handleRowDoubleClick = row => {
+    if (this.props.options.onRowDoubleClick) {
+      this.props.options.onRowDoubleClick(row);
     }
   }
 
@@ -1039,6 +1046,7 @@ BootstrapTable.propTypes = {
     afterSearch: PropTypes.func,
     afterColumnFilter: PropTypes.func,
     onRowClick: PropTypes.func,
+    onRowDoubleClick: PropTypes.func,
     page: PropTypes.number,
     pageStartIndex: PropTypes.number,
     paginationShowsTotal: PropTypes.oneOfType([ PropTypes.bool, PropTypes.func ]),
@@ -1133,6 +1141,7 @@ BootstrapTable.defaultProps = {
     afterSearch: undefined,
     afterColumnFilter: undefined,
     onRowClick: undefined,
+    onRowDoubleClick: undefined,
     onMouseLeave: undefined,
     onMouseEnter: undefined,
     onRowMouseOut: undefined,

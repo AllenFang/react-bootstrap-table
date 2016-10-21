@@ -23,6 +23,9 @@ addProducts(5);
 const options = {
   onRowClick: function(row) {
     alert(`You click row id: ${row.id}`);
+  },
+  onRowDoubleClick: function(row) {
+    alert(`You double click row id: ${row.id}`);
   }
 };
 
