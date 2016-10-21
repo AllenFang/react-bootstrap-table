@@ -207,9 +207,9 @@ class TableBody extends Component {
     let selectedRow;
     const { data, onRowDoubleClick } = this.props;
     data.forEach((row, i) => {
-        if (i === rowIndex - 1) {
-            selectedRow = row;
-        }
+      if (i === rowIndex - 1) {
+        selectedRow = row;
+      }
     });
     onRowDoubleClick(selectedRow);
   }
