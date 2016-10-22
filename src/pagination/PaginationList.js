@@ -58,7 +58,7 @@ class PaginationList extends Component {
       pageStartIndex,
       hideSizePerPage
     } = this.props;
-
+    let sizePerPageText = '';
     this.totalPages = Math.ceil(dataSize / sizePerPage);
     this.lastPage = this.props.pageStartIndex + this.totalPages - 1;
     const pageBtns = this.makePage();
@@ -71,6 +71,7 @@ class PaginationList extends Component {
     const sizePerPageOptions = sizePerPageList.map((_sizePerPage) => {
       const pageText = _sizePerPage.text || _sizePerPage;
       const pageNum = _sizePerPage.value || _sizePerPage;
+      if (sizePerPage === pageNum) sizePerPageText = pageText;
       return (
         <li key={ pageText } role='presentation'>
           <a role='menuitem'
@@ -109,7 +110,7 @@ class PaginationList extends Component {
                   <button className='btn btn-default dropdown-toggle'
                     type='button' id='pageDropDown' data-toggle='dropdown'
                     aria-expanded='true'>
-                    { sizePerPage }
+                    { sizePerPageText }
                     <span>
                       { ' ' }
                       <span className='caret'/>
