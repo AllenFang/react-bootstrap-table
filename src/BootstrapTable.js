@@ -899,7 +899,8 @@ class BootstrapTable extends Component {
   }
 
   _adjustTable = () => {
-    this._adjustHeaderWidth();
+    if (!_this.props.printable)
+      this._adjustHeaderWidth();
     this._adjustHeight();
   }
 
@@ -994,6 +995,7 @@ BootstrapTable.propTypes = {
   hover: PropTypes.bool,
   condensed: PropTypes.bool,
   pagination: PropTypes.bool,
+  printable: PropTypes.bool,
   searchPlaceholder: PropTypes.string,
   selectRow: PropTypes.shape({
     mode: PropTypes.oneOf([
@@ -1092,6 +1094,7 @@ BootstrapTable.defaultProps = {
   hover: false,
   condensed: false,
   pagination: false,
+  printable: false,
   searchPlaceholder: undefined,
   selectRow: {
     mode: Const.ROW_SELECT_NONE,
