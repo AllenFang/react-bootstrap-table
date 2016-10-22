@@ -899,8 +899,9 @@ class BootstrapTable extends Component {
   }
 
   _adjustTable = () => {
-    if (!_this.props.printable)
+    if (!this.props.printable) {
       this._adjustHeaderWidth();
+    }
     this._adjustHeight();
   }
 
