@@ -160,6 +160,7 @@
                 <li><a href="#onSelectAll" class="sub-prop">onSelectAll</a></li>
                 <li><a href="#cellEdit">cellEdit</a></li>
                 <li><a href="#edit-mode" class="sub-prop">mode</a></li>
+                <li><a href="#blurToSave" class="sub-prop">blurToSave</a></li>
                 <li><a href="#beforeSaveCell" class="sub-prop">beforeSaveCell</a></li>
                 <li><a href="#afterSaveCell" class="sub-prop">afterSaveCell</a></li>
                 <li><a href="#options">options</a></li>
@@ -185,6 +186,8 @@
                 <li><a href="#paginationSize" class="sub-prop">paginationSize</a></li>
                 <li><a href="#hideSizePerPage" class="sub-prop">hideSizePerPage</a></li>
                 <li><a href="#paginationShowsTotal" class="sub-prop">paginationShowsTotal</a></li>
+                <li><a href="#pageStartIndex" class="sub-prop">pageStartIndex</a></li>
+                <li><a href="#onPageChange" class="sub-prop">onPageChange</a></li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -235,8 +238,8 @@ const data = [ ... ];
                           </span>
 <pre>
 <code class="html">&lt;BootstrapTable data={ data } keyField='account'&gt;
-&lt;TableHeaderColumn dataField='account'&gt;Account&lt;/TableHeaderColumn&gt;
-&lt;TableHeaderColumn dataField='name'&gt;Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='account'&gt;Account&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name'&gt;Name&lt;/TableHeaderColumn&gt;
 &lt;/BootstrapTable&gt;
 </code>
 </pre>
@@ -245,8 +248,8 @@ const data = [ ... ];
                           </span>
 <pre>
 <code class="html">&lt;BootstrapTable data={ data }&gt;
-&lt;TableHeaderColumn isKey dataField='account'&gt;Account&lt;/TableHeaderColumn&gt;
-&lt;TableHeaderColumn dataField='name'&gt;Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn isKey dataField='account'&gt;Account&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name'&gt;Name&lt;/TableHeaderColumn&gt;
 &lt;/BootstrapTable&gt;
 </code>
 </pre>
@@ -441,16 +444,16 @@ const data = [ ... ];
                         </span>
 <pre>
 <code class="javascript">trClassFormat(row, rowIndex) {
-// row is the current row data
-return rowIndex % 2 === 0 ? "tr-odd" : "tr-even";  //return class name.
+  // row is the current row data
+  return rowIndex % 2 === 0 ? "tr-odd" : "tr-even";  // return class name.
 }
 
 render() {
-return (
-  &lt;BootstrapTable data={ data } trClassName={ this.trClassFormat }&gt;
-    //...
-  &lt;/BootstrapTable&gt;
-);
+  return (
+    &lt;BootstrapTable data={ data } trClassName={ this.trClassFormat }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -494,19 +497,18 @@ return (
                           If you enable row dropping, there's a <img height="22" width="52" src='./images/delete-btn.png' alt='delete row button'/> button on the upper left side of table.</br></br>
                         </span>
 <pre>
-<code class="javascript">
-render() {
-const selectRow = {
-mode: 'radio' //radio or checkbox
-};
-return (
-&lt;BootstrapTable
-  data={ data }
-  selectRow={ selectRow }
-  deleteRow&gt;
-  //...
-&lt;/BootstrapTable&gt;
-);
+<code class="javascript">render() {
+  const selectRow = {
+    mode: 'radio' //radio or checkbox
+  };
+  return (
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }
+      deleteRow&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -566,10 +568,10 @@ return (
                         </span>
 <pre>
 <code class="html">&lt;BootstrapTable
-data={ data }
-search
-searchPlaceholder='input something...' &gt;
-//...
+  data={ data }
+  search
+  searchPlaceholder='input something...' &gt;
+    //...
 &lt;/BootstrapTable&gt;
 </code>
 </pre>
@@ -590,10 +592,10 @@ searchPlaceholder='input something...' &gt;
                         </span>
 <pre>
 <code class="html">&lt;BootstrapTable
-data={ data }
-search
-multiColumnSearch&gt;
-//...
+  data={ data }
+  search
+  multiColumnSearch&gt;
+    //...
 &lt;/BootstrapTable&gt;
 </code>
 </pre>
@@ -613,9 +615,9 @@ multiColumnSearch&gt;
                         </span>
 <pre>
 <code class="html">&lt;BootstrapTable
-data={ data }
-exportCSV&gt;
-//...
+  data={ data }
+  exportCSV&gt;
+    //...
 &lt;/BootstrapTable&gt;
 </code>
 </pre>
@@ -636,10 +638,10 @@ exportCSV&gt;
                         </span>
 <pre>
 <code class="html">&lt;BootstrapTable
-data={ data }
-exportCSV
-csvFileName='table-export'&gt;
-//...
+  data={ data }
+  exportCSV
+  csvFileName='table-export'&gt;
+    //...
 &lt;/BootstrapTable&gt;
 </code>
 </pre>
@@ -658,10 +660,10 @@ csvFileName='table-export'&gt;
                         </span>
 <pre>
 <code class="html">&lt;BootstrapTable
-data={ data }
-pagination
-ignoreSinglePage&gt;
-//...
+  data={ data }
+  pagination
+  ignoreSinglePage&gt;
+  //...
 &lt;/BootstrapTable&gt;
 </code>
 </pre>
@@ -680,9 +682,9 @@ ignoreSinglePage&gt;
                         </span>
 <pre>
 <code class="html">&lt;BootstrapTable
-data={ data }
-containerStyle={ { background: '#00ff00' } }&gt;
-//...
+  data={ data }
+  containerStyle={ { background: '#00ff00' } }&gt;
+    //...
 &lt;/BootstrapTable&gt;
 </code>
 </pre>
@@ -701,9 +703,9 @@ containerStyle={ { background: '#00ff00' } }&gt;
                         </span>
 <pre>
 <code class="html">&lt;BootstrapTable
-data={ data }
-tableStyle={ { background: '#00ff00' } }&gt;
-//...
+  data={ data }
+  tableStyle={ { background: '#00ff00' } }&gt;
+    //...
 &lt;/BootstrapTable&gt;
 </code>
 </pre>
@@ -722,9 +724,9 @@ tableStyle={ { background: '#00ff00' } }&gt;
                         </span>
 <pre>
 <code class="html">&lt;BootstrapTable
-data={ data }
-headerStyle={ { background: '#00ff00' } }&gt;
-//...
+  data={ data }
+  headerStyle={ { background: '#00ff00' } }&gt;
+    //...
 &lt;/BootstrapTable&gt;
 </code>
 </pre>
@@ -743,9 +745,9 @@ headerStyle={ { background: '#00ff00' } }&gt;
                         </span>
 <pre>
 <code class="html">&lt;BootstrapTable
-data={ data }
-bodyStyle={ { background: '#00ff00' } }&gt;
-//...
+  data={ data }
+  bodyStyle={ { background: '#00ff00' } }&gt;
+    //...
 &lt;/BootstrapTable&gt;
 </code>
 </pre>
@@ -765,9 +767,9 @@ bodyStyle={ { background: '#00ff00' } }&gt;
                         </span>
 <pre>
 <code class="html">&lt;BootstrapTable
-data={ data }
-tableHeaderClass='my-custom-class'&gt;
-//...
+  data={ data }
+  tableHeaderClass='my-custom-class'&gt;
+    //...
 &lt;/BootstrapTable&gt;
 </code>
 </pre>
@@ -787,9 +789,9 @@ tableHeaderClass='my-custom-class'&gt;
                         </span>
 <pre>
 <code class="html">&lt;BootstrapTable
-data={ data }
-tableBodyClass='my-custom-class'&gt;
-//...
+  data={ data }
+  tableBodyClass='my-custom-class'&gt;
+    //...
 &lt;/BootstrapTable&gt;
 </code>
 </pre>
@@ -825,16 +827,16 @@ tableBodyClass='my-custom-class'&gt;
                         </span>
 <pre>
 <code class="javascript">render() {
-const selectRow = {
-mode: 'radio' // or checkbox
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  selectRow={ selectRow }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const selectRow = {
+    mode: 'radio' // or checkbox
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -854,31 +856,31 @@ return(
                         </span>
 <pre>
 <code class="javascript">render() {
-const selectRow = {
-mode: 'radio'  // single select
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  selectRow={ selectRow }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const selectRow = {
+    mode: 'radio'  // single select
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
 <pre>
 <code class="javascript">render() {
-const selectRow = {
-mode: 'checkout'  // multi select
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  selectRow={ selectRow }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const selectRow = {
+    mode: 'checkout'  // multi select
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -898,17 +900,17 @@ return(
                         </span>
 <pre>
 <code class="javascript">render() {
-const selectRow = {
-mode: 'checkbox',  // multi select
-clickToSelect: true
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  selectRow={ selectRow }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    clickToSelect: true
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -927,17 +929,17 @@ return(
                         </span>
 <pre>
 <code class="javascript">render() {
-const selectRow = {
-mode: 'checkbox',  // multi select
-clickToSelectAndEditCell: true
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  selectRow={ selectRow }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    clickToSelectAndEditCell: true
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -956,17 +958,17 @@ return(
                         </span>
 <pre>
 <code class="javascript">render() {
-const selectRow = {
-mode: 'checkbox',  // multi select
-bgColor: '#fefefe'
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  selectRow={ selectRow }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    bgColor: '#fefefe'
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -985,17 +987,17 @@ return(
                         </span>
 <pre>
 <code class="javascript">render() {
-const selectRow = {
-mode: 'checkbox',  // multi select
-className: 'custom-select-class'
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  selectRow={ selectRow }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    className: 'custom-select-class'
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -1015,17 +1017,17 @@ return(
                         </span>
 <pre>
 <code class="javascript">render() {
-const selectRow = {
-mode: 'checkbox',  // multi select
-selected: [ 'row1', 'row3' ]
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  selectRow={ selectRow }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    selected: [ 'row1', 'row3' ]
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -1045,17 +1047,17 @@ return(
                         </span>
 <pre>
 <code class="javascript">render() {
-const selectRow = {
-mode: 'checkbox',  // multi select
-unselectable: [ 'row4', 'row5' ]
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  selectRow={ selectRow }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    unselectable: [ 'row4', 'row5' ]
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -1075,17 +1077,17 @@ return(
                         </span>
 <pre>
 <code class="javascript">render() {
-const selectRow = {
-mode: 'checkbox',  // multi select
-hideSelectColumn: true
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  selectRow={ selectRow }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    hideSelectColumn: true
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -1104,17 +1106,17 @@ return(
                         </span>
 <pre>
 <code class="javascript">render() {
-const selectRow = {
-mode: 'checkbox',  // multi select
-showOnlySelected: true
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  selectRow={ selectRow }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    showOnlySelected: true
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -1144,21 +1146,21 @@ return(
                         </span>
 <pre>
 <code class="javascript">handleRowSelect(row, isSelected, e) {
-// ...
+  // ...
 }
 
 render() {
-const selectRow = {
-mode: 'checkbox',  // multi select
-onSelect: this.handleRowSelect
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  selectRow={ selectRow }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    onSelect: this.handleRowSelect
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -1188,7 +1190,7 @@ return(
                         </span>
 <pre>
 <code class="javascript">handleRowSelect(isSelected, rows) {
-// ...
+  // ...
 }
 
 render() {
@@ -1236,13 +1238,13 @@ render() {
     mode: 'click' // click cell to edit
   };
   return(
-  &lt;BootstrapTable
-    data={ data }
-    cellEdit={ cellEdit }&gt;
-  //...
-  &lt;/BootstrapTable&gt;
+    &lt;BootstrapTable
+      data={ data }
+      cellEdit={ cellEdit }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
   );
-  }
+}
 </code>
 </pre>
                       </div>
@@ -1260,31 +1262,31 @@ render() {
                         </span>
 <pre>
 <code class="javascript">render() {
-const cellEdit = {
-mode: 'click' // click cell to edit
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  cellEdit={ cellEdit }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const cellEdit = {
+    mode: 'click' // click cell to edit
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      cellEdit={ cellEdit }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
 <pre>
 <code class="javascript">render() {
-const cellEdit = {
-mode: 'dbclick' // double click cell to edit
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  cellEdit={ cellEdit }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const cellEdit = {
+    mode: 'dbclick' // double click cell to edit
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      cellEdit={ cellEdit }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -1304,17 +1306,17 @@ return(
                         </span>
 <pre>
 <code class="javascript">render() {
-const cellEdit = {
-mode: 'click', // click cell to edit
-blurToSave: true,
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  cellEdit={ cellEdit }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const cellEdit = {
+    mode: 'click', // click cell to edit
+    blurToSave: true,
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      cellEdit={ cellEdit }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -1340,21 +1342,21 @@ return(
                         </span>
 <pre>
 <code class="javascript">beforeSaveCell(row, cellName, cellValue) {
-// if you dont want to save this editing, just return false to cancel it.
+  // if you dont want to save this editing, just return false to cancel it.
 }
 
 render() {
-const cellEdit = {
-mode: 'click', // click cell to edit
-beforeSaveCell: this.beforeSaveCell,
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  cellEdit={ cellEdit }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const cellEdit = {
+    mode: 'click', // click cell to edit
+    beforeSaveCell: this.beforeSaveCell,
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      cellEdit={ cellEdit }&gt;
+     //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -1379,21 +1381,21 @@ return(
                         </span>
 <pre>
 <code class="javascript">afterSaveCell(row, cellName, cellValue) {
-// do your stuff...
+  // do your stuff...
 }
 
 render() {
-const cellEdit = {
-mode: 'click', // click cell to edit
-afterSaveCell: this.afterSaveCell,
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  cellEdit={ cellEdit }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const cellEdit = {
+    mode: 'click', // click cell to edit
+    afterSaveCell: this.afterSaveCell,
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      cellEdit={ cellEdit }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -1434,6 +1436,8 @@ return(
                             <li><a href='#paginationSize'>paginationSize</a></li>
                             <li><a href='#hideSizePerPage'>hideSizePerPage</a></li>
                             <li><a href='#paginationShowsTotal'>paginationShowsTotal</a></li>
+                            <li><a href='#pageStartIndex'>pageStartIndex</a></li>
+                            <li><a href='#onPageChange'>onPageChange</a></li>
                           </ul>
                           <strong><b>Following is another options</b></strong>
                           <ul>
@@ -2166,6 +2170,35 @@ render() {
 render() {
   const options = {
     paginationShowsTotal: this.renderPaginationShowsTotal  // custom
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      pagination&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="pageStartIndex">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#pageStartIndex'>pageStartIndex : Number</a></h1>
+                        <span>
+                          A chance to modify the start page number, default is start from the page one.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    pageStartIndex: 0
   };
   return (
     &lt;BootstrapTable 
