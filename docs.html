@@ -224,6 +224,26 @@
                 <li><a href="#getPageByRowKey">getPageByRowKey</a></li>
                 <li><a href="#handleExportCSV">handleExportCSV</a></li>
                 <li><a href="#cleanSelected">cleanSelected</a></li>
+                <li class="sidebar-brand">
+                  <a class="active" id="propsOnBootstrapTable" href="#propsOnBootstrapTable">
+                      Props on &lt;TableHeaderColumn&gt;
+                  </a>
+                </li>
+                <li><a href="#dataField">dataField</a></li>
+                <li><a href="#isKey">isKey</a></li>
+                <li><a href="#width">width</a></li>
+                <li><a href="#dataAlign">dataAlign</a></li>
+                <li><a href="#headerAlign">headerAlign</a></li>
+                <li><a href="#dataSort">dataSort</a></li>
+                <li><a href="#caretRender">caretRender</a></li>
+                <li><a href="#dataFormat">dataFormat</a></li>
+                <li><a href="#formatExtraData">formatExtraData</a></li>
+                <li><a href="#filterFormatted">filterFormatted</a></li>
+                <li><a href="#filterValue">filterValue</a></li>
+                <li><a href="#csvFormat">csvFormat</a></li>
+                <li><a href="#csvHeader">csvHeader</a></li>
+                <li><a href="#hidden">hidden</a></li>
+                <li><a href="#export">export</a></li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -3258,6 +3278,407 @@ this.refs.table.handleExportCSV();  // this.refs.table is a ref for BootstrapTab
                   </div>
               </div>
           </div>
+          <div class="tab-pane" id="dataField">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#dataField'>dataField : String</a></h1>
+                        <span>
+                          The field of data you want to show on column.</br>
+                          <strong>Tips</strong>: This prop is <b>required</b>
+                          </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ products }&gt;
+  &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="isKey">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#isKey'>isKey : String</a></h1>
+                        <span>
+                          Use <code>isKey</code> to tell table which column is unique. This is same as <code>keyField</code> in <code>&lt;BootstrapTable&gt;</code>
+                          <strong>Tips</strong>: You need choose one of configuration to set the key field: <code>isKey</code> or <code>keyField</code> in <code>&lt;BootstrapTable&gt;</code>.
+                          </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ products }&gt;
+  &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="width">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#width'>width : String</a></h1>
+                        <span>
+                          Set the column width. ex: 150, it's means 150px.
+                          </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ products }&gt;
+  &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name' width='150'&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='price' width='90'&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="dataAlign">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#dataAlign'>dataAlign : String</a></h1>
+                        <span>
+                          Set align on column, available value is 
+                          <code>left</code>, <code>center</code>, <code>right</code>, <code>start</code> and <code>end</code>.
+                          </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ products }&gt;
+  &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name' dataAlign='right'&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="headerAlign">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#headerAlign'>headerAlign : String</a></h1>
+                        <span>
+                          Set align on header, available value is 
+                          <code>left</code>, <code>center</code>, <code>right</code>, <code>start</code> and <code>end</code>.
+                          <strong>Tips</strong>: If you don't set the <code>headerAlign</code>, default will follow <code>dataAlign</code>.
+                          </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ products }&gt;
+  &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name' headerAlign='right'&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="dataSort">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#dataSort'>dataSort : Bool</a></h1>
+                        <span>
+                          True to enable table sorting. Default is disabled.
+                          </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ products }&gt;
+  &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name' dataSort&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='price' dataSort&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="caretRender">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#caretRender'>caretRender : Function</a></h1>
+                        <span>
+                          Allow user to render a custom sort caret. You should give a function and should return a JSX.</br>
+                          This function taking an arguments: <code>direction</code> which present the sort order currently.
+                          </br></br>
+                        </span>
+<pre>
+<code class="javascript">renderCaret = (direction) => {
+  if (direction === 'asc') {
+    return (
+      <span> up</span>
+    );
+  }
+  if (direction === 'desc') {
+    return (
+      <span> down</span>
+    );
+  }
+  return (
+    <span> up/down</span>
+  );
+}
+
+render() {
+  return (
+    &lt;BootstrapTable data={ products }&gt;
+      &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name' dataSort caretRender={ this.renderCaret }&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="dataFormat">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#dataFormat'>dataFormat : Function</a></h1>
+                        <span>
+                          To customize the column. This callback function should return a String or a React Component.
+                          In addition, this function taking four argument: 
+                          <ul>
+                            <li><code>cell</code></li>
+                            <li><code>row</code></li>
+                            <li><code>formatExtraData</code></li>
+                            <li><code>rowIdx</code></li>
+                          </ul>
+                          The <code>formatExtraData</code> will be the value which you assign it on <code>&lt;TableHeaderColumn&gt;</code>.</br>
+                          You need to return a String or JSX in <code>dataFormat</code>
+                          </br></br>
+                        </span>
+<pre>
+<code class="javascript">priceFormatter(cell, row) {   // String example
+  return `&lt;i class='glyphicon glyphicon-usd'&gt;&lt;/i&gt; ${cell}`;
+}
+
+render() {
+  return (
+    &lt;BootstrapTable data={ products }&gt;
+      &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='price' dataFormat={ this.priceFormatter }&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+<pre>
+<code class="javascript">priceFormatter(cell, row) {   // JSX example
+  return ( ... );
+}
+
+render() {
+  return (
+    &lt;BootstrapTable data={ products } search&gt;
+      &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='price' dataFormat={ this.priceFormatter }&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="formatExtraData">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#formatExtraData'>formatExtraData : Any</a></h1>
+                        <span>
+                          It's useful on <code>dataFormat</code>, you can give any data you want to be passed to the formatter.
+                          </br></br>
+                        </span>
+<pre>
+<code class="javascript">enumFormatter(cell, row, enumObject) {
+  return enumObject[cell];
+}
+
+render() {
+  const qualityType = {
+    0: 'good',
+    1: 'bad',
+    2: 'unknown'
+  };
+  const inStockStatus = {
+    1: 'yes',
+    2: 'no'
+  };
+  return (
+    &lt;BootstrapTable data={ products }&gt;
+      &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='quality' dataFormat={ enumFormatter } formatExtraData={ qualityType }&gt;Product Quality&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='inStock' dataFormat={ enumFormatter } formatExtraData={ inStockStatus }&gt;Product Stock Status&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="filterFormatted">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#filterFormatted'>filterFormatted : Bool</a></h1>
+                        <span>
+                          To to enable search or filter on formatting data. Default is false
+                          </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ products } search&gt;
+  &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name' filterFormatted&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='price' filter={ { type: 'TextFilter' } }&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="filterValue">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#filterValue'>filterValue : Function</a></h1>
+                        <span>
+                          Return the value you want to be filtered on that column. It's useful if your column data is an object.
+                          You can also check this <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/manipulation/search-format-table.js">example</a>
+                          </br></br>
+                        </span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="csvFormat">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#csvFormat'>csvFormat : Function</a></h1>
+                        <span>
+                          A chance to customize the header column when export to csv file. 
+                          This function taking two argument: 
+                          <ul>
+                            <li><code>cell</code></li>
+                            <li><code>row</code></li>
+                          </ul>
+                          In <code>csvFormat</code>, you should return a string.
+                          </br></br>
+                        </span>
+<pre>
+<code class="javascript">csvFormatter(cell, row) {
+  return `${row.id}: ${cell} USD`;
+}
+
+render() {
+  return (
+    &lt;BootstrapTable data={ products } exportCSV&gt;
+      &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='price' csvFormat={ this.csvFormatter }&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="csvHeader">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#csvHeader'>csvHeader : String</a></h1>
+                        <span>
+                          To custom the text of header in csv file.
+                          </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ products } exportCSV&gt;
+  &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name' csvHeader='product-name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="hidden">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#hidden'>hidden : Bool</a></h1>
+                        <span>
+                          True to hide column.
+                          </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ products }&gt;
+  &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name' hidden&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="export">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#export'>export : Bool</a></h1>
+                        <span>
+                          <code>export={true}</code> usually be used when you want to export a column which is hidden. Because hidden column can't be export to csv by default.</br>
+                          <code>export={false}</code> to tell the <code>react-bootstrap-table</code> do not export this column when exporting csv.
+                          </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ products } exportCSV&gt;
+  &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name' export hidden&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
 
         </div>
         </div>
