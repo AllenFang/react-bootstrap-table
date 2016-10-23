@@ -117,7 +117,7 @@
             <ul class="sidebar-nav nav nav-tabs" id="sidebar-nav">
                 <li class="sidebar-brand">
                   <a class="active" id="propsOnBootstrapTable" href="#propsOnBootstrapTable">
-                      Props in &lt;BootstrapTable&gt;
+                      Props on &lt;BootstrapTable&gt;
                   </a>
                 </li>
                 <li><a id="default-show" href="#data">data</a></li>
@@ -169,13 +169,29 @@
                 <li><a href="#defaultSortName" class="sub-prop">defaultSortName</a></li>
                 <li><a href="#defaultSortOrder" class="sub-prop">defaultSortOrder</a></li>
                 <li><a href="#sortIndicator" class="sub-prop">sortIndicator</a></li>
+                <li><a href="#onSortChange" class="sub-prop">onSortChange</a></li>
                 <li><a href="#noDataText" class="sub-prop">noDataText</a></li>
                 <li><a href="#searchDelayTime" class="sub-prop">searchDelayTime</a></li>
                 <li><a href="#clearSearch" class="sub-prop">clearSearch</a></li>
+                <li><a href="#defaultSearch" class="sub-prop">defaultSearch</a></li>
+                <li><a href="#onSearchChange" class="sub-prop">onSearchChange</a></li>
+                <li><a href="#afterSearch" class="sub-prop">afterSearch</a></li>
                 <li><a href="#ignoreEditable" class="sub-prop">ignoreEditable</a></li>
                 <li><a href="#afterTableComplete" class="sub-prop">afterTableComplete</a></li>
                 <li><a href="#afterDeleteRow" class="sub-prop">afterDeleteRow</a></li>
                 <li><a href="#afterInsertRow" class="sub-prop">afterInsertRow</a></li>
+                <li><a href="#afterColumnFilter" class="sub-prop">afterColumnFilter</a></li>
+                <li><a href="#onAddRow" class="sub-prop">onAddRow</a></li>
+                <li><a href="#onFilterChange" class="sub-prop">onFilterChange</a></li>
+                <li><a href="#onExportToCSV" class="sub-prop">onExportToCSV</a></li>
+                <li><a href="#onDeleteRow" class="sub-prop">onDeleteRow</a></li>
+                <li><a href="#onRowClick" class="sub-prop">onRowClick</a></li>
+                <li><a href="#onRowDoubleClick" class="sub-prop">onRowDoubleClick</a></li>
+                <li><a href="#onMouseEnter" class="sub-prop">onMouseEnter</a></li>
+                <li><a href="#onMouseLeave" class="sub-prop">onMouseLeave</a></li>
+                <li><a href="#onRowMouseOver" class="sub-prop">onRowMouseOver</a></li>
+                <li><a href="#onRowMouseOut" class="sub-prop">onRowMouseOut</a></li>
+                <li><a href="#handleConfirmDeleteRow" class="sub-prop">handleConfirmDeleteRow</a></li>
                 <li><a href="#prePage" class="sub-prop">prePage</a></li>
                 <li><a href="#nextPage" class="sub-prop">nextPage</a></li>
                 <li><a href="#firstPage" class="sub-prop">firstPage</a></li>
@@ -188,6 +204,26 @@
                 <li><a href="#paginationShowsTotal" class="sub-prop">paginationShowsTotal</a></li>
                 <li><a href="#pageStartIndex" class="sub-prop">pageStartIndex</a></li>
                 <li><a href="#onPageChange" class="sub-prop">onPageChange</a></li>
+                <li><a href="#onSizePerPageList" class="sub-prop">onSizePerPageList</a></li>
+                <li><a href="#insertText" class="sub-prop">insertText</a></li>
+                <li><a href="#deleteText" class="sub-prop">deleteText</a></li>
+                <li><a href="#saveText" class="sub-prop">saveText</a></li>
+                <li><a href="#closeText" class="sub-prop">closeText</a></li>
+                <li><a href="#exportCSVText" class="sub-prop">exportCSVText</a></li>
+                <li class="sidebar-brand">
+                  <a class="active" id="propsOnBootstrapTable" href="#propsOnBootstrapTable">
+                      API on &lt;BootstrapTable&gt;
+                  </a>
+                </li>
+                <li><a href="#handleAddRow">handleAddRow</a></li>
+                <li><a href="#handleAddRowAtBegin">handleAddRowAtBegin</a></li>
+                <li><a href="#handleDropRow">handleDropRow</a></li>
+                <li><a href="#handleFilterData">handleFilterData</a></li>
+                <li><a href="#handleSearch">handleSearch</a></li>
+                <li><a href="#handleSort">handleSort</a></li>
+                <li><a href="#getPageByRowKey">getPageByRowKey</a></li>
+                <li><a href="#handleExportCSV">handleExportCSV</a></li>
+                <li><a href="#cleanSelected">cleanSelected</a></li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -1418,11 +1454,15 @@ render() {
                             <li><a href='#defaultSortName'>defaultSortName</a></li>
                             <li><a href='#defaultSortOrder'>defaultSortOrder</a></li>
                             <li><a href='#sortIndicator'>sortIndicator</a></li>
+                            <li><a href='#onSortChange'>onSortChange</a></li>
                           </ul>
                           <strong><b>Following is all about configuring table search</b></strong>
                           <ul>
+                            <li><a href='#defaultSearch'>defaultSearch</a></li>
                             <li><a href='#searchDelayTime'>searchDelayTime</a></li>
                             <li><a href='#clearSearch'>clearSearch</a></li>
+                            <li><a href='#onSearchChange'>onSearchChange</a></li>
+                            <li><a href='#afterSearch'>afterSearch</a></li>
                           </ul>
                           <strong><b>Following is all about configuring table pagination</b></strong>
                           <ul>
@@ -1438,14 +1478,32 @@ render() {
                             <li><a href='#paginationShowsTotal'>paginationShowsTotal</a></li>
                             <li><a href='#pageStartIndex'>pageStartIndex</a></li>
                             <li><a href='#onPageChange'>onPageChange</a></li>
+                            <li><a href='#onSizePerPageList'>onSizePerPageList</a></li>
                           </ul>
                           <strong><b>Following is another options</b></strong>
                           <ul>
                             <li><a href='#noDataText'>noDataText</a></li>
+                            <li><a href='#insertText'>insertText</a></li>
+                            <li><a href='#deleteText'>deleteText</a></li>
+                            <li><a href='#saveText'>saveText</a></li>
+                            <li><a href='#closeText'>closeText</a></li>
+                            <li><a href='#exportCSVText'>exportCSVText</a></li>
                             <li><a href='#ignoreEditable'>ignoreEditable</a></li>
                             <li><a href='#afterTableComplete'>afterTableComplete</a></li>
                             <li><a href='#afterDeleteRow'>afterDeleteRow</a></li>
                             <li><a href='#afterInsertRow'>afterInsertRow</a></li>
+                            <li><a href='#afterColumnFilter'>afterColumnFilter</a></li>
+                            <li><a href='#onAddRow'>onAddRow</a></li>
+                            <li><a href='#onFilterChange'>onFilterChange</a></li>
+                            <li><a href='#onExportToCSV'>onExportToCSV</a></li>
+                            <li><a href='#onDeleteRow'>onDeleteRow</a></li>
+                            <li><a href='#onRowClick'>onRowClick</a></li>
+                            <li><a href='#onRowDoubleClick'>onRowDoubleClick</a></li>
+                            <li><a href='#onMouseEnter'>onMouseEnter</a></li>
+                            <li><a href='#onMouseLeave'>onMouseLeave</a></li>
+                            <li><a href='#onRowMouseOver'>onRowMouseOver</a></li>
+                            <li><a href='#onRowMouseOut'>onRowMouseOut</a></li>
+                            <li><a href='#handleConfirmDeleteRow'>handleConfirmDeleteRow</a></li>
                           </ul>
                         </br></br>
                         </span>
@@ -1600,6 +1658,44 @@ render() {
                   </div>
               </div>
           </div>
+          <div class="tab-pane" id="onSortChange">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#onSortChange'>onSortChange : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called after trigger sorting.
+                          This function taking two argument:
+                          <ul>
+                            <li><code>sortName</code></li>
+                            <li><code>sortOrder</code></li>
+                          </ul>
+                          This function almost used on <a href="#remote">remote</a>, 
+                          you can check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-sorting.js#L27">this</a> example.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">onSortChange = (sortName, sortOrder) => {
+  // ...
+}
+render() {
+  const options = {
+    onSortChange: this.onSortChange
+  };
+  return (
+    &lt;BootstrapTable data={ products } options={ options }&gt;
+      &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name' dataSort&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='price' dataSort&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
           <div class="tab-pane" id="noDataText">
               <div class="container-fluid">
                   <div class="row">
@@ -1620,6 +1716,32 @@ render() {
       &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
       &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
       &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="defaultSearch">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#defaultSearch'>defaultSearch : String</a></h1>
+                        <span>
+                          Setting the default search condition.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    defaultSearch: 'Product 1'
+  };
+  return (
+    &lt;BootstrapTable data={ products } options={ options } search&gt;
+      // ...
     &lt;/BootstrapTable&gt;
   );
 }
@@ -1702,9 +1824,81 @@ render() {
   };
   return (
     &lt;BootstrapTable data={ products } options={ options } search&gt;
-      &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
-      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
-      &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="onSearchChange">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#onSearchChange'>onSearchChange : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called when search text change.
+                          This function taking three argument: 
+                          <ul>
+                            <li><code>searchText</code></li>
+                            <li><code>colInfos</code></li>
+                            <li><code>multiColumnSearch</code></li>
+                          </ul>
+                          In most case, you only need to use <code>searchText</code>.
+                          This function almost used on <a href="#remote">remote</a>, you can check 
+                          <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-search.js#L27">this</a> example.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">onSearchChange = (searchText, colInfos, multiColumnSearch) => {
+  //...
+}
+
+render() {
+  const options = {
+    onSearchChange: this.onSearchChange
+  };
+  return (
+    &lt;BootstrapTable data={ products } options={ options } search&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="afterSearch">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#afterSearch'>afterSearch : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called after trigger searching.
+                          This function taking two argument: 
+                          <ul>
+                            <li><code>searchText</code></li>
+                            <li><code>result</code></li>
+                          </ul>
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">afterSearch = (searchText, result) => {
+  //...
+}
+
+render() {
+  const options = {
+    afterSearch: this.afterSearch
+  };
+  return (
+    &lt;BootstrapTable data={ products } options={ options } search&gt;
+      // ...
     &lt;/BootstrapTable&gt;
   );
 }
@@ -1811,9 +2005,458 @@ render() {
       data={ products } 
       options={ options }
       insertRow&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="afterColumnFilter">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#afterColumnFilter'>afterColumnFilter : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called after trigger column filtering.
+                          This function taking two argument: 
+                          <ul>
+                            <li><code>filterConds</code></li>
+                            <li><code>result</code></li>
+                          </ul>
+                          <code>filterConds</code>: It's an array object which contain all column filter conditions.</br>
+                          <code>result</code>: The results after filtering.</br>
+                          This function only work when you enable <code>columnFilter</code> on <code>&lt;BootstrapTable&gt;</code> or
+                          define the <code>filter</code> on <code>&lt;TableHeaderColumn&gt;</code>
+
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">afterColumnFilter(filterConds, result) {
+  console.log('Filter Conditions: ');
+  for (const prop in filterConds) {
+    console.log('Filter column= ' + prop + ', Filter value= ' + filterConds[prop]);
+  }
+  console.log('Result is:');
+  for (let i = 0; i < result.length; i++) {
+    console.log('Product: ' + result[i].id + ', ' + result[i].name + ', ' + result[i].price);
+  }
+}
+
+render() {
+  const options = {
+    afterColumnFilter: this.afterColumnFilter
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      columnFilter&gt;
       &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
-      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name' filter={ { type: 'TextFilter', delay: 1000 } }&gt;Product Name&lt;/TableHeaderColumn&gt;
       &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="onAddRow">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#onAddRow'>onAddRow : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called when a row be added.
+                          This function taking one argument: <code>row</code> which presented as the new row data.
+                          <code>onAddRow</code> almost used on <a href="#remote">remote</a>, 
+                          you can check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-insert-row.js#L27">this</a> example. 
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">onAddRow(row) {
+  // ...
+}
+
+render() {
+  const options = {
+    onAddRow: this.onAddRow
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      insertRow&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="onFilterChange">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#onFilterChange'>onFilterChange : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called when a filter condition changing.
+                          This function taking one argument: filterObj which is an object which take <code>dataField</code> as object key and the value is the filter condition.
+                          <code>onFilterChange</code> almost used on <a href="#remote">remote</a>, 
+                          you can check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-filtering.js#L67">this</a> example. 
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">onFilterChange(filterObj) {
+  // ...
+}
+
+render() {
+  const options = {
+    onFilterChange: this.onFilterChange
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }&gt;
+      &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name' filter={ { type: 'TextFilter', delay: 1000 } }&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="onExportToCSV">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#onExportToCSV'>onExportToCSV : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called when click the export csv button.
+                          In this function, you need to return an array which need to be exported.
+                          <code>onExportToCSV</code> almost used on <a href="#remote">remote</a>, 
+                          you can check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-export-csv.js#L27">this</a> example. 
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">onExportToCSV(row) {
+  // ...
+  return products; // must return the data which you want to be exported
+}
+
+render() {
+  const options = {
+    onExportToCSV: this.onExportToCSV
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      exportCSV&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="onDeleteRow">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#onDeleteRow'>onDeleteRow : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called when a row been deleted.
+                          This function taking one argument: <code>rows</code> which presented as the deleted rows.
+                          <code>onDeleteRow</code> almost used on <a href="#remote">remote</a>, 
+                          you can check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-delete-row.js#L27">this</a> example. 
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">onDeleteRow(rows) {
+  // ...
+}
+
+render() {
+  const options = {
+    onDeleteRow: this.onDeleteRow
+  };
+  const selectRow = {
+    mode: 'checkbox'
+  }
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      selectRow= { selectRow }
+      deleteRow&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="onRowClick">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#onRowClick'>onRowClick : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called after a click on row.
+                          This function taking one argument: <code>row</code> which is the row data which you click on.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">onRowClick(row) {
+  // ...
+}
+
+render() {
+  const options = {
+    onRowClick: this.onRowClick
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="onRowDoubleClick">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#onRowDoubleClick'>onRowDoubleClick : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called after a double click on row.
+                          This function taking one argument: <code>row</code> which is the row data which you dbclick on.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">onRowDoubleClick(row) {
+  // ...
+}
+
+render() {
+  const options = {
+    onRowDoubleClick: this.onRowDoubleClick
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="onMouseEnter">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#onMouseEnter'>onMouseEnter : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called when mouse enter into the table.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">onMouseEnter() {
+  // ...
+}
+
+render() {
+  const options = {
+    onMouseEnter: this.onMouseEnter
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="onMouseLeave">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#onMouseLeave'>onMouseLeave : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called when mouse leave from the table.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">onMouseLeave() {
+  // ...
+}
+
+render() {
+  const options = {
+    onMouseLeave: this.onMouseLeave
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="onRowMouseOver">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#onRowMouseOver'>onRowMouseOver : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called when mouse over a row in table.
+                          This function taking one argument: <code>row</code> is the row data which mouse over.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">onRowMouseOver(row) {
+  // ...
+}
+
+render() {
+  const options = {
+    onRowMouseOver: this.onRowMouseOver
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="onRowMouseOut">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#onRowMouseOut'>onRowMouseOut : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called when mouse leave a row in table.
+                          This function taking one argument: <code>row</code> is the row data which mouse out.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">onRowMouseOut(row) {
+  // ...
+}
+
+render() {
+  const options = {
+    onRowMouseOut: this.onRowMouseOut
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="handleConfirmDeleteRow">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#handleConfirmDeleteRow'>handleConfirmDeleteRow : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called when row dropping.
+                          It give you a chance to customize your confirmation message for row deletion.
+                          This function taking two argument: 
+                          <ul>
+                            <li><code>next</code></li>
+                            <li><code>rowKeys</code></li>
+                          </ul>
+                          <code>next</code>: If you confirm to drop row, call next() to continue the process</br>
+                          <code>rowKeys</code>: is the row keys which been deleted, you can call next function to apply this deletion.
+                          </br>
+
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">customConfirm(next, dropRowKeys) {
+  const dropRowKeysStr = dropRowKeys.join(',');
+  if (confirm(`(It's a custom confirm)Are you sure you want to delete ${dropRowKeysStr}?`)) {
+    // If the confirmation is true, call the function that
+    // continues the deletion of the record.
+    next();
+  }
+}
+
+render() {
+  const options = {
+    handleConfirmDeleteRow: this.customConfirm
+  };
+  const selectRow = {
+    mode: 'checkbox',
+    clickToSelect: true
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      selectRow={ selectRow }
+      options={ options }
+      deleteRow&gt;
+      // ...
     &lt;/BootstrapTable&gt;
   );
 }
@@ -1842,9 +2485,7 @@ render() {
       data={ products } 
       options={ options }
       pagination&gt;
-      &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
-      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
-      &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+      // ...
     &lt;/BootstrapTable&gt;
   );
 }
@@ -2209,6 +2850,408 @@ render() {
     &lt;/BootstrapTable&gt;
   );
 }
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="onPageChange">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#onPageChange'>onPageChange : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called after page changed.
+                          This function taking two argument: 
+                          <ul>
+                            <li>page</li>
+                            <li>sizePerPage</li>
+                          </ul>
+                          This function almost used on <a href="#remote">remote</a>, you can check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-paging.js#L30">this</a> example.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">onPageChange = (page, sizePerPage) => {
+  // ...
+}
+
+render() {
+  const options = {
+    onPageChange: this.onPageChange
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      pagination&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="onSizePerPageList">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#onSizePerPageList'>onSizePerPageList : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called after size per page dropdown changed.
+                          This function taking one argument:
+                          <ul>
+                            <li>sizePerPage</li>
+                          </ul>
+                          This function almost used on <a href="#remote">remote</a>, you can check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-paging.js#L38">this</a> example.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">onSizePerPageList = (sizePerPage) => {
+  // ...
+}
+
+render() {
+  const options = {
+    onSizePerPageList: this.onSizePerPageList
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      pagination&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="insertText">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#insertText'>insertText : String</a></h1>
+                        <span>
+                          Customize the text on insert button.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    insertText: 'Custom Insert Text'
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      insertRow&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="deleteText">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#deleteText'>deleteText : String</a></h1>
+                        <span>
+                          Customize the text on delete button.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    deleteText: 'Custom Delete Text'
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      deleteRow&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="saveText">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#saveText'>saveText : String</a></h1>
+                        <span>
+                          Customize the text of save button in insert modal.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    saveText: 'Custom Save Text'
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      insertRow&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="closeText">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#closeText'>closeText : String</a></h1>
+                        <span>
+                          Customize the text of close button in insert modal.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    closeText: 'Custom Close Text'
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      insertRow&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="exportCSVText">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#exportCSVText'>exportCSVText : String</a></h1>
+                        <span>
+                          Customize the text on the export csv button.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    exportCSVText: 'Custom Export CSV Text'
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      exportCSV&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="handleAddRow">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#handleAddRow'>handleAddRow</a></h1>
+                        <span>
+                          Call <code>handleAddRow</code> to insert an new row to table.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">var fakeRow = {
+  id: 10,
+  name: 'Product one',
+  price: 240
+};
+// insert a new row
+var result = this.refs.table.handleAddRow(fakeRow);   // this.refs.table is a ref for BootstrapTable
+if (result){  // some error happen, ex: doesn't assign row key or row key duplicated
+  console.log(result);
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="handleAddRowAtBegin">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#handleAddRowAtBegin'>handleAddRowAtBegin</a></h1>
+                        <span>
+                          Call <code>handleAddRowAtBegin</code> to insert an new row as first row on table.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">var fakeRow = {
+  id: 10,
+  name: 'Product one',
+  price: 240
+};
+// insert a new row
+var result = this.refs.table.handleAddRowAtBegin(fakeRow);   // this.refs.table is a ref for BootstrapTable
+if (result){  // some error happen, ex: doesn't assign row key or row key duplicated
+  console.log(result);
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="handleDropRow">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#handleDropRow'>handleDropRow</a></h1>
+                        <span>
+                          Call <code>handleDropRow</code> to drop rows in table.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">// Drop row key 2 & 3
+this.refs.table.handleDropRow([ 2, 3 ]); // this.refs.table is a ref for BootstrapTable
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="handleFilterData">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#handleFilterData'>handleFilterData</a></h1>
+                        <span>
+                          Call <code>handleFilterData</code> to do column filtering on table.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">// find name eq 'Allen' && age eq 26
+this.refs.table.handleFilterData({  // this.refs.table is a ref for BootstrapTable
+    name: "Allen",
+    age: 26
+});
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="handleSearch">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#handleSearch'>handleSearch</a></h1>
+                        <span>
+                          Call <code>handleSearch</code> with search text for fully searching.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">// Search table for 'React.js'
+this.refs.table.handleSearch('React.js'); // this.refs.table is a ref for BootstrapTable
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="handleSort">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#handleSort'>handleSort</a></h1>
+                        <span>
+                          Call <code>handleSort</code> with order and field for sorting.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">// Force a sort for product_id field by desc
+this.refs.table.handleSort('desc', 'product_id');  // this.refs.table is a ref for BootstrapTable
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="getPageByRowKey">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#getPageByRowKey'>getPageByRowKey</a></h1>
+                        <span>
+                          Call <code>getPageByRowKey</code> to get the page by a rowkey.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">// Find the page of product_id
+this.refs.table.getPageByRowKey('product_id');  // this.refs.table is a ref for BootstrapTable
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="handleExportCSV">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#handleExportCSV'>handleExportCSV</a></h1>
+                        <span>
+                          Call <code>handleExportCSV</code>  to export table as csv.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">// export CSV file
+this.refs.table.handleExportCSV();  // this.refs.table is a ref for BootstrapTable
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="cleanSelected">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#cleanSelected'>cleanSelected</a></h1>
+                        <span>
+                          Call <code>cleanSelected</code> deselect all rows.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">this.refs.table.cleanSelected();  // this.refs.table is a ref for BootstrapTable
 </code>
 </pre>
                       </div>
