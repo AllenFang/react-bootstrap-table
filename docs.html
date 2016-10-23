@@ -170,9 +170,21 @@
                 <li><a href="#sortIndicator" class="sub-prop">sortIndicator</a></li>
                 <li><a href="#noDataText" class="sub-prop">noDataText</a></li>
                 <li><a href="#searchDelayTime" class="sub-prop">searchDelayTime</a></li>
-                <li><a href="#ignoreEditable" class="sub-prop">ignoreEditable</a></li>
                 <li><a href="#clearSearch" class="sub-prop">clearSearch</a></li>
+                <li><a href="#ignoreEditable" class="sub-prop">ignoreEditable</a></li>
                 <li><a href="#afterTableComplete" class="sub-prop">afterTableComplete</a></li>
+                <li><a href="#afterDeleteRow" class="sub-prop">afterDeleteRow</a></li>
+                <li><a href="#afterInsertRow" class="sub-prop">afterInsertRow</a></li>
+                <li><a href="#prePage" class="sub-prop">prePage</a></li>
+                <li><a href="#nextPage" class="sub-prop">nextPage</a></li>
+                <li><a href="#firstPage" class="sub-prop">firstPage</a></li>
+                <li><a href="#lastPage" class="sub-prop">lastPage</a></li>
+                <li><a href="#page" class="sub-prop">page</a></li>
+                <li><a href="#sizePerPageList" class="sub-prop">sizePerPageList</a></li>
+                <li><a href="#sizePerPage" class="sub-prop">sizePerPage</a></li>
+                <li><a href="#paginationSize" class="sub-prop">paginationSize</a></li>
+                <li><a href="#hideSizePerPage" class="sub-prop">hideSizePerPage</a></li>
+                <li><a href="#paginationShowsTotal" class="sub-prop">paginationShowsTotal</a></li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -1180,17 +1192,17 @@ return(
 }
 
 render() {
-const selectRow = {
-mode: 'checkbox',  // multi select
-onSelectAll: this.handleSelectAll
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  selectRow={ selectRow }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    onSelectAll: this.handleSelectAll
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+        //...
+    &lt;/BootstrapTable&gt;
+  );
 }
 </code>
 </pre>
@@ -1220,17 +1232,17 @@ return(
                         </span>
 <pre>
 <code class="javascript">render() {
-const cellEdit = {
-mode: 'click' // click cell to edit
-};
-return(
-&lt;BootstrapTable
-  data={ data }
-  cellEdit={ cellEdit }&gt;
-//...
-&lt;/BootstrapTable&gt;
-);
-}
+  const cellEdit = {
+    mode: 'click' // click cell to edit
+  };
+  return(
+  &lt;BootstrapTable
+    data={ data }
+    cellEdit={ cellEdit }&gt;
+  //...
+  &lt;/BootstrapTable&gt;
+  );
+  }
 </code>
 </pre>
                       </div>
@@ -1410,11 +1422,26 @@ return(
                             <li><a href='#searchDelayTime'>searchDelayTime</a></li>
                             <li><a href='#clearSearch'>clearSearch</a></li>
                           </ul>
+                          <strong><b>Following is all about configuring table pagination</b></strong>
+                          <ul>
+                            <li><a href='#prePage'>prePage</a></li>
+                            <li><a href='#nextPage'>nextPage</a></li>
+                            <li><a href='#firstPage'>firstPage</a></li>
+                            <li><a href='#lastPage'>lastPage</a></li>
+                            <li><a href='#page'>page</a></li>
+                            <li><a href='#sizePerPageList'>sizePerPageList</a></li>
+                            <li><a href='#sizePerPage'>sizePerPage</a></li>
+                            <li><a href='#paginationSize'>paginationSize</a></li>
+                            <li><a href='#hideSizePerPage'>hideSizePerPage</a></li>
+                            <li><a href='#paginationShowsTotal'>paginationShowsTotal</a></li>
+                          </ul>
                           <strong><b>Following is another options</b></strong>
                           <ul>
                             <li><a href='#noDataText'>noDataText</a></li>
                             <li><a href='#ignoreEditable'>ignoreEditable</a></li>
                             <li><a href='#afterTableComplete'>afterTableComplete</a></li>
+                            <li><a href='#afterDeleteRow'>afterDeleteRow</a></li>
+                            <li><a href='#afterInsertRow'>afterInsertRow</a></li>
                           </ul>
                         </br></br>
                         </span>
@@ -1706,6 +1733,446 @@ render() {
       &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
       &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
       &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="afterDeleteRow">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#afterDeleteRow'>afterDeleteRow : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called after row delete.
+                          This function taking one argument: <code>rowKeys</code>, which means the row keys you dropped.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">handleDeletedRow(rowKeys) {
+  // ...
+}
+
+render() {
+  const options = {
+    afterDeleteRow: this.handleDeletedRow
+  };
+  const selectRow = {
+    mode: 'checkbox',
+    clickToSelect: true
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      selectRow={ selectRow }
+      options={ options }
+      deleteRow&gt;
+      &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="afterInsertRow">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#afterInsertRow'>afterInsertRow : Function</a></h1>
+                        <span>
+                          Assign a callback function which will be called after row insert.
+                          This function taking one argument: <code>row</code>, which means the row object you added.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">handleInsertedRow(row) {
+  // ...
+}
+
+render() {
+  const options = {
+    afterInsertRow: this.handleInsertedRow
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      insertRow&gt;
+      &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="prePage">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#prePage'>prePage : String</a></h1>
+                        <span>
+                          Customize the text of previouse page button
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    prePage: 'Previous'
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      pagination&gt;
+      &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="nextPage">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#nextPage'>nextPage : String</a></h1>
+                        <span>
+                          Customize the text of next page button
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    nextPage: 'Next'
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      pagination&gt;
+      &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="firstPage">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#firstPage'>firstPage : String</a></h1>
+                        <span>
+                          Customize the text of first page button
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    firstPage: 'First Page'
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      pagination&gt;
+      &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="lastPage">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#lastPage'>lastPage : String</a></h1>
+                        <span>
+                          Customize the text of last page button
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    lastPage: 'Last Page'
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      pagination&gt;
+      &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="page">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#page'>page : Number</a></h1>
+                        <span>
+                          Accept a number, which means the page you want to show as default.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    page: 3  // Showing page 3 as default
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      pagination&gt;
+      &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="sizePerPageList">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#sizePerPageList'>sizePerPageList : Array</a></h1>
+                        <span>
+                          You can change the dropdown list for size per page. default is <code>10</code>, <code>25</code>, <code>30</code>, <code>50</code>.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    sizePerPageList: [ 5, 15, 30 ]
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      pagination&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                        <span>
+                          However, you can do more customization like following:
+<pre>
+<code class="javascript">render() {
+  const options = {
+    sizePerPageList: [ {
+      text: '5', value: 5
+    }, {
+      text: '10', value: 10
+    }, {
+      text: 'All', value: products.length
+    } ]
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      pagination&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                        </br></br>
+                        </span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="sizePerPage">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#sizePerPage'>sizePerPage : Number</a></h1>
+                        <span>
+                          Accept a number, which means the size per page you want to show as default.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    sizePerPage: 30  // Showing 30 for the size per page as default
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      pagination&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="paginationSize">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#paginationSize'>paginationSize : Number</a></h1>
+                        <span>
+                          To define the length of pagination bar, default is 5.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    paginationSize: 3
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      pagination&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="hideSizePerPage">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#hideSizePerPage'>hideSizePerPage : Bool</a></h1>
+                        <span>
+                          Enable to hide the dropdown list for size per page, default is false.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    hideSizePerPage: true
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      pagination&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="paginationShowsTotal">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#paginationShowsTotal'>paginationShowsTotal : Bool | Function</a></h1>
+                        <span>
+                          Display a short text the total number of element and current lines displayed, default is <b>false</b>.
+                          If you want to custom this short text, you can give a function and this function take three arguments:
+                          <ul>
+                            <li>start</li>
+                            <li>to</li>
+                            <li>total</li>
+                          </ul>
+                          <code>start</code>: Current start index.</br>
+                          <code>to</code>: Current end index.</br>
+                          <code>total</code>: The total data volume.</br>
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    paginationShowsTotal: true  // Enable showing total text
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      pagination&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                        <span>
+                         Following is a customization example
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">renderPaginationShowsTotal(start, to, total) {
+  return (
+    &lt;p style={ { color: 'blue' } }&gt;
+      From { start } to { to }, totals is { total }&nbsp;&nbsp;(its a customize text)
+    &lt;/p&gt;
+  );
+}
+
+render() {
+  const options = {
+    paginationShowsTotal: this.renderPaginationShowsTotal  // custom
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      pagination&gt;
+      // ...
     &lt;/BootstrapTable&gt;
   );
 }
