@@ -244,6 +244,12 @@
                 <li><a href="#csvHeader">csvHeader</a></li>
                 <li><a href="#hidden">hidden</a></li>
                 <li><a href="#export">export</a></li>
+                <li><a href="#hiddenOnInsert">hiddenOnInsert</a></li>
+                <li><a href="#searchable">searchable</a></li>
+                <li><a href="#columnTitle">columnTitle</a></li>
+                <li><a href="#sortFunc">sortFunc</a></li>
+                <li><a href="#className">className</a></li>
+
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -3672,6 +3678,159 @@ render() {
   &lt;TableHeaderColumn dataField='name' export hidden&gt;Product Name&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
 &lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="hiddenOnInsert">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#hiddenOnInsert'>hiddenOnInsert : Bool</a></h1>
+                        <span>
+                          Enable <code>hiddenOnInsert</code> to hide the input field of htis column in insert modal.
+                          This prop almost configured with another prop: <a href="#autoValue">autoValue</a>.</br>
+                          Because in the insert modal, the <a href="#keyField">keyField</a> almost cant be inputed by user, 
+                          so you can enable <code>hiddenOnInsert</code> to hide the input field and use <a href="#autoValue">autoValue</a> to generate an key value automatically.
+                          </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ products } keyField='id' insertRow&gt;
+  &lt;TableHeaderColumn dataField='id' hiddenOnInsert autoValue&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="searchable">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#searchable'>searchable : Bool</a></h1>
+                        <span>
+                          False to disable search functionality on the column, default is true.
+                          </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ products } search&gt;
+  &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name' searchable={ false }&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="columnTitle">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#columnTitle'>columnTitle : Bool</a></h1>
+                        <span>
+                          Show the <code>title</code> on each column, default is false.
+                          </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ products }&gt;
+  &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name' columnTitle&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='price' columnTitle&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="sortFunc">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#sortFunc'>sortFunc : Function</a></h1>
+                        <span>
+                          Give a custom callback function for perform your data sorting.
+                          This function taking five arguments: 
+                          <ul>
+                            <li><code>a</code></li>
+                            <li><code>b</code></li>
+                            <li><code>order</code></li>
+                            <li><code>sortField</code></li>
+                            <li><code>extraData</code></li>
+                          </ul>
+                          The <code>extraData</code> is the data from the <a href="#sortFuncExtraData">sortFuncExtraData</a>.</br>
+                          <strong>Tips</strong>: This function should return a negative, zero, or positive value, depending on the arguments.
+                          </br></br>
+                        </span>
+<pre>
+<code class="javascript">revertSortFunc(a, b, order) {   // order is desc or asc
+  if (order === 'desc') {
+    return a.price - b.price;
+  } else {
+    return b.price - a.price;
+  }
+}
+
+render() {
+  return (
+    &lt;BootstrapTable data={ products }&gt;
+      &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='price' dataSort sortFunc={ this.revertSortFunc }&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="sortFuncExtraData">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#sortFuncExtraData'>sortFuncExtraData : Any</a></h1>
+                        <span>
+                          It's a extra data for custom sort function, if defined, this data will be pass as fifth argument in <a href="#sortFunc">sortFunc</a>.
+                          You can follow <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/sort/custom-sort-with-extra-data-table.js">this</a> example to see how it work.
+                          </br></br>
+                        </span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="className">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#className'>className : String | Function</a></h1>
+                        <span>
+                          Add custom css class on <b>table header column</b>, this prop only accept <code>String</code> or <code>Function</code>.</br>
+                          If a <code>Function</code> given, you should return a String which is the class name you want to add on.
+                          </br></br>
+                        </span>
+<pre>
+<code class="javascript">customHeaderClass() {
+  return 'custom-header-class';
+}
+
+render() {
+  return (
+    &lt;BootstrapTable data={ products }&gt;
+      &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='price' className={ this.customHeaderClass }&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
 </code>
 </pre>
                       </div>
