@@ -1,3 +1,12 @@
+<a name="v2.5.6"></a>
+# [v2.5.6](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.5...v2.5.6) (2016-10-22)
+## Bug fixes
+* Fixed Search fails on number 0([2af763e](https://github.com/madeinfree/react-bootstrap-table/commit/2af763e78c2377e4ebb771eeb34684fa83119fcf))
+* Fixed the wrong display text when giving ```sizePerPageList``` as an array of object([a48dc5f](https://github.com/AllenFang/react-bootstrap-table/commit/a48dc5f9e5f47efa00292d959297d759f1f600a3))
+
+## Enhancement
+* Support ```onRowDoubleClick``` in ```options``` prop([3d884ea](https://github.com/AllenFang/react-bootstrap-table/commit/3d884ea233e2cb9a9e33a2439328d89121827216)) 
+
 <a name="v2.5.5"></a>
 # [v2.5.5](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.4...v2.5.5) (2016-10-01)
 ## Enhancement
