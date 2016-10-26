@@ -712,7 +712,7 @@ class BootstrapTable extends Component {
     let result = {};
 
     let { csvFileName } = this.props;
-    const { onExportToCSV } = this.props.options;
+    const { onExportToCSV, exportHidden } = this.props.options;
     if (onExportToCSV) {
       result = onExportToCSV();
     } else {
@@ -723,7 +723,7 @@ class BootstrapTable extends Component {
     this.props.children.map(function(column) {
       if (column.props.export === true ||
         (typeof column.props.export === 'undefined' &&
-        column.props.hidden === false)) {
+        (exportHidden === true || column.props.hidden === false))) {
         keys.push({
           field: column.props.dataField,
           format: column.props.csvFormat,
@@ -1064,6 +1064,7 @@ BootstrapTable.propTypes = {
     onSearchChange: React.PropTypes.func,
     onAddRow: React.PropTypes.func,
     onExportToCSV: React.PropTypes.func,
+    exportHidden: React.PropTypes.bool,
     onCellEdit: React.PropTypes.func,
     noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
     handleConfirmDeleteRow: PropTypes.func,
@@ -1166,6 +1167,7 @@ BootstrapTable.defaultProps = {
     pageStartIndex: undefined,
     searchDelayTime: undefined,
     exportCSVText: Const.EXPORT_CSV_TEXT,
+    exportHidden: false,
     insertText: Const.INSERT_BTN_TEXT,
     deleteText: Const.DELETE_BTN_TEXT,
     saveText: Const.SAVE_BTN_TEXT,
