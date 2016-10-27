@@ -75,6 +75,7 @@
 		.demo-div {
 			padding-left: 0px;
 			padding-right: 0px;
+			margin-bottom: 55px;
 		}
 		.demo-title {
 			text-align: center;
@@ -141,204 +142,101 @@
 				</div>
 
 				<div id="example-basic" class="example row row-bottom-padded-md">
-					<h3 class="demo-title">Basic Table</h3>
-					<div id="basic" class="col-md-12 demo-div"></div>
-<pre>
-<code class="html">&lt;BootstrapTable data={ products }&gt;
-  &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
-&lt;/BootstrapTable&gt;
-</code>
-</pre>
-					<h3 class="demo-title">Single Column Table</h3>
-					<div id="single" class="col-md-12 demo-div"></div>
-<pre>
-<code class="html">&lt;BootstrapTable data={ products }&gt;
-  &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
-&lt;/BootstrapTable&gt;
-</code>
-</pre>
-					<h3 class="demo-title">Custom Text for Empty Data</h3>
-					<div id="nodata" class="col-md-12 demo-div"></div>
-<pre>
-<code class="html">&lt;BootstrapTable data={ products } options={ { noDataText: 'This is custom text for empty data' } }&gt;
-  &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
-&lt;/BootstrapTable&gt;
-</code>
-</pre>
-					<h3 class="demo-title">Borderless Table</h3>
-					<div id="borderless" class="col-md-12 demo-div"></div>
-<pre>
-<code class="html">&lt;BootstrapTable data={ products } bordered={ false }&gt;
-  &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
-&lt;/BootstrapTable&gt;
-</code>
-</pre>
-					<h3 class="demo-title">Hover, Striped, Condensed Table</h3>
-					<div id="striped" class="col-md-12 demo-div"></div>
-<pre>
-<code class="html">&lt;BootstrapTable data={ products } striped hover condensed&gt;
-  &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
-&lt;/BootstrapTable&gt;
-</code>
-</pre>
-					<h3 class="demo-title">Large Table</h3>
-					<div id="large" class="col-md-12 demo-div"></div>
-<pre>
-<code class="html">&lt;BootstrapTable data={ products }&gt;
-  &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn width='150' dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn width='150' dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn width='150' dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn width='150' dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn width='150' dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn width='150' dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn width='150' dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn width='150' dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
-&lt;/BootstrapTable&gt;
-</code>
-</pre>
-					<h3 class="demo-title">Scroll Table</h3>
-					<div id="scroll" class="col-md-12 demo-div"></div>
-<pre>
-<code class="html">&lt;BootstrapTable data={ products } height='120'&gt;
-  &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
-&lt;/BootstrapTable&gt;
-</code>
-</pre>
+					<div class="row heading-section">
+						<h3 class="demo-title">Basic Table</h3>
+						<script src="https://gist.github.com/AllenFang/025e43e818d4d00d4577f5aabd335d0a.js"></script>
+						<div id="basic" class="col-md-12 demo-div heading-section"></div>
+					</div>
+					<div class="row heading-section">
+						<h3 class="demo-title">Custom Text for Empty Data</h3>
+						<script src="https://gist.github.com/AllenFang/10da97f8f5d44e073c924dfc07060ff7.js"></script>
+						<div id="nodata" class="col-md-12 demo-div heading-section"></div>
+					</div>
+					<div class="row heading-section">
+						<h3 class="demo-title">Borderless Table</h3>
+						<script src="https://gist.github.com/AllenFang/4fb12be4ac0cab3671022e6141d3672c.js"></script>
+						<div id="borderless" class="col-md-12 demo-div heading-section"></div>
+					</div>
+					<div class="row heading-section">
+						<h3 class="demo-title">Hover, Striped, Condensed Table</h3>
+						<script src="https://gist.github.com/AllenFang/1a6074c4004959ea525d69585f79e8bd.js"></script>
+						<div id="striped" class="col-md-12 demo-div heading-section"></div>
+					</div>
+					<div class="row heading-section">
+						<h3 class="demo-title">Large Table</h3>
+						<script src="https://gist.github.com/AllenFang/fb58d551962484bee0aed61e22b7081f.js"></script>
+						<div id="large" class="col-md-12 demo-div heading-section"></div>
+					</div>
+					<div class="row heading-section">
+						<h3 class="demo-title">Scroll Table</h3>
+						<script src="https://gist.github.com/AllenFang/210ecca380a5613ae8a630ec1adae288.js"></script>
+						<div id="scroll" class="col-md-12 demo-div heading-section"></div>
+					</div>
 				</div>
 				<div id="example-column" class="example row row-bottom-padded-md">
-					<h3 class="demo-title">Column Align</h3>
-					<div id="align" class="col-md-12 demo-div"></div>
-<pre>
-<code class="html">&lt;BootstrapTable data={ products }&gt;
-  &lt;TableHeaderColumn dataField='id' dataAlign='center' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='name' headerAlign='right'&gt;Product Name&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='price' headerAlign='center' dataAlign='right'&gt;Product Price&lt;/TableHeaderColumn&gt;
-&lt;/BootstrapTable&gt;
-</code>
-</pre>
-					<h3 class="demo-title">Column Width</h3>
-					<div id="width" class="col-md-12 demo-div"></div>
-<pre>
-<code class="html">&lt;BootstrapTable data={ products }&gt;
-  &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='name' width='150'&gt;Product Name&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='price' width='90'&gt;Product Price&lt;/TableHeaderColumn&gt;
-&lt;/BootstrapTable&gt;
-</code>
-</pre>
-					<h3 class="demo-title">Column Hidden</h3>
-					<div id="hide" class="col-md-12 demo-div"></div>
-<pre>
-<code class="html">&lt;BootstrapTable data={ products }&gt;
-  &lt;TableHeaderColumn dataField='id' isKey hidden&gt;Product ID&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
-&lt;/BootstrapTable&gt;
-</code>
-</pre>
-					<h3 class="demo-title">Column Title</h3>
-					<div id="title" class="col-md-12 demo-div"></div>
-<pre>
-<code class="html">&lt;BootstrapTable data={ products }&gt;
-  &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='name' columnTitle&gt;Product Name&lt;/TableHeaderColumn&gt;
-  &lt;TableHeaderColumn dataField='price' columnTitle&gt;Product Price&lt;/TableHeaderColumn&gt;
-&lt;/BootstrapTable&gt;
-</code>
-</pre>					
+					<div class="row heading-section">
+						<h3 class="demo-title">Column Align</h3>
+						<script src="https://gist.github.com/AllenFang/88c592eeacf2355b63aaaa37a9220325.js"></script>
+						<div id="align" class="col-md-12 demo-div heading-section"></div>
+					</div>
+					<div class="row heading-section">
+						<h3 class="demo-title">Column Width</h3>
+						<script src="https://gist.github.com/AllenFang/a9412f07c38ce894de3316c09d5bc6b1.js"></script>
+						<div id="width" class="col-md-12 demo-div heading-section"></div>
+					</div>
+					<div class="row heading-section">
+						<h3 class="demo-title">Column Hidden</h3>
+						<script src="https://gist.github.com/AllenFang/d8a5f38598a76a082067c5b02c5ba28c.js"></script>
+						<div id="hide" class="col-md-12 demo-div heading-section"></div>
+					</div>
+					<div class="row heading-section">
+						<h3 class="demo-title">Column Title</h3>
+						<script src="https://gist.github.com/AllenFang/6e2b176e7cc439137417dfe747450cdd.js"></script>
+						<div id="title" class="col-md-12 demo-div heading-section"></div>
+					</div>				
 				</div>
 
 				<div id="example-sort" class="example row row-bottom-padded-md">
-					<h3 class="demo-title">Column Sort</h3>
-					<div id="sort" class="col-md-12 demo-div"></div>
-<pre>
-<code class="javascript">let order = 'desc';
-handleBtnClick = () => {
-  if (order === 'desc') {
-	this.refs.table.handleSort('asc', 'name');
-	order = 'asc';
-  } else {
-	this.refs.table.handleSort('desc', 'name');
-	order = 'desc';
-  }
-}
-render() {
-  return (
-    &lt;div&gt;
-      &lt;button onClick={ this.handleBtnClick }&gt;Sort Product Name&lt;/button&gt;
-      &lt;BootstrapTable data={ products }&gt;
-        &lt;TableHeaderColumn dataField='id' isKey dataSort&gt;Product ID&lt;/TableHeaderColumn&gt;
-        &lt;TableHeaderColumn dataField='name' dataSort&gt;Product Name&lt;/TableHeaderColumn&gt;
-        &lt;TableHeaderColumn dataField='price' dataSort&gt;Product Price&lt;/TableHeaderColumn&gt;
-      &lt;/BootstrapTable&gt;
-    &lt;/div&gt;
-  );
-}
-</code>
-</pre>
-				<div id="defaultsort" class="col-md-12 demo-div"></div>
-<pre>
-<code class="javascript">render() {
-  const options = {
-    defaultSortName: 'name',  // default sort column name
-    defaultSortOrder: 'desc'  // default sort order
-  };
-  return (
-    &lt;BootstrapTable data={ products } options={ options }&gt;
-      &lt;TableHeaderColumn dataField='id' isKey dataSort&gt;Product ID&lt;/TableHeaderColumn&gt;
-      &lt;TableHeaderColumn dataField='name' dataSort&gt;Product Name&lt;/TableHeaderColumn&gt;
-      &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
-    &lt;/BootstrapTable&gt;
-  );
-}
-</code>
-</pre>
-				<div id="externalsort" class="col-md-12 demo-div"></div>
-<pre>
-<code class="javascript">constructor(props) {
-  super(props);
-  this.state = {
-    sortName: undefined,
-    sortOrder: undefined
-  };
-  this.onSortChange = this.onSortChange.bind(this);
-}
-
-onSortChange(sortName, sortOrder) {
-  console.info('onSortChange', arguments);
-  this.setState({
-    sortName,
-    sortOrder
-  });
-}
-
-render() {
-  const options = {
-    sortName: this.state.sortName,
-    sortOrder: this.state.sortOrder,
-    onSortChange: this.onSortChange
-  };
-  return (
-    &lt;BootstrapTable data={ products } options={ options }&gt;
-      &lt;TableHeaderColumn dataField='id' isKey dataSort&gt;Product ID&lt;/TableHeaderColumn&gt;
-      &lt;TableHeaderColumn dataField='name' dataSort&gt;Product Name&lt;/TableHeaderColumn&gt;
-      &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
-    &lt;/BootstrapTable&gt;
-  );
-}
-</code>
-</pre>
+					<div class="row heading-section">
+						<h3 class="demo-title">Column Sort</h3>
+						<script src="https://gist.github.com/AllenFang/ab826ffbb22b351c3261a9134be95210.js"></script>
+						<div id="sort" class="col-md-12 demo-div heading-section"></div>
+					</div>
+					<div class="row heading-section">
+						<h3 class="demo-title">Default Sort</h3>
+						<script src="https://gist.github.com/AllenFang/3a1f10239043fe71c11320665d815534.js"></script>
+						<div id="defaultsort" class="col-md-12 demo-div heading-section"></div>
+					</div>
+					<div class="row heading-section">
+						<h3 class="demo-title">Manage Sorting External</h3>
+						<script src="https://gist.github.com/AllenFang/d26a733870c11c2163161fc22042ba6f.js"></script>
+						<div id="externalsort" class="col-md-12 demo-div heading-section"></div>
+					</div>
+					<div class="row heading-section">
+						<h3 class="demo-title">Custom Sort Function</h3>
+						<script src="https://gist.github.com/AllenFang/d8e69441dbafb357b410507ca7f2560a.js"></script>
+						<div id="customsort" class="col-md-12 demo-div heading-section"></div>
+					</div>
+					<div class="row heading-section">
+						<h3 class="demo-title">Custom Sort with Extra Data</h3>
+						<script src="https://gist.github.com/AllenFang/cbdaf0cb33d4e50a4a40809cde537893.js"></script>
+						<div id="customsortwithextra" class="col-md-12 demo-div heading-section"></div>
+					</div>
+					<div class="row heading-section">
+						<h3 class="demo-title">Sorting Hooks</h3>
+						<script src="https://gist.github.com/AllenFang/93f4fe46bae380e79679ff659b6442f2.js"></script>
+						<div id="sorthook" class="col-md-12 demo-div heading-section"></div>
+					</div>
+					<div class="row heading-section">
+						<h3 class="demo-title">Disable Sort Indicator</h3>
+						<script src="https://gist.github.com/AllenFang/7ea6fdf768a2f90c92a27cbf22ea2d5e.js"></script>
+						<div id="disableindicator" class="col-md-12 demo-div heading-section"></div>
+					</div>
+					<div class="row heading-section">
+						<h3 class="demo-title">Custom Sort Caret</h3>
+						<script src="https://gist.github.com/AllenFang/2073ee7f201452ba0854faa7c61556b4.js"></script>
+						<div id="customcaret" class="col-md-12 demo-div heading-section"></div>
+					</div>
 				</div>
 				
 				<!--<div class="row row-bottom-padded-md">

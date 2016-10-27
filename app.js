@@ -18,7 +18,6 @@ import DefaultSortTable from './components/sort/default-sort-table';
 import ExternalSort from './components/sort/manage-sort-external-table';
 import CustomSortTable from './components/sort/custom-sort-table';
 import CustomSortWithExtraDataTable from './components/sort/custom-sort-with-extra-data-table';
-import ReusableCustomSortTable from './components/sort/reusable-custom-sort-table';
 import SortHookTable from './components/sort/sort-hook-table';
 import DisableSortIndicatorTable from './components/sort/disable-sort-indicator-table';
 import CustomCaretSortTable from './components/sort/custom-caret-sort-table';
@@ -28,7 +27,7 @@ $(".example").hide();
 
 if (window.location.hash === '#basic') {
     $("#example-basic").show();
-    ReactDOM.render(<BasicTable />, document.querySelector('#basic'));
+    ReactDOM.render(<BasicTable />, document.getElementById('basic'));
     ReactDOM.render(<NoDataTable />, document.querySelector('#nodata'));
     ReactDOM.render(<BorderlessTable />, document.querySelector('#borderless'));
     ReactDOM.render(<StripedTable />, document.querySelector('#striped'));
@@ -52,7 +51,6 @@ if (window.location.hash === '#sort') {
     ReactDOM.render(<ExternalSort />, document.querySelector('#externalsort'));
     ReactDOM.render(<CustomSortTable />, document.querySelector('#customsort'));
     ReactDOM.render(<CustomSortWithExtraDataTable />, document.querySelector('#customsortwithextra'));
-    ReactDOM.render(<ReusableCustomSortTable />, document.querySelector('#resuablesort'));
     ReactDOM.render(<SortHookTable />, document.querySelector('#sorthook'));
     ReactDOM.render(<DisableSortIndicatorTable />, document.querySelector('#disableindicator'));
     ReactDOM.render(<CustomCaretSortTable />, document.querySelector('#customcaret'));
