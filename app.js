@@ -22,6 +22,11 @@ import SortHookTable from './components/sort/sort-hook-table';
 import DisableSortIndicatorTable from './components/sort/disable-sort-indicator-table';
 import CustomCaretSortTable from './components/sort/custom-caret-sort-table';
 
+import HtmlColumnFormatTable from './components/column-format/html-column-format-table';
+import ReactColumnFormatTable from './components/column-format/react-column-format-table';
+import ExtraDataColumnFormatTable from './components/column-format/extra-data-column-format-table';
+import GetRowIndexTable from './components/column-format/get-row-index-table';
+
 
 $(".example").hide();
 
@@ -54,4 +59,12 @@ if (window.location.hash === '#sort') {
     ReactDOM.render(<SortHookTable />, document.querySelector('#sorthook'));
     ReactDOM.render(<DisableSortIndicatorTable />, document.querySelector('#disableindicator'));
     ReactDOM.render(<CustomCaretSortTable />, document.querySelector('#customcaret'));
+}
+
+if (window.location.hash === '#column-format') {
+    $("#example-format").show();
+    ReactDOM.render(<HtmlColumnFormatTable />, document.querySelector('#htmlformat'));
+    ReactDOM.render(<ReactColumnFormatTable />, document.querySelector('#reactformat'));
+    ReactDOM.render(<ExtraDataColumnFormatTable />, document.querySelector('#formatwithextra'));
+    ReactDOM.render(<GetRowIndexTable />, document.querySelector('#getrowindex'));
 }
