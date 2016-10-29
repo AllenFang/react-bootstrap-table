@@ -312,7 +312,7 @@ class ToolBar extends Component {
       if (this.props.clearSearch) {
         if (this.props.clearSearchBtn) {
           clearBtn = this.renderCustomBtn(this.props.clearSearchBtn,
-            [ this.handleClearBtnClick ], ClearSearchButton.name, 'onClick', this.handleClearBtnClick);
+            [ this.handleClearBtnClick ], ClearSearchButton.name, 'onClick', this.handleClearBtnClick); /* eslint max-len: 0*/
         } else {
           clearBtn = (
             <ClearSearchButton onClick={ this.handleClearBtnClick }/>
