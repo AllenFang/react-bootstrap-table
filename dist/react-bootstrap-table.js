@@ -444,7 +444,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	          keys.push({
 	            field: column.props.dataField,
 	            format: column.props.csvFormat,
-	            header: column.props.csvHeader || column.props.dataField
+	            header: column.props.csvHeader || column.props.dataField,
+	            row: Number(column.props.row) || 0,
+	            rowSpan: Number(column.props.rowSpan) || 1,
+	            colSpan: Number(column.props.colSpan) || 1
 	          });
 	        }
 	      });
@@ -1586,8 +1589,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'table-bordered': this.props.bordered,
 	        'table-condensed': this.props.condensed
 	      }, this.props.tableHeaderClass);
-	      var selectRowHeaderCol = null;
-	      if (!this.props.hideSelectColumn) selectRowHeaderCol = this.renderSelectRowHeader();
 	      var i = 0;
 
 	      var rowCount = 0;
@@ -1596,7 +1597,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	          rowCount = Number(elm.props.row);
 	        }
 	      });
+
 	      var rows = [];
+
+	      if (!this.props.hideSelectColumn) {
+	        rows[0] = [this.renderSelectRowHeader(rowCount + 1)];
+	      }
+
 	      _react2['default'].Children.forEach(this.props.children, function (elm) {
 	        var _props = _this.props;
 	        var sortIndicator = _props.sortIndicator;
@@ -1637,7 +1644,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _react2['default'].createElement(
 	            'thead',
 	            { ref: 'header' },
-	            selectRowHeaderCol,
 	            trs
 	          )
 	        )
@@ -1645,22 +1651,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'renderSelectRowHeader',
-	    value: function renderSelectRowHeader() {
+	    value: function renderSelectRowHeader(rowCount) {
 	      if (this.props.customComponent) {
 	        var CustomComponent = this.props.customComponent;
 	        return _react2['default'].createElement(
 	          _SelectRowHeaderColumn2['default'],
-	          null,
+	          { rowCount: rowCount },
 	          _react2['default'].createElement(CustomComponent, { type: 'checkbox', checked: this.props.isSelectAll,
 	            indeterminate: this.props.isSelectAll === 'indeterminate', disabled: false,
 	            onChange: this.props.onSelectAllRow, rowIndex: 'Header' })
 	        );
 	      } else if (this.props.rowSelectType === _Const2['default'].ROW_SELECT_SINGLE) {
-	        return _react2['default'].createElement(_SelectRowHeaderColumn2['default'], null);
+	        return _react2['default'].createElement(_SelectRowHeaderColumn2['default'], { rowCount: rowCount });
 	      } else if (this.props.rowSelectType === _Const2['default'].ROW_SELECT_MULTI) {
 	        return _react2['default'].createElement(
 	          _SelectRowHeaderColumn2['default'],
-	          null,
+	          { rowCount: rowCount },
 	          _react2['default'].createElement(Checkbox, {
 	            onChange: this.props.onSelectAllRow,
 	            checked: this.props.isSelectAll })
@@ -1739,7 +1745,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function render() {
 	      return _react2['default'].createElement(
 	        'th',
-	        { style: { textAlign: 'center' } },
+	        { rowSpan: this.props.rowCount, style: { textAlign: 'center' },
+	          'data-is-only-head': false },
 	        this.props.children
 	      );
 	    }
@@ -1749,7 +1756,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react.Component);
 
 	SelectRowHeaderColumn.propTypes = {
-	  children: _react.PropTypes.node
+	  children: _react.PropTypes.node,
+	  rowCount: _react.PropTypes.number
 	};
 	exports['default'] = SelectRowHeaderColumn;
 	module.exports = exports['default'];
@@ -21644,7 +21652,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          // when you want same auto generate value and not allow edit, example ID field
 	          var time = new Date().getTime();
 	          tempValue = typeof column.autoValue === 'function' ? column.autoValue() : 'autovalue-' + time;
-	        } else if (column.hiddenOnInsert) {
+	        } else if (column.hiddenOnInsert || !column.field) {
 	          tempValue = '';
 	        } else {
 	          var dom = this.refs[column.field + i];
@@ -21838,7 +21846,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          placeholder: editable.placeholder ? editable.placeholder : name
 	        };
 
-	        if (autoValue || hiddenOnInsert) {
+	        if (autoValue || hiddenOnInsert || !column.field) {
 	          // when you want same auto generate value
 	          // and not allow edit, for example ID field
 	          return null;
@@ -22870,9 +22878,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var dataString = '';
 	  if (data.length === 0) return dataString;
 
-	  dataString += keys.map(function (x) {
-	    return x.header;
-	  }).join(',') + '\n';
+	  var headCells = [];
+	  var rowCount = 0;
+	  keys.forEach(function (key) {
+	    if (key.row > rowCount) {
+	      rowCount = key.row;
+	    }
+	    // rowCount += (key.rowSpan + key.colSpan - 1);
+	    for (var index = 0; index < key.colSpan; index++) {
+	      headCells.push(key);
+	    }
+	  });
+
+	  var _loop = function (i) {
+	    dataString += headCells.map(function (x) {
+	      if (x.row + (x.rowSpan - 1) === i) {
+	        return x.header;
+	      }
+	      if (x.row === i && x.rowSpan > 1) {
+	        return '';
+	      }
+	    }).filter(function (key) {
+	      return typeof key !== 'undefined';
+	    }).join(',') + '\n';
+	  };
+
+	  for (var i = 0; i <= rowCount; i++) {
+	    _loop(i);
+	  }
+
+	  keys = keys.filter(function (key) {
+	    return key.field !== undefined;
+	  });
 
 	  data.map(function (row) {
 	    keys.map(function (col, i) {
