@@ -12,7 +12,10 @@ function addProducts(quantity) {
     products.push({
       id: id,
       name: 'Item name ' + id,
-      price: 2100 + i
+      price: 2100 + i,
+      status: Math.round(Math.random()) ? 'yes' : 'no',
+      customer: 'Customer ' + i,
+      order: i
     });
   }
 }
@@ -38,9 +41,13 @@ export default class ColumnHeaderSpanComplex extends React.Component {
         cellEdit={ cellEdit }
         insertRow deleteRow exportCSV>
         <TableHeaderColumn row='0' rowSpan='2' dataField='id' isKey={ true } >ID</TableHeaderColumn>
-        <TableHeaderColumn row='0' colSpan='2'>Product</TableHeaderColumn>
-        <TableHeaderColumn row='1' dataField='name'>Name</TableHeaderColumn>
-        <TableHeaderColumn row='1' dataField='price'>Price</TableHeaderColumn>
+        <TableHeaderColumn row='0' colSpan='2' csvHeader='Product'>Product</TableHeaderColumn>
+        <TableHeaderColumn row='1' dataField='name'>name</TableHeaderColumn>
+        <TableHeaderColumn row='1' dataField='price'>price</TableHeaderColumn>
+        <TableHeaderColumn row='0' csvHeader='In stock' rowSpan='2' dataField='status'>In stock</TableHeaderColumn>
+        <TableHeaderColumn row='0' colSpan='2' csvHeader='Customer'>Customer</TableHeaderColumn>
+        <TableHeaderColumn row='1' csvHeader='name' dataField='customer'>name</TableHeaderColumn>
+        <TableHeaderColumn row='1' csvHeader='order' dataField='order'>order</TableHeaderColumn>
       </BootstrapTable>
     );
   }
