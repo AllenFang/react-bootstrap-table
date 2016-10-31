@@ -27,6 +27,25 @@ import ReactColumnFormatTable from './components/column-format/react-column-form
 import ExtraDataColumnFormatTable from './components/column-format/extra-data-column-format-table';
 import GetRowIndexTable from './components/column-format/get-row-index-table';
 
+import TextFilter from './components/column-filter/text-filter';
+import TextFilterWithDefaultValue from './components/column-filter/text-filter-with-default-value';
+import ProgrammaticallyTextFilter from './components/column-filter/text-filter-programmatically';
+import RegexFilter from './components/column-filter/regex-filter';
+import ProgrammaticallyRegexFilter from './components/column-filter/regex-filter-programmatically';
+import SelectFilter from './components/column-filter/select-filter';
+import SelectFilterWithDefaultValue from './components/column-filter/select-filter-with-default-value';
+import ProgrammaticallySelectFilter from './components/column-filter/select-filter-programmatically';
+import NumberFilter from './components/column-filter/number-filter';
+import NumberFilterWithDefaultValue from './components/column-filter/number-filter-with-default-value';
+import ProgrammaticallyNumberFilter from './components/column-filter/number-filter-programmatically';
+import NumberOptionsFilter from './components/column-filter/number-options-filter';
+import NumberOptionsFilterWithDefaultValue from './components/column-filter/number-options-filter-with-default-value';
+import DateFilter from './components/column-filter/date-filter';
+import DateFilterWithDefaultValue from './components/column-filter/date-filter-with-default-value';
+import ProgrammaticallyDateFilter from './components/column-filter/date-filter-programmatically';
+import CustomFilter from './components/column-filter/custom-filter';
+import AllFilter from './components/column-filter/all-filters';
+import FloatFilter from './components/column-filter/float-filter';
 
 $(".example").hide();
 
@@ -67,4 +86,22 @@ if (window.location.hash === '#column-format') {
     ReactDOM.render(<ReactColumnFormatTable />, document.querySelector('#reactformat'));
     ReactDOM.render(<ExtraDataColumnFormatTable />, document.querySelector('#formatwithextra'));
     ReactDOM.render(<GetRowIndexTable />, document.querySelector('#getrowindex'));
+}
+
+if (window.location.hash === '#column-filter') {
+    $("#example-filter").show();
+    ReactDOM.render(<TextFilter />, document.querySelector('#textfilter'));
+    ReactDOM.render(<TextFilterWithDefaultValue />, document.querySelector('#textfilterdefaultvalue'));
+    ReactDOM.render(<ProgrammaticallyTextFilter />, document.querySelector('#programtextfilter'));
+    ReactDOM.render(<RegexFilter />, document.querySelector('#regexfilter'));
+    ReactDOM.render(<ProgrammaticallyRegexFilter />, document.querySelector('#programregexfilter'));
+    ReactDOM.render(<SelectFilter />, document.querySelector('#selectfilter'));
+    ReactDOM.render(<SelectFilterWithDefaultValue />, document.querySelector('#selectfilterdefaultvalue'));
+    ReactDOM.render(<ProgrammaticallySelectFilter />, document.querySelector('#programselectfilter'));
+    ReactDOM.render(<NumberFilter />, document.querySelector('#numberfilter'));
+    ReactDOM.render(<NumberFilterWithDefaultValue />, document.querySelector('#numberfilterwithdefault'));
+    ReactDOM.render(<ProgrammaticallyNumberFilter />, document.querySelector('#programnumberfilter'));
+    ReactDOM.render(<NumberOptionsFilter />, document.querySelector('#numberoptionsfilter'));
+    ReactDOM.render(<NumberOptionsFilterWithDefaultValue />, document.querySelector('#numberoptionsfilterwithdefault'));
+    ReactDOM.render(<DateFilter />, document.querySelector('#datefilter'));
 }
