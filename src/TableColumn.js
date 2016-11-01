@@ -61,6 +61,9 @@ class TableColumn extends Component {
   }
 
   render() {
+    const {
+      children
+    } = this.props;
     const tdStyle = {
       textAlign: this.props.dataAlign,
       display: this.props.hidden ? 'none' : null
@@ -79,7 +82,7 @@ class TableColumn extends Component {
           title={ this.props.columnTitle }
           className={ this.props.className }
           { ...opts }>
-        { this.props.children }
+        { typeof children === 'boolean' ? children.toString() : children }
       </td>
     );
   }
