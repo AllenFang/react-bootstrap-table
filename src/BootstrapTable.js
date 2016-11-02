@@ -67,7 +67,7 @@ class BootstrapTable extends Component {
         column.props.filter.emitter = this.filter;
       }
     });
-    
+
     if (this.filter) {
       this.filter.removeAllListeners('onFilterChange');
       this.filter.on('onFilterChange', (currentFilter) => {
