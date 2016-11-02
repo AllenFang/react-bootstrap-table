@@ -286,6 +286,7 @@ class BootstrapTable extends Component {
             condensed={ this.props.condensed }
             isFiltered={ this.filter ? true : false }
             isSelectAll={ isSelectAll }>
+            onResize={ this._adjustBodyWidth }>
             { this.props.children }
           </TableHeader>
           <TableBody ref='body'
@@ -895,6 +896,43 @@ class BootstrapTable extends Component {
   _adjustTable = () => {
     this._adjustHeaderWidth();
     this._adjustHeight();
+  }
+
+  _adjustBodyWidth = () => {
+    const header = this.refs.header.refs.header;
+    const headerContainer = this.refs.header.refs.container;
+    const bodyHeader = this.refs.body.refs.header;
+    const bodyColumns = bodyHeader.childNodes;
+    const headerRow = header.childNodes;
+    const isScroll = headerContainer.offsetWidth !== bodyHeader.parentNode.offsetWidth;
+    const scrollBarWidth = isScroll ? Util.getScrollBarWidth() : 0;
+    if(headerRow){
+      for(let i = 0; i<headerRow.length;i++){
+        const cell = headerRow[i];
+        const computedStyle = getComputedStyle(cell);
+        let width = parseFloat(computedStyle.width.replace('px',''));
+
+        if (this.isIE) {
+          const paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
+          const paddingRightWidth = parseFloat(computedStyle.paddingRight.replace('px', ''));
+          const borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace('px', ''));
+          const borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace('px', ''));
+          width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
+        }
+
+        const lastPadding = (headerRow.length - 1 === i ? scrollBarWidth : 0);
+        if (width <= 0) {
+          width = 120;
+          cell.width = width + lastPadding + 'px';
+        }
+        const result = width + lastPadding + 'px';
+
+        bodyHeader.childNodes[i].style.width = result;
+        bodyHeader.childNodes[i].style.minWidth = result;
+//                header.childNodes[i].style.width = result;
+//                header.childNodes[i].style.minWidth = result;
+      }
+    }
   }
 
   _adjustHeaderWidth = () => {
