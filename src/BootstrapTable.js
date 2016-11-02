@@ -970,10 +970,11 @@ class BootstrapTable extends Component {
       const { sizePerPage } = this.state;
 
       if (atTheBeginning) {
+        const firstPage = this.props.options.pageStartIndex || Const.PAGE_START_INDEX;
         result = this.store.page(firstPage, sizePerPage).get();
         this.setState({
           data: result,
-          currPage: this.props.options.pageStartIndex || Const.PAGE_START_INDEX
+          currPage: firstPage
         });
       } else {
         const currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
