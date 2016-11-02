@@ -67,7 +67,7 @@ class BootstrapTable extends Component {
         column.props.filter.emitter = this.filter;
       }
     });
-    
+
     if (this.filter) {
       this.filter.removeAllListeners('onFilterChange');
       this.filter.on('onFilterChange', (currentFilter) => {
@@ -181,10 +181,7 @@ class BootstrapTable extends Component {
       if (page > Math.ceil(nextProps.data.length / sizePerPage)) {
         page = 1;
       }
-      const sortInfo = this.store.getSortInfo();
-      const sortField = options.sortName || (sortInfo ? sortInfo.sortField : undefined);
-      const sortOrder = options.sortOrder || (sortInfo ? sortInfo.order : undefined);
-      if (sortField && sortOrder) this.store.sort(sortOrder, sortField);
+
       const data = this.store.page(page, sizePerPage).get();
       this.setState({
         data,
@@ -192,6 +189,12 @@ class BootstrapTable extends Component {
         sizePerPage
       });
     }
+
+    // moved out of above if else clause - needs to be done every time
+    const sortInfo = this.store.getSortInfo();
+    const sortField = options.sortName || (sortInfo ? sortInfo.sortField : undefined);
+    const sortOrder = options.sortOrder || (sortInfo ? sortInfo.order : undefined);
+    if (sortField && sortOrder) this.store.sort(sortOrder, sortField);
 
     if (selectRow && selectRow.selected) {
       // set default select rows to store.
@@ -252,8 +255,10 @@ class BootstrapTable extends Component {
       maxHeight: this.props.maxHeight
     };
 
-    const columns = this.getColumnsDescription(this.props);
-    const sortInfo = this.store.getSortInfo();
+    const columns = this.getColumnsDescription(this.props); // todo use to set tably body widths - might be obsolete; if no other information -> delete
+    const sortInfo = this.options && ((this.options.sortName && this.options.sortOrder) ||
+                    (this.options.sortName==='' && this.options.sortOrder==='none'))
+                    && {sortField: this.options.sortName, order: this.options.sortOrder} || this.store.getSortInfo();
     const pagination = this.renderPagination();
     const toolBar = this.renderToolBar();
     const tableFilter = this.renderTableFilter(columns);
@@ -285,17 +290,18 @@ class BootstrapTable extends Component {
             bordered={ this.props.bordered }
             condensed={ this.props.condensed }
             isFiltered={ this.filter ? true : false }
-            isSelectAll={ isSelectAll }>
+            isSelectAll={ isSelectAll }
             onResize={ this._adjustBodyWidth }>
             { this.props.children }
           </TableHeader>
           <TableBody ref='body'
             bodyContainerClass={ this.props.bodyContainerClass }
             tableBodyClass={ this.props.tableBodyClass }
-            style={ { ...style, ...this.props.bodyStyle } }
+            style={ { ...style, ...this.props.bodyStyle, position:"relative" } }
             data={ this.state.data }
             columns={ columns }
             trClassName={ this.props.trClassName }
+            totalCount={ this.props.totalCount }
             striped={ this.props.striped }
             bordered={ this.props.bordered }
             hover={ this.props.hover }
@@ -308,7 +314,9 @@ class BootstrapTable extends Component {
             onRowMouseOver={ this.handleRowMouseOver }
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
-            noDataText={ this.props.options.noDataText } />
+            noDataText={ this.props.options.noDataText }
+            fetchData={ this.props.fetchData }
+            clearScroll={ this.props.options.clearScroll }/>
         </div>
         { tableFilter }
         { pagination }
@@ -978,16 +986,16 @@ class BootstrapTable extends Component {
     const { height } = this.props;
     let { maxHeight } = this.props;
     if ((typeof height === 'number' && !isNaN(height)) || height.indexOf('%') === -1) {
-      this.refs.body.refs.container.style.height =
-        parseFloat(height, 10) - this.refs.header.refs.container.offsetHeight + 'px';
+    this.refs.body.refs.container.style.height =
+      parseFloat(height, 10) - this.refs.header.refs.container.offsetHeight + 'px';
     }
     if (maxHeight) {
-      maxHeight = typeof maxHeight === 'number' ?
-        maxHeight :
-        parseInt(maxHeight.replace('px', ''), 10);
+    maxHeight = typeof maxHeight === 'number' ?
+      maxHeight :
+      parseInt(maxHeight.replace('px', ''), 10);
 
-      this.refs.body.refs.container.style.maxHeight =
-        maxHeight - this.refs.header.refs.container.offsetHeight + 'px';
+    this.refs.body.refs.container.style.maxHeight =
+      maxHeight - this.refs.header.refs.container.offsetHeight + 'px';
     }
   }
 
@@ -1021,6 +1029,8 @@ BootstrapTable.propTypes = {
   maxHeight: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   data: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
   remote: PropTypes.bool, // remote data, default is false
+  totalCount: PropTypes.number,
+  fetchData: PropTypes.func,
   striped: PropTypes.bool,
   bordered: PropTypes.bool,
   hover: PropTypes.bool,
@@ -1106,7 +1116,8 @@ BootstrapTable.propTypes = {
     saveText: PropTypes.string,
     closeText: PropTypes.string,
     ignoreEditable: PropTypes.bool,
-    defaultSearch: PropTypes.string
+    defaultSearch: PropTypes.string,
+    clearScroll: PropTypes.bool
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1118,6 +1129,8 @@ BootstrapTable.propTypes = {
 BootstrapTable.defaultProps = {
   height: '100%',
   maxHeight: undefined,
+  totalCount: 0,
+  fetchData: undefined,
   striped: false,
   bordered: true,
   hover: false,
