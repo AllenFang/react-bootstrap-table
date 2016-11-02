@@ -350,7 +350,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } catch (e) {
 	        return e;
 	      }
-	      _this._handleAfterAddingRow(newObj);
+	      _this._handleAfterAddingRow(newObj, false);
 	    };
 
 	    this.getPageByRowKey = function (rowKey) {
@@ -573,12 +573,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    this.initTable(this.props);
 
-	    if (this.filter) {
-	      this.filter.on('onFilterChange', function (currentFilter) {
-	        _this.handleFilterData(currentFilter);
-	      });
-	    }
-
 	    if (this.props.selectRow && this.props.selectRow.selected) {
 	      var copy = this.props.selectRow.selected.slice();
 	      this.store.setSelectedRowKey(copy);
@@ -623,6 +617,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	          column.props.filter.emitter = _this2.filter;
 	        }
 	      });
+
+	      if (this.filter) {
+	        this.filter.removeAllListeners('onFilterChange');
+	        this.filter.on('onFilterChange', function (currentFilter) {
+	          _this2.handleFilterData(currentFilter);
+	        });
+	      }
 
 	      this.colInfos = this.getColumnsDescription(props).reduce(function (prev, curr) {
 	        prev[curr.name] = curr;
@@ -971,7 +972,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } catch (e) {
 	        return e;
 	      }
-	      this._handleAfterAddingRow(newObj);
+	      this._handleAfterAddingRow(newObj, true);
 	    }
 	  }, {
 	    key: 'getSizePerPage',
@@ -1150,18 +1151,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: '_handleAfterAddingRow',
-	    value: function _handleAfterAddingRow(newObj) {
+	    value: function _handleAfterAddingRow(newObj, atTheBeginning) {
 	      var result = undefined;
 	      if (this.props.pagination) {
-	        // if pagination is enabled and insert row be trigger, change to last page
+	        // if pagination is enabled and inserting row at the end,
+	        // change page to the last page
+	        // otherwise, change it to the first page
 	        var sizePerPage = this.state.sizePerPage;
 
-	        var currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
-	        result = this.store.page(currLastPage, sizePerPage).get();
-	        this.setState({
-	          data: result,
-	          currPage: currLastPage
-	        });
+	        if (atTheBeginning) {
+	          var firstPage = this.props.options.pageStartIndex || _Const2['default'].PAGE_START_INDEX;
+	          result = this.store.page(firstPage, sizePerPage).get();
+	          this.setState({
+	            data: result,
+	            currPage: firstPage
+	          });
+	        } else {
+	          var currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
+	          result = this.store.page(currLastPage, sizePerPage).get();
+	          this.setState({
+	            data: result,
+	            currPage: currLastPage
+	          });
+	        }
 	      } else {
 	        result = this.store.get();
 	        this.setState({
@@ -2323,26 +2335,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _props = this.props;
+	      var children = _props.children;
+	      var columnTitle = _props.columnTitle;
+	      var className = _props.className;
+	      var dataAlign = _props.dataAlign;
+	      var hidden = _props.hidden;
+	      var cellEdit = _props.cellEdit;
+
 	      var tdStyle = {
-	        textAlign: this.props.dataAlign,
-	        display: this.props.hidden ? 'none' : null
+	        textAlign: dataAlign,
+	        display: hidden ? 'none' : null
 	      };
 
 	      var opts = {};
-	      if (this.props.cellEdit) {
-	        if (this.props.cellEdit.mode === _Const2['default'].CELL_EDIT_CLICK) {
+
+	      if (cellEdit) {
+	        if (cellEdit.mode === _Const2['default'].CELL_EDIT_CLICK) {
 	          opts.onClick = this.handleCellEdit;
-	        } else if (this.props.cellEdit.mode === _Const2['default'].CELL_EDIT_DBCLICK) {
+	        } else if (cellEdit.mode === _Const2['default'].CELL_EDIT_DBCLICK) {
 	          opts.onDoubleClick = this.handleCellEdit;
 	        }
 	      }
 	      return _react2['default'].createElement(
 	        'td',
 	        _extends({ style: tdStyle,
-	          title: this.props.columnTitle,
-	          className: this.props.className
+	          title: columnTitle,
+	          className: className
 	        }, opts),
-	        this.props.children
+	        typeof children === 'boolean' ? children.toString() : children
 	      );
 	    }
 	  }]);
@@ -23661,6 +23682,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var dataAlign = _props.dataAlign;
 	      var dataField = _props.dataField;
 	      var headerAlign = _props.headerAlign;
+	      var headerTitle = _props.headerTitle;
 	      var hidden = _props.hidden;
 	      var sort = _props.sort;
 	      var dataSort = _props.dataSort;
@@ -23695,7 +23717,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      var classes = (0, _classnames2['default'])(typeof className === 'function' ? className() : className, dataSort ? 'sort-column' : '');
 
-	      var title = typeof children === 'string' ? { title: children } : null;
+	      var title = headerTitle && typeof children === 'string' ? { title: children } : null;
 	      return _react2['default'].createElement(
 	        'th',
 	        _extends({ ref: 'header-col',
@@ -23795,6 +23817,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  dataField: _react.PropTypes.string,
 	  dataAlign: _react.PropTypes.string,
 	  headerAlign: _react.PropTypes.string,
+	  headerTitle: _react.PropTypes.bool,
 	  dataSort: _react.PropTypes.bool,
 	  onSort: _react.PropTypes.func,
 	  dataFormat: _react.PropTypes.func,
@@ -23835,6 +23858,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	TableHeaderColumn.defaultProps = {
 	  dataAlign: 'left',
 	  headerAlign: undefined,
+	  headerTitle: true,
 	  dataSort: false,
 	  dataFormat: undefined,
 	  csvFormat: undefined,
