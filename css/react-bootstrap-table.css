@@ -126,6 +126,26 @@
   float: left;
 }
 
+.react-bs-table .react-bs-container-header > table > thead > tr > th.resizable {
+  position: relative;
+}
+
+.react-bs-table .react-bs-container-header > table > thead > tr > th.resizable > div.resize-handler {
+  height: 100%;
+  width: 10px;
+  background-color: transparent;
+  cursor: e-resize;
+  border-right: 2px solid #BBB;
+  position: absolute;
+  display: inline-block;
+  top: 0;
+  right: 0;
+}
+
+.react-bs-table .react-bs-container-header > table > thead > tr > th.resizable:last-child > div.resize-handler {
+  display: none;
+}
+
 .react-bs-table .react-bs-container-header .sort-column {
   cursor: pointer;
 }
