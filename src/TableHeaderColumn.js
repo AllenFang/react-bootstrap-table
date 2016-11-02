@@ -157,8 +157,12 @@ class TableHeaderColumn extends Component {
 
     const changeValue = mouseEvent.clientX - this.nMouseX;
 
-    this.activeEl.style.width = String(Math.max(this.headerStartWidth + changeValue,20)) + "px";
-    this.activeEl.nextSibling.style.width = String(Math.max(this.nextHeaderStartWidth - changeValue,20)) + "px";
+    if ((this.headerStartWidth + changeValue)<=20 || (this.nextHeaderStartWidth - changeValue)<=20) {
+      return;
+    }
+
+    this.activeEl.style.width = String(this.headerStartWidth + changeValue) + "px";
+    this.activeEl.nextSibling.style.width = String(this.nextHeaderStartWidth - changeValue) + "px";
 
     this.props.onResize();
   }
