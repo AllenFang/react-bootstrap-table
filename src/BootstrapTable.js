@@ -311,6 +311,7 @@ class BootstrapTable extends Component {
             cellEdit={ this.props.cellEdit }
             selectedRowKeys={ this.state.selectedRowKeys }
             onRowClick={ this.handleRowClick }
+            onRowDoubleClick={ this.handleRowDoubleClick }
             onRowMouseOver={ this.handleRowMouseOver }
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
@@ -432,6 +433,12 @@ class BootstrapTable extends Component {
   handleRowClick = row => {
     if (this.props.options.onRowClick) {
       this.props.options.onRowClick(row);
+    }
+  }
+
+  handleRowDoubleClick = row => {
+    if (this.props.options.onRowDoubleClick) {
+      this.props.options.onRowDoubleClick(row);
     }
   }
 
@@ -902,7 +909,9 @@ class BootstrapTable extends Component {
   }
 
   _adjustTable = () => {
-    this._adjustHeaderWidth();
+    if (!this.props.printable) {
+      this._adjustHeaderWidth();
+    }
     this._adjustHeight();
   }
 
@@ -1036,6 +1045,7 @@ BootstrapTable.propTypes = {
   hover: PropTypes.bool,
   condensed: PropTypes.bool,
   pagination: PropTypes.bool,
+  printable: PropTypes.bool,
   searchPlaceholder: PropTypes.string,
   selectRow: PropTypes.shape({
     mode: PropTypes.oneOf([
@@ -1088,6 +1098,7 @@ BootstrapTable.propTypes = {
     afterSearch: PropTypes.func,
     afterColumnFilter: PropTypes.func,
     onRowClick: PropTypes.func,
+    onRowDoubleClick: PropTypes.func,
     page: PropTypes.number,
     pageStartIndex: PropTypes.number,
     paginationShowsTotal: PropTypes.oneOfType([ PropTypes.bool, PropTypes.func ]),
@@ -1136,6 +1147,7 @@ BootstrapTable.defaultProps = {
   hover: false,
   condensed: false,
   pagination: false,
+  printable: false,
   searchPlaceholder: undefined,
   selectRow: {
     mode: Const.ROW_SELECT_NONE,
@@ -1185,6 +1197,7 @@ BootstrapTable.defaultProps = {
     afterSearch: undefined,
     afterColumnFilter: undefined,
     onRowClick: undefined,
+    onRowDoubleClick: undefined,
     onMouseLeave: undefined,
     onMouseEnter: undefined,
     onRowMouseOut: undefined,

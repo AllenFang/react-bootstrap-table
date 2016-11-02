@@ -487,7 +487,11 @@ export class TableDataStore {
       // http://jsperf.com/for-vs-foreach/66
       for (let i = 0, keysLength = keys.length; i < keysLength; i++) {
         const key = keys[i];
-        if (this.colInfos[key] && row[key]) {
+        // fixed data filter when misunderstand 0 is false
+        let filterSpecialNum = false;
+        if (!isNaN(row[key]) &&
+          parseInt(row[key], 10) === 0) { filterSpecialNum = true; }
+        if (this.colInfos[key] && (row[key] || filterSpecialNum)) {
           const {
             format,
             filterFormatted,
