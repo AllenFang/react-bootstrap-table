@@ -562,7 +562,7 @@ class BootstrapTable extends Component {
     } catch (e) {
       return e;
     }
-    this._handleAfterAddingRow(newObj);
+    this._handleAfterAddingRow(newObj, true);
   }
 
   handleAddRow = newObj => {
@@ -584,7 +584,7 @@ class BootstrapTable extends Component {
     } catch (e) {
       return e;
     }
-    this._handleAfterAddingRow(newObj);
+    this._handleAfterAddingRow(newObj, false);
   }
 
   getSizePerPage() {
@@ -961,17 +961,29 @@ class BootstrapTable extends Component {
     }
   }
 
-  _handleAfterAddingRow(newObj) {
+  _handleAfterAddingRow(newObj, atTheBeginning) {
     let result;
     if (this.props.pagination) {
-      // if pagination is enabled and insert row be trigger, change to last page
+      // if pagination is enabled and inserting row at the end,
+      // change page to the last page
+      // otherwise, change it to the first page
       const { sizePerPage } = this.state;
-      const currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
-      result = this.store.page(currLastPage, sizePerPage).get();
-      this.setState({
-        data: result,
-        currPage: currLastPage
-      });
+
+      if (atTheBeginning) {
+        const firstPage = 1;
+        result = this.store.page(firstPage, sizePerPage).get();
+        this.setState({
+          data: result,
+          currPage: firstPage
+        });
+      } else {
+        const currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
+        result = this.store.page(currLastPage, sizePerPage).get();
+        this.setState({
+          data: result,
+          currPage: currLastPage
+        });
+      }
     } else {
       result = this.store.get();
       this.setState({
