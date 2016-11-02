@@ -76,7 +76,7 @@ class TableColumn extends Component {
     };
 
     const opts = {};
-    
+
     if (cellEdit) {
       if (cellEdit.mode === Const.CELL_EDIT_CLICK) {
         opts.onClick = this.handleCellEdit;
