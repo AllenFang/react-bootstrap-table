@@ -76,6 +76,7 @@ class TableHeaderColumn extends Component {
       dataAlign,
       dataField,
       headerAlign,
+      headerTitle,
       hidden,
       sort,
       dataSort,
@@ -108,7 +109,7 @@ class TableHeaderColumn extends Component {
       typeof className === 'function' ? className() : className,
       dataSort ? 'sort-column' : '');
 
-    const title = typeof children === 'string' ? { title: children } : null;
+    const title = headerTitle && typeof children === 'string' ? { title: children } : null;
     return (
       <th ref='header-col'
           className={ classes }
@@ -188,6 +189,7 @@ TableHeaderColumn.propTypes = {
   dataField: PropTypes.string,
   dataAlign: PropTypes.string,
   headerAlign: PropTypes.string,
+  headerTitle: PropTypes.bool,
   dataSort: PropTypes.bool,
   onSort: PropTypes.func,
   dataFormat: PropTypes.func,
@@ -232,6 +234,7 @@ TableHeaderColumn.propTypes = {
 TableHeaderColumn.defaultProps = {
   dataAlign: 'left',
   headerAlign: undefined,
+  headerTitle: true,
   dataSort: false,
   dataFormat: undefined,
   csvFormat: undefined,
