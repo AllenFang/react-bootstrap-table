@@ -42,10 +42,10 @@ class TableHeader extends Component {
               { selectRowHeaderCol }
               {
                 React.Children.map(this.props.children, (elm) => {
-                  const { sortIndicator, sortName, sortOrder, onSort } = this.props;
+                  const { sortIndicator, sortName, sortOrder, onSort, onResize } = this.props;
                   const { dataField, dataSort } = elm.props;
                   const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
-                  return React.cloneElement(elm, { key: i++, onSort, sort, sortIndicator });
+                  return React.cloneElement(elm, { key: i++, onSort, sort, sortIndicator, onResize });
                 })
               }
             </tr>
@@ -95,7 +95,8 @@ TableHeader.propTypes = {
   isFiltered: PropTypes.bool,
   isSelectAll: PropTypes.oneOf([ true, 'indeterminate', false ]),
   sortIndicator: PropTypes.bool,
-  customComponent: PropTypes.func
+  customComponent: PropTypes.func,
+  onResize: PropTypes.func
 };
 
 export default TableHeader;
