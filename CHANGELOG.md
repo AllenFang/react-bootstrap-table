@@ -1,3 +1,13 @@
+<a name="v2.5.7"></a>
+# [v2.5.7](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.6...v2.5.7) (2016-11-02)
+## Bug fixes
+* Fixed display boolean value if value is false([8fde9d6](https://github.com/AllenFang/react-bootstrap-table/commit/8fde9d6a0a06f584ff71306c53ed01a5fb3fd13a))
+* Fixed the filters do not work with dynamically generated columns([e1f287a](https://github.com/AllenFang/react-bootstrap-table/commit/e1f287a2a3d56a3c1a840a076029825d8c2d9e4d))
+
+## Enhancement
+* Add ```headerTitle``` in ```<TableHeaderColumn>``` for enable the title on header, default is true([7685e14](https://github.com/AllenFang/react-bootstrap-table/commit/7685e1409c3459eb000632e21d3832865866c7e5))
+* Redirect to first page if calling ```handleAddRowAtBegin```([3a4432a](https://github.com/AllenFang/react-bootstrap-table/commit/3a4432a0ddbb859c40a9b5de65ffeeea1ef106ef))
+
 <a name="v2.5.6"></a>
 # [v2.5.6](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.5...v2.5.6) (2016-10-22)
 ## Bug fixes
