@@ -47,6 +47,23 @@ import CustomFilter from './components/column-filter/custom-filter';
 import AllFilter from './components/column-filter/all-filters';
 import FloatFilter from './components/column-filter/float-filter';
 
+import SingleSelectTable from './components/selection/single-select-table';
+import MultiSelectTable from './components/selection/multi-select-table';
+import UnSelectableTable from './components/selection/unselectable-table';
+import ClickToSelectTable from './components/selection/click-to-select-table';
+import DefaultSelectTable from './components/selection/default-select-table';
+import SelectBgColorTable from './components/selection/select-bgcolor-table';
+import SelectHookTable from './components/selection/select-hook-table';
+import HideSelectionColumnTable from './components/selection/hide-selection-col-table';
+import SelectValidationTable from './components/selection/select-validation-table';
+import RowClickTable from './components/selection/row-click-table';
+import OnlySelectedTable from './components/selection/only-show-selected-table';
+import ExternallyManagedSelection from './components/selection/externally-managed-selection';
+import CustomMultiSelectTable from './components/selection/custom-multi-select-table';
+import SelectAll from './components/selection/all-select';
+
+
+
 $(".example").hide();
 
 if (window.location.hash === '#basic') {
@@ -104,4 +121,18 @@ if (window.location.hash === '#column-filter') {
     ReactDOM.render(<NumberOptionsFilter />, document.querySelector('#numberoptionsfilter'));
     ReactDOM.render(<NumberOptionsFilterWithDefaultValue />, document.querySelector('#numberoptionsfilterwithdefault'));
     ReactDOM.render(<DateFilter />, document.querySelector('#datefilter'));
+    ReactDOM.render(<DateFilterWithDefaultValue />, document.querySelector('#datefilterwithdefaultvalue'));
+    ReactDOM.render(<ProgrammaticallyDateFilter />, document.querySelector('#programdatefilter'));
+    ReactDOM.render(<CustomFilter />, document.querySelector('#customfilter'));
+    ReactDOM.render(<FloatFilter />, document.querySelector('#floatfilter'));
+    ReactDOM.render(<AllFilter />, document.querySelector('#allfilter'));
+}
+
+if (window.location.hash === '#selection') {
+    $("#example-selection").show();
+    ReactDOM.render(<SingleSelectTable />, document.querySelector('#singleselect'));
+    ReactDOM.render(<MultiSelectTable />, document.querySelector('#multiselect'));
+    ReactDOM.render(<UnSelectableTable />, document.querySelector('#unselectable'));
+    ReactDOM.render(<ClickToSelectTable />, document.querySelector('#clicktoselect'));
+
 }
