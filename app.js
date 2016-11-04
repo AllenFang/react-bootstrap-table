@@ -134,5 +134,9 @@ if (window.location.hash === '#selection') {
     ReactDOM.render(<MultiSelectTable />, document.querySelector('#multiselect'));
     ReactDOM.render(<UnSelectableTable />, document.querySelector('#unselectable'));
     ReactDOM.render(<ClickToSelectTable />, document.querySelector('#clicktoselect'));
+    ReactDOM.render(<DefaultSelectTable />, document.querySelector('#defaultselect'));
+    ReactDOM.render(<SelectBgColorTable />, document.querySelector('#selectbgcolor'));
+    ReactDOM.render(<SelectHookTable />, document.querySelector('#selecthook'));
+    ReactDOM.render(<HideSelectionColumnTable />, document.querySelector('#hideselectioncolumn'));
 
 }
