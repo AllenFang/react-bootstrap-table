@@ -99,7 +99,13 @@
   					<div class="nav-header">
   						<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
   						<h1 id="fh5co-logo"><a href="index.html">react-bootstrap-table</a></h1>
-  						<!-- START #fh5co-menu-wrap -->
+              <ul class="nav navbar-nav" style="margin-top: 1.5%; margin-left: 10%;">
+                <li><a href="start.html">Getting Started</a></li>
+                <li><a href="example.html">Example</a></li>
+                <li class="active"><a href="docs.html">Docs</a></li> 
+                <li><a href="#advance.html">Advanced</a></li> 
+              </ul>
+  					</div>
   				</div>
   			</header>
 
@@ -161,6 +167,7 @@
                 <li><a href="#cellEdit" class="prop">cellEdit</a></li>
                 <li><a href="#edit-mode" class="sub-prop prop">mode</a></li>
                 <li><a href="#blurToSave" class="sub-prop prop">blurToSave</a></li>
+                <li><a href="#bgColor" class="sub-prop prop">bgColor</a></li>
                 <li><a href="#beforeSaveCell" class="sub-prop prop">beforeSaveCell</a></li>
                 <li><a href="#afterSaveCell" class="sub-prop prop">afterSaveCell</a></li>
                 <li><a href="#options" class="prop">options</a></li>
@@ -305,7 +312,7 @@ const data = [ ... ];
                       <div class="col-lg-12">
                           <h1><a href='#keyField'>keyField : String</a></h1>
                           <span>
-                          Use <code>keyField</code> to tell table which column is unique. This is same as <code>isKey</code> in <code>&lt;TableHeaderColumn&gt;</code></br>
+                          Use <code>keyField</code> to tell table which column is unique. This is same as <a class="internal-anchor" href="#isKey">isKey</a> in <code>&lt;TableHeaderColumn&gt;</code></br>
                           <strong>Tips</strong>: <code>react-bootstrap-table</code> support data manipulation(CRUD) so that we need to fetch correct row by a unique column.</br></br>
                           </span>
 <pre>
@@ -682,7 +689,7 @@ render() {
                         <h1><a href='#exportCSV'>exportCSV : Bool</a></h1>
                         <span>
                           Enable export csv functionality by setting <code>exportCSV</code> as true, default is false.
-                          If you enable, there's a <img height="22" width="52" src="./images/export-btn.png" alt="export csv button"/> button on the upper left side of table.
+                          If you enable, there's a <img height="22" width="92" src="./images/export-btn.png" alt="export csv button"/> button on the upper left side of table.
                         </br></br>
                         </span>
 <pre>
@@ -704,8 +711,7 @@ render() {
                         <h1><a href='#csvFileName'>csvFileName : String | Function</a></h1>
                         <span>
                           Set the CSV filename (e.g. items.csv). Default is spreadsheet.csv.
-                          If a function given, you should return a file name as a string type.</br>
-                          If you enable, there's a <img height="22" width="92" src="./images/export-btn.png" alt="export csv button"/> button on the upper left side of table.
+                          If a function given, you should return a file name as a string type.
                         </br></br>
                         </span>
 <pre>
@@ -881,19 +887,19 @@ render() {
                           <code>react-bootstrap-table</code> will add a selection column at first position.
                           <code>selectRow</code> accept an object which have the following props:
                           <ul>
-                            <li><a href='#select-mode'>mode</a></li>
-                            <li><a href='#clickToSelect'>clickToSelect</a></li>
-                            <li><a href='#clickToSelectAndEditCell'>clickToSelectAndEditCell</a></li>
-                            <li><a href='#bgColor'>bgColor</a></li>
-                            <li><a href='#select-className'>className</a></li>
-                            <li><a href='#selected'>selected</a></li>
-                            <li><a href='#unselectable'>unselectable</a></li>
-                            <li><a href='#hideSelectColumn'>hideSelectColumn</a></li>
-                            <li><a href='#showOnlySelected'>showOnlySelected</a></li>
-                            <li><a href='#onSelect'>onSelect</a></li>
-                            <li><a href='#onSelectAll'>onSelectAll</a></li>
+                            <li><a class="internal-anchor" href='#select-mode'>mode</a></li>
+                            <li><a class="internal-anchor" href='#clickToSelect'>clickToSelect</a></li>
+                            <li><a class="internal-anchor" href='#clickToSelectAndEditCell'>clickToSelectAndEditCell</a></li>
+                            <li><a class="internal-anchor" href='#bgColor'>bgColor</a></li>
+                            <li><a class="internal-anchor" href='#select-className'>className</a></li>
+                            <li><a class="internal-anchor" href='#selected'>selected</a></li>
+                            <li><a class="internal-anchor" href='#unselectable'>unselectable</a></li>
+                            <li><a class="internal-anchor" href='#hideSelectColumn'>hideSelectColumn</a></li>
+                            <li><a class="internal-anchor" href='#showOnlySelected'>showOnlySelected</a></li>
+                            <li><a class="internal-anchor" href='#onSelect'>onSelect</a></li>
+                            <li><a class="internal-anchor" href='#onSelectAll'>onSelectAll</a></li>
                           </ul>
-                        Be carefully, when you enable <code>selectRow</code>, you should tell <code>react-bootstrap-table</code> which the <a href='#select-mode'>mode</a> you wanted.
+                        Be carefully, when you enable <code>selectRow</code>, you should tell <code>react-bootstrap-table</code> which the <a class="internal-anchor" href='#select-mode'>mode</a> you wanted.
                         Following is a most simple example for configuring the <code>selectRow</code>
                         </br></br>
                         </span>
@@ -1144,7 +1150,7 @@ render() {
                         <h1><a href='#hideSelectColumn'>selectRow: hideSelectColumn : Bool</a></h1>
                         <span>
                           Default is false. If true, the radio/checkbox column will be hide.
-                          You can enable this attribute if you enable <code>clickToSelect</code> and you don't want to show the selection column.
+                          You can enable this attribute if you enable <a class="internal-anchor" href="#clickToSelect">clickToSelect</a> and you don't want to show the selection column.
                         </br></br>
                         </span>
 <pre>
@@ -1294,13 +1300,13 @@ render() {
                           <code>react-bootstrap-table</code> will make the target cell as editable by clicking or dbclicking.
                           <code>cellEdit</code> accept an object which have the following props:
                           <ul>
-                            <li><a href='#edit-mode'>mode</a></li>
-                            <li><a href='#blurToSave'>blurToSave</a></li>
-                            <li><a href='#beforeSaveCell'>beforeSaveCell</a></li>
-                            <li><a href='#bgColor'>bgColor</a></li>
-                            <li><a href='#afterSaveCell'>afterSaveCell</a></li>
+                            <li><a class="internal-anchor" href='#edit-mode'>mode</a></li>
+                            <li><a class="internal-anchor" href='#blurToSave'>blurToSave</a></li>
+                            <li><a class="internal-anchor" href='#beforeSaveCell'>beforeSaveCell</a></li>
+                            <li><a class="internal-anchor" href='#bgColor'>bgColor</a></li>
+                            <li><a class="internal-anchor" href='#afterSaveCell'>afterSaveCell</a></li>
                           </ul>
-                        Be carefully, when you enable <code>cellEdit</code>, you should tell <code>react-bootstrap-table</code> which the <a href='#edit-mode'>mode</a> you wanted.
+                        Be carefully, when you enable <code>cellEdit</code>, you should tell <code>react-bootstrap-table</code> which the <a class="internal-anchor" href='#edit-mode'>mode</a> you wanted.
                         Following is a most simple example for configuring the <code>cellEdit</code>
                         </br></br>
                         </span>
@@ -1485,61 +1491,61 @@ render() {
                           <code>options</code> accept an object which have the following props:
                           <strong><b>Following is all about configuring table sort</b></strong>
                           <ul>
-                            <li><a href='#sortName'>sortName</a></li>
-                            <li><a href='#sortOrder'>sortOrder</a></li>
-                            <li><a href='#defaultSortName'>defaultSortName</a></li>
-                            <li><a href='#defaultSortOrder'>defaultSortOrder</a></li>
-                            <li><a href='#sortIndicator'>sortIndicator</a></li>
-                            <li><a href='#onSortChange'>onSortChange</a></li>
+                            <li><a class="internal-anchor" href='#sortName'>sortName</a></li>
+                            <li><a class="internal-anchor" href='#sortOrder'>sortOrder</a></li>
+                            <li><a class="internal-anchor" href='#defaultSortName'>defaultSortName</a></li>
+                            <li><a class="internal-anchor" href='#defaultSortOrder'>defaultSortOrder</a></li>
+                            <li><a class="internal-anchor" href='#sortIndicator'>sortIndicator</a></li>
+                            <li><a class="internal-anchor" href='#onSortChange'>onSortChange</a></li>
                           </ul>
                           <strong><b>Following is all about configuring table search</b></strong>
                           <ul>
-                            <li><a href='#defaultSearch'>defaultSearch</a></li>
-                            <li><a href='#searchDelayTime'>searchDelayTime</a></li>
-                            <li><a href='#clearSearch'>clearSearch</a></li>
-                            <li><a href='#onSearchChange'>onSearchChange</a></li>
-                            <li><a href='#afterSearch'>afterSearch</a></li>
+                            <li><a class="internal-anchor" href='#defaultSearch'>defaultSearch</a></li>
+                            <li><a class="internal-anchor" href='#searchDelayTime'>searchDelayTime</a></li>
+                            <li><a class="internal-anchor" href='#clearSearch'>clearSearch</a></li>
+                            <li><a class="internal-anchor" href='#onSearchChange'>onSearchChange</a></li>
+                            <li><a class="internal-anchor" href='#afterSearch'>afterSearch</a></li>
                           </ul>
                           <strong><b>Following is all about configuring table pagination</b></strong>
                           <ul>
-                            <li><a href='#prePage'>prePage</a></li>
-                            <li><a href='#nextPage'>nextPage</a></li>
-                            <li><a href='#firstPage'>firstPage</a></li>
-                            <li><a href='#lastPage'>lastPage</a></li>
-                            <li><a href='#page'>page</a></li>
-                            <li><a href='#sizePerPageList'>sizePerPageList</a></li>
-                            <li><a href='#sizePerPage'>sizePerPage</a></li>
-                            <li><a href='#paginationSize'>paginationSize</a></li>
-                            <li><a href='#hideSizePerPage'>hideSizePerPage</a></li>
-                            <li><a href='#paginationShowsTotal'>paginationShowsTotal</a></li>
-                            <li><a href='#pageStartIndex'>pageStartIndex</a></li>
-                            <li><a href='#onPageChange'>onPageChange</a></li>
-                            <li><a href='#onSizePerPageList'>onSizePerPageList</a></li>
+                            <li><a class="internal-anchor" href='#prePage'>prePage</a></li>
+                            <li><a class="internal-anchor" href='#nextPage'>nextPage</a></li>
+                            <li><a class="internal-anchor" href='#firstPage'>firstPage</a></li>
+                            <li><a class="internal-anchor" href='#lastPage'>lastPage</a></li>
+                            <li><a class="internal-anchor" href='#page'>page</a></li>
+                            <li><a class="internal-anchor" href='#sizePerPageList'>sizePerPageList</a></li>
+                            <li><a class="internal-anchor" href='#sizePerPage'>sizePerPage</a></li>
+                            <li><a class="internal-anchor" href='#paginationSize'>paginationSize</a></li>
+                            <li><a class="internal-anchor" href='#hideSizePerPage'>hideSizePerPage</a></li>
+                            <li><a class="internal-anchor" href='#paginationShowsTotal'>paginationShowsTotal</a></li>
+                            <li><a class="internal-anchor" href='#pageStartIndex'>pageStartIndex</a></li>
+                            <li><a class="internal-anchor" href='#onPageChange'>onPageChange</a></li>
+                            <li><a class="internal-anchor" href='#onSizePerPageList'>onSizePerPageList</a></li>
                           </ul>
                           <strong><b>Following is another options</b></strong>
                           <ul>
-                            <li><a href='#noDataText'>noDataText</a></li>
-                            <li><a href='#insertText'>insertText</a></li>
-                            <li><a href='#deleteText'>deleteText</a></li>
-                            <li><a href='#saveText'>saveText</a></li>
-                            <li><a href='#closeText'>closeText</a></li>
-                            <li><a href='#exportCSVText'>exportCSVText</a></li>
-                            <li><a href='#ignoreEditable'>ignoreEditable</a></li>
-                            <li><a href='#afterTableComplete'>afterTableComplete</a></li>
-                            <li><a href='#afterDeleteRow'>afterDeleteRow</a></li>
-                            <li><a href='#afterInsertRow'>afterInsertRow</a></li>
-                            <li><a href='#afterColumnFilter'>afterColumnFilter</a></li>
-                            <li><a href='#onAddRow'>onAddRow</a></li>
-                            <li><a href='#onFilterChange'>onFilterChange</a></li>
-                            <li><a href='#onExportToCSV'>onExportToCSV</a></li>
-                            <li><a href='#onDeleteRow'>onDeleteRow</a></li>
-                            <li><a href='#onRowClick'>onRowClick</a></li>
-                            <li><a href='#onRowDoubleClick'>onRowDoubleClick</a></li>
-                            <li><a href='#onMouseEnter'>onMouseEnter</a></li>
-                            <li><a href='#onMouseLeave'>onMouseLeave</a></li>
-                            <li><a href='#onRowMouseOver'>onRowMouseOver</a></li>
-                            <li><a href='#onRowMouseOut'>onRowMouseOut</a></li>
-                            <li><a href='#handleConfirmDeleteRow'>handleConfirmDeleteRow</a></li>
+                            <li><a class="internal-anchor" href='#noDataText'>noDataText</a></li>
+                            <li><a class="internal-anchor" href='#insertText'>insertText</a></li>
+                            <li><a class="internal-anchor" href='#deleteText'>deleteText</a></li>
+                            <li><a class="internal-anchor" href='#saveText'>saveText</a></li>
+                            <li><a class="internal-anchor" href='#closeText'>closeText</a></li>
+                            <li><a class="internal-anchor" href='#exportCSVText'>exportCSVText</a></li>
+                            <li><a class="internal-anchor" href='#ignoreEditable'>ignoreEditable</a></li>
+                            <li><a class="internal-anchor" href='#afterTableComplete'>afterTableComplete</a></li>
+                            <li><a class="internal-anchor" href='#afterDeleteRow'>afterDeleteRow</a></li>
+                            <li><a class="internal-anchor" href='#afterInsertRow'>afterInsertRow</a></li>
+                            <li><a class="internal-anchor" href='#afterColumnFilter'>afterColumnFilter</a></li>
+                            <li><a class="internal-anchor" href='#onAddRow'>onAddRow</a></li>
+                            <li><a class="internal-anchor" href='#onFilterChange'>onFilterChange</a></li>
+                            <li><a class="internal-anchor" href='#onExportToCSV'>onExportToCSV</a></li>
+                            <li><a class="internal-anchor" href='#onDeleteRow'>onDeleteRow</a></li>
+                            <li><a class="internal-anchor" href='#onRowClick'>onRowClick</a></li>
+                            <li><a class="internal-anchor" href='#onRowDoubleClick'>onRowDoubleClick</a></li>
+                            <li><a class="internal-anchor" href='#onMouseEnter'>onMouseEnter</a></li>
+                            <li><a class="internal-anchor" href='#onMouseLeave'>onMouseLeave</a></li>
+                            <li><a class="internal-anchor" href='#onRowMouseOver'>onRowMouseOver</a></li>
+                            <li><a class="internal-anchor" href='#onRowMouseOut'>onRowMouseOut</a></li>
+                            <li><a class="internal-anchor" href='#handleConfirmDeleteRow'>handleConfirmDeleteRow</a></li>
                           </ul>
                         </br></br>
                         </span>
@@ -1553,7 +1559,7 @@ render() {
                       <div class="col-lg-12">
                         <h1><a href='#sortName'>sortName : String</a></h1>
                         <span>
-                          Manage the sort field by yourself. You can also control the sort order by <a href='#sortOrder'>sortOrder</a>
+                          Manage the sort field by yourself. You can also control the sort order by <a class="internal-anchor" href='#sortOrder'>sortOrder</a>
                         </br></br>
                         </span>
 <pre>
@@ -1600,7 +1606,7 @@ render() {
                       <div class="col-lg-12">
                         <h1><a href='#sortOrder'>sortOrder : String</a></h1>
                         <span>
-                          Manage the sort order by yourself. It's same as <a href='#sortName'>sortName</a>.
+                          Manage the sort order by yourself. It's same as <a class="internal-anchor" href='#sortName'>sortName</a>.
                           <strong>Tips</strong>: The available value is <code>desc</code> and <code>asc</code>.
                         </br></br>
                         </span>
@@ -1706,7 +1712,7 @@ render() {
                             <li><code>sortName</code></li>
                             <li><code>sortOrder</code></li>
                           </ul>
-                          This function almost used on <a href="#remote">remote</a>, 
+                          This function almost used on <a class="internal-anchor" href="#remote">remote</a>, 
                           you can check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-sorting.js#L27">this</a> example.
                         </br></br>
                         </span>
@@ -1884,7 +1890,7 @@ render() {
                             <li><code>multiColumnSearch</code></li>
                           </ul>
                           In most case, you only need to use <code>searchText</code>.
-                          This function almost used on <a href="#remote">remote</a>, you can check 
+                          This function almost used on <a class="internal-anchor" href="#remote">remote</a>, you can check 
                           <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-search.js#L27">this</a> example.
                         </br></br>
                         </span>
@@ -2111,7 +2117,7 @@ render() {
                         <span>
                           Assign a callback function which will be called when a row be added.
                           This function taking one argument: <code>row</code> which presented as the new row data.
-                          <code>onAddRow</code> almost used on <a href="#remote">remote</a>, 
+                          <code>onAddRow</code> almost used on <a class="internal-anchor" href="#remote">remote</a>, 
                           you can check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-insert-row.js#L27">this</a> example. 
                         </br></br>
                         </span>
@@ -2147,7 +2153,7 @@ render() {
                         <span>
                           Assign a callback function which will be called when a filter condition changing.
                           This function taking one argument: filterObj which is an object which take <code>dataField</code> as object key and the value is the filter condition.
-                          <code>onFilterChange</code> almost used on <a href="#remote">remote</a>, 
+                          <code>onFilterChange</code> almost used on <a class="internal-anchor" href="#remote">remote</a>, 
                           you can check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-filtering.js#L67">this</a> example. 
                         </br></br>
                         </span>
@@ -2184,7 +2190,7 @@ render() {
                         <span>
                           Assign a callback function which will be called when click the export csv button.
                           In this function, you need to return an array which need to be exported.
-                          <code>onExportToCSV</code> almost used on <a href="#remote">remote</a>, 
+                          <code>onExportToCSV</code> almost used on <a class="internal-anchor" href="#remote">remote</a>, 
                           you can check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-export-csv.js#L27">this</a> example. 
                         </br></br>
                         </span>
@@ -2221,7 +2227,7 @@ render() {
                         <span>
                           Assign a callback function which will be called when a row been deleted.
                           This function taking one argument: <code>rows</code> which presented as the deleted rows.
-                          <code>onDeleteRow</code> almost used on <a href="#remote">remote</a>, 
+                          <code>onDeleteRow</code> almost used on <a class="internal-anchor" href="#remote">remote</a>, 
                           you can check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-delete-row.js#L27">this</a> example. 
                         </br></br>
                         </span>
@@ -2904,7 +2910,7 @@ render() {
                             <li>page</li>
                             <li>sizePerPage</li>
                           </ul>
-                          This function almost used on <a href="#remote">remote</a>, you can check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-paging.js#L30">this</a> example.
+                          This function almost used on <a class="internal-anchor" href="#remote">remote</a>, you can check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-paging.js#L30">this</a> example.
                         </br></br>
                         </span>
 <pre>
@@ -2942,7 +2948,7 @@ render() {
                           <ul>
                             <li>sizePerPage</li>
                           </ul>
-                          This function almost used on <a href="#remote">remote</a>, you can check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-paging.js#L38">this</a> example.
+                          This function almost used on <a class="internal-anchor" href="#remote">remote</a>, you can check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-paging.js#L38">this</a> example.
                         </br></br>
                         </span>
 <pre>
@@ -3322,7 +3328,7 @@ this.refs.table.handleExportCSV();  // this.refs.table is a ref for BootstrapTab
                       <div class="col-lg-12">
                         <h1><a href='#isKey'>isKey : String</a></h1>
                         <span>
-                          Use <code>isKey</code> to tell table which column is unique. This is same as <code>keyField</code> in <code>&lt;BootstrapTable&gt;</code>
+                          Use <code>isKey</code> to tell table which column is unique. This is same as <a href="#keyField" class="internal-anchor" >keyField</a> in <code>&lt;BootstrapTable&gt;</code>
                           <strong>Tips</strong>: You need choose one of configuration to set the key field: <code>isKey</code> or <code>keyField</code> in <code>&lt;BootstrapTable&gt;</code>.
                           </br></br>
                         </span>
@@ -3527,7 +3533,7 @@ render() {
                       <div class="col-lg-12">
                         <h1><a href='#formatExtraData'>formatExtraData : Any</a></h1>
                         <span>
-                          It's useful on <code>dataFormat</code>, you can give any data you want to be passed to the formatter.
+                          It's useful with <a href="#dataFormat" class="internal-anchor">dataFormat</a>, you can give any data you want to be passed to the formatter.
                           </br></br>
                         </span>
 <pre>
@@ -3701,9 +3707,9 @@ render() {
                         <h1><a href='#hiddenOnInsert'>hiddenOnInsert : Bool</a></h1>
                         <span>
                           Enable <code>hiddenOnInsert</code> to hide the input field of htis column in insert modal.
-                          This prop almost configured with another prop: <a href="#autoValue">autoValue</a>.</br>
-                          Because in the insert modal, the <a href="#keyField">keyField</a> almost cant be inputed by user, 
-                          so you can enable <code>hiddenOnInsert</code> to hide the input field and use <a href="#autoValue">autoValue</a> to generate an key value automatically.
+                          This prop almost configured with another prop: <a class="internal-anchor" href="#autoValue">autoValue</a>.</br>
+                          Because in the insert modal, the <a class="internal-anchor" href="#keyField">keyField</a> almost cant be inputed by user, 
+                          so you can enable <code>hiddenOnInsert</code> to hide the input field and use <a class="internal-anchor" href="#autoValue">autoValue</a> to generate an key value automatically.
                           </br></br>
                         </span>
 <pre>
@@ -3797,7 +3803,7 @@ render() {
                             <li><code>sortField</code></li>
                             <li><code>extraData</code></li>
                           </ul>
-                          The <code>extraData</code> is the data from the <a href="#sortFuncExtraData">sortFuncExtraData</a>.</br>
+                          The <code>extraData</code> is the data from the <a class="internal-anchor" href="#sortFuncExtraData">sortFuncExtraData</a>.</br>
                           <strong>Tips</strong>: This function should return a negative, zero, or positive value, depending on the arguments.
                           </br></br>
                         </span>
@@ -3831,7 +3837,7 @@ render() {
                       <div class="col-lg-12">
                         <h1><a href='#sortFuncExtraData'>sortFuncExtraData : Any</a></h1>
                         <span>
-                          It's a extra data for custom sort function, if defined, this data will be pass as fifth argument in <a href="#sortFunc">sortFunc</a>.
+                          It's a extra data for custom sort function, if defined, this data will be pass as fifth argument in <a class="internal-anchor" href="#sortFunc">sortFunc</a>.
                           You can follow <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/sort/custom-sort-with-extra-data-table.js">this</a> example to see how it work.
                           </br></br>
                         </span>
@@ -4011,12 +4017,12 @@ render() {
                           To Enable a column filter within header column. 
                           This feature support a lots of filter type and condition. Please check <a href="https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/column-filter" target="_blank">example</a>.</br>
                           Following is the format for <code>filter</code>: </br>
-                          <code>type</code>: Available value is <code>TextFilter</code>, <code>SelectFilter</code>,  <code>NumberFilter</code>, <code>DateFilter</code>, <code>RegexFilter</code>, <code>YOUR_CUSTOM_FILTER</code>(<a href="" target="_blank">Custom Example</a>)</br></br>
+                          <code>type</code>: Available value is <code>TextFilter</code>, <code>SelectFilter</code>,  <code>NumberFilter</code>, <code>DateFilter</code>, <code>RegexFilter</code>, <code>YOUR_CUSTOM_FILTER</code>(<a href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column-filter/custom-filter.js" target="_blank">Custom Example</a>)</br></br>
                           <code>defaultValue</code>: Default value on filter.</br>
                           &nbsp;&nbsp;&nbsp;&nbsp;If type is <code>NumberFilter</code>, the default value will be like { number: xxx, comparator: '>' }</br>
                           &nbsp;&nbsp;&nbsp;&nbsp;If type is <code>DateFilter</code>, the default value will be like { date: xxx, comparator: '>' }</br></br>
                           <code>delay</code>: Assign a millisecond for delay when trigger filtering, default is 500.</br></br>
-                          <code>placeholder</code>: Assign the placeholder text on text and regex filter, this only work on <code>TextFilter</code> and <code>RegexFilter</code>.</br></br>
+                          <code>placeholder</code>: Assign the placeholder text on all the filter.</br></br>
                           <code>numberComparators</code>: Only work on <code>NumberFilter</code> and <code>DateFilter</code>. Accept an array which conatin the filter condition, like: ['<','>','=']</br></br>
                           <code>options</code>: Only work on <code>SelectFilter</code> or <code>NumberFilter</code>: </br>
                           &nbsp;&nbsp;&nbsp;&nbsp;<code>SelectFilter</code>: you can assign the selection options by an <code>Object</code> which presented as { 0: 'good', 1: 'bad' ... }</br>
@@ -4061,34 +4067,8 @@ render() {
         </div>
         </div>
       </div>
-
-
-		<!--<footer>
-			<div id="footer">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-6 col-md-offset-3 text-center">
-							<p class="fh5co-social-icons">
-								<a href="#"><i class="icon-twitter2"></i></a>
-								<a href="#"><i class="icon-facebook2"></i></a>
-								<a href="#"><i class="icon-instagram"></i></a>
-								<a href="#"><i class="icon-dribbble2"></i></a>
-								<a href="#"><i class="icon-youtube"></i></a>
-							</p>
-							<p>Copyright 2016 Free Html5 <a href="#">Pentagon</a>. All Rights Reserved. <br>Made with <i class="icon-heart3"></i> by <a href="http://freehtml5.co/" target="_blank">Freehtml5.co</a> / Demo Images: <a href="https://unsplash.com/" target="_blank">Unsplash</a></p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</footer>-->
-
-
 	</div>
-	<!-- END fh5co-page -->
-
 	</div>
-	<!-- END fh5co-wrapper -->
-
 	<!-- jQuery -->
 
 
@@ -4114,10 +4094,13 @@ render() {
       $("#wrapper").toggleClass("toggled");
   });
   $('#sidebar-nav a').click(function (e) {
-    // e.preventDefault();
-    console.log(this);
     $(this).tab('show');
-  })
+  });
+  $('.internal-anchor').click(function(e) {
+    if (e.currentTarget.hash) {
+      $("a.prop[href='"+e.currentTarget.hash+"']").click();
+    }
+  });
   $("#default-show").tab('show');
 
   $( document ).ready(function() {
