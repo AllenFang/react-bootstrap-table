@@ -6,6 +6,7 @@ import ProgrammaticallyTextFilter from './text-filter-programmatically';
 import RegexFilter from './regex-filter';
 import ProgrammaticallyRegexFilter from './regex-filter-programmatically';
 import SelectFilter from './select-filter';
+import SelectFilterWithCustomText from './select-filter-with-select-text';
 import SelectFilterWithDefaultValue from './select-filter-with-default-value';
 import ProgrammaticallySelectFilter from './select-filter-programmatically';
 import SelectFilterWithSort from './select-filter-with-sort';
@@ -76,6 +77,15 @@ class Demo extends React.Component {
                     <div className='panel-body'>
                         <h5>Source in /examples/js/column-filter/select-filter.js</h5>
                         <SelectFilter />
+                    </div>
+                </div>
+            </div>
+            <div className='col-md-offset-1 col-md-8'>
+                <div className='panel panel-default'>
+                    <div className='panel-heading'>Select Filter with Custom Text Example</div>
+                    <div className='panel-body'>
+                        <h5>Source in /examples/js/column-filter/select-filter-with-select-text.js</h5>
+                        <SelectFilterWithCustomText />
                     </div>
                 </div>
             </div>
