@@ -34,9 +34,10 @@ class SelectFilter extends Component {
 
   getOptions() {
     const optionTags = [];
-    const { options, placeholder, columnName } = this.props;
+    const { options, placeholder, columnName, selectText } = this.props;
+    const selectTextValue = (selectText !== undefined) ? selectText : 'Select';
     optionTags.push((
-      <option key='-1' value=''>{ placeholder || `Select ${columnName}...` }</option>
+      <option key='-1' value=''>{ placeholder || `${selectTextValue} ${columnName}...` }</option>
     ));
     Object.keys(options).map(key => {
       optionTags.push(<option key={ key } value={ key }>{ options[key] + '' }</option>);
