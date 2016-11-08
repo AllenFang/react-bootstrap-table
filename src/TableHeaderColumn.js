@@ -31,7 +31,7 @@ class TableHeaderColumn extends Component {
   }
 
   handleFilter(value, type) {
-    if(this.clear===false){
+    if (this.clear === false) {
       this.props.filter.emitter.handleFilter(this.props.dataField, value, type);
     }
   }
@@ -75,19 +75,19 @@ class TableHeaderColumn extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps){
-    if(nextProps.filter && nextProps.filter.clear){
-      this.clear = true
-      this.cleanFiltered()
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.filter && nextProps.filter.clear) {
+      this.clear = true;
+      this.cleanFiltered();
     }
   }
 
   componentDidMount() {
     this.refs['header-col'].setAttribute('data-field', this.props.dataField);
     this.clear = false;
-    let handlers = document.getElementsByClassName("resize-handler");
-    for(var i = 0; i < handlers.length; i++) {
-      let handler = handlers[i];
+    const handlers = this.refs['header-col'].getElementsByClassName('resize-handler');
+    for (let i = 0; i < handlers.length; i++) {
+      const handler = handlers[i];
       handler.addEventListener('mousedown', this.handleMouseDown);
     }
     document.addEventListener('mouseup', this.handleMouseUp);
@@ -139,11 +139,11 @@ class TableHeaderColumn extends Component {
           className={ classes }
           style={ thStyle }
           { ...title }>
-        <div onClick={ this.handleColumnClick } style={{display:'inline'}} >{ children }{ sortCaret }</div>
+        <div onClick={ this.handleColumnClick } style={ { display: 'inline' } }>{ children }{ sortCaret }</div>
         <div onClick={ e => e.stopPropagation() }>
           { this.props.filter ? this.getFilters() : null }
         </div>
-        <div className="resize-handler"></div>
+        <div className='resize-handler'></div>
       </th>
     );
   }
@@ -153,46 +153,46 @@ class TableHeaderColumn extends Component {
       return;
     }
     event.preventDefault();
-    var mouseEvent = event || window.event;
+    const mouseEvent = event || window.event;
 
     const changeValue = mouseEvent.clientX - this.nMouseX;
 
-    if ((this.headerStartWidth + changeValue)<=20 || (this.nextHeaderStartWidth - changeValue)<=20) {
+    if ((this.headerStartWidth + changeValue) <= 20 || (this.nextHeaderStartWidth - changeValue) <= 20) {
       return;
     }
 
-    this.activeEl.style.width = String(this.headerStartWidth + changeValue) + "px";
-    this.activeEl.nextSibling.style.width = String(this.nextHeaderStartWidth - changeValue) + "px";
+    this.activeEl.style.width = String(this.headerStartWidth + changeValue) + 'px';
+    this.activeEl.nextSibling.style.width = String(this.nextHeaderStartWidth - changeValue) + 'px';
 
     this.props.onResize();
   }
 
-  handleMouseUp = (event) => {
-    if(this.inResize) {
+  handleMouseUp = () => {
+    if (this.inResize) {
       this.inResize = false;
     }
   }
 
   handleMouseDown = (event) => {
-    let bExit = true, mouseEvent = event || window.event;
-    for (var iNode = mouseEvent.target || mouseEvent.srcElement; iNode; iNode = iNode.parentNode) {
-      if (iNode.className.indexOf("resizable")!==-1) {
+    let bExit = true;
+    const mouseEvent = event || window.event;
+    for (let iNode = mouseEvent.target || mouseEvent.srcElement; iNode; iNode = iNode.parentNode) {
+      if (iNode.className.indexOf('resizable') !== -1) {
         bExit = false;
         this.activeEl = iNode;
         break;
       }
     }
     if (bExit ||
-        this.activeEl.nextSibling===null ||
-        this.activeEl.nodeName.toLowerCase()!==this.activeEl.nextSibling.nodeName.toLowerCase()) {
+        this.activeEl.nextSibling === null ||
+        this.activeEl.nodeName.toLowerCase() !== this.activeEl.nextSibling.nodeName.toLowerCase()) {
       return;
     }
     event.stopImmediatePropagation();
     this.inResize = true;
-    this.headerStartWidth = parseInt(this.activeEl.style.width,10) || 0;
-    this.nextHeaderStartWidth = parseInt(this.activeEl.nextSibling.style.width,10) || 0;
+    this.headerStartWidth = parseInt(this.activeEl.style.width, 10) || 0;
+    this.nextHeaderStartWidth = parseInt(this.activeEl.nextSibling.style.width, 10) || 0;
     this.nMouseX = mouseEvent.clientX;
-    return false;
   }
 
   cleanFiltered() {
@@ -222,7 +222,7 @@ class TableHeaderColumn extends Component {
       break;
     }
     }
-    this.clear = false
+    this.clear = false;
   }
 
   applyFilter(val) {

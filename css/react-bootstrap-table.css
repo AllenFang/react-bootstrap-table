@@ -135,11 +135,14 @@
   width: 10px;
   background-color: transparent;
   cursor: e-resize;
-  border-right: 2px solid #BBB;
   position: absolute;
   display: inline-block;
   top: 0;
   right: 0;
+}
+
+.react-bs-table .react-bs-container-header > table > thead > tr > th.resizable > div.resize-handler:hover {
+  border-right: 2px solid #BBB;
 }
 
 .react-bs-table .react-bs-container-header > table > thead > tr > th.resizable:last-child > div.resize-handler {

@@ -910,15 +910,14 @@ class BootstrapTable extends Component {
     const header = this.refs.header.refs.header;
     const headerContainer = this.refs.header.refs.container;
     const bodyHeader = this.refs.body.refs.header;
-    const bodyColumns = bodyHeader.childNodes;
     const headerRow = header.childNodes;
     const isScroll = headerContainer.offsetWidth !== bodyHeader.parentNode.offsetWidth;
     const scrollBarWidth = isScroll ? Util.getScrollBarWidth() : 0;
-    if(headerRow){
-      for(let i = 0; i<headerRow.length;i++){
+    if (headerRow) {
+      for (let i = 0; i < headerRow.length; i++) {
         const cell = headerRow[i];
         const computedStyle = getComputedStyle(cell);
-        let width = parseFloat(computedStyle.width.replace('px',''));
+        let width = parseFloat(computedStyle.width.replace('px', ''));
 
         if (this.isIE) {
           const paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
