@@ -92,7 +92,7 @@ class PaginationList extends Component {
     </span> : null;
 
     if (typeof paginationShowsTotal === 'function') {
-      total = paginationShowsTotal(start, to, dataSize);
+      total = paginationShowsTotal(start, to + 1, dataSize);
     }
 
     const dropDownStyle = {
