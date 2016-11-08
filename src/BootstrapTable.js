@@ -27,12 +27,6 @@ class BootstrapTable extends Component {
 
     this.initTable(this.props);
 
-    if (this.filter) {
-      this.filter.on('onFilterChange', (currentFilter) => {
-        this.handleFilterData(currentFilter);
-      });
-    }
-
     if (this.props.selectRow && this.props.selectRow.selected) {
       const copy = this.props.selectRow.selected.slice();
       this.store.setSelectedRowKey(copy);
@@ -73,6 +67,13 @@ class BootstrapTable extends Component {
         column.props.filter.emitter = this.filter;
       }
     });
+
+    if (this.filter) {
+      this.filter.removeAllListeners('onFilterChange');
+      this.filter.on('onFilterChange', (currentFilter) => {
+        this.handleFilterData(currentFilter);
+      });
+    }
 
     this.colInfos = this.getColumnsDescription(props).reduce(( prev, curr ) => {
       prev[curr.name] = curr;
@@ -308,6 +309,7 @@ class BootstrapTable extends Component {
             cellEdit={ this.props.cellEdit }
             selectedRowKeys={ this.state.selectedRowKeys }
             onRowClick={ this.handleRowClick }
+            onRowDoubleClick={ this.handleRowDoubleClick }
             onRowMouseOver={ this.handleRowMouseOver }
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
@@ -427,6 +429,12 @@ class BootstrapTable extends Component {
   handleRowClick = row => {
     if (this.props.options.onRowClick) {
       this.props.options.onRowClick(row);
+    }
+  }
+
+  handleRowDoubleClick = row => {
+    if (this.props.options.onRowDoubleClick) {
+      this.props.options.onRowDoubleClick(row);
     }
   }
 
@@ -560,7 +568,7 @@ class BootstrapTable extends Component {
     } catch (e) {
       return e;
     }
-    this._handleAfterAddingRow(newObj);
+    this._handleAfterAddingRow(newObj, true);
   }
 
   handleAddRow = newObj => {
@@ -582,7 +590,7 @@ class BootstrapTable extends Component {
     } catch (e) {
       return e;
     }
-    this._handleAfterAddingRow(newObj);
+    this._handleAfterAddingRow(newObj, false);
   }
 
   getSizePerPage() {
@@ -914,7 +922,9 @@ class BootstrapTable extends Component {
   }
 
   _adjustTable = () => {
-    this._adjustHeaderWidth();
+    if (!this.props.printable) {
+      this._adjustHeaderWidth();
+    }
     this._adjustHeight();
   }
 
@@ -974,17 +984,29 @@ class BootstrapTable extends Component {
     }
   }
 
-  _handleAfterAddingRow(newObj) {
+  _handleAfterAddingRow(newObj, atTheBeginning) {
     let result;
     if (this.props.pagination) {
-      // if pagination is enabled and insert row be trigger, change to last page
+      // if pagination is enabled and inserting row at the end,
+      // change page to the last page
+      // otherwise, change it to the first page
       const { sizePerPage } = this.state;
-      const currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
-      result = this.store.page(currLastPage, sizePerPage).get();
-      this.setState({
-        data: result,
-        currPage: currLastPage
-      });
+
+      if (atTheBeginning) {
+        const firstPage = this.props.options.pageStartIndex || Const.PAGE_START_INDEX;
+        result = this.store.page(firstPage, sizePerPage).get();
+        this.setState({
+          data: result,
+          currPage: firstPage
+        });
+      } else {
+        const currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
+        result = this.store.page(currLastPage, sizePerPage).get();
+        this.setState({
+          data: result,
+          currPage: currLastPage
+        });
+      }
     } else {
       result = this.store.get();
       this.setState({
@@ -1009,6 +1031,7 @@ BootstrapTable.propTypes = {
   hover: PropTypes.bool,
   condensed: PropTypes.bool,
   pagination: PropTypes.bool,
+  printable: PropTypes.bool,
   searchPlaceholder: PropTypes.string,
   selectRow: PropTypes.shape({
     mode: PropTypes.oneOf([
@@ -1061,6 +1084,7 @@ BootstrapTable.propTypes = {
     afterSearch: PropTypes.func,
     afterColumnFilter: PropTypes.func,
     onRowClick: PropTypes.func,
+    onRowDoubleClick: PropTypes.func,
     page: PropTypes.number,
     pageStartIndex: PropTypes.number,
     paginationShowsTotal: PropTypes.oneOfType([ PropTypes.bool, PropTypes.func ]),
@@ -1127,6 +1151,7 @@ BootstrapTable.defaultProps = {
   hover: false,
   condensed: false,
   pagination: false,
+  printable: false,
   searchPlaceholder: undefined,
   selectRow: {
     mode: Const.ROW_SELECT_NONE,
@@ -1176,6 +1201,7 @@ BootstrapTable.defaultProps = {
     afterSearch: undefined,
     afterColumnFilter: undefined,
     onRowClick: undefined,
+    onRowDoubleClick: undefined,
     onMouseLeave: undefined,
     onMouseEnter: undefined,
     onRowMouseOut: undefined,

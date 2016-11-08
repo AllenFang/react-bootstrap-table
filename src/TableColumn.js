@@ -61,25 +61,35 @@ class TableColumn extends Component {
   }
 
   render() {
+    const {
+      children,
+      columnTitle,
+      className,
+      dataAlign,
+      hidden,
+      cellEdit
+    } = this.props;
+
     const tdStyle = {
-      textAlign: this.props.dataAlign,
-      display: this.props.hidden ? 'none' : null
+      textAlign: dataAlign,
+      display: hidden ? 'none' : null
     };
 
     const opts = {};
-    if (this.props.cellEdit) {
-      if (this.props.cellEdit.mode === Const.CELL_EDIT_CLICK) {
+
+    if (cellEdit) {
+      if (cellEdit.mode === Const.CELL_EDIT_CLICK) {
         opts.onClick = this.handleCellEdit;
-      } else if (this.props.cellEdit.mode === Const.CELL_EDIT_DBCLICK) {
+      } else if (cellEdit.mode === Const.CELL_EDIT_DBCLICK) {
         opts.onDoubleClick = this.handleCellEdit;
       }
     }
     return (
       <td style={ tdStyle }
-          title={ this.props.columnTitle }
-          className={ this.props.className }
+          title={ columnTitle }
+          className={ className }
           { ...opts }>
-        { this.props.children }
+        { typeof children === 'boolean' ? children.toString() : children }
       </td>
     );
   }

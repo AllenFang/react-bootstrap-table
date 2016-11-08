@@ -77,7 +77,7 @@ class PaginationList extends Component {
       pageStartIndex,
       hideSizePerPage
     } = this.props;
-
+    let sizePerPageText = '';
     this.totalPages = Math.ceil(dataSize / sizePerPage);
     this.lastPage = this.props.pageStartIndex + this.totalPages - 1;
     const pageBtns = this.makePage();
@@ -90,6 +90,7 @@ class PaginationList extends Component {
     const sizePerPageOptions = sizePerPageList.map((_sizePerPage) => {
       const pageText = _sizePerPage.text || _sizePerPage;
       const pageNum = _sizePerPage.value || _sizePerPage;
+      if (sizePerPage === pageNum) sizePerPageText = pageText;
       return (
         <li key={ pageText } role='presentation'>
           <a role='menuitem'
@@ -110,7 +111,7 @@ class PaginationList extends Component {
     </span> : null;
 
     if (typeof paginationShowsTotal === 'function') {
-      total = paginationShowsTotal(start, to, dataSize);
+      total = paginationShowsTotal(start, to + 1, dataSize);
     }
 
     const dropDownStyle = {
@@ -130,7 +131,7 @@ class PaginationList extends Component {
                     id='pageDropDown' data-toggle='dropdown'
                     aria-expanded={ this.state.open }
                     onClick={ this.toggleDropDown }>
-                    { sizePerPage }
+                    { sizePerPageText }
                     <span>
                       { ' ' }
                       <span className='caret'/>

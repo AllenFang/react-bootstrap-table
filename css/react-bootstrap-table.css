@@ -2,7 +2,7 @@
 /*@import "~toastr/build/toastr.min.css";*/
 
 .react-bs-table-container .react-bs-table-search-form {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .react-bs-table {
@@ -11,7 +11,7 @@
 }
 
 .react-bs-table table {
-  margin-bottom: 0px;
+  margin-bottom: 0;
   table-layout: fixed;
 }
 
@@ -21,6 +21,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
 .react-bs-table {
   margin: 5px 10px 5px 10px;
 }
@@ -30,7 +31,7 @@
 }
 
 .react-bs-table-tool-bar {
-  margin: 10px 10px 0px 10px;
+  margin: 10px 10px 0 10px;
 }
 
 .react-bs-container-header {
@@ -45,20 +46,24 @@
 }
 
 .react-bs-table .table-bordered {
-    border: 0px;
+    border: 0;
 }
+
 .react-bs-table .table-bordered > thead > tr > th,
 .react-bs-table .table-bordered > thead > tr > td {
   border-bottom-width: 2px;
 }
+
 .react-bs-table .table-bordered > tfoot > tr > th,
 .react-bs-table .table-bordered > tfoot > tr > td {
   border-top-width: 2px;
 }
+
 .react-bs-table .table-bordered > tfoot > tr > th,
 .react-bs-table .table-bordered > tfoot > tr > td {
-  border-bottom-width: 0px;
+  border-bottom-width: 0;
 }
+
 /*Esquerda*/
 .react-bs-table .table-bordered > thead > tr > th:first-child,
 .react-bs-table .table-bordered > tbody > tr > th:first-child,
@@ -66,8 +71,9 @@
 .react-bs-table .table-bordered > thead > tr > td:first-child,
 .react-bs-table .table-bordered > tbody > tr > td:first-child,
 .react-bs-table .table-bordered > tfoot > tr > td:first-child {
-  border-left-width: 0px;
+  border-left-width: 0;
 }
+
 /*Direita*/
 .react-bs-table .table-bordered > thead > tr > th:last-child,
 .react-bs-table .table-bordered > tbody > tr > th:last-child,
@@ -75,22 +81,25 @@
 .react-bs-table .table-bordered > thead > tr > td:last-child,
 .react-bs-table .table-bordered > tbody > tr > td:last-child,
 .react-bs-table .table-bordered > tfoot > tr > td:last-child {
-  border-right-width: 0px;
+  border-right-width: 0;
 }
+
 /*Topo*/
 .react-bs-table .table-bordered > thead > tr:first-child > th,
 .react-bs-table .table-bordered > thead > tr:first-child > td {
-  border-top-width: 0px;
+  border-top-width: 0;
 }
+
 /*Baixo*/
 .react-bs-table .table-bordered > tfoot > tr:last-child > th,
 .react-bs-table .table-bordered > tfoot > tr:last-child > td {
-  border-bottom-width: 0px;
+  border-bottom-width: 0;
 }
 
 .react-bs-table .react-bs-container-header > table > thead > tr > th {
   vertical-align: middle;
 }
+
 .react-bs-table .react-bs-container-header > table > thead > tr > th .filter{
   font-weight: normal;
 }
@@ -200,9 +209,11 @@
 .animated.bounceOut{
   animation-duration: .75s;
 }
+
 .animated.shake{
-  animation-duration:.3s;
+  animation-duration: .3s;
 }
+
 @keyframes shake {
   from, to {
     transform: translate3d(0, 0, 0);
@@ -220,6 +231,7 @@
 .shake {
   animation-name: shake;
 }
+
 @keyframes bounceIn {
   from, 20%, 40%, 60%, 80%, to {
     animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
