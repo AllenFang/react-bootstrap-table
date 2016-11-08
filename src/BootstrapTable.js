@@ -284,7 +284,7 @@ class BootstrapTable extends Component {
             bordered={ this.props.bordered }
             condensed={ this.props.condensed }
             isFiltered={ this.filter ? true : false }
-            isSelectAll={ isSelectAll }>
+            isSelectAll={ isSelectAll }
             onResize={ this._adjustBodyWidth }>
             { this.props.children }
           </TableHeader>
@@ -937,8 +937,6 @@ class BootstrapTable extends Component {
 
         bodyHeader.childNodes[i].style.width = result;
         bodyHeader.childNodes[i].style.minWidth = result;
-//                header.childNodes[i].style.width = result;
-//                header.childNodes[i].style.minWidth = result;
       }
     }
   }
