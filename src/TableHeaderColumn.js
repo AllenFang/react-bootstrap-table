@@ -138,8 +138,9 @@ class TableHeaderColumn extends Component {
       <th ref='header-col'
           className={ classes }
           style={ thStyle }
+          onClick={ this.handleColumnClick }   
           { ...title }>
-        <div onClick={ this.handleColumnClick } style={ { display: 'inline' } }>{ children }{ sortCaret }</div>
+        { children }{ sortCaret }
         <div onClick={ e => e.stopPropagation() }>
           { this.props.filter ? this.getFilters() : null }
         </div>
