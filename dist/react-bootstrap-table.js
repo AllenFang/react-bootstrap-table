@@ -21191,7 +21191,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      ) : null;
 
 	      if (typeof paginationShowsTotal === 'function') {
-	        total = paginationShowsTotal(start, to, dataSize);
+	        total = paginationShowsTotal(start, to + 1, dataSize);
 	      }
 
 	      var dropDownStyle = {
@@ -24373,11 +24373,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var options = _props.options;
 	      var placeholder = _props.placeholder;
 	      var columnName = _props.columnName;
+	      var selectText = _props.selectText;
 
+	      var selectTextValue = selectText !== undefined ? selectText : 'Select';
 	      optionTags.push(_react2['default'].createElement(
 	        'option',
 	        { key: '-1', value: '' },
-	        placeholder || 'Select ' + columnName + '...'
+	        placeholder || selectTextValue + ' ' + columnName + '...'
 	      ));
 	      Object.keys(options).map(function (key) {
 	        optionTags.push(_react2['default'].createElement(
