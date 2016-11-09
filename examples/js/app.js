@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { IndexRoute, Router, Route } from 'react-router';
+import { IndexRoute, Router, Route, hashHistory } from 'react-router';
 
 import App from './components/App';
 import Home from './components/Home';
@@ -9,7 +9,7 @@ import GettingStarted from './components/GettingStarted';
 import PageNotFound from './components/PageNotFound';
 
 const routes = (
-  <Router>
+  <Router history={ hashHistory }>
     <Route path='/' component={ App }>
       <IndexRoute component={ Home } />
       <Route path='getting-started' component={ GettingStarted }/>
