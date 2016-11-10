@@ -309,6 +309,27 @@ class BootstrapTable extends Component {
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
             noDataText={ this.props.options.noDataText } />
+          { this.props.footerData && <TableBody ref='footer'
+             bodyContainerClass={ this.props.bodyContainerClass }
+             tableBodyClass={ this.props.tableBodyClass }
+             style={ { ...style, ...this.props.bodyStyle } }
+             data={ this.props.footerData }
+             columns={ columns }
+             trClassName={ this.props.trClassName }
+             striped={ this.props.striped }
+             bordered={ this.props.bordered }
+             hover={ this.props.hover }
+             keyField={ this.store.getKeyField() }
+             condensed={ this.props.condensed }
+             selectRow={ false }
+             cellEdit={ false }
+             selectedRowKeys={ this.state.selectedRowKeys }
+             onRowClick={ this.handleRowClick }
+             onRowDoubleClick={ this.handleRowDoubleClick }
+             onRowMouseOver={ this.handleRowMouseOver }
+             onRowMouseOut={ this.handleRowMouseOut }
+             onSelectRow={ this.handleSelectRow }
+             noDataText={ this.props.options.noDataText } /> }
         </div>
         { tableFilter }
         { pagination }

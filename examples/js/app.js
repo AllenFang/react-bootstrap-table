@@ -28,6 +28,7 @@ const routes = (
         <Route path='others' component={ require('./others/demo') } />
         <Route path='complex' component={ require('./complex/demo') } />
         <Route path='remote' component={ require('./remote/demo') } />
+        <Route path='footer' component={ require('./footer/demo') } />
       </Route>
       <Route path='*' component={ PageNotFound }/>
     </Route>
