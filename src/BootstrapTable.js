@@ -260,6 +260,7 @@ class BootstrapTable extends Component {
     const isSelectAll = this.isSelectAll();
     let sortIndicator = this.props.options.sortIndicator;
     if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
+
     return (
       <div className={ classSet('react-bs-table-container', this.props.containerClass) }
         style={ this.props.containerStyle }>
@@ -293,6 +294,7 @@ class BootstrapTable extends Component {
             tableBodyClass={ this.props.tableBodyClass }
             style={ { ...style, ...this.props.bodyStyle } }
             data={ this.state.data }
+            footerData={ this.props.footerData }
             columns={ columns }
             trClassName={ this.props.trClassName }
             striped={ this.props.striped }
@@ -309,27 +311,6 @@ class BootstrapTable extends Component {
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
             noDataText={ this.props.options.noDataText } />
-          { this.props.footerData && <TableBody ref='footer'
-             bodyContainerClass={ this.props.bodyContainerClass }
-             tableBodyClass={ this.props.tableBodyClass }
-             style={ { ...style, ...this.props.bodyStyle } }
-             data={ this.props.footerData }
-             columns={ columns }
-             trClassName={ this.props.trClassName }
-             striped={ this.props.striped }
-             bordered={ this.props.bordered }
-             hover={ this.props.hover }
-             keyField={ this.store.getKeyField() }
-             condensed={ this.props.condensed }
-             selectRow={ false }
-             cellEdit={ false }
-             selectedRowKeys={ this.state.selectedRowKeys }
-             onRowClick={ this.handleRowClick }
-             onRowDoubleClick={ this.handleRowDoubleClick }
-             onRowMouseOver={ this.handleRowMouseOver }
-             onRowMouseOut={ this.handleRowMouseOut }
-             onSelectRow={ this.handleSelectRow }
-             noDataText={ this.props.options.noDataText } /> }
         </div>
         { tableFilter }
         { pagination }
@@ -1024,6 +1005,7 @@ BootstrapTable.propTypes = {
   height: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   maxHeight: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   data: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
+  footerData: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
   remote: PropTypes.bool, // remote data, default is false
   striped: PropTypes.bool,
   bordered: PropTypes.bool,

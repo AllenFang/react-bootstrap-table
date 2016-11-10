@@ -22,7 +22,7 @@ addProducts(8);
 
 footerData.push({
   id: '',
-  name: 'Total',
+  name: 'Totals',
   price: 22000
 });
 
@@ -33,7 +33,7 @@ export default class BasicTable extends React.Component {
         <BootstrapTable data={ products } footerData={ footerData } >
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
+          <TableHeaderColumn dataField='price' columnTitle={ true } >Product Price</TableHeaderColumn>
         </BootstrapTable>
 
         <BootstrapTable data={ products } >
