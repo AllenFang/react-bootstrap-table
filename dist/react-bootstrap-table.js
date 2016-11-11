@@ -826,6 +826,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var isSelectAll = this.isSelectAll();
 	      var sortIndicator = this.props.options.sortIndicator;
 	      if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
+
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: (0, _classnames2['default'])('react-bs-table-container', this.props.containerClass),
@@ -864,6 +865,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            tableBodyClass: this.props.tableBodyClass,
 	            style: _extends({}, style, this.props.bodyStyle),
 	            data: this.state.data,
+	            footerData: this.props.footerData,
 	            columns: columns,
 	            trClassName: this.props.trClassName,
 	            striped: this.props.striped,
@@ -1195,6 +1197,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  height: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
 	  maxHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
 	  data: _react.PropTypes.oneOfType([_react.PropTypes.array, _react.PropTypes.object]),
+	  footerData: _react.PropTypes.oneOfType([_react.PropTypes.array, _react.PropTypes.object]),
 	  remote: _react.PropTypes.bool, // remote data, default is false
 	  striped: _react.PropTypes.bool,
 	  bordered: _react.PropTypes.bool,
@@ -1781,6 +1784,97 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return obj && typeof obj === 'function';
 	};
 
+	var mapColumns = function mapColumns(column, i, data, r, object) {
+	  var fieldValue = data[column.name];
+	  if (column.name !== object.props.keyField && // Key field can't be edit
+	  column.editable && // column is editable? default is true, user can set it false
+	  object.state.currEditCell !== null && object.state.currEditCell.rid === r && object.state.currEditCell.cid === i) {
+	    var editable = column.editable;
+	    var format = column.format ? function (value) {
+	      return column.format(value, data, column.formatExtraData, r).replace(/<.*?>/g, '');
+	    } : false;
+	    if (isFun(column.editable)) {
+	      editable = column.editable(fieldValue, data, r, i);
+	    }
+
+	    return _react2['default'].createElement(_TableEditColumn2['default'], {
+	      completeEdit: object.handleCompleteEditCell,
+	      // add by bluespring for column editor customize
+	      editable: editable,
+	      customEditor: column.customEditor,
+	      format: column.format ? format : false,
+	      key: i,
+	      blurToSave: object.props.cellEdit.blurToSave,
+	      rowIndex: r,
+	      colIndex: i,
+	      row: data,
+	      fieldValue: fieldValue });
+	  } else {
+	    // add by bluespring for className customize
+	    var columnChild = fieldValue && fieldValue.toString();
+	    var columnTitle = null;
+	    var colSpan = 1;
+	    var tdClassName = column.className;
+	    if (isFun(column.className)) {
+	      tdClassName = column.className(fieldValue, data, r, i);
+	    }
+
+	    if (typeof column.format !== 'undefined') {
+	      var formattedValue = column.format(fieldValue, data, column.formatExtraData, r);
+	      if (!_react2['default'].isValidElement(formattedValue)) {
+	        columnChild = _react2['default'].createElement('div', { dangerouslySetInnerHTML: { __html: formattedValue } });
+	      } else {
+	        columnChild = formattedValue;
+	        columnTitle = column.columnTitle && formattedValue ? formattedValue.toString() : null;
+	      }
+	    } else {
+	      columnTitle = column.columnTitle && fieldValue ? fieldValue.toString() : null;
+	    }
+	    return _react2['default'].createElement(
+	      _TableColumn2['default'],
+	      { key: i,
+	        dataAlign: column.align,
+	        className: tdClassName,
+	        columnTitle: columnTitle,
+	        colSpan: colSpan,
+	        cellEdit: object.props.cellEdit,
+	        hidden: column.hidden,
+	        onEdit: object.handleEditCell,
+	        width: column.width },
+	      columnChild
+	    );
+	  }
+	};
+
+	var mapTableRows = function mapTableRows(data, r, unselectable, isSelectRowDefined, inputType, CustomComponent, object) {
+	  var tableColumns = object.props.columns.map(function (column, i) {
+	    return mapColumns(column, i, data, r, object);
+	  }, object);
+	  var key = data[object.props.keyField];
+	  var disable = unselectable.indexOf(key) !== -1;
+	  var selected = object.props.selectedRowKeys.indexOf(key) !== -1;
+	  var selectRowColumn = isSelectRowDefined && !object.props.selectRow.hideSelectColumn ? object.renderSelectRowColumn(selected, inputType, disable, CustomComponent, r) : null;
+	  // add by bluespring for className customize
+	  var trClassName = object.props.trClassName;
+	  if (isFun(object.props.trClassName)) {
+	    trClassName = object.props.trClassName(data, r);
+	  }
+	  return _react2['default'].createElement(
+	    _TableRow2['default'],
+	    { isSelected: selected, key: key, className: trClassName, ref: key,
+	      selectRow: isSelectRowDefined ? object.props.selectRow : undefined,
+	      enableCellEdit: object.props.cellEdit.mode !== _Const2['default'].CELL_EDIT_NONE,
+	      onRowClick: object.handleRowClick,
+	      onRowDoubleClick: object.handleRowDoubleClick,
+	      onRowMouseOver: object.handleRowMouseOver,
+	      onRowMouseOut: object.handleRowMouseOut,
+	      onSelectRow: object.handleSelectRow,
+	      unselectableRow: disable },
+	    selectRowColumn,
+	    tableColumns
+	  );
+	};
+
 	var TableBody = (function (_Component) {
 	  _inherits(TableBody, _Component);
 
@@ -1885,6 +1979,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(TableBody, [{
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
 	      var tableClasses = (0, _classnames2['default'])('table', {
 	        'table-striped': this.props.striped,
 	        'table-bordered': this.props.bordered,
@@ -1899,89 +1995,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var CustomComponent = this.props.selectRow.customComponent;
 
 	      var tableRows = this.props.data.map(function (data, r) {
-	        var tableColumns = this.props.columns.map(function (column, i) {
-	          var fieldValue = data[column.name];
-	          if (column.name !== this.props.keyField && // Key field can't be edit
-	          column.editable && // column is editable? default is true, user can set it false
-	          this.state.currEditCell !== null && this.state.currEditCell.rid === r && this.state.currEditCell.cid === i) {
-	            var editable = column.editable;
-	            var format = column.format ? function (value) {
-	              return column.format(value, data, column.formatExtraData, r).replace(/<.*?>/g, '');
-	            } : false;
-	            if (isFun(column.editable)) {
-	              editable = column.editable(fieldValue, data, r, i);
-	            }
-
-	            return _react2['default'].createElement(_TableEditColumn2['default'], {
-	              completeEdit: this.handleCompleteEditCell,
-	              // add by bluespring for column editor customize
-	              editable: editable,
-	              customEditor: column.customEditor,
-	              format: column.format ? format : false,
-	              key: i,
-	              blurToSave: this.props.cellEdit.blurToSave,
-	              rowIndex: r,
-	              colIndex: i,
-	              row: data,
-	              fieldValue: fieldValue });
-	          } else {
-	            // add by bluespring for className customize
-	            var columnChild = fieldValue && fieldValue.toString();
-	            var columnTitle = null;
-	            var tdClassName = column.className;
-	            if (isFun(column.className)) {
-	              tdClassName = column.className(fieldValue, data, r, i);
-	            }
-
-	            if (typeof column.format !== 'undefined') {
-	              var formattedValue = column.format(fieldValue, data, column.formatExtraData, r);
-	              if (!_react2['default'].isValidElement(formattedValue)) {
-	                columnChild = _react2['default'].createElement('div', { dangerouslySetInnerHTML: { __html: formattedValue } });
-	              } else {
-	                columnChild = formattedValue;
-	                columnTitle = column.columnTitle && formattedValue ? formattedValue.toString() : null;
-	              }
-	            } else {
-	              columnTitle = column.columnTitle && fieldValue ? fieldValue.toString() : null;
-	            }
-	            return _react2['default'].createElement(
-	              _TableColumn2['default'],
-	              { key: i,
-	                dataAlign: column.align,
-	                className: tdClassName,
-	                columnTitle: columnTitle,
-	                cellEdit: this.props.cellEdit,
-	                hidden: column.hidden,
-	                onEdit: this.handleEditCell,
-	                width: column.width },
-	              columnChild
-	            );
-	          }
-	        }, this);
-	        var key = data[this.props.keyField];
-	        var disable = unselectable.indexOf(key) !== -1;
-	        var selected = this.props.selectedRowKeys.indexOf(key) !== -1;
-	        var selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ? this.renderSelectRowColumn(selected, inputType, disable, CustomComponent, r) : null;
-	        // add by bluespring for className customize
-	        var trClassName = this.props.trClassName;
-	        if (isFun(this.props.trClassName)) {
-	          trClassName = this.props.trClassName(data, r);
-	        }
-	        return _react2['default'].createElement(
-	          _TableRow2['default'],
-	          { isSelected: selected, key: key, className: trClassName,
-	            selectRow: isSelectRowDefined ? this.props.selectRow : undefined,
-	            enableCellEdit: this.props.cellEdit.mode !== _Const2['default'].CELL_EDIT_NONE,
-	            onRowClick: this.handleRowClick,
-	            onRowDoubleClick: this.handleRowDoubleClick,
-	            onRowMouseOver: this.handleRowMouseOver,
-	            onRowMouseOut: this.handleRowMouseOut,
-	            onSelectRow: this.handleSelectRow,
-	            unselectableRow: disable },
-	          selectRowColumn,
-	          tableColumns
-	        );
-	      }, this);
+	        return mapTableRows(data, r, unselectable, isSelectRowDefined, inputType, CustomComponent, _this2);
+	      });
 
 	      if (tableRows.length === 0) {
 	        tableRows.push(_react2['default'].createElement(
@@ -1995,6 +2010,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          )
 	        ));
 	      }
+	      var footerRows = this.props.footerData ? this.props.footerData.map(function (data, r) {
+	        return mapTableRows(data, r, unselectable, isSelectRowDefined, inputType, CustomComponent, _this2);
+	      }) : [];
 
 	      return _react2['default'].createElement(
 	        'div',
@@ -2009,6 +2027,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            'tbody',
 	            { ref: 'tbody' },
 	            tableRows
+	          ),
+	          footerRows.length > 0 && _react2['default'].createElement(
+	            'tfoot',
+	            { ref: 'tfoot' },
+	            footerRows
 	          )
 	        )
 	      );
@@ -2051,7 +2074,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'renderSelectRowColumn',
 	    value: function renderSelectRowColumn(selected, inputType, disabled) {
-	      var _this2 = this;
+	      var _this3 = this;
 
 	      var CustomComponent = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
 	      var rowIndex = arguments.length <= 4 || arguments[4] === undefined ? null : arguments[4];
@@ -2062,10 +2085,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        CustomComponent ? _react2['default'].createElement(CustomComponent, { type: inputType, checked: selected, disabled: disabled,
 	          rowIndex: rowIndex,
 	          onChange: function (e) {
-	            return _this2.handleSelectRowColumChange(e, e.currentTarget.parentElement.parentElement.parentElement.rowIndex);
+	            return _this3.handleSelectRowColumChange(e, e.currentTarget.parentElement.parentElement.parentElement.rowIndex);
 	          } }) : _react2['default'].createElement('input', { type: inputType, checked: selected, disabled: disabled,
 	          onChange: function (e) {
-	            return _this2.handleSelectRowColumChange(e, e.currentTarget.parentElement.parentElement.rowIndex);
+	            return _this3.handleSelectRowColumChange(e, e.currentTarget.parentElement.parentElement.rowIndex);
 	          } })
 	      );
 	    }
@@ -2081,6 +2104,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	TableBody.propTypes = {
 	  data: _react.PropTypes.array,
+	  footerData: _react.PropTypes.array,
 	  columns: _react.PropTypes.array,
 	  striped: _react.PropTypes.bool,
 	  bordered: _react.PropTypes.bool,
@@ -2339,6 +2363,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var children = _props.children;
 	      var columnTitle = _props.columnTitle;
 	      var className = _props.className;
+	      var colSpan = _props.colSpan;
 	      var dataAlign = _props.dataAlign;
 	      var hidden = _props.hidden;
 	      var cellEdit = _props.cellEdit;
@@ -2361,7 +2386,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'td',
 	        _extends({ style: tdStyle,
 	          title: columnTitle,
-	          className: className
+	          className: className,
+	          colSpan: colSpan
 	        }, opts),
 	        typeof children === 'boolean' ? children.toString() : children
 	      );
@@ -2376,6 +2402,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  hidden: _react.PropTypes.bool,
 	  className: _react.PropTypes.string,
 	  columnTitle: _react.PropTypes.string,
+	  colSpan: _react.PropTypes.number,
 	  children: _react.PropTypes.node
 	};
 

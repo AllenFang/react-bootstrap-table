@@ -42,7 +42,7 @@ const mapColumns = function(column, i, data, r, object) {
     // add by bluespring for className customize
     let columnChild = fieldValue && fieldValue.toString();
     let columnTitle = null;
-    const colSpan = 2;
+    const colSpan = 1;
     let tdClassName = column.className;
     if (isFun(column.className)) {
       tdClassName = column.className(fieldValue, data, r, i);
