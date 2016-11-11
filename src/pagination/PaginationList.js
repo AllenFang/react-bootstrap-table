@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import PageButton from './PageButton.js';
+import SizePerPageDropDown from './SizePerPageDropDown';
 import Const from '../Const';
 
 class PaginationList extends Component {
@@ -114,11 +115,6 @@ class PaginationList extends Component {
       total = paginationShowsTotal(start, to + 1, dataSize);
     }
 
-    const dropDownStyle = {
-      visibility: hideSizePerPage ? 'hidden' : 'visible'
-    };
-    const open = this.state.open ? 'open' : '';
-
     return (
       <div className='row' style={ { marginTop: 15 } }>
         {
@@ -126,21 +122,12 @@ class PaginationList extends Component {
           ? <div>
               <div className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
                 { total }{ ' ' }
-                <span className={ `dropdown ${open}` } style={ dropDownStyle }>
-                  <button className='btn btn-default dropdown-toggle'
-                    id='pageDropDown' data-toggle='dropdown'
-                    aria-expanded={ this.state.open }
-                    onClick={ this.toggleDropDown }>
-                    { sizePerPageText }
-                    <span>
-                      { ' ' }
-                      <span className='caret'/>
-                    </span>
-                  </button>
-                  <ul className='dropdown-menu' role='menu' aria-labelledby='pageDropDown'>
-                    { sizePerPageOptions }
-                  </ul>
-                </span>
+                <SizePerPageDropDown
+                  open={ this.state.open }
+                  hidden={ hideSizePerPage }
+                  currSizePerPage={ sizePerPageText }
+                  options={ sizePerPageOptions }
+                  onClick={ this.toggleDropDown }/>
               </div>
               <div className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
                 <ul className='pagination' style={ pageListStyle }>
