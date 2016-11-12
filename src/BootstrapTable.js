@@ -820,6 +820,7 @@ class BootstrapTable extends Component {
             firstPage={ options.firstPage || Const.FIRST_PAGE }
             lastPage={ options.lastPage || Const.LAST_PAGE }
             hideSizePerPage={ options.hideSizePerPage }
+            sizePerPageDropDown={ options.sizePerPageDropDown }
             open={ false }/>
         </div>
       );
@@ -1134,6 +1135,7 @@ BootstrapTable.propTypes = {
     searchPanel: PropTypes.func,
     btnGroup: PropTypes.func,
     toolBar: PropTypes.func,
+    sizePerPageDropDown: PropTypes.func,
     searchPosition: PropTypes.string
   }),
   fetchInfo: PropTypes.shape({
@@ -1244,6 +1246,7 @@ BootstrapTable.defaultProps = {
     searchPanel: undefined,
     btnGroup: undefined,
     toolBar: undefined,
+    sizePerPageDropDown: undefined,
     searchPosition: 'right'
   },
   fetchInfo: {

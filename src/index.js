@@ -10,6 +10,7 @@ import ShowSelectedOnlyButton from './toolbar/ShowSelectedOnlyButton';
 import ClearSearchButton from './toolbar/ClearSearchButton';
 import SearchField from './toolbar/SearchField';
 import ButtonGroup from './toolbar/ButtonGroup';
+import SizePerPageDropDown from './pagination/SizePerPageDropDown';
 
 if (typeof window !== 'undefined') {
   window.BootstrapTable = BootstrapTable;
@@ -24,6 +25,7 @@ if (typeof window !== 'undefined') {
   window.ClearSearchButton = ClearSearchButton;
   window.SearchField = SearchField;
   window.ButtonGroup = ButtonGroup;
+  window.SizePerPageDropDown = SizePerPageDropDown;
 }
 export {
   BootstrapTable,
@@ -37,5 +39,6 @@ export {
   ExportCSVButton,
   ClearSearchButton,
   SearchField,
-  ButtonGroup
+  ButtonGroup,
+  SizePerPageDropDown
 };
