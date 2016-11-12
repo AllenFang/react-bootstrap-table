@@ -75,32 +75,17 @@ class PaginationList extends Component {
       sizePerPage,
       sizePerPageList,
       paginationShowsTotal,
-      pageStartIndex,
-      hideSizePerPage
+      pageStartIndex
     } = this.props;
-    let sizePerPageText = '';
     this.totalPages = Math.ceil(dataSize / sizePerPage);
     this.lastPage = this.props.pageStartIndex + this.totalPages - 1;
     const pageBtns = this.makePage();
+    const dropdown = this.makeDropDown();
     const pageListStyle = {
       float: 'right',
       // override the margin-top defined in .pagination class in bootstrap.
       marginTop: '0px'
     };
-
-    const sizePerPageOptions = sizePerPageList.map((_sizePerPage) => {
-      const pageText = _sizePerPage.text || _sizePerPage;
-      const pageNum = _sizePerPage.value || _sizePerPage;
-      if (sizePerPage === pageNum) sizePerPageText = pageText;
-      return (
-        <li key={ pageText } role='presentation'>
-          <a role='menuitem'
-            tabIndex='-1' href='#'
-            data-page={ pageNum }
-            onClick={ this.changeSizePerPage }>{ pageText }</a>
-        </li>
-      );
-    });
 
     const offset = Math.abs(Const.PAGE_START_INDEX - pageStartIndex);
     let start = ((currPage - pageStartIndex) * sizePerPage);
@@ -121,13 +106,7 @@ class PaginationList extends Component {
           sizePerPageList.length > 1
           ? <div>
               <div className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
-                { total }{ ' ' }
-                <SizePerPageDropDown
-                  open={ this.state.open }
-                  hidden={ hideSizePerPage }
-                  currSizePerPage={ sizePerPageText }
-                  options={ sizePerPageOptions }
-                  onClick={ this.toggleDropDown }/>
+                { total }{ ' ' }{ dropdown }
               </div>
               <div className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
                 <ul className='pagination' style={ pageListStyle }>
@@ -148,6 +127,59 @@ class PaginationList extends Component {
         }
       </div>
     );
+  }
+
+  makeDropDown() {
+    let dropdown;
+    let dropdownProps;
+    let sizePerPageText = '';
+    const {
+      sizePerPageDropDown,
+      hideSizePerPage,
+      sizePerPage,
+      sizePerPageList
+    } = this.props;
+    if (sizePerPageDropDown) {
+      dropdown = sizePerPageDropDown({
+        open: this.state.open,
+        hideSizePerPage,
+        currSizePerPage: sizePerPage,
+        sizePerPageList,
+        onToggleDropDown: this.toggleDropDown,
+        onSelect: this.changeSizePerPage
+      });
+      if (dropdown.type.name === SizePerPageDropDown.name) {
+        dropdownProps = dropdown.props;
+      } else {
+        return dropdown;
+      }
+    }
+
+    if (dropdownProps || !dropdown) {
+      const sizePerPageOptions = sizePerPageList.map((_sizePerPage) => {
+        const pageText = _sizePerPage.text || _sizePerPage;
+        const pageNum = _sizePerPage.value || _sizePerPage;
+        if (sizePerPage === pageNum) sizePerPageText = pageText;
+        return (
+          <li key={ pageText } role='presentation'>
+            <a role='menuitem'
+              tabIndex='-1' href='#'
+              data-page={ pageNum }
+              onClick={ this.changeSizePerPage }>{ pageText }</a>
+          </li>
+        );
+      });
+      dropdown = (
+        <SizePerPageDropDown
+          open={ this.state.open }
+          hidden={ hideSizePerPage }
+          currSizePerPage={ sizePerPageText }
+          options={ sizePerPageOptions }
+          onClick={ this.toggleDropDown }
+          { ...dropdownProps }/>
+      );
+    }
+    return dropdown;
   }
 
   makePage() {
@@ -235,7 +267,8 @@ PaginationList.propTypes = {
   pageStartIndex: PropTypes.number,
   hideSizePerPage: PropTypes.bool,
   alwaysShowAllBtns: PropTypes.bool,
-  withFirstAndLast: PropTypes.bool
+  withFirstAndLast: PropTypes.bool,
+  sizePerPageDropDown: PropTypes.func
 };
 
 PaginationList.defaultProps = {
