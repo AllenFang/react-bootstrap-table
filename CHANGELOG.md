@@ -1,3 +1,11 @@
+<a name="v2.5.8"></a>
+# [v2.5.8](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.7...v2.5.8) (2016-11-09)
+## Bug fixes
+* Fixed the issue with giving the paginationShowsTotal as function when table is empty([ec93ddb](https://github.com/AllenFang/react-bootstrap-table/commit/ec93ddb4b4a4ed6cf6393649f816e19105f116de))
+
+## Enhancement
+* Add an option for changing the text on select filter([79b9f41](https://github.com/AllenFang/react-bootstrap-table/commit/79b9f41575511fbab15b4f08c32a215731288181))
+
 <a name="v2.5.7"></a>
 # [v2.5.7](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.6...v2.5.7) (2016-11-02)
 ## Bug fixes
