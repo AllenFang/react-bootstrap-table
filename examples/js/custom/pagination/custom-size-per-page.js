@@ -1,4 +1,5 @@
 /* eslint max-len: 0 */
+/* eslint no-console: 0 */
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn, SizePerPageDropDown } from 'react-bootstrap-table';
 
