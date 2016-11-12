@@ -25,6 +25,7 @@ import CustomSearchPanel2 from './search/custom-search-panel-2';
 import CustomButtonGroup from './toolbar/custom-button-group';
 import CustomToolBar1 from './toolbar/custom-toolbar-1';
 import LeftSearchPanel from './toolbar/left-search-panel';
+import CustomSizePerPage from './pagination/custom-size-per-page';
 
 import { Col, Panel } from 'react-bootstrap';
 
@@ -123,6 +124,10 @@ class Demo extends React.Component {
         <Panel header={ 'Custom for Tool Bar Demo' }>
           { renderLinks('custom/toolbar/custom-toolbar-1.js') }
             <CustomToolBar1/>
+        </Panel>
+        <Panel header={ 'Custom for Size Per Page DropDown Demo' }>
+          { renderLinks('custom/pagination/custom-size-per-page.js') }
+            <CustomSizePerPage/>
         </Panel>
       </Col>
     );
