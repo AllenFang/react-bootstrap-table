@@ -45,6 +45,12 @@
   width: 100%;
 }
 
+.react-bootstrap-table-page-btns-ul {
+  float: right;
+  /* override the margin-top defined in .pagination class in bootstrap. */
+  margin-top: 0;
+}
+
 .react-bs-table .table-bordered {
     border: 0;
 }

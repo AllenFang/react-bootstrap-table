@@ -75,17 +75,13 @@ class PaginationList extends Component {
       sizePerPage,
       sizePerPageList,
       paginationShowsTotal,
-      pageStartIndex
+      pageStartIndex,
+      paginationPanel
     } = this.props;
     this.totalPages = Math.ceil(dataSize / sizePerPage);
     this.lastPage = this.props.pageStartIndex + this.totalPages - 1;
     const pageBtns = this.makePage();
     const dropdown = this.makeDropDown();
-    const pageListStyle = {
-      float: 'right',
-      // override the margin-top defined in .pagination class in bootstrap.
-      marginTop: '0px'
-    };
 
     const offset = Math.abs(Const.PAGE_START_INDEX - pageStartIndex);
     let start = ((currPage - pageStartIndex) * sizePerPage);
@@ -100,30 +96,32 @@ class PaginationList extends Component {
       total = paginationShowsTotal(start, to + 1, dataSize);
     }
 
+    const content = paginationPanel && paginationPanel({
+      currPage,
+      sizePerPage,
+      sizePerPageList,
+      pageStartIndex,
+      toggleDropDown: this.toggleDropDown,
+      changeSizePerPage: this.changeSizePerPage,
+      components: {
+        totalText: total,
+        sizePerPageDropdown: dropdown,
+        pageList: pageBtns
+      }
+    });
+
     return (
       <div className='row' style={ { marginTop: 15 } }>
         {
-          sizePerPageList.length > 1
-          ? <div>
-              <div className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
-                { total }{ ' ' }{ dropdown }
-              </div>
-              <div className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
-                <ul className='pagination' style={ pageListStyle }>
-                  { pageBtns }
-                </ul>
-              </div>
+          content ||
+          <div>
+            <div className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
+              { total }{ sizePerPageList.length > 1 ? dropdown : null }
             </div>
-          : <div>
-              <div className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
-                { total }
-              </div>
-              <div className='col-md-6 col-xs-6'>
-                <ul className='pagination' style={ pageListStyle }>
-                  { pageBtns }
-                </ul>
-              </div>
+            <div className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
+              { pageBtns }
             </div>
+          </div>
         }
       </div>
     );
@@ -145,8 +143,8 @@ class PaginationList extends Component {
         hideSizePerPage,
         currSizePerPage: sizePerPage,
         sizePerPageList,
-        onToggleDropDown: this.toggleDropDown,
-        onSelect: this.changeSizePerPage
+        toggleDropDown: this.toggleDropDown,
+        changeSizePerPage: this.changeSizePerPage
       });
       if (dropdown.type.name === SizePerPageDropDown.name) {
         dropdownProps = dropdown.props;
@@ -184,7 +182,7 @@ class PaginationList extends Component {
 
   makePage() {
     const pages = this.getPages();
-    return pages.map(function(page) {
+    const pageBtns = pages.map(function(page) {
       const isActive = page === this.props.currPage;
       let disabled = false;
       let hidden = false;
@@ -212,6 +210,11 @@ class PaginationList extends Component {
         </PageButton>
       );
     }, this);
+    return (
+      <ul className='react-bootstrap-table-page-btns-ul pagination'>
+        { pageBtns }
+      </ul>
+    );
   }
 
   getPages() {
@@ -268,7 +271,8 @@ PaginationList.propTypes = {
   hideSizePerPage: PropTypes.bool,
   alwaysShowAllBtns: PropTypes.bool,
   withFirstAndLast: PropTypes.bool,
-  sizePerPageDropDown: PropTypes.func
+  sizePerPageDropDown: PropTypes.func,
+  paginationPanel: PropTypes.func
 };
 
 PaginationList.defaultProps = {
