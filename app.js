@@ -113,6 +113,24 @@ import HideOnInsertTable from './components/advance/hide-on-insert-table';
 import MouseEventTable from './components/others/mouse-event-table';
 import GetPageNumByKeyTable from './components/others/expose-api-table';
 
+import DefaultCustomInsertModalHeaderTable from './components/custom/insert-modal/default-custom-insert-modal-header';
+import FullyCustomInsertModalHeaderTable from './components/custom/insert-modal/fully-custom-insert-modal-header';
+import DefaultCustomInsertModalFooterTable from './components/custom/insert-modal/default-custom-insert-modal-footer';
+import FullyCustomInsertModalFooterTable from './components/custom/insert-modal/fully-custom-insert-modal-footer';
+import CustomInsertModalBodyTable from './components/custom/insert-modal/custom-insert-modal-body';
+import CustomInsertModalTable from './components/custom/insert-modal/custom-insert-modal';
+import DefaultCustomInsertButtonTable from './components/custom/insert-button/default-custom-insert-button';
+import FullyCustomInsertButtonTable from './components/custom/insert-button/fully-custom-insert-button';
+import DefaultCustomDeleteButtonTable from './components/custom/delete-button/default-custom-delete-button';
+import FullyCustomDeleteButtonTable from './components/custom/delete-button/fully-custom-delete-button';
+import DefaultCustomShowSelectButtonTable from './components/custom/show-only-select-button/default-custom-show-select-button';
+import FullyCustomShowSelectButtonTable from './components/custom/show-only-select-button/fully-custom-show-select-button';
+import DefaultCustomExportCSVButtonTable from './components/custom/csv-button/default-custom-csv-button';
+import FullyCustomExportCSVButtonTable from './components/custom/csv-button/fully-custom-csv-button';
+import DefaultCustomClearButtonTable from './components/custom/search/default-custom-search-clear-button';
+import FullyCustomClearButtonTable from './components/custom/search/fully-custom-search-clear-button';
+
+
 function appendGist(domId, gist) {
     window['callback'+domId] = function(gistData) {
         delete window['callback'+domId];
@@ -729,3 +747,90 @@ if (window.location.hash === '#others') {
     renderExampleAndGist(sources);
 }
 
+if (window.location.hash === '#custom') {
+    $("#example-section").empty();
+
+    const sources = [{
+        id: 'modalheadercustomdefault_s',
+        title: 'Default Custom the Header of Insert Modal',
+        gist: 'https://gist.github.com/AllenFang/44c07ea83294a88a1affa2c98897d012.js',
+        component: (<DefaultCustomInsertModalHeaderTable />)
+    }, {
+        id: 'modalheadercustomfully_s',
+        title: 'Fully Custom the Header of Insert Modal',
+        gist: 'https://gist.github.com/AllenFang/689e16a5209f470d69e6418e8445b7fb.js',
+        component: (<FullyCustomInsertModalHeaderTable />)
+    }, {
+        id: 'modalfootercustomdefault_s',
+        title: 'Default Custom the Footer of Insert Modal',
+        gist: 'https://gist.github.com/AllenFang/31ae7ed92f88f44e1e4c7fb0101e2c84.js',
+        component: (<DefaultCustomInsertModalFooterTable />)
+    }, {
+        id: 'modalfootercustomfully_s',
+        title: 'Fully Custom the Footer of Insert Modal',
+        gist: 'https://gist.github.com/AllenFang/980e13dd80fd66bc9a6243842acd7b45.js',
+        component: (<FullyCustomInsertModalFooterTable />)
+    }, {
+        id: 'modalbodycustom_s',
+        title: 'Custom the Body of Insert Modal',
+        gist: 'https://gist.github.com/AllenFang/bb06cc4740762bfea8ac50c2d620cbb1.js',
+        component: (<CustomInsertModalBodyTable />)
+    }, {
+        id: 'custommodal_s',
+        title: 'Custom the Insert Modal',
+        gist: 'https://gist.github.com/AllenFang/b07eb78dc052c7a6dc4d026cdc5eeb1b.js',
+        component: (<CustomInsertModalTable />)
+    }, {
+        id: 'defaultcustominsertbtn_s',
+        title: 'Default Custom Insert Button',
+        gist: 'https://gist.github.com/AllenFang/7eedf99212f27a34997c95e6891b65fa.js',
+        component: (<DefaultCustomInsertButtonTable />)
+    }, {
+        id: 'fullycustominsertbtn_s',
+        title: 'Fully Custom Insert Button',
+        gist: 'https://gist.github.com/AllenFang/66887f1d633000fa14dfc9ecf0e35cd6.js',
+        component: (<FullyCustomInsertButtonTable />)
+    }, {
+        id: 'defaultcustomdeletebtn_s',
+        title: 'Default Custom Delete Button',
+        gist: 'https://gist.github.com/AllenFang/283c5627abe3f94aad43d8347fb16e2a.js',
+        component: (<DefaultCustomDeleteButtonTable />)
+    }, {
+        id: 'fullycustomdeletebtn_s',
+        title: 'Fully Custom Delete Button',
+        gist: 'https://gist.github.com/AllenFang/437025e8c2c633d40f83efddaf6a7b17.js',
+        component: (<FullyCustomDeleteButtonTable />)
+    }, {
+        id: 'defaultcustomshowselectbtn_s',
+        title: 'Default Custom Show Select Button',
+        gist: 'https://gist.github.com/AllenFang/e180deebbeb16ba7bb45138c3683218f.js',
+        component: (<DefaultCustomShowSelectButtonTable />)
+    }, {
+        id: 'fullycustomshowselectbtn_s',
+        title: 'Fully Custom Show Select Button',
+        gist: 'https://gist.github.com/AllenFang/617b6d1480dc0983524759d67f7d7a7b.js',
+        component: (<FullyCustomShowSelectButtonTable />)
+    }, {
+        id: 'defaultcustomexportcsvbtn_s',
+        title: 'Default Custom Export CSV Button',
+        gist: 'https://gist.github.com/AllenFang/9e64138307e054940e0f3b67143da1cd.js',
+        component: (<DefaultCustomExportCSVButtonTable />)
+    }, {
+        id: 'fullycustomexportcsvbtn_s',
+        title: 'Fully Custom Export CSV Button',
+        gist: 'https://gist.github.com/AllenFang/4589e7f9b41be87f4b3c82d47e0884a6.js',
+        component: (<FullyCustomExportCSVButtonTable />)
+    }, {
+        id: 'defaultcustomclearbtn_s',
+        title: 'Default Custom Clear Search Button',
+        gist: 'https://gist.github.com/AllenFang/1c25909ea3a7f92ba9cde42172582dee.js',
+        component: (<DefaultCustomClearButtonTable />)
+    }, {
+        id: 'fullycustomclearbtn_s',
+        title: 'Fully Custom Clear Search Button',
+        gist: 'https://gist.github.com/AllenFang/b109186f62dcb728693d00b5dc2d60e9.js',
+        component: (<FullyCustomClearButtonTable />)
+    }];
+    
+    renderExampleAndGist(sources);
+}
