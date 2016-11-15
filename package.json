@@ -64,6 +64,7 @@
   },
   "dependencies": {
     "classnames": "^2.1.2",
+    "history": "^1.17.0",
     "react-toastr": "^2.8.0"
   },
   "peerDependencies": {
