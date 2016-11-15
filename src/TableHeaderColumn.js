@@ -124,7 +124,7 @@ class TableHeaderColumn extends Component {
         </span>
       );
     }
-    let sortCaret = sort && sort !== 'none' ? Util.renderReactSortCaret(sort) : defaultCaret;
+    let sortCaret = sort ? Util.renderReactSortCaret(sort) : defaultCaret;
     if (caretRender) {
       sortCaret = caretRender(sort, dataField);
     }
@@ -138,9 +138,8 @@ class TableHeaderColumn extends Component {
       <th ref='header-col'
           className={ classes }
           style={ thStyle }
-          onClick={ this.handleColumnClick }   
           { ...title }>
-        { children }{ sortCaret }
+        <div onClick={ this.handleColumnClick } style={ { display: 'inline' } }>{ children }{ sortCaret }</div>
         <div onClick={ e => e.stopPropagation() }>
           { this.props.filter ? this.getFilters() : null }
         </div>
