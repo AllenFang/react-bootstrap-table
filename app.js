@@ -129,6 +129,15 @@ import DefaultCustomExportCSVButtonTable from './components/custom/csv-button/de
 import FullyCustomExportCSVButtonTable from './components/custom/csv-button/fully-custom-csv-button';
 import DefaultCustomClearButtonTable from './components/custom/search/default-custom-search-clear-button';
 import FullyCustomClearButtonTable from './components/custom/search/fully-custom-search-clear-button';
+import DefaultCustomSearchFieldTable from './components/custom/search/default-custom-search-field';
+import FullyCustomSearchFieldTable from './components/custom/search/fully-custom-search-field';
+import CustomSearchPanel1 from './components/custom/search/custom-search-panel-1';
+import CustomSearchPanel2 from './components/custom/search/custom-search-panel-2';
+import CustomButtonGroup from './components/custom/toolbar/custom-button-group';
+import CustomToolBar1 from './components/custom/toolbar/custom-toolbar-1';
+import LeftSearchPanel from './components/custom/toolbar/left-search-panel';
+import CustomSizePerPage from './components/custom/pagination/custom-size-per-page';
+import CustomPaginationPanel from './components/custom/pagination/custom-pagination-panel';
 
 
 function appendGist(domId, gist) {
@@ -830,6 +839,51 @@ if (window.location.hash === '#custom') {
         title: 'Fully Custom Clear Search Button',
         gist: 'https://gist.github.com/AllenFang/b109186f62dcb728693d00b5dc2d60e9.js',
         component: (<FullyCustomClearButtonTable />)
+    }, {
+        id: 'defaultcustomsearchfield_s',
+        title: 'Default Custom Search Field',
+        gist: 'https://gist.github.com/AllenFang/faaf03ebcd6e5a23c71d35df1501adc9.js',
+        component: (<DefaultCustomSearchFieldTable />)
+    }, {
+        id: 'fullycustomsearchfield_s',
+        title: 'Fully Custom Search Field',
+        gist: 'https://gist.github.com/AllenFang/695f2c2310d57028166a9cfd5af7b61a.js',
+        component: (<FullyCustomSearchFieldTable />)
+    }, {
+        id: 'customsearchpanel1_s',
+        title: 'Custom Search Panel',
+        gist: 'https://gist.github.com/AllenFang/258cdfa92d6ce36a4d22ffd8b2aea17e.js',
+        component: (<CustomSearchPanel1 />)
+    }, {
+        id: 'customsearchpanel2_s',
+        title: 'Custom Search Panel',
+        gist: 'https://gist.github.com/AllenFang/dc16ed779a9e2daa69c2f998cfcf4d87.js',
+        component: (<CustomSearchPanel2 />)
+    }, {
+        id: 'custombtngroup_s',
+        title: 'Custom Button Group',
+        gist: 'https://gist.github.com/AllenFang/53bfe8746e1face5ca7fc0e82d68c399.js',
+        component: (<CustomButtonGroup />)
+    }, {
+        id: 'customtoolbar_s',
+        title: 'Custom ToolBar',
+        gist: 'https://gist.github.com/AllenFang/bf83073aa4320fa7200881e305d9e1e4.js',
+        component: (<CustomToolBar1 />)
+    }, {
+        id: 'customtoolbar1_s',
+        title: 'A Left Search Panell',
+        gist: 'https://gist.github.com/AllenFang/19556ac2b26f478f98c64d90fe0eda0c.js',
+        component: (<LeftSearchPanel />)
+    }, {
+        id: 'customsizeperpagedefault_s',
+        title: 'Custom SizePerPage DropDown',
+        gist: 'https://gist.github.com/AllenFang/d313a63737ee691b7f5cdc1a1505e270.js',
+        component: (<CustomSizePerPage />)
+    }, {
+        id: 'custompaginationpanel',
+        title: 'A Left Search Panell',
+        gist: 'https://gist.github.com/AllenFang/d49c17ca42f03e8349583d8c96f6968e.js',
+        component: (<CustomPaginationPanel />)
     }];
     
     renderExampleAndGist(sources);
