@@ -4,6 +4,7 @@ import TableRow from './TableRow';
 import TableColumn from './TableColumn';
 import TableEditColumn from './TableEditColumn';
 import classSet from 'classnames';
+import ExpandComponent from './ExpandComponent';
 
 const isFun = function(obj) {
   return obj && (typeof obj === 'function');
@@ -14,7 +15,9 @@ class TableBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currEditCell: null
+		currEditCell: null,
+		hideExpandRow: false
+		// hideExpandRow: new Array(this.props.data.length).fill(true)
     };
   }
 
@@ -32,7 +35,9 @@ class TableBody extends Component {
     const inputType = this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
     const CustomComponent = this.props.selectRow.customComponent;
 
-    const tableRows = this.props.data.map(function(data, r) {
+	// const tmp = filter(this.props.data);
+	// delete tmp['expand'];
+	const tableRows = this.props.data.map(function(data, r) {
       const tableColumns = this.props.columns.map(function(column, i) {
         const fieldValue = data[column.name];
         if (column.name !== this.props.keyField && // Key field can't be edit
@@ -97,7 +102,7 @@ class TableBody extends Component {
             </TableColumn>
           );
         }
-      }, this);
+	  }, this);
       const key = data[this.props.keyField];
       const disable = unselectable.indexOf(key) !== -1;
       const selected = this.props.selectedRowKeys.indexOf(key) !== -1;
@@ -107,27 +112,45 @@ class TableBody extends Component {
       let trClassName = this.props.trClassName;
       if (isFun(this.props.trClassName)) {
         trClassName = this.props.trClassName(data, r);
-      }
-      return (
-        <TableRow isSelected={ selected } key={ key } className={ trClassName }
-          selectRow={ isSelectRowDefined ? this.props.selectRow : undefined }
-          enableCellEdit={ this.props.cellEdit.mode !== Const.CELL_EDIT_NONE }
-          onRowClick={ this.handleRowClick }
-          onRowDoubleClick={ this.handleRowDoubleClick }
-          onRowMouseOver={ this.handleRowMouseOver }
-          onRowMouseOut={ this.handleRowMouseOut }
-          onSelectRow={ this.handleSelectRow }
-          unselectableRow={ disable }>
-          { selectRowColumn }
-          { tableColumns }
-        </TableRow>
-      );
-    }, this);
+	  }
+	  const result = [<TableRow isSelected={selected} key={key} className={trClassName}
+		  selectRow={isSelectRowDefined ? this.props.selectRow : undefined}
+		  enableCellEdit={this.props.cellEdit.mode !== Const.CELL_EDIT_NONE}
+		  onRowClick={this.handleRowClick}
+		  onRowDoubleClick={this.handleRowDoubleClick}
+		  onRowMouseOver={this.handleRowMouseOver}
+		  onRowMouseOut={this.handleRowMouseOut}
+		  onSelectRow={this.handleSelectRow}
+		  unselectableRow={disable}>
+		  {selectRowColumn}
+		  {tableColumns}
+	  </TableRow>];
+	  if ('expand' in data) {
+		  console.debug(data.expand);
+		  result.push(
+			  <ExpandComponent data={data.expand}
+				  columns={this.props.expandColumns}
+				  hidden={this.state.hideExpandRow}
+				  colSpan={this.props.columns.length}
+				  width={"100%"}
+				  selectRow={isSelectRowDefined ? this.props.selectRow : undefined}
+				  enableCellEdit={this.props.cellEdit.mode !== Const.CELL_EDIT_NONE}
+				  onRowClick={this.handleRowClick}
+				  onRowDoubleClick={this.handleRowDoubleClick}
+				  onRowMouseOver={this.handleRowMouseOver}
+				  onRowMouseOut={this.handleRowMouseOut}
+				  onSelectRow={this.handleSelectRow}
+				  unselectableRow={disable} />
+		  );
+	  }
+	  
+		return (result);
+	}, this);
 
     if (tableRows.length === 0) {
       tableRows.push(
         <TableRow key='##table-empty##'>
-          <td colSpan={ this.props.columns.length + (isSelectRowDefined ? 1 : 0) }
+          <td data-toggle="collapse" colSpan={ this.props.columns.length + (isSelectRowDefined ? 1 : 0) }
               className='react-bs-table-no-data'>
               { this.props.noDataText || Const.NO_DATA_TEXT }
           </td>
@@ -200,7 +223,7 @@ class TableBody extends Component {
         selectedRow = row;
       }
     });
-    onRowClick(selectedRow);
+	onRowClick(selectedRow);
   }
 
   handleRowDoubleClick = rowIndex => {
