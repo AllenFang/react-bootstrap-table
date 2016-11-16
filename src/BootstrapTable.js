@@ -12,16 +12,7 @@ import { TableDataStore } from './store/TableDataStore';
 import Util from './util';
 import exportCSV from './csv_export_util';
 import { Filter } from './Filter';
-// const filter = function(data) {
-// 	let result = [];
-// 	for (let i = 0, len = data.length; i < len; i++) {
-// 		if ('expand' in data[i]) {
-// 			let el = data[i],expand;
-// 			result.push(el.expand);
-// 		}
-// 	}
-// 	return result;
-// }
+
 class BootstrapTable extends Component {
 
   constructor(props) {
@@ -31,8 +22,12 @@ class BootstrapTable extends Component {
     if (Util.canUseDOM()) {
       this.isIE = document.documentMode;
     }
-
-    this.store = new TableDataStore(this.props.data.slice());
+    if (this.props.data) {
+      this.store = new TableDataStore(this.props.data.slice());
+    } else {
+      this.store = new TableDataStore([]);
+	}
+    // this.store = new TableDataStore(this.props.data.slice());
 
     this.initTable(this.props);
 
@@ -134,32 +129,32 @@ class BootstrapTable extends Component {
     return result;
   }
 
-  getExpandColumnsDescription() {
-      return React.Children.map(this.props.expandTableHeaderColumn, (column, i) => {
-          return {
-              name: column.props.dataField,
-              align: column.props.dataAlign,
-              sort: column.props.dataSort,
-              format: column.props.dataFormat,
-              formatExtraData: column.props.formatExtraData,
-              filterFormatted: column.props.filterFormatted,
-              filterValue: column.props.filterValue,
-              editable: column.props.editable,
-              customEditor: column.props.customEditor,
-              hidden: column.props.hidden,
-              hiddenOnInsert: column.props.hiddenOnInsert,
-              searchable: column.props.searchable,
-              className: column.props.columnClassName,
-              columnTitle: column.props.columnTitle,
-              width: column.props.width,
-              text: column.props.children,
-              sortFunc: column.props.sortFunc,
-              sortFuncExtraData: column.props.sortFuncExtraData,
-              export: column.props.export,
-              index: i
-          };
-      });
-  }    
+//   getExpandColumnsDescription() {
+//       return React.Children.map(this.props.expandTableHeaderColumn, (column, i) => {
+//           return {
+//               name: column.props.dataField,
+//               align: column.props.dataAlign,
+//               sort: column.props.dataSort,
+//               format: column.props.dataFormat,
+//               formatExtraData: column.props.formatExtraData,
+//               filterFormatted: column.props.filterFormatted,
+//               filterValue: column.props.filterValue,
+//               editable: column.props.editable,
+//               customEditor: column.props.customEditor,
+//               hidden: column.props.hidden,
+//               hiddenOnInsert: column.props.hiddenOnInsert,
+//               searchable: column.props.searchable,
+//               className: column.props.columnClassName,
+//               columnTitle: column.props.columnTitle,
+//               width: column.props.width,
+//               text: column.props.children,
+//               sortFunc: column.props.sortFunc,
+//               sortFuncExtraData: column.props.sortFuncExtraData,
+//               export: column.props.export,
+//               index: i
+//           };
+//       });
+//   }    
 
   getColumnsDescription({ children }) {
     return React.Children.map(children, (column, i) => {
@@ -287,8 +282,7 @@ class BootstrapTable extends Component {
       height: this.props.height,
       maxHeight: this.props.maxHeight
     };
-    // const expandData = filter(this.props.data);
-    const expandColumns = this.getExpandColumnsDescription();
+
 	const columns = this.getColumnsDescription(this.props);
     const sortInfo = this.store.getSortInfo();
     const pagination = this.renderPagination();
@@ -330,8 +324,8 @@ class BootstrapTable extends Component {
             tableBodyClass={ this.props.tableBodyClass }
             style={ { ...style, ...this.props.bodyStyle } }
             data={this.state.data}
-            // expandData={expandData}
-            expandColumns={ expandColumns }
+            enableExpandRow={this.props.enableExpandRow}
+            expandConponent={ this.props.expandConponent }
             columns={ columns }
             trClassName={ this.props.trClassName }
             striped={ this.props.striped }

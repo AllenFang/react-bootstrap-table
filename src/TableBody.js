@@ -13,11 +13,24 @@ const isFun = function(obj) {
 class TableBody extends Component {
 
   constructor(props) {
-    super(props);
+	  super(props);
+	  const size = this.props.data.length;
+	  const hideExpandConponent = {};
+	  const canExpand = {};
+	  for (let i = 0; i < size; i++){
+		  let key = this.props.data[i].id;
+		  hideExpandConponent[key] = true;
+		  if ('expand' in this.props.data[i]) {
+			  canExpand[key] = true;
+		  } else {
+			  canExpand[key] = false;
+		  }
+	  }
+	  
     this.state = {
 		currEditCell: null,
-		hideExpandRow: false
-		// hideExpandRow: new Array(this.props.data.length).fill(true)
+		hideExpandConponent: hideExpandConponent,
+		canExpand: canExpand
     };
   }
 
@@ -38,7 +51,7 @@ class TableBody extends Component {
 	// const tmp = filter(this.props.data);
 	// delete tmp['expand'];
 	const tableRows = this.props.data.map(function(data, r) {
-      const tableColumns = this.props.columns.map(function(column, i) {
+		const tableColumns = this.props.columns.map(function(column, i) {
         const fieldValue = data[column.name];
         if (column.name !== this.props.keyField && // Key field can't be edit
           column.editable && // column is editable? default is true, user can set it false
@@ -125,25 +138,19 @@ class TableBody extends Component {
 		  {selectRowColumn}
 		  {tableColumns}
 	  </TableRow>];
-	  if ('expand' in data) {
-		  console.debug(data.expand);
+
+	  if (this.props.enableExpandRow) {
 		  result.push(
 			  <ExpandComponent data={data.expand}
-				  columns={this.props.expandColumns}
-				  hidden={this.state.hideExpandRow}
+				  expandConponent={this.props.expandConponent}
+				  //   parent={key}
+				  //   columns={this.props.expandColumns}
+				  hidden={this.state.hideExpandConponent[key]}
 				  colSpan={this.props.columns.length}
 				  width={"100%"}
-				  selectRow={isSelectRowDefined ? this.props.selectRow : undefined}
-				  enableCellEdit={this.props.cellEdit.mode !== Const.CELL_EDIT_NONE}
-				  onRowClick={this.handleRowClick}
-				  onRowDoubleClick={this.handleRowDoubleClick}
-				  onRowMouseOver={this.handleRowMouseOver}
-				  onRowMouseOut={this.handleRowMouseOut}
-				  onSelectRow={this.handleSelectRow}
-				  unselectableRow={disable} />
+				  onRowClick={this.handleRowClick} />
 		  );
 	  }
-	  
 		return (result);
 	}, this);
 
@@ -216,13 +223,26 @@ class TableBody extends Component {
   }
 
   handleRowClick = rowIndex => {
+	if (this.props.enableExpandRow) {
+		if (rowIndex !== 1) {
+		rowIndex = ( rowIndex+1 ) /2
+	  }
+	}
+	console.info(rowIndex);  
     let selectedRow;
-    const { data, onRowClick } = this.props;
-    data.forEach((row, i) => {
+	const { data, onRowClick } = this.props;
+	data.forEach((row, i) => {
       if (i === rowIndex - 1) {
         selectedRow = row;
       }
-    });
+	});
+	if (this.props.enableExpandRow && this.state.canExpand[rowIndex-1]) {
+		let tmp = Object.assign({}, this.state.hideExpandConponent);
+		tmp[rowIndex - 1] = !this.state.hideExpandConponent[rowIndex - 1];
+		this.setState({
+			hideExpandConponent: tmp
+		})
+	}
 	onRowClick(selectedRow);
   }
 
