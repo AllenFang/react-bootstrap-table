@@ -26,7 +26,7 @@ class BootstrapTable extends Component {
       this.store = new TableDataStore(this.props.data.slice());
     } else {
       this.store = new TableDataStore([]);
-	}
+    }
     // this.store = new TableDataStore(this.props.data.slice());
 
     this.initTable(this.props);
@@ -128,33 +128,6 @@ class BootstrapTable extends Component {
     }
     return result;
   }
-
-//   getExpandColumnsDescription() {
-//       return React.Children.map(this.props.expandTableHeaderColumn, (column, i) => {
-//           return {
-//               name: column.props.dataField,
-//               align: column.props.dataAlign,
-//               sort: column.props.dataSort,
-//               format: column.props.dataFormat,
-//               formatExtraData: column.props.formatExtraData,
-//               filterFormatted: column.props.filterFormatted,
-//               filterValue: column.props.filterValue,
-//               editable: column.props.editable,
-//               customEditor: column.props.customEditor,
-//               hidden: column.props.hidden,
-//               hiddenOnInsert: column.props.hiddenOnInsert,
-//               searchable: column.props.searchable,
-//               className: column.props.columnClassName,
-//               columnTitle: column.props.columnTitle,
-//               width: column.props.width,
-//               text: column.props.children,
-//               sortFunc: column.props.sortFunc,
-//               sortFuncExtraData: column.props.sortFuncExtraData,
-//               export: column.props.export,
-//               index: i
-//           };
-//       });
-//   }    
 
   getColumnsDescription({ children }) {
     return React.Children.map(children, (column, i) => {
@@ -283,7 +256,7 @@ class BootstrapTable extends Component {
       maxHeight: this.props.maxHeight
     };
 
-	const columns = this.getColumnsDescription(this.props);
+    const columns = this.getColumnsDescription(this.props);
     const sortInfo = this.store.getSortInfo();
     const pagination = this.renderPagination();
     const toolBar = this.renderToolBar();
@@ -323,8 +296,8 @@ class BootstrapTable extends Component {
             bodyContainerClass={ this.props.bodyContainerClass }
             tableBodyClass={ this.props.tableBodyClass }
             style={ { ...style, ...this.props.bodyStyle } }
-            data={this.state.data}
-            enableExpandRow={this.props.enableExpandRow}
+            data={ this.state.data }
+            enableExpandRow={ this.props.enableExpandRow }
             expandConponent={ this.props.expandConponent }
             columns={ columns }
             trClassName={ this.props.trClassName }

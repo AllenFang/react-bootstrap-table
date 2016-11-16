@@ -11,26 +11,26 @@ const isFun = function(obj) {
 };
 
 class TableBody extends Component {
-
   constructor(props) {
-	  super(props);
-	  const size = this.props.data.length;
-	  const hideExpandConponent = {};
-	  const canExpand = {};
-	  for (let i = 0; i < size; i++){
-		  let key = this.props.data[i].id;
-		  hideExpandConponent[key] = true;
-		  if ('expand' in this.props.data[i]) {
-			  canExpand[key] = true;
-		  } else {
-			  canExpand[key] = false;
-		  }
-	  }
-	  
+    super(props);
+    const size = this.props.data.length;
+    const hideExpandConponent = {};
+    const canExpand = {};
+    for (let i = 0; i < size; i++) {
+      const key = this.props.data[i].id;
+      hideExpandConponent[key] = true;
+      if ('expand' in this.props.data[i]) {
+        canExpand[key] = true;
+      } else {
+        canExpand[key] = false;
+      }
+    }
+
     this.state = {
-		currEditCell: null,
-		hideExpandConponent: hideExpandConponent,
-		canExpand: canExpand
+      currEditCell: null,
+      hideExpandConponent: hideExpandConponent,
+      canExpand: canExpand,
+      lastExpand: null
     };
   }
 
@@ -48,10 +48,10 @@ class TableBody extends Component {
     const inputType = this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
     const CustomComponent = this.props.selectRow.customComponent;
 
-	// const tmp = filter(this.props.data);
-	// delete tmp['expand'];
-	const tableRows = this.props.data.map(function(data, r) {
-		const tableColumns = this.props.columns.map(function(column, i) {
+    // const tmp = filter(this.props.data);
+    // delete tmp['expand'];
+    const tableRows = this.props.data.map(function(data, r) {
+      const tableColumns = this.props.columns.map(function(column, i) {
         const fieldValue = data[column.name];
         if (column.name !== this.props.keyField && // Key field can't be edit
           column.editable && // column is editable? default is true, user can set it false
@@ -115,7 +115,7 @@ class TableBody extends Component {
             </TableColumn>
           );
         }
-	  }, this);
+      }, this);
       const key = data[this.props.keyField];
       const disable = unselectable.indexOf(key) !== -1;
       const selected = this.props.selectedRowKeys.indexOf(key) !== -1;
@@ -125,39 +125,39 @@ class TableBody extends Component {
       let trClassName = this.props.trClassName;
       if (isFun(this.props.trClassName)) {
         trClassName = this.props.trClassName(data, r);
-	  }
-	  const result = [<TableRow isSelected={selected} key={key} className={trClassName}
-		  selectRow={isSelectRowDefined ? this.props.selectRow : undefined}
-		  enableCellEdit={this.props.cellEdit.mode !== Const.CELL_EDIT_NONE}
-		  onRowClick={this.handleRowClick}
-		  onRowDoubleClick={this.handleRowDoubleClick}
-		  onRowMouseOver={this.handleRowMouseOver}
-		  onRowMouseOut={this.handleRowMouseOut}
-		  onSelectRow={this.handleSelectRow}
-		  unselectableRow={disable}>
-		  {selectRowColumn}
-		  {tableColumns}
-	  </TableRow>];
+      }
+      const result = [ <TableRow isSelected={ selected } key={ key } className={ trClassName }
+        selectRow={ isSelectRowDefined ? this.props.selectRow : undefined }
+        enableCellEdit={ this.props.cellEdit.mode !== Const.CELL_EDIT_NONE }
+        onRowClick={ this.handleRowClick }
+        onRowDoubleClick={ this.handleRowDoubleClick }
+        onRowMouseOver={ this.handleRowMouseOver }
+        onRowMouseOut={ this.handleRowMouseOut }
+        onSelectRow={ this.handleSelectRow }
+        unselectableRow={ disable }>
+        { selectRowColumn }
+        { tableColumns }
+      </TableRow> ];
 
-	  if (this.props.enableExpandRow) {
-		  result.push(
-			  <ExpandComponent data={data.expand}
-				  expandConponent={this.props.expandConponent}
-				  //   parent={key}
-				  //   columns={this.props.expandColumns}
-				  hidden={this.state.hideExpandConponent[key]}
-				  colSpan={this.props.columns.length}
-				  width={"100%"}
-				  onRowClick={this.handleRowClick} />
-		  );
-	  }
-		return (result);
-	}, this);
+      if (this.props.enableExpandRow) {
+        result.push(
+          <ExpandComponent data={ data.expand }
+            expandConponent={ this.props.expandConponent }
+            //   parent={key}
+            //   columns={this.props.expandColumns}
+            hidden={ this.state.hideExpandConponent[key] }
+            colSpan={ this.props.columns.length }
+            width={ "100%" }
+            onRowClick={ this.handleRowClick } />
+        );
+      }
+      return (result);
+    }, this);
 
     if (tableRows.length === 0) {
       tableRows.push(
         <TableRow key='##table-empty##'>
-          <td data-toggle="collapse" colSpan={ this.props.columns.length + (isSelectRowDefined ? 1 : 0) }
+          <td data-toggle='collapse' colSpan={ this.props.columns.length + (isSelectRowDefined ? 1 : 0) }
               className='react-bs-table-no-data'>
               { this.props.noDataText || Const.NO_DATA_TEXT }
           </td>
@@ -223,27 +223,31 @@ class TableBody extends Component {
   }
 
   handleRowClick = rowIndex => {
-	if (this.props.enableExpandRow) {
-		if (rowIndex !== 1) {
-		rowIndex = ( rowIndex+1 ) /2
-	  }
-	}
-	console.info(rowIndex);  
+    if (this.props.enableExpandRow) {
+      if (rowIndex !== 1) {
+        rowIndex = (rowIndex + 1) / 2;
+      }
+    }
     let selectedRow;
-	const { data, onRowClick } = this.props;
-	data.forEach((row, i) => {
+    const { data, onRowClick } = this.props;
+    data.forEach((row, i) => {
       if (i === rowIndex - 1) {
         selectedRow = row;
       }
-	});
-	if (this.props.enableExpandRow && this.state.canExpand[rowIndex-1]) {
-		let tmp = Object.assign({}, this.state.hideExpandConponent);
-		tmp[rowIndex - 1] = !this.state.hideExpandConponent[rowIndex - 1];
-		this.setState({
-			hideExpandConponent: tmp
-		})
-	}
-	onRowClick(selectedRow);
+    });
+    if (this.props.enableExpandRow && this.state.canExpand[rowIndex - 1]) {
+      const tmp = Object.assign({}, this.state.hideExpandConponent);
+      tmp[rowIndex - 1] = !this.state.hideExpandConponent[rowIndex - 1];
+      if (this.state.lastExpand !== null && !tmp[this.state.lastExpand]) {
+        tmp[this.state.lastExpand] = !this.state.hideExpandConponent[this.state.lastExpand];
+      }
+      const lastExpand = rowIndex - 1;
+      this.setState({
+        hideExpandConponent: tmp,
+        lastExpand: lastExpand
+      });
+    }
+    onRowClick(selectedRow);
   }
 
   handleRowDoubleClick = rowIndex => {

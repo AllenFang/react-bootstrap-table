@@ -14,6 +14,7 @@ const routes = (
       <IndexRoute component={ Home } />
       <Route path='getting-started' component={ GettingStarted }/>
       <Route path='examples'>
+        <Route path='expandRow' component={ require('./expandRow/demo') } />
         <Route path='basic' component={ require('./basic/demo') } />
         <Route path='column' component={ require('./column/demo') } />
         <Route path='sort' component={ require('./sort/demo') } />
