@@ -53,7 +53,7 @@ class BootstrapTable extends Component {
     React.Children.forEach(props.children, column => {
       if (column.props.isKey) {
         if (keyField) {
-          throw 'Error. Multiple key column be detected in TableHeaderColumn.';
+          throw new Error('Error. Multiple key column be detected in TableHeaderColumn.');
         }
         keyField = column.props.dataField;
       }
@@ -81,8 +81,8 @@ class BootstrapTable extends Component {
     }, {});
 
     if (!isKeyFieldDefined && !keyField) {
-      throw `Error. No any key column defined in TableHeaderColumn.
-            Use 'isKey={true}' to specify a unique column after version 0.5.4.`;
+      throw new Error(`Error. No any key column defined in TableHeaderColumn.
+            Use 'isKey={true}' to specify a unique column after version 0.5.4.`);
     }
 
     this.store.setProps({
