@@ -13,12 +13,13 @@ const isFun = function(obj) {
 class TableBody extends Component {
   constructor(props) {
     super(props);
+    const keyField = this.props.keyField;
     const size = this.props.data.length;
-    const hideExpandConponent = {};
+    const hideExpandComponent = {};
     const canExpand = {};
     for (let i = 0; i < size; i++) {
-      const key = this.props.data[i].id;
-      hideExpandConponent[key] = true;
+      const key = this.props.data[i][keyField];
+      hideExpandComponent[key] = true;
       if ('expand' in this.props.data[i]) {
         canExpand[key] = true;
       } else {
@@ -28,7 +29,7 @@ class TableBody extends Component {
 
     this.state = {
       currEditCell: null,
-      hideExpandConponent: hideExpandConponent,
+      hideExpandComponent: hideExpandComponent,
       canExpand: canExpand,
       lastExpand: null
     };
@@ -142,10 +143,8 @@ class TableBody extends Component {
       if (this.props.enableExpandRow) {
         result.push(
           <ExpandComponent data={ data.expand }
-            expandConponent={ this.props.expandConponent }
-            //   parent={key}
-            //   columns={this.props.expandColumns}
-            hidden={ this.state.hideExpandConponent[key] }
+            expandComponent={ this.props.expandComponent }
+            hidden={ this.state.hideExpandComponent[key] }
             colSpan={ this.props.columns.length }
             width={ "100%" }
             onRowClick={ this.handleRowClick } />
@@ -236,14 +235,14 @@ class TableBody extends Component {
       }
     });
     if (this.props.enableExpandRow && this.state.canExpand[rowIndex - 1]) {
-      const tmp = Object.assign({}, this.state.hideExpandConponent);
-      tmp[rowIndex - 1] = !this.state.hideExpandConponent[rowIndex - 1];
+      const tmp = Object.assign({}, this.state.hideExpandComponent);
+      tmp[rowIndex - 1] = !this.state.hideExpandComponent[rowIndex - 1];
       if (this.state.lastExpand !== null && !tmp[this.state.lastExpand]) {
-        tmp[this.state.lastExpand] = !this.state.hideExpandConponent[this.state.lastExpand];
+        tmp[this.state.lastExpand] = !this.state.hideExpandComponent[this.state.lastExpand];
       }
       const lastExpand = rowIndex - 1;
       this.setState({
-        hideExpandConponent: tmp,
+        hideExpandComponent: tmp,
         lastExpand: lastExpand
       });
     }

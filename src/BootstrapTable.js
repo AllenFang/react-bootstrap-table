@@ -298,7 +298,7 @@ class BootstrapTable extends Component {
             style={ { ...style, ...this.props.bodyStyle } }
             data={ this.state.data }
             enableExpandRow={ this.props.enableExpandRow }
-            expandConponent={ this.props.expandConponent }
+            expandComponent={ this.props.expandComponent }
             columns={ columns }
             trClassName={ this.props.trClassName }
             striped={ this.props.striped }

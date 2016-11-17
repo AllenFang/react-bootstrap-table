@@ -7,7 +7,7 @@ class ExpandComponent extends Component {
     return (
       <tr {...this.props}>
         <td colSpan={ this.props.colSpan }>
-          { this.props.expandConponent }
+          { this.props.expandComponent }
         </td>
       </tr>
     );

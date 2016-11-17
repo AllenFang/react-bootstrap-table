@@ -69,7 +69,7 @@ export default class ExpandRow extends React.Component {
       <BootstrapTable data={ products }
         options={ options }
         enableExpandRow={ true }
-        expandConponent={ <BSTable data={ me.state.rowData.expand } /> }>
+        expandComponent={ <BSTable data={ me.state.rowData.expand } /> }>
         <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
         <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
