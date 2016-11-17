@@ -35,12 +35,6 @@ export default class BasicTable extends React.Component {
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price' columnTitle={ true } >Product Price</TableHeaderColumn>
         </BootstrapTable>
-
-        <BootstrapTable data={ products } >
-          <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
-        </BootstrapTable>
       </div>
     );
   }
