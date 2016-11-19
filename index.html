@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>React Bootstrap Table</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="react-bootstrap-table is a Bootstrap table component rebuilt by React.js.React-bootstrap-table support these features: column align, sorting, column format, pagination, table style and row selection.">
+  <meta name="keywords" content="react, Bootstrap, table, react.js, component, frontend, web development">
+  <meta name="author" content="AllenFang">
+  <meta http-equiv="cache-control" content="max-age=0" />
+  <meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="expires" content="0" />
+  <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+  <meta http-equiv="pragma" content="no-cache" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'> -->
+
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Superfish -->
+	<link rel="stylesheet" href="css/superfish.css">
+
+	<link rel="stylesheet" href="css/style.css">
+
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+	</head>
+	<body>
+		<meta itemprop="downloadUrl" content="https://github.com/AllenFang/react-bootstrap-table">
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="AllenFang"></span>
+    <meta itemprop="url" content="http://allenfang.github.io/react-bootstrap-table/index.html">
+    <meta itemprop="applicationCategory" content="React Bootstrap table">
+		<div id="fh5co-wrapper">
+		<div id="fh5co-page">
+		<div id="fh5co-header">
+			<header id="fh5co-header-section">
+				<div class="container">
+					<div class="nav-header">
+						<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
+						<h1 id="fh5co-logo"><a href="index.html">react-bootstrap-table</a></h1>
+						<nav id="fh5co-menu-wrap" role="navigation">
+							<ul class="sf-menu" id="fh5co-primary-menu">
+								<li class="active">
+									<a href="index.html">Home</a>
+								</li>
+								<li><a href="start.html">Getting Started</a></li>
+								<li>
+									<a href="example.html" class="fh5co-sub-ddown">Example</a>
+									<ul class="fh5co-sub-menu">
+										<li><a class="example-anchor" href="example.html#basic">Basic Table</a></li>
+										<li><a class="example-anchor" href="example.html#sort">Sort</a></li>
+										<li><a class="example-anchor" href="example.html#column">Work on Column</a></li>
+										<li><a class="example-anchor" href="example.html#column-format">Column Format</a></li>
+										<li><a class="example-anchor" href="example.html#column-filter">Column Filter</a></li>
+										<li><a class="example-anchor" href="example.html#selection">Row Selection</a></li>
+										<li><a class="example-anchor" href="example.html#pagination">Pagination</a></li>
+										<li><a class="example-anchor" href="example.html#manipulation">Manipulation</a></li>
+										<li><a class="example-anchor" href="example.html#celledit">Cell Edit</a></li>
+										<li><a class="example-anchor" href="example.html#style">Table Style</a></li>
+										<li><a class="example-anchor" href="example.html#remote">Remote</a></li>
+										<li><a class="example-anchor" href="example.html#custom">Custom</a></li>
+										<li><a class="example-anchor" href="example.html#advance">Advance</a></li>
+										<li><a class="example-anchor" href="example.html#others">Others</a></li>
+									</ul>
+								</li>
+								<li><a href="docs.html">Docs</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</header>
+
+		</div>
+
+
+		<div class="fh5co-hero">
+			<div class="fh5co-overlay"></div>
+			<div class="fh5co-cover text-center" data-stellar-background-ratio="0.5" style="background-image: url(images/cover_bg_1.jpg);">
+				<div class="desc animate-box">
+					<h2>react-bootstrap-table</h2>
+					<span>It's a bootstrap table bulit for React.js</span>
+					<span><a class="btn btn-primary btn-lg" href="start.html">Get Started</a></span>
+				</div>
+			</div>
+
+		</div>
+		<!-- end:header-top -->
+		<div id="fh5co-features">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4">
+
+						<div class="feature-left">
+							<span class="icon">
+								<i class="icon-rocket"></i>
+							</span>
+							<div class="feature-copy">
+								<h3>Functional Table</h3>
+								<p>Column align, hidden, sorting, formating, filter, styling, pagination and search.</p>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="col-md-4">
+						<div class="feature-left">
+							<span class="icon">
+								<i class="icon-table2"></i>
+							</span>
+							<div class="feature-copy">
+								<h3>Manipulation</h3>
+								<p>A basic CRUD on table data is important for table component, so we support cell editing, row insert and remove on table.</p>
+							</div>
+						</div>
+
+					</div>
+					<div class="col-md-4">
+						<div class="feature-left">
+							<span class="icon">
+								<i class="icon-gears"></i>
+							</span>
+							<div class="feature-copy">
+								<h3>Customization</h3>
+								<p>After v3.0.0, we allow more customizable on table, include the all buttons, toolbar, cell editing etc.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="fh5co-feature-product" class="fh5co-section-gray">
+			<div class="container">
+				<div class="row row-bottom-padded-md">
+					<div class="col-md-12 text-center heading-section">
+						<h3>react-bootstrap-table</h3>
+						<p>react-bootstrap-table is a React component for Bootstrap table. It's a configurable, functional table component.It make you build a Bootstrap Table more efficiency and easy in your React application.</p>
+					</div>
+					<div class="col-md-12 text-center">
+						<a href="https://github.com/AllenFang/react-bootstrap-table" class="btn btn-primary btn-lg">View on Github</a>
+						<a href="https://github.com/AllenFang/react-bootstrap-table/zipball/master" class="btn btn-primary btn-lg">Download .zip</a>
+						<a href="https://github.com/AllenFang/react-bootstrap-table/tarball/master" class="btn btn-primary btn-lg">Download .tar.gz</a>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12 text-center animate-box">
+						<p><img src="images/react-bootstrap-table-sample.png" alt="react-bootstrap-table sample" class="img-responsive"></p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="feature-text">
+							<h3><span class="number">01.</span> Bootstrap</h3>
+							<p>Built with native bootstrap@3 and not dependency with react-bootstrap, but fully compatiable with it.</p>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="feature-text">
+							<h3><span class="number">02.</span> Intuitive</h3>
+							<p>Declarative and Compositable Component for development</p>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="feature-text">
+							<h3><span class="number">03.</span> Flux</h3>
+							<p>We support data manipulation inside our table store or on your flux implement both</p>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+
+
+		<div id="fh5co-portfolio">
+			<div class="container">
+
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3 text-center heading-section animate-box">
+						<h3>Quick Look</h3>
+					</div>
+				</div>
+
+
+				<div class="row row-bottom-padded-md">
+					<div class="col-md-12">
+						<script src="https://gist.github.com/AllenFang/282dbcc233d3541230516c305fa6521f.js"></script>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div id="fh5co-content-section" class="fh5co-section-gray">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+						<h3>Recent Work</h3>
+						<p><strong>v3.0.0 is on beta, check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/releases">release page</a> to see the news.</strong></p>
+						<p>We still improve this component, feel free to give us any feedback or PR is welcome.</p>
+						<p>You can check <a target='_blank' href='https://github.com/AllenFang/react-bootstrap-table/blob/master/CHANGELOG.md'>CHANGELOG</a> to see what we are working on.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END What we do -->
+		<footer>
+			<div id="footer">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3 text-center">
+							<p>react-bootstrap-table is maintained by <a target="_blank" href="https://github.com/AllenFang">AllenFang.</p>
+							<p>Copyright 2016 Free Html5 Pentagon. All Rights Reserved. <br>Made with <i class="icon-heart3"></i> by <a href="http://freehtml5.co/" target="_blank">Freehtml5.co</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+
+	</div>
+	</div>
+
+	<!-- jQuery -->
+
+
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Stellar -->
+	<script src="js/jquery.stellar.min.js"></script>
+	<!-- Superfish -->
+	<script src="js/hoverIntent.js"></script>
+	<script src="js/superfish.js"></script>
+
+	<!-- Main JS -->
+	<script src="js/main.js"></script>
+
+	</body>
+</html>
