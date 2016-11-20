@@ -65,6 +65,7 @@ class TableColumn extends Component {
       children,
       columnTitle,
       className,
+      colSpan,
       dataAlign,
       hidden,
       cellEdit
@@ -88,6 +89,7 @@ class TableColumn extends Component {
       <td style={ tdStyle }
           title={ columnTitle }
           className={ className }
+          colSpan={ colSpan }
           { ...opts }>
         { typeof children === 'boolean' ? children.toString() : children }
       </td>
@@ -99,6 +101,7 @@ TableColumn.propTypes = {
   hidden: PropTypes.bool,
   className: PropTypes.string,
   columnTitle: PropTypes.string,
+  colSpan: PropTypes.number,
   children: PropTypes.node
 };
 

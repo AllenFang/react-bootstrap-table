@@ -1,11 +1,11 @@
 {
-  "name": "react-bootstrap-table",
-  "version": "2.5.8",
+  "name": "react-bootstrap-table-footer",
+  "version": "2.5.9",
   "description": "It's a react table for bootstrap",
   "main": "./lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AllenFang/react-bootstrap-table.git"
+    "url": "https://github.com/sameersemna/react-bootstrap-table.git"
   },
   "scripts": {
     "lint": "eslint src",
@@ -27,7 +27,7 @@
   "tags": [
     "react"
   ],
-  "author": "AllenFang",
+  "author": "sameersemna",
   "license": "MIT",
   "devDependencies": {
     "babel": "^5.8.29",
@@ -56,6 +56,7 @@
     "react-dom": "^0.14.3 || ^15.0.0",
     "react-hot-loader": "^1.3.0",
     "react-router": "^1.0.2",
+    "history": "^1.17.0",
     "style-loader": "^0.13.0",
     "toastr": "^2.1.2",
     "vinyl-source-stream": "^1.1.0",

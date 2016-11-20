@@ -9,6 +9,105 @@ const isFun = function(obj) {
   return obj && (typeof obj === 'function');
 };
 
+const mapColumns = function(column, i, data, r, object) {
+  const fieldValue = data[column.name];
+  if (column.name !== object.props.keyField && // Key field can't be edit
+      column.editable && // column is editable? default is true, user can set it false
+      object.state.currEditCell !== null &&
+      object.state.currEditCell.rid === r &&
+      object.state.currEditCell.cid === i) {
+    let editable = column.editable;
+    const format = column.format ? function(value) {
+      return column.format(value, data, column.formatExtraData, r).replace(/<.*?>/g, '');
+    } : false;
+    if (isFun(column.editable)) {
+      editable = column.editable(fieldValue, data, r, i);
+    }
+
+    return (
+        <TableEditColumn
+            completeEdit={ object.handleCompleteEditCell }
+            // add by bluespring for column editor customize
+            editable={ editable }
+            customEditor={ column.customEditor }
+            format={ column.format ? format : false }
+            key={ i }
+            blurToSave={ object.props.cellEdit.blurToSave }
+            rowIndex={ r }
+            colIndex={ i }
+            row={ data }
+            fieldValue={ fieldValue } />
+    );
+  } else {
+    // add by bluespring for className customize
+    let columnChild = fieldValue && fieldValue.toString();
+    let columnTitle = null;
+    const colSpan = 1;
+    let tdClassName = column.className;
+    if (isFun(column.className)) {
+      tdClassName = column.className(fieldValue, data, r, i);
+    }
+
+    if (typeof column.format !== 'undefined') {
+      const formattedValue = column.format(fieldValue, data, column.formatExtraData, r);
+      if (!React.isValidElement(formattedValue)) {
+        columnChild = (
+            <div dangerouslySetInnerHTML={ { __html: formattedValue } }></div>
+        );
+      } else {
+        columnChild = formattedValue;
+        columnTitle = column.columnTitle && formattedValue ? formattedValue.toString() : null;
+      }
+    } else {
+      columnTitle = column.columnTitle && fieldValue ? fieldValue.toString() : null;
+    }
+    return (
+        <TableColumn key={ i }
+                     dataAlign={ column.align }
+                     className={ tdClassName }
+                     columnTitle={ columnTitle }
+                     colSpan={ colSpan }
+                     cellEdit={ object.props.cellEdit }
+                     hidden={ column.hidden }
+                     onEdit={ object.handleEditCell }
+                     width={ column.width }>
+          { columnChild }
+        </TableColumn>
+    );
+  }
+};
+
+const mapTableRows = function(data, r, unselectable,
+                              isSelectRowDefined, inputType, CustomComponent, object) {
+  const tableColumns = object.props.columns.map((column, i) => {
+    return mapColumns(column, i, data, r, object);
+  }, object);
+  const key = data[object.props.keyField];
+  const disable = unselectable.indexOf(key) !== -1;
+  const selected = object.props.selectedRowKeys.indexOf(key) !== -1;
+  const selectRowColumn = isSelectRowDefined && !object.props.selectRow.hideSelectColumn ?
+      object.renderSelectRowColumn(selected, inputType, disable, CustomComponent, r) : null;
+  // add by bluespring for className customize
+  let trClassName = object.props.trClassName;
+  if (isFun(object.props.trClassName)) {
+    trClassName = object.props.trClassName(data, r);
+  }
+  return (
+      <TableRow isSelected={ selected } key={ key } className={ trClassName } ref={ key }
+                selectRow={ isSelectRowDefined ? object.props.selectRow : undefined }
+                enableCellEdit={ object.props.cellEdit.mode !== Const.CELL_EDIT_NONE }
+                onRowClick={ object.handleRowClick }
+                onRowDoubleClick={ object.handleRowDoubleClick }
+                onRowMouseOver={ object.handleRowMouseOver }
+                onRowMouseOut={ object.handleRowMouseOut }
+                onSelectRow={ object.handleSelectRow }
+                unselectableRow={ disable }>
+        { selectRowColumn }
+        { tableColumns }
+      </TableRow>
+  );
+};
+
 class TableBody extends Component {
 
   constructor(props) {
@@ -32,97 +131,13 @@ class TableBody extends Component {
     const inputType = this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
     const CustomComponent = this.props.selectRow.customComponent;
 
-    const tableRows = this.props.data.map(function(data, r) {
-      const tableColumns = this.props.columns.map(function(column, i) {
-        const fieldValue = data[column.name];
-        if (column.name !== this.props.keyField && // Key field can't be edit
-          column.editable && // column is editable? default is true, user can set it false
-          this.state.currEditCell !== null &&
-          this.state.currEditCell.rid === r &&
-          this.state.currEditCell.cid === i) {
-          let editable = column.editable;
-          const format = column.format ? function(value) {
-            return column.format(value, data, column.formatExtraData, r).replace(/<.*?>/g, '');
-          } : false;
-          if (isFun(column.editable)) {
-            editable = column.editable(fieldValue, data, r, i);
-          }
-
-          return (
-              <TableEditColumn
-                completeEdit={ this.handleCompleteEditCell }
-                // add by bluespring for column editor customize
-                editable={ editable }
-                customEditor={ column.customEditor }
-                format={ column.format ? format : false }
-                key={ i }
-                blurToSave={ this.props.cellEdit.blurToSave }
-                rowIndex={ r }
-                colIndex={ i }
-                row={ data }
-                fieldValue={ fieldValue } />
-            );
-        } else {
-          // add by bluespring for className customize
-          let columnChild = fieldValue && fieldValue.toString();
-          let columnTitle = null;
-          let tdClassName = column.className;
-          if (isFun(column.className)) {
-            tdClassName = column.className(fieldValue, data, r, i);
-          }
-
-          if (typeof column.format !== 'undefined') {
-            const formattedValue = column.format(fieldValue, data, column.formatExtraData, r);
-            if (!React.isValidElement(formattedValue)) {
-              columnChild = (
-                <div dangerouslySetInnerHTML={ { __html: formattedValue } }></div>
-              );
-            } else {
-              columnChild = formattedValue;
-              columnTitle = column.columnTitle && formattedValue ? formattedValue.toString() : null;
-            }
-          } else {
-            columnTitle = column.columnTitle && fieldValue ? fieldValue.toString() : null;
-          }
-          return (
-            <TableColumn key={ i }
-              dataAlign={ column.align }
-              className={ tdClassName }
-              columnTitle={ columnTitle }
-              cellEdit={ this.props.cellEdit }
-              hidden={ column.hidden }
-              onEdit={ this.handleEditCell }
-              width={ column.width }>
-              { columnChild }
-            </TableColumn>
-          );
-        }
-      }, this);
-      const key = data[this.props.keyField];
-      const disable = unselectable.indexOf(key) !== -1;
-      const selected = this.props.selectedRowKeys.indexOf(key) !== -1;
-      const selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ?
-              this.renderSelectRowColumn(selected, inputType, disable, CustomComponent, r) : null;
-      // add by bluespring for className customize
-      let trClassName = this.props.trClassName;
-      if (isFun(this.props.trClassName)) {
-        trClassName = this.props.trClassName(data, r);
-      }
-      return (
-        <TableRow isSelected={ selected } key={ key } className={ trClassName }
-          selectRow={ isSelectRowDefined ? this.props.selectRow : undefined }
-          enableCellEdit={ this.props.cellEdit.mode !== Const.CELL_EDIT_NONE }
-          onRowClick={ this.handleRowClick }
-          onRowDoubleClick={ this.handleRowDoubleClick }
-          onRowMouseOver={ this.handleRowMouseOver }
-          onRowMouseOut={ this.handleRowMouseOut }
-          onSelectRow={ this.handleSelectRow }
-          unselectableRow={ disable }>
-          { selectRowColumn }
-          { tableColumns }
-        </TableRow>
+    const tableRows = this.props.data.map((data, r) => {
+      return mapTableRows(
+        data, r, unselectable,
+        isSelectRowDefined, inputType, CustomComponent,
+        this
       );
-    }, this);
+    });
 
     if (tableRows.length === 0) {
       tableRows.push(
@@ -134,6 +149,13 @@ class TableBody extends Component {
         </TableRow>
       );
     }
+    const footerRows = this.props.footerData ? this.props.footerData.map((data, r) => {
+      return mapTableRows(
+        data, r, unselectable,
+        isSelectRowDefined, inputType, CustomComponent,
+        this
+      );
+    }) : [];
 
     return (
       <div ref='container'
@@ -144,6 +166,9 @@ class TableBody extends Component {
           <tbody ref='tbody'>
             { tableRows }
           </tbody>
+          { footerRows.length > 0 && <tfoot ref='tfoot'>
+          { footerRows }
+          </tfoot> }
         </table>
       </div>
     );
@@ -288,6 +313,7 @@ class TableBody extends Component {
 }
 TableBody.propTypes = {
   data: PropTypes.array,
+  footerData: PropTypes.array,
   columns: PropTypes.array,
   striped: PropTypes.bool,
   bordered: PropTypes.bool,
