@@ -60,8 +60,10 @@ class TableHeaderColumn extends Component {
       );
     }
     case Const.FILTER_TYPE.CUSTOM: {
-      return this.props.filter.getElement(this.handleFilter,
+      const elm = this.props.filter.getElement(this.handleFilter,
           this.props.filter.customFilterParameters);
+
+      return React.cloneElement(elm, { ref: 'customFilter' });
     }
     }
   }
@@ -148,6 +150,10 @@ class TableHeaderColumn extends Component {
     }
     case Const.FILTER_TYPE.DATE: {
       this.refs.dateFilter.cleanFiltered();
+      break;
+    }
+    case Const.FILTER_TYPE.CUSTOM: {
+      this.refs.customFilter.cleanFiltered();
       break;
     }
     }
