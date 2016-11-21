@@ -1,11 +1,11 @@
 /* eslint max-len: 0 */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 class ExpandComponent extends Component {
 
   render() {
     return (
-      <tr {...this.props}>
+      <tr hidden={ this.props.hidden } width={ this.props.width }>
         <td colSpan={ this.props.colSpan }>
           { this.props.expandComponent }
         </td>
@@ -13,8 +13,5 @@ class ExpandComponent extends Component {
     );
   }
 }
-ExpandComponent.propTypes = {
-  data: PropTypes.array,
-  columns: PropTypes.array
-};
+
 export default ExpandComponent;

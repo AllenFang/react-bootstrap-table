@@ -13,10 +13,11 @@ function addProducts(quantity) {
         id: id,
         name: 'Item name ' + id,
         price: 2100 + i,
+        expandable: true,
         expand: [ {
           fieldA: 'test1',
-          fieldB: ( i + 1 ) * 99,
-          fieldC: ( i + 1 ) * Math.random() * 100,
+          fieldB: (i + 1) * 99,
+          fieldC: (i + 1) * Math.random() * 100,
           fieldD: '123eedd' + i
         }, {
           fieldA: 'test2',
@@ -38,14 +39,17 @@ addProducts(5);
 
 class BSTable extends React.Component {
   render() {
-    return (
-      <BootstrapTable data={ this.props.data }>
-        <TableHeaderColumn dataField='fieldA' isKey={ true }>Field A</TableHeaderColumn>
-        <TableHeaderColumn dataField='fieldB'>Field B</TableHeaderColumn>
-        <TableHeaderColumn dataField='fieldC'>Field C</TableHeaderColumn>
-        <TableHeaderColumn dataField='fieldD'>Field D</TableHeaderColumn>
-      </BootstrapTable>
-    );
+    if (this.props.data) { // prevent from data error
+      return (
+        <BootstrapTable data={ this.props.data }>
+          <TableHeaderColumn dataField='fieldA' isKey={ true }>Field A</TableHeaderColumn>
+          <TableHeaderColumn dataField='fieldB'>Field B</TableHeaderColumn>
+          <TableHeaderColumn dataField='fieldC'>Field C</TableHeaderColumn>
+          <TableHeaderColumn dataField='fieldD'>Field D</TableHeaderColumn>
+        </BootstrapTable>);
+    } else {
+      return (<p>?</p>);
+    }
   }
 }
 
