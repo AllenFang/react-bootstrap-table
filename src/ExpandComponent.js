@@ -1,11 +1,21 @@
 /* eslint max-len: 0 */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import classSet from 'classnames';
 
 class ExpandComponent extends Component {
 
   render() {
+    const trCss = {
+      style: {
+        backgroundColor: this.props.bgColor
+      },
+      className: classSet(
+        this.props.isSelected ? this.props.selectRow.className : null,
+        this.props.className
+      )
+    };
     return (
-      <tr {...this.props}>
+      <tr hidden={ this.props.hidden } width={ this.props.width } { ...trCss }>
         <td colSpan={ this.props.colSpan }>
           { this.props.expandComponent }
         </td>
@@ -13,8 +23,5 @@ class ExpandComponent extends Component {
     );
   }
 }
-ExpandComponent.propTypes = {
-  data: PropTypes.array,
-  columns: PropTypes.array
-};
+
 export default ExpandComponent;

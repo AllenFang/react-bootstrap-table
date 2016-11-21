@@ -1107,6 +1107,8 @@ BootstrapTable.propTypes = {
   ignoreSinglePage: PropTypes.bool
 };
 BootstrapTable.defaultProps = {
+  enableExpandRow: false,
+  expandComponent: undefined,
   height: '100%',
   maxHeight: undefined,
   striped: false,

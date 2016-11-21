@@ -63,6 +63,7 @@
 		"webpack-dev-server": "^1.12.1"
 	},
 	"dependencies": {
+    "underscore": "1.8.3",
 		"history": "^1.7.0",
 		"classnames": "^2.1.2",
 		"react-toastr": "^2.8.0"
