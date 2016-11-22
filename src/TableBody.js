@@ -3,6 +3,7 @@ import Const from './Const';
 import TableRow from './TableRow';
 import TableColumn from './TableColumn';
 import TableEditColumn from './TableEditColumn';
+import TableHeaderResizable from './TableHeaderResizable';
 import classSet from 'classnames';
 
 const isFun = function(obj) {
@@ -157,12 +158,33 @@ class TableBody extends Component {
       );
     }) : [];
 
+    const { sortInfo, isSelectAll, sortIndicator, onSort } = this.props.resizableOptions;
+
     return (
       <div ref='container'
         className={ classSet('react-bs-container-body', this.props.bodyContainerClass) }
         style={ this.props.style }>
-        <table className={ tableClasses }>
+        <table className={ tableClasses } ref='table'>
           { tableHeader }
+          { this.props.resizable && <TableHeaderResizable
+            ref='header'
+            headerContainerClass={ this.props.headerContainerClass }
+            tableHeaderClass={ this.props.tableHeaderClass }
+            style={ this.props.headerStyle }
+            rowSelectType={ this.props.selectRow.mode }
+            customComponent={ this.props.selectRow.customComponent }
+            hideSelectColumn={ this.props.selectRow.hideSelectColumn }
+            sortName={ sortInfo ? sortInfo.sortField : undefined }
+            sortOrder={ sortInfo ? sortInfo.order : undefined }
+            sortIndicator={ sortIndicator }
+            onSort={ onSort }
+            onSelectAllRow={ this.handleSelectAllRow }
+            bordered={ this.props.bordered }
+            condensed={ this.props.condensed }
+            isFiltered={ this.filter ? true : false }
+            isSelectAll={ isSelectAll }>
+              { this.props.resizableOptions.children }
+            </TableHeaderResizable> }
           <tbody ref='tbody'>
             { tableRows }
           </tbody>
@@ -327,6 +349,8 @@ TableBody.propTypes = {
   noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
   style: PropTypes.object,
   tableBodyClass: PropTypes.string,
-  bodyContainerClass: PropTypes.string
+  bodyContainerClass: PropTypes.string,
+  resizable: PropTypes.bool,
+  resizableOptions: PropTypes.object
 };
 export default TableBody;

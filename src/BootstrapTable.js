@@ -260,6 +260,13 @@ class BootstrapTable extends Component {
     const isSelectAll = this.isSelectAll();
     let sortIndicator = this.props.options.sortIndicator;
     if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
+    const resizableOptions = {
+      sortIndicator: sortIndicator,
+      isSelectAll: isSelectAll,
+      sortInfo: sortInfo,
+      onSort: this.handleSort,
+      children: this.props.children
+    };
 
     return (
       <div className={ classSet('react-bs-table-container', this.props.containerClass) }
@@ -270,7 +277,7 @@ class BootstrapTable extends Component {
             style={ { ...style, ...this.props.tableStyle } }
             onMouseEnter={ this.handleMouseEnter }
             onMouseLeave={ this.handleMouseLeave }>
-          <TableHeader
+          { !this.props.resizable && <TableHeader
             ref='header'
             headerContainerClass={ this.props.headerContainerClass }
             tableHeaderClass={ this.props.tableHeaderClass }
@@ -288,7 +295,7 @@ class BootstrapTable extends Component {
             isFiltered={ this.filter ? true : false }
             isSelectAll={ isSelectAll }>
             { this.props.children }
-          </TableHeader>
+          </TableHeader> }
           <TableBody ref='body'
             bodyContainerClass={ this.props.bodyContainerClass }
             tableBodyClass={ this.props.tableBodyClass }
@@ -310,7 +317,9 @@ class BootstrapTable extends Component {
             onRowMouseOver={ this.handleRowMouseOver }
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
-            noDataText={ this.props.options.noDataText } />
+            noDataText={ this.props.options.noDataText }
+            resizable={ this.props.resizable }
+            resizableOptions={ resizableOptions } />
         </div>
         { tableFilter }
         { pagination }
@@ -909,6 +918,9 @@ class BootstrapTable extends Component {
   }
 
   _adjustHeaderWidth = () => {
+    if (this.props.resizable) {
+      return;
+    }
     const header = this.refs.header.refs.header;
     const headerContainer = this.refs.header.refs.container;
     const tbody = this.refs.body.refs.tbody;
@@ -1013,6 +1025,7 @@ BootstrapTable.propTypes = {
   condensed: PropTypes.bool,
   pagination: PropTypes.bool,
   printable: PropTypes.bool,
+  resizable: PropTypes.bool,
   searchPlaceholder: PropTypes.string,
   selectRow: PropTypes.shape({
     mode: PropTypes.oneOf([
@@ -1112,6 +1125,7 @@ BootstrapTable.defaultProps = {
   condensed: false,
   pagination: false,
   printable: false,
+  resizable: false,
   searchPlaceholder: undefined,
   selectRow: {
     mode: Const.ROW_SELECT_NONE,

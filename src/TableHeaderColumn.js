@@ -9,6 +9,7 @@ import TextFilter from './filters/Text';
 import RegexFilter from './filters/Regex';
 import SelectFilter from './filters/Select';
 import NumberFilter from './filters/Number';
+import resizable from './resizable';
 
 class TableHeaderColumn extends Component {
 
@@ -68,6 +69,7 @@ class TableHeaderColumn extends Component {
 
   componentDidMount() {
     this.refs['header-col'].setAttribute('data-field', this.props.dataField);
+    resizable(this.refs['header-col']);
   }
 
   render() {
@@ -83,11 +85,22 @@ class TableHeaderColumn extends Component {
       sortIndicator,
       children,
       caretRender,
-      className
+      className,
+      resize
     } = this.props;
     const thStyle = {
       textAlign: headerAlign || dataAlign,
-      display: hidden ? 'none' : null
+      display: hidden ? 'none' : null,
+      position: resize ? 'relative' : 'initial'
+    };
+    const resizerStyle = {
+      width: '3px',
+      height: '100%',
+      position: 'absolute',
+      right: 0,
+      bottom: 0,
+      cursor: 'ew-resize',
+      border: '1px dotted #ddd'
     };
     if (sortIndicator) {
       defaultCaret = (!dataSort) ? null : (
@@ -107,7 +120,8 @@ class TableHeaderColumn extends Component {
     }
     const classes = classSet(
       typeof className === 'function' ? className() : className,
-      dataSort ? 'sort-column' : '');
+      dataSort ? 'sort-column' : '',
+      resize ? 'resizable' : '');
 
     const title = headerTitle && typeof children === 'string' ? { title: children } : null;
     return (
@@ -120,6 +134,7 @@ class TableHeaderColumn extends Component {
         <div onClick={ e => e.stopPropagation() }>
           { this.props.filter ? this.getFilters() : null }
         </div>
+        { resize && <div className='resizer' style={ resizerStyle }></div> }
       </th>
     );
   }
@@ -228,6 +243,7 @@ TableHeaderColumn.propTypes = {
     customFilterParameters: PropTypes.object
   }),
   sortIndicator: PropTypes.bool,
+  resize: PropTypes.bool,
   export: PropTypes.bool
 };
 
@@ -256,7 +272,8 @@ TableHeaderColumn.defaultProps = {
   formatExtraData: undefined,
   sortFuncExtraData: undefined,
   filter: undefined,
-  sortIndicator: true
+  sortIndicator: true,
+  resize: false
 };
 
 export default TableHeaderColumn;
