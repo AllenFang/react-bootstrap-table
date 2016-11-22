@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-table",
-  "version": "2.5.9",
+  "version": "2.5.10",
   "description": "It's a react table for bootstrap",
   "main": "./lib/index.js",
   "repository": {
@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "classnames": "^2.1.2",
-    "react-toastr": "2.8.0"
+    "react-toastr": "https://github.com/AllenFang/react-toastr.git"
   },
   "peerDependencies": {
     "react": "^0.14.3 || ^15.0.0"
