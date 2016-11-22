@@ -907,6 +907,9 @@ class BootstrapTable extends Component {
   }
 
   _scrollHeader = (e) => {
+    if (this.props.resizable) {
+      return;
+    }
     this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
   }
 
