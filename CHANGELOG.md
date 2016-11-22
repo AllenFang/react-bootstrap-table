@@ -1,3 +1,12 @@
+<a name="v2.5.9"></a>
+# [v2.5.9](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.8...v2.5.9) (2016-11-21)
+## Bug fixes
+* Fix npm 3 install fail[#797](https://github.com/AllenFang/react-bootstrap-table/issues/797)([3fea774](https://github.com/AllenFang/react-bootstrap-table/commit/3fea774b671419e613bf765c549c0ba4787814f8))
+* Fix cleanFiltered could not clear customerFilter([07b8560](https://github.com/AllenFang/react-bootstrap-table/commit/07b8560a9a00304f9fb3a3ef193b2c5b51df7f65))
+
+## Enhancement
+* Throw errors instead of string literals([f32ba6f](https://github.com/AllenFang/react-bootstrap-table/commit/f32ba6fd141562de39a5904218142c9d1a803fab))
+
 <a name="v2.5.8"></a>
 # [v2.5.8](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.7...v2.5.8) (2016-11-09)
 ## Bug fixes
