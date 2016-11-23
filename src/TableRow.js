@@ -31,7 +31,8 @@ class TableRow extends Component {
           }, 200);
         }
       }
-      if (this.props.onRowClick) this.props.onRowClick(rowIndex);
+      const self = e;
+      if (this.props.onRowClick) this.props.onRowClick(rowIndex, self);
     }
   }
 
