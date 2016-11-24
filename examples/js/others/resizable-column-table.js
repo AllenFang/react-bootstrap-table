@@ -28,14 +28,27 @@ footerData.push({
 });
 
 export default class ResizableColumnTable extends React.Component {
+  columnResizing(e, newWidth) {
+    console.log(newWidth);
+    console.dir(this);
+    // this.refs.restable._adjustTable();
+    // this.refs.restable.forceUpdate();
+    this.forceUpdate();
+  }
+  componentWillMount() {
+    this.columnResizing = this.columnResizing.bind(this);
+  }
   render() {
     const options = { };
 
     return (
-      <BootstrapTable data={ products } options={ options } footerData={ footerData } resizable >
-          <TableHeaderColumn dataField='id' isKey={ true } resize>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField='name' dataSort resize>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField='price' dataSort>Product Price</TableHeaderColumn>
+      <BootstrapTable ref='restable' data={ products } options={ options } footerData={ footerData } resizable >
+          <TableHeaderColumn dataField='id' isKey={ true } resize
+            resizeOptions={ { minWidth: 100, maxWidth: false } }>Product ID</TableHeaderColumn>
+          <TableHeaderColumn dataField='name' dataSort resize onResizing={ this.columnResizing }
+            resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='price' dataSort resize
+            resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
   }
