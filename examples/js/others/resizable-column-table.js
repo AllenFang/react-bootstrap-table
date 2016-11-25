@@ -19,7 +19,7 @@ function addProducts(quantity) {
   }
 }
 
-addProducts(5);
+addProducts(50);
 
 footerData.push({
   id: '',
@@ -28,28 +28,44 @@ footerData.push({
 });
 
 export default class ResizableColumnTable extends React.Component {
-  columnResizing(e, newWidth) {
+  // columnResizing(e, newWidth) {
+  //   console.log(newWidth);
+  //   console.dir(this);
+  //   // this.refs.restable._adjustTable();
+  //   // this.refs.restable.forceUpdate();
+  //   this.forceUpdate();
+  // }
+  // columnSorting(order, dataField) {
+  //   console.log(order);
+  //   console.log(dataField);
+  // }
+  onSortChange = (sortName, sortOrder) => {
+    // console.log(sortName);
+    console.log(sortOrder);
+  }
+  onResizing(e, newWidth) {
     console.log(newWidth);
-    console.dir(this);
-    // this.refs.restable._adjustTable();
-    // this.refs.restable.forceUpdate();
-    this.forceUpdate();
   }
   componentWillMount() {
-    this.columnResizing = this.columnResizing.bind(this);
+    // this.columnResizing = this.columnResizing.bind(this);
   }
   render() {
-    const options = { };
+    const options = {
+      onSortChange: this.onSortChange,
+      onResizing: this.onResizing
+    };
 
     return (
       <BootstrapTable ref='restable' data={ products } options={ options }
-                      footerData={ footerData } resizable >
-          <TableHeaderColumn dataField='id' isKey={ true } resize
-            resizeOptions={ { minWidth: 100, maxWidth: false } }>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField='name' dataSort resize onResizing={ this.columnResizing }
-            resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField='price' dataSort resize
-            resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Price</TableHeaderColumn>
+        footerData={ footerData } height='200px' resizable={ true }>
+        <TableHeaderColumn dataField='id' isKey={ true } resize
+          resizeOptions={ { minWidth: 100, maxWidth: false } }>Product ID</TableHeaderColumn>
+        <TableHeaderColumn dataField='name' dataSort resize
+          // onResizing={ this.columnResizing }
+          // onSort={ this.columnSorting }
+          resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Name</TableHeaderColumn>
+        <TableHeaderColumn dataField='price' dataSort resize
+          resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
   }

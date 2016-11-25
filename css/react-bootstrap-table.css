@@ -8,6 +8,8 @@
 .react-bs-table {
   border: 1px solid #ddd;
   border-radius: 5px;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .react-bs-table table {
@@ -35,13 +37,17 @@
 }
 
 .react-bs-container-header {
-  overflow: hidden;
   width: 100%;
 }
 
 .react-bs-container-body {
   /*height: 154px;*/
-  overflow: auto;
+  /*overflow: auto;*/
+  overflow-y: auto;
+  width: 100%;
+}
+
+.react-bs-container-footer {
   width: 100%;
 }
 

@@ -17,6 +17,8 @@ class TableHeaderColumn extends Component {
     super(props);
     this.handleFilter = this.handleFilter.bind(this);
     this.handleColumnResizing = this.handleColumnResizing.bind(this);
+    this.handleColumnStartResizing = this.handleColumnStartResizing.bind(this);
+    this.handleColumnStopResizing = this.handleColumnStopResizing.bind(this);
   }
 
   handleColumnClick = () => {
@@ -72,6 +74,16 @@ class TableHeaderColumn extends Component {
     if (!this.props.onResizing) return;
     // const parent = this._reactInternalInstance._currentElement._owner._instance;
     this.props.onResizing(e, newWidth);
+  }
+
+  handleColumnStartResizing(e, startX, startWidth) {
+    if (!this.props.onStartResizing) return;
+    this.props.onStartResizing(e, startX, startWidth);
+  }
+
+  handleColumnStopResizing(e) {
+    if (!this.props.onStopResizing) return;
+    this.props.onStopResizing(e);
   }
 
   componentDidMount() {
@@ -254,6 +266,8 @@ TableHeaderColumn.propTypes = {
   resize: PropTypes.bool,
   resizeOptions: PropTypes.object,
   onResizing: PropTypes.function,
+  onStartResizing: PropTypes.function,
+  onStopResizing: PropTypes.function,
   export: PropTypes.bool
 };
 
@@ -268,6 +282,7 @@ TableHeaderColumn.defaultProps = {
   isKey: false,
   editable: true,
   onSort: undefined,
+  onResizing: undefined,
   hidden: false,
   hiddenOnInsert: false,
   searchable: true,
