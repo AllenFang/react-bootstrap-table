@@ -4,20 +4,58 @@ import TableRow from './TableRow';
 import TableColumn from './TableColumn';
 import TableEditColumn from './TableEditColumn';
 import classSet from 'classnames';
+import ExpandComponent from './ExpandComponent';
+import _ from 'underscore';
 
 const isFun = function(obj) {
   return obj && (typeof obj === 'function');
 };
 
 class TableBody extends Component {
-
   constructor(props) {
     super(props);
+    const hideExpandComponent = {};
+    const canExpand = {};
+    if (this.props.enableExpandRow) {
+      for (let i = 0; i < this.props.data.length; i++) {
+        const key = this.props.data[i][this.props.keyField];
+        hideExpandComponent[key] = true;
+        if ('expandable' in this.props.data[i] && this.props.data[i].expandable) {
+          canExpand[key] = true;
+        } else {
+          canExpand[key] = false;
+        }
+      }
+    }
     this.state = {
-      currEditCell: null
+      currEditCell: null,
+      hideExpandComponent: hideExpandComponent,
+      canExpand: canExpand,
+      lastExpand: null
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.enableExpandRow) {
+      if (!(_.isEqual(this.props.data, nextProps.data))) {
+        const hideExpandComponent = {};
+        const canExpand = {};
+        for (let i = 0; i < nextProps.data.length; i++) {
+          const key = nextProps.data[i][nextProps.keyField];
+          hideExpandComponent[key] = true;
+          if ('expandable' in nextProps.data[i] && nextProps.data[i].expandable) {
+            canExpand[key] = true;
+          } else {
+            canExpand[key] = false;
+          }
+        }
+        this.setState({
+          hideExpandComponent: hideExpandComponent,
+          canExpand: canExpand
+        });
+      }
+    }
+  }
   render() {
     const tableClasses = classSet('table', {
       'table-striped': this.props.striped,
@@ -108,26 +146,40 @@ class TableBody extends Component {
       if (isFun(this.props.trClassName)) {
         trClassName = this.props.trClassName(data, r);
       }
-      return (
-        <TableRow isSelected={ selected } key={ key } className={ trClassName }
-          selectRow={ isSelectRowDefined ? this.props.selectRow : undefined }
-          enableCellEdit={ this.props.cellEdit.mode !== Const.CELL_EDIT_NONE }
-          onRowClick={ this.handleRowClick }
-          onRowDoubleClick={ this.handleRowDoubleClick }
-          onRowMouseOver={ this.handleRowMouseOver }
-          onRowMouseOut={ this.handleRowMouseOut }
-          onSelectRow={ this.handleSelectRow }
-          unselectableRow={ disable }>
-          { selectRowColumn }
-          { tableColumns }
-        </TableRow>
-      );
-    }, this);
+      const result = [ <TableRow isSelected={ selected } key={ key } className={ trClassName }
+        selectRow={ isSelectRowDefined ? this.props.selectRow : undefined }
+        enableCellEdit={ this.props.cellEdit.mode !== Const.CELL_EDIT_NONE }
+        onRowClick={ this.handleRowClick }
+        onRowDoubleClick={ this.handleRowDoubleClick }
+        onRowMouseOver={ this.handleRowMouseOver }
+        onRowMouseOut={ this.handleRowMouseOut }
+        onSelectRow={ this.handleSelectRow }
+        unselectableRow={ disable }>
+        { selectRowColumn }
+        { tableColumns }
+      </TableRow> ];
 
+      if (this.props.enableExpandRow) {
+        let hidden = true;
+        if (!(Object.keys(this.state.hideExpandComponent).length === 0) && (this.state.hideExpandComponent.constructor === Object)) {
+          hidden = this.state.hideExpandComponent[key];
+        }
+        result.push(
+          <ExpandComponent
+            className={ trClassName }
+            bgColor={ isSelectRowDefined ? this.props.selectRow.bgColor : undefined }
+            expandComponent={ this.props.expandComponent }
+            hidden={ hidden }
+            colSpan={ this.props.columns.length }
+            width={ "100%" }/>
+        );
+      }
+      return (result);
+    }, this);
     if (tableRows.length === 0) {
       tableRows.push(
         <TableRow key='##table-empty##'>
-          <td colSpan={ this.props.columns.length + (isSelectRowDefined ? 1 : 0) }
+          <td data-toggle='collapse' colSpan={ this.props.columns.length + (isSelectRowDefined ? 1 : 0) }
               className='react-bs-table-no-data'>
               { this.props.noDataText || Const.NO_DATA_TEXT }
           </td>
@@ -183,16 +235,31 @@ class TableBody extends Component {
   }
 
   handleRowMouseOut = (rowIndex, event) => {
+    if (this.props.enableExpandRow) {
+      if (rowIndex !== 1) {
+        rowIndex = (rowIndex + 1) / 2;
+      }
+    }
     const targetRow = this.props.data[rowIndex];
     this.props.onRowMouseOut(targetRow, event);
   }
 
   handleRowMouseOver = (rowIndex, event) => {
+    if (this.props.enableExpandRow) {
+      if (rowIndex !== 1) {
+        rowIndex = (rowIndex + 1) / 2;
+      }
+    }
     const targetRow = this.props.data[rowIndex];
     this.props.onRowMouseOver(targetRow, event);
   }
 
   handleRowClick = rowIndex => {
+    if (this.props.enableExpandRow) {
+      if (rowIndex !== 1) {
+        rowIndex = (rowIndex + 1) / 2;
+      }
+    }
     let selectedRow;
     const { data, onRowClick } = this.props;
     data.forEach((row, i) => {
@@ -200,10 +267,31 @@ class TableBody extends Component {
         selectedRow = row;
       }
     });
+    const clickId = selectedRow[this.props.keyField];
+    if (this.props.enableExpandRow) {
+      const tmp = _.clone(this.state.hideExpandComponent);
+      if (this.state.canExpand[clickId]) {
+        if (this.state.lastExpand !== null) {
+          tmp[this.state.lastExpand] = true;
+        }
+        tmp[clickId] = !this.state.hideExpandComponent[clickId];
+        if (!tmp[clickId]) {
+          this.setState( { lastExpand: clickId } );
+        }
+      } else {
+        tmp[this.state.lastExpand] = true;
+      }
+      this.setState({ hideExpandComponent: tmp });
+    }
     onRowClick(selectedRow);
   }
 
   handleRowDoubleClick = rowIndex => {
+    if (this.props.enableExpandRow) {
+      if (rowIndex !== 1) {
+        rowIndex = (rowIndex + 1) / 2;
+      }
+    }
     let selectedRow;
     const { data, onRowDoubleClick } = this.props;
     data.forEach((row, i) => {
@@ -215,6 +303,11 @@ class TableBody extends Component {
   }
 
   handleSelectRow = (rowIndex, isSelected, e) => {
+    if (this.props.enableExpandRow) {
+      if (rowIndex !== 1) {
+        rowIndex = (rowIndex + 1) / 2;
+      }
+    }
     let selectedRow;
     const { data, onSelectRow } = this.props;
     data.forEach((row, i) => {
@@ -227,6 +320,11 @@ class TableBody extends Component {
   }
 
   handleSelectRowColumChange = (e, rowIndex) => {
+    if (this.props.enableExpandRow) {
+      if (rowIndex !== 1) {
+        rowIndex = (rowIndex + 1) / 2;
+      }
+    }
     if (!this.props.selectRow.clickToSelect ||
       !this.props.selectRow.clickToSelectAndEditCell) {
       this.handleSelectRow(
@@ -237,6 +335,11 @@ class TableBody extends Component {
   }
 
   handleEditCell = (rowIndex, columnIndex, e) => {
+    if (this.props.enableExpandRow) {
+      if (rowIndex !== 1) {
+        rowIndex = (rowIndex + 1) / 2;
+      }
+    }
     if (this._isSelectRowDefined()) {
       columnIndex--;
       if (this.props.selectRow.hideSelectColumn) columnIndex++;
@@ -259,6 +362,11 @@ class TableBody extends Component {
   }
 
   handleCompleteEditCell = (newVal, rowIndex, columnIndex) => {
+    if (this.props.enableExpandRow) {
+      if (rowIndex !== 1) {
+        rowIndex = (rowIndex + 1) / 2;
+      }
+    }
     this.setState({ currEditCell: null });
     if (newVal !== null) {
       this.props.cellEdit.__onCompleteEdit__(newVal, rowIndex, columnIndex);

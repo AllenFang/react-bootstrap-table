@@ -22,8 +22,12 @@ class BootstrapTable extends Component {
     if (Util.canUseDOM()) {
       this.isIE = document.documentMode;
     }
-
-    this.store = new TableDataStore(this.props.data.slice());
+    if (this.props.data) {
+      this.store = new TableDataStore(this.props.data.slice());
+    } else {
+      this.store = new TableDataStore([]);
+    }
+    // this.store = new TableDataStore(this.props.data.slice());
 
     this.initTable(this.props);
 
@@ -293,6 +297,8 @@ class BootstrapTable extends Component {
             tableBodyClass={ this.props.tableBodyClass }
             style={ { ...style, ...this.props.bodyStyle } }
             data={ this.state.data }
+            enableExpandRow={ this.props.enableExpandRow }
+            expandComponent={ this.props.expandComponent }
             columns={ columns }
             trClassName={ this.props.trClassName }
             striped={ this.props.striped }
@@ -1101,6 +1107,8 @@ BootstrapTable.propTypes = {
   ignoreSinglePage: PropTypes.bool
 };
 BootstrapTable.defaultProps = {
+  enableExpandRow: false,
+  expandComponent: undefined,
   height: '100%',
   maxHeight: undefined,
   striped: false,
