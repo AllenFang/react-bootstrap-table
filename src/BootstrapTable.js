@@ -22,12 +22,7 @@ class BootstrapTable extends Component {
     if (Util.canUseDOM()) {
       this.isIE = document.documentMode;
     }
-    if (this.props.data) {
-      this.store = new TableDataStore(this.props.data.slice());
-    } else {
-      this.store = new TableDataStore([]);
-    }
-    // this.store = new TableDataStore(this.props.data.slice());
+    this.store = new TableDataStore(this.props.data.slice());
 
     this.initTable(this.props);
 
