@@ -311,7 +311,8 @@ class BootstrapTable extends Component {
             onRowMouseOver={ this.handleRowMouseOver }
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
-            noDataText={ this.props.options.noDataText } />
+            noDataText={ this.props.options.noDataText }
+            adjustHeaderWidth={ this._adjustHeaderWidth } />
         </div>
         { tableFilter }
         { pagination }
