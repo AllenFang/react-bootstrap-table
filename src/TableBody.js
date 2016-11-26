@@ -241,7 +241,9 @@ class TableBody extends Component {
       } else {
         expanding.push(rowKey);
       }
-      this.setState({ expanding });
+      this.setState({ expanding }, () => {
+        this.props.adjustHeaderWidth();
+      });
     }
     onRowClick(selectedRow);
   }
@@ -372,6 +374,7 @@ TableBody.propTypes = {
   bodyContainerClass: PropTypes.string,
   expandableRow: PropTypes.func,
   expandComponent: PropTypes.func,
-  expandRowBgColor: PropTypes.string
+  expandRowBgColor: PropTypes.string,
+  adjustHeaderWidth: PropTypes.func
 };
 export default TableBody;
