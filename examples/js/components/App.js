@@ -23,9 +23,6 @@ class App extends React.Component {
 
   render() {
     const examples = [ {
-      text: 'Expandable Row',
-      href: 'expandRow'
-    }, {
       text: 'Basic Table',
       href: 'basic'
     }, {
@@ -61,6 +58,9 @@ class App extends React.Component {
     }, {
       text: 'Advance data edit&insert',
       href: 'advance'
+    }, {
+      text: 'Expandable Row',
+      href: 'expandRow'
     }, {
       text: 'Other',
       href: 'others'

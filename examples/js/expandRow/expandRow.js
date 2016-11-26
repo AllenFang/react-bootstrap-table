@@ -8,12 +8,11 @@ function addProducts(quantity) {
   const startId = products.length;
   for (let i = 0; i < quantity; i++) {
     const id = startId + i;
-    if (i % 2 === 0) {
+    if (i < 3) {
       products.push({
         id: id,
         name: 'Item name ' + id,
         price: 2100 + i,
-        expandable: true,
         expand: [ {
           fieldA: 'test1',
           fieldB: (i + 1) * 99,
@@ -39,7 +38,7 @@ addProducts(5);
 
 class BSTable extends React.Component {
   render() {
-    if (this.props.data) { // prevent from data error
+    if (this.props.data) {
       return (
         <BootstrapTable data={ this.props.data }>
           <TableHeaderColumn dataField='fieldA' isKey={ true }>Field A</TableHeaderColumn>
@@ -56,32 +55,29 @@ class BSTable extends React.Component {
 export default class ExpandRow extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      rowData: {}
-    };
   }
+
+  isExpandableRow(row) {
+    if (row.id < 3) return true;
+    else return false;
+  }
+
+  expandComponent(row) {
+    return (
+      <BSTable data={ row.expand } />
+    );
+  }
+
   render() {
-    const me = this;
     const options = {
-      onRowClick: function(row) {
-        me.setState({
-          rowData: row
-        });
-      }
-    };
-    const selectRow = {
-      mode: 'radio',
-      clickToSelect: true,
-      bgColor: 'rgb(215, 221, 224)',
-      color: 'rgb(255, 255, 255)',
-      hideSelectColumn: true
+      expandRowBgColor: 'rgb(242, 255, 163)'
     };
     return (
       <BootstrapTable data={ products }
-        selectRow={ selectRow }
         options={ options }
-        enableExpandRow={ true }
-        expandComponent={ <BSTable data={ me.state.rowData.expand } /> }>
+        expandableRow={ this.isExpandableRow }
+        expandComponent={ this.expandComponent }
+        search>
         <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
         <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
