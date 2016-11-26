@@ -88,6 +88,7 @@ class TableBody extends Component {
           }
           return (
             <TableColumn key={ i }
+              rIndex={ r }
               dataAlign={ column.align }
               className={ tdClassName }
               columnTitle={ columnTitle }
@@ -111,6 +112,7 @@ class TableBody extends Component {
         trClassName = this.props.trClassName(data, r);
       }
       const result = [ <TableRow isSelected={ selected } key={ key } className={ trClassName }
+        index={ r }
         selectRow={ isSelectRowDefined ? this.props.selectRow : undefined }
         enableCellEdit={ this.props.cellEdit.mode !== Const.CELL_EDIT_NONE }
         onRowClick={ this.handleRowClick }
@@ -201,31 +203,16 @@ class TableBody extends Component {
   }
 
   handleRowMouseOut = (rowIndex, event) => {
-    if (this.props.enableExpandRow) {
-      if (rowIndex !== 1) {
-        rowIndex = (rowIndex + 1) / 2;
-      }
-    }
     const targetRow = this.props.data[rowIndex];
     this.props.onRowMouseOut(targetRow, event);
   }
 
   handleRowMouseOver = (rowIndex, event) => {
-    if (this.props.enableExpandRow) {
-      if (rowIndex !== 1) {
-        rowIndex = (rowIndex + 1) / 2;
-      }
-    }
     const targetRow = this.props.data[rowIndex];
     this.props.onRowMouseOver(targetRow, event);
   }
 
   handleRowClick = rowIndex => {
-    if (this.props.enableExpandRow) {
-      if (rowIndex !== 1) {
-        rowIndex = (rowIndex + 1) / 2;
-      }
-    }
     let selectedRow;
     const { data, onRowClick } = this.props;
     data.forEach((row, i) => {
@@ -249,11 +236,6 @@ class TableBody extends Component {
   }
 
   handleRowDoubleClick = rowIndex => {
-    if (this.props.enableExpandRow) {
-      if (rowIndex !== 1) {
-        rowIndex = (rowIndex + 1) / 2;
-      }
-    }
     let selectedRow;
     const { data, onRowDoubleClick } = this.props;
     data.forEach((row, i) => {
@@ -265,11 +247,6 @@ class TableBody extends Component {
   }
 
   handleSelectRow = (rowIndex, isSelected, e) => {
-    if (this.props.enableExpandRow) {
-      if (rowIndex !== 1) {
-        rowIndex = (rowIndex + 1) / 2;
-      }
-    }
     let selectedRow;
     const { data, onSelectRow } = this.props;
     data.forEach((row, i) => {
@@ -282,11 +259,6 @@ class TableBody extends Component {
   }
 
   handleSelectRowColumChange = (e, rowIndex) => {
-    if (this.props.enableExpandRow) {
-      if (rowIndex !== 1) {
-        rowIndex = (rowIndex + 1) / 2;
-      }
-    }
     if (!this.props.selectRow.clickToSelect ||
       !this.props.selectRow.clickToSelectAndEditCell) {
       this.handleSelectRow(
@@ -297,11 +269,6 @@ class TableBody extends Component {
   }
 
   handleEditCell = (rowIndex, columnIndex, e) => {
-    if (this.props.enableExpandRow) {
-      if (rowIndex !== 1) {
-        rowIndex = (rowIndex + 1) / 2;
-      }
-    }
     if (this._isSelectRowDefined()) {
       columnIndex--;
       if (this.props.selectRow.hideSelectColumn) columnIndex++;
@@ -324,11 +291,6 @@ class TableBody extends Component {
   }
 
   handleCompleteEditCell = (newVal, rowIndex, columnIndex) => {
-    if (this.props.enableExpandRow) {
-      if (rowIndex !== 1) {
-        rowIndex = (rowIndex + 1) / 2;
-      }
-    }
     this.setState({ currEditCell: null });
     if (newVal !== null) {
       this.props.cellEdit.__onCompleteEdit__(newVal, rowIndex, columnIndex);
@@ -341,11 +303,9 @@ class TableBody extends Component {
       { CustomComponent ?
         <CustomComponent type={ inputType } checked={ selected } disabled={ disabled }
           rowIndex={ rowIndex }
-          onChange={ e=>this.handleSelectRowColumChange(e,
-            e.currentTarget.parentElement.parentElement.parentElement.rowIndex) }/> :
+          onChange={ e=>this.handleSelectRowColumChange(e, rowIndex) }/> :
         <input type={ inputType } checked={ selected } disabled={ disabled }
-          onChange={ e=>this.handleSelectRowColumChange(e,
-            e.currentTarget.parentElement.parentElement.rowIndex) }/>
+          onChange={ e=>this.handleSelectRowColumChange(e, rowIndex) }/>
       }
       </TableColumn>
     );

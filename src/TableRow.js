@@ -12,7 +12,7 @@ class TableRow extends Component {
     if (e.target.tagName !== 'INPUT' &&
         e.target.tagName !== 'SELECT' &&
         e.target.tagName !== 'TEXTAREA') {
-      const rowIndex = e.currentTarget.rowIndex + 1;
+      const rowIndex = this.props.index + 1;
       const { selectRow, unselectableRow, isSelected, onSelectRow } = this.props;
       if (selectRow) {
         if (selectRow.clickToSelect && !unselectableRow) {
@@ -88,6 +88,7 @@ class TableRow extends Component {
   }
 }
 TableRow.propTypes = {
+  index: PropTypes.number,
   isSelected: PropTypes.bool,
   enableCellEdit: PropTypes.bool,
   onRowClick: PropTypes.func,
