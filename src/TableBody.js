@@ -160,10 +160,11 @@ class TableBody extends Component {
           <ExpandComponent
             className={ trClassName }
             bgColor={ isSelectRowDefined ? this.props.selectRow.bgColor : undefined }
-            expandComponent={ this.props.expandComponent }
             hidden={ hidden }
             colSpan={ this.props.columns.length }
-            width={ "100%" }/>
+            width={ "100%" }>
+            { this.props.expandComponent(data) }
+          </ExpandComponent>
         );
       }
       return (result);
@@ -402,6 +403,7 @@ TableBody.propTypes = {
   style: PropTypes.object,
   tableBodyClass: PropTypes.string,
   bodyContainerClass: PropTypes.string,
-  expandableRow: PropTypes.func
+  expandableRow: PropTypes.func,
+  expandComponent: PropTypes.func
 };
 export default TableBody;

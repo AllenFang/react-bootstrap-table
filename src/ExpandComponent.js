@@ -17,7 +17,7 @@ class ExpandComponent extends Component {
     return (
       <tr hidden={ this.props.hidden } width={ this.props.width } { ...trCss }>
         <td colSpan={ this.props.colSpan }>
-          { this.props.expandComponent }
+          { this.props.children }
         </td>
       </tr>
     );
