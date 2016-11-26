@@ -5,7 +5,6 @@ import TableColumn from './TableColumn';
 import TableEditColumn from './TableEditColumn';
 import classSet from 'classnames';
 import ExpandComponent from './ExpandComponent';
-import _ from 'underscore';
 
 const isFun = function(obj) {
   return obj && (typeof obj === 'function');
@@ -14,40 +13,13 @@ const isFun = function(obj) {
 class TableBody extends Component {
   constructor(props) {
     super(props);
-    const hideExpandComponent = {};
-    const canExpand = {};
-    if (this.props.enableExpandRow) {
-      for (let i = 0; i < this.props.data.length; i++) {
-        const key = this.props.data[i][this.props.keyField];
-        hideExpandComponent[key] = true;
-        canExpand[key] = this.props.expandableRow(this.props.data[i]);
-      }
-    }
     this.state = {
       currEditCell: null,
-      hideExpandComponent: hideExpandComponent,
-      canExpand: canExpand,
+      expanding: [],
       lastExpand: null
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.enableExpandRow) {
-      if (!(_.isEqual(this.props.data, nextProps.data))) {
-        const hideExpandComponent = {};
-        const canExpand = {};
-        for (let i = 0; i < nextProps.data.length; i++) {
-          const key = nextProps.data[i][nextProps.keyField];
-          hideExpandComponent[key] = true;
-          canExpand[key] = this.props.expandableRow(this.props.data[i]);
-        }
-        this.setState({
-          hideExpandComponent: hideExpandComponent,
-          canExpand: canExpand
-        });
-      }
-    }
-  }
   render() {
     const tableClasses = classSet('table', {
       'table-striped': this.props.striped,
@@ -151,16 +123,12 @@ class TableBody extends Component {
         { tableColumns }
       </TableRow> ];
 
-      if (this.props.enableExpandRow) {
-        let hidden = true;
-        if (!(Object.keys(this.state.hideExpandComponent).length === 0) && (this.state.hideExpandComponent.constructor === Object)) {
-          hidden = this.state.hideExpandComponent[key];
-        }
+      if (this.props.expandableRow && this.props.expandableRow(data)) {
         result.push(
           <ExpandComponent
             className={ trClassName }
             bgColor={ isSelectRowDefined ? this.props.selectRow.bgColor : undefined }
-            hidden={ hidden }
+            hidden={ !(this.state.expanding.indexOf(key) > -1) }
             colSpan={ this.props.columns.length }
             width={ "100%" }>
             { this.props.expandComponent(data) }
@@ -260,21 +228,15 @@ class TableBody extends Component {
         selectedRow = row;
       }
     });
-    const clickId = selectedRow[this.props.keyField];
+    const rowKey = selectedRow[this.props.keyField];
     if (this.props.enableExpandRow) {
-      const tmp = _.clone(this.state.hideExpandComponent);
-      if (this.state.canExpand[clickId]) {
-        if (this.state.lastExpand !== null) {
-          tmp[this.state.lastExpand] = true;
-        }
-        tmp[clickId] = !this.state.hideExpandComponent[clickId];
-        if (!tmp[clickId]) {
-          this.setState( { lastExpand: clickId } );
-        }
+      let expanding = this.state.expanding;
+      if (this.state.expanding.indexOf(rowKey) > -1) {
+        expanding = expanding.filter(k => k !== rowKey);
       } else {
-        tmp[this.state.lastExpand] = true;
+        expanding.push(rowKey);
       }
-      this.setState({ hideExpandComponent: tmp });
+      this.setState({ expanding });
     }
     onRowClick(selectedRow);
   }
