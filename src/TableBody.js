@@ -20,11 +20,7 @@ class TableBody extends Component {
       for (let i = 0; i < this.props.data.length; i++) {
         const key = this.props.data[i][this.props.keyField];
         hideExpandComponent[key] = true;
-        if ('expandable' in this.props.data[i] && this.props.data[i].expandable) {
-          canExpand[key] = true;
-        } else {
-          canExpand[key] = false;
-        }
+        canExpand[key] = this.props.expandableRow(this.props.data[i]);
       }
     }
     this.state = {
@@ -43,11 +39,7 @@ class TableBody extends Component {
         for (let i = 0; i < nextProps.data.length; i++) {
           const key = nextProps.data[i][nextProps.keyField];
           hideExpandComponent[key] = true;
-          if ('expandable' in nextProps.data[i] && nextProps.data[i].expandable) {
-            canExpand[key] = true;
-          } else {
-            canExpand[key] = false;
-          }
+          canExpand[key] = this.props.expandableRow(this.props.data[i]);
         }
         this.setState({
           hideExpandComponent: hideExpandComponent,
@@ -409,6 +401,7 @@ TableBody.propTypes = {
   noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
   style: PropTypes.object,
   tableBodyClass: PropTypes.string,
-  bodyContainerClass: PropTypes.string
+  bodyContainerClass: PropTypes.string,
+  expandableRow: PropTypes.func
 };
 export default TableBody;

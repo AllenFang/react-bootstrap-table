@@ -294,6 +294,7 @@ class BootstrapTable extends Component {
             data={ this.state.data }
             enableExpandRow={ this.props.enableExpandRow }
             expandComponent={ this.props.expandComponent }
+            expandableRow={ this.props.expandableRow }
             columns={ columns }
             trClassName={ this.props.trClassName }
             striped={ this.props.striped }
@@ -1099,11 +1100,13 @@ BootstrapTable.propTypes = {
   }),
   exportCSV: PropTypes.bool,
   csvFileName: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
-  ignoreSinglePage: PropTypes.bool
+  ignoreSinglePage: PropTypes.bool,
+  expandableRow: PropTypes.func
 };
 BootstrapTable.defaultProps = {
   enableExpandRow: false,
   expandComponent: undefined,
+  expandableRow: undefined,
   height: '100%',
   maxHeight: undefined,
   striped: false,
