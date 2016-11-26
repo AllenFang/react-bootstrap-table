@@ -292,7 +292,6 @@ class BootstrapTable extends Component {
             tableBodyClass={ this.props.tableBodyClass }
             style={ { ...style, ...this.props.bodyStyle } }
             data={ this.state.data }
-            enableExpandRow={ this.props.enableExpandRow }
             expandComponent={ this.props.expandComponent }
             expandableRow={ this.props.expandableRow }
             expandRowBgColor={ this.props.options.expandRowBgColor }
@@ -1108,7 +1107,6 @@ BootstrapTable.propTypes = {
   expandComponent: PropTypes.func
 };
 BootstrapTable.defaultProps = {
-  enableExpandRow: false,
   expandComponent: undefined,
   expandableRow: undefined,
   height: '100%',

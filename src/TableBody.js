@@ -222,7 +222,7 @@ class TableBody extends Component {
       }
     });
     const rowKey = selectedRow[this.props.keyField];
-    if (this.props.enableExpandRow) {
+    if (this.props.expandableRow) {
       let expanding = this.state.expanding;
       if (this.state.expanding.indexOf(rowKey) > -1) {
         expanding = expanding.filter(k => k !== rowKey);
