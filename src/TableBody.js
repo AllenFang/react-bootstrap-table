@@ -4,17 +4,19 @@ import TableRow from './TableRow';
 import TableColumn from './TableColumn';
 import TableEditColumn from './TableEditColumn';
 import classSet from 'classnames';
+import ExpandComponent from './ExpandComponent';
 
 const isFun = function(obj) {
   return obj && (typeof obj === 'function');
 };
 
 class TableBody extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      currEditCell: null
+      currEditCell: null,
+      expanding: [],
+      lastExpand: null
     };
   }
 
@@ -86,6 +88,7 @@ class TableBody extends Component {
           }
           return (
             <TableColumn key={ i }
+              rIndex={ r }
               dataAlign={ column.align }
               className={ tdClassName }
               columnTitle={ columnTitle }
@@ -108,26 +111,44 @@ class TableBody extends Component {
       if (isFun(this.props.trClassName)) {
         trClassName = this.props.trClassName(data, r);
       }
-      return (
-        <TableRow isSelected={ selected } key={ key } className={ trClassName }
-          selectRow={ isSelectRowDefined ? this.props.selectRow : undefined }
-          enableCellEdit={ this.props.cellEdit.mode !== Const.CELL_EDIT_NONE }
-          onRowClick={ this.handleRowClick }
-          onRowDoubleClick={ this.handleRowDoubleClick }
-          onRowMouseOver={ this.handleRowMouseOver }
-          onRowMouseOut={ this.handleRowMouseOut }
-          onSelectRow={ this.handleSelectRow }
-          unselectableRow={ disable }>
-          { selectRowColumn }
-          { tableColumns }
-        </TableRow>
-      );
-    }, this);
+      const result = [ <TableRow isSelected={ selected } key={ key } className={ trClassName }
+        index={ r }
+        selectRow={ isSelectRowDefined ? this.props.selectRow : undefined }
+        enableCellEdit={ this.props.cellEdit.mode !== Const.CELL_EDIT_NONE }
+        onRowClick={ this.handleRowClick }
+        onRowDoubleClick={ this.handleRowDoubleClick }
+        onRowMouseOver={ this.handleRowMouseOver }
+        onRowMouseOut={ this.handleRowMouseOut }
+        onSelectRow={ this.handleSelectRow }
+        unselectableRow={ disable }>
+        { selectRowColumn }
+        { tableColumns }
+      </TableRow> ];
 
+      if (this.props.expandableRow && this.props.expandableRow(data)) {
+        let colSpan = this.props.columns.length;
+        const bgColor = this.props.expandRowBgColor || this.props.selectRow.bgColor || undefined;
+        if (isSelectRowDefined && !this.props.selectRow.hideSelectColumn) {
+          colSpan += 1;
+        }
+        result.push(
+          <ExpandComponent
+            className={ trClassName }
+            bgColor={ bgColor }
+            hidden={ !(this.state.expanding.indexOf(key) > -1) }
+            colSpan={ colSpan }
+            width={ "100%" }>
+            { this.props.expandComponent(data) }
+          </ExpandComponent>
+        );
+      }
+      return (result);
+    }, this);
     if (tableRows.length === 0) {
       tableRows.push(
         <TableRow key='##table-empty##'>
-          <td colSpan={ this.props.columns.length + (isSelectRowDefined ? 1 : 0) }
+          <td data-toggle='collapse'
+              colSpan={ this.props.columns.length + (isSelectRowDefined ? 1 : 0) }
               className='react-bs-table-no-data'>
               { this.props.noDataText || Const.NO_DATA_TEXT }
           </td>
@@ -200,6 +221,18 @@ class TableBody extends Component {
         selectedRow = row;
       }
     });
+    const rowKey = selectedRow[this.props.keyField];
+    if (this.props.expandableRow) {
+      let expanding = this.state.expanding;
+      if (this.state.expanding.indexOf(rowKey) > -1) {
+        expanding = expanding.filter(k => k !== rowKey);
+      } else {
+        expanding.push(rowKey);
+      }
+      this.setState({ expanding }, () => {
+        this.props.adjustHeaderWidth();
+      });
+    }
     onRowClick(selectedRow);
   }
 
@@ -271,11 +304,9 @@ class TableBody extends Component {
       { CustomComponent ?
         <CustomComponent type={ inputType } checked={ selected } disabled={ disabled }
           rowIndex={ rowIndex }
-          onChange={ e=>this.handleSelectRowColumChange(e,
-            e.currentTarget.parentElement.parentElement.parentElement.rowIndex) }/> :
+          onChange={ e=>this.handleSelectRowColumChange(e, rowIndex) }/> :
         <input type={ inputType } checked={ selected } disabled={ disabled }
-          onChange={ e=>this.handleSelectRowColumChange(e,
-            e.currentTarget.parentElement.parentElement.rowIndex) }/>
+          onChange={ e=>this.handleSelectRowColumChange(e, rowIndex) }/>
       }
       </TableColumn>
     );
@@ -301,6 +332,10 @@ TableBody.propTypes = {
   noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
   style: PropTypes.object,
   tableBodyClass: PropTypes.string,
-  bodyContainerClass: PropTypes.string
+  bodyContainerClass: PropTypes.string,
+  expandableRow: PropTypes.func,
+  expandComponent: PropTypes.func,
+  expandRowBgColor: PropTypes.string,
+  adjustHeaderWidth: PropTypes.func
 };
 export default TableBody;

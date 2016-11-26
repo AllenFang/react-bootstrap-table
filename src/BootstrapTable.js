@@ -22,7 +22,6 @@ class BootstrapTable extends Component {
     if (Util.canUseDOM()) {
       this.isIE = document.documentMode;
     }
-
     this.store = new TableDataStore(this.props.data.slice());
 
     this.initTable(this.props);
@@ -293,6 +292,9 @@ class BootstrapTable extends Component {
             tableBodyClass={ this.props.tableBodyClass }
             style={ { ...style, ...this.props.bodyStyle } }
             data={ this.state.data }
+            expandComponent={ this.props.expandComponent }
+            expandableRow={ this.props.expandableRow }
+            expandRowBgColor={ this.props.options.expandRowBgColor }
             columns={ columns }
             trClassName={ this.props.trClassName }
             striped={ this.props.striped }
@@ -308,7 +310,8 @@ class BootstrapTable extends Component {
             onRowMouseOver={ this.handleRowMouseOver }
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
-            noDataText={ this.props.options.noDataText } />
+            noDataText={ this.props.options.noDataText }
+            adjustHeaderWidth={ this._adjustHeaderWidth } />
         </div>
         { tableFilter }
         { pagination }
@@ -1091,16 +1094,21 @@ BootstrapTable.propTypes = {
     saveText: PropTypes.string,
     closeText: PropTypes.string,
     ignoreEditable: PropTypes.bool,
-    defaultSearch: PropTypes.string
+    defaultSearch: PropTypes.string,
+    expandRowBgColor: PropTypes.string
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
   }),
   exportCSV: PropTypes.bool,
   csvFileName: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
-  ignoreSinglePage: PropTypes.bool
+  ignoreSinglePage: PropTypes.bool,
+  expandableRow: PropTypes.func,
+  expandComponent: PropTypes.func
 };
 BootstrapTable.defaultProps = {
+  expandComponent: undefined,
+  expandableRow: undefined,
   height: '100%',
   maxHeight: undefined,
   striped: false,
@@ -1184,7 +1192,8 @@ BootstrapTable.defaultProps = {
     saveText: Const.SAVE_BTN_TEXT,
     closeText: Const.CLOSE_BTN_TEXT,
     ignoreEditable: false,
-    defaultSearch: ''
+    defaultSearch: '',
+    expandRowBgColor: undefined
   },
   fetchInfo: {
     dataTotalSize: 0

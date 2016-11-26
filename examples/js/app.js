@@ -21,6 +21,7 @@ import Advance from './advance/demo';
 import Other from './others/demo';
 import Complex from './complex/demo';
 import Remote from './remote/demo';
+import Expand from './expandRow/demo';
 
 const renderApp = () => {
   ReactDOM.render(
@@ -44,6 +45,7 @@ const renderApp = () => {
             <Route path='others' component={ Other } />
             <Route path='complex' component={ Complex } />
             <Route path='remote' component={ Remote } />
+            <Route path='expandRow' component={ Expand } />
           </Route>
           <Route path='*' component={ PageNotFound }/>
         </Route>

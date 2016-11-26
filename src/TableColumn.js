@@ -55,7 +55,7 @@ class TableColumn extends Component {
       }
     }
     this.props.onEdit(
-      e.currentTarget.parentElement.rowIndex + 1,
+      this.props.rIndex + 1,
       e.currentTarget.cellIndex,
       e);
   }
@@ -95,6 +95,7 @@ class TableColumn extends Component {
   }
 }
 TableColumn.propTypes = {
+  rIndex: PropTypes.number,
   dataAlign: PropTypes.string,
   hidden: PropTypes.bool,
   className: PropTypes.string,
