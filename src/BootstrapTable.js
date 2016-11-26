@@ -295,6 +295,7 @@ class BootstrapTable extends Component {
             enableExpandRow={ this.props.enableExpandRow }
             expandComponent={ this.props.expandComponent }
             expandableRow={ this.props.expandableRow }
+            expandRowBgColor={ this.props.options.expandRowBgColor }
             columns={ columns }
             trClassName={ this.props.trClassName }
             striped={ this.props.striped }
@@ -1093,7 +1094,8 @@ BootstrapTable.propTypes = {
     saveText: PropTypes.string,
     closeText: PropTypes.string,
     ignoreEditable: PropTypes.bool,
-    defaultSearch: PropTypes.string
+    defaultSearch: PropTypes.string,
+    expandRowBgColor: PropTypes.string
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1191,7 +1193,8 @@ BootstrapTable.defaultProps = {
     saveText: Const.SAVE_BTN_TEXT,
     closeText: Const.CLOSE_BTN_TEXT,
     ignoreEditable: false,
-    defaultSearch: ''
+    defaultSearch: '',
+    expandRowBgColor: undefined
   },
   fetchInfo: {
     dataTotalSize: 0
