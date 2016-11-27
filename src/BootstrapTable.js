@@ -586,7 +586,7 @@ class BootstrapTable extends Component {
     try {
       this.store.add(newObj);
     } catch (e) {
-      return e;
+      return e.message;
     }
     this._handleAfterAddingRow(newObj, false);
   }
