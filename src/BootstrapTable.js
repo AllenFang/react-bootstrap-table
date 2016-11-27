@@ -295,7 +295,7 @@ class BootstrapTable extends Component {
             expandComponent={ this.props.expandComponent }
             expandableRow={ this.props.expandableRow }
             expandRowBgColor={ this.props.options.expandRowBgColor }
-            footerData={ this.props.footerData }
+            footer={ this.props.footer }
             columns={ columns }
             trClassName={ this.props.trClassName }
             striped={ this.props.striped }
@@ -1007,7 +1007,7 @@ BootstrapTable.propTypes = {
   height: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   maxHeight: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   data: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
-  footerData: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
+  footer: PropTypes.object,
   remote: PropTypes.bool, // remote data, default is false
   striped: PropTypes.bool,
   bordered: PropTypes.bool,
@@ -1195,7 +1195,8 @@ BootstrapTable.defaultProps = {
     closeText: Const.CLOSE_BTN_TEXT,
     ignoreEditable: false,
     defaultSearch: '',
-    expandRowBgColor: undefined
+    expandRowBgColor: undefined,
+    footer: undefined
   },
   fetchInfo: {
     dataTotalSize: 0
