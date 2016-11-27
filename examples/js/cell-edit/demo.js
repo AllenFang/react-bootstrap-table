@@ -40,12 +40,14 @@ class Demo extends React.Component {
         </div>
         <div className='col-md-offset-1 col-md-8'>
           <div className='panel panel-default'>
-            <div className='panel-heading'>A Non Editable Cell Example&nbsp;(Product Name can not be edited)</div>
+            <div className='panel-heading'>A Non Editable Cell Example&nbsp;</div>
             <div className='panel-body'>
               <h5>Source in /examples/js/cell-edit/non-editable-table.js</h5>
               <span>
                 BTW, if you set editable to true, which field will be non editable also when insert.<br/>
                 so if you want to make field editable when insert, you can set ignoreEditable to true in options prop.<br/>
+                In this example, Product Name can not be edited cause by we apply <code>editable</code>.<br/>
+                In addtiion, we also make the whole row which Product ID less than 3 uneditable by <code>nonEditableRows</code>
               </span>
               <NonEditableTable />
             </div>
