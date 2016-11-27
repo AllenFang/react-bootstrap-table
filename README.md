@@ -6,8 +6,7 @@
 
 [![Dependency Status][deps-badge]][deps]
 [![devDependency Status][dev-deps-badge]][dev-deps]
-[![peerDependency Status][peer-deps-badge]][peer-deps]
-# Please Stay The Version on ```v2.5.8```, There's some dependency and react version problem.
+[![peerDependency Status][peer-deps-badge]][peer-deps]   
 It's a [react.js](http://facebook.github.io/react/) table for bootstrap, named reactbsTable. It's a configurable, functional table component and make you build a Bootstrap Table more efficiency and easy in your React application, However ```react-bootstrap-table``` support these features:
 
 - striped, borderless, condensed table
