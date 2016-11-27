@@ -21,6 +21,7 @@ class TableBody extends Component {
   }
 
   render() {
+    const { cellEdit } = this.props;
     const tableClasses = classSet('table', {
       'table-striped': this.props.striped,
       'table-bordered': this.props.bordered,
@@ -28,6 +29,7 @@ class TableBody extends Component {
       'table-condensed': this.props.condensed
     }, this.props.tableBodyClass);
 
+    const noneditableRows = (cellEdit.nonEditableRows && cellEdit.nonEditableRows()) || [];
     const unselectable = this.props.selectRow.unselectable || [];
     const isSelectRowDefined = this._isSelectRowDefined();
     const tableHeader = this.renderTableHeader(isSelectRowDefined);
@@ -41,7 +43,8 @@ class TableBody extends Component {
           column.editable && // column is editable? default is true, user can set it false
           this.state.currEditCell !== null &&
           this.state.currEditCell.rid === r &&
-          this.state.currEditCell.cid === i) {
+          this.state.currEditCell.cid === i &&
+          noneditableRows.indexOf(data[this.props.keyField]) === -1) {
           let editable = column.editable;
           const format = column.format ? function(value) {
             return column.format(value, data, column.formatExtraData, r).replace(/<.*?>/g, '');
@@ -58,7 +61,7 @@ class TableBody extends Component {
                 customEditor={ column.customEditor }
                 format={ column.format ? format : false }
                 key={ i }
-                blurToSave={ this.props.cellEdit.blurToSave }
+                blurToSave={ cellEdit.blurToSave }
                 rowIndex={ r }
                 colIndex={ i }
                 row={ data }
@@ -92,7 +95,7 @@ class TableBody extends Component {
               dataAlign={ column.align }
               className={ tdClassName }
               columnTitle={ columnTitle }
-              cellEdit={ this.props.cellEdit }
+              cellEdit={ cellEdit }
               hidden={ column.hidden }
               onEdit={ this.handleEditCell }
               width={ column.width }>
@@ -114,7 +117,7 @@ class TableBody extends Component {
       const result = [ <TableRow isSelected={ selected } key={ key } className={ trClassName }
         index={ r }
         selectRow={ isSelectRowDefined ? this.props.selectRow : undefined }
-        enableCellEdit={ this.props.cellEdit.mode !== Const.CELL_EDIT_NONE }
+        enableCellEdit={ cellEdit.mode !== Const.CELL_EDIT_NONE }
         onRowClick={ this.handleRowClick }
         onRowDoubleClick={ this.handleRowDoubleClick }
         onRowMouseOver={ this.handleRowMouseOver }

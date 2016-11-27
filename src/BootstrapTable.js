@@ -1035,7 +1035,8 @@ BootstrapTable.propTypes = {
     mode: PropTypes.string,
     blurToSave: PropTypes.bool,
     beforeSaveCell: PropTypes.func,
-    afterSaveCell: PropTypes.func
+    afterSaveCell: PropTypes.func,
+    nonEditableRows: PropTypes.func
   }),
   insertRow: PropTypes.bool,
   deleteRow: PropTypes.bool,
@@ -1135,7 +1136,8 @@ BootstrapTable.defaultProps = {
     mode: Const.CELL_EDIT_NONE,
     blurToSave: false,
     beforeSaveCell: undefined,
-    afterSaveCell: undefined
+    afterSaveCell: undefined,
+    nonEditableRows: undefined
   },
   insertRow: false,
   deleteRow: false,
