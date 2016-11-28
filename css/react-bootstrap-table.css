@@ -37,18 +37,23 @@
 }
 
 .react-bs-container-header {
-  width: 100%;
+  width: auto;
+  display: inline-block;
+  margin-bottom: -5px;
 }
 
 .react-bs-container-body {
   /*height: 154px;*/
   /*overflow: auto;*/
   overflow-y: auto;
-  width: 100%;
+  width: auto;
+  display: inline-block;
+  margin-bottom: -5px;
 }
 
 .react-bs-container-footer {
-  width: 100%;
+  width: auto;
+  display: inline-block;
 }
 
 .react-bs-table .table-bordered {
