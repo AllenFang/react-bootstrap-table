@@ -265,9 +265,9 @@ TableHeaderColumn.propTypes = {
   sortIndicator: PropTypes.bool,
   resize: PropTypes.bool,
   resizeOptions: PropTypes.object,
-  onResizing: PropTypes.function,
-  onStartResizing: PropTypes.function,
-  onStopResizing: PropTypes.function,
+  onResizing: PropTypes.func,
+  onStartResizing: PropTypes.func,
+  onStopResizing: PropTypes.func,
   export: PropTypes.bool
 };
 

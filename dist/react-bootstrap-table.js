@@ -11077,9 +11077,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  sortIndicator: _react.PropTypes.bool,
 	  resize: _react.PropTypes.bool,
 	  resizeOptions: _react.PropTypes.object,
-	  onResizing: _react.PropTypes['function'],
-	  onStartResizing: _react.PropTypes['function'],
-	  onStopResizing: _react.PropTypes['function'],
+	  onResizing: _react.PropTypes.func,
+	  onStartResizing: _react.PropTypes.func,
+	  onStopResizing: _react.PropTypes.func,
 	  'export': _react.PropTypes.bool
 	};
 
