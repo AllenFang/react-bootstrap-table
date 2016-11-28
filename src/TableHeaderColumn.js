@@ -16,6 +16,9 @@ class TableHeaderColumn extends Component {
   constructor(props) {
     super(props);
     this.handleFilter = this.handleFilter.bind(this);
+    this.handleColumnResizing = this.handleColumnResizing.bind(this);
+    this.handleColumnStartResizing = this.handleColumnStartResizing.bind(this);
+    this.handleColumnStopResizing = this.handleColumnStopResizing.bind(this);
   }
 
   handleColumnClick = () => {
@@ -67,9 +70,25 @@ class TableHeaderColumn extends Component {
     }
   }
 
+  handleColumnResizing(e, newWidth) {
+    if (!this.props.onResizing) return;
+    // const parent = this._reactInternalInstance._currentElement._owner._instance;
+    this.props.onResizing(e, newWidth);
+  }
+
+  handleColumnStartResizing(e, startX, startWidth) {
+    if (!this.props.onStartResizing) return;
+    this.props.onStartResizing(e, startX, startWidth);
+  }
+
+  handleColumnStopResizing(e) {
+    if (!this.props.onStopResizing) return;
+    this.props.onStopResizing(e);
+  }
+
   componentDidMount() {
     this.refs['header-col'].setAttribute('data-field', this.props.dataField);
-    resizable(this.refs['header-col']);
+    resizable(this.refs['header-col'], this, this.handleColumnResizing);
   }
 
   render() {
@@ -91,7 +110,8 @@ class TableHeaderColumn extends Component {
     const thStyle = {
       textAlign: headerAlign || dataAlign,
       display: hidden ? 'none' : null,
-      position: resize ? 'relative' : 'initial'
+      position: resize ? 'relative' : 'initial',
+      width: this.props.resizeOptions.minWidth ? this.props.resizeOptions.minWidth : 'auto'
     };
     const resizerStyle = {
       width: '3px',
@@ -244,6 +264,10 @@ TableHeaderColumn.propTypes = {
   }),
   sortIndicator: PropTypes.bool,
   resize: PropTypes.bool,
+  resizeOptions: PropTypes.object,
+  onResizing: PropTypes.function,
+  onStartResizing: PropTypes.function,
+  onStopResizing: PropTypes.function,
   export: PropTypes.bool
 };
 
@@ -258,6 +282,7 @@ TableHeaderColumn.defaultProps = {
   isKey: false,
   editable: true,
   onSort: undefined,
+  onResizing: undefined,
   hidden: false,
   hiddenOnInsert: false,
   searchable: true,
@@ -273,7 +298,11 @@ TableHeaderColumn.defaultProps = {
   sortFuncExtraData: undefined,
   filter: undefined,
   sortIndicator: true,
-  resize: false
+  resize: false,
+  resizeOptions: {
+    minWidth: 25,
+    maxWidth: false
+  }
 };
 
 export default TableHeaderColumn;
