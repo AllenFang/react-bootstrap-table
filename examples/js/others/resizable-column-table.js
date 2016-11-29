@@ -43,8 +43,14 @@ export default class ResizableColumnTable extends React.Component {
     // console.log(sortName);
     console.log(sortOrder);
   }
-  onResizing(e, newWidth) {
-    console.log(newWidth);
+  onResizing(e, newWidth, col) {
+    console.log(col.props.dataField);
+  }
+  onStartResizing(e, x, width) {
+    console.log(x, width);
+  }
+  onStopResizing(e, x, width) {
+    console.log(x, width);
   }
   componentWillMount() {
     // this.columnResizing = this.columnResizing.bind(this);
@@ -52,7 +58,9 @@ export default class ResizableColumnTable extends React.Component {
   render() {
     const options = {
       onSortChange: this.onSortChange,
-      onResizing: this.onResizing
+      onResizing: this.onResizing,
+      onStartResizing: this.onStartResizing,
+      onStopResizing: this.onStopResizing
     };
 
     return (

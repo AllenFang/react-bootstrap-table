@@ -73,22 +73,23 @@ class TableHeaderColumn extends Component {
   handleColumnResizing(e, newWidth) {
     if (!this.props.onResizing) return;
     // const parent = this._reactInternalInstance._currentElement._owner._instance;
-    this.props.onResizing(e, newWidth);
+    this.props.onResizing(e, newWidth, this);
   }
 
   handleColumnStartResizing(e, startX, startWidth) {
     if (!this.props.onStartResizing) return;
-    this.props.onStartResizing(e, startX, startWidth);
+    this.props.onStartResizing(e, startX, startWidth, this);
   }
 
-  handleColumnStopResizing(e) {
+  handleColumnStopResizing(e, stopX, stopWidth) {
     if (!this.props.onStopResizing) return;
-    this.props.onStopResizing(e);
+    this.props.onStopResizing(e, stopX, stopWidth, this);
   }
 
   componentDidMount() {
     this.refs['header-col'].setAttribute('data-field', this.props.dataField);
-    resizable(this.refs['header-col'], this, this.handleColumnResizing);
+    resizable(this.refs['header-col'], this,
+        this.handleColumnResizing, this.handleColumnStartResizing, this.handleColumnStopResizing);
   }
 
   render() {
@@ -148,9 +149,10 @@ class TableHeaderColumn extends Component {
       <th ref='header-col'
           className={ classes }
           style={ thStyle }
-          onClick={ this.handleColumnClick }
           { ...title }>
-        { children }{ sortCaret }
+        <div onClick={ this.handleColumnClick }>
+          { children }{ sortCaret }
+        </div>
         <div onClick={ e => e.stopPropagation() }>
           { this.props.filter ? this.getFilters() : null }
         </div>
@@ -283,6 +285,8 @@ TableHeaderColumn.defaultProps = {
   editable: true,
   onSort: undefined,
   onResizing: undefined,
+  onStartResizing: undefined,
+  onStopResizing: undefined,
   hidden: false,
   hiddenOnInsert: false,
   searchable: true,
