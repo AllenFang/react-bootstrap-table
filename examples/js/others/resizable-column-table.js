@@ -43,8 +43,8 @@ export default class ResizableColumnTable extends React.Component {
     // console.log(sortName);
     console.log(sortOrder);
   }
-  onResizing(e, newWidth) {
-    console.log(newWidth);
+  onResizing(e, newWidth, col) {
+    console.log(col.props.dataField);
   }
   onStartResizing(e, x, width) {
     console.log(x, width);

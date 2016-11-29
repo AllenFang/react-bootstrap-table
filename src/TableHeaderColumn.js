@@ -73,17 +73,17 @@ class TableHeaderColumn extends Component {
   handleColumnResizing(e, newWidth) {
     if (!this.props.onResizing) return;
     // const parent = this._reactInternalInstance._currentElement._owner._instance;
-    this.props.onResizing(e, newWidth);
+    this.props.onResizing(e, newWidth, this);
   }
 
   handleColumnStartResizing(e, startX, startWidth) {
     if (!this.props.onStartResizing) return;
-    this.props.onStartResizing(e, startX, startWidth);
+    this.props.onStartResizing(e, startX, startWidth, this);
   }
 
   handleColumnStopResizing(e, stopX, stopWidth) {
     if (!this.props.onStopResizing) return;
-    this.props.onStopResizing(e, stopX, stopWidth);
+    this.props.onStopResizing(e, stopX, stopWidth, this);
   }
 
   componentDidMount() {

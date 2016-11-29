@@ -424,22 +424,22 @@ class BootstrapTable extends Component {
     });
   }
 
-  handleResizing = (e, newWidth) => {
+  handleResizing = (e, newWidth, tableheaderColumn) => {
     if (this.props.options.onResizing) {
-      this.props.options.onResizing(e, newWidth);
+      this.props.options.onResizing(e, newWidth, tableheaderColumn);
     }
     this._adjustTable();
   }
 
-  handleStartResizing = (e, startX, startWidth) => {
+  handleStartResizing = (e, startX, startWidth, tableheaderColumn) => {
     if (this.props.options.onStartResizing) {
-      this.props.options.onStartResizing(e, startX, startWidth);
+      this.props.options.onStartResizing(e, startX, startWidth, tableheaderColumn);
     }
   }
 
-  handleStopResizing = (e, stopX, stopWidth) => {
+  handleStopResizing = (e, stopX, stopWidth, tableheaderColumn) => {
     if (this.props.options.onStopResizing) {
-      this.props.options.onStopResizing(e, stopX, stopWidth);
+      this.props.options.onStopResizing(e, stopX, stopWidth, tableheaderColumn);
     }
   }
 
