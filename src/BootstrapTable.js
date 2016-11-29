@@ -149,7 +149,8 @@ class BootstrapTable extends Component {
         sortFunc: column.props.sortFunc,
         sortFuncExtraData: column.props.sortFuncExtraData,
         export: column.props.export,
-        index: i
+        index: i,
+        resize: column.props.resize
       };
     });
   }
