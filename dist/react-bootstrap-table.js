@@ -761,7 +761,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          sortFunc: column.props.sortFunc,
 	          sortFuncExtraData: column.props.sortFuncExtraData,
 	          'export': column.props['export'],
-	          index: i
+	          index: i,
+	          resize: column.props.resize
 	        };
 	      });
 	    }
@@ -2368,13 +2369,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var style = {
 	          display: column.hidden ? 'none' : null
 	        };
-	        if (column.width) {
+	        if (!column.resize && column.width) {
 	          var width = parseInt(column.width, 10);
 	          style.width = width;
 	          /** add min-wdth to fix user assign column width
 	          not eq offsetWidth in large column table **/
 	          style.minWidth = width;
 	        }
+	        column.className = column.resize ? column.className + ' resizable' : column.className;
 	        return _react2['default'].createElement('col', { style: style, key: i, className: column.className });
 	      });
 
@@ -10930,9 +10932,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var thStyle = {
 	        textAlign: headerAlign || dataAlign,
 	        display: hidden ? 'none' : null,
-	        position: resize ? 'relative' : 'initial',
-	        width: this.props.resizeOptions.minWidth ? this.props.resizeOptions.minWidth : 'auto'
+	        position: resize ? 'relative' : 'initial'
 	      };
+	      if (this.props.width) {
+	        thStyle.width = this.props.width;
+	      } else if (this.props.resizeOptions.minWidth) {
+	        thStyle.width = this.props.resizeOptions.minWidth;
+	      }
+	      thStyle.width = thStyle.width.toString().indexOf('px') > -1 ? thStyle.width : thStyle.width + 'px';
 	      var resizerStyle = {
 	        width: '3px',
 	        height: '100%',
