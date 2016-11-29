@@ -74,7 +74,7 @@ export default class ResizableColumnTable extends React.Component {
           resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Name</TableHeaderColumn>
         <TableHeaderColumn dataField='price' dataSort resize
           resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Price</TableHeaderColumn>
-        <TableHeaderColumn dataField='price' dataSort resize
+        <TableHeaderColumn dataField='price' dataSort resize width='300px'
           resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Price1</TableHeaderColumn>
         <TableHeaderColumn dataField='price' dataSort resize
           resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Price2</TableHeaderColumn>

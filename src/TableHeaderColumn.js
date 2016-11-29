@@ -111,9 +111,15 @@ class TableHeaderColumn extends Component {
     const thStyle = {
       textAlign: headerAlign || dataAlign,
       display: hidden ? 'none' : null,
-      position: resize ? 'relative' : 'initial',
-      width: this.props.resizeOptions.minWidth ? this.props.resizeOptions.minWidth : 'auto'
+      position: resize ? 'relative' : 'initial'
     };
+    if (this.props.width) {
+      thStyle.width = this.props.width;
+    } else if (this.props.resizeOptions.minWidth) {
+      thStyle.width = this.props.resizeOptions.minWidth;
+    }
+    thStyle.width = (thStyle.width.toString().indexOf('px') > -1)
+        ? thStyle.width : `${thStyle.width}px`;
     const resizerStyle = {
       width: '3px',
       height: '100%',
