@@ -179,12 +179,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	    };
 
-	    this.handleResizing = function (e, newWidth) {
+	    this.handleResizing = function (e, newWidth, tableheaderColumn) {
 	      if (_this.props.options.onResizing) {
-	        _this.props.options.onResizing(e, newWidth);
+	        _this.props.options.onResizing(e, newWidth, tableheaderColumn);
 	      }
-
 	      _this._adjustTable();
+	    };
+
+	    this.handleStartResizing = function (e, startX, startWidth, tableheaderColumn) {
+	      if (_this.props.options.onStartResizing) {
+	        _this.props.options.onStartResizing(e, startX, startWidth, tableheaderColumn);
+	      }
+	    };
+
+	    this.handleStopResizing = function (e, stopX, stopWidth, tableheaderColumn) {
+	      if (_this.props.options.onStopResizing) {
+	        _this.props.options.onStopResizing(e, stopX, stopWidth, tableheaderColumn);
+	      }
 	    };
 
 	    this.handlePaginationData = function (page, sizePerPage) {
@@ -878,8 +889,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        isSelectAll: isSelectAll,
 	        sortInfo: sortInfo,
 	        onSort: this.handleSort,
-	        children: this.props.children,
-	        onResizing: this.handleResizing
+	        children: this.props.children
 	      };
 
 	      return _react2['default'].createElement(
@@ -908,7 +918,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	              sortOrder: sortInfo ? sortInfo.order : undefined,
 	              sortIndicator: sortIndicator,
 	              onSort: this.handleSort,
-	              onResizing: this.handleResizing,
 	              onSelectAllRow: this.handleSelectAllRow,
 	              bordered: this.props.bordered,
 	              condensed: this.props.condensed,
@@ -931,6 +940,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	              sortIndicator: sortIndicator,
 	              onSort: this.handleSort,
 	              onResizing: this.handleResizing,
+	              onStartResizing: this.handleStartResizing,
+	              onStopResizing: this.handleStopResizing,
 	              onSelectAllRow: this.handleSelectAllRow,
 	              bordered: this.props.bordered,
 	              condensed: this.props.condensed,
@@ -1366,6 +1377,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    hideSizePerPage: _react.PropTypes.bool,
 	    onSortChange: _react.PropTypes.func,
 	    onResizing: _react.PropTypes.func,
+	    onStartResizing: _react.PropTypes.func,
+	    onStopResizing: _react.PropTypes.func,
 	    onPageChange: _react.PropTypes.func,
 	    onSizePerPageList: _react.PropTypes.func,
 	    onFilterChange: _react2['default'].PropTypes.func,
@@ -1960,12 +1973,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var sortOrder = _props.sortOrder;
 	                var onSort = _props.onSort;
 	                var onResizing = _props.onResizing;
+	                var onStartResizing = _props.onStartResizing;
+	                var onStopResizing = _props.onStopResizing;
 	                var _elm$props = elm.props;
 	                var dataField = _elm$props.dataField;
 	                var dataSort = _elm$props.dataSort;
 
 	                var sort = dataSort && dataField === sortName ? sortOrder : undefined;
-	                return _react2['default'].cloneElement(elm, { key: i++, onSort: onSort, onResizing: onResizing, sort: sort, sortIndicator: sortIndicator });
+	                return _react2['default'].cloneElement(elm, {
+	                  key: i++,
+	                  onSort: onSort,
+	                  onResizing: onResizing,
+	                  onStartResizing: onStartResizing,
+	                  onStopResizing: onStopResizing,
+	                  sort: sort,
+	                  sortIndicator: sortIndicator
+	                });
 	              })
 	            )
 	          )
@@ -2010,6 +2033,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  rowSelectType: _react.PropTypes.string,
 	  onSort: _react.PropTypes.func,
 	  onResizing: _react.PropTypes.func,
+	  onStartResizing: _react.PropTypes.func,
+	  onStopResizing: _react.PropTypes.func,
 	  onSelectAllRow: _react.PropTypes.func,
 	  sortName: _react.PropTypes.string,
 	  sortOrder: _react.PropTypes.string,
@@ -10864,25 +10889,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function handleColumnResizing(e, newWidth) {
 	      if (!this.props.onResizing) return;
 	      // const parent = this._reactInternalInstance._currentElement._owner._instance;
-	      this.props.onResizing(e, newWidth);
+	      this.props.onResizing(e, newWidth, this);
 	    }
 	  }, {
 	    key: 'handleColumnStartResizing',
 	    value: function handleColumnStartResizing(e, startX, startWidth) {
 	      if (!this.props.onStartResizing) return;
-	      this.props.onStartResizing(e, startX, startWidth);
+	      this.props.onStartResizing(e, startX, startWidth, this);
 	    }
 	  }, {
 	    key: 'handleColumnStopResizing',
-	    value: function handleColumnStopResizing(e) {
+	    value: function handleColumnStopResizing(e, stopX, stopWidth) {
 	      if (!this.props.onStopResizing) return;
-	      this.props.onStopResizing(e);
+	      this.props.onStopResizing(e, stopX, stopWidth, this);
 	    }
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      this.refs['header-col'].setAttribute('data-field', this.props.dataField);
-	      (0, _resizable2['default'])(this.refs['header-col'], this, this.handleColumnResizing);
+	      (0, _resizable2['default'])(this.refs['header-col'], this, this.handleColumnResizing, this.handleColumnStartResizing, this.handleColumnStopResizing);
 	    }
 	  }, {
 	    key: 'render',
@@ -10944,11 +10969,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'th',
 	        _extends({ ref: 'header-col',
 	          className: classes,
-	          style: thStyle,
-	          onClick: this.handleColumnClick
+	          style: thStyle
 	        }, title),
-	        children,
-	        sortCaret,
+	        _react2['default'].createElement(
+	          'div',
+	          { onClick: this.handleColumnClick },
+	          children,
+	          sortCaret
+	        ),
 	        _react2['default'].createElement(
 	          'div',
 	          { onClick: function (e) {
@@ -11095,6 +11123,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  editable: true,
 	  onSort: undefined,
 	  onResizing: undefined,
+	  onStartResizing: undefined,
+	  onStopResizing: undefined,
 	  hidden: false,
 	  hiddenOnInsert: false,
 	  searchable: true,
@@ -11921,7 +11951,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var resizer = resizable.querySelector('.resizer');
 
 	  var startX = undefined;
+	  var stopX = undefined;
 	  var startWidth = undefined;
+	  var stopWidth = undefined;
 
 	  var doDrag = function doDrag(e) {
 	    var newWidth = startWidth + e.clientX - startX;
@@ -11933,9 +11965,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 
 	  var stopDrag = function stopDrag(e) {
+	    stopX = e.clientX;
+	    stopWidth = parseInt(document.defaultView.getComputedStyle(resizable).width, 10);
 	    document.documentElement.removeEventListener('mousemove', doDrag, false);
 	    document.documentElement.removeEventListener('mouseup', stopDrag, false);
-	    onStopResizing(e);
+	    onStopResizing(e, stopX, stopWidth);
 	  };
 
 	  var initDrag = function initDrag(e) {
