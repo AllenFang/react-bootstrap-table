@@ -42,11 +42,21 @@ class TableHeaderResizable extends Component {
             { selectRowHeaderCol }
             {
               React.Children.map(this.props.children, (elm) => {
-                const { sortIndicator, sortName, sortOrder, onSort, onResizing } = this.props;
+                const { sortIndicator, sortName, sortOrder, onSort,
+                    onResizing, onStartResizing, onStopResizing } = this.props;
                 const { dataField, dataSort } = elm.props;
                 const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
-                return React.cloneElement(elm,
-                    { key: i++, onSort, onResizing, sort, sortIndicator });
+                return React.cloneElement(
+                  elm,
+                  {
+                    key: i++,
+                    onSort,
+                    onResizing,
+                    onStartResizing,
+                    onStopResizing,
+                    sort,
+                    sortIndicator
+                  });
               })
             }
           </tr>
@@ -88,6 +98,8 @@ TableHeaderResizable.propTypes = {
   rowSelectType: PropTypes.string,
   onSort: PropTypes.func,
   onResizing: PropTypes.func,
+  onStartResizing: PropTypes.func,
+  onStopResizing: PropTypes.func,
   onSelectAllRow: PropTypes.func,
   sortName: PropTypes.string,
   sortOrder: PropTypes.string,

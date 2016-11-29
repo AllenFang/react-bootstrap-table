@@ -267,8 +267,7 @@ class BootstrapTable extends Component {
       isSelectAll: isSelectAll,
       sortInfo: sortInfo,
       onSort: this.handleSort,
-      children: this.props.children,
-      onResizing: this.handleResizing
+      children: this.props.children
     };
 
     return (
@@ -292,7 +291,6 @@ class BootstrapTable extends Component {
             sortOrder={ sortInfo ? sortInfo.order : undefined }
             sortIndicator={ sortIndicator }
             onSort={ this.handleSort }
-            onResizing={ this.handleResizing }
             onSelectAllRow={ this.handleSelectAllRow }
             bordered={ this.props.bordered }
             condensed={ this.props.condensed }
@@ -313,6 +311,8 @@ class BootstrapTable extends Component {
               sortIndicator={ sortIndicator }
               onSort={ this.handleSort }
               onResizing={ this.handleResizing }
+              onStartResizing={ this.handleStartResizing }
+              onStopResizing={ this.handleStopResizing }
               onSelectAllRow={ this.handleSelectAllRow }
               bordered={ this.props.bordered }
               condensed={ this.props.condensed }
@@ -428,8 +428,19 @@ class BootstrapTable extends Component {
     if (this.props.options.onResizing) {
       this.props.options.onResizing(e, newWidth);
     }
-
     this._adjustTable();
+  }
+
+  handleStartResizing = (e, startX, startWidth) => {
+    if (this.props.options.onStartResizing) {
+      this.props.options.onStartResizing(e, startX, startWidth);
+    }
+  }
+
+  handleStopResizing = (e, stopX, stopWidth) => {
+    if (this.props.options.onStopResizing) {
+      this.props.options.onStopResizing(e, stopX, stopWidth);
+    }
   }
 
   handlePaginationData = (page, sizePerPage) => {
@@ -1176,6 +1187,8 @@ BootstrapTable.propTypes = {
     hideSizePerPage: PropTypes.bool,
     onSortChange: PropTypes.func,
     onResizing: PropTypes.func,
+    onStartResizing: PropTypes.func,
+    onStopResizing: PropTypes.func,
     onPageChange: PropTypes.func,
     onSizePerPageList: PropTypes.func,
     onFilterChange: React.PropTypes.func,

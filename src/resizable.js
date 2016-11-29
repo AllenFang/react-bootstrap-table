@@ -11,7 +11,9 @@ const Resizable = function(el, header, onResizing, onStartResizing, onStopResizi
   const resizer = resizable.querySelector('.resizer');
 
   let startX;
+  let stopX;
   let startWidth;
+  let stopWidth;
 
   const doDrag = function(e) {
     const newWidth = (startWidth + e.clientX - startX);
@@ -24,9 +26,11 @@ const Resizable = function(el, header, onResizing, onStartResizing, onStopResizi
   };
 
   const stopDrag = function(e) {
+    stopX = e.clientX;
+    stopWidth = parseInt(document.defaultView.getComputedStyle(resizable).width, 10);
     document.documentElement.removeEventListener('mousemove', doDrag, false);
     document.documentElement.removeEventListener('mouseup', stopDrag, false);
-    onStopResizing(e);
+    onStopResizing(e, stopX, stopWidth);
   };
 
   const initDrag = function(e) {
