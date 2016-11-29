@@ -1,3 +1,17 @@
+<a name="v2.6.0"></a>
+# [v2.6.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.9...v2.6.0) (2016-11-28)
+## Bug fixes
+* Fixed [#838](https://github.com/AllenFang/react-bootstrap-table/issues/838)
+
+## Features
+* Support expandable row([00d1756](https://github.com/AllenFang/react-bootstrap-table/commit/00d17562eebf4cfba78c0ec0c762e7c032f20239))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/expandRow/expandRow.js)
+
+## Enhancement
+* Support row lock level on cell edit([7c57b52](https://github.com/AllenFang/react-bootstrap-table/commit/7c57b52b06b2455d025f0810a38da4ad0ea6f58c))
+	* Use ```nonEditableRows``` in ```cellEdit``` props
+	* ```nonEditableRows``` accept a callback function which return an array of rowKey which is noneditable rows
+
 <a name="v2.5.9"></a>
 # [v2.5.9](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.8...v2.5.9) (2016-11-21)
 ## Bug fixes
