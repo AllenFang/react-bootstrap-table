@@ -33,6 +33,12 @@ class ToolBar extends Component {
     this.clearTimeout();
   }
 
+  setSearchInput(text) {
+    if (this.refs.seachInput.value !== text) {
+      this.refs.seachInput.value = text;
+    }
+  }
+
   clearTimeout() {
     if (this.timeouteClear) {
       clearTimeout(this.timeouteClear);

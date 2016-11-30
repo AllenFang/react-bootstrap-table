@@ -744,6 +744,11 @@ class BootstrapTable extends Component {
   }
 
   handleSearch = searchText => {
+    // Set search field if this function being called outside
+    // but it's not necessary if calling fron inside.
+    if (this.refs.toolbar) {
+      this.refs.toolbar.setSearchInput(searchText);
+    }
     const { onSearchChange } = this.props.options;
     if (onSearchChange) {
       const colInfos = this.store.getColInfos();
@@ -858,6 +863,7 @@ class BootstrapTable extends Component {
       return (
         <div className='react-bs-table-tool-bar'>
           <ToolBar
+            ref='toolbar'
             defaultSearch={ this.props.options.defaultSearch }
             clearSearch={ this.props.options.clearSearch }
             searchDelayTime={ this.props.options.searchDelayTime }
