@@ -171,7 +171,7 @@ class PaginationList extends Component {
         <SizePerPageDropDown
           open={ this.state.open }
           hidden={ hideSizePerPage }
-          currSizePerPage={ sizePerPageText }
+          currSizePerPage={ String(sizePerPageText) }
           options={ sizePerPageOptions }
           onClick={ this.toggleDropDown }
           { ...dropdownProps }/>
