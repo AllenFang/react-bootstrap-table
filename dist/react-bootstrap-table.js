@@ -1229,7 +1229,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var cells = firstRow.childNodes;
 	        for (var i = 0; i < cells.length; i++) {
 	          var cell = cells[i];
-	          var computedStyle = getComputedStyle(cell);
+	          var computedStyle = window.getComputedStyle(cell);
 	          var width = parseFloat(computedStyle.width.replace('px', ''));
 	          if (this.isIE) {
 	            var paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
@@ -8367,7 +8367,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
 	 * @providesModule reactProdInvariant
-	 * 
+	 *
 	 */
 	'use strict';
 

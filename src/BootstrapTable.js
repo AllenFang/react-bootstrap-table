@@ -920,7 +920,7 @@ class BootstrapTable extends Component {
       const cells = firstRow.childNodes;
       for (let i = 0; i < cells.length; i++) {
         const cell = cells[i];
-        const computedStyle = getComputedStyle(cell);
+        const computedStyle = window.getComputedStyle(cell);
         let width = parseFloat(computedStyle.width.replace('px', ''));
         if (this.isIE) {
           const paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
