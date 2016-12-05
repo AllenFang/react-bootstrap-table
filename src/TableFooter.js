@@ -108,7 +108,7 @@ const mapTableRows = function(data, r, unselectable,
   );
 };
 
-class TableBody extends Component {
+class TableFooter extends Component {
 
   constructor(props) {
     super(props);
@@ -123,7 +123,7 @@ class TableBody extends Component {
       'table-bordered': this.props.bordered,
       'table-hover': this.props.hover,
       'table-condensed': this.props.condensed
-    }, this.props.tableBodyClass);
+    }, this.props.tableFooterClass);
 
     const unselectable = this.props.selectRow.unselectable || [];
     const isSelectRowDefined = this._isSelectRowDefined();
@@ -149,16 +149,23 @@ class TableBody extends Component {
         </TableRow>
       );
     }
+    const footerRows = this.props.data ? this.props.data.map((data, r) => {
+      return mapTableRows(
+        data, r, unselectable,
+        isSelectRowDefined, inputType, CustomComponent,
+        this
+      );
+    }) : [];
 
     return (
       <div ref='container'
-        className={ classSet('react-bs-container-body', this.props.bodyContainerClass) }
+        className={ classSet('react-bs-container-footer', this.props.bodyContainerClass) }
         style={ this.props.style }>
         <table className={ tableClasses } ref='table'>
           { tableHeader }
-          <tbody ref='tbody'>
-            { tableRows }
-          </tbody>
+          <tfoot ref='tfoot'>
+            { footerRows }
+          </tfoot>
         </table>
       </div>
     );
@@ -302,7 +309,7 @@ class TableBody extends Component {
           this.props.selectRow.mode === Const.ROW_SELECT_MULTI;
   }
 }
-TableBody.propTypes = {
+TableFooter.propTypes = {
   data: PropTypes.array,
   columns: PropTypes.array,
   striped: PropTypes.bool,
@@ -316,9 +323,9 @@ TableBody.propTypes = {
   onSelectRow: PropTypes.func,
   noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
   style: PropTypes.object,
-  tableBodyClass: PropTypes.string,
+  tableFooterClass: PropTypes.string,
   bodyContainerClass: PropTypes.string,
   resizable: PropTypes.bool,
   resizableOptions: PropTypes.object
 };
-export default TableBody;
+export default TableFooter;

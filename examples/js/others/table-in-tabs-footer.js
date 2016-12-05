@@ -47,11 +47,13 @@ export default class TableInTabs extends React.Component {
          */
         if (key === 1) {
           setTimeout(() => {
-            // this.refs.table1.forceUpdate();
+            this.refs.table1.forceUpdate();
+            this.refs.table1.refs.table._adjustTable();
           }, 500);
         } else if (key === 2) {
           setTimeout(() => {
-            // this.refs.table2.forceUpdate();
+            this.refs.table2.forceUpdate();
+            this.refs.table2.refs.table._adjustHeaderWidth();
           }, 500);
         }
       });

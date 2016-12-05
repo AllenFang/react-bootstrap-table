@@ -9,12 +9,16 @@ import TextFilter from './filters/Text';
 import RegexFilter from './filters/Regex';
 import SelectFilter from './filters/Select';
 import NumberFilter from './filters/Number';
+import resizable from './resizable';
 
 class TableHeaderColumn extends Component {
 
   constructor(props) {
     super(props);
     this.handleFilter = this.handleFilter.bind(this);
+    this.handleColumnResizing = this.handleColumnResizing.bind(this);
+    this.handleColumnStartResizing = this.handleColumnStartResizing.bind(this);
+    this.handleColumnStopResizing = this.handleColumnStopResizing.bind(this);
   }
 
   handleColumnClick = () => {
@@ -66,8 +70,26 @@ class TableHeaderColumn extends Component {
     }
   }
 
+  handleColumnResizing(e, newWidth) {
+    if (!this.props.onResizing) return;
+    // const parent = this._reactInternalInstance._currentElement._owner._instance;
+    this.props.onResizing(e, newWidth, this);
+  }
+
+  handleColumnStartResizing(e, startX, startWidth) {
+    if (!this.props.onStartResizing) return;
+    this.props.onStartResizing(e, startX, startWidth, this);
+  }
+
+  handleColumnStopResizing(e, stopX, stopWidth) {
+    if (!this.props.onStopResizing) return;
+    this.props.onStopResizing(e, stopX, stopWidth, this);
+  }
+
   componentDidMount() {
     this.refs['header-col'].setAttribute('data-field', this.props.dataField);
+    resizable(this.refs['header-col'], this,
+        this.handleColumnResizing, this.handleColumnStartResizing, this.handleColumnStopResizing);
   }
 
   render() {
@@ -83,11 +105,29 @@ class TableHeaderColumn extends Component {
       sortIndicator,
       children,
       caretRender,
-      className
+      className,
+      resize
     } = this.props;
     const thStyle = {
       textAlign: headerAlign || dataAlign,
-      display: hidden ? 'none' : null
+      display: hidden ? 'none' : null,
+      position: resize ? 'relative' : 'initial'
+    };
+    if (this.props.width) {
+      thStyle.width = this.props.width;
+    } else if (this.props.resizeOptions.minWidth) {
+      thStyle.width = this.props.resizeOptions.minWidth;
+    }
+    thStyle.width = (thStyle.width.toString().indexOf('px') > -1)
+        ? thStyle.width : `${thStyle.width}px`;
+    const resizerStyle = {
+      width: '3px',
+      height: '100%',
+      position: 'absolute',
+      right: 0,
+      bottom: 0,
+      cursor: 'ew-resize',
+      border: '1px dotted #ddd'
     };
     if (sortIndicator) {
       defaultCaret = (!dataSort) ? null : (
@@ -107,19 +147,22 @@ class TableHeaderColumn extends Component {
     }
     const classes = classSet(
       typeof className === 'function' ? className() : className,
-      dataSort ? 'sort-column' : '');
+      dataSort ? 'sort-column' : '',
+      resize ? 'resizable' : '');
 
     const title = headerTitle && typeof children === 'string' ? { title: children } : null;
     return (
       <th ref='header-col'
           className={ classes }
           style={ thStyle }
-          onClick={ this.handleColumnClick }
           { ...title }>
-        { children }{ sortCaret }
+        <div onClick={ this.handleColumnClick }>
+          { children }{ sortCaret }
+        </div>
         <div onClick={ e => e.stopPropagation() }>
           { this.props.filter ? this.getFilters() : null }
         </div>
+        { resize && <div className='resizer' style={ resizerStyle }></div> }
       </th>
     );
   }
@@ -228,6 +271,11 @@ TableHeaderColumn.propTypes = {
     customFilterParameters: PropTypes.object
   }),
   sortIndicator: PropTypes.bool,
+  resize: PropTypes.bool,
+  resizeOptions: PropTypes.object,
+  onResizing: PropTypes.func,
+  onStartResizing: PropTypes.func,
+  onStopResizing: PropTypes.func,
   export: PropTypes.bool
 };
 
@@ -242,6 +290,9 @@ TableHeaderColumn.defaultProps = {
   isKey: false,
   editable: true,
   onSort: undefined,
+  onResizing: undefined,
+  onStartResizing: undefined,
+  onStopResizing: undefined,
   hidden: false,
   hiddenOnInsert: false,
   searchable: true,
@@ -256,7 +307,12 @@ TableHeaderColumn.defaultProps = {
   formatExtraData: undefined,
   sortFuncExtraData: undefined,
   filter: undefined,
-  sortIndicator: true
+  sortIndicator: true,
+  resize: false,
+  resizeOptions: {
+    minWidth: 25,
+    maxWidth: false
+  }
 };
 
 export default TableHeaderColumn;

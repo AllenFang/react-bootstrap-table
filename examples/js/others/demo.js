@@ -1,5 +1,6 @@
 import React from 'react';
 import MouseEventTable from './mouse-event-table';
+import ResizableColumnTable from './resizable-column-table';
 import TableInTabs from './table-in-tabs';
 import TableInTabsFooter from './table-in-tabs-footer';
 import GetPageNumByKeyTable from './expose-api-table';
@@ -28,6 +29,11 @@ class Demo extends React.Component {
           <h5>Source in /examples/js/others/expose-api-table.js</h5>
           <h5>Use expose API by BootstrapTable to get page number by rowkey</h5>
           <GetPageNumByKeyTable/>
+        </Panel>
+        <Panel header={ 'Resizable Column Table Example' }>
+          <h5>Source in /examples/js/others/resizable-column-table.js</h5>
+          <h5>See event ouput in browser console</h5>
+          <ResizableColumnTable/>
         </Panel>
       </Col>
     );
