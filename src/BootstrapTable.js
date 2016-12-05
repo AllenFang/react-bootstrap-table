@@ -91,6 +91,7 @@ class BootstrapTable extends Component {
       keyField: keyField,
       colInfos: this.colInfos,
       multiColumnSearch: props.multiColumnSearch,
+      multiSort: props.multiSort,
       remote: this.isRemoteDataSource()
     });
   }
@@ -1106,6 +1107,7 @@ BootstrapTable.propTypes = {
   pagination: PropTypes.bool,
   printable: PropTypes.bool,
   resizable: PropTypes.bool,
+  multiSort: PropTypes.bool,
   searchPlaceholder: PropTypes.string,
   selectRow: PropTypes.shape({
     mode: PropTypes.oneOf([
@@ -1209,6 +1211,7 @@ BootstrapTable.defaultProps = {
   pagination: false,
   printable: false,
   resizable: false,
+  multiSort: false,
   searchPlaceholder: undefined,
   selectRow: {
     mode: Const.ROW_SELECT_NONE,

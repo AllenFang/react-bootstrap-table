@@ -13,8 +13,8 @@ function addProducts(quantity) {
     const id = startId + i;
     products.push({
       id: id,
-      name: 'Item name ' + id,
-      price: 2100 + i
+      name: 'Item name ' + (Math.floor(Math.random() * 9) + 1),
+      price: Math.floor(Math.random() * 9) + 1
     });
   }
 }
@@ -65,8 +65,8 @@ export default class ResizableColumnTable extends React.Component {
 
     return (
       <BootstrapTable ref='restable' data={ products } options={ options }
-        footerData={ footerData } height='200px' resizable={ true }>
-        <TableHeaderColumn dataField='id' isKey={ true } resize
+        footerData={ footerData } height='800px' resizable={ true } multiSort={ true }>
+        <TableHeaderColumn dataField='id' isKey={ true } dataSort resize
           resizeOptions={ { minWidth: 100, maxWidth: false } }>Product ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name' dataSort resize
           // onResizing={ this.columnResizing }

@@ -5,8 +5,8 @@
 /* eslint one-var: 0 */
 import Const from '../Const';
 
-function _sort(arr, sortField, order, sortFunc, sortFuncExtraData) {
-  order = order.toLowerCase();
+/*
+function _arrsort(arr, sortField, order, sortFunc, sortFuncExtraData) {
   const isDesc = order === Const.SORT_DESC;
   arr.sort((a, b) => {
     if (sortFunc) {
@@ -29,7 +29,70 @@ function _sort(arr, sortField, order, sortFunc, sortFuncExtraData) {
       }
     }
   });
+  return arr;
+}
+*/
 
+function _compareValue(valueA, valueB, order) {
+  let compareVal = 0;
+  const isDesc = order === Const.SORT_DESC;
+  if (isDesc) {
+    if (typeof valueB === 'string') {
+      compareVal = valueB.localeCompare(valueA);
+    } else {
+      compareVal = valueA > valueB ? -1 : ((valueA < valueB) ? 1 : 0);
+    }
+  } else {
+    if (typeof valueA === 'string') {
+      compareVal = valueA.localeCompare(valueB);
+    } else {
+      compareVal = valueA < valueB ? -1 : ((valueA > valueB) ? 1 : 0);
+    }
+  }
+  return compareVal;
+}
+
+function _arrsortMul(arr, sortCols, sortFunc, sortFuncExtraData) {
+  arr.sort((a, b) => {
+    if (sortFunc) {
+      const sortCol = sortCols[0];
+      return sortFunc(a, b, sortCol.order, sortCol.field, sortFuncExtraData);
+    } else {
+      let compVal = 0;
+      sortCols.some((sortCol) => {
+        const sortField = sortCol.field;
+        const order = sortCol.order;
+        const valueA = a[sortField] === null ? '' : a[sortField];
+        const valueB = b[sortField] === null ? '' : b[sortField];
+        const compareVal = _compareValue(valueA, valueB, order);
+        if (compareVal !== 0) {
+          compVal = compareVal;
+          return true;
+        }
+      });
+      return compVal;
+    }
+  });
+  return arr;
+}
+let sortCols = [];
+function _sort(arr, sortField, order, sortFunc, sortFuncExtraData, multiSort) {
+  order = order.toLowerCase();
+  // arr = _arrsort(arr, sortField, order, sortFunc, sortFuncExtraData);
+  if (multiSort) {
+    sortCols = sortCols.filter(function(sortCol) {
+      return sortCol.field !== sortField;
+    });
+  } else {
+    sortCols = [];
+  }
+  if (order !== '') {
+    sortCols.push({ field: sortField, order: order });
+  }
+  console.dir(sortCols);
+  if (sortCols.length > 0) {
+    arr = _arrsortMul(arr, sortCols, sortFunc, sortFuncExtraData);
+  }
   return arr;
 }
 
@@ -56,6 +119,7 @@ export class TableDataStore {
     this.colInfos = props.colInfos;
     this.remote = props.remote;
     this.multiColumnSearch = props.multiColumnSearch;
+    this.multiSort = props.multiSort;
   }
 
   setData(data) {
@@ -132,7 +196,8 @@ export class TableDataStore {
     if (!this.colInfos[sortField]) return this;
 
     const { sortFunc, sortFuncExtraData } = this.colInfos[sortField];
-    currentDisplayData = _sort(currentDisplayData, sortField, order, sortFunc, sortFuncExtraData);
+    currentDisplayData = _sort(currentDisplayData, sortField, order,
+        sortFunc, sortFuncExtraData, this.multiSort);
 
     return this;
   }

@@ -23,7 +23,18 @@ class TableHeaderColumn extends Component {
 
   handleColumnClick = () => {
     if (!this.props.dataSort) return;
-    const order = this.props.sort === Const.SORT_DESC ? Const.SORT_ASC : Const.SORT_DESC;
+    // const order = this.props.sort === Const.SORT_DESC ? Const.SORT_ASC : Const.SORT_DESC;
+    let order = '';
+    switch (this.props.sort) {
+    case Const.SORT_DESC:
+      order = Const.SORT_ASC;
+      break;
+    case Const.SORT_ASC:
+      order = '';
+      break;
+    default:
+      order = Const.SORT_DESC;
+    }
     this.props.onSort(order, this.props.dataField);
   }
 
