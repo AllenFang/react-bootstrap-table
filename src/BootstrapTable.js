@@ -4,7 +4,6 @@ import React, { Component, PropTypes } from 'react';
 import classSet from 'classnames';
 import Const from './Const';
 import TableHeader from './TableHeader';
-import TableHeaderResizable from './TableHeaderResizable';
 import TableBody from './TableBody';
 import TableFooter from './TableFooter';
 import PaginationList from './pagination/PaginationList';
@@ -280,26 +279,7 @@ class BootstrapTable extends Component {
             style={ { ...style, ...this.props.tableStyle } }
             onMouseEnter={ this.handleMouseEnter }
             onMouseLeave={ this.handleMouseLeave }>
-          { !this.props.resizable && <TableHeader
-            ref='header'
-            headerContainerClass={ this.props.headerContainerClass }
-            tableHeaderClass={ this.props.tableHeaderClass }
-            style={ this.props.headerStyle }
-            rowSelectType={ this.props.selectRow.mode }
-            customComponent={ this.props.selectRow.customComponent }
-            hideSelectColumn={ this.props.selectRow.hideSelectColumn }
-            sortName={ sortInfo ? sortInfo.sortField : undefined }
-            sortOrder={ sortInfo ? sortInfo.order : undefined }
-            sortIndicator={ sortIndicator }
-            onSort={ this.handleSort }
-            onSelectAllRow={ this.handleSelectAllRow }
-            bordered={ this.props.bordered }
-            condensed={ this.props.condensed }
-            isFiltered={ this.filter ? true : false }
-            isSelectAll={ isSelectAll }>
-            { this.props.children }
-          </TableHeader> }
-          { this.props.resizable && <TableHeaderResizable
+          <TableHeader
               ref='header'
               headerContainerClass={ this.props.headerContainerClass }
               tableHeaderClass={ this.props.tableHeaderClass }
@@ -320,7 +300,7 @@ class BootstrapTable extends Component {
               isFiltered={ this.filter ? true : false }
               isSelectAll={ isSelectAll }>
             { this.props.children }
-          </TableHeaderResizable> }
+          </TableHeader>
           <TableBody ref='body'
             bodyContainerClass={ this.props.bodyContainerClass }
             tableBodyClass={ this.props.tableBodyClass }

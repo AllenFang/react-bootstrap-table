@@ -35,23 +35,34 @@ class TableHeader extends Component {
     if (!this.props.hideSelectColumn) selectRowHeaderCol = this.renderSelectRowHeader();
     let i = 0;
     return (
-      <div ref='container' className={ containerClasses } style={ this.props.style }>
-        <table className={ tableClasses }>
-          <thead>
-            <tr ref='header'>
-              { selectRowHeaderCol }
-              {
-                React.Children.map(this.props.children, (elm) => {
-                  const { sortIndicator, sortName, sortOrder, onSort } = this.props;
-                  const { dataField, dataSort } = elm.props;
-                  const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
-                  return React.cloneElement(elm, { key: i++, onSort, sort, sortIndicator });
-                })
-              }
-            </tr>
-          </thead>
-        </table>
-      </div>
+    <div ref='container' className={ containerClasses } style={ this.props.style }>
+      <table className={ tableClasses }>
+        <thead>
+          <tr ref='header'>
+            { selectRowHeaderCol }
+            {
+              React.Children.map(this.props.children, (elm) => {
+                const { sortIndicator, sortName, sortOrder, onSort,
+                    onResizing, onStartResizing, onStopResizing } = this.props;
+                const { dataField, dataSort } = elm.props;
+                const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
+                return React.cloneElement(
+                  elm,
+                  {
+                    key: i++,
+                    onSort,
+                    onResizing,
+                    onStartResizing,
+                    onStopResizing,
+                    sort,
+                    sortIndicator
+                  });
+              })
+            }
+          </tr>
+        </thead>
+      </table>
+    </div>
     );
   }
 
@@ -86,6 +97,9 @@ TableHeader.propTypes = {
   style: PropTypes.object,
   rowSelectType: PropTypes.string,
   onSort: PropTypes.func,
+  onResizing: PropTypes.func,
+  onStartResizing: PropTypes.func,
+  onStopResizing: PropTypes.func,
   onSelectAllRow: PropTypes.func,
   sortName: PropTypes.string,
   sortOrder: PropTypes.string,

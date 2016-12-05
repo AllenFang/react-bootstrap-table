@@ -127,6 +127,7 @@ class TableFooter extends Component {
 
     const unselectable = this.props.selectRow.unselectable || [];
     const isSelectRowDefined = this._isSelectRowDefined();
+    const tableHeader = this.renderTableHeader(isSelectRowDefined);
     const inputType = this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
     const CustomComponent = this.props.selectRow.customComponent;
 
@@ -161,6 +162,7 @@ class TableFooter extends Component {
         className={ classSet('react-bs-container-footer', this.props.bodyContainerClass) }
         style={ this.props.style }>
         <table className={ tableClasses } ref='table'>
+          { tableHeader }
           <tfoot ref='tfoot'>
             { footerRows }
           </tfoot>
@@ -185,13 +187,14 @@ class TableFooter extends Component {
       const style = {
         display: column.hidden ? 'none' : null
       };
-      if (column.width) {
+      if (!column.resize && column.width) {
         const width = parseInt(column.width, 10);
         style.width = width;
         /** add min-wdth to fix user assign column width
         not eq offsetWidth in large column table **/
         style.minWidth = width;
       }
+      column.className = column.resize ? column.className + ' resizable' : column.className;
       return (<col style={ style } key={ i } className={ column.className }></col>);
     });
 

@@ -149,13 +149,6 @@ class TableBody extends Component {
         </TableRow>
       );
     }
-    const footerRows = this.props.footerData ? this.props.footerData.map((data, r) => {
-      return mapTableRows(
-        data, r, unselectable,
-        isSelectRowDefined, inputType, CustomComponent,
-        this
-      );
-    }) : [];
 
     return (
       <div ref='container'
@@ -166,9 +159,6 @@ class TableBody extends Component {
           <tbody ref='tbody'>
             { tableRows }
           </tbody>
-          { footerRows.length > 0 && <tfoot ref='tfoot'>
-          { footerRows }
-          </tfoot> }
         </table>
       </div>
     );
@@ -314,7 +304,6 @@ class TableBody extends Component {
 }
 TableBody.propTypes = {
   data: PropTypes.array,
-  footerData: PropTypes.array,
   columns: PropTypes.array,
   striped: PropTypes.bool,
   bordered: PropTypes.bool,
