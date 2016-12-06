@@ -395,7 +395,7 @@ class BootstrapTable extends Component {
       sortCols = [];
     }
     if (order !== '') {
-      sortCols.push({ field: sortField, order: order.toLowerCase() });
+      sortCols.push({ number: (sortCols.length + 1), field: sortField, order: order.toLowerCase() });
     }
 
     if (this.isRemoteDataSource()) {

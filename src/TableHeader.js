@@ -50,6 +50,7 @@ class TableHeader extends Component {
                 })[0];
                 // const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
                 const sort = (dataSort && colSortInfo) ? colSortInfo.order : undefined;
+                const sortNumber = (dataSort && colSortInfo) ? colSortInfo.number : 0;
                 return React.cloneElement(
                   elm,
                   {
@@ -59,7 +60,8 @@ class TableHeader extends Component {
                     onStartResizing,
                     onStopResizing,
                     sort,
-                    sortIndicator
+                    sortIndicator,
+                    sortNumber
                   });
               })
             }

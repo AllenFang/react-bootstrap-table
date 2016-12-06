@@ -116,7 +116,8 @@ class TableHeaderColumn extends Component {
       children,
       caretRender,
       className,
-      resize
+      resize,
+      sortNumber
     } = this.props;
     const thStyle = {
       textAlign: headerAlign || dataAlign,
@@ -137,7 +138,8 @@ class TableHeaderColumn extends Component {
       right: 0,
       bottom: 0,
       cursor: 'ew-resize',
-      border: '1px dotted #ddd'
+      border: '1px dotted #ddd',
+      ...this.props.resizerStyle
     };
 
     let sortCaret = Util.getReactSortCaret(sort, sortIndicator, dataSort);
@@ -157,6 +159,8 @@ class TableHeaderColumn extends Component {
           { ...title }>
         <div onClick={ this.handleColumnClick }>
           { children }{ sortCaret }
+          { sortNumber !== 0
+          && <span className='numberCircle sortNumber' style={ this.props.sortNumberStyle }>{ sortNumber }</span> }
         </div>
         <div onClick={ e => e.stopPropagation() }>
           { this.props.filter ? this.getFilters() : null }
@@ -275,7 +279,9 @@ TableHeaderColumn.propTypes = {
   onResizing: PropTypes.func,
   onStartResizing: PropTypes.func,
   onStopResizing: PropTypes.func,
-  export: PropTypes.bool
+  export: PropTypes.bool,
+  resizerStyle: PropTypes.object,
+  sortNumberStyle: PropTypes.object
 };
 
 TableHeaderColumn.defaultProps = {
@@ -311,7 +317,9 @@ TableHeaderColumn.defaultProps = {
   resizeOptions: {
     minWidth: 25,
     maxWidth: false
-  }
+  },
+  resizerStyle: undefined,
+  sortNumberStyle: undefined
 };
 
 export default TableHeaderColumn;
