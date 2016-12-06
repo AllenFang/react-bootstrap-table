@@ -43,7 +43,8 @@ class TableHeader extends Component {
             {
               React.Children.map(this.props.children, (elm) => {
                 const { sortIndicator, sortInfo, onSort,
-                    onResizing, onStartResizing, onStopResizing } = this.props;
+                    onResizing, onStartResizing, onStopResizing,
+                    multiSortEnabled } = this.props;
                 const { dataField, dataSort } = elm.props;
                 const colSortInfo = sortInfo.filter(function(sortCol) {
                   return sortCol.field === dataField;
@@ -61,7 +62,8 @@ class TableHeader extends Component {
                     onStopResizing,
                     sort,
                     sortIndicator,
-                    sortNumber
+                    sortNumber,
+                    multiSortEnabled
                   });
               })
             }

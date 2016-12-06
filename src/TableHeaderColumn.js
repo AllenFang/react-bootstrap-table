@@ -21,7 +21,7 @@ class TableHeaderColumn extends Component {
     this.handleColumnStopResizing = this.handleColumnStopResizing.bind(this);
   }
 
-  handleColumnClick = () => {
+  handleColumnClick = (event) => {
     if (!this.props.dataSort) return;
     // const order = this.props.sort === Const.SORT_DESC ? Const.SORT_ASC : Const.SORT_DESC;
     let order = '';
@@ -35,7 +35,7 @@ class TableHeaderColumn extends Component {
     default:
       order = Const.SORT_DESC;
     }
-    this.props.onSort(order, this.props.dataField);
+    this.props.onSort(order, this.props.dataField, event);
   }
 
   handleFilter(value, type) {
@@ -159,8 +159,9 @@ class TableHeaderColumn extends Component {
           { ...title }>
         <div onClick={ this.handleColumnClick }>
           { children }{ sortCaret }
-          { sortNumber !== 0
-          && <span className='numberCircle sortNumber' style={ this.props.sortNumberStyle }>{ sortNumber }</span> }
+          { (this.props.multiSortEnabled && sortNumber !== 0)
+            && <span className='numberCircle sortNumber'
+              style={ this.props.sortNumberStyle }>{ sortNumber }</span> }
         </div>
         <div onClick={ e => e.stopPropagation() }>
           { this.props.filter ? this.getFilters() : null }

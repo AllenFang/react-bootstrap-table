@@ -44,7 +44,8 @@ class BootstrapTable extends Component {
       currPage: currPage,
       sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
       selectedRowKeys: this.store.getSelectedRowKeys(),
-      sortCols: this.props.sortCols
+      sortCols: this.props.sortCols,
+      multiSortEnabled: false
     };
   }
 
@@ -292,7 +293,8 @@ class BootstrapTable extends Component {
               bordered={ this.props.bordered }
               condensed={ this.props.condensed }
               isFiltered={ this.filter ? true : false }
-              isSelectAll={ isSelectAll }>
+              isSelectAll={ isSelectAll }
+              multiSortEnabled={ this.state.multiSortEnabled }>
             { this.props.children }
           </TableHeader>
           <TableBody ref='body'
@@ -381,13 +383,16 @@ class BootstrapTable extends Component {
     });
   }
 
-  handleSort = (order, sortField) => {
+  handleSort = (order, sortField, event) => {
     if (this.props.options.onSortChange) {
       this.props.options.onSortChange(sortField, order, this.props);
     }
+
+    const multiSortEnabled = (this.props.multiSort && this.props.multiSortKey) ? event[this.props.multiSortKey] : this.props.multiSort;
+
     // get multiple sorted columns
     let sortCols = this.state.sortCols;
-    if (this.props.multiSort) {
+    if (multiSortEnabled) {
       sortCols = sortCols.filter(function(sortCol) {
         return sortCol.field !== sortField;
       });
@@ -406,7 +411,8 @@ class BootstrapTable extends Component {
     const result = this.store.sort(order, sortField, sortCols).get();
     this.setState({
       data: result,
-      sortCols: sortCols
+      sortCols: sortCols,
+      multiSortEnabled: multiSortEnabled
     });
   }
 
