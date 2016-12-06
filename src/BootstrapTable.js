@@ -263,13 +263,6 @@ class BootstrapTable extends Component {
     const isSelectAll = this.isSelectAll();
     let sortIndicator = this.props.options.sortIndicator;
     if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
-    const resizableOptions = {
-      sortIndicator: sortIndicator,
-      isSelectAll: isSelectAll,
-      sortInfo: sortInfo,
-      onSort: this.handleSort,
-      children: this.props.children
-    };
 
     return (
       <div className={ classSet('react-bs-table-container', this.props.containerClass) }
@@ -323,8 +316,7 @@ class BootstrapTable extends Component {
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
             noDataText={ this.props.options.noDataText }
-            resizable={ this.props.resizable }
-            resizableOptions={ resizableOptions } />
+            resizable={ this.props.resizable } />
           { this.props.footerData && <TableFooter ref='footer'
             bodyContainerClass={ this.props.bodyContainerClass }
             tableFooterClass={ this.props.tableBodyClass }
@@ -346,8 +338,7 @@ class BootstrapTable extends Component {
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
             noDataText={ this.props.options.noDataText }
-            resizable={ this.props.resizable }
-            resizableOptions={ resizableOptions } /> }
+            resizable={ this.props.resizable } /> }
         </div>
         { tableFilter }
         { pagination }

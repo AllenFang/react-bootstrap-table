@@ -325,7 +325,6 @@ TableFooter.propTypes = {
   style: PropTypes.object,
   tableFooterClass: PropTypes.string,
   bodyContainerClass: PropTypes.string,
-  resizable: PropTypes.bool,
-  resizableOptions: PropTypes.object
+  resizable: PropTypes.bool
 };
 export default TableFooter;
