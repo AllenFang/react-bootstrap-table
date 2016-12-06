@@ -77,6 +77,9 @@
     .feature-text h3 {
   		text-transform: none !important;
   	}
+    p, ul, ol {
+      margin-bottom: 0.5em;
+    }
 	</style>
 	</head>
 	<body>
@@ -146,7 +149,7 @@
               <ul>
                 <li><a href="#btnGroup">ButtonGroup</a>(Left side)</li>
                 <ul>
-                  <li>Insert Row Button</li>
+                  <li><a href="#insertBtn">Insert Row Button</a></li>
                   <li>Drop Row Button</li>
                   <li>Export CSV Button</li>
                   <li>Select Only Button</li>
@@ -241,10 +244,11 @@ function priceFormatter(cell, row) {
     &lt;/div&gt;
   );
 }
+// ...
 const options = {
   toolBar: this.renderCustomToolBar
 };
-//...
+// ...
 &lt;BootstrapTable data={rows} options={options}&gt;
 </code>
 </pre></br>
@@ -253,34 +257,98 @@ const options = {
             Button group which contain the insert, drop, show only select and export CSV buttons, these button all grouped as
             <code>btn-group</code> class in bootstrap. This is a chance that you can custom this button group.
           </span>
+          <p>Give a <code>btnGroup</code> in <code>options</code> props and <code>btnGroup</code> only accept a function and a JSX returned value is necessary</p>
 <pre>
-<code class="javascript">// with es6
-var React = require('react');
-var ReactDOM = require('react-dom');
-var ReactBsTable  = require('react-bootstrap-table');
-var BootstrapTable = ReactBsTable.BootstrapTable;
-var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
-
-var products = [{
-      id: 1,
-      name: "Product1",
-      price: 120
-  }, {
-      id: 2,
-      name: "Product2",
-      price: 80
-  }...];
-
-ReactDOM.render(
-  &lt;BootstrapTable data={products} striped hover&gt;
-      &lt;TableHeaderColumn isKey dataField='id'&gt;Product ID&lt;/TableHeaderColumn&gt;
-      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
-      &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
-  &lt;/BootstrapTable&gt;,
-  document.getElementById('basic')
-);
+<code class="javascript">createCustomButtonGroup = props => {
+  /**
+   *  This function only pass one argument, is props object has following properties
+   *  {
+   *    exportCSVBtn,  // export CSV button JSX
+   *    insertBtn,  // insert button JSX
+   *    deleteBtn,  // delete button JSX
+   *    showSelectedOnlyBtn  // show selected button JSX
+   *  }
+   ***/
+  return (
+    ...
+  );
+}
+// ...
+const options = {
+  btnGroup: this.createCustomButtonGroup
+};
+// ...
+&lt;BootstrapTable data={rows} options={options}&gt;
+</code>
+</pre></br>
+        <h3 id="insertBtn">Insert Button</h3>
+          <span>
+            It's available to custom insert button by configuring <code>insertBtn</code> in <code>options</code> props,
+            <code>insertBtn</code> only accept a function and a JSX returned value is necessary. This function will take one argument: <code>onClick</code>.
+            Following, we have two way to customize the insert button: 
+          </span>
+          </br></br>
+          <div class="feature-text">
+              <h3><span class="number">01.</span> Use <code>InsertButton</code> by default</h3>
+              <span>
+                This is a simple and default way to custom this component. <code>InsertButton</code> is a exported React component by
+                <code>react-bootstrap-table</code>, and it have following props you can configure:
+                <ul>
+                  <li>btnText</li>
+                  <li>btnContextual</li>
+                  <li>className</li>
+                  <li>onClick</li>
+                  <li>btnGlyphicon</li>
+                </ul>These all props are not required, so you can only configure the props that you want.
+              </span>
+<pre>
+<code class="javascript">import { BootstrapTable, TableHeaderColumn, InsertButton } from 'react-bootstrap-table';
+// ...
+handleInsertButtonClick = (onClick) => {
+  // Custom your onClick event here,
+  // it's not necessary to implement this function if you have no any process before onClick
+  console.log('This is my custom function for InserButton click event');
+  onClick();
+}
+createCustomInsertButton = (onClick) => {
+  return (
+    &lt;InsertButton
+      btnText='CustomInsertText'
+      btnContextual='btn-warning'
+      className='my-custom-class'
+      btnGlyphicon='glyphicon-edit'
+      onClick={ () => this.handleInsertButtonClick(onClick) }/&gt;
+  );
+}
+//...
+const options = {
+  insertBtn: this.createCustomInsertButton
+};
+//...
+&lt;BootstrapTable data={rows} options={options} insertRow&gt;
 </code>
 </pre>
+            </div>
+            <div class="feature-text">
+              <h3><span class="number">02.</span> Customize by yourself</h3>
+              <span>
+                If you think <code>InsertButton</code> is not satisfied to your requirement, you can custom a new one as following
+              </span>
+<pre>
+<code class="javascript">createCustomInsertButton = (onClick) => {
+  return (
+    &lt;button style={ { color: 'red' } } onClick={ onClick }&gt;Add rows&lt;/button&gt;
+  );
+}
+//...
+const options = {
+  insertBtn: this.createCustomInsertButton
+};
+//...
+&lt;BootstrapTable data={rows} options={options} insertRow&gt;
+</code>
+</pre>
+            </div>
 				</div>
 			</div>
 		</div>
