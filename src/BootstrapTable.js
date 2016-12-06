@@ -393,8 +393,11 @@ class BootstrapTable extends Component {
     // get multiple sorted columns
     let sortCols = this.state.sortCols;
     if (multiSortEnabled) {
-      sortCols = sortCols.filter(function(sortCol) {
+      sortCols = sortCols.filter((sortCol) => {
         return sortCol.field !== sortField;
+      });
+      sortCols.map((sortCol, key) => {
+        sortCol.number = key + 1;
       });
     } else {
       sortCols = [];
