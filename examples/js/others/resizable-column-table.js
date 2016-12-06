@@ -14,7 +14,10 @@ function addProducts(quantity) {
     products.push({
       id: id,
       name: 'Item name ' + (Math.floor(Math.random() * 9) + 1),
-      price: Math.floor(Math.random() * 9) + 1
+      price: Math.floor(Math.random() * 3) + 1,
+      rate: Math.floor(Math.random() * 5) + 1,
+      quantity: Math.floor(Math.random() * 7) + 1,
+      stock: Math.floor(Math.random() * 9) + 1
     });
   }
 }
@@ -24,7 +27,10 @@ addProducts(50);
 footerData.push({
   id: '',
   name: 'Totals',
-  price: 22000
+  price: 22000,
+  rate: 22000,
+  quantity: 22000,
+  stock: 22000
 });
 
 export default class ResizableColumnTable extends React.Component {
@@ -74,12 +80,12 @@ export default class ResizableColumnTable extends React.Component {
           resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Name</TableHeaderColumn>
         <TableHeaderColumn dataField='price' dataSort resize
           resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Price</TableHeaderColumn>
-        <TableHeaderColumn dataField='price' dataSort resize width='300px'
-          resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Price1</TableHeaderColumn>
-        <TableHeaderColumn dataField='price' dataSort resize
-          resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Price2</TableHeaderColumn>
-        <TableHeaderColumn dataField='price' dataSort
-          resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Price3</TableHeaderColumn>
+        <TableHeaderColumn dataField='rate' dataSort resize width='300px'
+          resizeOptions={ { minWidth: 200, maxWidth: false } }>Rate</TableHeaderColumn>
+        <TableHeaderColumn dataField='quantity' dataSort resize
+          resizeOptions={ { minWidth: 200, maxWidth: false } }>Quantity</TableHeaderColumn>
+        <TableHeaderColumn dataField='stock' dataSort
+          resizeOptions={ { minWidth: 200, maxWidth: false } }>Stock</TableHeaderColumn>
       </BootstrapTable>
     );
   }

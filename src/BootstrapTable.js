@@ -43,7 +43,8 @@ class BootstrapTable extends Component {
       data: this.getTableData(),
       currPage: currPage,
       sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
-      selectedRowKeys: this.store.getSelectedRowKeys()
+      selectedRowKeys: this.store.getSelectedRowKeys(),
+      sortCols: this.props.sortCols
     };
   }
 
@@ -281,8 +282,7 @@ class BootstrapTable extends Component {
               rowSelectType={ this.props.selectRow.mode }
               customComponent={ this.props.selectRow.customComponent }
               hideSelectColumn={ this.props.selectRow.hideSelectColumn }
-              sortName={ sortInfo ? sortInfo.sortField : undefined }
-              sortOrder={ sortInfo ? sortInfo.order : undefined }
+              sortInfo={ sortInfo ? sortInfo : [] }
               sortIndicator={ sortIndicator }
               onSort={ this.handleSort }
               onResizing={ this.handleResizing }
@@ -385,15 +385,28 @@ class BootstrapTable extends Component {
     if (this.props.options.onSortChange) {
       this.props.options.onSortChange(sortField, order, this.props);
     }
+    // get multiple sorted columns
+    let sortCols = this.state.sortCols;
+    if (this.props.multiSort) {
+      sortCols = sortCols.filter(function(sortCol) {
+        return sortCol.field !== sortField;
+      });
+    } else {
+      sortCols = [];
+    }
+    if (order !== '') {
+      sortCols.push({ field: sortField, order: order.toLowerCase() });
+    }
 
     if (this.isRemoteDataSource()) {
       this.store.setSortInfo(order, sortField);
       return;
     }
 
-    const result = this.store.sort(order, sortField).get();
+    const result = this.store.sort(order, sortField, sortCols).get();
     this.setState({
-      data: result
+      data: result,
+      sortCols: sortCols
     });
   }
 
@@ -1099,6 +1112,7 @@ BootstrapTable.propTypes = {
   printable: PropTypes.bool,
   resizable: PropTypes.bool,
   multiSort: PropTypes.bool,
+  sortCols: PropTypes.array,
   searchPlaceholder: PropTypes.string,
   selectRow: PropTypes.shape({
     mode: PropTypes.oneOf([
@@ -1203,6 +1217,7 @@ BootstrapTable.defaultProps = {
   printable: false,
   resizable: false,
   multiSort: false,
+  sortCols: [],
   searchPlaceholder: undefined,
   selectRow: {
     mode: Const.ROW_SELECT_NONE,

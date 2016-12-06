@@ -42,10 +42,14 @@ class TableHeader extends Component {
             { selectRowHeaderCol }
             {
               React.Children.map(this.props.children, (elm) => {
-                const { sortIndicator, sortName, sortOrder, onSort,
+                const { sortIndicator, sortInfo, onSort,
                     onResizing, onStartResizing, onStopResizing } = this.props;
                 const { dataField, dataSort } = elm.props;
-                const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
+                const colSortInfo = sortInfo.filter(function(sortCol) {
+                  return sortCol.field === dataField;
+                })[0];
+                // const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
+                const sort = (dataSort && colSortInfo) ? colSortInfo.order : undefined;
                 return React.cloneElement(
                   elm,
                   {
@@ -101,8 +105,7 @@ TableHeader.propTypes = {
   onStartResizing: PropTypes.func,
   onStopResizing: PropTypes.func,
   onSelectAllRow: PropTypes.func,
-  sortName: PropTypes.string,
-  sortOrder: PropTypes.string,
+  sortInfo: PropTypes.array,
   hideSelectColumn: PropTypes.bool,
   bordered: PropTypes.bool,
   condensed: PropTypes.bool,

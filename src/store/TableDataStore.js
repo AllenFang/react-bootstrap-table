@@ -75,21 +75,9 @@ function _arrsortMul(arr, sortCols, sortFunc, sortFuncExtraData) {
   });
   return arr;
 }
-let sortCols = [];
-function _sort(arr, sortField, order, sortFunc, sortFuncExtraData, multiSort) {
-  order = order.toLowerCase();
+
+function _sort(arr, sortCols, sortFunc, sortFuncExtraData) {
   // arr = _arrsort(arr, sortField, order, sortFunc, sortFuncExtraData);
-  if (multiSort) {
-    sortCols = sortCols.filter(function(sortCol) {
-      return sortCol.field !== sortField;
-    });
-  } else {
-    sortCols = [];
-  }
-  if (order !== '') {
-    sortCols.push({ field: sortField, order: order });
-  }
-  console.dir(sortCols);
   if (sortCols.length > 0) {
     arr = _arrsortMul(arr, sortCols, sortFunc, sortFuncExtraData);
   }
@@ -139,11 +127,8 @@ export class TableDataStore {
     return this.sortObj;
   }
 
-  setSortInfo(order, sortField) {
-    this.sortObj = {
-      order: order,
-      sortField: sortField
-    };
+  setSortInfo(sortCols) {
+    this.sortObj = sortCols;
   }
 
   setSelectedRowKey(selectedRowKeys) {
@@ -189,15 +174,15 @@ export class TableDataStore {
     }
   }
 
-  sort(order, sortField) {
-    this.setSortInfo(order, sortField);
+  sort(order, sortField, sortCols) {
+    this.setSortInfo(sortCols);
 
     let currentDisplayData = this.getCurrentDisplayData();
     if (!this.colInfos[sortField]) return this;
 
     const { sortFunc, sortFuncExtraData } = this.colInfos[sortField];
-    currentDisplayData = _sort(currentDisplayData, sortField, order,
-        sortFunc, sortFuncExtraData, this.multiSort);
+    currentDisplayData = _sort(currentDisplayData, sortCols,
+        sortFunc, sortFuncExtraData);
 
     return this;
   }
