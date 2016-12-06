@@ -104,7 +104,6 @@ class TableHeaderColumn extends Component {
   }
 
   render() {
-    let defaultCaret;
     const {
       dataAlign,
       dataField,
@@ -140,19 +139,8 @@ class TableHeaderColumn extends Component {
       cursor: 'ew-resize',
       border: '1px dotted #ddd'
     };
-    if (sortIndicator) {
-      defaultCaret = (!dataSort) ? null : (
-        <span className='order'>
-          <span className='dropdown'>
-            <span className='caret' style={ { margin: '10px 0 10px 5px', color: '#ccc' } }></span>
-          </span>
-          <span className='dropup'>
-            <span className='caret' style={ { margin: '10px 0', color: '#ccc' } }></span>
-          </span>
-        </span>
-      );
-    }
-    let sortCaret = sort ? Util.renderReactSortCaret(sort) : defaultCaret;
+
+    let sortCaret = Util.getReactSortCaret(sort, sortIndicator, dataSort);
     if (caretRender) {
       sortCaret = caretRender(sort, dataField);
     }
