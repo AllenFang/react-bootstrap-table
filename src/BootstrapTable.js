@@ -45,12 +45,12 @@ class BootstrapTable extends Component {
         this.props.sortCols;
 
     this.state = {
-      data: this.getTableData(),
+      data: this.getTableData(sortCols),
       currPage: currPage,
       sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
       selectedRowKeys: this.store.getSelectedRowKeys(),
       sortCols: sortCols,
-      multiSortEnabled: false
+      multiSortEnabled: sortCols.length > 1
     };
   }
 
@@ -103,14 +103,14 @@ class BootstrapTable extends Component {
     });
   }
 
-  getTableData() {
+  getTableData(sortCols) {
     let result = [];
     const { options, pagination } = this.props;
     const sortName = options.defaultSortName || options.sortName;
     const sortOrder = options.defaultSortOrder || options.sortOrder;
     const searchText = options.defaultSearch;
-    if (sortName && sortOrder) {
-      this.store.sort(sortOrder, sortName);
+    if ((sortName && sortOrder) || (sortCols.length > 0)) {
+      this.store.sort(sortOrder, sortName, sortCols);
     }
 
     if (searchText) {
