@@ -150,7 +150,7 @@
                 <li><a href="#btnGroup">ButtonGroup</a>(Left side)</li>
                 <ul>
                   <li><a href="#insertBtn">Insert Row Button</a></li>
-                  <li>Drop Row Button</li>
+                  <li><a href="#dropBtn">Drop Row Button</a></li>
                   <li>Export CSV Button</li>
                   <li>Select Only Button</li>
                 </ul>
@@ -281,7 +281,7 @@ const options = {
 &lt;BootstrapTable data={rows} options={options}&gt;
 </code>
 </pre></br>
-        <h3 id="insertBtn">Insert Button</h3>
+<h3 id="insertBtn">Insert Button</h3>
           <span>
             It's available to custom insert button by configuring <code>insertBtn</code> in <code>options</code> props,
             <code>insertBtn</code> only accept a function and a JSX returned value is necessary. This function will take one argument: <code>onClick</code>.
@@ -346,6 +346,74 @@ const options = {
 };
 //...
 &lt;BootstrapTable data={rows} options={options} insertRow&gt;
+</code>
+</pre>
+            </div>
+        <h3 id="dropBtn">Drop Row Button</h3>
+          <span>
+            It's available to custom drop row button by configuring <code>deleteBtn</code> in <code>options</code> props,
+            <code>deleteBtn</code> only accept a function and a JSX returned value is necessary. This function will take one argument: <code>onClick</code>.
+            Following, we have two way to customize the delete row button: 
+          </span>
+          </br></br>
+          <div class="feature-text">
+              <h3><span class="number">01.</span> Use <code>DeleteButton</code> by default</h3>
+              <span>
+                This is a simple and default way to custom this component. <code>DeleteButton</code> is a exported React component by
+                <code>react-bootstrap-table</code>, and it have following props you can configure:
+                <ul>
+                  <li>btnText</li>
+                  <li>btnContextual</li>
+                  <li>className</li>
+                  <li>onClick</li>
+                  <li>btnGlyphicon</li>
+                </ul>These all props are not required, so you can only configure the props that you want.
+              </span>
+<pre>
+<code class="javascript">import { BootstrapTable, TableHeaderColumn, DeleteButton } from 'react-bootstrap-table';
+// ...
+handleDeleteButtonClick = (onClick) => {
+  // Custom your onClick event here,
+  // it's not necessary to implement this function if you have no any process before onClick
+  console.log('This is my custom function for DeleteButton click event');
+  onClick();
+}
+createCustomDeleteButton = (onClick) => {
+  return (
+    &lt;DeleteButton
+      btnText='CustomDeleteText'
+      btnContextual='btn-warning'
+      className='my-custom-class'
+      btnGlyphicon='glyphicon-edit'
+      onClick={ () => this.handleDeleteButtonClick(onClick) }/&gt;
+  );
+}
+//...
+const options = {
+  deleteBtn: this.createCustomDeleteButton
+};
+//...
+&lt;BootstrapTable data={rows} options={options} deleteRow&gt;
+</code>
+</pre>
+            </div>
+            <div class="feature-text">
+              <h3><span class="number">02.</span> Customize by yourself</h3>
+              <span>
+                If you think <code>DeleteButton</code> is not satisfied to your requirement, you can custom a new one as following
+              </span>
+<pre>
+<code class="javascript">createCustomDeleteButton = (onClick) => {
+  return (
+    &lt;button style={ { color: 'red' } } onClick={ onClick }&gt;Delete rows&lt;/button&gt;
+  );
+}
+//...
+const options = {
+  deleteBtn: this.createCustomDeleteButton
+};
+//...
+&lt;BootstrapTable data={rows} options={options} deleteRow&gt;
 </code>
 </pre>
             </div>
