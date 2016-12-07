@@ -159,15 +159,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _get(Object.getPrototypeOf(BootstrapTable.prototype), 'constructor', this).call(this, props);
 
-	    this.handleSort = function (order, sortField, event) {
-	      if (_this.props.options.onSortChange) {
-	        _this.props.options.onSortChange(sortField, order, _this.props);
-	      }
-
-	      var multiSortEnabled = _this.props.multiSort && _this.props.multiSortKey ? event[_this.props.multiSortKey] : _this.props.multiSort;
-
-	      // get multiple sorted columns
-	      var sortCols = _this.state.sortCols;
+	    this.getSortCols = function (order, sortField, multiSortEnabled) {
+	      var sortCols = _this.state ? _this.state.sortCols : [];
 	      if (multiSortEnabled) {
 	        sortCols = sortCols.filter(function (sortCol) {
 	          return sortCol.field !== sortField;
@@ -181,6 +174,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (order !== '') {
 	        sortCols.push({ number: sortCols.length + 1, field: sortField, order: order.toLowerCase() });
 	      }
+	      return sortCols;
+	    };
+
+	    this.handleSort = function (order, sortField, event) {
+	      if (_this.props.options.onSortChange) {
+	        _this.props.options.onSortChange(sortField, order, _this.props);
+	      }
+
+	      var multiSortEnabled = _this.props.multiSort && _this.props.multiSortKey ? event[_this.props.multiSortKey] : _this.props.multiSort;
+
+	      // get multiple sorted columns
+	      var sortCols = _this.getSortCols(order, sortField, multiSortEnabled);
 
 	      if (_this.isRemoteDataSource()) {
 	        _this.store.setSortInfo(order, sortField);
@@ -447,9 +452,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _this.store.filter(filterObj);
 
 	      var sortObj = _this.store.getSortInfo();
-
 	      if (sortObj) {
-	        _this.store.sort(sortObj.order, sortObj.sortField);
+	        _this.store.sort(sortObj.order, sortObj.sortField, sortObj);
 	      }
 
 	      var result = undefined;
@@ -521,9 +525,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _this.store.search(searchText);
 
 	      var sortObj = _this.store.getSortInfo();
-
 	      if (sortObj) {
-	        _this.store.sort(sortObj.order, sortObj.sortField);
+	        _this.store.sort(sortObj.order, sortObj.sortField, sortObj);
 	      }
 
 	      var result = undefined;
@@ -658,12 +661,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	      currPage = this.props.options.pageStartIndex;
 	    }
 
+	    var _props$options2 = this.props.options;
+	    var defaultSortName = _props$options2.defaultSortName;
+	    var defaultSortOrder = _props$options2.defaultSortOrder;
+
+	    var sortCols = defaultSortName && defaultSortOrder && this.props.sortCols.length === 0 ? this.getSortCols(defaultSortOrder, defaultSortName, false) : this.props.sortCols;
+
 	    this.state = {
 	      data: this.getTableData(),
 	      currPage: currPage,
 	      sizePerPage: this.props.options.sizePerPage || _Const2['default'].SIZE_PER_PAGE_LIST[0],
 	      selectedRowKeys: this.store.getSelectedRowKeys(),
-	      sortCols: this.props.sortCols,
+	      sortCols: sortCols,
 	      multiSortEnabled: false
 	    };
 	  }
@@ -820,12 +829,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var sortInfo = this.store.getSortInfo();
 	        var sortField = options.sortName || (sortInfo ? sortInfo.sortField : undefined);
 	        var sortOrder = options.sortOrder || (sortInfo ? sortInfo.order : undefined);
-	        if (sortField && sortOrder) this.store.sort(sortOrder, sortField);
+	        var sortCols = [];
+	        if (sortField && sortOrder) {
+	          sortCols = this.getSortCols(sortOrder, sortField, this.state.multiSortEnabled);
+	          this.store.sort(sortOrder, sortField, sortCols);
+	        }
 	        var data = this.store.page(page, sizePerPage).get();
 	        this.setState({
 	          data: data,
 	          currPage: page,
-	          sizePerPage: sizePerPage
+	          sizePerPage: sizePerPage,
+	          sortCols: sortCols
 	        });
 	      }
 
@@ -9333,6 +9347,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'sort',
 	    value: function sort(order, sortField, sortCols) {
+	      sortCols = sortCols ? sortCols : [{ number: 1, field: sortField, order: order.toLowerCase() }];
+	      sortField = sortField ? sortField : sortCols[sortCols.length - 1].field;
 	      this.setSortInfo(sortCols);
 
 	      var currentDisplayData = this.getCurrentDisplayData();
