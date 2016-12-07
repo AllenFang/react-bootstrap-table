@@ -668,12 +668,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var sortCols = defaultSortName && defaultSortOrder && this.props.sortCols.length === 0 ? this.getSortCols(defaultSortOrder, defaultSortName, false) : this.props.sortCols;
 
 	    this.state = {
-	      data: this.getTableData(),
+	      data: this.getTableData(sortCols),
 	      currPage: currPage,
 	      sizePerPage: this.props.options.sizePerPage || _Const2['default'].SIZE_PER_PAGE_LIST[0],
 	      selectedRowKeys: this.store.getSelectedRowKeys(),
 	      sortCols: sortCols,
-	      multiSortEnabled: false
+	      multiSortEnabled: sortCols.length > 1
 	    };
 	  }
 
@@ -730,7 +730,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'getTableData',
-	    value: function getTableData() {
+	    value: function getTableData(sortCols) {
 	      var result = [];
 	      var _props = this.props;
 	      var options = _props.options;
@@ -739,8 +739,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var sortName = options.defaultSortName || options.sortName;
 	      var sortOrder = options.defaultSortOrder || options.sortOrder;
 	      var searchText = options.defaultSearch;
-	      if (sortName && sortOrder) {
-	        this.store.sort(sortOrder, sortName);
+	      if (sortName && sortOrder || sortCols.length > 0) {
+	        this.store.sort(sortOrder, sortName, sortCols);
 	      }
 
 	      if (searchText) {
