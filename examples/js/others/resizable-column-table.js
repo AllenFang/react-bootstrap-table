@@ -66,7 +66,9 @@ export default class ResizableColumnTable extends React.Component {
       onSortChange: this.onSortChange,
       onResizing: this.onResizing,
       onStartResizing: this.onStartResizing,
-      onStopResizing: this.onStopResizing
+      onStopResizing: this.onStopResizing,
+      defaultSortName: 'price',
+      defaultSortOrder: 'asc'
     };
 
     return (
