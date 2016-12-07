@@ -66,15 +66,21 @@ export default class ResizableColumnTable extends React.Component {
       onSortChange: this.onSortChange,
       onResizing: this.onResizing,
       onStartResizing: this.onStartResizing,
-      onStopResizing: this.onStopResizing,
-      defaultSortName: 'price',
-      defaultSortOrder: 'asc'
+      onStopResizing: this.onStopResizing// ,
+      // defaultSortName: 'price',
+      // defaultSortOrder: 'asc'
     };
+
+    const sortCols = [
+      { number: 1, field: 'price', order: 'desc' },
+      { number: 2, field: 'rate', order: 'asc' },
+      { number: 3, field: 'quantity', order: 'desc' }
+    ];
 
     return (
       <BootstrapTable ref='restable' data={ products } options={ options }
         footerData={ footerData } height='800px' resizable={ true } multiSort={ true }
-        multiSortKey='shiftKey'>
+        sortCols={ sortCols } multiSortKey='shiftKey'>
         <TableHeaderColumn dataField='id' isKey={ true } dataSort resize
           resizeOptions={ { minWidth: 100, maxWidth: false } }>Product ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name' dataSort resize
