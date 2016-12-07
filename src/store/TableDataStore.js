@@ -175,6 +175,9 @@ export class TableDataStore {
   }
 
   sort(order, sortField, sortCols) {
+    sortCols = sortCols ? sortCols :
+        [ { number: 1, field: sortField, order: order.toLowerCase() } ];
+    sortField = sortField ? sortField : sortCols[sortCols.length - 1].field;
     this.setSortInfo(sortCols);
 
     let currentDisplayData = this.getCurrentDisplayData();
