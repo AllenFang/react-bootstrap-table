@@ -151,7 +151,7 @@
                 <ul>
                   <li><a href="#insertBtn">Insert Row Button</a></li>
                   <li><a href="#dropBtn">Drop Row Button</a></li>
-                  <li>Export CSV Button</li>
+                  <li><a href="#csvBtn">Export CSV Button</a></li>
                   <li>Select Only Button</li>
                 </ul>
                 <li>Search Panel(Right side)</li>
@@ -414,6 +414,71 @@ const options = {
 };
 //...
 &lt;BootstrapTable data={rows} options={options} deleteRow&gt;
+</code>
+</pre>
+            </div>
+        <h3 id="csvBtn">Export CSV Button</h3>
+          <span>
+            It's available to custom export csv button by configuring <code>exportCSVBtn</code> in <code>options</code> props,
+            <code>exportCSVBtn</code> only accept a function and a JSX returned value is necessary. This function will take one argument: <code>onClick</code>.
+            Following, we have two way to customize the export csv button: 
+          </span>
+          </br></br>
+          <div class="feature-text">
+              <h3><span class="number">01.</span> Use <code>ExportCSVButton</code> by default</h3>
+              <span>
+                This is a simple and default way to custom this component. <code>ExportCSVButton</code> is a exported React component by
+                <code>react-bootstrap-table</code>, and it have following props you can configure:
+                <ul>
+                  <li>btnText</li>
+                  <li>btnContextual</li>
+                  <li>className</li>
+                  <li>onClick</li>
+                  <li>btnGlyphicon</li>
+                </ul>These all props are not required, so you can only configure the props that you want.
+              </span>
+<pre>
+<code class="javascript">import { BootstrapTable, TableHeaderColumn, ExportCSVButton } from 'react-bootstrap-table';
+// ...
+handleExportCSVButtonClick = (onClick) => {
+  // Custom your onClick event here,
+  // it's not necessary to implement this function if you have no any process before onClick
+  console.log('This is my custom function for DeleteButton click event');
+  onClick();
+}
+createCustomExportCSVButton = (onClick) => {
+  return (
+    &lt;ExportCSVButton
+      btnText='Down CSV'
+      onClick={ () => this.handleExportCSVButtonClick(onClick) }/&gt;
+  );
+}
+//...
+const options = {
+  exportCSVBtn: this.createCustomExportCSVButton
+};
+//...
+&lt;BootstrapTable data={rows} options={options} exportCSV&gt;
+</code>
+</pre>
+            </div>
+            <div class="feature-text">
+              <h3><span class="number">02.</span> Customize by yourself</h3>
+              <span>
+                If you think <code>ExportCSVButton</code> is not satisfied to your requirement, you can custom a new one as following
+              </span>
+<pre>
+<code class="javascript">createCustomExportCSVButton = (onClick) => {
+  return (
+    &lt;button style={ { color: 'red' } } onClick={ onClick }&gt;Delete rows&lt;/button&gt;
+  );
+}
+//...
+const options = {
+  deleteBtn: this.createCustomExportCSVButton
+};
+//...
+&lt;BootstrapTable data={rows} options={options} exportCSV&gt;
 </code>
 </pre>
             </div>
