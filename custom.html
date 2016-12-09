@@ -152,7 +152,7 @@
                   <li><a href="#insertBtn">Insert Row Button</a></li>
                   <li><a href="#dropBtn">Drop Row Button</a></li>
                   <li><a href="#csvBtn">Export CSV Button</a></li>
-                  <li>Select Only Button</li>
+                  <li><a href="#selectOnly">Select Only Toggle</a></li>
                 </ul>
                 <li>Search Panel(Right side)</li>
                 <ul>
@@ -443,7 +443,7 @@ const options = {
 handleExportCSVButtonClick = (onClick) => {
   // Custom your onClick event here,
   // it's not necessary to implement this function if you have no any process before onClick
-  console.log('This is my custom function for DeleteButton click event');
+  console.log('This is my custom function for ExportCSVButton click event');
   onClick();
 }
 createCustomExportCSVButton = (onClick) => {
@@ -459,6 +459,75 @@ const options = {
 };
 //...
 &lt;BootstrapTable data={rows} options={options} exportCSV&gt;
+</code>
+</pre>
+            </div>
+            <div class="feature-text">
+              <h3><span class="number">02.</span> Customize by yourself</h3>
+              <span>
+                If you think <code>ExportCSVButton</code> is not satisfied to your requirement, you can custom a new one as following
+              </span>
+<pre>
+<code class="javascript">createCustomExportCSVButton = (onClick) => {
+  return (
+    &lt;button style={ { color: 'red' } } onClick={ onClick }&gt;Delete rows&lt;/button&gt;
+  );
+}
+//...
+const options = {
+  deleteBtn: this.createCustomExportCSVButton
+};
+//...
+&lt;BootstrapTable data={rows} options={options} exportCSV&gt;
+</code>
+</pre>
+            </div>
+            <h3 id="selectOnly">Select Only Toggle</h3>
+          <span>
+            It's available to custom select only toggle button by configuring <code>showSelectedOnlyBtn</code> in <code>options</code> props,
+            <code>showSelectedOnlyBtn</code> only accept a function and a JSX returned value is necessary. This function will take two argument: <code>onClick</code> and <code>showSelected</code>.
+            Following, we have two way to customize the select only toggle button: 
+          </span>
+          </br></br>
+          <div class="feature-text">
+              <h3><span class="number">01.</span> Use <code>ShowSelectedOnlyButton</code> by default</h3>
+              <span>
+                This is a simple and default way to custom this component. <code>ShowSelectedOnlyButton</code> is a exported React component by
+                <code>react-bootstrap-table</code>, and it have following props you can configure:
+                <ul>
+                  <li>showAllText</li>
+                  <li>showOnlySelectText</li>
+                  <li>btnContextual</li>
+                  <li>onClick</li>
+                  <li>className</li>
+                </ul>These all props are not required, so you can only configure the props that you want.
+              </span>
+<pre>
+<code class="javascript">import { BootstrapTable, TableHeaderColumn, ShowSelectedOnlyButton } from 'react-bootstrap-table';
+// ...
+handleShowSelectButtonClick = (onClick) => {
+  // Custom your onClick event here,
+  // it's not necessary to implement this function if you have no any process before onClick
+  console.log('This is my custom function for ShowSelectedOnlyButton click event');
+  onClick();
+}
+createCustomShowSelectButton = (onClick, showSelected) => {
+  return (
+    &lt;ExportCSVButton
+      className='my-custom-class'
+      onClick={ () => this.handleShowSelectButtonClick(onClick) }/&gt;
+  );
+}
+//...
+const selectRow = {
+  mode: 'radio',
+  showOnlySelected: true
+};
+const options = {
+  showSelectedOnlyBtn: this.createCustomShowSelectButton
+};
+//...
+&lt;BootstrapTable data={rows} options={options} selectRow={selectRow} exportCSV&gt;
 </code>
 </pre>
             </div>
