@@ -137,7 +137,9 @@ class TableBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currEditCell: null
+      currEditCell: null,
+      expanding: [],
+      lastExpand: null
     };
   }
 
