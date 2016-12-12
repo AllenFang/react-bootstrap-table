@@ -318,7 +318,6 @@ TableBody.propTypes = {
   style: PropTypes.object,
   tableBodyClass: PropTypes.string,
   bodyContainerClass: PropTypes.string,
-  resizable: PropTypes.bool,
-  resizableOptions: PropTypes.object
+  resizable: PropTypes.bool
 };
 export default TableBody;

@@ -39,11 +39,18 @@ class BootstrapTable extends Component {
       currPage = this.props.options.pageStartIndex;
     }
 
+    const { defaultSortName, defaultSortOrder } = this.props.options;
+    const sortCols = (defaultSortName && defaultSortOrder && this.props.sortCols.length === 0) ?
+        this.getSortCols(defaultSortOrder, defaultSortName, false) :
+        this.props.sortCols;
+
     this.state = {
-      data: this.getTableData(),
+      data: this.getTableData(sortCols),
       currPage: currPage,
       sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
-      selectedRowKeys: this.store.getSelectedRowKeys()
+      selectedRowKeys: this.store.getSelectedRowKeys(),
+      sortCols: sortCols,
+      multiSortEnabled: sortCols.length > 1
     };
   }
 
@@ -91,18 +98,19 @@ class BootstrapTable extends Component {
       keyField: keyField,
       colInfos: this.colInfos,
       multiColumnSearch: props.multiColumnSearch,
+      multiSort: props.multiSort,
       remote: this.isRemoteDataSource()
     });
   }
 
-  getTableData() {
+  getTableData(sortCols) {
     let result = [];
     const { options, pagination } = this.props;
     const sortName = options.defaultSortName || options.sortName;
     const sortOrder = options.defaultSortOrder || options.sortOrder;
     const searchText = options.defaultSearch;
-    if (sortName && sortOrder) {
-      this.store.sort(sortOrder, sortName);
+    if ((sortName && sortOrder) || (sortCols.length > 0)) {
+      this.store.sort(sortOrder, sortName, sortCols);
     }
 
     if (searchText) {
@@ -186,12 +194,17 @@ class BootstrapTable extends Component {
       const sortInfo = this.store.getSortInfo();
       const sortField = options.sortName || (sortInfo ? sortInfo.sortField : undefined);
       const sortOrder = options.sortOrder || (sortInfo ? sortInfo.order : undefined);
-      if (sortField && sortOrder) this.store.sort(sortOrder, sortField);
+      let sortCols = [];
+      if (sortField && sortOrder) {
+        sortCols = this.getSortCols(sortOrder, sortField, this.state.multiSortEnabled);
+        this.store.sort(sortOrder, sortField, sortCols);
+      }
       const data = this.store.page(page, sizePerPage).get();
       this.setState({
         data,
         currPage: page,
-        sizePerPage
+        sizePerPage,
+        sortCols: sortCols
       });
     }
 
@@ -262,13 +275,6 @@ class BootstrapTable extends Component {
     const isSelectAll = this.isSelectAll();
     let sortIndicator = this.props.options.sortIndicator;
     if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
-    const resizableOptions = {
-      sortIndicator: sortIndicator,
-      isSelectAll: isSelectAll,
-      sortInfo: sortInfo,
-      onSort: this.handleSort,
-      children: this.props.children
-    };
 
     return (
       <div className={ classSet('react-bs-table-container', this.props.containerClass) }
@@ -287,8 +293,7 @@ class BootstrapTable extends Component {
               rowSelectType={ this.props.selectRow.mode }
               customComponent={ this.props.selectRow.customComponent }
               hideSelectColumn={ this.props.selectRow.hideSelectColumn }
-              sortName={ sortInfo ? sortInfo.sortField : undefined }
-              sortOrder={ sortInfo ? sortInfo.order : undefined }
+              sortInfo={ sortInfo ? sortInfo : [] }
               sortIndicator={ sortIndicator }
               onSort={ this.handleSort }
               onResizing={ this.handleResizing }
@@ -298,7 +303,8 @@ class BootstrapTable extends Component {
               bordered={ this.props.bordered }
               condensed={ this.props.condensed }
               isFiltered={ this.filter ? true : false }
-              isSelectAll={ isSelectAll }>
+              isSelectAll={ isSelectAll }
+              multiSortEnabled={ this.state.multiSortEnabled }>
             { this.props.children }
           </TableHeader>
           <TableBody ref='body'
@@ -322,8 +328,7 @@ class BootstrapTable extends Component {
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
             noDataText={ this.props.options.noDataText }
-            resizable={ this.props.resizable }
-            resizableOptions={ resizableOptions } />
+            resizable={ this.props.resizable } />
           { this.props.footerData && <TableFooter ref='footer'
             bodyContainerClass={ this.props.bodyContainerClass }
             tableFooterClass={ this.props.tableBodyClass }
@@ -345,8 +350,7 @@ class BootstrapTable extends Component {
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
             noDataText={ this.props.options.noDataText }
-            resizable={ this.props.resizable }
-            resizableOptions={ resizableOptions } /> }
+            resizable={ this.props.resizable } /> }
         </div>
         { tableFilter }
         { pagination }
@@ -389,19 +393,44 @@ class BootstrapTable extends Component {
     });
   }
 
-  handleSort = (order, sortField) => {
+  getSortCols = (order, sortField, multiSortEnabled) => {
+    let sortCols = this.state ? this.state.sortCols : [];
+    if (multiSortEnabled) {
+      sortCols = sortCols.filter((sortCol) => {
+        return sortCol.field !== sortField;
+      });
+      sortCols.map((sortCol, key) => {
+        sortCol.number = key + 1;
+      });
+    } else {
+      sortCols = [];
+    }
+    if (order !== '') {
+      sortCols.push({ number: (sortCols.length + 1), field: sortField, order: order.toLowerCase() });
+    }
+    return sortCols;
+  }
+
+  handleSort = (order, sortField, event) => {
     if (this.props.options.onSortChange) {
       this.props.options.onSortChange(sortField, order, this.props);
     }
+
+    const multiSortEnabled = (this.props.multiSort && this.props.multiSortKey) ? event[this.props.multiSortKey] : this.props.multiSort;
+
+    // get multiple sorted columns
+    const sortCols = this.getSortCols(order, sortField, multiSortEnabled);
 
     if (this.isRemoteDataSource()) {
       this.store.setSortInfo(order, sortField);
       return;
     }
 
-    const result = this.store.sort(order, sortField).get();
+    const result = this.store.sort(order, sortField, sortCols).get();
     this.setState({
-      data: result
+      data: result,
+      sortCols: sortCols,
+      multiSortEnabled: multiSortEnabled
     });
   }
 
@@ -744,9 +773,8 @@ class BootstrapTable extends Component {
     this.store.filter(filterObj);
 
     const sortObj = this.store.getSortInfo();
-
     if (sortObj) {
-      this.store.sort(sortObj.order, sortObj.sortField);
+      this.store.sort(sortObj.order, sortObj.sortField, sortObj);
     }
 
     let result;
@@ -815,13 +843,11 @@ class BootstrapTable extends Component {
       return;
     }
 
-
     this.store.search(searchText);
 
     const sortObj = this.store.getSortInfo();
-
     if (sortObj) {
-      this.store.sort(sortObj.order, sortObj.sortField);
+      this.store.sort(sortObj.order, sortObj.sortField, sortObj);
     }
 
     let result;
@@ -1106,6 +1132,8 @@ BootstrapTable.propTypes = {
   pagination: PropTypes.bool,
   printable: PropTypes.bool,
   resizable: PropTypes.bool,
+  multiSort: PropTypes.bool,
+  sortCols: PropTypes.array,
   searchPlaceholder: PropTypes.string,
   selectRow: PropTypes.shape({
     mode: PropTypes.oneOf([
@@ -1209,6 +1237,8 @@ BootstrapTable.defaultProps = {
   pagination: false,
   printable: false,
   resizable: false,
+  multiSort: false,
+  sortCols: [],
   searchPlaceholder: undefined,
   selectRow: {
     mode: Const.ROW_SELECT_NONE,

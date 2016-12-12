@@ -258,3 +258,14 @@
 .bounceOut {
   animation-name: bounceOut;
 }
+
+.numberCircle {
+  border-radius: 50%;
+  padding: 1px 3px;
+  background: #000;
+  border: 1px solid #000;
+  color: #fff;
+  text-align: center;
+  font-weight: normal;
+  font-size: 11px;
+}

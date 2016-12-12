@@ -13,8 +13,11 @@ function addProducts(quantity) {
     const id = startId + i;
     products.push({
       id: id,
-      name: 'Item name ' + id,
-      price: 2100 + i
+      name: 'Item name ' + (Math.floor(Math.random() * 9) + 1),
+      price: Math.floor(Math.random() * 3) + 1,
+      rate: Math.floor(Math.random() * 5) + 1,
+      quantity: Math.floor(Math.random() * 7) + 1,
+      stock: Math.floor(Math.random() * 9) + 1
     });
   }
 }
@@ -24,7 +27,10 @@ addProducts(50);
 footerData.push({
   id: '',
   name: 'Totals',
-  price: 22000
+  price: 22000,
+  rate: 22000,
+  quantity: 22000,
+  stock: 22000
 });
 
 export default class ResizableColumnTable extends React.Component {
@@ -60,13 +66,22 @@ export default class ResizableColumnTable extends React.Component {
       onSortChange: this.onSortChange,
       onResizing: this.onResizing,
       onStartResizing: this.onStartResizing,
-      onStopResizing: this.onStopResizing
+      onStopResizing: this.onStopResizing// ,
+      // defaultSortName: 'price',
+      // defaultSortOrder: 'asc'
     };
+
+    const sortCols = [
+      { number: 1, field: 'price', order: 'desc' },
+      { number: 2, field: 'rate', order: 'asc' },
+      { number: 3, field: 'quantity', order: 'desc' }
+    ];
 
     return (
       <BootstrapTable ref='restable' data={ products } options={ options }
-        footerData={ footerData } height='200px' resizable={ true }>
-        <TableHeaderColumn dataField='id' isKey={ true } resize
+        footerData={ footerData } height='800px' resizable={ true } multiSort={ true }
+        sortCols={ sortCols } multiSortKey='shiftKey'>
+        <TableHeaderColumn dataField='id' isKey={ true } dataSort resize
           resizeOptions={ { minWidth: 100, maxWidth: false } }>Product ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name' dataSort resize
           // onResizing={ this.columnResizing }
@@ -74,12 +89,12 @@ export default class ResizableColumnTable extends React.Component {
           resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Name</TableHeaderColumn>
         <TableHeaderColumn dataField='price' dataSort resize
           resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Price</TableHeaderColumn>
-        <TableHeaderColumn dataField='price' dataSort resize width='300px'
-          resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Price1</TableHeaderColumn>
-        <TableHeaderColumn dataField='price' dataSort resize
-          resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Price2</TableHeaderColumn>
-        <TableHeaderColumn dataField='price' dataSort
-          resizeOptions={ { minWidth: 200, maxWidth: false } }>Product Price3</TableHeaderColumn>
+        <TableHeaderColumn dataField='rate' dataSort resize width='300px'
+          resizeOptions={ { minWidth: 200, maxWidth: false } }>Rate</TableHeaderColumn>
+        <TableHeaderColumn dataField='quantity' dataSort resize
+          resizeOptions={ { minWidth: 200, maxWidth: false } }>Quantity</TableHeaderColumn>
+        <TableHeaderColumn dataField='stock' dataSort
+          resizeOptions={ { minWidth: 200, maxWidth: false } }>Stock</TableHeaderColumn>
       </BootstrapTable>
     );
   }
