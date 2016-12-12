@@ -11,7 +11,8 @@ const isFun = function(obj) {
 };
 
 const mapColumns = function(column, i, data, r, object) {
-  const noneditableRows = [];
+  const { cellEdit } = object.props;
+  const noneditableRows = (cellEdit.nonEditableRows && cellEdit.nonEditableRows()) || [];
   const fieldValue = data[column.name];
   if (column.name !== object.props.keyField && // Key field can't be edit
       column.editable && // column is editable? default is true, user can set it false
@@ -111,20 +112,20 @@ const mapTableRows = function(data, r, unselectable,
         { tableColumns }
       </TableRow> ];
 
-  if (this.props.expandableRow && this.props.expandableRow(data)) {
-    let colSpan = this.props.columns.length;
-    const bgColor = this.props.expandRowBgColor || this.props.selectRow.bgColor || undefined;
-    if (isSelectRowDefined && !this.props.selectRow.hideSelectColumn) {
+  if (object.props.expandableRow && object.props.expandableRow(data)) {
+    let colSpan = object.props.columns.length;
+    const bgColor = object.props.expandRowBgColor || object.props.selectRow.bgColor || undefined;
+    if (isSelectRowDefined && !object.props.selectRow.hideSelectColumn) {
       colSpan += 1;
     }
     result.push(
         <ExpandComponent
             className={ trClassName }
             bgColor={ bgColor }
-            hidden={ !(this.state.expanding.indexOf(key) > -1) }
+            hidden={ !(object.state.expanding.indexOf(key) > -1) }
             colSpan={ colSpan }
             width={ "100%" }>
-          { this.props.expandComponent(data) }
+          { object.props.expandComponent(data) }
         </ExpandComponent>
     );
   }
