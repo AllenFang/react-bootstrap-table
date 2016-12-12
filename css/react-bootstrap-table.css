@@ -42,6 +42,10 @@
   margin-bottom: -5px;
 }
 
+.expander .react-bs-container-header {
+  display: block;
+}
+
 .react-bs-container-body {
   /*height: 154px;*/
   /*overflow: auto;*/
