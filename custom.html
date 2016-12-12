@@ -154,7 +154,7 @@
                   <li><a href="#csvBtn">Export CSV Button</a></li>
                   <li><a href="#selectOnly">Select Only Toggle</a></li>
                 </ul>
-                <li>Search Panel(Right side)</li>
+                <li><a href="#searchpanel">Search Panel(Right side)<a/></li>
                 <ul>
                   <li>Search Field</li>
                   <li>Clear Search Button</li>
@@ -551,6 +551,45 @@ const options = {
 </code>
 </pre>
             </div>
+            <h3 id="searchpanel">Search Panel</h3>
+            <span>
+              You can custom the whole search panel(right side) by <code>searchPanel</code> in <code>options</code> props.
+              <code>searchPanel</code> only accept a function and a JSX returned value is necessary. This function will take one argument: <code>props</code>.
+              and it have following properties you can use:
+              <ul>
+                <li>searchField</li>
+                <li>clearBtn</li>
+                <li>defaultValue</li>
+                <li>placeholder</li>
+                <li>clearBtnClick</li>
+                <li>search</li>
+              </ul>
+            </span>
+<pre>
+<code class="javascript">renderCustomSearchPanel = props => {
+  /**
+   *  This function only pass one argument, is props object has following properties
+   *  {
+   *    searchField,  // the search input field JSX
+   *    clearBtn,  // clear search button JSX
+   *    defaultValue,  // the default value for searching
+   *    placeholder,  // placeholder for search input field
+   *    clearBtnClick,  // the callback for triggering clear button click event
+   *    search  // the callback function for triggering search event, call it with a string text for searching
+   *  }
+   ***/
+  return (
+    ...
+  );
+}
+// ...
+const options = {
+  searchPanel: this.renderCustomSearchPanel
+};
+// ...
+&lt;BootstrapTable data={rows} options={options} search&gt;
+</code>
+</pre></br>
 				</div>
 			</div>
 		</div>
