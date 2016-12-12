@@ -1,3 +1,34 @@
+<a name="v2.6.0"></a>
+# [v2.6.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.9...v2.6.0) (2016-11-28)
+## Bug fixes
+* Fixed [#838](https://github.com/AllenFang/react-bootstrap-table/issues/838)
+
+## Features
+* Support expandable row([00d1756](https://github.com/AllenFang/react-bootstrap-table/commit/00d17562eebf4cfba78c0ec0c762e7c032f20239))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/expandRow/expandRow.js)
+
+## Enhancement
+* Support row lock level on cell edit([7c57b52](https://github.com/AllenFang/react-bootstrap-table/commit/7c57b52b06b2455d025f0810a38da4ad0ea6f58c))
+	* Use ```nonEditableRows``` in ```cellEdit``` props
+	* ```nonEditableRows``` accept a callback function which return an array of rowKey which is noneditable rows
+
+<a name="v2.5.9"></a>
+# [v2.5.9](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.8...v2.5.9) (2016-11-21)
+## Bug fixes
+* Fix npm 3 install fail[#797](https://github.com/AllenFang/react-bootstrap-table/issues/797)([3fea774](https://github.com/AllenFang/react-bootstrap-table/commit/3fea774b671419e613bf765c549c0ba4787814f8))
+* Fix cleanFiltered could not clear customerFilter([07b8560](https://github.com/AllenFang/react-bootstrap-table/commit/07b8560a9a00304f9fb3a3ef193b2c5b51df7f65))
+
+## Enhancement
+* Throw errors instead of string literals([f32ba6f](https://github.com/AllenFang/react-bootstrap-table/commit/f32ba6fd141562de39a5904218142c9d1a803fab))
+
+<a name="v2.5.8"></a>
+# [v2.5.8](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.7...v2.5.8) (2016-11-09)
+## Bug fixes
+* Fixed the issue with giving the paginationShowsTotal as function when table is empty([ec93ddb](https://github.com/AllenFang/react-bootstrap-table/commit/ec93ddb4b4a4ed6cf6393649f816e19105f116de))
+
+## Enhancement
+* Add an option for changing the text on select filter([79b9f41](https://github.com/AllenFang/react-bootstrap-table/commit/79b9f41575511fbab15b4f08c32a215731288181))
+
 <a name="v2.5.7"></a>
 # [v2.5.7](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.6...v2.5.7) (2016-11-02)
 ## Bug fixes

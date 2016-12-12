@@ -23,7 +23,6 @@ class BootstrapTable extends Component {
     if (Util.canUseDOM()) {
       this.isIE = document.documentMode;
     }
-
     this.store = new TableDataStore(this.props.data.slice());
 
     this.initTable(this.props);
@@ -61,7 +60,7 @@ class BootstrapTable extends Component {
     React.Children.forEach(props.children, column => {
       if (column.props.isKey) {
         if (keyField) {
-          throw 'Error. Multiple key column be detected in TableHeaderColumn.';
+          throw new Error('Error. Multiple key column be detected in TableHeaderColumn.');
         }
         keyField = column.props.dataField;
       }
@@ -89,8 +88,8 @@ class BootstrapTable extends Component {
     }, {});
 
     if (!isKeyFieldDefined && !keyField) {
-      throw `Error. No any key column defined in TableHeaderColumn.
-            Use 'isKey={true}' to specify a unique column after version 0.5.4.`;
+      throw new Error(`Error. No any key column defined in TableHeaderColumn.
+            Use 'isKey={true}' to specify a unique column after version 0.5.4.`);
     }
 
     this.store.setProps({
@@ -275,7 +274,6 @@ class BootstrapTable extends Component {
     const isSelectAll = this.isSelectAll();
     let sortIndicator = this.props.options.sortIndicator;
     if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
-
     return (
       <div className={ classSet('react-bs-table-container', this.props.containerClass) }
         style={ this.props.containerStyle }>
@@ -312,6 +310,9 @@ class BootstrapTable extends Component {
             tableBodyClass={ this.props.tableBodyClass }
             style={ { ...style, ...this.props.bodyStyle } }
             data={ this.state.data }
+            expandComponent={ this.props.expandComponent }
+            expandableRow={ this.props.expandableRow }
+            expandRowBgColor={ this.props.options.expandRowBgColor }
             columns={ columns }
             trClassName={ this.props.trClassName }
             striped={ this.props.striped }
@@ -328,6 +329,7 @@ class BootstrapTable extends Component {
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
             noDataText={ this.props.options.noDataText }
+            adjustHeaderWidth={ this._adjustHeaderWidth }
             resizable={ this.props.resizable } />
           { this.props.footerData && <TableFooter ref='footer'
             bodyContainerClass={ this.props.bodyContainerClass }
@@ -669,7 +671,7 @@ class BootstrapTable extends Component {
     try {
       this.store.add(newObj);
     } catch (e) {
-      return e;
+      return e.message;
     }
     this._handleAfterAddingRow(newObj, false);
   }
@@ -1156,7 +1158,8 @@ BootstrapTable.propTypes = {
     mode: PropTypes.string,
     blurToSave: PropTypes.bool,
     beforeSaveCell: PropTypes.func,
-    afterSaveCell: PropTypes.func
+    afterSaveCell: PropTypes.func,
+    nonEditableRows: PropTypes.func
   }),
   insertRow: PropTypes.bool,
   deleteRow: PropTypes.bool,
@@ -1218,16 +1221,21 @@ BootstrapTable.propTypes = {
     saveText: PropTypes.string,
     closeText: PropTypes.string,
     ignoreEditable: PropTypes.bool,
-    defaultSearch: PropTypes.string
+    defaultSearch: PropTypes.string,
+    expandRowBgColor: PropTypes.string
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
   }),
   exportCSV: PropTypes.bool,
   csvFileName: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
-  ignoreSinglePage: PropTypes.bool
+  ignoreSinglePage: PropTypes.bool,
+  expandableRow: PropTypes.func,
+  expandComponent: PropTypes.func
 };
 BootstrapTable.defaultProps = {
+  expandComponent: undefined,
+  expandableRow: undefined,
   height: '100%',
   maxHeight: undefined,
   striped: false,
@@ -1257,7 +1265,8 @@ BootstrapTable.defaultProps = {
     mode: Const.CELL_EDIT_NONE,
     blurToSave: false,
     beforeSaveCell: undefined,
-    afterSaveCell: undefined
+    afterSaveCell: undefined,
+    nonEditableRows: undefined
   },
   insertRow: false,
   deleteRow: false,
@@ -1314,7 +1323,8 @@ BootstrapTable.defaultProps = {
     saveText: Const.SAVE_BTN_TEXT,
     closeText: Const.CLOSE_BTN_TEXT,
     ignoreEditable: false,
-    defaultSearch: ''
+    defaultSearch: '',
+    expandRowBgColor: undefined
   },
   fetchInfo: {
     dataTotalSize: 0
