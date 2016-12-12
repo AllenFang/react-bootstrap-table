@@ -11,6 +11,7 @@ const isFun = function(obj) {
 };
 
 const mapColumns = function(column, i, data, r, object) {
+  const noneditableRows = [];
   const fieldValue = data[column.name];
   if (column.name !== object.props.keyField && // Key field can't be edit
       column.editable && // column is editable? default is true, user can set it false
@@ -95,7 +96,8 @@ const mapTableRows = function(data, r, unselectable,
   if (isFun(object.props.trClassName)) {
     trClassName = object.props.trClassName(data, r);
   }
-  const result = [ <TableRow isSelected={ selected } key={ key } className={ trClassName } ref={ key }
+  const result = [ <TableRow isSelected={ selected } key={ key } className={ trClassName }
+                ref={ key }
                 index={ r }
                 selectRow={ isSelectRowDefined ? object.props.selectRow : undefined }
                 enableCellEdit={ object.props.cellEdit.mode !== Const.CELL_EDIT_NONE }
@@ -350,8 +352,7 @@ TableBody.propTypes = {
   style: PropTypes.object,
   tableBodyClass: PropTypes.string,
   bodyContainerClass: PropTypes.string,
-  resizable: PropTypes.bool
-  bodyContainerClass: PropTypes.string,
+  resizable: PropTypes.bool,
   expandableRow: PropTypes.func,
   expandComponent: PropTypes.func,
   expandRowBgColor: PropTypes.string,
