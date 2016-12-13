@@ -47,6 +47,9 @@ class Demo extends React.Component {
         </Panel>
         <Panel header={ 'Table Scroll Example' }>
           { renderLinks('basic/scroll-table') }
+          <span style={ { color: 'red' } }>
+            You can use <code>scrollTop</code> to set the table content scroll, available value is <code>Top</code>, <code>Bottom</code> and a numeric value
+          </span>
           <ScrollTable/>
         </Panel>
       </Col>
