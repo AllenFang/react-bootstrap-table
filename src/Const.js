@@ -25,6 +25,8 @@ export default {
   SAVE_BTN_TEXT: 'Save',
   CLOSE_BTN_TEXT: 'Close',
   FILTER_DELAY: 500,
+  SCROLL_TOP: 'Top',
+  SCROLL_BOTTOM: 'Bottom',
   FILTER_TYPE: {
     TEXT: 'TextFilter',
     REGEX: 'RegexFilter',

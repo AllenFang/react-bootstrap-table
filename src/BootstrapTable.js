@@ -206,6 +206,9 @@ class BootstrapTable extends Component {
     this._adjustTable();
     window.addEventListener('resize', this._adjustTable);
     this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader);
+    if (this.props.scrollTop) {
+      this._scrollTop();
+    }
   }
 
   componentWillUnmount() {
@@ -904,6 +907,16 @@ class BootstrapTable extends Component {
     }
   }
 
+  _scrollTop = () => {
+    const { scrollTop } = this.props;
+    if (scrollTop === Const.SCROLL_TOP) {
+      this.refs.body.refs.container.scrollTop = 0;
+    } else if (scrollTop === Const.SCROLL_BOTTOM) {
+      this.refs.body.refs.container.scrollTop = this.refs.body.refs.container.scrollHeight;
+    } else if (typeof scrollTop === 'number' && !isNaN(scrollTop)) {
+      this.refs.body.refs.container.scrollTop = scrollTop;
+    }
+  }
   _scrollHeader = (e) => {
     this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
   }
@@ -1013,6 +1026,7 @@ BootstrapTable.propTypes = {
   maxHeight: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   data: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
   remote: PropTypes.bool, // remote data, default is false
+  scrollTop: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   striped: PropTypes.bool,
   bordered: PropTypes.bool,
   hover: PropTypes.bool,
@@ -1114,6 +1128,7 @@ BootstrapTable.propTypes = {
   expandComponent: PropTypes.func
 };
 BootstrapTable.defaultProps = {
+  scrollTop: undefined,
   expandComponent: undefined,
   expandableRow: undefined,
   height: '100%',
