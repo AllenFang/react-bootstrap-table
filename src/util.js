@@ -3,6 +3,23 @@ import Const from './Const';
 import classSet from 'classnames';
 
 export default {
+  getReactSortCaret(order, sortIndicator, dataSort) {
+    let defaultCaret = '';
+    if (sortIndicator) {
+      defaultCaret = (!dataSort) ? null : (
+          <span className='order'>
+          <span className='dropdown'>
+            <span className='caret' style={ { margin: '10px 0 10px 5px', color: '#ccc' } }></span>
+          </span>
+          <span className='dropup'>
+            <span className='caret' style={ { margin: '10px 0', color: '#ccc' } }></span>
+          </span>
+        </span>
+      );
+    }
+    return order ? this.renderReactSortCaret(order) : defaultCaret;
+  },
+
   renderReactSortCaret(order) {
     const orderClass = classSet('order', {
       'dropup': order === Const.SORT_ASC
