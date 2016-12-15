@@ -14,7 +14,14 @@ class TableHeaderColumn extends Component {
 
   constructor(props) {
     super(props);
+    this.clear = props.filter && props.filter.clear;
     this.handleFilter = this.handleFilter.bind(this);
+
+    this.activeEl = null;
+    this.nMouseX = 0;
+    this.headerStartWidth = 0;
+    this.nextHeaderStartWidth = 0;
+    this.inResize = false;
   }
 
   handleColumnClick = () => {
@@ -24,7 +31,9 @@ class TableHeaderColumn extends Component {
   }
 
   handleFilter(value, type) {
-    this.props.filter.emitter.handleFilter(this.props.dataField, value, type);
+    if(this.clear===false){
+      this.props.filter.emitter.handleFilter(this.props.dataField, value, type);
+    }
   }
 
   getFilters() {
@@ -68,8 +77,23 @@ class TableHeaderColumn extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps.filter && nextProps.filter.clear){
+      this.clear = true
+      this.cleanFiltered()
+    }
+  }
+
   componentDidMount() {
     this.refs['header-col'].setAttribute('data-field', this.props.dataField);
+    this.clear = false;
+    let handlers = document.getElementsByClassName("resize-handler");
+    for(var i = 0; i < handlers.length; i++) {
+      let handler = handlers[i];
+      handler.addEventListener('mousedown', this.handleMouseDown);
+    }
+    document.addEventListener('mouseup', this.handleMouseUp);
+    document.addEventListener('mousemove', this.handleMouseMove);
   }
 
   render() {
@@ -103,27 +127,71 @@ class TableHeaderColumn extends Component {
         </span>
       );
     }
-    let sortCaret = sort ? Util.renderReactSortCaret(sort) : defaultCaret;
+    let sortCaret = sort && sort !== 'none' ? Util.renderReactSortCaret(sort) : defaultCaret;
     if (caretRender) {
       sortCaret = caretRender(sort, dataField);
     }
     const classes = classSet(
       typeof className === 'function' ? className() : className,
-      dataSort ? 'sort-column' : '');
+      dataSort ? 'sort-column' : '',
+      'resizable');
 
     const title = headerTitle && typeof children === 'string' ? { title: children } : null;
     return (
       <th ref='header-col'
           className={ classes }
           style={ thStyle }
-          onClick={ this.handleColumnClick }
           { ...title }>
-        { children }{ sortCaret }
+        <div onClick={ this.handleColumnClick } style={{display:'inline'}} >{ children }{ sortCaret }</div>
         <div onClick={ e => e.stopPropagation() }>
           { this.props.filter ? this.getFilters() : null }
         </div>
+        <div className="resize-handler"></div>
       </th>
     );
+  }
+
+  handleMouseMove = (event) => {
+    if (!this.inResize) {
+      return;
+    }
+    event.preventDefault();
+    var mouseEvent = event || window.event;
+
+    const changeValue = mouseEvent.clientX - this.nMouseX;
+
+    this.activeEl.style.width = String(Math.max(this.headerStartWidth + changeValue,20)) + "px";
+    this.activeEl.nextSibling.style.width = String(Math.max(this.nextHeaderStartWidth - changeValue,20)) + "px";
+
+    this.props.onResize();
+  }
+
+  handleMouseUp = (event) => {
+    if(this.inResize) {
+      this.inResize = false;
+    }
+  }
+
+  handleMouseDown = (event) => {
+    let bExit = true, mouseEvent = event || window.event;
+    for (var iNode = mouseEvent.target || mouseEvent.srcElement; iNode; iNode = iNode.parentNode) {
+      if (iNode.className.indexOf("resizable")!==-1) {
+        bExit = false;
+        this.activeEl = iNode;
+        break;
+      }
+    }
+    if (bExit ||
+        this.activeEl.nextSibling===null ||
+        this.activeEl.nodeName.toLowerCase()!==this.activeEl.nextSibling.nodeName.toLowerCase()) {
+      return;
+    }
+    event.stopImmediatePropagation();
+    this.inResize = true;
+    this.headerStartWidth = parseInt(this.activeEl.style.width,10) || 0;
+    this.nextHeaderStartWidth = parseInt(this.activeEl.nextSibling.style.width,10) || 0;
+    this.nMouseX = mouseEvent.clientX;
+    return false;
   }
 
   cleanFiltered() {
@@ -157,6 +225,7 @@ class TableHeaderColumn extends Component {
       break;
     }
     }
+    this.clear = false
   }
 
   applyFilter(val) {
@@ -234,7 +303,8 @@ TableHeaderColumn.propTypes = {
     customFilterParameters: PropTypes.object
   }),
   sortIndicator: PropTypes.bool,
-  export: PropTypes.bool
+  export: PropTypes.bool,
+  onResize: PropTypes.func
 };
 
 TableHeaderColumn.defaultProps = {
