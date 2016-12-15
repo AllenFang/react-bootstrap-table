@@ -206,6 +206,9 @@ class BootstrapTable extends Component {
     this._adjustTable();
     window.addEventListener('resize', this._adjustTable);
     this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader);
+    if (this.props.scrollTop) {
+      this._scrollTop();
+    }
   }
 
   componentWillUnmount() {
@@ -749,6 +752,11 @@ class BootstrapTable extends Component {
   }
 
   handleSearch = searchText => {
+    // Set search field if this function being called outside
+    // but it's not necessary if calling fron inside.
+    if (this.refs.toolbar) {
+      this.refs.toolbar.setSearchInput(searchText);
+    }
     const { onSearchChange } = this.props.options;
     if (onSearchChange) {
       const colInfos = this.store.getColInfos();
@@ -868,6 +876,7 @@ class BootstrapTable extends Component {
       return (
         <div className='react-bs-table-tool-bar'>
           <ToolBar
+            ref='toolbar'
             defaultSearch={ this.props.options.defaultSearch }
             clearSearch={ this.props.options.clearSearch }
             searchPosition={ this.props.options.searchPosition }
@@ -922,6 +931,16 @@ class BootstrapTable extends Component {
     }
   }
 
+  _scrollTop = () => {
+    const { scrollTop } = this.props;
+    if (scrollTop === Const.SCROLL_TOP) {
+      this.refs.body.refs.container.scrollTop = 0;
+    } else if (scrollTop === Const.SCROLL_BOTTOM) {
+      this.refs.body.refs.container.scrollTop = this.refs.body.refs.container.scrollHeight;
+    } else if (typeof scrollTop === 'number' && !isNaN(scrollTop)) {
+      this.refs.body.refs.container.scrollTop = scrollTop;
+    }
+  }
   _scrollHeader = (e) => {
     this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
   }
@@ -944,7 +963,7 @@ class BootstrapTable extends Component {
       const cells = firstRow.childNodes;
       for (let i = 0; i < cells.length; i++) {
         const cell = cells[i];
-        const computedStyle = getComputedStyle(cell);
+        const computedStyle = window.getComputedStyle(cell);
         let width = parseFloat(computedStyle.width.replace('px', ''));
         if (this.isIE) {
           const paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
@@ -1031,6 +1050,7 @@ BootstrapTable.propTypes = {
   maxHeight: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   data: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
   remote: PropTypes.bool, // remote data, default is false
+  scrollTop: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   striped: PropTypes.bool,
   bordered: PropTypes.bool,
   hover: PropTypes.bool,
@@ -1155,6 +1175,7 @@ BootstrapTable.propTypes = {
   expandComponent: PropTypes.func
 };
 BootstrapTable.defaultProps = {
+  scrollTop: undefined,
   expandComponent: undefined,
   expandableRow: undefined,
   height: '100%',

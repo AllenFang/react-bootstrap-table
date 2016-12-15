@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { ToastContainer, ToastMessage } from 'react-toastr';
+import { ToastContainer, ToastMessage } from '@allenfang/react-toastr';
 
 
 const ToastrMessageFactory = React.createFactory(ToastMessage.animation);

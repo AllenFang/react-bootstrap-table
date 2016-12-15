@@ -347,6 +347,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.__handleSearch__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+	    _this._scrollTop = function () {
+	      return _this.___scrollTop__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
 	    _this._scrollHeader = function () {
 	      return _this.___scrollHeader__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
@@ -568,6 +572,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this._adjustTable();
 	      window.addEventListener('resize', this._adjustTable);
 	      this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader);
+	      if (this.props.scrollTop) {
+	        this._scrollTop();
+	      }
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -1177,6 +1184,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleSearch__REACT_HOT_LOADER__',
 	    value: function __handleSearch__REACT_HOT_LOADER__(searchText) {
+	      // Set search field if this function being called outside
+	      // but it's not necessary if calling fron inside.
+	      if (this.refs.toolbar) {
+	        this.refs.toolbar.setSearchInput(searchText);
+	      }
 	      var onSearchChange = this.props.options.onSearchChange;
 
 	      if (onSearchChange) {
@@ -1310,6 +1322,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          'div',
 	          { className: 'react-bs-table-tool-bar' },
 	          _react2.default.createElement(_ToolBar2.default, {
+	            ref: 'toolbar',
 	            defaultSearch: this.props.options.defaultSearch,
 	            clearSearch: this.props.options.clearSearch,
 	            searchPosition: this.props.options.searchPosition,
@@ -1362,6 +1375,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  }, {
+	    key: '___scrollTop__REACT_HOT_LOADER__',
+	    value: function ___scrollTop__REACT_HOT_LOADER__() {
+	      var scrollTop = this.props.scrollTop;
+
+	      if (scrollTop === _Const2.default.SCROLL_TOP) {
+	        this.refs.body.refs.container.scrollTop = 0;
+	      } else if (scrollTop === _Const2.default.SCROLL_BOTTOM) {
+	        this.refs.body.refs.container.scrollTop = this.refs.body.refs.container.scrollHeight;
+	      } else if (typeof scrollTop === 'number' && !isNaN(scrollTop)) {
+	        this.refs.body.refs.container.scrollTop = scrollTop;
+	      }
+	    }
+	  }, {
 	    key: '___scrollHeader__REACT_HOT_LOADER__',
 	    value: function ___scrollHeader__REACT_HOT_LOADER__(e) {
 	      this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
@@ -1387,7 +1413,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var cells = firstRow.childNodes;
 	        for (var i = 0; i < cells.length; i++) {
 	          var cell = cells[i];
-	          var computedStyle = getComputedStyle(cell);
+	          var computedStyle = window.getComputedStyle(cell);
 	          var width = parseFloat(computedStyle.width.replace('px', ''));
 	          if (this.isIE) {
 	            var paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
@@ -1477,6 +1503,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  maxHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
 	  data: _react.PropTypes.oneOfType([_react.PropTypes.array, _react.PropTypes.object]),
 	  remote: _react.PropTypes.bool, // remote data, default is false
+	  scrollTop: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
 	  striped: _react.PropTypes.bool,
 	  bordered: _react.PropTypes.bool,
 	  hover: _react.PropTypes.bool,
@@ -1596,6 +1623,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  expandComponent: _react.PropTypes.func
 	};
 	BootstrapTable.defaultProps = {
+	  scrollTop: undefined,
 	  expandComponent: undefined,
 	  expandableRow: undefined,
 	  height: '100%',
@@ -1834,6 +1862,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  SAVE_BTN_TEXT: 'Save',
 	  CLOSE_BTN_TEXT: 'Close',
 	  FILTER_DELAY: 500,
+	  SCROLL_TOP: 'Top',
+	  SCROLL_BOTTOM: 'Bottom',
 	  FILTER_TYPE: {
 	    TEXT: 'TextFilter',
 	    REGEX: 'RegexFilter',
@@ -10488,6 +10518,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      this.clearTimeout();
+	    }
+	  }, {
+	    key: 'setSearchInput',
+	    value: function setSearchInput(text) {
+	      if (this.refs.seachInput.value !== text) {
+	        this.refs.seachInput.value = text;
+	      }
 	    }
 	  }, {
 	    key: 'clearTimeout',
