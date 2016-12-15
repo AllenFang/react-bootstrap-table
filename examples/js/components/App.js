@@ -67,6 +67,9 @@ class App extends React.Component {
     }, {
       text: 'A complex demo',
       href: 'complex'
+    }, {
+      text: 'Footer demo',
+      href: 'footer'
     } ];
 
     const exampleMenuItems = examples.map((item) => {

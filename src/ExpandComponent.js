@@ -10,6 +10,7 @@ class ExpandComponent extends Component {
         backgroundColor: this.props.bgColor
       },
       className: classSet(
+        'expander',
         this.props.isSelected ? this.props.selectRow.className : null,
         this.props.className
       )

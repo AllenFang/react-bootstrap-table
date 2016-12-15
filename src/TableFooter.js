@@ -4,22 +4,18 @@ import TableRow from './TableRow';
 import TableColumn from './TableColumn';
 import TableEditColumn from './TableEditColumn';
 import classSet from 'classnames';
-import ExpandComponent from './ExpandComponent';
 
 const isFun = function(obj) {
   return obj && (typeof obj === 'function');
 };
 
 const mapColumns = function(column, i, data, r, object) {
-  const { cellEdit } = object.props;
-  const noneditableRows = (cellEdit.nonEditableRows && cellEdit.nonEditableRows()) || [];
   const fieldValue = data[column.name];
   if (column.name !== object.props.keyField && // Key field can't be edit
       column.editable && // column is editable? default is true, user can set it false
       object.state.currEditCell !== null &&
       object.state.currEditCell.rid === r &&
-      object.state.currEditCell.cid === i &&
-      noneditableRows.indexOf(data[object.props.keyField]) === -1) {
+      object.state.currEditCell.cid === i) {
     let editable = column.editable;
     const format = column.format ? function(value) {
       return column.format(value, data, column.formatExtraData, r).replace(/<.*?>/g, '');
@@ -67,7 +63,6 @@ const mapColumns = function(column, i, data, r, object) {
     }
     return (
         <TableColumn key={ i }
-                     rIndex={ r }
                      dataAlign={ column.align }
                      className={ tdClassName }
                      columnTitle={ columnTitle }
@@ -97,9 +92,8 @@ const mapTableRows = function(data, r, unselectable,
   if (isFun(object.props.trClassName)) {
     trClassName = object.props.trClassName(data, r);
   }
-  const result = [ <TableRow isSelected={ selected } key={ key } className={ trClassName }
-                ref={ key }
-                index={ r }
+  return (
+      <TableRow isSelected={ selected } key={ key } className={ trClassName } ref={ key }
                 selectRow={ isSelectRowDefined ? object.props.selectRow : undefined }
                 enableCellEdit={ object.props.cellEdit.mode !== Const.CELL_EDIT_NONE }
                 onRowClick={ object.handleRowClick }
@@ -110,36 +104,16 @@ const mapTableRows = function(data, r, unselectable,
                 unselectableRow={ disable }>
         { selectRowColumn }
         { tableColumns }
-      </TableRow> ];
-
-  if (object.props.expandableRow && object.props.expandableRow(data)) {
-    let colSpan = object.props.columns.length;
-    const bgColor = object.props.expandRowBgColor || object.props.selectRow.bgColor || undefined;
-    if (isSelectRowDefined && !object.props.selectRow.hideSelectColumn) {
-      colSpan += 1;
-    }
-    result.push(
-        <ExpandComponent
-            className={ trClassName }
-            bgColor={ bgColor }
-            hidden={ !(object.state.expanding.indexOf(key) > -1) }
-            colSpan={ colSpan }
-            width={ "100%" }>
-          { object.props.expandComponent(data) }
-        </ExpandComponent>
-    );
-  }
-  return (result);
+      </TableRow>
+  );
 };
 
-class TableBody extends Component {
+class TableFooter extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      currEditCell: null,
-      expanding: [],
-      lastExpand: null
+      currEditCell: null
     };
   }
 
@@ -149,7 +123,7 @@ class TableBody extends Component {
       'table-bordered': this.props.bordered,
       'table-hover': this.props.hover,
       'table-condensed': this.props.condensed
-    }, this.props.tableBodyClass);
+    }, this.props.tableFooterClass);
 
     const unselectable = this.props.selectRow.unselectable || [];
     const isSelectRowDefined = this._isSelectRowDefined();
@@ -168,24 +142,30 @@ class TableBody extends Component {
     if (tableRows.length === 0) {
       tableRows.push(
         <TableRow key='##table-empty##'>
-          <td data-toggle='collapse'
-              colSpan={ this.props.columns.length + (isSelectRowDefined ? 1 : 0) }
+          <td colSpan={ this.props.columns.length + (isSelectRowDefined ? 1 : 0) }
               className='react-bs-table-no-data'>
               { this.props.noDataText || Const.NO_DATA_TEXT }
           </td>
         </TableRow>
       );
     }
+    const footerRows = this.props.data ? this.props.data.map((data, r) => {
+      return mapTableRows(
+        data, r, unselectable,
+        isSelectRowDefined, inputType, CustomComponent,
+        this
+      );
+    }) : [];
 
     return (
       <div ref='container'
-        className={ classSet('react-bs-container-body', this.props.bodyContainerClass) }
+        className={ classSet('react-bs-container-footer', this.props.bodyContainerClass) }
         style={ this.props.style }>
         <table className={ tableClasses } ref='table'>
           { tableHeader }
-          <tbody ref='tbody'>
-            { tableRows }
-          </tbody>
+          <tfoot ref='tfoot'>
+            { footerRows }
+          </tfoot>
         </table>
       </div>
     );
@@ -243,18 +223,6 @@ class TableBody extends Component {
         selectedRow = row;
       }
     });
-    const rowKey = selectedRow[this.props.keyField];
-    if (this.props.expandableRow) {
-      let expanding = this.state.expanding;
-      if (this.state.expanding.indexOf(rowKey) > -1) {
-        expanding = expanding.filter(k => k !== rowKey);
-      } else {
-        expanding.push(rowKey);
-      }
-      this.setState({ expanding }, () => {
-        this.props.adjustHeaderWidth();
-      });
-    }
     onRowClick(selectedRow);
   }
 
@@ -326,9 +294,11 @@ class TableBody extends Component {
       { CustomComponent ?
         <CustomComponent type={ inputType } checked={ selected } disabled={ disabled }
           rowIndex={ rowIndex }
-          onChange={ e=>this.handleSelectRowColumChange(e, rowIndex) }/> :
+          onChange={ e=>this.handleSelectRowColumChange(e,
+            e.currentTarget.parentElement.parentElement.parentElement.rowIndex) }/> :
         <input type={ inputType } checked={ selected } disabled={ disabled }
-          onChange={ e=>this.handleSelectRowColumChange(e, rowIndex) }/>
+          onChange={ e=>this.handleSelectRowColumChange(e,
+            e.currentTarget.parentElement.parentElement.rowIndex) }/>
       }
       </TableColumn>
     );
@@ -339,7 +309,7 @@ class TableBody extends Component {
           this.props.selectRow.mode === Const.ROW_SELECT_MULTI;
   }
 }
-TableBody.propTypes = {
+TableFooter.propTypes = {
   data: PropTypes.array,
   columns: PropTypes.array,
   striped: PropTypes.bool,
@@ -353,12 +323,8 @@ TableBody.propTypes = {
   onSelectRow: PropTypes.func,
   noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
   style: PropTypes.object,
-  tableBodyClass: PropTypes.string,
+  tableFooterClass: PropTypes.string,
   bodyContainerClass: PropTypes.string,
-  resizable: PropTypes.bool,
-  expandableRow: PropTypes.func,
-  expandComponent: PropTypes.func,
-  expandRowBgColor: PropTypes.string,
-  adjustHeaderWidth: PropTypes.func
+  resizable: PropTypes.bool
 };
-export default TableBody;
+export default TableFooter;

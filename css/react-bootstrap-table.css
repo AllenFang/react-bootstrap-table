@@ -8,6 +8,8 @@
 .react-bs-table {
   border: 1px solid #ddd;
   border-radius: 5px;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .react-bs-table table {
@@ -35,14 +37,27 @@
 }
 
 .react-bs-container-header {
-  overflow: hidden;
-  width: 100%;
+  width: auto;
+  display: inline-block;
+  margin-bottom: -5px;
+}
+
+.expander .react-bs-container-header {
+  display: block;
 }
 
 .react-bs-container-body {
   /*height: 154px;*/
-  overflow: auto;
-  width: 100%;
+  /*overflow: auto;*/
+  overflow-y: auto;
+  width: auto;
+  display: inline-block;
+  margin-bottom: -5px;
+}
+
+.react-bs-container-footer {
+  width: auto;
+  display: inline-block;
 }
 
 .react-bs-table .table-bordered {
@@ -246,4 +261,15 @@
 
 .bounceOut {
   animation-name: bounceOut;
+}
+
+.numberCircle {
+  border-radius: 50%;
+  padding: 1px 3px;
+  background: #000;
+  border: 1px solid #000;
+  color: #fff;
+  text-align: center;
+  font-weight: normal;
+  font-size: 11px;
 }
