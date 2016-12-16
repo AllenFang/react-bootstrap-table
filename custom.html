@@ -154,9 +154,9 @@
                   <li><a href="#csvBtn">Export CSV Button</a></li>
                   <li><a href="#selectOnly">Select Only Toggle</a></li>
                 </ul>
-                <li><a href="#searchpanel">Search Panel(Right side)<a/></li>
+                <li><a href="#searchpanel">Search Panel(Right side)</a></li>
                 <ul>
-                  <li>Search Field</li>
+                  <li><a href="#searchfield">Search Field</a></li>
                   <li>Clear Search Button</li>
                 </ul>
               </ul>
@@ -590,6 +590,80 @@ const options = {
 &lt;BootstrapTable data={rows} options={options} search&gt;
 </code>
 </pre></br>
+<h3 id="searchfield">Search Input Field</h3>
+            <span>
+              You can custom the search input field only by <code>searchField</code> in <code>options</code> props.
+              <code>searchField</code> only accept a function and a JSX returned value is necessary.
+            </span></br></br>
+            <div class="feature-text">
+              <h3><span class="number">01.</span> Use <code>SearchField</code> by default</h3>
+              <span>
+                This is a simple and default way to custom this component. <code>SearchField</code> is a exported React component by
+                <code>react-bootstrap-table</code>, and it have following props you can configure:
+                <ul>
+                  <li>className</li>
+                  <li>defaultValue</li>
+                  <li>placeholder</li>
+                  <li>onKeyUp</li>
+                </ul>These all props are not required, so you can only configure the props that you want.
+              </span>
+<pre>
+<code class="javascript">import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table';
+// ...
+createCustomSearchField = (props) => {
+  return (
+    &lt;SearchField
+        className='my-custom-class'
+        defaultValue='2000'
+        placeholder='Input a number'/&gt;
+  );
+}
+//...
+const options = {
+  searchField: this.createCustomSearchField
+};
+//...
+&lt;BootstrapTable data={rows} options={options} search&gt;
+</code>
+</pre>
+            </div>
+            <div class="feature-text">
+              <h3><span class="number">02.</span> Customize by yourself</h3>
+              <span>
+                If you think <code>SearchField</code> is not satisfied to your requirement, you can custom a new one as following
+              </span>
+<pre>
+<code class="javascript">class MySearchField extends React.Component {
+  // It's necessary to implement getValue
+  getValue() {
+    return ReactDOM.findDOMNode(this).value;
+  }
+
+  // It's necessary to implement setValue
+  setValue(value) {
+    ReactDOM.findDOMNode(this).value = value;
+  }
+
+  render() {
+    return (
+      &lt;input
+        className={ `form-control` }
+        type='text'
+        defaultValue={ this.props.defaultValue }
+        placeholder={ this.props.placeholder }
+        onKeyUp={ this.props.search }/&gt;
+    );
+  }
+}
+//...
+const options = {
+  searchField: (props) => (&lt;MySearchField { ...props }/&gt;)
+};
+//...
+&lt;BootstrapTable data={rows} options={options} search&gt;
+</code>
+</pre>
+            </div>
 				</div>
 			</div>
 		</div>
