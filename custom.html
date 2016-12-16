@@ -157,7 +157,7 @@
                 <li><a href="#searchpanel">Search Panel(Right side)</a></li>
                 <ul>
                   <li><a href="#searchfield">Search Field</a></li>
-                  <li>Clear Search Button</li>
+                  <li><a href="#clearsearchbtn">Clear Search Button</a></li>
                 </ul>
               </ul>
               <li>Insert Modal</li>
@@ -593,7 +593,7 @@ const options = {
 <h3 id="searchfield">Search Input Field</h3>
             <span>
               You can custom the search input field only by <code>searchField</code> in <code>options</code> props.
-              <code>searchField</code> only accept a function and a JSX returned value is necessary.
+              <code>searchField</code> only accept a function and a JSX returned value is necessary. Following, we have two way to customize the search field: 
             </span></br></br>
             <div class="feature-text">
               <h3><span class="number">01.</span> Use <code>SearchField</code> by default</h3>
@@ -658,6 +658,74 @@ const options = {
 //...
 const options = {
   searchField: (props) => (&lt;MySearchField { ...props }/&gt;)
+};
+//...
+&lt;BootstrapTable data={rows} options={options} search&gt;
+</code>
+</pre>
+            </div>
+
+<h3 id="clearsearchbtn">Clear Search Button</h3>
+            <span>
+              You can custom the clear button for search field by giving <code>clearSearchBtn</code> in <code>options</code> props.
+              <code>clearSearchBtn</code> only accept a function and a JSX returned value is necessary.
+              Following, we have two way to customize the clear search button: 
+            </span></br></br>
+            <div class="feature-text">
+              <h3><span class="number">01.</span> Use <code>ClearSearchButton</code> by default</h3>
+              <span>
+                This is a simple and default way to custom this component. <code>ClearSearchButton</code> is a exported React component by
+                <code>react-bootstrap-table</code>, and it have following props you can configure:
+                <ul>
+                  <li>btnContextual</li>
+                  <li>className</li>
+                  <li>btnText</li>
+                  <li>onClick</li>
+                </ul>These all props are not required, so you can only configure the props that you want.
+              </span>
+<pre>
+<code class="javascript">import { BootstrapTable, TableHeaderColumn, ClearSearchButton } from 'react-bootstrap-table';
+// ...
+handleClearButtonClick = (onClick) => {
+  // Custom your onClick event here,
+  // it's not necessary to implement this function if you have no any process before onClick
+  console.log('This is my custom function for ClearSearchButton click event');
+  onClick();
+}
+createCustomClearButton = (onClick) => {
+  return (
+    &lt;ClearSearchButton
+      btnText='MyClear'
+      btnContextual='btn-warning'
+      className='my-custom-class'
+      onClick={ e => this.handleClearButtonClick(onClick) }/&gt;
+  );
+}
+//...
+const options = {
+  clearSearch: true,
+  clearSearchBtn: this.createCustomClearButton
+};
+//...
+&lt;BootstrapTable data={rows} options={options} search&gt;
+</code>
+</pre>
+            </div>
+            <div class="feature-text">
+              <h3><span class="number">02.</span> Customize by yourself</h3>
+              <span>
+                If you think <code>ClearSearchButton</code> is not satisfied to your requirement, you can custom a new one as following
+              </span>
+<pre>
+<code class="javascript">createCustomClearButton = (onClick) => {
+  return (
+    &lt;button className='btn btn-warning' onClick={ onClick }&gt;Clean&lt;/button&gt;
+  );
+}
+//...
+const options = {
+  clearSearch: true,
+  clearSearchBtn: this.createCustomClearButton
 };
 //...
 &lt;BootstrapTable data={rows} options={options} search&gt;
