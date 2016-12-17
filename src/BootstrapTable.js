@@ -142,7 +142,7 @@ class BootstrapTable extends Component {
         className: column.props.columnClassName,
         columnTitle: column.props.columnTitle,
         width: column.props.width,
-        text: column.props.children,
+        text: column.props.headerText || column.props.children,
         sortFunc: column.props.sortFunc,
         sortFuncExtraData: column.props.sortFuncExtraData,
         export: column.props.export,
@@ -843,7 +843,7 @@ class BootstrapTable extends Component {
         columns = children.map((column, r) => {
           const { props } = column;
           return {
-            name: props.children,
+            name: props.headerText || props.children,
             field: props.dataField,
             hiddenOnInsert: props.hiddenOnInsert,
             // when you want same auto generate value and not allow edit, example ID field
@@ -857,7 +857,7 @@ class BootstrapTable extends Component {
         });
       } else {
         columns = [ {
-          name: children.props.children,
+          name: children.props.headerText || children.props.children,
           field: children.props.dataField,
           editable: children.props.editable,
           hiddenOnInsert: children.props.hiddenOnInsert

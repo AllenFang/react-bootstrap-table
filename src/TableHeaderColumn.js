@@ -28,35 +28,36 @@ class TableHeaderColumn extends Component {
   }
 
   getFilters() {
+    const { headerText, children } = this.props;
     switch (this.props.filter.type) {
     case Const.FILTER_TYPE.TEXT: {
       return (
         <TextFilter ref='textFilter' { ...this.props.filter }
-          columnName={ this.props.children } filterHandler={ this.handleFilter } />
+          columnName={ headerText || children } filterHandler={ this.handleFilter } />
       );
     }
     case Const.FILTER_TYPE.REGEX: {
       return (
         <RegexFilter ref='regexFilter' { ...this.props.filter }
-          columnName={ this.props.children } filterHandler={ this.handleFilter } />
+          columnName={ headerText || children } filterHandler={ this.handleFilter } />
       );
     }
     case Const.FILTER_TYPE.SELECT: {
       return (
         <SelectFilter ref='selectFilter' { ...this.props.filter }
-          columnName={ this.props.children } filterHandler={ this.handleFilter } />
+          columnName={ headerText || children } filterHandler={ this.handleFilter } />
       );
     }
     case Const.FILTER_TYPE.NUMBER: {
       return (
         <NumberFilter ref='numberFilter' { ...this.props.filter }
-          columnName={ this.props.children } filterHandler={ this.handleFilter } />
+          columnName={ headerText || children } filterHandler={ this.handleFilter } />
       );
     }
     case Const.FILTER_TYPE.DATE: {
       return (
         <DateFilter ref='dateFilter' { ...this.props.filter }
-          columnName={ this.props.children } filterHandler={ this.handleFilter } />
+          columnName={ headerText || children } filterHandler={ this.handleFilter } />
       );
     }
     case Const.FILTER_TYPE.CUSTOM: {
@@ -75,6 +76,7 @@ class TableHeaderColumn extends Component {
   render() {
     let defaultCaret;
     const {
+      headerText,
       dataAlign,
       dataField,
       headerAlign,
@@ -111,7 +113,9 @@ class TableHeaderColumn extends Component {
       typeof className === 'function' ? className() : className,
       dataSort ? 'sort-column' : '');
 
-    const title = headerTitle && typeof children === 'string' ? { title: children } : null;
+    const title = {
+      title: ((headerTitle && typeof children === 'string') ? children : headerText)
+    };
     return (
       <th ref='header-col'
           className={ classes }
@@ -196,6 +200,7 @@ TableHeaderColumn.propTypes = {
   dataAlign: PropTypes.string,
   headerAlign: PropTypes.string,
   headerTitle: PropTypes.bool,
+  headerText: PropTypes.string,
   dataSort: PropTypes.bool,
   onSort: PropTypes.func,
   dataFormat: PropTypes.func,
