@@ -35,6 +35,10 @@ class TableBody extends Component {
     const tableHeader = this.renderTableHeader(isSelectRowDefined);
     const inputType = this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
     const CustomComponent = this.props.selectRow.customComponent;
+    let expandColSpan = this.props.columns.filter(col => !col.hidden).length;
+    if (isSelectRowDefined && !this.props.selectRow.hideSelectColumn) {
+      expandColSpan += 1;
+    }
 
     const tableRows = this.props.data.map(function(data, r) {
       const tableColumns = this.props.columns.map(function(column, i) {
@@ -129,17 +133,12 @@ class TableBody extends Component {
       </TableRow> ];
 
       if (this.props.expandableRow && this.props.expandableRow(data)) {
-        let colSpan = this.props.columns.length;
-        const bgColor = this.props.expandRowBgColor || this.props.selectRow.bgColor || undefined;
-        if (isSelectRowDefined && !this.props.selectRow.hideSelectColumn) {
-          colSpan += 1;
-        }
         result.push(
           <ExpandComponent
             className={ trClassName }
-            bgColor={ bgColor }
+            bgColor={ this.props.expandRowBgColor || this.props.selectRow.bgColor || undefined }
             hidden={ !(this.state.expanding.indexOf(key) > -1) }
-            colSpan={ colSpan }
+            colSpan={ expandColSpan }
             width={ "100%" }>
             { this.props.expandComponent(data) }
           </ExpandComponent>
