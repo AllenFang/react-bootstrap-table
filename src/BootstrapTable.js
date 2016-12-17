@@ -140,6 +140,7 @@ class BootstrapTable extends Component {
         hiddenOnInsert: column.props.hiddenOnInsert,
         searchable: column.props.searchable,
         className: column.props.columnClassName,
+        editClassName: column.props.editColumnClassName,
         columnTitle: column.props.columnTitle,
         width: column.props.width,
         text: column.props.headerText || column.props.children,

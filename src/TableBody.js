@@ -69,7 +69,8 @@ class TableBody extends Component {
                 rowIndex={ r }
                 colIndex={ i }
                 row={ data }
-                fieldValue={ fieldValue } />
+                fieldValue={ fieldValue }
+                className={ column.editClassName } />
             );
         } else {
           // add by bluespring for className customize
