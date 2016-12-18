@@ -218,32 +218,7 @@ class TableBody extends Component {
   }
 
   handleRowClick = rowIndex => {
-    let selectedRow;
-    const {
-      data,
-      onRowClick,
-      expandBy,
-      expandableRow,
-      keyField
-    } = this.props;
-    data.forEach((row, i) => {
-      if (i === rowIndex - 1) {
-        selectedRow = row;
-      }
-    });
-    if (expandableRow && expandBy === Const.EXPAND_BY_ROW) {
-      const rowKey = selectedRow[keyField];
-      let expanding = this.state.expanding;
-      if (this.state.expanding.indexOf(rowKey) > -1) {
-        expanding = expanding.filter(k => k !== rowKey);
-      } else {
-        expanding.push(rowKey);
-      }
-      this.setState({ expanding }, () => {
-        this.props.adjustHeaderWidth();
-      });
-    }
-    onRowClick(selectedRow);
+    this.props.onRowClick(this.props.data[rowIndex - 1]);
   }
 
   handleRowDoubleClick = rowIndex => {
@@ -258,6 +233,7 @@ class TableBody extends Component {
   }
 
   handleSelectRow = (rowIndex, isSelected, e) => {
+    // console.log('handleSelectRow');
     let selectedRow;
     const { data, onSelectRow } = this.props;
     data.forEach((row, i) => {
@@ -280,17 +256,20 @@ class TableBody extends Component {
   }
 
   handleClickCell = (rowIndex, columnIndex) => {
+    // console.log('handleClickCell');
     const {
       columns,
+      keyField,
       expandBy,
       expandableRow
     } = this.props;
+
     if (expandableRow &&
-      columns[columnIndex].expandable &&
-      expandBy === Const.EXPAND_BY_COL) {
+      (expandBy === Const.EXPAND_BY_ROW ||
+      (expandBy === Const.EXPAND_BY_COL && columns[columnIndex].expandable))) {
+      const rowKey = this.props.data[rowIndex - 1][keyField];
       let expanding = this.state.expanding;
-      const rowKey = this.props.data[rowIndex - 1][this.props.keyField];
-      if (this.state.expanding.indexOf(rowKey) > -1) {
+      if (expanding.indexOf(rowKey) > -1) {
         expanding = expanding.filter(k => k !== rowKey);
       } else {
         expanding.push(rowKey);
