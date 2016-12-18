@@ -1051,6 +1051,7 @@ BootstrapTable.propTypes = {
     clickToSelect: PropTypes.bool,
     hideSelectColumn: PropTypes.bool,
     clickToSelectAndEditCell: PropTypes.bool,
+    clickToExpand: PropTypes.bool,
     showOnlySelected: PropTypes.bool,
     unselectable: PropTypes.array
   }),
@@ -1153,6 +1154,7 @@ BootstrapTable.defaultProps = {
     clickToSelect: false,
     hideSelectColumn: false,
     clickToSelectAndEditCell: false,
+    clickToExpand: false,
     showOnlySelected: false,
     unselectable: [],
     customComponent: undefined

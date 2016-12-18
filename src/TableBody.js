@@ -233,7 +233,6 @@ class TableBody extends Component {
   }
 
   handleSelectRow = (rowIndex, isSelected, e) => {
-    // console.log('handleSelectRow');
     let selectedRow;
     const { data, onSelectRow } = this.props;
     data.forEach((row, i) => {
@@ -256,15 +255,19 @@ class TableBody extends Component {
   }
 
   handleClickCell = (rowIndex, columnIndex) => {
-    // console.log('handleClickCell');
     const {
       columns,
       keyField,
       expandBy,
-      expandableRow
+      expandableRow,
+      selectRow: {
+        clickToExpand
+      }
     } = this.props;
+    const selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
 
     if (expandableRow &&
+      selectRowAndExpand &&
       (expandBy === Const.EXPAND_BY_ROW ||
       (expandBy === Const.EXPAND_BY_COL && columns[columnIndex].expandable))) {
       const rowKey = this.props.data[rowIndex - 1][keyField];
