@@ -386,12 +386,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	          hiddenOnInsert: column.props.hiddenOnInsert,
 	          searchable: column.props.searchable,
 	          className: column.props.columnClassName,
+	          editClassName: column.props.editColumnClassName,
 	          columnTitle: column.props.columnTitle,
 	          width: column.props.width,
-	          text: column.props.children,
+	          text: column.props.headerText || column.props.children,
 	          sortFunc: column.props.sortFunc,
 	          sortFuncExtraData: column.props.sortFuncExtraData,
 	          export: column.props.export,
+	          expandable: column.props.expandable,
 	          index: i
 	        };
 	      });
@@ -561,6 +563,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            expandComponent: this.props.expandComponent,
 	            expandableRow: this.props.expandableRow,
 	            expandRowBgColor: this.props.options.expandRowBgColor,
+	            expandBy: this.props.options.expandBy || _Const2.default.EXPAND_BY_ROW,
 	            columns: columns,
 	            trClassName: this.props.trClassName,
 	            striped: this.props.striped,
@@ -1154,7 +1157,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var props = column.props;
 
 	            return {
-	              name: props.children,
+	              name: props.headerText || props.children,
 	              field: props.dataField,
 	              hiddenOnInsert: props.hiddenOnInsert,
 	              // when you want same auto generate value and not allow edit, example ID field
@@ -1168,7 +1171,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          });
 	        } else {
 	          columns = [{
-	            name: children.props.children,
+	            name: children.props.headerText || children.props.children,
 	            field: children.props.dataField,
 	            editable: children.props.editable,
 	            hiddenOnInsert: children.props.hiddenOnInsert
@@ -1363,6 +1366,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    clickToSelect: _react.PropTypes.bool,
 	    hideSelectColumn: _react.PropTypes.bool,
 	    clickToSelectAndEditCell: _react.PropTypes.bool,
+	    clickToExpand: _react.PropTypes.bool,
 	    showOnlySelected: _react.PropTypes.bool,
 	    unselectable: _react.PropTypes.array
 	  }),
@@ -1431,7 +1435,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    closeText: _react.PropTypes.string,
 	    ignoreEditable: _react.PropTypes.bool,
 	    defaultSearch: _react.PropTypes.string,
-	    expandRowBgColor: _react.PropTypes.string
+	    expandRowBgColor: _react.PropTypes.string,
+	    expandBy: _react.PropTypes.string
 	  }),
 	  fetchInfo: _react.PropTypes.shape({
 	    dataTotalSize: _react.PropTypes.number
@@ -1464,6 +1469,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    clickToSelect: false,
 	    hideSelectColumn: false,
 	    clickToSelectAndEditCell: false,
+	    clickToExpand: false,
 	    showOnlySelected: false,
 	    unselectable: [],
 	    customComponent: undefined
@@ -1531,7 +1537,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    closeText: _Const2.default.CLOSE_BTN_TEXT,
 	    ignoreEditable: false,
 	    defaultSearch: '',
-	    expandRowBgColor: undefined
+	    expandRowBgColor: undefined,
+	    expandBy: _Const2.default.EXPAND_BY_ROW
 	  },
 	  fetchInfo: {
 	    dataTotalSize: 0
@@ -1662,7 +1669,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    NUMBER: 'NumberFilter',
 	    DATE: 'DateFilter',
 	    CUSTOM: 'CustomFilter'
-	  }
+	  },
+	  EXPAND_BY_ROW: 'row',
+	  EXPAND_BY_COL: 'column'
 	};
 	exports.default = _default;
 	;
@@ -2030,6 +2039,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.__handleSelectRowColumChange__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+	    _this.handleClickCell = function () {
+	      return _this.__handleClickCell__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
 	    _this.handleEditCell = function () {
 	      return _this.__handleEditCell__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
@@ -2064,6 +2077,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var tableHeader = this.renderTableHeader(isSelectRowDefined);
 	      var inputType = this.props.selectRow.mode === _Const2.default.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
 	      var CustomComponent = this.props.selectRow.customComponent;
+	      var expandColSpan = this.props.columns.filter(function (col) {
+	        return !col.hidden;
+	      }).length;
+	      if (isSelectRowDefined && !this.props.selectRow.hideSelectColumn) {
+	        expandColSpan += 1;
+	      }
 
 	      var tableRows = this.props.data.map(function (data, r) {
 	        var tableColumns = this.props.columns.map(function (column, i) {
@@ -2090,7 +2109,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	              rowIndex: r,
 	              colIndex: i,
 	              row: data,
-	              fieldValue: fieldValue });
+	              fieldValue: fieldValue,
+	              className: column.editClassName });
 	          } else {
 	            // add by bluespring for className customize
 	            var columnChild = fieldValue && fieldValue.toString();
@@ -2121,7 +2141,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                cellEdit: cellEdit,
 	                hidden: column.hidden,
 	                onEdit: this.handleEditCell,
-	                width: column.width },
+	                width: column.width,
+	                onClick: this.handleClickCell },
 	              columnChild
 	            );
 	          }
@@ -2152,18 +2173,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        )];
 
 	        if (this.props.expandableRow && this.props.expandableRow(data)) {
-	          var colSpan = this.props.columns.length;
-	          var bgColor = this.props.expandRowBgColor || this.props.selectRow.bgColor || undefined;
-	          if (isSelectRowDefined && !this.props.selectRow.hideSelectColumn) {
-	            colSpan += 1;
-	          }
 	          result.push(_react2.default.createElement(
 	            _ExpandComponent2.default,
 	            {
 	              className: trClassName,
-	              bgColor: bgColor,
+	              bgColor: this.props.expandRowBgColor || this.props.selectRow.bgColor || undefined,
 	              hidden: !(this.state.expanding.indexOf(key) > -1),
-	              colSpan: colSpan,
+	              colSpan: expandColSpan,
 	              width: "100%" },
 	            this.props.expandComponent(data)
 	          ));
@@ -2251,41 +2267,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleRowClick__REACT_HOT_LOADER__',
 	    value: function __handleRowClick__REACT_HOT_LOADER__(rowIndex) {
-	      var _this2 = this;
-
-	      var selectedRow = void 0;
-	      var _props = this.props,
-	          data = _props.data,
-	          onRowClick = _props.onRowClick;
-
-	      data.forEach(function (row, i) {
-	        if (i === rowIndex - 1) {
-	          selectedRow = row;
-	        }
-	      });
-	      var rowKey = selectedRow[this.props.keyField];
-	      if (this.props.expandableRow) {
-	        var expanding = this.state.expanding;
-	        if (this.state.expanding.indexOf(rowKey) > -1) {
-	          expanding = expanding.filter(function (k) {
-	            return k !== rowKey;
-	          });
-	        } else {
-	          expanding.push(rowKey);
-	        }
-	        this.setState({ expanding: expanding }, function () {
-	          _this2.props.adjustHeaderWidth();
-	        });
-	      }
-	      onRowClick(selectedRow);
+	      this.props.onRowClick(this.props.data[rowIndex - 1]);
 	    }
 	  }, {
 	    key: '__handleRowDoubleClick__REACT_HOT_LOADER__',
 	    value: function __handleRowDoubleClick__REACT_HOT_LOADER__(rowIndex) {
 	      var selectedRow = void 0;
-	      var _props2 = this.props,
-	          data = _props2.data,
-	          onRowDoubleClick = _props2.onRowDoubleClick;
+	      var _props = this.props,
+	          data = _props.data,
+	          onRowDoubleClick = _props.onRowDoubleClick;
 
 	      data.forEach(function (row, i) {
 	        if (i === rowIndex - 1) {
@@ -2298,9 +2288,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: '__handleSelectRow__REACT_HOT_LOADER__',
 	    value: function __handleSelectRow__REACT_HOT_LOADER__(rowIndex, isSelected, e) {
 	      var selectedRow = void 0;
-	      var _props3 = this.props,
-	          data = _props3.data,
-	          onSelectRow = _props3.onSelectRow;
+	      var _props2 = this.props,
+	          data = _props2.data,
+	          onSelectRow = _props2.onSelectRow;
 
 	      data.forEach(function (row, i) {
 	        if (i === rowIndex - 1) {
@@ -2315,6 +2305,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function __handleSelectRowColumChange__REACT_HOT_LOADER__(e, rowIndex) {
 	      if (!this.props.selectRow.clickToSelect || !this.props.selectRow.clickToSelectAndEditCell) {
 	        this.handleSelectRow(rowIndex + 1, e.currentTarget.checked, e);
+	      }
+	    }
+	  }, {
+	    key: '__handleClickCell__REACT_HOT_LOADER__',
+	    value: function __handleClickCell__REACT_HOT_LOADER__(rowIndex, columnIndex) {
+	      var _this2 = this;
+
+	      var _props3 = this.props,
+	          columns = _props3.columns,
+	          keyField = _props3.keyField,
+	          expandBy = _props3.expandBy,
+	          expandableRow = _props3.expandableRow,
+	          clickToExpand = _props3.selectRow.clickToExpand;
+
+	      var selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
+
+	      if (expandableRow && selectRowAndExpand && (expandBy === _Const2.default.EXPAND_BY_ROW || expandBy === _Const2.default.EXPAND_BY_COL && columns[columnIndex].expandable)) {
+	        (function () {
+	          var rowKey = _this2.props.data[rowIndex - 1][keyField];
+	          var expanding = _this2.state.expanding;
+	          if (expanding.indexOf(rowKey) > -1) {
+	            expanding = expanding.filter(function (k) {
+	              return k !== rowKey;
+	            });
+	          } else {
+	            expanding.push(rowKey);
+	          }
+	          _this2.setState({ expanding: expanding }, function () {
+	            _this2.props.adjustHeaderWidth();
+	          });
+	        })();
 	      }
 	    }
 	  }, {
@@ -2396,6 +2417,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  expandableRow: _react.PropTypes.func,
 	  expandComponent: _react.PropTypes.func,
 	  expandRowBgColor: _react.PropTypes.string,
+	  expandBy: _react.PropTypes.string,
 	  adjustHeaderWidth: _react.PropTypes.func
 	};
 	var _default = TableBody;
@@ -2642,6 +2664,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.__handleCellEdit__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+	    _this.handleCellClick = function () {
+	      return _this.__handleCellClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
 	    return _this;
 	  }
 	  /* eslint no-unused-vars: [0, { "args": "after-used" }] */
@@ -2692,6 +2718,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.props.onEdit(this.props.rIndex + 1, e.currentTarget.cellIndex, e);
 	    }
 	  }, {
+	    key: '__handleCellClick__REACT_HOT_LOADER__',
+	    value: function __handleCellClick__REACT_HOT_LOADER__(e) {
+	      this.props.onClick(this.props.rIndex + 1, e.currentTarget.cellIndex, e);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props,
@@ -2715,6 +2746,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          opts.onClick = this.handleCellEdit;
 	        } else if (cellEdit.mode === _Const2.default.CELL_EDIT_DBCLICK) {
 	          opts.onDoubleClick = this.handleCellEdit;
+	        } else {
+	          opts.onClick = this.handleCellClick;
 	        }
 	      }
 	      return _react2.default.createElement(
@@ -2737,7 +2770,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  hidden: _react.PropTypes.bool,
 	  className: _react.PropTypes.string,
 	  columnTitle: _react.PropTypes.string,
-	  children: _react.PropTypes.node
+	  children: _react.PropTypes.node,
+	  onClick: _react.PropTypes.func
 	};
 
 	TableColumn.defaultProps = {
@@ -2936,7 +2970,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props = this.props,
 	          editable = _props.editable,
 	          format = _props.format,
-	          customEditor = _props.customEditor;
+	          customEditor = _props.customEditor,
+	          className = _props.className;
 	      var shakeEditor = this.state.shakeEditor;
 
 	      var attr = {
@@ -2965,7 +3000,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return _react2.default.createElement(
 	        'td',
-	        { ref: 'td', style: { position: 'relative' } },
+	        { ref: 'td', style: { position: 'relative' }, className: className },
 	        cellEditor,
 	        _react2.default.createElement(_Notification2.default, { ref: 'notifier' })
 	      );
@@ -2991,7 +3026,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  editable: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.object]),
 	  format: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.func]),
 	  row: _react.PropTypes.any,
-	  fieldValue: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.bool, _react.PropTypes.number, _react.PropTypes.array, _react.PropTypes.object])
+	  fieldValue: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.bool, _react.PropTypes.number, _react.PropTypes.array, _react.PropTypes.object]),
+	  className: _react.PropTypes.any
 	};
 
 	var _default = TableEditColumn;
@@ -12192,31 +12228,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'getFilters',
 	    value: function getFilters() {
+	      var _props = this.props,
+	          headerText = _props.headerText,
+	          children = _props.children;
+
 	      switch (this.props.filter.type) {
 	        case _Const2.default.FILTER_TYPE.TEXT:
 	          {
 	            return _react2.default.createElement(_Text2.default, _extends({ ref: 'textFilter' }, this.props.filter, {
-	              columnName: this.props.children, filterHandler: this.handleFilter }));
+	              columnName: headerText || children, filterHandler: this.handleFilter }));
 	          }
 	        case _Const2.default.FILTER_TYPE.REGEX:
 	          {
 	            return _react2.default.createElement(_Regex2.default, _extends({ ref: 'regexFilter' }, this.props.filter, {
-	              columnName: this.props.children, filterHandler: this.handleFilter }));
+	              columnName: headerText || children, filterHandler: this.handleFilter }));
 	          }
 	        case _Const2.default.FILTER_TYPE.SELECT:
 	          {
 	            return _react2.default.createElement(_Select2.default, _extends({ ref: 'selectFilter' }, this.props.filter, {
-	              columnName: this.props.children, filterHandler: this.handleFilter }));
+	              columnName: headerText || children, filterHandler: this.handleFilter }));
 	          }
 	        case _Const2.default.FILTER_TYPE.NUMBER:
 	          {
 	            return _react2.default.createElement(_Number2.default, _extends({ ref: 'numberFilter' }, this.props.filter, {
-	              columnName: this.props.children, filterHandler: this.handleFilter }));
+	              columnName: headerText || children, filterHandler: this.handleFilter }));
 	          }
 	        case _Const2.default.FILTER_TYPE.DATE:
 	          {
 	            return _react2.default.createElement(_Date2.default, _extends({ ref: 'dateFilter' }, this.props.filter, {
-	              columnName: this.props.children, filterHandler: this.handleFilter }));
+	              columnName: headerText || children, filterHandler: this.handleFilter }));
 	          }
 	        case _Const2.default.FILTER_TYPE.CUSTOM:
 	          {
@@ -12235,18 +12275,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'render',
 	    value: function render() {
 	      var defaultCaret = void 0;
-	      var _props = this.props,
-	          dataAlign = _props.dataAlign,
-	          dataField = _props.dataField,
-	          headerAlign = _props.headerAlign,
-	          headerTitle = _props.headerTitle,
-	          hidden = _props.hidden,
-	          sort = _props.sort,
-	          dataSort = _props.dataSort,
-	          sortIndicator = _props.sortIndicator,
-	          children = _props.children,
-	          caretRender = _props.caretRender,
-	          className = _props.className;
+	      var _props2 = this.props,
+	          headerText = _props2.headerText,
+	          dataAlign = _props2.dataAlign,
+	          dataField = _props2.dataField,
+	          headerAlign = _props2.headerAlign,
+	          headerTitle = _props2.headerTitle,
+	          hidden = _props2.hidden,
+	          sort = _props2.sort,
+	          dataSort = _props2.dataSort,
+	          sortIndicator = _props2.sortIndicator,
+	          children = _props2.children,
+	          caretRender = _props2.caretRender,
+	          className = _props2.className;
 
 	      var thStyle = {
 	        textAlign: headerAlign || dataAlign,
@@ -12274,7 +12315,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      var classes = (0, _classnames2.default)(typeof className === 'function' ? className() : className, dataSort ? 'sort-column' : '');
 
-	      var title = headerTitle && typeof children === 'string' ? { title: children } : null;
+	      var title = {
+	        title: headerTitle && typeof children === 'string' ? children : headerText
+	      };
 	      return _react2.default.createElement(
 	        'th',
 	        _extends({ ref: 'header-col',
@@ -12380,6 +12423,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  dataAlign: _react.PropTypes.string,
 	  headerAlign: _react.PropTypes.string,
 	  headerTitle: _react.PropTypes.bool,
+	  headerText: _react.PropTypes.string,
 	  dataSort: _react.PropTypes.bool,
 	  onSort: _react.PropTypes.func,
 	  dataFormat: _react.PropTypes.func,
@@ -12395,6 +12439,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  sortFunc: _react.PropTypes.func,
 	  sortFuncExtraData: _react.PropTypes.any,
 	  columnClassName: _react.PropTypes.any,
+	  editColumnClassName: _react.PropTypes.any,
 	  columnTitle: _react.PropTypes.bool,
 	  filterFormatted: _react.PropTypes.bool,
 	  filterValue: _react.PropTypes.func,
@@ -12414,7 +12459,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    customFilterParameters: _react.PropTypes.object
 	  }),
 	  sortIndicator: _react.PropTypes.bool,
-	  export: _react.PropTypes.bool
+	  export: _react.PropTypes.bool,
+	  expandable: _react.PropTypes.bool
 	};
 
 	TableHeaderColumn.defaultProps = {
@@ -12436,13 +12482,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  width: null,
 	  sortFunc: undefined,
 	  columnClassName: '',
+	  editColumnClassName: '',
 	  filterFormatted: false,
 	  filterValue: undefined,
 	  sort: undefined,
 	  formatExtraData: undefined,
 	  sortFuncExtraData: undefined,
 	  filter: undefined,
-	  sortIndicator: true
+	  sortIndicator: true,
+	  expandable: true
 	};
 
 	var _default = TableHeaderColumn;
