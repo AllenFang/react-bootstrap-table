@@ -103,7 +103,8 @@ class TableBody extends Component {
               cellEdit={ cellEdit }
               hidden={ column.hidden }
               onEdit={ this.handleEditCell }
-              width={ column.width }>
+              width={ column.width }
+              onClick={ this.handleClickCell }>
               { columnChild }
             </TableColumn>
           );
@@ -218,14 +219,20 @@ class TableBody extends Component {
 
   handleRowClick = rowIndex => {
     let selectedRow;
-    const { data, onRowClick } = this.props;
+    const {
+      data,
+      onRowClick,
+      expandBy,
+      expandableRow,
+      keyField
+    } = this.props;
     data.forEach((row, i) => {
       if (i === rowIndex - 1) {
         selectedRow = row;
       }
     });
-    const rowKey = selectedRow[this.props.keyField];
-    if (this.props.expandableRow) {
+    if (expandableRow && expandBy === Const.EXPAND_BY_ROW) {
+      const rowKey = selectedRow[keyField];
       let expanding = this.state.expanding;
       if (this.state.expanding.indexOf(rowKey) > -1) {
         expanding = expanding.filter(k => k !== rowKey);
@@ -269,6 +276,28 @@ class TableBody extends Component {
         rowIndex + 1,
         e.currentTarget.checked,
         e);
+    }
+  }
+
+  handleClickCell = (rowIndex, columnIndex) => {
+    const {
+      columns,
+      expandBy,
+      expandableRow
+    } = this.props;
+    if (expandableRow &&
+      columns[columnIndex].expandable &&
+      expandBy === Const.EXPAND_BY_COL) {
+      let expanding = this.state.expanding;
+      const rowKey = this.props.data[rowIndex - 1][this.props.keyField];
+      if (this.state.expanding.indexOf(rowKey) > -1) {
+        expanding = expanding.filter(k => k !== rowKey);
+      } else {
+        expanding.push(rowKey);
+      }
+      this.setState({ expanding }, () => {
+        this.props.adjustHeaderWidth();
+      });
     }
   }
 
@@ -339,6 +368,7 @@ TableBody.propTypes = {
   expandableRow: PropTypes.func,
   expandComponent: PropTypes.func,
   expandRowBgColor: PropTypes.string,
+  expandBy: PropTypes.string,
   adjustHeaderWidth: PropTypes.func
 };
 export default TableBody;

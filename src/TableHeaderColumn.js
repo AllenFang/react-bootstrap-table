@@ -240,7 +240,8 @@ TableHeaderColumn.propTypes = {
     customFilterParameters: PropTypes.object
   }),
   sortIndicator: PropTypes.bool,
-  export: PropTypes.bool
+  export: PropTypes.bool,
+  expandable: PropTypes.bool
 };
 
 TableHeaderColumn.defaultProps = {
@@ -269,7 +270,8 @@ TableHeaderColumn.defaultProps = {
   formatExtraData: undefined,
   sortFuncExtraData: undefined,
   filter: undefined,
-  sortIndicator: true
+  sortIndicator: true,
+  expandable: true
 };
 
 export default TableHeaderColumn;

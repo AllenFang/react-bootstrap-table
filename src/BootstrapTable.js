@@ -147,6 +147,7 @@ class BootstrapTable extends Component {
         sortFunc: column.props.sortFunc,
         sortFuncExtraData: column.props.sortFuncExtraData,
         export: column.props.export,
+        expandable: column.props.expandable,
         index: i
       };
     });
@@ -299,6 +300,7 @@ class BootstrapTable extends Component {
             expandComponent={ this.props.expandComponent }
             expandableRow={ this.props.expandableRow }
             expandRowBgColor={ this.props.options.expandRowBgColor }
+            expandBy={ this.props.options.expandBy || Const.EXPAND_BY_ROW }
             columns={ columns }
             trClassName={ this.props.trClassName }
             striped={ this.props.striped }
@@ -1117,7 +1119,8 @@ BootstrapTable.propTypes = {
     closeText: PropTypes.string,
     ignoreEditable: PropTypes.bool,
     defaultSearch: PropTypes.string,
-    expandRowBgColor: PropTypes.string
+    expandRowBgColor: PropTypes.string,
+    expandBy: PropTypes.string
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1217,7 +1220,8 @@ BootstrapTable.defaultProps = {
     closeText: Const.CLOSE_BTN_TEXT,
     ignoreEditable: false,
     defaultSearch: '',
-    expandRowBgColor: undefined
+    expandRowBgColor: undefined,
+    expandBy: Const.EXPAND_BY_ROW
   },
   fetchInfo: {
     dataTotalSize: 0
