@@ -1,6 +1,6 @@
 /* eslint max-len: 0 */
 import React from 'react';
-import ExpandRow from './ExpandRow';
+import ExpandRow from './expandRow';
 import ExpandByColumn from './expand-row-by-column';
 import ExpandWithSelection from './expand-row-with-selection';
 import renderLinks from '../utils';
