@@ -22,11 +22,13 @@ function addProducts(quantity) {
 
 addProducts(50);
 
-export default class SelectAllOnCurrPage extends React.Component {
+export default class SelectAllOnAllPage extends React.Component {
 
   onSelectAll = (isSelected) => {
     if (isSelected) {
-      return this.refs.table.state.data.map(row => row.id);
+      return products.map(row => row.id);
+    } else {
+      return [];
     }
   }
 
