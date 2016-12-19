@@ -139,7 +139,7 @@ class Demo extends React.Component {
         </div>
         <div className='col-md-offset-1 col-md-8'>
           <div className='panel panel-default'>
-            <div className='panel-heading'>Select All Which Only Active on Current Page</div>
+            <div className='panel-heading'>Select All on All Pages</div>
             <div className='panel-body'>
               <h5>Source in all-select.js</h5>
               <SelectAll />
