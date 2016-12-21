@@ -1486,7 +1486,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  deleteRow: false,
 	  search: false,
 	  multiColumnSearch: false,
-	  multiColumnSort: false,
+	  multiColumnSort: 1,
 	  columnFilter: false,
 	  trClassName: '',
 	  tableStyle: undefined,
@@ -10659,7 +10659,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.pageObj = {};
 	    this.selected = [];
 	    this.multiColumnSearch = false;
-	    this.multiColumnSort = false;
+	    this.multiColumnSort = 1;
 	    this.showOnlySelected = false;
 	    this.remote = false; // remote data
 	  }
@@ -10702,7 +10702,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        sortField: sortField
 	      };
 
-	      if (this.multiColumnSort) {
+	      if (this.multiColumnSort > 1) {
 	        var i = this.sortList.length - 1;
 	        var sortFieldInHistory = false;
 
@@ -10722,6 +10722,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        this.sortList.unshift(this.sortObj);
+	        this.sortList = this.sortList.slice(0, this.multiColumnSort);
 	      } else {
 	        this.sortList = [this.sortObj];
 	      }

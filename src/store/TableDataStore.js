@@ -19,7 +19,7 @@ export class TableDataStore {
     this.pageObj = {};
     this.selected = [];
     this.multiColumnSearch = false;
-    this.multiColumnSort = false;
+    this.multiColumnSort = 1;
     this.showOnlySelected = false;
     this.remote = false; // remote data
   }
@@ -56,7 +56,7 @@ export class TableDataStore {
       sortField: sortField
     };
 
-    if (this.multiColumnSort) {
+    if (this.multiColumnSort > 1) {
       let i = this.sortList.length - 1;
       let sortFieldInHistory = false;
 
@@ -76,6 +76,7 @@ export class TableDataStore {
       }
 
       this.sortList.unshift(this.sortObj);
+      this.sortList = this.sortList.slice(0, this.multiColumnSort);
     } else {
       this.sortList = [ this.sortObj ];
     }

@@ -1171,7 +1171,7 @@ BootstrapTable.defaultProps = {
   deleteRow: false,
   search: false,
   multiColumnSearch: false,
-  multiColumnSort: false,
+  multiColumnSort: 1,
   columnFilter: false,
   trClassName: '',
   tableStyle: undefined,

@@ -30,7 +30,7 @@ export default class MultiSortTable extends React.Component {
   render() {
     return (
       <div>
-        <BootstrapTable ref='table' data={ products } multiColumnSort={ true }>
+        <BootstrapTable ref='table' data={ products } multiColumnSort={ 2 }>
             <TableHeaderColumn dataField='id' isKey={ true } dataSort={ true }>Product ID</TableHeaderColumn>
             <TableHeaderColumn dataField='name' dataSort={ true }>Product Name</TableHeaderColumn>
             <TableHeaderColumn dataField='price' dataSort={ true }>Product Price</TableHeaderColumn>
