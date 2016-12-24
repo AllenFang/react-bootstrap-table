@@ -18,7 +18,7 @@ class TableHeaderColumn extends Component {
   }
 
   handleColumnClick = () => {
-    if (!this.props.dataSort) return;
+    if (this.props.isOnlyHead || !this.props.dataSort) return;
     const order = this.props.sort === Const.SORT_DESC ? Const.SORT_ASC : Const.SORT_DESC;
     this.props.onSort(order, this.props.dataField);
   }
@@ -75,6 +75,7 @@ class TableHeaderColumn extends Component {
 
   render() {
     let defaultCaret;
+    let sortCaret;
     const {
       headerText,
       dataAlign,
@@ -87,31 +88,35 @@ class TableHeaderColumn extends Component {
       sortIndicator,
       children,
       caretRender,
-      className
+      className,
+      isOnlyHead
     } = this.props;
     const thStyle = {
       textAlign: headerAlign || dataAlign,
       display: hidden ? 'none' : null
     };
-    if (sortIndicator) {
-      defaultCaret = (!dataSort) ? null : (
-        <span className='order'>
-          <span className='dropdown'>
-            <span className='caret' style={ { margin: '10px 0 10px 5px', color: '#ccc' } }></span>
+    if (!isOnlyHead) {
+      if (sortIndicator) {
+        defaultCaret = (!dataSort) ? null : (
+          <span className='order'>
+            <span className='dropdown'>
+              <span className='caret' style={ { margin: '10px 0 10px 5px', color: '#ccc' } }></span>
+            </span>
+            <span className='dropup'>
+              <span className='caret' style={ { margin: '10px 0', color: '#ccc' } }></span>
+            </span>
           </span>
-          <span className='dropup'>
-            <span className='caret' style={ { margin: '10px 0', color: '#ccc' } }></span>
-          </span>
-        </span>
-      );
+        );
+      }
+      sortCaret = sort ? Util.renderReactSortCaret(sort) : defaultCaret;
+      if (caretRender) {
+        sortCaret = caretRender(sort, dataField);
+      }
     }
-    let sortCaret = sort ? Util.renderReactSortCaret(sort) : defaultCaret;
-    if (caretRender) {
-      sortCaret = caretRender(sort, dataField);
-    }
+
     const classes = classSet(
       typeof className === 'function' ? className() : className,
-      dataSort ? 'sort-column' : '');
+      !isOnlyHead && dataSort ? 'sort-column' : '');
 
     const title = {
       title: ((headerTitle && typeof children === 'string') ? children : headerText)
