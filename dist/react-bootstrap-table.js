@@ -1184,13 +1184,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        var options = this.props.options;
 
+	        var withFirstAndLast = options.withFirstAndLast === undefined ? true : options.withFirstAndLast;
 	        if (Math.ceil(dataSize / this.state.sizePerPage) <= 1 && this.props.ignoreSinglePage) return null;
 	        return _react2.default.createElement(
 	          'div',
 	          { className: 'react-bs-table-pagination' },
 	          _react2.default.createElement(_PaginationList2.default, {
 	            ref: 'pagination',
-	            withFirstAndLast: options.withFirstAndLast,
+	            withFirstAndLast: withFirstAndLast,
 	            alwaysShowAllBtns: options.alwaysShowAllBtns,
 	            currPage: this.state.currPage,
 	            changePage: this.handlePaginationData,
