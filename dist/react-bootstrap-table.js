@@ -219,8 +219,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.__handleDropRow__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+<<<<<<< HEAD
 	    _this.handleFilterData = function () {
 	      return _this.__handleFilterData__REACT_HOT_LOADER__.apply(_this, arguments);
+=======
+	    this.handleExportCSV = function () {
+	      var result = {};
+
+	      var csvFileName = _this.props.csvFileName;
+	      var onExportToCSV = _this.props.options.onExportToCSV;
+
+	      if (onExportToCSV) {
+	        result = onExportToCSV();
+	      } else {
+	        result = _this.store.getDataIgnoringPagination();
+	      }
+
+	      var keys = [];
+	      _this.props.children.map(function (column) {
+	        if (column.props['export'] === true || typeof column.props['export'] === 'undefined' && column.props.hidden === false) {
+	          keys.push({
+	            field: column.props.dataField,
+	            format: column.props.csvFormat,
+	            header: column.props.csvHeader || column.props.dataField,
+	            row: Number(column.props.row) || 0,
+	            rowSpan: Number(column.props.rowSpan) || 1,
+	            colSpan: Number(column.props.colSpan) || 1
+	          });
+	        }
+	      });
+
+	      if (typeof csvFileName === 'function') {
+	        csvFileName = csvFileName();
+	      }
+
+	      (0, _csv_export_util2['default'])(result, keys, csvFileName);
+>>>>>>> 8e459efde34ceca5b45f208524231b60fc81aedc
 	    };
 
 	    _this.handleExportCSV = function () {
@@ -235,8 +269,48 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.___scrollTop__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+<<<<<<< HEAD
 	    _this._scrollHeader = function () {
 	      return _this.___scrollHeader__REACT_HOT_LOADER__.apply(_this, arguments);
+=======
+	    this._adjustHeaderWidth = function () {
+	      var header = _this.refs.header.refs.header.querySelectorAll('[data-is-only-head=false]');
+	      var headerContainer = _this.refs.header.refs.container;
+	      var tbody = _this.refs.body.refs.tbody;
+	      var firstRow = tbody.childNodes[0];
+	      var isScroll = headerContainer.offsetWidth !== tbody.parentNode.offsetWidth;
+	      var scrollBarWidth = isScroll ? _util2['default'].getScrollBarWidth() : 0;
+	      if (firstRow && _this.store.getDataNum()) {
+	        var cells = firstRow.childNodes;
+	        for (var i = 0; i < cells.length; i++) {
+	          var cell = cells[i];
+	          var computedStyle = getComputedStyle(cell);
+	          var width = parseFloat(computedStyle.width.replace('px', ''));
+	          if (_this.isIE) {
+	            var paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
+	            var paddingRightWidth = parseFloat(computedStyle.paddingRight.replace('px', ''));
+	            var borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace('px', ''));
+	            var borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace('px', ''));
+	            width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
+	          }
+	          var lastPadding = cells.length - 1 === i ? scrollBarWidth : 0;
+	          if (width <= 0) {
+	            width = 120;
+	            cell.width = width + lastPadding + 'px';
+	          }
+	          var result = width + lastPadding + 'px';
+	          header[i].style.width = result;
+	          header[i].style.minWidth = result;
+	        }
+	      } else {
+	        _react2['default'].Children.forEach(_this.props.children, function (child, i) {
+	          if (child.props.width) {
+	            header[i].style.width = child.props.width + 'px';
+	            header[i].style.minWidth = child.props.width + 'px';
+	          }
+	        });
+	      }
+>>>>>>> 8e459efde34ceca5b45f208524231b60fc81aedc
 	    };
 
 	    _this._adjustTable = function () {
@@ -371,6 +445,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function getColumnsDescription(_ref) {
 	      var children = _ref.children;
 
+<<<<<<< HEAD
 	      return _react2.default.Children.map(children, function (column, i) {
 	        return {
 	          name: column.props.dataField,
@@ -396,6 +471,41 @@ return /******/ (function(modules) { // webpackBootstrap
 	          expandable: column.props.expandable,
 	          index: i
 	        };
+=======
+	      var rowCount = 0;
+	      _react2['default'].Children.forEach(children, function (column) {
+	        if (Number(column.props.row) > rowCount) {
+	          rowCount = Number(column.props.row);
+	        }
+	      });
+	      return _react2['default'].Children.map(children, function (column, i) {
+	        var rowIndex = column.props.row ? Number(column.props.row) : 0;
+	        var rowSpan = column.props.rowSpan ? Number(column.props.rowSpan) : 1;
+	        if (rowSpan + rowIndex === rowCount + 1) {
+	          return {
+	            name: column.props.dataField,
+	            align: column.props.dataAlign,
+	            sort: column.props.dataSort,
+	            format: column.props.dataFormat,
+	            formatExtraData: column.props.formatExtraData,
+	            filterFormatted: column.props.filterFormatted,
+	            filterValue: column.props.filterValue,
+	            editable: column.props.editable,
+	            customEditor: column.props.customEditor,
+	            hidden: column.props.hidden,
+	            hiddenOnInsert: column.props.hiddenOnInsert,
+	            searchable: column.props.searchable,
+	            className: column.props.columnClassName,
+	            columnTitle: column.props.columnTitle,
+	            width: column.props.width,
+	            text: column.props.children,
+	            sortFunc: column.props.sortFunc,
+	            sortFuncExtraData: column.props.sortFuncExtraData,
+	            'export': column.props['export'],
+	            index: i
+	          };
+	        }
+>>>>>>> 8e459efde34ceca5b45f208524231b60fc81aedc
 	      });
 	    }
 	  }, {
@@ -1782,10 +1892,57 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'table-bordered': this.props.bordered,
 	        'table-condensed': this.props.condensed
 	      }, this.props.tableHeaderClass);
-	      var selectRowHeaderCol = null;
-	      if (!this.props.hideSelectColumn) selectRowHeaderCol = this.renderSelectRowHeader();
 	      var i = 0;
+<<<<<<< HEAD
 	      return _react2.default.createElement(
+=======
+
+	      var rowCount = 0;
+	      _react2['default'].Children.forEach(this.props.children, function (elm) {
+	        if (Number(elm.props.row) > rowCount) {
+	          rowCount = Number(elm.props.row);
+	        }
+	      });
+
+	      var rows = [];
+
+	      if (!this.props.hideSelectColumn) {
+	        rows[0] = [this.renderSelectRowHeader(rowCount + 1)];
+	      }
+
+	      _react2['default'].Children.forEach(this.props.children, function (elm) {
+	        var _props = _this.props;
+	        var sortIndicator = _props.sortIndicator;
+	        var sortName = _props.sortName;
+	        var sortOrder = _props.sortOrder;
+	        var onSort = _props.onSort;
+	        var _elm$props = elm.props;
+	        var dataField = _elm$props.dataField;
+	        var dataSort = _elm$props.dataSort;
+
+	        var sort = dataSort && dataField === sortName ? sortOrder : undefined;
+	        var rowIndex = elm.props.row ? Number(elm.props.row) : 0;
+	        var rowSpan = elm.props.rowSpan ? Number(elm.props.rowSpan) : 1;
+	        if (rows[rowIndex] === undefined) {
+	          rows[rowIndex] = [];
+	        }
+	        if (rowSpan + rowIndex === rowCount + 1) {
+	          rows[rowIndex].push(_react2['default'].cloneElement(elm, { key: i++, onSort: onSort, sort: sort, sortIndicator: sortIndicator, isOnlyHead: false }));
+	        } else {
+	          rows[rowIndex].push(_react2['default'].cloneElement(elm, { key: i++, isOnlyHead: true }));
+	        }
+	      });
+
+	      var trs = rows.map(function (row, indexRow) {
+	        return _react2['default'].createElement(
+	          'tr',
+	          { key: indexRow },
+	          row
+	        );
+	      });
+
+	      return _react2['default'].createElement(
+>>>>>>> 8e459efde34ceca5b45f208524231b60fc81aedc
 	        'div',
 	        { ref: 'container', className: containerClasses, style: this.props.style },
 	        _react2.default.createElement(
@@ -1793,6 +1950,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          { className: tableClasses },
 	          _react2.default.createElement(
 	            'thead',
+<<<<<<< HEAD
 	            null,
 	            _react2.default.createElement(
 	              'tr',
@@ -1812,15 +1970,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return _react2.default.cloneElement(elm, { key: i++, onSort: onSort, sort: sort, sortIndicator: sortIndicator });
 	              })
 	            )
+=======
+	            { ref: 'header' },
+	            trs
+>>>>>>> 8e459efde34ceca5b45f208524231b60fc81aedc
 	          )
 	        )
 	      );
 	    }
 	  }, {
 	    key: 'renderSelectRowHeader',
-	    value: function renderSelectRowHeader() {
+	    value: function renderSelectRowHeader(rowCount) {
 	      if (this.props.customComponent) {
 	        var CustomComponent = this.props.customComponent;
+<<<<<<< HEAD
 	        return _react2.default.createElement(
 	          _SelectRowHeaderColumn2.default,
 	          null,
@@ -1835,6 +1998,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _SelectRowHeaderColumn2.default,
 	          null,
 	          _react2.default.createElement(Checkbox, {
+=======
+	        return _react2['default'].createElement(
+	          _SelectRowHeaderColumn2['default'],
+	          { rowCount: rowCount },
+	          _react2['default'].createElement(CustomComponent, { type: 'checkbox', checked: this.props.isSelectAll,
+	            indeterminate: this.props.isSelectAll === 'indeterminate', disabled: false,
+	            onChange: this.props.onSelectAllRow, rowIndex: 'Header' })
+	        );
+	      } else if (this.props.rowSelectType === _Const2['default'].ROW_SELECT_SINGLE) {
+	        return _react2['default'].createElement(_SelectRowHeaderColumn2['default'], { rowCount: rowCount });
+	      } else if (this.props.rowSelectType === _Const2['default'].ROW_SELECT_MULTI) {
+	        return _react2['default'].createElement(
+	          _SelectRowHeaderColumn2['default'],
+	          { rowCount: rowCount },
+	          _react2['default'].createElement(Checkbox, {
+>>>>>>> 8e459efde34ceca5b45f208524231b60fc81aedc
 	            onChange: this.props.onSelectAllRow,
 	            checked: this.props.isSelectAll })
 	        );
@@ -1927,7 +2106,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'th',
-	        { style: { textAlign: 'center' } },
+	        { rowSpan: this.props.rowCount, style: { textAlign: 'center' },
+	          'data-is-only-head': false },
 	        this.props.children
 	      );
 	    }
@@ -1937,7 +2117,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	SelectRowHeaderColumn.propTypes = {
-	  children: _react.PropTypes.node
+	  children: _react.PropTypes.node,
+	  rowCount: _react.PropTypes.number
 	};
 	var _default = SelectRowHeaderColumn;
 	exports.default = _default;
@@ -10051,7 +10232,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          // when you want same auto generate value and not allow edit, example ID field
 	          var time = new Date().getTime();
 	          tempValue = typeof column.autoValue === 'function' ? column.autoValue() : 'autovalue-' + time;
-	        } else if (column.hiddenOnInsert) {
+	        } else if (column.hiddenOnInsert || !column.field) {
 	          tempValue = '';
 	        } else {
 	          var dom = this.refs[column.field + i];
@@ -10310,7 +10491,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          placeholder: editable.placeholder ? editable.placeholder : name
 	        };
 
-	        if (autoValue || hiddenOnInsert) {
+	        if (autoValue || hiddenOnInsert || !column.field) {
 	          // when you want same auto generate value
 	          // and not allow edit, for example ID field
 	          return null;
@@ -11401,9 +11582,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var dataString = '';
 	  if (data.length === 0) return dataString;
 
-	  dataString += keys.map(function (x) {
-	    return x.header;
-	  }).join(',') + '\n';
+	  var headCells = [];
+	  var rowCount = 0;
+	  keys.forEach(function (key) {
+	    if (key.row > rowCount) {
+	      rowCount = key.row;
+	    }
+	    // rowCount += (key.rowSpan + key.colSpan - 1);
+	    for (var index = 0; index < key.colSpan; index++) {
+	      headCells.push(key);
+	    }
+	  });
+
+	  var _loop = function (i) {
+	    dataString += headCells.map(function (x) {
+	      if (x.row + (x.rowSpan - 1) === i) {
+	        return x.header;
+	      }
+	      if (x.row === i && x.rowSpan > 1) {
+	        return '';
+	      }
+	    }).filter(function (key) {
+	      return typeof key !== 'undefined';
+	    }).join(',') + '\n';
+	  };
+
+	  for (var i = 0; i <= rowCount; i++) {
+	    _loop(i);
+	  }
+
+	  keys = keys.filter(function (key) {
+	    return key.field !== undefined;
+	  });
 
 	  data.map(function (row) {
 	    keys.map(function (col, i) {
@@ -12323,7 +12533,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _extends({ ref: 'header-col',
 	          className: classes,
 	          style: thStyle,
-	          onClick: this.handleColumnClick
+	          onClick: this.handleColumnClick,
+	          rowSpan: this.props.rowSpan,
+	          colSpan: this.props.colSpan,
+	          'data-is-only-head': this.props.isOnlyHead
 	        }, title),
 	        children,
 	        sortCaret,

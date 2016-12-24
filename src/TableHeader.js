@@ -31,45 +31,75 @@ class TableHeader extends Component {
       'table-bordered': this.props.bordered,
       'table-condensed': this.props.condensed
     }, this.props.tableHeaderClass);
-    let selectRowHeaderCol = null;
-    if (!this.props.hideSelectColumn) selectRowHeaderCol = this.renderSelectRowHeader();
     let i = 0;
+
+    let rowCount = 0;
+    React.Children.forEach(this.props.children, (elm) => {
+      if (Number(elm.props.row) > rowCount) {
+        rowCount = Number(elm.props.row);
+      }
+    });
+
+    const rows = [];
+
+    if (!this.props.hideSelectColumn) {
+      rows[0] = [ this.renderSelectRowHeader(rowCount + 1) ];
+    }
+
+    React.Children.forEach(this.props.children, (elm) => {
+      const { sortIndicator, sortName, sortOrder, onSort } = this.props;
+      const { dataField, dataSort } = elm.props;
+      const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
+      const rowIndex = elm.props.row ? Number(elm.props.row) : 0;
+      const rowSpan = elm.props.rowSpan ? Number(elm.props.rowSpan) : 1;
+      if (rows[rowIndex] === undefined) {
+        rows[rowIndex] = [];
+      }
+      if ((rowSpan + rowIndex) === (rowCount + 1)) {
+        rows[rowIndex].push(React.cloneElement(
+          elm, { key: i++, onSort, sort, sortIndicator, isOnlyHead: false }
+          ));
+      } else {
+        rows[rowIndex].push(React.cloneElement(
+          elm, { key: i++, isOnlyHead: true }
+          ));
+      }
+    });
+
+    const trs = rows.map((row, indexRow)=>{
+      return (
+        <tr key={ indexRow }>
+          { row }
+        </tr>
+      );
+    });
+
     return (
       <div ref='container' className={ containerClasses } style={ this.props.style }>
         <table className={ tableClasses }>
-          <thead>
-            <tr ref='header'>
-              { selectRowHeaderCol }
-              {
-                React.Children.map(this.props.children, (elm) => {
-                  const { sortIndicator, sortName, sortOrder, onSort } = this.props;
-                  const { dataField, dataSort } = elm.props;
-                  const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
-                  return React.cloneElement(elm, { key: i++, onSort, sort, sortIndicator });
-                })
-              }
-            </tr>
+          <thead ref='header'>
+            { trs }
           </thead>
         </table>
       </div>
     );
   }
 
-  renderSelectRowHeader() {
+  renderSelectRowHeader(rowCount) {
     if (this.props.customComponent) {
       const CustomComponent = this.props.customComponent;
       return (
-        <SelectRowHeaderColumn>
+        <SelectRowHeaderColumn rowCount={ rowCount }>
           <CustomComponent type='checkbox' checked={ this.props.isSelectAll }
             indeterminate={ this.props.isSelectAll === 'indeterminate' } disabled={ false }
             onChange={ this.props.onSelectAllRow } rowIndex='Header'/>
         </SelectRowHeaderColumn>
       );
     } else if (this.props.rowSelectType === Const.ROW_SELECT_SINGLE) {
-      return (<SelectRowHeaderColumn />);
+      return (<SelectRowHeaderColumn rowCount={ rowCount }/>);
     } else if (this.props.rowSelectType === Const.ROW_SELECT_MULTI) {
       return (
-        <SelectRowHeaderColumn>
+        <SelectRowHeaderColumn rowCount={ rowCount }>
           <Checkbox
             onChange={ this.props.onSelectAllRow }
             checked={ this.props.isSelectAll }/>
