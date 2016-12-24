@@ -808,13 +808,14 @@ class BootstrapTable extends Component {
         dataSize = this.store.getDataNum();
       }
       const { options } = this.props;
+      const withFirstAndLast = options.withFirstAndLast === undefined ? true : options.withFirstAndLast;
       if (Math.ceil(dataSize / this.state.sizePerPage) <= 1 &&
         this.props.ignoreSinglePage) return null;
       return (
         <div className='react-bs-table-pagination'>
           <PaginationList
             ref='pagination'
-            withFirstAndLast={ options.withFirstAndLast }
+            withFirstAndLast={ withFirstAndLast }
             alwaysShowAllBtns={ options.alwaysShowAllBtns }
             currPage={ this.state.currPage }
             changePage={ this.handlePaginationData }
