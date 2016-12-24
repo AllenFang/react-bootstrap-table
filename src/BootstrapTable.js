@@ -537,13 +537,8 @@ class BootstrapTable extends Component {
   handleEditCell(newVal, rowIndex, colIndex) {
     const { onCellEdit } = this.props.options;
     const { beforeSaveCell, afterSaveCell } = this.props.cellEdit;
-    let fieldName;
-    React.Children.forEach(this.props.children, function(column, i) {
-      if (i === colIndex) {
-        fieldName = column.props.dataField;
-        return false;
-      }
-    });
+    const columns = this.getColumnsDescription(this.props);
+    const fieldName = columns[colIndex].name;
 
     if (beforeSaveCell) {
       const isValid = beforeSaveCell(this.state.data[rowIndex], fieldName, newVal);
