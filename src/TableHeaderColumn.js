@@ -132,7 +132,7 @@ class TableHeaderColumn extends Component {
           { ...title }>
         { children }{ sortCaret }
         <div onClick={ e => e.stopPropagation() }>
-          { this.props.filter ? this.getFilters() : null }
+          { this.props.filter && !isOnlyHead ? this.getFilters() : null }
         </div>
       </th>
     );
