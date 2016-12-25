@@ -77,12 +77,17 @@ class TableHeader extends Component {
     return (
       <div ref='container' className={ containerClasses } style={ this.props.style }>
         <table className={ tableClasses }>
+          { React.cloneElement(this.props.colGroups, { ref: 'headerGrp' }) }
           <thead ref='header'>
             { trs }
           </thead>
         </table>
       </div>
     );
+  }
+
+  getHeaderColGrouop = () => {
+    return this.refs.headerGrp.childNodes;
   }
 
   renderSelectRowHeader(rowCount) {
@@ -125,7 +130,8 @@ TableHeader.propTypes = {
   isFiltered: PropTypes.bool,
   isSelectAll: PropTypes.oneOf([ true, 'indeterminate', false ]),
   sortIndicator: PropTypes.bool,
-  customComponent: PropTypes.func
+  customComponent: PropTypes.func,
+  colGroups: PropTypes.children
 };
 
 export default TableHeader;
