@@ -125,31 +125,41 @@ class BootstrapTable extends Component {
   }
 
   getColumnsDescription({ children }) {
+    let rowCount = 0;
+    React.Children.forEach(children, (column) => {
+      if (Number(column.props.row) > rowCount) {
+        rowCount = Number(column.props.row);
+      }
+    });
     return React.Children.map(children, (column, i) => {
-      return {
-        name: column.props.dataField,
-        align: column.props.dataAlign,
-        sort: column.props.dataSort,
-        format: column.props.dataFormat,
-        formatExtraData: column.props.formatExtraData,
-        filterFormatted: column.props.filterFormatted,
-        filterValue: column.props.filterValue,
-        editable: column.props.editable,
-        customEditor: column.props.customEditor,
-        hidden: column.props.hidden,
-        hiddenOnInsert: column.props.hiddenOnInsert,
-        searchable: column.props.searchable,
-        className: column.props.columnClassName,
-        editClassName: column.props.editColumnClassName,
-        columnTitle: column.props.columnTitle,
-        width: column.props.width,
-        text: column.props.headerText || column.props.children,
-        sortFunc: column.props.sortFunc,
-        sortFuncExtraData: column.props.sortFuncExtraData,
-        export: column.props.export,
-        expandable: column.props.expandable,
-        index: i
-      };
+      const rowIndex = column.props.row ? Number(column.props.row) : 0;
+      const rowSpan = column.props.rowSpan ? Number(column.props.rowSpan) : 1;
+      if ((rowSpan + rowIndex) === (rowCount + 1)) {
+        return {
+          name: column.props.dataField,
+          align: column.props.dataAlign,
+          sort: column.props.dataSort,
+          format: column.props.dataFormat,
+          formatExtraData: column.props.formatExtraData,
+          filterFormatted: column.props.filterFormatted,
+          filterValue: column.props.filterValue,
+          editable: column.props.editable,
+          customEditor: column.props.customEditor,
+          hidden: column.props.hidden,
+          hiddenOnInsert: column.props.hiddenOnInsert,
+          searchable: column.props.searchable,
+          className: column.props.columnClassName,
+          editClassName: column.props.editColumnClassName,
+          columnTitle: column.props.columnTitle,
+          width: column.props.width,
+          text: column.props.headerText || column.props.children,
+          sortFunc: column.props.sortFunc,
+          sortFuncExtraData: column.props.sortFuncExtraData,
+          export: column.props.export,
+          expandable: column.props.expandable,
+          index: i
+        };
+      }
     });
   }
 
@@ -262,6 +272,7 @@ class BootstrapTable extends Component {
     const toolBar = this.renderToolBar();
     const tableFilter = this.renderTableFilter(columns);
     const isSelectAll = this.isSelectAll();
+    const colGroups = Util.renderColGroup(columns, this.props.selectRow);
     let sortIndicator = this.props.options.sortIndicator;
     if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
     return (
@@ -275,6 +286,7 @@ class BootstrapTable extends Component {
             onMouseLeave={ this.handleMouseLeave }>
           <TableHeader
             ref='header'
+            colGroups={ colGroups }
             headerContainerClass={ this.props.headerContainerClass }
             tableHeaderClass={ this.props.tableHeaderClass }
             style={ this.props.headerStyle }
@@ -527,13 +539,8 @@ class BootstrapTable extends Component {
   handleEditCell(newVal, rowIndex, colIndex) {
     const { onCellEdit } = this.props.options;
     const { beforeSaveCell, afterSaveCell } = this.props.cellEdit;
-    let fieldName;
-    React.Children.forEach(this.props.children, function(column, i) {
-      if (i === colIndex) {
-        fieldName = column.props.dataField;
-        return false;
-      }
-    });
+    const columns = this.getColumnsDescription(this.props);
+    const fieldName = columns[colIndex].name;
 
     if (beforeSaveCell) {
       const isValid = beforeSaveCell(this.state.data[rowIndex], fieldName, newVal);
@@ -737,7 +744,10 @@ class BootstrapTable extends Component {
         keys.push({
           field: column.props.dataField,
           format: column.props.csvFormat,
-          header: column.props.csvHeader || column.props.dataField
+          header: column.props.csvHeader || column.props.dataField,
+          row: Number(column.props.row) || 0,
+          rowSpan: Number(column.props.rowSpan) || 1,
+          colSpan: Number(column.props.colSpan) || 1
         });
       }
     });
@@ -932,7 +942,7 @@ class BootstrapTable extends Component {
   }
 
   _adjustHeaderWidth = () => {
-    const header = this.refs.header.refs.header;
+    const header = this.refs.header.getHeaderColGrouop();
     const headerContainer = this.refs.header.refs.container;
     const tbody = this.refs.body.refs.tbody;
     const firstRow = tbody.childNodes[0];
@@ -957,14 +967,14 @@ class BootstrapTable extends Component {
           cell.width = width + lastPadding + 'px';
         }
         const result = width + lastPadding + 'px';
-        header.childNodes[i].style.width = result;
-        header.childNodes[i].style.minWidth = result;
+        header[i].style.width = result;
+        header[i].style.minWidth = result;
       }
     } else {
       React.Children.forEach(this.props.children, (child, i) => {
         if (child.props.width) {
-          header.childNodes[i].style.width = `${child.props.width}px`;
-          header.childNodes[i].style.minWidth = `${child.props.width}px`;
+          header[i].style.width = `${child.props.width}px`;
+          header[i].style.minWidth = `${child.props.width}px`;
         }
       });
     }
