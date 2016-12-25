@@ -272,6 +272,7 @@ class BootstrapTable extends Component {
     const toolBar = this.renderToolBar();
     const tableFilter = this.renderTableFilter(columns);
     const isSelectAll = this.isSelectAll();
+    const colGroups = Util.renderColGroup(columns, this.props.selectRow);
     let sortIndicator = this.props.options.sortIndicator;
     if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
     return (
@@ -285,6 +286,7 @@ class BootstrapTable extends Component {
             onMouseLeave={ this.handleMouseLeave }>
           <TableHeader
             ref='header'
+            colGroups={ colGroups }
             headerContainerClass={ this.props.headerContainerClass }
             tableHeaderClass={ this.props.tableHeaderClass }
             style={ this.props.headerStyle }
@@ -940,7 +942,7 @@ class BootstrapTable extends Component {
   }
 
   _adjustHeaderWidth = () => {
-    const header = this.refs.header.refs.header.querySelectorAll('[data-is-only-head=false]');
+    const header = this.refs.header.getHeaderColGrouop();
     const headerContainer = this.refs.header.refs.container;
     const tbody = this.refs.body.refs.tbody;
     const firstRow = tbody.childNodes[0];
