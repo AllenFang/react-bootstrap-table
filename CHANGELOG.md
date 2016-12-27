@@ -1,3 +1,8 @@
+<a name="v2.8.0"></a>
+# [v2.8.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.7.1...v2.8.0) (2016-12-25)
+## Features
+* Support colSpan and rowSpan on table header([8e459ef](https://github.com/AllenFang/react-bootstrap-table/commit/8e459efde34ceca5b45f208524231b60fc81aedc))
+
 <a name="v2.7.1"></a>
 # [v2.7.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.7.0...v2.7.1) (2016-12-18)
 ## Bug fixes
