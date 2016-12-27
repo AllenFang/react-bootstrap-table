@@ -39,7 +39,7 @@ class TableRow extends Component {
     if (e.target.tagName !== 'INPUT' &&
         e.target.tagName !== 'SELECT' &&
         e.target.tagName !== 'TEXTAREA') {
-      const rowIndex = e.currentTarget.rowIndex + 1;
+      const rowIndex = this.props.index;
       if (this.props.onRowDoubleClick) {
         this.props.onRowDoubleClick(rowIndex);
       }
@@ -47,14 +47,16 @@ class TableRow extends Component {
   }
 
   rowMouseOut = e => {
+    const rowIndex = this.props.index;
     if (this.props.onRowMouseOut) {
-      this.props.onRowMouseOut(e.currentTarget.rowIndex, e);
+      this.props.onRowMouseOut(rowIndex, e);
     }
   }
 
   rowMouseOver = e => {
+    const rowIndex = this.props.index;
     if (this.props.onRowMouseOver) {
-      this.props.onRowMouseOver(e.currentTarget.rowIndex, e);
+      this.props.onRowMouseOver(rowIndex, e);
     }
   }
 
