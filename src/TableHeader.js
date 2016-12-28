@@ -131,7 +131,7 @@ TableHeader.propTypes = {
   isSelectAll: PropTypes.oneOf([ true, 'indeterminate', false ]),
   sortIndicator: PropTypes.bool,
   customComponent: PropTypes.func,
-  colGroups: PropTypes.children
+  colGroups: PropTypes.element
 };
 
 export default TableHeader;
