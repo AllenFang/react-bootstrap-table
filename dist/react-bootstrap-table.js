@@ -1804,19 +1804,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'table-bordered': this.props.bordered,
 	        'table-condensed': this.props.condensed
 	      }, this.props.tableHeaderClass);
-	      var i = 0;
 
-	      var rowCount = 0;
-	      _react2.default.Children.forEach(this.props.children, function (elm) {
-	        if (Number(elm.props.row) > rowCount) {
-	          rowCount = Number(elm.props.row);
-	        }
-	      });
+	      var rowCount = Math.max(_react2.default.Children.map(this.props.children, function (elm) {
+	        return Number(elm.props.row);
+	      }));
 
 	      var rows = [];
+	      var rowKey = 0;
 
 	      if (!this.props.hideSelectColumn) {
-	        rows[0] = [this.renderSelectRowHeader(rowCount + 1)];
+	        rows[0] = [this.renderSelectRowHeader(rowCount + 1, rowKey++)];
 	      }
 
 	      _react2.default.Children.forEach(this.props.children, function (elm) {
@@ -1836,9 +1833,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          rows[rowIndex] = [];
 	        }
 	        if (rowSpan + rowIndex === rowCount + 1) {
-	          rows[rowIndex].push(_react2.default.cloneElement(elm, { key: i++, onSort: onSort, sort: sort, sortIndicator: sortIndicator, isOnlyHead: false }));
+	          rows[rowIndex].push(_react2.default.cloneElement(elm, { key: rowKey++, onSort: onSort, sort: sort, sortIndicator: sortIndicator, isOnlyHead: false }));
 	        } else {
-	          rows[rowIndex].push(_react2.default.cloneElement(elm, { key: i++, isOnlyHead: true }));
+	          rows[rowIndex].push(_react2.default.cloneElement(elm, { key: rowKey++, isOnlyHead: true }));
 	        }
 	      });
 
@@ -1872,22 +1869,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'renderSelectRowHeader',
-	    value: function renderSelectRowHeader(rowCount) {
+	    value: function renderSelectRowHeader(rowCount, rowKey) {
 	      if (this.props.customComponent) {
 	        var CustomComponent = this.props.customComponent;
 	        return _react2.default.createElement(
 	          _SelectRowHeaderColumn2.default,
-	          { rowCount: rowCount },
+	          { key: rowKey, rowCount: rowCount },
 	          _react2.default.createElement(CustomComponent, { type: 'checkbox', checked: this.props.isSelectAll,
 	            indeterminate: this.props.isSelectAll === 'indeterminate', disabled: false,
 	            onChange: this.props.onSelectAllRow, rowIndex: 'Header' })
 	        );
 	      } else if (this.props.rowSelectType === _Const2.default.ROW_SELECT_SINGLE) {
-	        return _react2.default.createElement(_SelectRowHeaderColumn2.default, { rowCount: rowCount });
+	        return _react2.default.createElement(_SelectRowHeaderColumn2.default, { key: rowKey, rowCount: rowCount });
 	      } else if (this.props.rowSelectType === _Const2.default.ROW_SELECT_MULTI) {
 	        return _react2.default.createElement(
 	          _SelectRowHeaderColumn2.default,
-	          { rowCount: rowCount },
+	          { key: rowKey, rowCount: rowCount },
 	          _react2.default.createElement(Checkbox, {
 	            onChange: this.props.onSelectAllRow,
 	            checked: this.props.isSelectAll })
@@ -1917,7 +1914,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  isSelectAll: _react.PropTypes.oneOf([true, 'indeterminate', false]),
 	  sortIndicator: _react.PropTypes.bool,
 	  customComponent: _react.PropTypes.func,
-	  colGroups: _react.PropTypes.children
+	  colGroups: _react.PropTypes.element
 	};
 
 	var _default = TableHeader;
@@ -2298,25 +2295,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleRowDoubleClick__REACT_HOT_LOADER__',
 	    value: function __handleRowDoubleClick__REACT_HOT_LOADER__(rowIndex) {
-	      var selectedRow = void 0;
-	      var _props = this.props,
-	          data = _props.data,
-	          onRowDoubleClick = _props.onRowDoubleClick;
+	      var onRowDoubleClick = this.props.onRowDoubleClick;
 
-	      data.forEach(function (row, i) {
-	        if (i === rowIndex - 1) {
-	          selectedRow = row;
-	        }
-	      });
-	      onRowDoubleClick(selectedRow);
+	      var targetRow = this.props.data[rowIndex];
+	      onRowDoubleClick(targetRow);
 	    }
 	  }, {
 	    key: '__handleSelectRow__REACT_HOT_LOADER__',
 	    value: function __handleSelectRow__REACT_HOT_LOADER__(rowIndex, isSelected, e) {
 	      var selectedRow = void 0;
-	      var _props2 = this.props,
-	          data = _props2.data,
-	          onSelectRow = _props2.onSelectRow;
+	      var _props = this.props,
+	          data = _props.data,
+	          onSelectRow = _props.onSelectRow;
 
 	      data.forEach(function (row, i) {
 	        if (i === rowIndex - 1) {
@@ -2338,12 +2328,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function __handleClickCell__REACT_HOT_LOADER__(rowIndex, columnIndex) {
 	      var _this2 = this;
 
-	      var _props3 = this.props,
-	          columns = _props3.columns,
-	          keyField = _props3.keyField,
-	          expandBy = _props3.expandBy,
-	          expandableRow = _props3.expandableRow,
-	          clickToExpand = _props3.selectRow.clickToExpand;
+	      var _props2 = this.props,
+	          columns = _props2.columns,
+	          keyField = _props2.keyField,
+	          expandBy = _props2.expandBy,
+	          expandableRow = _props2.expandableRow,
+	          clickToExpand = _props2.selectRow.clickToExpand;
 
 	      var selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
 
@@ -2672,24 +2662,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: '__rowDoubleClick__REACT_HOT_LOADER__',
 	    value: function __rowDoubleClick__REACT_HOT_LOADER__(e) {
 	      if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT' && e.target.tagName !== 'TEXTAREA') {
-	        var rowIndex = e.currentTarget.rowIndex + 1;
 	        if (this.props.onRowDoubleClick) {
-	          this.props.onRowDoubleClick(rowIndex);
+	          this.props.onRowDoubleClick(this.props.index);
 	        }
 	      }
 	    }
 	  }, {
 	    key: '__rowMouseOut__REACT_HOT_LOADER__',
 	    value: function __rowMouseOut__REACT_HOT_LOADER__(e) {
+	      var rowIndex = this.props.index;
 	      if (this.props.onRowMouseOut) {
-	        this.props.onRowMouseOut(e.currentTarget.rowIndex, e);
+	        this.props.onRowMouseOut(rowIndex, e);
 	      }
 	    }
 	  }, {
 	    key: '__rowMouseOver__REACT_HOT_LOADER__',
 	    value: function __rowMouseOver__REACT_HOT_LOADER__(e) {
+	      var rowIndex = this.props.index;
 	      if (this.props.onRowMouseOver) {
-	        this.props.onRowMouseOver(e.currentTarget.rowIndex, e);
+	        this.props.onRowMouseOver(rowIndex, e);
 	      }
 	    }
 	  }, {
