@@ -39,9 +39,8 @@ class TableRow extends Component {
     if (e.target.tagName !== 'INPUT' &&
         e.target.tagName !== 'SELECT' &&
         e.target.tagName !== 'TEXTAREA') {
-      const rowIndex = this.props.index;
       if (this.props.onRowDoubleClick) {
-        this.props.onRowDoubleClick(rowIndex);
+        this.props.onRowDoubleClick(this.props.index);
       }
     }
   }

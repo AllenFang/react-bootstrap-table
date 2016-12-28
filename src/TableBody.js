@@ -190,14 +190,9 @@ class TableBody extends Component {
   }
 
   handleRowDoubleClick = rowIndex => {
-    let selectedRow;
-    const { data, onRowDoubleClick } = this.props;
-    data.forEach((row, i) => {
-      if (i === rowIndex - 1) {
-        selectedRow = row;
-      }
-    });
-    onRowDoubleClick(selectedRow);
+    const { onRowDoubleClick } = this.props;
+    const targetRow = this.props.data[rowIndex];
+    onRowDoubleClick(targetRow);
   }
 
   handleSelectRow = (rowIndex, isSelected, e) => {
