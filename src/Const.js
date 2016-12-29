@@ -37,5 +37,7 @@ export default {
     NUMBER: 'NumberFilter',
     DATE: 'DateFilter',
     CUSTOM: 'CustomFilter'
-  }
+  },
+  EXPAND_BY_ROW: 'row',
+  EXPAND_BY_COL: 'column'
 };

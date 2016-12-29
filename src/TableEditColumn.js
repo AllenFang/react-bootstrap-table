@@ -100,7 +100,7 @@ class TableEditColumn extends Component {
   }
 
   render() {
-    const { editable, format, customEditor } = this.props;
+    const { editable, format, customEditor, className } = this.props;
     const { shakeEditor } = this.state;
     const attr = {
       ref: 'inputRef',
@@ -127,7 +127,7 @@ class TableEditColumn extends Component {
     }
 
     return (
-      <td ref='td' style={ { position: 'relative' } }>
+      <td ref='td' style={ { position: 'relative' } } className={ className }>
         { cellEditor }
         <Notifier ref='notifier'/>
       </td>
@@ -156,7 +156,8 @@ TableEditColumn.propTypes = {
     PropTypes.number,
     PropTypes.array,
     PropTypes.object
-  ])
+  ]),
+  className: PropTypes.any
 };
 
 

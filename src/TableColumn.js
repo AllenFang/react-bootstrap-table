@@ -60,6 +60,12 @@ class TableColumn extends Component {
       e);
   }
 
+  handleCellClick = e => {
+    this.props.onClick(this.props.rIndex + 1,
+      e.currentTarget.cellIndex,
+      e);
+  }
+
   render() {
     const {
       children,
@@ -82,6 +88,8 @@ class TableColumn extends Component {
         opts.onClick = this.handleCellEdit;
       } else if (cellEdit.mode === Const.CELL_EDIT_DBCLICK) {
         opts.onDoubleClick = this.handleCellEdit;
+      } else {
+        opts.onClick = this.handleCellClick;
       }
     }
     return (
@@ -100,7 +108,8 @@ TableColumn.propTypes = {
   hidden: PropTypes.bool,
   className: PropTypes.string,
   columnTitle: PropTypes.string,
-  children: PropTypes.node
+  children: PropTypes.node,
+  onClick: PropTypes.func
 };
 
 TableColumn.defaultProps = {

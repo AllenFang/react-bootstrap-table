@@ -15,7 +15,7 @@ class InsertModalBody extends Component {
         inputVal = typeof column.autoValue === 'function' ?
           column.autoValue() :
           (`autovalue-${time}`);
-      } else if (column.hiddenOnInsert) {
+      } else if (column.hiddenOnInsert || !column.field) {
         inputVal = '';
       } else {
         const dom = this.refs[column.field + i];
@@ -50,7 +50,7 @@ class InsertModalBody extends Component {
               placeholder: editable.placeholder ? editable.placeholder : name
             };
 
-            if (autoValue || hiddenOnInsert) {
+            if (autoValue || hiddenOnInsert || !column.field) {
               // when you want same auto generate value
               // and not allow edit, for example ID field
               return null;

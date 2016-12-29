@@ -1,3 +1,38 @@
+<a name="v2.8.0"></a>
+# [v2.8.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.7.1...v2.8.0) (2016-12-25)
+## Features
+* Support colSpan and rowSpan on table header([8e459ef](https://github.com/AllenFang/react-bootstrap-table/commit/8e459efde34ceca5b45f208524231b60fc81aedc))
+
+<a name="v2.7.1"></a>
+# [v2.7.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.7.0...v2.7.1) (2016-12-18)
+## Bug fixes
+* Fix layout error when expand row with a hidden column outside([460ba53](https://github.com/AllenFang/react-bootstrap-table/commit/460ba535fa12b4bfda54b034c044c52ebcd8543e))
+
+## Enhancement
+* Support ```editColumnClassName``` prop on ```<TableHeaderColumn>``` for separate from ```columnClassName```([dbc40d3](https://github.com/AllenFang/react-bootstrap-table/commit/dbc40d3acad89e805dbccdb29d261af4b8f6ab39))
+	* check [#892](https://github.com/AllenFang/react-bootstrap-table/issues/892)
+* Support ```headerText``` prop on ```<TableHeaderColumn>```([9183e71](https://github.com/AllenFang/react-bootstrap-table/commit/9183e7127d584818a59b6cd8833c0b787a0cf61d))
+	* It's optional but if you dont have a pure text as children in ```<TableHeaderColumn>```, you can configure this prop to avoid couple wanring when insert or filter.
+	* The value of this prop will be used on the placeholder or tip for filter or insert modal field.
+
+## Features
+* Allow to expand row by specified column or a row([95fbfd4](https://github.com/AllenFang/react-bootstrap-table/commit/95fbfd4edf3287d94282919fb3e7b0a7e2455390))
+	* Check [this](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/expandRow/expand-row-by-column.js) example
+	* Give ```expandBy``` in ```options``` props and assign as ```column``` or ```row```(```row``` is default)
+	* If you give ```expandBy``` as ```column```, all column can trigger expanding by click
+	* You can tell ```react-bootstrap-table``` which column can trigger expanding by ```expandable={ false }``` on ```<TableHeaderColumn>```
+
+<a name="v2.7.0"></a>
+# [v2.7.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.6.0...v2.7.0) (2016-12-13)
+## Bug fixes
+* Fixed calling ```handleSearch('')``` will no clear the text on search field([f7646dc](https://github.com/AllenFang/react-bootstrap-table/commit/f7646dcd9c5c2122c9447c9f20ac0d13d8c6761d))
+* Fixed ```getComputedStyle``` is not defined error([c9587b2](https://github.com/AllenFang/react-bootstrap-table/commit/c9587b25c06998eb443970b89302bac147840fd1))
+* Fixed fails in restricted network environment for ```react-toastr``` with a git url installation
+
+## Features
+* Support ```scrollTop``` prop on ```<BootstrapTable>```([20a0d65](https://github.com/AllenFang/react-bootstrap-table/commit/20a0d657624b88f7105482a1d0d3ca7e7d715ec2))
+	* Available valus is a numeric value or ```Top``` or ```Bottom```
+
 <a name="v2.6.0"></a>
 # [v2.6.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.5.9...v2.6.0) (2016-11-28)
 ## Bug fixes
