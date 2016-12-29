@@ -32,8 +32,9 @@ class TableHeader extends Component {
       'table-condensed': this.props.condensed
     }, this.props.tableHeaderClass);
 
-    const rowCount = Math.max(React.Children.map(this.props.children, elm =>
-      Number(elm.props.row)));
+    const rowCount = Math.max(...React.Children.map(this.props.children, elm =>
+      elm.props.row ? Number(elm.props.row) : 0
+    ));
 
     const rows = [];
     let rowKey = 0;
