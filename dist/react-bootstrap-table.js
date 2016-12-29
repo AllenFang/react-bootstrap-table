@@ -1730,6 +1730,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -1805,9 +1807,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'table-condensed': this.props.condensed
 	      }, this.props.tableHeaderClass);
 
-	      var rowCount = Math.max(_react2.default.Children.map(this.props.children, function (elm) {
-	        return Number(elm.props.row);
-	      }));
+	      var rowCount = Math.max.apply(Math, _toConsumableArray(_react2.default.Children.map(this.props.children, function (elm) {
+	        return elm.props.row ? Number(elm.props.row) : 0;
+	      })));
 
 	      var rows = [];
 	      var rowKey = 0;
