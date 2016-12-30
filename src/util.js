@@ -63,11 +63,10 @@ export default {
         display: column.hidden ? 'none' : null
       };
       if (column.width) {
-        const width = parseInt(column.width, 10);
-        style.width = width;
+        style.width = column.width;
         /** add min-wdth to fix user assign column width
         not eq offsetWidth in large column table **/
-        style.minWidth = width;
+        style.minWidth = column.width;
       }
       return (<col style={ style } key={ i } className={ column.className }></col>);
     });
