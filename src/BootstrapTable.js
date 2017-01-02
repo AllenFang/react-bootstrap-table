@@ -150,6 +150,7 @@ class BootstrapTable extends Component {
           searchable: column.props.searchable,
           className: column.props.columnClassName,
           editClassName: column.props.editColumnClassName,
+          invalidEditColumnClassName: column.props.invalidEditColumnClassName,
           columnTitle: column.props.columnTitle,
           width: column.props.width,
           text: column.props.headerText || column.props.children,

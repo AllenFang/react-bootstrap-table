@@ -7,8 +7,10 @@ class TableEditColumn extends Component {
   constructor(props) {
     super(props);
     this.timeouteClear = 0;
+    const { fieldValue, row, className } = this.props;
     this.state = {
-      shakeEditor: false
+      shakeEditor: false,
+      className: typeof className === 'function' ? className(fieldValue, row) : className
     };
   }
 
@@ -73,7 +75,11 @@ class TableEditColumn extends Component {
       if (!valid) {
         // animate input
         ts.clearTimeout();
-        ts.setState({ shakeEditor: true });
+        const { invalidColumnClassName, row } = this.props;
+        const className = typeof invalidColumnClassName === 'function' ?
+          invalidColumnClassName(value, row) :
+          invalidColumnClassName;
+        ts.setState({ shakeEditor: true, className });
         ts.timeouteClear = setTimeout(() => {
           ts.setState({ shakeEditor: false });
         }, 300);
@@ -100,8 +106,8 @@ class TableEditColumn extends Component {
   }
 
   render() {
-    const { editable, format, customEditor, className } = this.props;
-    const { shakeEditor } = this.state;
+    const { editable, format, customEditor } = this.props;
+    const { shakeEditor, className } = this.state;
     const attr = {
       ref: 'inputRef',
       onKeyDown: this.handleKeyPress,
@@ -127,7 +133,9 @@ class TableEditColumn extends Component {
     }
 
     return (
-      <td ref='td' style={ { position: 'relative' } } className={ className }>
+      <td ref='td'
+        style={ { position: 'relative' } }
+        className={ className }>
         { cellEditor }
         <Notifier ref='notifier'/>
       </td>

@@ -71,7 +71,8 @@ class TableBody extends Component {
                 colIndex={ i }
                 row={ data }
                 fieldValue={ fieldValue }
-                className={ column.editClassName } />
+                className={ column.editClassName }
+                invalidColumnClassName={ column.invalidEditColumnClassName } />
             );
         } else {
           // add by bluespring for className customize
