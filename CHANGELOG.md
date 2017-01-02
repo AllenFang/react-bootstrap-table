@@ -1,3 +1,16 @@
+<a name="v2.8.2"></a>
+# [v2.8.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.8.0...v2.8.2) (2016-12-29)
+## Bug fixes
+* Hot fixes for sort caret disappear after ```v2.8.1```([7e88e15](https://github.com/AllenFang/react-bootstrap-table/commit/7e88e151ae5eb5fcd58db718a0afa2a0ed08993b))
+
+<a name="v2.8.1"></a>
+# [v2.8.1(unpublish)](https://github.com/AllenFang/react-bootstrap-table/compare/v2.8.0...v2.8.1) (2016-12-28)
+## Bug fixes
+* Fixed onRowMouseOver called with wrong arguments when expandableRow enable([86270e2](https://github.com/AllenFang/react-bootstrap-table/commit/86270e2bf96c8bb3defd9655647a0c583ee17372))
+
+## Enhancement
+* Fixed TableHeader: prop type ```colGroups``` is invalid([11e9daa](https://github.com/AllenFang/react-bootstrap-table/commit/11e9daae65d9b5db4a615f82c890e7236dfa2a20))
+
 <a name="v2.8.0"></a>
 # [v2.8.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.7.1...v2.8.0) (2016-12-25)
 ## Features
