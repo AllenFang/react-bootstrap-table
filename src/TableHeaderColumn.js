@@ -24,7 +24,8 @@ class TableHeaderColumn extends Component {
   }
 
   handleFilter(value, type) {
-    this.props.filter.emitter.handleFilter(this.props.dataField, value, type);
+    const { filter } = this.props;
+    filter.emitter.handleFilter(this.props.dataField, value, type, filter);
   }
 
   getFilters() {
@@ -246,7 +247,8 @@ TableHeaderColumn.propTypes = {
     emitter: PropTypes.object,
     placeholder: PropTypes.string,
     getElement: PropTypes.func,
-    customFilterParameters: PropTypes.object
+    customFilterParameters: PropTypes.object,
+    condition: PropTypes.oneOf(Const.FILTER_CONDITION)
   }),
   sortIndicator: PropTypes.bool,
   export: PropTypes.bool,

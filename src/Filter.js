@@ -7,7 +7,7 @@ export class Filter extends EventEmitter {
     this.currentFilter = {};
   }
 
-  handleFilter(dataField, value, type) {
+  handleFilter(dataField, value, type, filterObj) {
     const filterType = type || Const.FILTER_TYPE.CUSTOM;
 
     if (value !== null && typeof value === 'object') {
