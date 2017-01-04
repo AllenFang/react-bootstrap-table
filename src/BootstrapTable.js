@@ -280,7 +280,7 @@ class BootstrapTable extends Component {
     const showPaginationOnBottom = paginationPosition !== Const.PAGINATION_POS_TOP;
 
     return (
-      <div className={ classSet('react-bs-table-container', this.props.containerClass) }
+      <div className={ classSet('react-bs-table-container', this.props.className, this.props.containerClass) }
         style={ this.props.containerStyle }>
         { toolBar }
         { showPaginationOnTop ? pagination : null }
