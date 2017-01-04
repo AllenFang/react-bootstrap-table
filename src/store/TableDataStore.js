@@ -350,7 +350,8 @@ export class TableDataStore {
     return this.filterText(targetVal, filterVal);
   }
 
-  filterText(targetVal, filterVal) {
+  filterText(targetVal, filterVal, cond) {
+    console.log(cond);
     targetVal = targetVal.toString().toLowerCase();
     filterVal = filterVal.toString().toLowerCase();
     if (targetVal.indexOf(filterVal) === -1) {
@@ -457,7 +458,7 @@ export class TableDataStore {
             filterFormatted && filterFormatted && format) {
             filterVal = format(filterVal, row, formatExtraData, r);
           }
-          valid = this.filterText(targetVal, filterVal);
+          valid = this.filterText(targetVal, filterVal, filterObj[key].props.cond);
           break;
         }
         }
