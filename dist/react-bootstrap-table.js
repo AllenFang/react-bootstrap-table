@@ -396,6 +396,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            searchable: column.props.searchable,
 	            className: column.props.columnClassName,
 	            editClassName: column.props.editColumnClassName,
+	            invalidEditColumnClassName: column.props.invalidEditColumnClassName,
 	            columnTitle: column.props.columnTitle,
 	            width: column.props.width,
 	            text: column.props.headerText || column.props.children,
@@ -403,7 +404,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            sortFuncExtraData: column.props.sortFuncExtraData,
 	            export: column.props.export,
 	            expandable: column.props.expandable,
-	            index: i
+	            index: i,
+	            attrs: column.props.tdAttr
 	          };
 	        }
 	      });
@@ -1680,6 +1682,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    DATE: 'DateFilter',
 	    CUSTOM: 'CustomFilter'
 	  },
+	  FILTER_COND_EQ: 'eq',
+	  FILTER_COND_LIKE: 'like',
 	  EXPAND_BY_ROW: 'row',
 	  EXPAND_BY_COL: 'column'
 	};
@@ -2170,7 +2174,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	              colIndex: i,
 	              row: data,
 	              fieldValue: fieldValue,
-	              className: column.editClassName });
+	              className: column.editClassName,
+	              invalidColumnClassName: column.invalidEditColumnClassName });
 	          } else {
 	            // add by bluespring for className customize
 	            var columnChild = fieldValue && fieldValue.toString();
@@ -2202,7 +2207,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                hidden: column.hidden,
 	                onEdit: this.handleEditCell,
 	                width: column.width,
-	                onClick: this.handleClickCell },
+	                onClick: this.handleClickCell,
+	                attrs: column.attrs },
 	              columnChild
 	            );
 	          }
@@ -2861,7 +2867,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          className = _props.className,
 	          dataAlign = _props.dataAlign,
 	          hidden = _props.hidden,
-	          cellEdit = _props.cellEdit;
+	          cellEdit = _props.cellEdit,
+	          attrs = _props.attrs;
 
 
 	      var tdStyle = {
@@ -2885,7 +2892,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _extends({ style: tdStyle,
 	          title: columnTitle,
 	          className: className
-	        }, opts),
+	        }, opts, attrs),
 	        typeof children === 'boolean' ? children.toString() : children
 	      );
 	    }
@@ -2901,7 +2908,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  className: _react.PropTypes.string,
 	  columnTitle: _react.PropTypes.string,
 	  children: _react.PropTypes.node,
-	  onClick: _react.PropTypes.func
+	  onClick: _react.PropTypes.func,
+	  attrs: _react.PropTypes.object
 	};
 
 	TableColumn.defaultProps = {
@@ -2986,8 +2994,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    _this.timeouteClear = 0;
+	    var _this$props = _this.props,
+	        fieldValue = _this$props.fieldValue,
+	        row = _this$props.row,
+	        className = _this$props.className;
+
 	    _this.state = {
-	      shakeEditor: false
+	      shakeEditor: false,
+	      className: typeof className === 'function' ? className(fieldValue, row) : className
 	    };
 	    return _this;
 	  }
@@ -3054,7 +3068,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (!valid) {
 	          // animate input
 	          ts.clearTimeout();
-	          ts.setState({ shakeEditor: true });
+	          var _props = this.props,
+	              invalidColumnClassName = _props.invalidColumnClassName,
+	              row = _props.row;
+
+	          var className = typeof invalidColumnClassName === 'function' ? invalidColumnClassName(value, row) : invalidColumnClassName;
+	          ts.setState({ shakeEditor: true, className: className });
 	          ts.timeouteClear = setTimeout(function () {
 	            ts.setState({ shakeEditor: false });
 	          }, 300);
@@ -3097,12 +3116,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props,
-	          editable = _props.editable,
-	          format = _props.format,
-	          customEditor = _props.customEditor,
-	          className = _props.className;
-	      var shakeEditor = this.state.shakeEditor;
+	      var _props2 = this.props,
+	          editable = _props2.editable,
+	          format = _props2.format,
+	          customEditor = _props2.customEditor;
+	      var _state = this.state,
+	          shakeEditor = _state.shakeEditor,
+	          className = _state.className;
 
 	      var attr = {
 	        ref: 'inputRef',
@@ -3130,7 +3150,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return _react2.default.createElement(
 	        'td',
-	        { ref: 'td', style: { position: 'relative' }, className: className },
+	        { ref: 'td',
+	          style: { position: 'relative' },
+	          className: className },
 	        cellEditor,
 	        _react2.default.createElement(_Notification2.default, { ref: 'notifier' })
 	      );
@@ -11159,22 +11181,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'filterCustom',
-	    value: function filterCustom(targetVal, filterVal, callbackInfo) {
+	    value: function filterCustom(targetVal, filterVal, callbackInfo, cond) {
 	      if (callbackInfo !== null && (typeof callbackInfo === 'undefined' ? 'undefined' : _typeof(callbackInfo)) === 'object') {
 	        return callbackInfo.callback(targetVal, callbackInfo.callbackParameters);
 	      }
 
-	      return this.filterText(targetVal, filterVal);
+	      return this.filterText(targetVal, filterVal, cond);
 	    }
 	  }, {
 	    key: 'filterText',
-	    value: function filterText(targetVal, filterVal) {
-	      targetVal = targetVal.toString().toLowerCase();
-	      filterVal = filterVal.toString().toLowerCase();
-	      if (targetVal.indexOf(filterVal) === -1) {
-	        return false;
+	    value: function filterText(targetVal, filterVal, cond) {
+	      targetVal = targetVal.toString();
+	      filterVal = filterVal.toString();
+	      if (cond === _Const2.default.FILTER_COND_EQ) {
+	        return targetVal === filterVal;
+	      } else {
+	        targetVal = targetVal.toLowerCase();
+	        filterVal = filterVal.toLowerCase();
+	        return !(targetVal.indexOf(filterVal) === -1);
 	      }
-	      return true;
 	    }
 
 	    /* General search function
@@ -11237,10 +11262,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	              }
 	            default:
 	              {
-	                filterVal = typeof filterObj[key].value === 'string' ? filterObj[key].value.toLowerCase() : filterObj[key].value;
+	                filterVal = filterObj[key].value;
 	                if (filterVal === undefined) {
 	                  // Support old filter
-	                  filterVal = filterObj[key].toLowerCase();
+	                  filterVal = filterObj[key];
 	                }
 	                break;
 	              }
@@ -11279,7 +11304,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              }
 	            case _Const2.default.FILTER_TYPE.CUSTOM:
 	              {
-	                valid = _this4.filterCustom(targetVal, filterVal, filterObj[key].value);
+	                valid = _this4.filterCustom(targetVal, filterVal, filterObj[key].value, filterObj[key].props.cond);
 	                break;
 	              }
 	            default:
@@ -11287,7 +11312,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (filterObj[key].type === _Const2.default.FILTER_TYPE.SELECT && filterFormatted && filterFormatted && format) {
 	                  filterVal = format(filterVal, row, formatExtraData, r);
 	                }
-	                valid = _this4.filterText(targetVal, filterVal);
+	                valid = _this4.filterText(targetVal, filterVal, filterObj[key].props.cond);
 	                break;
 	              }
 	          }
@@ -11869,8 +11894,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  _createClass(Filter, [{
 	    key: 'handleFilter',
-	    value: function handleFilter(dataField, value, type) {
+	    value: function handleFilter(dataField, value, type, filterObj) {
 	      var filterType = type || _Const2.default.FILTER_TYPE.CUSTOM;
+
+	      var props = {
+	        cond: filterObj.condition // Only for select and text filter
+	      };
 
 	      if (value !== null && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
 	        // value of the filter is an object
@@ -11883,14 +11912,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        // if one of the object properties is undefined or empty, we remove the filter
 	        if (hasValue) {
-	          this.currentFilter[dataField] = { value: value, type: filterType };
+	          this.currentFilter[dataField] = { value: value, type: filterType, props: props };
 	        } else {
 	          delete this.currentFilter[dataField];
 	        }
 	      } else if (!value || value.trim() === '') {
 	        delete this.currentFilter[dataField];
 	      } else {
-	        this.currentFilter[dataField] = { value: value.trim(), type: filterType };
+	        this.currentFilter[dataField] = { value: value.trim(), type: filterType, props: props };
 	      }
 	      this.emit('onFilterChange', this.currentFilter);
 	    }
@@ -12305,7 +12334,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'handleFilter',
 	    value: function handleFilter(value, type) {
-	      this.props.filter.emitter.handleFilter(this.props.dataField, value, type);
+	      var filter = this.props.filter;
+
+	      filter.emitter.handleFilter(this.props.dataField, value, type, filter);
 	    }
 	  }, {
 	    key: 'getFilters',
@@ -12530,6 +12561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  sortFuncExtraData: _react.PropTypes.any,
 	  columnClassName: _react.PropTypes.any,
 	  editColumnClassName: _react.PropTypes.any,
+	  invalidEditColumnClassName: _react.PropTypes.any,
 	  columnTitle: _react.PropTypes.bool,
 	  filterFormatted: _react.PropTypes.bool,
 	  filterValue: _react.PropTypes.func,
@@ -12546,11 +12578,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    emitter: _react.PropTypes.object,
 	    placeholder: _react.PropTypes.string,
 	    getElement: _react.PropTypes.func,
-	    customFilterParameters: _react.PropTypes.object
+	    customFilterParameters: _react.PropTypes.object,
+	    condition: _react.PropTypes.oneOf([_Const2.default.FILTER_COND_EQ, _Const2.default.FILTER_COND_LIKE])
 	  }),
 	  sortIndicator: _react.PropTypes.bool,
 	  export: _react.PropTypes.bool,
-	  expandable: _react.PropTypes.bool
+	  expandable: _react.PropTypes.bool,
+	  tdAttr: _react.PropTypes.object
 	};
 
 	TableHeaderColumn.defaultProps = {
@@ -12573,6 +12607,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  sortFunc: undefined,
 	  columnClassName: '',
 	  editColumnClassName: '',
+	  invalidEditColumnClassName: '',
 	  filterFormatted: false,
 	  filterValue: undefined,
 	  sort: undefined,
@@ -12580,7 +12615,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  sortFuncExtraData: undefined,
 	  filter: undefined,
 	  sortIndicator: true,
-	  expandable: true
+	  expandable: true,
+	  tdAttr: undefined
 	};
 
 	var _default = TableHeaderColumn;
