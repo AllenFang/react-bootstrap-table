@@ -131,9 +131,7 @@ export class TableDataStore {
     let currentDisplayData = this.getCurrentDisplayData();
     if (!this.colInfos[sortField]) return this;
 
-    const { sortFunc, sortFuncExtraData } = this.colInfos[sortField];
-    currentDisplayData =
-      this._sort(currentDisplayData, sortFunc, sortFuncExtraData);
+    currentDisplayData = this._sort(currentDisplayData);
 
     return this;
   }
@@ -523,7 +521,7 @@ export class TableDataStore {
     this.isOnFilter = true;
   }
 
-  _sort(arr, sortFunc, sortFuncExtraData) {
+  _sort(arr) {
     if (this.sortList.length === 0 || typeof(this.sortList[0]) === 'undefined') {
       return arr;
     }
@@ -534,6 +532,8 @@ export class TableDataStore {
       for (let i = 0; i < this.sortList.length; i++) {
         const sortDetails = this.sortList[i];
         const isDesc = sortDetails.order.toLowerCase() === Const.SORT_DESC;
+
+        const { sortFunc, sortFuncExtraData } = this.colInfos[sortDetails.sortField];
 
         if (sortFunc) {
           result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
