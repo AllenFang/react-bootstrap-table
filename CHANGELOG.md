@@ -7,6 +7,8 @@
 * Allow to configure the text, select or custom with a filter condition, default is ```like``` and ```eq``` is available.([a48e10c](https://github.com/AllenFang/react-bootstrap-table/commit/a48e10cb416382feaad47ad381d611e172513ea6))
 	* [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column-filter/text-filter-with-eq-condition.js) for text filter
 	* [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column-filter/select-filter-with-eq-condition.js) for select filter
+* Allow to add your own attribute on TD element([a44e189](https://github.com/AllenFang/react-bootstrap-table/commit/a44e18918a9c50bd9594b7f3f3af09a9ae608c5b))
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column/td-attribute-table.js)
 
 <a name="v2.8.2"></a>
 # [v2.8.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.8.0...v2.8.2) (2016-12-29)
