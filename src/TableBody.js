@@ -15,9 +15,7 @@ class TableBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currEditCell: null,
-      expanding: [],
-      lastExpand: null
+      currEditCell: null
     };
   }
 
@@ -142,7 +140,7 @@ class TableBody extends Component {
           <ExpandComponent
             className={ trClassName }
             bgColor={ this.props.expandRowBgColor || this.props.selectRow.bgColor || undefined }
-            hidden={ !(this.state.expanding.indexOf(key) > -1) }
+            hidden={ !(this.props.expanding.indexOf(key) > -1) }
             colSpan={ expandColSpan }
             width={ "100%" }>
             { this.props.expandComponent(data) }
@@ -236,15 +234,13 @@ class TableBody extends Component {
       (expandBy === Const.EXPAND_BY_ROW ||
       (expandBy === Const.EXPAND_BY_COL && columns[columnIndex].expandable))) {
       const rowKey = this.props.data[rowIndex - 1][keyField];
-      let expanding = this.state.expanding;
+      let expanding = this.props.expanding;
       if (expanding.indexOf(rowKey) > -1) {
         expanding = expanding.filter(k => k !== rowKey);
       } else {
         expanding.push(rowKey);
       }
-      this.setState({ expanding }, () => {
-        this.props.adjustHeaderWidth();
-      });
+      this.props.onExpand(expanding);
     }
   }
 
@@ -316,6 +312,7 @@ TableBody.propTypes = {
   expandComponent: PropTypes.func,
   expandRowBgColor: PropTypes.string,
   expandBy: PropTypes.string,
-  adjustHeaderWidth: PropTypes.func
+  expanding: PropTypes.array,
+  onExpand: PropTypes.func
 };
 export default TableBody;

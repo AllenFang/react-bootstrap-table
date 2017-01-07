@@ -40,6 +40,7 @@ class BootstrapTable extends Component {
     this.state = {
       data: this.getTableData(),
       currPage: currPage,
+      expanding: [],
       sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
       selectedRowKeys: this.store.getSelectedRowKeys()
     };
@@ -331,7 +332,8 @@ class BootstrapTable extends Component {
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
             noDataText={ this.props.options.noDataText }
-            adjustHeaderWidth={ this._adjustHeaderWidth } />
+            expanding={ this.state.expanding }
+            onExpand={ this.handleExpandRow } />
         </div>
         { tableFilter }
         { pagination }
@@ -387,6 +389,12 @@ class BootstrapTable extends Component {
     const result = this.store.sort(order, sortField).get();
     this.setState({
       data: result
+    });
+  }
+
+  handleExpandRow = expanding => {
+    this.setState({ expanding }, () => {
+      this.props.adjustHeaderWidth();
     });
   }
 
