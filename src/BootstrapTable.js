@@ -40,7 +40,7 @@ class BootstrapTable extends Component {
     this.state = {
       data: this.getTableData(),
       currPage: currPage,
-      expanding: [],
+      expanding: this.props.options.expanding || [],
       sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
       selectedRowKeys: this.store.getSelectedRowKeys()
     };
@@ -1141,7 +1141,8 @@ BootstrapTable.propTypes = {
     ignoreEditable: PropTypes.bool,
     defaultSearch: PropTypes.string,
     expandRowBgColor: PropTypes.string,
-    expandBy: PropTypes.string
+    expandBy: PropTypes.string,
+    expanding: PropTypes.array
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1243,7 +1244,8 @@ BootstrapTable.defaultProps = {
     ignoreEditable: false,
     defaultSearch: '',
     expandRowBgColor: undefined,
-    expandBy: Const.EXPAND_BY_ROW
+    expandBy: Const.EXPAND_BY_ROW,
+    expanding: []
   },
   fetchInfo: {
     dataTotalSize: 0
