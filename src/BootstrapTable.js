@@ -90,6 +90,7 @@ class BootstrapTable extends Component {
       keyField: keyField,
       colInfos: this.colInfos,
       multiColumnSearch: props.multiColumnSearch,
+      multiColumnSort: props.multiColumnSort,
       remote: this.isRemoteDataSource()
     });
   }
@@ -1191,6 +1192,7 @@ BootstrapTable.defaultProps = {
   deleteRow: false,
   search: false,
   multiColumnSearch: false,
+  multiColumnSort: 1,
   columnFilter: false,
   trClassName: '',
   tableStyle: undefined,
