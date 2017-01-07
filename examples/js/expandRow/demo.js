@@ -2,6 +2,7 @@
 import React from 'react';
 import ExpandRow from './expandRow';
 import ExpandByColumn from './expand-row-by-column';
+import ManageExpandExternal from './manage-expanding';
 import ExpandWithSelection from './expand-row-with-selection';
 import renderLinks from '../utils';
 
@@ -21,6 +22,10 @@ class Demo extends React.Component {
           <span>You can trigger expand row by column or row, default is row,
           configure <code>expandBy</code> in <code>options</code> props</span>
           <ExpandByColumn/>
+        </Panel>
+        <Panel header={ 'Manage the Expanding Row External' }>
+          { renderLinks('expandRow/expand-row-by-column.js') }
+          <ManageExpandExternal/>
         </Panel>
         <Panel header={ 'Expand Row with Selection' }>
           <span>You can enable/disable the expanding if you click row to select,
