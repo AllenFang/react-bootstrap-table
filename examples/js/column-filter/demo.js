@@ -2,10 +2,12 @@
 import React from 'react';
 import TextFilter from './text-filter';
 import TextFilterWithDefaultValue from './text-filter-with-default-value';
+import TextFilterWithCondition from './text-filter-with-eq-condition';
 import ProgrammaticallyTextFilter from './text-filter-programmatically';
 import RegexFilter from './regex-filter';
 import ProgrammaticallyRegexFilter from './regex-filter-programmatically';
 import SelectFilter from './select-filter';
+import SelectFilterWithCondition from './select-filter-with-eq-condition';
 import SelectFilterWithCustomText from './select-filter-with-select-text';
 import SelectFilterWithDefaultValue from './select-filter-with-default-value';
 import ProgrammaticallySelectFilter from './select-filter-programmatically';
@@ -46,6 +48,19 @@ class Demo extends React.Component {
             </div>
             <div className='col-md-offset-1 col-md-8'>
                 <div className='panel panel-default'>
+                    <div className='panel-heading'>Text Filter with EQ Condition Example</div>
+                    <div className='panel-body'>
+                        <h5>Source in /examples/js/column-filter/text-filter-with-eq-condition.js</h5>
+                        <span>
+                            The Text, Select and Custom filter will take the <code>condition</code>, this tell filter how to filter data.<br/>
+                            Default is <code>like</code>, and you can use <code>eq</code> to filter data with fully matching.
+                        </span>
+                        <TextFilterWithCondition />
+                    </div>
+                </div>
+            </div>
+            <div className='col-md-offset-1 col-md-8'>
+                <div className='panel panel-default'>
                     <div className='panel-heading'>Set Text Filter Programmatically</div>
                     <div className='panel-body'>
                         <h5>Source in /examples/js/column-filter/text-filter-programmatically.js</h5>
@@ -77,6 +92,19 @@ class Demo extends React.Component {
                     <div className='panel-body'>
                         <h5>Source in /examples/js/column-filter/select-filter.js</h5>
                         <SelectFilter />
+                    </div>
+                </div>
+            </div>
+            <div className='col-md-offset-1 col-md-8'>
+                <div className='panel panel-default'>
+                    <div className='panel-heading'>Select Filter with EQ Condition Example</div>
+                    <div className='panel-body'>
+                        <h5>Source in /examples/js/column-filter/select-filter-with-eq-condition.js</h5>
+                        <span>
+                            The Text, Select and Custom filter will take the <code>condition</code>, this tell filter how to filter data.<br/>
+                            Default is <code>like</code>, and you can use <code>eq</code> to filter data with fully matching.
+                        </span>
+                        <SelectFilterWithCondition />
                     </div>
                 </div>
             </div>
