@@ -248,7 +248,7 @@ TableHeaderColumn.propTypes = {
     placeholder: PropTypes.string,
     getElement: PropTypes.func,
     customFilterParameters: PropTypes.object,
-    condition: PropTypes.oneOf(Const.FILTER_CONDITION)
+    condition: PropTypes.oneOf([ Const.FILTER_COND_EQ, Const.FILTER_COND_LIKE ])
   }),
   sortIndicator: PropTypes.bool,
   export: PropTypes.bool,

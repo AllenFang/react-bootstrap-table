@@ -35,7 +35,8 @@ export default {
     DATE: 'DateFilter',
     CUSTOM: 'CustomFilter'
   },
-  FILTER_CONDITION: [ 'eq', 'like' ],
+  FILTER_COND_EQ: 'eq',
+  FILTER_COND_LIKE: 'like',
   EXPAND_BY_ROW: 'row',
   EXPAND_BY_COL: 'column'
 };
