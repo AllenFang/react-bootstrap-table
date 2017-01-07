@@ -342,22 +342,24 @@ export class TableDataStore {
     }
   }
 
-  filterCustom(targetVal, filterVal, callbackInfo) {
+  filterCustom(targetVal, filterVal, callbackInfo, cond) {
     if (callbackInfo !== null && typeof callbackInfo === 'object') {
       return callbackInfo.callback(targetVal, callbackInfo.callbackParameters);
     }
 
-    return this.filterText(targetVal, filterVal);
+    return this.filterText(targetVal, filterVal, cond);
   }
 
   filterText(targetVal, filterVal, cond) {
-    console.log(cond);
-    targetVal = targetVal.toString().toLowerCase();
-    filterVal = filterVal.toString().toLowerCase();
-    if (targetVal.indexOf(filterVal) === -1) {
-      return false;
+    targetVal = targetVal.toString();
+    filterVal = filterVal.toString();
+    if (cond === Const.FILTER_COND_EQ) {
+      return targetVal === filterVal;
+    } else {
+      targetVal = targetVal.toLowerCase();
+      filterVal = filterVal.toLowerCase();
+      return !(targetVal.indexOf(filterVal) === -1);
     }
-    return true;
   }
 
   /* General search function
@@ -413,12 +415,10 @@ export class TableDataStore {
           break;
         }
         default: {
-          filterVal = (typeof filterObj[key].value === 'string') ?
-            filterObj[key].value.toLowerCase() :
-            filterObj[key].value;
+          filterVal = filterObj[key].value;
           if (filterVal === undefined) {
             // Support old filter
-            filterVal = filterObj[key].toLowerCase();
+            filterVal = filterObj[key];
           }
           break;
         }
@@ -450,7 +450,8 @@ export class TableDataStore {
           break;
         }
         case Const.FILTER_TYPE.CUSTOM: {
-          valid = this.filterCustom(targetVal, filterVal, filterObj[key].value);
+          valid = this.filterCustom(targetVal, filterVal,
+            filterObj[key].value, filterObj[key].props.cond);
           break;
         }
         default: {
