@@ -1,3 +1,13 @@
+<a name="v2.8.3"></a>
+# [v2.8.3](https://github.com/AllenFang/react-bootstrap-table/compare/v2.8.2...v2.8.3) (2017-01-07)
+## Enhancement
+* Add ```invalidEditColumnClassName``` props on ```TableHeaderColumn``` for supporting the class on cell editing fail([4ddc906](https://github.com/AllenFang/react-bootstrap-table/commit/4ddc906390d1dc0857f4c4062142610c779c6015))
+
+## Features
+* Allow to configure the text, select or custom with a filter condition, default is ```like``` and ```eq``` is available.([a48e10c](https://github.com/AllenFang/react-bootstrap-table/commit/a48e10cb416382feaad47ad381d611e172513ea6))
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column-filter/text-filter-with-eq-condition.js) for text filter
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column-filter/select-filter-with-eq-condition.js) for select filter
+
 <a name="v2.8.2"></a>
 # [v2.8.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.8.0...v2.8.2) (2016-12-29)
 ## Bug fixes
