@@ -252,7 +252,8 @@ TableHeaderColumn.propTypes = {
   }),
   sortIndicator: PropTypes.bool,
   export: PropTypes.bool,
-  expandable: PropTypes.bool
+  expandable: PropTypes.bool,
+  tdAttr: PropTypes.object
 };
 
 TableHeaderColumn.defaultProps = {
@@ -283,7 +284,8 @@ TableHeaderColumn.defaultProps = {
   sortFuncExtraData: undefined,
   filter: undefined,
   sortIndicator: true,
-  expandable: true
+  expandable: true,
+  tdAttr: undefined
 };
 
 export default TableHeaderColumn;
