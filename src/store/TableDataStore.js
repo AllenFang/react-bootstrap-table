@@ -50,34 +50,51 @@ export class TableDataStore {
   }
 
   setSortInfo(order, sortField) {
-    const sortObj = {
-      order: order,
-      sortField: sortField
-    };
-
-    if (this.multiColumnSort > 1) {
-      let i = this.sortList.length - 1;
-      let sortFieldInHistory = false;
-
-      for (; i >= 0; i--) {
-        if (this.sortList[i].sortField === sortField) {
-          sortFieldInHistory = true;
-          break;
-        }
+    if (typeof order !== typeof sortField) {
+      throw new Error('The type of sort field and order should be both with String or Array');
+    }
+    if (Array.isArray(order) && Array.isArray(sortField)) {
+      if (order.length !== sortField.length) {
+        throw new Error('The length of sort fields and orders should be equivalent');
       }
-
-      if (sortFieldInHistory) {
-        if (i > 0) {
-          this.sortList = this.sortList.slice(0, i);
-        } else {
-          this.sortList = this.sortList.slice(1);
-        }
-      }
-
-      this.sortList.unshift(sortObj);
+      order = order.reverse();
+      this.sortList = sortField.reverse().map((field, i) => {
+        return {
+          order: order[i],
+          sortField: field
+        };
+      });
       this.sortList = this.sortList.slice(0, this.multiColumnSort);
     } else {
-      this.sortList = [ sortObj ];
+      const sortObj = {
+        order: order,
+        sortField: sortField
+      };
+
+      if (this.multiColumnSort > 1) {
+        let i = this.sortList.length - 1;
+        let sortFieldInHistory = false;
+
+        for (; i >= 0; i--) {
+          if (this.sortList[i].sortField === sortField) {
+            sortFieldInHistory = true;
+            break;
+          }
+        }
+
+        if (sortFieldInHistory) {
+          if (i > 0) {
+            this.sortList = this.sortList.slice(0, i);
+          } else {
+            this.sortList = this.sortList.slice(1);
+          }
+        }
+
+        this.sortList.unshift(sortObj);
+        this.sortList = this.sortList.slice(0, this.multiColumnSort);
+      } else {
+        this.sortList = [ sortObj ];
+      }
     }
   }
 
