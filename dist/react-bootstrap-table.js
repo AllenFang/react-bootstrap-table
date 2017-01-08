@@ -167,6 +167,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.__handleSort__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+	    _this.handleExpandRow = function () {
+	      return _this.__handleExpandRow__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
 	    _this.handlePaginationData = function () {
 	      return _this.__handlePaginationData__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
@@ -274,6 +278,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _this.state = {
 	      data: _this.getTableData(),
 	      currPage: currPage,
+	      expanding: _this.props.options.expanding || [],
 	      sizePerPage: _this.props.options.sizePerPage || _Const2.default.SIZE_PER_PAGE_LIST[0],
 	      selectedRowKeys: _this.store.getSelectedRowKeys()
 	    };
@@ -328,6 +333,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        keyField: keyField,
 	        colInfos: this.colInfos,
 	        multiColumnSearch: props.multiColumnSearch,
+	        multiColumnSort: props.multiColumnSort,
 	        remote: this.isRemoteDataSource()
 	      });
 	    }
@@ -594,7 +600,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onRowMouseOut: this.handleRowMouseOut,
 	            onSelectRow: this.handleSelectRow,
 	            noDataText: this.props.options.noDataText,
-	            adjustHeaderWidth: this._adjustHeaderWidth })
+	            expanding: this.state.expanding,
+	            onExpand: this.handleExpandRow })
 	        ),
 	        tableFilter,
 	        pagination
@@ -648,6 +655,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var result = this.store.sort(order, sortField).get();
 	      this.setState({
 	        data: result
+	      });
+	    }
+	  }, {
+	    key: '__handleExpandRow__REACT_HOT_LOADER__',
+	    value: function __handleExpandRow__REACT_HOT_LOADER__(expanding) {
+	      var _this3 = this;
+
+	      this.setState({ expanding: expanding }, function () {
+	        _this3.props.adjustHeaderWidth();
 	      });
 	    }
 	  }, {
@@ -928,14 +944,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleDropRow__REACT_HOT_LOADER__',
 	    value: function __handleDropRow__REACT_HOT_LOADER__(rowKeys) {
-	      var _this3 = this;
+	      var _this4 = this;
 
 	      var dropRowKeys = rowKeys ? rowKeys : this.store.getSelectedRowKeys();
 	      // add confirm before the delete action if that option is set.
 	      if (dropRowKeys && dropRowKeys.length > 0) {
 	        if (this.props.options.handleConfirmDeleteRow) {
 	          this.props.options.handleConfirmDeleteRow(function () {
-	            _this3.deleteRow(dropRowKeys);
+	            _this4.deleteRow(dropRowKeys);
 	          }, dropRowKeys);
 	        } else if (confirm('Are you sure you want to delete?')) {
 	          this.deleteRow(dropRowKeys);
@@ -1448,7 +1464,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    ignoreEditable: _react.PropTypes.bool,
 	    defaultSearch: _react.PropTypes.string,
 	    expandRowBgColor: _react.PropTypes.string,
-	    expandBy: _react.PropTypes.string
+	    expandBy: _react.PropTypes.string,
+	    expanding: _react.PropTypes.array
 	  }),
 	  fetchInfo: _react.PropTypes.shape({
 	    dataTotalSize: _react.PropTypes.number
@@ -1497,6 +1514,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  deleteRow: false,
 	  search: false,
 	  multiColumnSearch: false,
+	  multiColumnSort: 1,
 	  columnFilter: false,
 	  trClassName: '',
 	  tableStyle: undefined,
@@ -1550,7 +1568,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    ignoreEditable: false,
 	    defaultSearch: '',
 	    expandRowBgColor: undefined,
-	    expandBy: _Const2.default.EXPAND_BY_ROW
+	    expandBy: _Const2.default.EXPAND_BY_ROW,
+	    expanding: []
 	  },
 	  fetchInfo: {
 	    dataTotalSize: 0
@@ -2116,9 +2135,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    _this.state = {
-	      currEditCell: null,
-	      expanding: [],
-	      lastExpand: null
+	      currEditCell: null
 	    };
 	    return _this;
 	  }
@@ -2244,7 +2261,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            {
 	              className: trClassName,
 	              bgColor: this.props.expandRowBgColor || this.props.selectRow.bgColor || undefined,
-	              hidden: !(this.state.expanding.indexOf(key) > -1),
+	              hidden: !(this.props.expanding.indexOf(key) > -1),
 	              colSpan: expandColSpan,
 	              width: "100%" },
 	            this.props.expandComponent(data)
@@ -2348,7 +2365,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (expandableRow && selectRowAndExpand && (expandBy === _Const2.default.EXPAND_BY_ROW || expandBy === _Const2.default.EXPAND_BY_COL && columns[columnIndex].expandable)) {
 	        (function () {
 	          var rowKey = _this2.props.data[rowIndex - 1][keyField];
-	          var expanding = _this2.state.expanding;
+	          var expanding = _this2.props.expanding;
 	          if (expanding.indexOf(rowKey) > -1) {
 	            expanding = expanding.filter(function (k) {
 	              return k !== rowKey;
@@ -2356,9 +2373,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          } else {
 	            expanding.push(rowKey);
 	          }
-	          _this2.setState({ expanding: expanding }, function () {
-	            _this2.props.adjustHeaderWidth();
-	          });
+	          _this2.props.onExpand(expanding);
 	        })();
 	      }
 	    }
@@ -2442,7 +2457,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  expandComponent: _react.PropTypes.func,
 	  expandRowBgColor: _react.PropTypes.string,
 	  expandBy: _react.PropTypes.string,
-	  adjustHeaderWidth: _react.PropTypes.func
+	  expanding: _react.PropTypes.array,
+	  onExpand: _react.PropTypes.func
 	};
 	var _default = TableBody;
 	exports.default = _default;
@@ -10794,34 +10810,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _sort(arr, sortField, order, sortFunc, sortFuncExtraData) {
-	  order = order.toLowerCase();
-	  var isDesc = order === _Const2.default.SORT_DESC;
-	  arr.sort(function (a, b) {
-	    if (sortFunc) {
-	      return sortFunc(a, b, order, sortField, sortFuncExtraData);
-	    } else {
-	      var valueA = a[sortField] === null ? '' : a[sortField];
-	      var valueB = b[sortField] === null ? '' : b[sortField];
-	      if (isDesc) {
-	        if (typeof valueB === 'string') {
-	          return valueB.localeCompare(valueA);
-	        } else {
-	          return valueA > valueB ? -1 : valueA < valueB ? 1 : 0;
-	        }
-	      } else {
-	        if (typeof valueA === 'string') {
-	          return valueA.localeCompare(valueB);
-	        } else {
-	          return valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
-	        }
-	      }
-	    }
-	  });
-
-	  return arr;
-	}
-
 	var TableDataStore = function () {
 	  function TableDataStore(data) {
 	    _classCallCheck(this, TableDataStore);
@@ -10833,9 +10821,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.filterObj = null;
 	    this.searchText = null;
 	    this.sortObj = null;
+	    this.sortList = [];
 	    this.pageObj = {};
 	    this.selected = [];
 	    this.multiColumnSearch = false;
+	    this.multiColumnSort = 1;
 	    this.showOnlySelected = false;
 	    this.remote = false; // remote data
 	  }
@@ -10848,6 +10838,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.colInfos = props.colInfos;
 	      this.remote = props.remote;
 	      this.multiColumnSearch = props.multiColumnSearch;
+	      this.multiColumnSort = props.multiColumnSort;
 	    }
 	  }, {
 	    key: 'setData',
@@ -10876,6 +10867,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	        order: order,
 	        sortField: sortField
 	      };
+
+	      if (this.multiColumnSort > 1) {
+	        var i = this.sortList.length - 1;
+	        var sortFieldInHistory = false;
+
+	        for (; i >= 0; i--) {
+	          if (this.sortList[i].sortField === sortField) {
+	            sortFieldInHistory = true;
+	            break;
+	          }
+	        }
+
+	        if (sortFieldInHistory) {
+	          if (i > 0) {
+	            this.sortList = this.sortList.slice(0, i);
+	          } else {
+	            this.sortList = this.sortList.slice(1);
+	          }
+	        }
+
+	        this.sortList.unshift(this.sortObj);
+	        this.sortList = this.sortList.slice(0, this.multiColumnSort);
+	      } else {
+	        this.sortList = [this.sortObj];
+	      }
 	    }
 	  }, {
 	    key: 'setSelectedRowKey',
@@ -10945,7 +10961,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          sortFunc = _colInfos$sortField.sortFunc,
 	          sortFuncExtraData = _colInfos$sortField.sortFuncExtraData;
 
-	      currentDisplayData = _sort(currentDisplayData, sortField, order, sortFunc, sortFuncExtraData);
+	      currentDisplayData = this._sort(currentDisplayData, sortFunc, sortFuncExtraData);
 
 	      return this;
 	    }
@@ -11379,6 +11395,52 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.isOnFilter = true;
 	    }
 	  }, {
+	    key: '_sort',
+	    value: function _sort(arr, sortFunc, sortFuncExtraData) {
+	      var _this6 = this;
+
+	      if (this.sortList.length === 0 || typeof this.sortList[0] === 'undefined') {
+	        return arr;
+	      }
+
+	      arr.sort(function (a, b) {
+	        var result = 0;
+
+	        for (var i = 0; i < _this6.sortList.length; i++) {
+	          var sortDetails = _this6.sortList[i];
+	          var isDesc = sortDetails.order.toLowerCase() === _Const2.default.SORT_DESC;
+
+	          if (sortFunc) {
+	            result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
+	          } else {
+	            var valueA = a[sortDetails.sortField] === null ? '' : a[sortDetails.sortField];
+	            var valueB = b[sortDetails.sortField] === null ? '' : b[sortDetails.sortField];
+	            if (isDesc) {
+	              if (typeof valueB === 'string') {
+	                result = valueB.localeCompare(valueA);
+	              } else {
+	                result = valueA > valueB ? -1 : valueA < valueB ? 1 : 0;
+	              }
+	            } else {
+	              if (typeof valueA === 'string') {
+	                result = valueA.localeCompare(valueB);
+	              } else {
+	                result = valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
+	              }
+	            }
+	          }
+
+	          if (result !== 0) {
+	            return result;
+	          }
+	        }
+
+	        return result;
+	      });
+
+	      return arr;
+	    }
+	  }, {
 	    key: 'getDataIgnoringPagination',
 	    value: function getDataIgnoringPagination() {
 	      return this.getCurrentDisplayData();
@@ -11424,10 +11486,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'getAllRowkey',
 	    value: function getAllRowkey() {
-	      var _this6 = this;
+	      var _this7 = this;
 
 	      return this.data.map(function (row) {
-	        return row[_this6.keyField];
+	        return row[_this7.keyField];
 	      });
 	    }
 	  }]);
@@ -11442,8 +11504,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
 	    return;
 	  }
-
-	  __REACT_HOT_LOADER__.register(_sort, '_sort', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/store/TableDataStore.js');
 
 	  __REACT_HOT_LOADER__.register(TableDataStore, 'TableDataStore', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/store/TableDataStore.js');
 	}();

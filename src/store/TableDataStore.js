@@ -5,34 +5,6 @@
 /* eslint one-var: 0 */
 import Const from '../Const';
 
-function _sort(arr, sortField, order, sortFunc, sortFuncExtraData) {
-  order = order.toLowerCase();
-  const isDesc = order === Const.SORT_DESC;
-  arr.sort((a, b) => {
-    if (sortFunc) {
-      return sortFunc(a, b, order, sortField, sortFuncExtraData);
-    } else {
-      const valueA = a[sortField] === null ? '' : a[sortField];
-      const valueB = b[sortField] === null ? '' : b[sortField];
-      if (isDesc) {
-        if (typeof valueB === 'string') {
-          return valueB.localeCompare(valueA);
-        } else {
-          return valueA > valueB ? -1 : ((valueA < valueB) ? 1 : 0);
-        }
-      } else {
-        if (typeof valueA === 'string') {
-          return valueA.localeCompare(valueB);
-        } else {
-          return valueA < valueB ? -1 : ((valueA > valueB) ? 1 : 0);
-        }
-      }
-    }
-  });
-
-  return arr;
-}
-
 export class TableDataStore {
 
   constructor(data) {
@@ -42,10 +14,11 @@ export class TableDataStore {
     this.isOnFilter = false;
     this.filterObj = null;
     this.searchText = null;
-    this.sortObj = null;
+    this.sortList = [];
     this.pageObj = {};
     this.selected = [];
     this.multiColumnSearch = false;
+    this.multiColumnSort = 1;
     this.showOnlySelected = false;
     this.remote = false; // remote data
   }
@@ -56,6 +29,7 @@ export class TableDataStore {
     this.colInfos = props.colInfos;
     this.remote = props.remote;
     this.multiColumnSearch = props.multiColumnSearch;
+    this.multiColumnSort = props.multiColumnSort;
   }
 
   setData(data) {
@@ -72,14 +46,56 @@ export class TableDataStore {
   }
 
   getSortInfo() {
-    return this.sortObj;
+    return this.sortList;
   }
 
   setSortInfo(order, sortField) {
-    this.sortObj = {
-      order: order,
-      sortField: sortField
-    };
+    if (typeof order !== typeof sortField) {
+      throw new Error('The type of sort field and order should be both with String or Array');
+    }
+    if (Array.isArray(order) && Array.isArray(sortField)) {
+      if (order.length !== sortField.length) {
+        throw new Error('The length of sort fields and orders should be equivalent');
+      }
+      order = order.reverse();
+      this.sortList = sortField.reverse().map((field, i) => {
+        return {
+          order: order[i],
+          sortField: field
+        };
+      });
+      this.sortList = this.sortList.slice(0, this.multiColumnSort);
+    } else {
+      const sortObj = {
+        order: order,
+        sortField: sortField
+      };
+
+      if (this.multiColumnSort > 1) {
+        let i = this.sortList.length - 1;
+        let sortFieldInHistory = false;
+
+        for (; i >= 0; i--) {
+          if (this.sortList[i].sortField === sortField) {
+            sortFieldInHistory = true;
+            break;
+          }
+        }
+
+        if (sortFieldInHistory) {
+          if (i > 0) {
+            this.sortList = this.sortList.slice(0, i);
+          } else {
+            this.sortList = this.sortList.slice(1);
+          }
+        }
+
+        this.sortList.unshift(sortObj);
+        this.sortList = this.sortList.slice(0, this.multiColumnSort);
+      } else {
+        this.sortList = [ sortObj ];
+      }
+    }
   }
 
   setSelectedRowKey(selectedRowKeys) {
@@ -107,8 +123,8 @@ export class TableDataStore {
       if (this.filterObj !== null) this.filter(this.filterObj);
       if (this.searchText !== null) this.search(this.searchText);
     }
-    if (!skipSorting && this.sortObj) {
-      this.sort(this.sortObj.order, this.sortObj.sortField);
+    if (!skipSorting && this.sortList.length > 0) {
+      this.sort();
     }
   }
 
@@ -125,14 +141,10 @@ export class TableDataStore {
     }
   }
 
-  sort(order, sortField) {
-    this.setSortInfo(order, sortField);
-
+  sort() {
     let currentDisplayData = this.getCurrentDisplayData();
-    if (!this.colInfos[sortField]) return this;
 
-    const { sortFunc, sortFuncExtraData } = this.colInfos[sortField];
-    currentDisplayData = _sort(currentDisplayData, sortField, order, sortFunc, sortFuncExtraData);
+    currentDisplayData = this._sort(currentDisplayData);
 
     return this;
   }
@@ -520,6 +532,51 @@ export class TableDataStore {
       return valid;
     });
     this.isOnFilter = true;
+  }
+
+  _sort(arr) {
+    if (this.sortList.length === 0 || typeof(this.sortList[0]) === 'undefined') {
+      return arr;
+    }
+
+    arr.sort((a, b) => {
+      let result = 0;
+
+      for (let i = 0; i < this.sortList.length; i++) {
+        const sortDetails = this.sortList[i];
+        const isDesc = sortDetails.order.toLowerCase() === Const.SORT_DESC;
+
+        const { sortFunc, sortFuncExtraData } = this.colInfos[sortDetails.sortField];
+
+        if (sortFunc) {
+          result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
+        } else {
+          const valueA = a[sortDetails.sortField] === null ? '' : a[sortDetails.sortField];
+          const valueB = b[sortDetails.sortField] === null ? '' : b[sortDetails.sortField];
+          if (isDesc) {
+            if (typeof valueB === 'string') {
+              result = valueB.localeCompare(valueA);
+            } else {
+              result = valueA > valueB ? -1 : ((valueA < valueB) ? 1 : 0);
+            }
+          } else {
+            if (typeof valueA === 'string') {
+              result = valueA.localeCompare(valueB);
+            } else {
+              result = valueA < valueB ? -1 : ((valueA > valueB) ? 1 : 0);
+            }
+          }
+        }
+
+        if (result !== 0) {
+          return result;
+        }
+      }
+
+      return result;
+    });
+
+    return arr;
   }
 
   getDataIgnoringPagination() {
