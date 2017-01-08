@@ -5,6 +5,7 @@ import DataInsertTypeTable from './insert-type-table';
 import AutoRowKeyTable from './auto-rowkey-table';
 import ValidatorTable from './validator-table';
 import HideOnInsertTable from './hide-on-insert-table';
+import DisableToastrTable from './disable-toastr-table';
 
 import renderLinks from '../utils';
 
@@ -34,6 +35,10 @@ class Demo extends React.Component {
         <Panel header={ 'Data Validator Example(Job Name length must great 10 char)' }>
           { renderLinks('advance/validator-table.js') }
           <ValidatorTable/>
+        </Panel>
+        <Panel header={ 'Custom Display Validating Message' }>
+          { renderLinks('advance/disable-toastr-table.js') }
+          <DisableToastrTable/>
         </Panel>
       </Col>
     );
