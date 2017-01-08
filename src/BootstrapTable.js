@@ -339,7 +339,8 @@ class BootstrapTable extends Component {
             onSelectRow={ this.handleSelectRow }
             noDataText={ this.props.options.noDataText }
             expanding={ this.state.expanding }
-            onExpand={ this.handleExpandRow } />
+            onExpand={ this.handleExpandRow }
+            beforeShowError={ this.props.options.beforeShowError } />
         </div>
         { tableFilter }
         { pagination }
@@ -1147,7 +1148,8 @@ BootstrapTable.propTypes = {
     defaultSearch: PropTypes.string,
     expandRowBgColor: PropTypes.string,
     expandBy: PropTypes.string,
-    expanding: PropTypes.array
+    expanding: PropTypes.array,
+    beforeShowError: PropTypes.func
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1251,7 +1253,8 @@ BootstrapTable.defaultProps = {
     defaultSearch: '',
     expandRowBgColor: undefined,
     expandBy: Const.EXPAND_BY_ROW,
-    expanding: []
+    expanding: [],
+    beforeShowError: undefined
   },
   fetchInfo: {
     dataTotalSize: 0

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import editor from './Editor';
 import Notifier from './Notification.js';
 import classSet from 'classnames';
+import Const from './Const';
 
 class TableEditColumn extends Component {
   constructor(props) {
@@ -65,12 +66,22 @@ class TableEditColumn extends Component {
       const responseType = typeof checkVal;
       if (responseType !== 'object' && checkVal !== true) {
         valid = false;
-        ts.refs.notifier.notice('error', checkVal, 'Pressed ESC can cancel');
+        const toastr = this.props.beforeShowError &&
+          this.props.beforeShowError('error', checkVal, Const.CANCEL_TOASTR);
+        if (toastr) {
+          ts.refs.notifier.notice('error', checkVal, Const.CANCEL_TOASTR);
+        }
       } else if (responseType === 'object' && checkVal.isValid !== true) {
         valid = false;
-        ts.refs.notifier.notice(checkVal.notification.type,
-                                checkVal.notification.msg,
-                                checkVal.notification.title);
+        const toastr = this.props.beforeShowError &&
+          this.props.beforeShowError(checkVal.notification.type,
+                                     checkVal.notification.msg,
+                                     checkVal.notification.title);
+        if (toastr) {
+          ts.refs.notifier.notice(checkVal.notification.type,
+                                  checkVal.notification.msg,
+                                  checkVal.notification.title);
+        }
       }
       if (!valid) {
         // animate input
@@ -165,7 +176,8 @@ TableEditColumn.propTypes = {
     PropTypes.array,
     PropTypes.object
   ]),
-  className: PropTypes.any
+  className: PropTypes.any,
+  beforeShowError: PropTypes.func
 };
 
 

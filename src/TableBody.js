@@ -20,7 +20,7 @@ class TableBody extends Component {
   }
 
   render() {
-    const { cellEdit } = this.props;
+    const { cellEdit, beforeShowError } = this.props;
     const tableClasses = classSet('table', {
       'table-striped': this.props.striped,
       'table-bordered': this.props.bordered,
@@ -70,7 +70,8 @@ class TableBody extends Component {
                 row={ data }
                 fieldValue={ fieldValue }
                 className={ column.editClassName }
-                invalidColumnClassName={ column.invalidEditColumnClassName } />
+                invalidColumnClassName={ column.invalidEditColumnClassName }
+                beforeShowError={ beforeShowError } />
             );
         } else {
           // add by bluespring for className customize
@@ -313,6 +314,7 @@ TableBody.propTypes = {
   expandRowBgColor: PropTypes.string,
   expandBy: PropTypes.string,
   expanding: PropTypes.array,
-  onExpand: PropTypes.func
+  onExpand: PropTypes.func,
+  beforeShowError: PropTypes.func
 };
 export default TableBody;
