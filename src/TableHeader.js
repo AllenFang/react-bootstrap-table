@@ -20,6 +20,18 @@ class Checkbox extends Component {
   }
 }
 
+function getSortOrder(sortList, field, enableSort) {
+  if (!enableSort) return undefined;
+  const result = sortList.filter(sortObj => {
+    return sortObj.sortField === field;
+  });
+  if (result.length > 0) {
+    return result[0].order;
+  } else {
+    return undefined;
+  }
+}
+
 class TableHeader extends Component {
 
   render() {
@@ -43,10 +55,11 @@ class TableHeader extends Component {
       rows[0] = [ this.renderSelectRowHeader(rowCount + 1, rowKey++) ];
     }
 
+    const { sortIndicator, sortList, onSort } = this.props;
+
     React.Children.forEach(this.props.children, (elm) => {
-      const { sortIndicator, sortName, sortOrder, onSort } = this.props;
       const { dataField, dataSort } = elm.props;
-      const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
+      const sort = getSortOrder(sortList, dataField, dataSort);
       const rowIndex = elm.props.row ? Number(elm.props.row) : 0;
       const rowSpan = elm.props.rowSpan ? Number(elm.props.rowSpan) : 1;
       if (rows[rowIndex] === undefined) {
@@ -119,8 +132,7 @@ TableHeader.propTypes = {
   rowSelectType: PropTypes.string,
   onSort: PropTypes.func,
   onSelectAllRow: PropTypes.func,
-  sortName: PropTypes.string,
-  sortOrder: PropTypes.string,
+  sortList: PropTypes.array,
   hideSelectColumn: PropTypes.bool,
   bordered: PropTypes.bool,
   condensed: PropTypes.bool,

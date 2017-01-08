@@ -102,7 +102,8 @@ class BootstrapTable extends Component {
     const sortOrder = options.defaultSortOrder || options.sortOrder;
     const searchText = options.defaultSearch;
     if (sortName && sortOrder) {
-      this.store.sort(sortOrder, sortName);
+      this.store.setSortInfo(sortOrder, sortName);
+      this.store.sort();
     }
 
     if (searchText) {
@@ -196,10 +197,15 @@ class BootstrapTable extends Component {
       if (page > Math.ceil(nextProps.data.length / sizePerPage)) {
         page = 1;
       }
-      const sortInfo = this.store.getSortInfo();
-      const sortField = options.sortName || (sortInfo ? sortInfo.sortField : undefined);
-      const sortOrder = options.sortOrder || (sortInfo ? sortInfo.order : undefined);
-      if (sortField && sortOrder) this.store.sort(sortOrder, sortField);
+      const sortList = this.store.getSortInfo();
+      const sortField = options.sortName;
+      const sortOrder = options.sortOrder;
+      if (sortField && sortOrder) {
+        this.store.setSortInfo(sortOrder, sortField);
+        this.store.sort();
+      } else if (sortList.length > 0) {
+        this.store.sort();
+      }
       const data = this.store.page(page, sizePerPage).get();
       this.setState({
         data,
@@ -271,7 +277,7 @@ class BootstrapTable extends Component {
     };
 
     const columns = this.getColumnsDescription(this.props);
-    const sortInfo = this.store.getSortInfo();
+    const sortList = this.store.getSortInfo();
     const pagination = this.renderPagination();
     const toolBar = this.renderToolBar();
     const tableFilter = this.renderTableFilter(columns);
@@ -297,8 +303,7 @@ class BootstrapTable extends Component {
             rowSelectType={ this.props.selectRow.mode }
             customComponent={ this.props.selectRow.customComponent }
             hideSelectColumn={ this.props.selectRow.hideSelectColumn }
-            sortName={ sortInfo ? sortInfo.sortField : undefined }
-            sortOrder={ sortInfo ? sortInfo.order : undefined }
+            sortList={ sortList }
             sortIndicator={ sortIndicator }
             onSort={ this.handleSort }
             onSelectAllRow={ this.handleSelectAllRow }
@@ -381,13 +386,12 @@ class BootstrapTable extends Component {
     if (this.props.options.onSortChange) {
       this.props.options.onSortChange(sortField, order, this.props);
     }
-
+    this.store.setSortInfo(order, sortField);
     if (this.isRemoteDataSource()) {
-      this.store.setSortInfo(order, sortField);
       return;
     }
 
-    const result = this.store.sort(order, sortField).get();
+    const result = this.store.sort().get();
     this.setState({
       data: result
     });
@@ -713,10 +717,10 @@ class BootstrapTable extends Component {
 
     this.store.filter(filterObj);
 
-    const sortObj = this.store.getSortInfo();
+    const sortList = this.store.getSortInfo();
 
-    if (sortObj) {
-      this.store.sort(sortObj.order, sortObj.sortField);
+    if (sortList.length > 0) {
+      this.store.sort();
     }
 
     let result;
@@ -796,10 +800,10 @@ class BootstrapTable extends Component {
 
     this.store.search(searchText);
 
-    const sortObj = this.store.getSortInfo();
+    const sortList = this.store.getSortInfo();
 
-    if (sortObj) {
-      this.store.sort(sortObj.order, sortObj.sortField);
+    if (sortList.length > 0) {
+      this.store.sort();
     }
 
     let result;

@@ -14,7 +14,6 @@ export class TableDataStore {
     this.isOnFilter = false;
     this.filterObj = null;
     this.searchText = null;
-    this.sortObj = null;
     this.sortList = [];
     this.pageObj = {};
     this.selected = [];
@@ -47,11 +46,11 @@ export class TableDataStore {
   }
 
   getSortInfo() {
-    return this.sortObj;
+    return this.sortList;
   }
 
   setSortInfo(order, sortField) {
-    this.sortObj = {
+    const sortObj = {
       order: order,
       sortField: sortField
     };
@@ -75,10 +74,10 @@ export class TableDataStore {
         }
       }
 
-      this.sortList.unshift(this.sortObj);
+      this.sortList.unshift(sortObj);
       this.sortList = this.sortList.slice(0, this.multiColumnSort);
     } else {
-      this.sortList = [ this.sortObj ];
+      this.sortList = [ sortObj ];
     }
   }
 
@@ -107,8 +106,8 @@ export class TableDataStore {
       if (this.filterObj !== null) this.filter(this.filterObj);
       if (this.searchText !== null) this.search(this.searchText);
     }
-    if (!skipSorting && this.sortObj) {
-      this.sort(this.sortObj.order, this.sortObj.sortField);
+    if (!skipSorting && this.sortList.length > 0) {
+      this.sort();
     }
   }
 
@@ -125,11 +124,8 @@ export class TableDataStore {
     }
   }
 
-  sort(order, sortField) {
-    this.setSortInfo(order, sortField);
-
+  sort() {
     let currentDisplayData = this.getCurrentDisplayData();
-    if (!this.colInfos[sortField]) return this;
 
     currentDisplayData = this._sort(currentDisplayData);
 
