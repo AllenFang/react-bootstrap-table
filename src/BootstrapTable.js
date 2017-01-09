@@ -89,6 +89,7 @@ class BootstrapTable extends Component {
       keyField: keyField,
       colInfos: this.colInfos,
       multiColumnSearch: props.multiColumnSearch,
+      multiColumnSort: props.multiColumnSort,
       remote: this.isRemoteDataSource()
     });
   }
@@ -99,8 +100,16 @@ class BootstrapTable extends Component {
     const sortName = options.defaultSortName || options.sortName;
     const sortOrder = options.defaultSortOrder || options.sortOrder;
     const searchText = options.defaultSearch;
+    const defaultMultiColumnSortOrder = options.defaultMultiColumnSortOrder;
+
     if (sortName && sortOrder) {
       this.store.sort(sortOrder, sortName);
+    }
+
+    if (defaultMultiColumnSortOrder) {
+      defaultMultiColumnSortOrder.reverse().forEach((sort) => {
+        this.store.sort(sort.sortOrder, sort.sortName);
+      });
     }
 
     if (searchText) {
@@ -1095,6 +1104,10 @@ BootstrapTable.propTypes = {
     sortOrder: PropTypes.string,
     defaultSortName: PropTypes.string,
     defaultSortOrder: PropTypes.string,
+    defaultMultiColumnSortOrder: PropTypes.arrayOf(React.PropTypes.shape({
+      sortOrder: React.PropTypes.string.isRequired,
+      sortName: React.PropTypes.string.isRequired
+    })),
     sortIndicator: PropTypes.bool,
     afterTableComplete: PropTypes.func,
     afterDeleteRow: PropTypes.func,
@@ -1182,6 +1195,7 @@ BootstrapTable.defaultProps = {
   deleteRow: false,
   search: false,
   multiColumnSearch: false,
+  multiColumnSort: 1,
   columnFilter: false,
   trClassName: '',
   tableStyle: undefined,
@@ -1200,6 +1214,7 @@ BootstrapTable.defaultProps = {
     sortOrder: undefined,
     defaultSortName: undefined,
     defaultSortOrder: undefined,
+    defaultMultiColumnSortOrder: undefined,
     sortIndicator: true,
     afterTableComplete: undefined,
     afterDeleteRow: undefined,
