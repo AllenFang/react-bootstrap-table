@@ -349,7 +349,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var sortOrder = options.defaultSortOrder || options.sortOrder;
 	      var searchText = options.defaultSearch;
 	      if (sortName && sortOrder) {
-	        this.store.sort(sortOrder, sortName);
+	        this.store.setSortInfo(sortOrder, sortName);
+	        this.store.sort();
 	      }
 
 	      if (searchText) {
@@ -449,10 +450,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (page > Math.ceil(nextProps.data.length / sizePerPage)) {
 	          page = 1;
 	        }
-	        var sortInfo = this.store.getSortInfo();
-	        var sortField = options.sortName || (sortInfo ? sortInfo.sortField : undefined);
-	        var sortOrder = options.sortOrder || (sortInfo ? sortInfo.order : undefined);
-	        if (sortField && sortOrder) this.store.sort(sortOrder, sortField);
+	        var sortList = this.store.getSortInfo();
+	        var sortField = options.sortName;
+	        var sortOrder = options.sortOrder;
+	        if (sortField && sortOrder) {
+	          this.store.setSortInfo(sortOrder, sortField);
+	          this.store.sort();
+	        } else if (sortList.length > 0) {
+	          this.store.sort();
+	        }
 	        var data = this.store.page(page, sizePerPage).get();
 	        this.setState({
 	          data: data,
@@ -533,7 +539,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      };
 
 	      var columns = this.getColumnsDescription(this.props);
-	      var sortInfo = this.store.getSortInfo();
+	      var sortList = this.store.getSortInfo();
 	      var pagination = this.renderPagination();
 	      var toolBar = this.renderToolBar();
 	      var tableFilter = this.renderTableFilter(columns);
@@ -564,8 +570,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              rowSelectType: this.props.selectRow.mode,
 	              customComponent: this.props.selectRow.customComponent,
 	              hideSelectColumn: this.props.selectRow.hideSelectColumn,
-	              sortName: sortInfo ? sortInfo.sortField : undefined,
-	              sortOrder: sortInfo ? sortInfo.order : undefined,
+	              sortList: sortList,
 	              sortIndicator: sortIndicator,
 	              onSort: this.handleSort,
 	              onSelectAllRow: this.handleSelectAllRow,
@@ -601,7 +606,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onSelectRow: this.handleSelectRow,
 	            noDataText: this.props.options.noDataText,
 	            expanding: this.state.expanding,
-	            onExpand: this.handleExpandRow })
+	            onExpand: this.handleExpandRow,
+	            beforeShowError: this.props.options.beforeShowError })
 	        ),
 	        tableFilter,
 	        pagination
@@ -646,13 +652,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (this.props.options.onSortChange) {
 	        this.props.options.onSortChange(sortField, order, this.props);
 	      }
-
+	      this.store.setSortInfo(order, sortField);
 	      if (this.isRemoteDataSource()) {
-	        this.store.setSortInfo(order, sortField);
 	        return;
 	      }
 
-	      var result = this.store.sort(order, sortField).get();
+	      var result = this.store.sort().get();
 	      this.setState({
 	        data: result
 	      });
@@ -1025,10 +1030,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.store.filter(filterObj);
 
-	      var sortObj = this.store.getSortInfo();
+	      var sortList = this.store.getSortInfo();
 
-	      if (sortObj) {
-	        this.store.sort(sortObj.order, sortObj.sortField);
+	      if (sortList.length > 0) {
+	        this.store.sort();
 	      }
 
 	      var result = void 0;
@@ -1109,10 +1114,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.store.search(searchText);
 
-	      var sortObj = this.store.getSortInfo();
+	      var sortList = this.store.getSortInfo();
 
-	      if (sortObj) {
-	        this.store.sort(sortObj.order, sortObj.sortField);
+	      if (sortList.length > 0) {
+	        this.store.sort();
 	      }
 
 	      var result = void 0;
@@ -1422,10 +1427,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  tableBodyClass: _react.PropTypes.string,
 	  options: _react.PropTypes.shape({
 	    clearSearch: _react.PropTypes.bool,
-	    sortName: _react.PropTypes.string,
-	    sortOrder: _react.PropTypes.string,
-	    defaultSortName: _react.PropTypes.string,
-	    defaultSortOrder: _react.PropTypes.string,
+	    sortName: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.array]),
+	    sortOrder: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.array]),
+	    defaultSortName: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.array]),
+	    defaultSortOrder: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.array]),
 	    sortIndicator: _react.PropTypes.bool,
 	    afterTableComplete: _react.PropTypes.func,
 	    afterDeleteRow: _react.PropTypes.func,
@@ -1465,7 +1470,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    defaultSearch: _react.PropTypes.string,
 	    expandRowBgColor: _react.PropTypes.string,
 	    expandBy: _react.PropTypes.string,
-	    expanding: _react.PropTypes.array
+	    expanding: _react.PropTypes.array,
+	    beforeShowError: _react.PropTypes.func
 	  }),
 	  fetchInfo: _react.PropTypes.shape({
 	    dataTotalSize: _react.PropTypes.number
@@ -1569,7 +1575,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    defaultSearch: '',
 	    expandRowBgColor: undefined,
 	    expandBy: _Const2.default.EXPAND_BY_ROW,
-	    expanding: []
+	    expanding: [],
+	    beforeShowError: undefined
 	  },
 	  fetchInfo: {
 	    dataTotalSize: 0
@@ -1704,7 +1711,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  FILTER_COND_EQ: 'eq',
 	  FILTER_COND_LIKE: 'like',
 	  EXPAND_BY_ROW: 'row',
-	  EXPAND_BY_COL: 'column'
+	  EXPAND_BY_COL: 'column',
+	  CANCEL_TOASTR: 'Pressed ESC can cancel'
 	};
 	exports.default = _default;
 	;
@@ -1798,6 +1806,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return Checkbox;
 	}(_react.Component);
 
+	function getSortOrder(sortList, field, enableSort) {
+	  if (!enableSort) return undefined;
+	  var result = sortList.filter(function (sortObj) {
+	    return sortObj.sortField === field;
+	  });
+	  if (result.length > 0) {
+	    return result[0].order;
+	  } else {
+	    return undefined;
+	  }
+	}
+
 	var TableHeader = function (_Component2) {
 	  _inherits(TableHeader, _Component2);
 
@@ -1822,8 +1842,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(TableHeader, [{
 	    key: 'render',
 	    value: function render() {
-	      var _this4 = this;
-
 	      var containerClasses = (0, _classnames2.default)('react-bs-container-header', 'table-header-wrapper', this.props.headerContainerClass);
 	      var tableClasses = (0, _classnames2.default)('table', 'table-hover', {
 	        'table-bordered': this.props.bordered,
@@ -1841,17 +1859,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        rows[0] = [this.renderSelectRowHeader(rowCount + 1, rowKey++)];
 	      }
 
+	      var _props = this.props,
+	          sortIndicator = _props.sortIndicator,
+	          sortList = _props.sortList,
+	          onSort = _props.onSort;
+
+
 	      _react2.default.Children.forEach(this.props.children, function (elm) {
-	        var _props = _this4.props,
-	            sortIndicator = _props.sortIndicator,
-	            sortName = _props.sortName,
-	            sortOrder = _props.sortOrder,
-	            onSort = _props.onSort;
 	        var _elm$props = elm.props,
 	            dataField = _elm$props.dataField,
 	            dataSort = _elm$props.dataSort;
 
-	        var sort = dataSort && dataField === sortName ? sortOrder : undefined;
+	        var sort = getSortOrder(sortList, dataField, dataSort);
 	        var rowIndex = elm.props.row ? Number(elm.props.row) : 0;
 	        var rowSpan = elm.props.rowSpan ? Number(elm.props.rowSpan) : 1;
 	        if (rows[rowIndex] === undefined) {
@@ -1930,8 +1949,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  rowSelectType: _react.PropTypes.string,
 	  onSort: _react.PropTypes.func,
 	  onSelectAllRow: _react.PropTypes.func,
-	  sortName: _react.PropTypes.string,
-	  sortOrder: _react.PropTypes.string,
+	  sortList: _react.PropTypes.array,
 	  hideSelectColumn: _react.PropTypes.bool,
 	  bordered: _react.PropTypes.bool,
 	  condensed: _react.PropTypes.bool,
@@ -1952,6 +1970,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  __REACT_HOT_LOADER__.register(Checkbox, 'Checkbox', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableHeader.js');
+
+	  __REACT_HOT_LOADER__.register(getSortOrder, 'getSortOrder', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableHeader.js');
 
 	  __REACT_HOT_LOADER__.register(TableHeader, 'TableHeader', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableHeader.js');
 
@@ -2143,7 +2163,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(TableBody, [{
 	    key: 'render',
 	    value: function render() {
-	      var cellEdit = this.props.cellEdit;
+	      var _props = this.props,
+	          cellEdit = _props.cellEdit,
+	          beforeShowError = _props.beforeShowError;
 
 	      var tableClasses = (0, _classnames2.default)('table', {
 	        'table-striped': this.props.striped,
@@ -2192,7 +2214,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	              row: data,
 	              fieldValue: fieldValue,
 	              className: column.editClassName,
-	              invalidColumnClassName: column.invalidEditColumnClassName });
+	              invalidColumnClassName: column.invalidEditColumnClassName,
+	              beforeShowError: beforeShowError });
 	          } else {
 	            // add by bluespring for className customize
 	            var columnChild = fieldValue && fieldValue.toString();
@@ -2329,9 +2352,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: '__handleSelectRow__REACT_HOT_LOADER__',
 	    value: function __handleSelectRow__REACT_HOT_LOADER__(rowIndex, isSelected, e) {
 	      var selectedRow = void 0;
-	      var _props = this.props,
-	          data = _props.data,
-	          onSelectRow = _props.onSelectRow;
+	      var _props2 = this.props,
+	          data = _props2.data,
+	          onSelectRow = _props2.onSelectRow;
 
 	      data.forEach(function (row, i) {
 	        if (i === rowIndex - 1) {
@@ -2353,12 +2376,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function __handleClickCell__REACT_HOT_LOADER__(rowIndex, columnIndex) {
 	      var _this2 = this;
 
-	      var _props2 = this.props,
-	          columns = _props2.columns,
-	          keyField = _props2.keyField,
-	          expandBy = _props2.expandBy,
-	          expandableRow = _props2.expandableRow,
-	          clickToExpand = _props2.selectRow.clickToExpand;
+	      var _props3 = this.props,
+	          columns = _props3.columns,
+	          keyField = _props3.keyField,
+	          expandBy = _props3.expandBy,
+	          expandableRow = _props3.expandableRow,
+	          clickToExpand = _props3.selectRow.clickToExpand;
 
 	      var selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
 
@@ -2458,7 +2481,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  expandRowBgColor: _react.PropTypes.string,
 	  expandBy: _react.PropTypes.string,
 	  expanding: _react.PropTypes.array,
-	  onExpand: _react.PropTypes.func
+	  onExpand: _react.PropTypes.func,
+	  beforeShowError: _react.PropTypes.func
 	};
 	var _default = TableBody;
 	exports.default = _default;
@@ -2981,6 +3005,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
+	var _Const = __webpack_require__(4);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3076,10 +3104,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var responseType = typeof checkVal === 'undefined' ? 'undefined' : _typeof(checkVal);
 	        if (responseType !== 'object' && checkVal !== true) {
 	          valid = false;
-	          ts.refs.notifier.notice('error', checkVal, 'Pressed ESC can cancel');
+	          var toastr = this.props.beforeShowError && this.props.beforeShowError('error', checkVal, _Const2.default.CANCEL_TOASTR);
+	          if (toastr) {
+	            ts.refs.notifier.notice('error', checkVal, _Const2.default.CANCEL_TOASTR);
+	          }
 	        } else if (responseType === 'object' && checkVal.isValid !== true) {
 	          valid = false;
-	          ts.refs.notifier.notice(checkVal.notification.type, checkVal.notification.msg, checkVal.notification.title);
+	          var _toastr = this.props.beforeShowError && this.props.beforeShowError(checkVal.notification.type, checkVal.notification.msg, checkVal.notification.title);
+	          if (_toastr) {
+	            ts.refs.notifier.notice(checkVal.notification.type, checkVal.notification.msg, checkVal.notification.title);
+	          }
 	        }
 	        if (!valid) {
 	          // animate input
@@ -3195,7 +3229,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  format: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.func]),
 	  row: _react.PropTypes.any,
 	  fieldValue: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.bool, _react.PropTypes.number, _react.PropTypes.array, _react.PropTypes.object]),
-	  className: _react.PropTypes.any
+	  className: _react.PropTypes.any,
+	  beforeShowError: _react.PropTypes.func
 	};
 
 	var _default = TableEditColumn;
@@ -10820,7 +10855,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.isOnFilter = false;
 	    this.filterObj = null;
 	    this.searchText = null;
-	    this.sortObj = null;
 	    this.sortList = [];
 	    this.pageObj = {};
 	    this.selected = [];
@@ -10858,39 +10892,56 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'getSortInfo',
 	    value: function getSortInfo() {
-	      return this.sortObj;
+	      return this.sortList;
 	    }
 	  }, {
 	    key: 'setSortInfo',
 	    value: function setSortInfo(order, sortField) {
-	      this.sortObj = {
-	        order: order,
-	        sortField: sortField
-	      };
-
-	      if (this.multiColumnSort > 1) {
-	        var i = this.sortList.length - 1;
-	        var sortFieldInHistory = false;
-
-	        for (; i >= 0; i--) {
-	          if (this.sortList[i].sortField === sortField) {
-	            sortFieldInHistory = true;
-	            break;
-	          }
+	      if ((typeof order === 'undefined' ? 'undefined' : _typeof(order)) !== (typeof sortField === 'undefined' ? 'undefined' : _typeof(sortField))) {
+	        throw new Error('The type of sort field and order should be both with String or Array');
+	      }
+	      if (Array.isArray(order) && Array.isArray(sortField)) {
+	        if (order.length !== sortField.length) {
+	          throw new Error('The length of sort fields and orders should be equivalent');
 	        }
-
-	        if (sortFieldInHistory) {
-	          if (i > 0) {
-	            this.sortList = this.sortList.slice(0, i);
-	          } else {
-	            this.sortList = this.sortList.slice(1);
-	          }
-	        }
-
-	        this.sortList.unshift(this.sortObj);
+	        order = order.reverse();
+	        this.sortList = sortField.reverse().map(function (field, i) {
+	          return {
+	            order: order[i],
+	            sortField: field
+	          };
+	        });
 	        this.sortList = this.sortList.slice(0, this.multiColumnSort);
 	      } else {
-	        this.sortList = [this.sortObj];
+	        var sortObj = {
+	          order: order,
+	          sortField: sortField
+	        };
+
+	        if (this.multiColumnSort > 1) {
+	          var i = this.sortList.length - 1;
+	          var sortFieldInHistory = false;
+
+	          for (; i >= 0; i--) {
+	            if (this.sortList[i].sortField === sortField) {
+	              sortFieldInHistory = true;
+	              break;
+	            }
+	          }
+
+	          if (sortFieldInHistory) {
+	            if (i > 0) {
+	              this.sortList = this.sortList.slice(0, i);
+	            } else {
+	              this.sortList = this.sortList.slice(1);
+	            }
+	          }
+
+	          this.sortList.unshift(sortObj);
+	          this.sortList = this.sortList.slice(0, this.multiColumnSort);
+	        } else {
+	          this.sortList = [sortObj];
+	        }
 	      }
 	    }
 	  }, {
@@ -10927,8 +10978,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (this.filterObj !== null) this.filter(this.filterObj);
 	        if (this.searchText !== null) this.search(this.searchText);
 	      }
-	      if (!skipSorting && this.sortObj) {
-	        this.sort(this.sortObj.order, this.sortObj.sortField);
+	      if (!skipSorting && this.sortList.length > 0) {
+	        this.sort();
 	      }
 	    }
 	  }, {
@@ -10951,17 +11002,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'sort',
-	    value: function sort(order, sortField) {
-	      this.setSortInfo(order, sortField);
-
+	    value: function sort() {
 	      var currentDisplayData = this.getCurrentDisplayData();
-	      if (!this.colInfos[sortField]) return this;
 
-	      var _colInfos$sortField = this.colInfos[sortField],
-	          sortFunc = _colInfos$sortField.sortFunc,
-	          sortFuncExtraData = _colInfos$sortField.sortFuncExtraData;
-
-	      currentDisplayData = this._sort(currentDisplayData, sortFunc, sortFuncExtraData);
+	      currentDisplayData = this._sort(currentDisplayData);
 
 	      return this;
 	    }
@@ -11396,7 +11440,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: '_sort',
-	    value: function _sort(arr, sortFunc, sortFuncExtraData) {
+	    value: function _sort(arr) {
 	      var _this6 = this;
 
 	      if (this.sortList.length === 0 || typeof this.sortList[0] === 'undefined') {
@@ -11409,6 +11453,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        for (var i = 0; i < _this6.sortList.length; i++) {
 	          var sortDetails = _this6.sortList[i];
 	          var isDesc = sortDetails.order.toLowerCase() === _Const2.default.SORT_DESC;
+
+	          var _colInfos$sortDetails = _this6.colInfos[sortDetails.sortField],
+	              sortFunc = _colInfos$sortDetails.sortFunc,
+	              sortFuncExtraData = _colInfos$sortDetails.sortFuncExtraData;
+
 
 	          if (sortFunc) {
 	            result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
