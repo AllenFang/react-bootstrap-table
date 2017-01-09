@@ -26,11 +26,21 @@ function addProducts(quantity) {
 addProducts(15);
 
 export default class MultiSortTable extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.options = {
+      defaultMultiColumnSortOrder: [
+        { sortOrder: 'desc', sortName: 'name' },
+        { sortOrder: 'asc', sortName: 'price' }
+      ]
+    };
+  }
 
   render() {
     return (
       <div>
-        <BootstrapTable ref='table' data={ products } multiColumnSort={ 2 }>
+        <BootstrapTable ref='table' data={ products } multiColumnSort={ 2 } options={ this.options }>
             <TableHeaderColumn dataField='id' isKey={ true } dataSort={ true }>Product ID</TableHeaderColumn>
             <TableHeaderColumn dataField='name' dataSort={ true }>Product Name</TableHeaderColumn>
             <TableHeaderColumn dataField='price' dataSort={ true }>Product Price</TableHeaderColumn>
