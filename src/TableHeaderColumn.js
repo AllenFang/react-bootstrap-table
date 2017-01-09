@@ -18,13 +18,14 @@ class TableHeaderColumn extends Component {
   }
 
   handleColumnClick = () => {
-    if (!this.props.dataSort) return;
+    if (this.props.isOnlyHead || !this.props.dataSort) return;
     const order = this.props.sort === Const.SORT_DESC ? Const.SORT_ASC : Const.SORT_DESC;
     this.props.onSort(order, this.props.dataField);
   }
 
   handleFilter(value, type) {
-    this.props.filter.emitter.handleFilter(this.props.dataField, value, type);
+    const { filter } = this.props;
+    filter.emitter.handleFilter(this.props.dataField, value, type, filter);
   }
 
   getFilters() {
@@ -75,6 +76,7 @@ class TableHeaderColumn extends Component {
 
   render() {
     let defaultCaret;
+    let sortCaret;
     const {
       headerText,
       dataAlign,
@@ -87,31 +89,35 @@ class TableHeaderColumn extends Component {
       sortIndicator,
       children,
       caretRender,
-      className
+      className,
+      isOnlyHead
     } = this.props;
     const thStyle = {
       textAlign: headerAlign || dataAlign,
       display: hidden ? 'none' : null
     };
-    if (sortIndicator) {
-      defaultCaret = (!dataSort) ? null : (
-        <span className='order'>
-          <span className='dropdown'>
-            <span className='caret' style={ { margin: '10px 0 10px 5px', color: '#ccc' } }></span>
+    if (!isOnlyHead) {
+      if (sortIndicator) {
+        defaultCaret = (!dataSort) ? null : (
+          <span className='order'>
+            <span className='dropdown'>
+              <span className='caret' style={ { margin: '10px 0 10px 5px', color: '#ccc' } }></span>
+            </span>
+            <span className='dropup'>
+              <span className='caret' style={ { margin: '10px 0', color: '#ccc' } }></span>
+            </span>
           </span>
-          <span className='dropup'>
-            <span className='caret' style={ { margin: '10px 0', color: '#ccc' } }></span>
-          </span>
-        </span>
-      );
+        );
+      }
+      sortCaret = sort ? Util.renderReactSortCaret(sort) : defaultCaret;
+      if (caretRender) {
+        sortCaret = caretRender(sort, dataField);
+      }
     }
-    let sortCaret = sort ? Util.renderReactSortCaret(sort) : defaultCaret;
-    if (caretRender) {
-      sortCaret = caretRender(sort, dataField);
-    }
+
     const classes = classSet(
       typeof className === 'function' ? className() : className,
-      dataSort ? 'sort-column' : '');
+      !isOnlyHead && dataSort ? 'sort-column' : '');
 
     const title = {
       title: ((headerTitle && typeof children === 'string') ? children : headerText)
@@ -121,10 +127,13 @@ class TableHeaderColumn extends Component {
           className={ classes }
           style={ thStyle }
           onClick={ this.handleColumnClick }
+          rowSpan={ this.props.rowSpan }
+          colSpan={ this.props.colSpan }
+          data-is-only-head={ this.props.isOnlyHead }
           { ...title }>
         { children }{ sortCaret }
         <div onClick={ e => e.stopPropagation() }>
-          { this.props.filter ? this.getFilters() : null }
+          { this.props.filter && !isOnlyHead ? this.getFilters() : null }
         </div>
       </th>
     );
@@ -220,6 +229,7 @@ TableHeaderColumn.propTypes = {
   sortFuncExtraData: PropTypes.any,
   columnClassName: PropTypes.any,
   editColumnClassName: PropTypes.any,
+  invalidEditColumnClassName: PropTypes.any,
   columnTitle: PropTypes.bool,
   filterFormatted: PropTypes.bool,
   filterValue: PropTypes.func,
@@ -237,11 +247,13 @@ TableHeaderColumn.propTypes = {
     emitter: PropTypes.object,
     placeholder: PropTypes.string,
     getElement: PropTypes.func,
-    customFilterParameters: PropTypes.object
+    customFilterParameters: PropTypes.object,
+    condition: PropTypes.oneOf([ Const.FILTER_COND_EQ, Const.FILTER_COND_LIKE ])
   }),
   sortIndicator: PropTypes.bool,
   export: PropTypes.bool,
-  expandable: PropTypes.bool
+  expandable: PropTypes.bool,
+  tdAttr: PropTypes.object
 };
 
 TableHeaderColumn.defaultProps = {
@@ -264,6 +276,7 @@ TableHeaderColumn.defaultProps = {
   sortFunc: undefined,
   columnClassName: '',
   editColumnClassName: '',
+  invalidEditColumnClassName: '',
   filterFormatted: false,
   filterValue: undefined,
   sort: undefined,
@@ -271,7 +284,8 @@ TableHeaderColumn.defaultProps = {
   sortFuncExtraData: undefined,
   filter: undefined,
   sortIndicator: true,
-  expandable: true
+  expandable: true,
+  tdAttr: undefined
 };
 
 export default TableHeaderColumn;

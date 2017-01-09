@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Utils from './util';
 import Const from './Const';
 import TableRow from './TableRow';
 import TableColumn from './TableColumn';
@@ -32,7 +33,7 @@ class TableBody extends Component {
     const noneditableRows = (cellEdit.nonEditableRows && cellEdit.nonEditableRows()) || [];
     const unselectable = this.props.selectRow.unselectable || [];
     const isSelectRowDefined = this._isSelectRowDefined();
-    const tableHeader = this.renderTableHeader(isSelectRowDefined);
+    const tableHeader = Utils.renderColGroup(this.props.columns, this.props.selectRow, 'header');
     const inputType = this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
     const CustomComponent = this.props.selectRow.customComponent;
     let expandColSpan = this.props.columns.filter(col => !col.hidden).length;
@@ -70,7 +71,8 @@ class TableBody extends Component {
                 colIndex={ i }
                 row={ data }
                 fieldValue={ fieldValue }
-                className={ column.editClassName } />
+                className={ column.editClassName }
+                invalidColumnClassName={ column.invalidEditColumnClassName } />
             );
         } else {
           // add by bluespring for className customize
@@ -104,7 +106,8 @@ class TableBody extends Component {
               hidden={ column.hidden }
               onEdit={ this.handleEditCell }
               width={ column.width }
-              onClick={ this.handleClickCell }>
+              onClick={ this.handleClickCell }
+              attrs={ column.attrs }>
               { columnChild }
             </TableColumn>
           );
@@ -165,45 +168,12 @@ class TableBody extends Component {
         className={ classSet('react-bs-container-body', this.props.bodyContainerClass) }
         style={ this.props.style }>
         <table className={ tableClasses }>
-          { tableHeader }
+          { React.cloneElement(tableHeader, { ref: 'header' }) }
           <tbody ref='tbody'>
             { tableRows }
           </tbody>
         </table>
       </div>
-    );
-  }
-
-  renderTableHeader(isSelectRowDefined) {
-    let selectRowHeader = null;
-
-    if (isSelectRowDefined) {
-      const style = {
-        width: 30,
-        minWidth: 30
-      };
-      if (!this.props.selectRow.hideSelectColumn) {
-        selectRowHeader = (<col style={ style } key={ -1 }></col>);
-      }
-    }
-    const theader = this.props.columns.map(function(column, i) {
-      const style = {
-        display: column.hidden ? 'none' : null
-      };
-      if (column.width) {
-        const width = parseInt(column.width, 10);
-        style.width = width;
-        /** add min-wdth to fix user assign column width
-        not eq offsetWidth in large column table **/
-        style.minWidth = width;
-      }
-      return (<col style={ style } key={ i } className={ column.className }></col>);
-    });
-
-    return (
-      <colgroup ref='header'>
-        { selectRowHeader }{ theader }
-      </colgroup>
     );
   }
 
@@ -222,14 +192,9 @@ class TableBody extends Component {
   }
 
   handleRowDoubleClick = rowIndex => {
-    let selectedRow;
-    const { data, onRowDoubleClick } = this.props;
-    data.forEach((row, i) => {
-      if (i === rowIndex - 1) {
-        selectedRow = row;
-      }
-    });
-    onRowDoubleClick(selectedRow);
+    const { onRowDoubleClick } = this.props;
+    const targetRow = this.props.data[rowIndex];
+    onRowDoubleClick(targetRow);
   }
 
   handleSelectRow = (rowIndex, isSelected, e) => {

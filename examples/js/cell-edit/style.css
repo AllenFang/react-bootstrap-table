@@ -1,0 +1,15 @@
+.editing-jobstatus-class{
+  background-color: aquamarine;
+}
+
+.invalid-jobstatus-class {
+  background-color: orangered;
+}
+
+.editing-jobsname-class {
+  background-color: blueviolet;
+}
+
+.invalid-jobsname-class {
+  background-color: orange;
+}

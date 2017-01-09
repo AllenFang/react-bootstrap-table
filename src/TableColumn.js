@@ -73,7 +73,8 @@ class TableColumn extends Component {
       className,
       dataAlign,
       hidden,
-      cellEdit
+      cellEdit,
+      attrs
     } = this.props;
 
     const tdStyle = {
@@ -96,7 +97,7 @@ class TableColumn extends Component {
       <td style={ tdStyle }
           title={ columnTitle }
           className={ className }
-          { ...opts }>
+          { ...opts } { ...attrs }>
         { typeof children === 'boolean' ? children.toString() : children }
       </td>
     );
@@ -109,7 +110,8 @@ TableColumn.propTypes = {
   className: PropTypes.string,
   columnTitle: PropTypes.string,
   children: PropTypes.node,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  attrs: PropTypes.object
 };
 
 TableColumn.defaultProps = {

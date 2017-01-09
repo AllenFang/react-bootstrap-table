@@ -1,3 +1,33 @@
+<a name="v2.8.3"></a>
+# [v2.8.3](https://github.com/AllenFang/react-bootstrap-table/compare/v2.8.2...v2.8.3) (2017-01-07)
+## Enhancement
+* Add ```invalidEditColumnClassName``` props on ```TableHeaderColumn``` for supporting the class on cell editing fail([4ddc906](https://github.com/AllenFang/react-bootstrap-table/commit/4ddc906390d1dc0857f4c4062142610c779c6015))
+
+## Features
+* Allow to configure the text, select or custom with a filter condition, default is ```like``` and ```eq``` is available.([a48e10c](https://github.com/AllenFang/react-bootstrap-table/commit/a48e10cb416382feaad47ad381d611e172513ea6))
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column-filter/text-filter-with-eq-condition.js) for text filter
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column-filter/select-filter-with-eq-condition.js) for select filter
+* Allow to add your own attribute on TD element([a44e189](https://github.com/AllenFang/react-bootstrap-table/commit/a44e18918a9c50bd9594b7f3f3af09a9ae608c5b))
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column/td-attribute-table.js)
+
+<a name="v2.8.2"></a>
+# [v2.8.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.8.0...v2.8.2) (2016-12-29)
+## Bug fixes
+* Hot fixes for sort caret disappear after ```v2.8.1```([7e88e15](https://github.com/AllenFang/react-bootstrap-table/commit/7e88e151ae5eb5fcd58db718a0afa2a0ed08993b))
+
+<a name="v2.8.1"></a>
+# [v2.8.1(unpublish)](https://github.com/AllenFang/react-bootstrap-table/compare/v2.8.0...v2.8.1) (2016-12-28)
+## Bug fixes
+* Fixed onRowMouseOver called with wrong arguments when expandableRow enable([86270e2](https://github.com/AllenFang/react-bootstrap-table/commit/86270e2bf96c8bb3defd9655647a0c583ee17372))
+
+## Enhancement
+* Fixed TableHeader: prop type ```colGroups``` is invalid([11e9daa](https://github.com/AllenFang/react-bootstrap-table/commit/11e9daae65d9b5db4a615f82c890e7236dfa2a20))
+
+<a name="v2.8.0"></a>
+# [v2.8.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.7.1...v2.8.0) (2016-12-25)
+## Features
+* Support colSpan and rowSpan on table header([8e459ef](https://github.com/AllenFang/react-bootstrap-table/commit/8e459efde34ceca5b45f208524231b60fc81aedc))
+
 <a name="v2.7.1"></a>
 # [v2.7.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.7.0...v2.7.1) (2016-12-18)
 ## Bug fixes

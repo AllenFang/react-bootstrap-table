@@ -1,3 +1,4 @@
+/* eslint react/display-name: 0 */
 import React from 'react';
 import Const from './Const';
 import classSet from 'classnames';
@@ -42,5 +43,39 @@ export default {
 
   canUseDOM() {
     return typeof window !== 'undefined' && typeof window.document !== 'undefined';
+  },
+
+  renderColGroup(columns, selectRow) {
+    let selectRowHeader = null;
+    const isSelectRowDefined = selectRow.mode === Const.ROW_SELECT_SINGLE ||
+      selectRow.mode === Const.ROW_SELECT_MULTI;
+    if (isSelectRowDefined) {
+      const style = {
+        width: 30,
+        minWidth: 30
+      };
+      if (!selectRow.hideSelectColumn) {
+        selectRowHeader = (<col style={ style } key={ -1 }></col>);
+      }
+    }
+    const theader = columns.map(function(column, i) {
+      const style = {
+        display: column.hidden ? 'none' : null
+      };
+      if (column.width) {
+        const width = parseInt(column.width, 10);
+        style.width = width;
+        /** add min-wdth to fix user assign column width
+        not eq offsetWidth in large column table **/
+        style.minWidth = width;
+      }
+      return (<col style={ style } key={ i } className={ column.className }></col>);
+    });
+
+    return (
+      <colgroup>
+        { selectRowHeader }{ theader }
+      </colgroup>
+    );
   }
 };

@@ -7,10 +7,10 @@
 [![Dependency Status][deps-badge]][deps]
 [![devDependency Status][dev-deps-badge]][dev-deps]
 [![peerDependency Status][peer-deps-badge]][peer-deps]   
-It's a [react.js](http://facebook.github.io/react/) table for bootstrap, named reactbsTable. It's a configurable, functional table component and make you build a Bootstrap Table more efficiency and easy in your React application, However ```react-bootstrap-table``` support these features:
+It's a [react.js](http://facebook.github.io/react/) table for bootstrap, named react-bootstrap-table. It's a configurable, functional table component and make you build a Bootstrap Table more efficiency and easy in your React application, However ```react-bootstrap-table``` support these features:
 
 - striped, borderless, condensed table
-- column align, hidden, width, sort
+- column align, hidden, width, sort, title
 - scrolling table
 - cell format
 - pagination
@@ -18,19 +18,23 @@ It's a [react.js](http://facebook.github.io/react/) table for bootstrap, named r
 - column filter with multi type
 - cell edit with multi type editor
 - insert & delete Row
-- row and column style customization
+- table, row and column styling
 - global search
-- export to CSV file
+- export to CSV
 - rich function hooks
 - large columns table
+- header colum span
+- remote mode
+- expandable row
 
+![Example](http://i.imgur.com/Ov1wMse.png)
 Explore more example on [examples](https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js) folder</br>
 See more about [react-bootstrap-table](http://allenfang.github.io/react-bootstrap-table/index.html).</br>
 Check [this](http://allenfang.github.io/react-bootstrap-table/advance.html) for more advance usage for ```react-bootstrap-table```. Feel free to ask more examples.</br>
 Check the <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/CHANGELOG.md'>CHANGELOG</a> for more detail release notes.
 
 ## Notes
-***```v3.0.0-beta.3``` released, check [release page](https://github.com/AllenFang/react-bootstrap-table/releases). [There](https://github.com/AllenFang/react-bootstrap-table/tree/v3.0.0-dev/examples/js/custom) are a lots of example for customization component, you can also check the [online](http://allenfang.github.io/react-bootstrap-table/example.html#custom) version<br/>***
+***```v3.0.0-beta.5``` released, check [release page](https://github.com/AllenFang/react-bootstrap-table/releases). [There](https://github.com/AllenFang/react-bootstrap-table/tree/v3.0.0-dev/examples/js/custom) are a lots of example for customization component, you can also check the [online](http://allenfang.github.io/react-bootstrap-table/example.html#custom) version<br/>***
 
 ***```v3.0.0``` is under planning, check [Milestone to v3.0.0](https://github.com/AllenFang/react-bootstrap-table/issues/497).<br/>***
 

@@ -22,6 +22,7 @@ import Other from './others/demo';
 import Complex from './complex/demo';
 import Remote from './remote/demo';
 import Expand from './expandRow/demo';
+import Span from './column-header-span/demo';
 
 const renderApp = () => {
   ReactDOM.render(
@@ -36,6 +37,7 @@ const renderApp = () => {
             <Route path='sort' component={ Sort } />
             <Route path='column-format' component={ ColumnFormat } />
             <Route path='column-filter' component={ ColumnFilter } />
+            <Route path='column-header-span' component={ Span } />
             <Route path='selection' component={ Selection } />
             <Route path='pagination' component={ Pagination } />
             <Route path='manipulation' component={ Manipulation } />
