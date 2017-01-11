@@ -1,3 +1,17 @@
+<a name="v2.9.0"></a>
+# [v2.9.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.8.3...v2.9.0) (2017-01-09)
+## Enhancement
+* Enhance the expanding row, support ```options.expanding```([aeb7125](https://github.com/AllenFang/react-bootstrap-table/commit/aeb71252d415e356aff6d7824a01b0da8752edba))
+	* [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/expandRow/manage-expanding.js#L69)
+* Add ```options.beforeShowError``` to do some thing before toastr popup([9bc8b7f](https://github.com/AllenFang/react-bootstrap-table/commit/9bc8b7f5bee61974bc854b990300e4dbc5c89a3d))
+	* Return false or do not return to prevent toastr popup
+	* [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/advance/disable-toastr-table.js#L67)
+
+## Features
+* Multi column sort
+	* [Simple multi column sort](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/sort/multi-sort-table.js)
+	* [Manage multi column sort externally](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/sort/manage-multi-sort-external-table.js)
+
 <a name="v2.8.3"></a>
 # [v2.8.3](https://github.com/AllenFang/react-bootstrap-table/compare/v2.8.2...v2.8.3) (2017-01-07)
 ## Enhancement
