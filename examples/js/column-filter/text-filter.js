@@ -16,12 +16,12 @@ function addProducts(quantity) {
   }
 }
 
-addProducts(5);
+addProducts(15);
 
 export default class TextFilter extends React.Component {
   render() {
     return (
-      <BootstrapTable data={ products }>
+      <BootstrapTable data={ products } aggColumnNamesGrandTotal='price'>
         <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name' filter={ { type: 'TextFilter', delay: 1000 } }>Product Name</TableHeaderColumn>
         <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>

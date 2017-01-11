@@ -38,7 +38,7 @@ export default class SortTable extends React.Component {
       <div>
         <p style={ { color: 'red' } }>You cam click header to sort or click following button to perform a sorting by expose API</p>
         <button onClick={ this.handleBtnClick }>Sort Product Name</button>
-        <BootstrapTable ref='table' data={ products }>
+        <BootstrapTable ref='table' data={ products } aggColumnNamesGrandTotal='price'>
             <TableHeaderColumn dataField='id' isKey={ true } dataSort={ true }>Product ID</TableHeaderColumn>
             <TableHeaderColumn dataField='name' dataSort={ true }>Product Name</TableHeaderColumn>
             <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>

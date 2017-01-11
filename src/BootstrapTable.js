@@ -313,6 +313,7 @@ class BootstrapTable extends Component {
             isSelectAll={ isSelectAll }>
             { this.props.children }
           </TableHeader>
+
           <TableBody ref='body'
             bodyContainerClass={ this.props.bodyContainerClass }
             tableBodyClass={ this.props.tableBodyClass }
@@ -340,7 +341,10 @@ class BootstrapTable extends Component {
             noDataText={ this.props.options.noDataText }
             expanding={ this.state.expanding }
             onExpand={ this.handleExpandRow }
-            beforeShowError={ this.props.options.beforeShowError } />
+            beforeShowError={ this.props.options.beforeShowError }
+            aggColumnNamesSubTotal={ this.props.aggColumnNamesSubTotal }
+            groupByForSubTotal={ this.props.groupByForSubTotal }
+            aggColumnNamesGrandTotal={ this.props.aggColumnNamesGrandTotal } />
         </div>
         { tableFilter }
         { pagination }
@@ -987,7 +991,7 @@ class BootstrapTable extends Component {
         header[i].style.minWidth = result;
       }
     } else {
-      React.Children.forEach(this.props.children, (child, i) => {
+      React.Children.forEach( this.props.children, (child, i) => {
         if (child.props.width) {
           header[i].style.width = `${child.props.width}px`;
           header[i].style.minWidth = `${child.props.width}px`;
@@ -1158,8 +1162,13 @@ BootstrapTable.propTypes = {
   csvFileName: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
   ignoreSinglePage: PropTypes.bool,
   expandableRow: PropTypes.func,
-  expandComponent: PropTypes.func
+  expandComponent: PropTypes.func,
+  aggColumnNamesSubTotal: PropTypes.string,
+  groupByForSubTotal: PropTypes.string,
+  aggColumnNamesGrandTotal: PropTypes.string
 };
+
+
 BootstrapTable.defaultProps = {
   scrollTop: undefined,
   expandComponent: undefined,
@@ -1261,7 +1270,10 @@ BootstrapTable.defaultProps = {
   },
   exportCSV: false,
   csvFileName: 'spreadsheet.csv',
-  ignoreSinglePage: false
+  ignoreSinglePage: false,
+  aggColumnNamesSubTotal: '',
+  groupByForSubTotal: '',
+  aggColumnNamesGrandTotal: ''
 };
 
 export default BootstrapTable;
