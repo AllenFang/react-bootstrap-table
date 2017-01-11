@@ -43,7 +43,7 @@
     "no-underscore-dangle": 0,
     "func-names": 0,
     "no-else-return": 0,
-    "no-console": 1,
+    "no-console": 0,
     "no-throw-literal": 0,
     "id-length": 0,
     "no-unused-expressions": 0,

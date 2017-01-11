@@ -20,6 +20,12 @@ class TableBody extends Component {
   }
 
   render() {
+    const grandTotal = {};
+    let fistAggColIdx = -1;
+    let grandTotalcolumns = [];
+    if (this.props.aggColumnNamesGrandTotal) {
+      grandTotalcolumns = this.props.aggColumnNamesGrandTotal.split(',');
+    }
     const { cellEdit, beforeShowError } = this.props;
     const tableClasses = classSet('table', {
       'table-striped': this.props.striped,
@@ -42,6 +48,22 @@ class TableBody extends Component {
     const tableRows = this.props.data.map(function(data, r) {
       const tableColumns = this.props.columns.map(function(column, i) {
         const fieldValue = data[column.name];
+
+        // --totals
+        console.log(column.name);
+        if (grandTotalcolumns.indexOf(column.name) !== -1) {
+          if (fistAggColIdx === -1) {
+            fistAggColIdx = i;
+            console.log('print idx=', fistAggColIdx);
+          }
+          if (!(column.name in grandTotal)) {
+            grandTotal[column.name] = 0;
+          }
+          let currVal = grandTotal[column.name];
+          currVal += fieldValue;
+          grandTotal[column.name] = currVal;
+        }
+
         if (column.name !== this.props.keyField && // Key field can't be edit
           column.editable && // column is editable? default is true, user can set it false
           this.state.currEditCell !== null &&
@@ -111,7 +133,8 @@ class TableBody extends Component {
             </TableColumn>
           );
         }
-      }, this);
+      }, this); // columns-loop
+
       const key = data[this.props.keyField];
       const disable = unselectable.indexOf(key) !== -1;
       const selected = this.props.selectedRowKeys.indexOf(key) !== -1;
@@ -148,8 +171,48 @@ class TableBody extends Component {
           </ExpandComponent>
         );
       }
+
+      // ----sub-total and grand-total
+      // -- Print Grant-Total
+      if (Object.keys(grandTotal).length > 0) {
+        console.log('------------Print Grant total------------');
+        if (this.props.data.length === (r + 1)) {
+          console.log(fistAggColIdx);
+          const labelColSpan = fistAggColIdx;
+          const totRowCols = [ <td className='grant-total total-label'
+                               colSpan={ labelColSpan }>Total</td> ];
+
+          for (let j = fistAggColIdx; j < this.props.columns.length; j++) {
+            console.log('j=', j);
+            console.log(this.props.columns);
+            const column = this.props.columns[j];
+            if (grandTotalcolumns.indexOf(column.name) !== -1) {
+              const fieldValue = grandTotal[column.name];
+              const rowNum = r + 1;
+              const colClassName = 'grant-total total-value ' + column.className;
+              totRowCols.push( <TableColumn key={ j }
+                                  rIndex={ rowNum }
+                                  dataAlign={ column.align }
+                                  className={ colClassName }
+                                  hidden={ false }
+                                  width={ column.width }
+                                  attrs={ column.attrs }>
+                                  { fieldValue }
+                                </TableColumn> );
+            }else {
+              totRowCols.push(<td></td>);
+            }
+          }
+
+          result.push(<TableRow className='grant-total' key='grant-total'>
+                        { totRowCols }
+                      </TableRow>);
+        }
+      }
+
       return (result);
     }, this);
+
     if (tableRows.length === 0) {
       tableRows.push(
         <TableRow key='##table-empty##'>
