@@ -22,6 +22,10 @@ class Demo extends React.Component {
         </Panel>
         <Panel header={ 'Empty Table Example' }>
           { renderLinks('basic/no-data-table.js') }
+          <span>
+            Use <code>noDataText</code> to custom the text if table is empty<br/>
+            Use <code>withoutNoDataText</code> to hide the table body if table is empty<br/>
+          </span>
           <NoDataTable/>
         </Panel>
         <Panel header={ 'A Single Column react-bootstrap-table' }>
