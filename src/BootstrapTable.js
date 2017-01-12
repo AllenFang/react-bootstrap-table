@@ -37,6 +37,10 @@ class BootstrapTable extends Component {
       currPage = this.props.options.pageStartIndex;
     }
 
+    this._adjustHeaderWidth = this._adjustHeaderWidth.bind(this);
+    this._adjustHeight = this._adjustHeight.bind(this);
+    this._adjustTable = this._adjustTable.bind(this);
+
     this.state = {
       data: this.getTableData(),
       currPage: currPage,
@@ -400,7 +404,7 @@ class BootstrapTable extends Component {
 
   handleExpandRow = expanding => {
     this.setState({ expanding }, () => {
-      this.props.adjustHeaderWidth();
+      this._adjustHeaderWidth();
     });
   }
 
@@ -950,14 +954,14 @@ class BootstrapTable extends Component {
     this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
   }
 
-  _adjustTable = () => {
+  _adjustTable() {
     if (!this.props.printable) {
       this._adjustHeaderWidth();
     }
     this._adjustHeight();
   }
 
-  _adjustHeaderWidth = () => {
+  _adjustHeaderWidth() {
     const header = this.refs.header.getHeaderColGrouop();
     const headerContainer = this.refs.header.refs.container;
     const tbody = this.refs.body.refs.tbody;
@@ -996,7 +1000,7 @@ class BootstrapTable extends Component {
     }
   }
 
-  _adjustHeight = () => {
+  _adjustHeight() {
     const { height } = this.props;
     let { maxHeight } = this.props;
     if ((typeof height === 'number' && !isNaN(height)) || height.indexOf('%') === -1) {
