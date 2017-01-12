@@ -342,6 +342,7 @@ class BootstrapTable extends Component {
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
             noDataText={ this.props.options.noDataText }
+            withoutNoDataText={ this.props.options.withoutNoDataText }
             expanding={ this.state.expanding }
             onExpand={ this.handleExpandRow }
             beforeShowError={ this.props.options.beforeShowError } />
@@ -1137,6 +1138,7 @@ BootstrapTable.propTypes = {
     onExportToCSV: React.PropTypes.func,
     onCellEdit: React.PropTypes.func,
     noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
+    withoutNoDataText: React.PropTypes.bool,
     handleConfirmDeleteRow: PropTypes.func,
     prePage: PropTypes.string,
     nextPage: PropTypes.string,
@@ -1241,6 +1243,7 @@ BootstrapTable.defaultProps = {
     hideSizePerPage: false,
     onSizePerPageList: undefined,
     noDataText: undefined,
+    withoutNoDataText: false,
     handleConfirmDeleteRow: undefined,
     prePage: Const.PRE_PAGE,
     nextPage: Const.NEXT_PAGE,

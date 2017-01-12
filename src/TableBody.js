@@ -150,7 +150,7 @@ class TableBody extends Component {
       }
       return (result);
     }, this);
-    if (tableRows.length === 0) {
+    if (tableRows.length === 0 && !this.props.withoutNoDataText) {
       tableRows.push(
         <TableRow key='##table-empty##'>
           <td data-toggle='collapse'
@@ -306,6 +306,7 @@ TableBody.propTypes = {
   onRowDoubleClick: PropTypes.func,
   onSelectRow: PropTypes.func,
   noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
+  withoutNoDataText: PropTypes.bool,
   style: PropTypes.object,
   tableBodyClass: PropTypes.string,
   bodyContainerClass: PropTypes.string,
