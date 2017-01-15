@@ -243,18 +243,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.___scrollHeader__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
-	    _this._adjustTable = function () {
-	      return _this.___adjustTable__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this._adjustHeaderWidth = function () {
-	      return _this.___adjustHeaderWidth__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this._adjustHeight = function () {
-	      return _this.___adjustHeight__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
 	    _this.isIE = false;
 	    _this._attachCellEditFunc();
 	    if (_util2.default.canUseDOM()) {
@@ -274,6 +262,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    } else if (typeof _this.props.options.pageStartIndex !== 'undefined') {
 	      currPage = _this.props.options.pageStartIndex;
 	    }
+
+	    _this._adjustHeaderWidth = _this._adjustHeaderWidth.bind(_this);
+	    _this._adjustHeight = _this._adjustHeight.bind(_this);
+	    _this._adjustTable = _this._adjustTable.bind(_this);
 
 	    _this.state = {
 	      data: _this.getTableData(),
@@ -605,6 +597,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onRowMouseOut: this.handleRowMouseOut,
 	            onSelectRow: this.handleSelectRow,
 	            noDataText: this.props.options.noDataText,
+	            withoutNoDataText: this.props.options.withoutNoDataText,
 	            expanding: this.state.expanding,
 	            onExpand: this.handleExpandRow,
 	            beforeShowError: this.props.options.beforeShowError })
@@ -668,7 +661,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _this3 = this;
 
 	      this.setState({ expanding: expanding }, function () {
-	        _this3.props.adjustHeaderWidth();
+	        _this3._adjustHeaderWidth();
 	      });
 	    }
 	  }, {
@@ -1271,16 +1264,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
 	    }
 	  }, {
-	    key: '___adjustTable__REACT_HOT_LOADER__',
-	    value: function ___adjustTable__REACT_HOT_LOADER__() {
+	    key: '_adjustTable',
+	    value: function _adjustTable() {
 	      if (!this.props.printable) {
 	        this._adjustHeaderWidth();
 	      }
 	      this._adjustHeight();
 	    }
 	  }, {
-	    key: '___adjustHeaderWidth__REACT_HOT_LOADER__',
-	    value: function ___adjustHeaderWidth__REACT_HOT_LOADER__() {
+	    key: '_adjustHeaderWidth',
+	    value: function _adjustHeaderWidth() {
 	      var header = this.refs.header.getHeaderColGrouop();
 	      var headerContainer = this.refs.header.refs.container;
 	      var tbody = this.refs.body.refs.tbody;
@@ -1319,8 +1312,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  }, {
-	    key: '___adjustHeight__REACT_HOT_LOADER__',
-	    value: function ___adjustHeight__REACT_HOT_LOADER__() {
+	    key: '_adjustHeight',
+	    value: function _adjustHeight() {
 	      var height = this.props.height;
 	      var maxHeight = this.props.maxHeight;
 
@@ -1455,6 +1448,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    onExportToCSV: _react2.default.PropTypes.func,
 	    onCellEdit: _react2.default.PropTypes.func,
 	    noDataText: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object]),
+	    withoutNoDataText: _react2.default.PropTypes.bool,
 	    handleConfirmDeleteRow: _react.PropTypes.func,
 	    prePage: _react.PropTypes.string,
 	    nextPage: _react.PropTypes.string,
@@ -1559,6 +1553,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    hideSizePerPage: false,
 	    onSizePerPageList: undefined,
 	    noDataText: undefined,
+	    withoutNoDataText: false,
 	    handleConfirmDeleteRow: undefined,
 	    prePage: _Const2.default.PRE_PAGE,
 	    nextPage: _Const2.default.NEXT_PAGE,
@@ -2292,7 +2287,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        return result;
 	      }, this);
-	      if (tableRows.length === 0) {
+	      if (tableRows.length === 0 && !this.props.withoutNoDataText) {
 	        tableRows.push(_react2.default.createElement(
 	          _TableRow2.default,
 	          { key: '##table-empty##' },
@@ -2473,6 +2468,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onRowDoubleClick: _react.PropTypes.func,
 	  onSelectRow: _react.PropTypes.func,
 	  noDataText: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object]),
+	  withoutNoDataText: _react.PropTypes.bool,
 	  style: _react.PropTypes.object,
 	  tableBodyClass: _react.PropTypes.string,
 	  bodyContainerClass: _react.PropTypes.string,
