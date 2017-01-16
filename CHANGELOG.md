@@ -1,3 +1,13 @@
+<a name="v2.9.1"></a>
+# [v2.9.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.9.0...v2.9.1) (2017-01-15)
+## Bug fixes
+* Fixed Uncaught TypeError: _this3.props.adjustHeaderWidth is not a function when expanding row([9202f31](https://github.com/AllenFang/react-bootstrap-table/commit/9202f31a837ae6e40cb496d612a5526ca5bd74b8))
+
+## Features
+* Support to hide the text for no data table([8bedcf7](https://github.com/AllenFang/react-bootstrap-table/commit/8bedcf7b0a8cd30da800c296d8d5f07aee0c71de))
+	* Use `options.withoutNoDataText`, default is false. Give true will hide the text content
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/commit/b003927f983026d1aa08fd313fdb8570d49c7419)
+
 <a name="v2.9.0"></a>
 # [v2.9.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.8.3...v2.9.0) (2017-01-09)
 ## Enhancement
