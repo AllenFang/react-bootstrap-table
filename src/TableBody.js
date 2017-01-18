@@ -229,6 +229,7 @@ class TableBody extends Component {
       }
     } = this.props;
     const selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
+    columnIndex = this._isSelectRowDefined() && columnIndex - 1;
 
     if (expandableRow &&
       selectRowAndExpand &&
