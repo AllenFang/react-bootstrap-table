@@ -1,3 +1,52 @@
+<a name="v2.9.1"></a>
+# [v2.9.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.9.0...v2.9.1) (2017-01-15)
+## Bug fixes
+* Fixed Uncaught TypeError: _this3.props.adjustHeaderWidth is not a function when expanding row([9202f31](https://github.com/AllenFang/react-bootstrap-table/commit/9202f31a837ae6e40cb496d612a5526ca5bd74b8))
+
+## Features
+* Support to hide the text for no data table([8bedcf7](https://github.com/AllenFang/react-bootstrap-table/commit/8bedcf7b0a8cd30da800c296d8d5f07aee0c71de))
+	* Use `options.withoutNoDataText`, default is false. Give true will hide the text content
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/commit/b003927f983026d1aa08fd313fdb8570d49c7419)
+
+<a name="v2.9.0"></a>
+# [v2.9.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.8.3...v2.9.0) (2017-01-09)
+## Enhancement
+* Enhance the expanding row, support ```options.expanding```([aeb7125](https://github.com/AllenFang/react-bootstrap-table/commit/aeb71252d415e356aff6d7824a01b0da8752edba))
+	* [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/expandRow/manage-expanding.js#L69)
+* Add ```options.beforeShowError``` to do some thing before toastr popup([9bc8b7f](https://github.com/AllenFang/react-bootstrap-table/commit/9bc8b7f5bee61974bc854b990300e4dbc5c89a3d))
+	* Return false or do not return to prevent toastr popup
+	* [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/advance/disable-toastr-table.js#L67)
+
+## Features
+* Multi column sort
+	* [Simple multi column sort](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/sort/multi-sort-table.js)
+	* [Manage multi column sort externally](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/sort/manage-multi-sort-external-table.js)
+
+<a name="v2.8.3"></a>
+# [v2.8.3](https://github.com/AllenFang/react-bootstrap-table/compare/v2.8.2...v2.8.3) (2017-01-07)
+## Enhancement
+* Add ```invalidEditColumnClassName``` props on ```TableHeaderColumn``` for supporting the class on cell editing fail([4ddc906](https://github.com/AllenFang/react-bootstrap-table/commit/4ddc906390d1dc0857f4c4062142610c779c6015))
+
+## Features
+* Allow to configure the text, select or custom with a filter condition, default is ```like``` and ```eq``` is available.([a48e10c](https://github.com/AllenFang/react-bootstrap-table/commit/a48e10cb416382feaad47ad381d611e172513ea6))
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column-filter/text-filter-with-eq-condition.js) for text filter
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column-filter/select-filter-with-eq-condition.js) for select filter
+* Allow to add your own attribute on TD element([a44e189](https://github.com/AllenFang/react-bootstrap-table/commit/a44e18918a9c50bd9594b7f3f3af09a9ae608c5b))
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column/td-attribute-table.js)
+
+<a name="v2.8.2"></a>
+# [v2.8.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.8.0...v2.8.2) (2016-12-29)
+## Bug fixes
+* Hot fixes for sort caret disappear after ```v2.8.1```([7e88e15](https://github.com/AllenFang/react-bootstrap-table/commit/7e88e151ae5eb5fcd58db718a0afa2a0ed08993b))
+
+<a name="v2.8.1"></a>
+# [v2.8.1(unpublish)](https://github.com/AllenFang/react-bootstrap-table/compare/v2.8.0...v2.8.1) (2016-12-28)
+## Bug fixes
+* Fixed onRowMouseOver called with wrong arguments when expandableRow enable([86270e2](https://github.com/AllenFang/react-bootstrap-table/commit/86270e2bf96c8bb3defd9655647a0c583ee17372))
+
+## Enhancement
+* Fixed TableHeader: prop type ```colGroups``` is invalid([11e9daa](https://github.com/AllenFang/react-bootstrap-table/commit/11e9daae65d9b5db4a615f82c890e7236dfa2a20))
+
 <a name="v2.8.0"></a>
 # [v2.8.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.7.1...v2.8.0) (2016-12-25)
 ## Features

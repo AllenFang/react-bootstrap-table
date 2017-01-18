@@ -38,6 +38,9 @@ export default {
     DATE: 'DateFilter',
     CUSTOM: 'CustomFilter'
   },
+  FILTER_COND_EQ: 'eq',
+  FILTER_COND_LIKE: 'like',
   EXPAND_BY_ROW: 'row',
-  EXPAND_BY_COL: 'column'
+  EXPAND_BY_COL: 'column',
+  CANCEL_TOASTR: 'Pressed ESC can cancel'
 };

@@ -4,6 +4,7 @@ import ColumnAlignTable from './column-align-table';
 import ColumnWidthTable from './column-width-table';
 import ColumnHideTable from './column-hide-table';
 import ColumnTitleTable from './column-title-table';
+import TdAttributeTable from './td-attribute-table';
 
 class Demo extends React.Component {
   render() {
@@ -42,6 +43,16 @@ class Demo extends React.Component {
             <div className='panel-body'>
               <h5>Source in /examples/js/column/column-title-table.js</h5>
               <ColumnTitleTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>TD Attributes Example</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/column/td-attribute-table.js</h5>
+              <span>You can apply your own couple attributes on the DOM of <code>td</code></span>
+              <TdAttributeTable />
             </div>
           </div>
         </div>

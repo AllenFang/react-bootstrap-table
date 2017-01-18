@@ -1,4 +1,5 @@
 /* eslint max-len: 0 */
+require('./style.css');
 import React from 'react';
 import ClickToEditTable from './click-to-edit-table';
 import DbClickToEditTable from './dbclick-to-edit-table';
@@ -6,6 +7,7 @@ import BlurToSaveTable from './blur-to-save-table';
 import CellEditHookTable from './cell-edit-hook-table';
 import NonEditableTable from './non-editable-table';
 import CustomCellEditTable from './custom-cell-edit-table';
+import EditCellClassNameTable from './cell-edit-classname';
 
 class Demo extends React.Component {
   render() {
@@ -68,6 +70,20 @@ class Demo extends React.Component {
             <div className='panel-body'>
               <h5>Source in /examples/js/cell-edit/custom-cell-edit-table.js</h5>
               <CustomCellEditTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Editing Cell Classname Example</div>
+            <div className='panel-body'>
+              <span>
+                <code>editColumnClassName</code> accept string or function, this prop is the class for editing cell<br/>
+                <code>invalidEditColumnClassName</code> accept string or function, this prop is the class for editing invalid cell<br/>
+                The Job Status and Job Name both apply the <code>editColumnClassName</code> and <code>invalidEditColumnClassName</code>.
+              </span>
+              <h5>Source in /examples/js/cell-edit/cell-edit-classname.js</h5>
+              <EditCellClassNameTable />
             </div>
           </div>
         </div>

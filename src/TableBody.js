@@ -15,14 +15,12 @@ class TableBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currEditCell: null,
-      expanding: [],
-      lastExpand: null
+      currEditCell: null
     };
   }
 
   render() {
-    const { cellEdit } = this.props;
+    const { cellEdit, beforeShowError } = this.props;
     const tableClasses = classSet('table', {
       'table-striped': this.props.striped,
       'table-bordered': this.props.bordered,
@@ -71,7 +69,9 @@ class TableBody extends Component {
                 colIndex={ i }
                 row={ data }
                 fieldValue={ fieldValue }
-                className={ column.editClassName } />
+                className={ column.editClassName }
+                invalidColumnClassName={ column.invalidEditColumnClassName }
+                beforeShowError={ beforeShowError } />
             );
         } else {
           // add by bluespring for className customize
@@ -105,7 +105,8 @@ class TableBody extends Component {
               hidden={ column.hidden }
               onEdit={ this.handleEditCell }
               width={ column.width }
-              onClick={ this.handleClickCell }>
+              onClick={ this.handleClickCell }
+              attrs={ column.attrs }>
               { columnChild }
             </TableColumn>
           );
@@ -140,7 +141,7 @@ class TableBody extends Component {
           <ExpandComponent
             className={ trClassName }
             bgColor={ this.props.expandRowBgColor || this.props.selectRow.bgColor || undefined }
-            hidden={ !(this.state.expanding.indexOf(key) > -1) }
+            hidden={ !(this.props.expanding.indexOf(key) > -1) }
             colSpan={ expandColSpan }
             width={ "100%" }>
             { this.props.expandComponent(data) }
@@ -149,7 +150,7 @@ class TableBody extends Component {
       }
       return (result);
     }, this);
-    if (tableRows.length === 0) {
+    if (tableRows.length === 0 && !this.props.withoutNoDataText) {
       tableRows.push(
         <TableRow key='##table-empty##'>
           <td data-toggle='collapse'
@@ -228,21 +229,20 @@ class TableBody extends Component {
       }
     } = this.props;
     const selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
+    columnIndex = this._isSelectRowDefined() && columnIndex - 1;
 
     if (expandableRow &&
       selectRowAndExpand &&
       (expandBy === Const.EXPAND_BY_ROW ||
       (expandBy === Const.EXPAND_BY_COL && columns[columnIndex].expandable))) {
       const rowKey = this.props.data[rowIndex - 1][keyField];
-      let expanding = this.state.expanding;
+      let expanding = this.props.expanding;
       if (expanding.indexOf(rowKey) > -1) {
         expanding = expanding.filter(k => k !== rowKey);
       } else {
         expanding.push(rowKey);
       }
-      this.setState({ expanding }, () => {
-        this.props.adjustHeaderWidth();
-      });
+      this.props.onExpand(expanding);
     }
   }
 
@@ -307,6 +307,7 @@ TableBody.propTypes = {
   onRowDoubleClick: PropTypes.func,
   onSelectRow: PropTypes.func,
   noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
+  withoutNoDataText: PropTypes.bool,
   style: PropTypes.object,
   tableBodyClass: PropTypes.string,
   bodyContainerClass: PropTypes.string,
@@ -314,6 +315,8 @@ TableBody.propTypes = {
   expandComponent: PropTypes.func,
   expandRowBgColor: PropTypes.string,
   expandBy: PropTypes.string,
-  adjustHeaderWidth: PropTypes.func
+  expanding: PropTypes.array,
+  onExpand: PropTypes.func,
+  beforeShowError: PropTypes.func
 };
 export default TableBody;

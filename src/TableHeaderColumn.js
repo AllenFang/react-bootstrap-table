@@ -24,7 +24,8 @@ class TableHeaderColumn extends Component {
   }
 
   handleFilter(value, type) {
-    this.props.filter.emitter.handleFilter(this.props.dataField, value, type);
+    const { filter } = this.props;
+    filter.emitter.handleFilter(this.props.dataField, value, type, filter);
   }
 
   getFilters() {
@@ -228,6 +229,7 @@ TableHeaderColumn.propTypes = {
   sortFuncExtraData: PropTypes.any,
   columnClassName: PropTypes.any,
   editColumnClassName: PropTypes.any,
+  invalidEditColumnClassName: PropTypes.any,
   columnTitle: PropTypes.bool,
   filterFormatted: PropTypes.bool,
   filterValue: PropTypes.func,
@@ -245,11 +247,13 @@ TableHeaderColumn.propTypes = {
     emitter: PropTypes.object,
     placeholder: PropTypes.string,
     getElement: PropTypes.func,
-    customFilterParameters: PropTypes.object
+    customFilterParameters: PropTypes.object,
+    condition: PropTypes.oneOf([ Const.FILTER_COND_EQ, Const.FILTER_COND_LIKE ])
   }),
   sortIndicator: PropTypes.bool,
   export: PropTypes.bool,
-  expandable: PropTypes.bool
+  expandable: PropTypes.bool,
+  tdAttr: PropTypes.object
 };
 
 TableHeaderColumn.defaultProps = {
@@ -272,6 +276,7 @@ TableHeaderColumn.defaultProps = {
   sortFunc: undefined,
   columnClassName: '',
   editColumnClassName: '',
+  invalidEditColumnClassName: '',
   filterFormatted: false,
   filterValue: undefined,
   sort: undefined,
@@ -279,7 +284,8 @@ TableHeaderColumn.defaultProps = {
   sortFuncExtraData: undefined,
   filter: undefined,
   sortIndicator: true,
-  expandable: true
+  expandable: true,
+  tdAttr: undefined
 };
 
 export default TableHeaderColumn;

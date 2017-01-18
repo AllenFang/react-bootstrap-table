@@ -37,9 +37,14 @@ class BootstrapTable extends Component {
       currPage = this.props.options.pageStartIndex;
     }
 
+    this._adjustHeaderWidth = this._adjustHeaderWidth.bind(this);
+    this._adjustHeight = this._adjustHeight.bind(this);
+    this._adjustTable = this._adjustTable.bind(this);
+
     this.state = {
       data: this.getTableData(),
       currPage: currPage,
+      expanding: this.props.options.expanding || [],
       sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
       selectedRowKeys: this.store.getSelectedRowKeys()
     };
@@ -89,6 +94,7 @@ class BootstrapTable extends Component {
       keyField: keyField,
       colInfos: this.colInfos,
       multiColumnSearch: props.multiColumnSearch,
+      multiColumnSort: props.multiColumnSort,
       remote: this.isRemoteDataSource()
     });
   }
@@ -100,7 +106,8 @@ class BootstrapTable extends Component {
     const sortOrder = options.defaultSortOrder || options.sortOrder;
     const searchText = options.defaultSearch;
     if (sortName && sortOrder) {
-      this.store.sort(sortOrder, sortName);
+      this.store.setSortInfo(sortOrder, sortName);
+      this.store.sort();
     }
 
     if (searchText) {
@@ -150,6 +157,7 @@ class BootstrapTable extends Component {
           searchable: column.props.searchable,
           className: column.props.columnClassName,
           editClassName: column.props.editColumnClassName,
+          invalidEditColumnClassName: column.props.invalidEditColumnClassName,
           columnTitle: column.props.columnTitle,
           width: column.props.width,
           text: column.props.headerText || column.props.children,
@@ -157,7 +165,8 @@ class BootstrapTable extends Component {
           sortFuncExtraData: column.props.sortFuncExtraData,
           export: column.props.export,
           expandable: column.props.expandable,
-          index: i
+          index: i,
+          attrs: column.props.tdAttr
         };
       }
     });
@@ -192,10 +201,15 @@ class BootstrapTable extends Component {
       if (page > Math.ceil(nextProps.data.length / sizePerPage)) {
         page = 1;
       }
-      const sortInfo = this.store.getSortInfo();
-      const sortField = options.sortName || (sortInfo ? sortInfo.sortField : undefined);
-      const sortOrder = options.sortOrder || (sortInfo ? sortInfo.order : undefined);
-      if (sortField && sortOrder) this.store.sort(sortOrder, sortField);
+      const sortList = this.store.getSortInfo();
+      const sortField = options.sortName;
+      const sortOrder = options.sortOrder;
+      if (sortField && sortOrder) {
+        this.store.setSortInfo(sortOrder, sortField);
+        this.store.sort();
+      } else if (sortList.length > 0) {
+        this.store.sort();
+      }
       const data = this.store.page(page, sizePerPage).get();
       this.setState({
         data,
@@ -267,7 +281,7 @@ class BootstrapTable extends Component {
     };
 
     const columns = this.getColumnsDescription(this.props);
-    const sortInfo = this.store.getSortInfo();
+    const sortList = this.store.getSortInfo();
     const pagination = this.renderPagination();
     const toolBar = this.renderToolBar();
     const tableFilter = this.renderTableFilter(columns);
@@ -298,8 +312,7 @@ class BootstrapTable extends Component {
             rowSelectType={ this.props.selectRow.mode }
             customComponent={ this.props.selectRow.customComponent }
             hideSelectColumn={ this.props.selectRow.hideSelectColumn }
-            sortName={ sortInfo ? sortInfo.sortField : undefined }
-            sortOrder={ sortInfo ? sortInfo.order : undefined }
+            sortList={ sortList }
             sortIndicator={ sortIndicator }
             onSort={ this.handleSort }
             onSelectAllRow={ this.handleSelectAllRow }
@@ -334,7 +347,10 @@ class BootstrapTable extends Component {
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
             noDataText={ this.props.options.noDataText }
-            adjustHeaderWidth={ this._adjustHeaderWidth } />
+            withoutNoDataText={ this.props.options.withoutNoDataText }
+            expanding={ this.state.expanding }
+            onExpand={ this.handleExpandRow }
+            beforeShowError={ this.props.options.beforeShowError } />
         </div>
         { tableFilter }
         { showPaginationOnBottom ? pagination : null }
@@ -381,15 +397,20 @@ class BootstrapTable extends Component {
     if (this.props.options.onSortChange) {
       this.props.options.onSortChange(sortField, order, this.props);
     }
-
+    this.store.setSortInfo(order, sortField);
     if (this.isRemoteDataSource()) {
-      this.store.setSortInfo(order, sortField);
       return;
     }
 
-    const result = this.store.sort(order, sortField).get();
+    const result = this.store.sort().get();
     this.setState({
       data: result
+    });
+  }
+
+  handleExpandRow = expanding => {
+    this.setState({ expanding }, () => {
+      this._adjustHeaderWidth();
     });
   }
 
@@ -707,10 +728,10 @@ class BootstrapTable extends Component {
 
     this.store.filter(filterObj);
 
-    const sortObj = this.store.getSortInfo();
+    const sortList = this.store.getSortInfo();
 
-    if (sortObj) {
-      this.store.sort(sortObj.order, sortObj.sortField);
+    if (sortList.length > 0) {
+      this.store.sort();
     }
 
     let result;
@@ -790,10 +811,10 @@ class BootstrapTable extends Component {
 
     this.store.search(searchText);
 
-    const sortObj = this.store.getSortInfo();
+    const sortList = this.store.getSortInfo();
 
-    if (sortObj) {
-      this.store.sort(sortObj.order, sortObj.sortField);
+    if (sortList.length > 0) {
+      this.store.sort();
     }
 
     let result;
@@ -959,14 +980,14 @@ class BootstrapTable extends Component {
     this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
   }
 
-  _adjustTable = () => {
+  _adjustTable() {
     if (!this.props.printable) {
       this._adjustHeaderWidth();
     }
     this._adjustHeight();
   }
 
-  _adjustHeaderWidth = () => {
+  _adjustHeaderWidth() {
     const header = this.refs.header.getHeaderColGrouop();
     const headerContainer = this.refs.header.refs.container;
     const tbody = this.refs.body.refs.tbody;
@@ -1005,7 +1026,7 @@ class BootstrapTable extends Component {
     }
   }
 
-  _adjustHeight = () => {
+  _adjustHeight() {
     const { height } = this.props;
     let { maxHeight } = this.props;
     if ((typeof height === 'number' && !isNaN(height)) || height.indexOf('%') === -1) {
@@ -1114,10 +1135,10 @@ BootstrapTable.propTypes = {
   tableBodyClass: PropTypes.string,
   options: PropTypes.shape({
     clearSearch: PropTypes.bool,
-    sortName: PropTypes.string,
-    sortOrder: PropTypes.string,
-    defaultSortName: PropTypes.string,
-    defaultSortOrder: PropTypes.string,
+    sortName: PropTypes.oneOfType([ PropTypes.string, PropTypes.array ]),
+    sortOrder: PropTypes.oneOfType([ PropTypes.string, PropTypes.array ]),
+    defaultSortName: PropTypes.oneOfType([ PropTypes.string, PropTypes.array ]),
+    defaultSortOrder: PropTypes.oneOfType([ PropTypes.string, PropTypes.array ]),
     sortIndicator: PropTypes.bool,
     afterTableComplete: PropTypes.func,
     afterDeleteRow: PropTypes.func,
@@ -1149,6 +1170,7 @@ BootstrapTable.propTypes = {
     onExportToCSV: React.PropTypes.func,
     onCellEdit: React.PropTypes.func,
     noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
+    withoutNoDataText: React.PropTypes.bool,
     handleConfirmDeleteRow: PropTypes.func,
     prePage: PropTypes.string,
     nextPage: PropTypes.string,
@@ -1179,7 +1201,9 @@ BootstrapTable.propTypes = {
     paginationPanel: PropTypes.func,
     searchPosition: PropTypes.string,
     expandRowBgColor: PropTypes.string,
-    expandBy: PropTypes.string
+    expandBy: PropTypes.string,
+    expanding: PropTypes.array,
+    beforeShowError: PropTypes.func
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1228,6 +1252,7 @@ BootstrapTable.defaultProps = {
   deleteRow: false,
   search: false,
   multiColumnSearch: false,
+  multiColumnSort: 1,
   columnFilter: false,
   trClassName: '',
   tableStyle: undefined,
@@ -1269,6 +1294,7 @@ BootstrapTable.defaultProps = {
     withFirstAndLast: true,
     onSizePerPageList: undefined,
     noDataText: undefined,
+    withoutNoDataText: false,
     handleConfirmDeleteRow: undefined,
     prePage: Const.PRE_PAGE,
     nextPage: Const.NEXT_PAGE,
@@ -1300,7 +1326,9 @@ BootstrapTable.defaultProps = {
     paginationPanel: undefined,
     searchPosition: 'right',
     expandRowBgColor: undefined,
-    expandBy: Const.EXPAND_BY_ROW
+    expandBy: Const.EXPAND_BY_ROW,
+    expanding: [],
+    beforeShowError: undefined
   },
   fetchInfo: {
     dataTotalSize: 0
