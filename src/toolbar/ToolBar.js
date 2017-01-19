@@ -412,7 +412,8 @@ class ToolBar extends Component {
     return (
       <Modal className='react-bs-insert-modal modal-dialog'
         isOpen={ this.state.isInsertModalOpen }
-        onRequestClose={ this.handleModalClose }>
+        onRequestClose={ this.handleModalClose }
+        contentLabel='Modal'>
         { modal }
       </Modal>
     );
