@@ -9965,6 +9965,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'makePage',
 	    value: function makePage() {
+	      var _this3 = this;
+
 	      var pages = this.getPages();
 	      var isStart = function isStart(page, _ref) {
 	        var currPage = _ref.currPage,
@@ -9977,7 +9979,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var currPage = _ref2.currPage,
 	            nextPage = _ref2.nextPage,
 	            lastPage = _ref2.lastPage;
-	        return currPage === lastPage && (page === nextPage || page === lastPage);
+	        return currPage === _this3.lastPage && (page === nextPage || page === lastPage);
 	      };
 	      var pageBtns = pages.filter(function (page) {
 	        if (this.props.alwaysShowAllBtns) {
@@ -9986,11 +9988,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return isStart(page, this.props) || isEnd(page, this.props) ? false : true;
 	      }, this).map(function (page) {
 	        var isActive = page === this.props.currPage;
+	        var isDisabled = isStart(page, this.props) || isEnd(page, this.props) ? true : false;
 	        return _react2.default.createElement(
 	          _PageButton2.default,
 	          { key: page,
 	            changePage: this.changePage,
-	            active: isActive },
+	            active: isActive,
+	            disable: isDisabled },
 	          page
 	        );
 	      }, this);

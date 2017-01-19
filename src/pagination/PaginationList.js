@@ -185,7 +185,7 @@ class PaginationList extends Component {
     const isStart = (page, { currPage, pageStartIndex, firstPage, prePage }) =>
       (currPage === pageStartIndex && (page === firstPage || page === prePage));
     const isEnd = (page, { currPage, nextPage, lastPage }) =>
-      (currPage === lastPage && (page === nextPage || page === lastPage ));
+      (currPage === this.lastPage && (page === nextPage || page === lastPage ));
     const pageBtns = pages
       .filter(function(page) {
         if (this.props.alwaysShowAllBtns) {
@@ -197,10 +197,14 @@ class PaginationList extends Component {
       }, this)
       .map(function(page) {
         const isActive = page === this.props.currPage;
+        const isDisabled = (isStart(page, this.props) || isEnd(page, this.props)) ?
+          true :
+          false;
         return (
           <PageButton key={ page }
             changePage={ this.changePage }
-            active={ isActive }>
+            active={ isActive }
+            disable={ isDisabled }>
             { page }
           </PageButton>
         );
