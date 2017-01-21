@@ -9,9 +9,7 @@ class TableRow extends Component {
   }
 
   rowClick = e => {
-    if (e.target.tagName !== 'INPUT' &&
-        e.target.tagName !== 'SELECT' &&
-        e.target.tagName !== 'TEXTAREA') {
+    if (e.target.tagName === 'TD') {
       const rowIndex = this.props.index + 1;
       const cellIndex = e.target.cellIndex;
       const { selectRow, unselectableRow, isSelected, onSelectRow, onExpandRow } = this.props;
