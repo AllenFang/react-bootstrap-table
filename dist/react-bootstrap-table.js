@@ -2268,6 +2268,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onRowMouseOver: this.handleRowMouseOver,
 	            onRowMouseOut: this.handleRowMouseOut,
 	            onSelectRow: this.handleSelectRow,
+	            onExpandRow: this.handleClickCell,
 	            unselectableRow: disable },
 	          selectRowColumn,
 	          tableColumns
@@ -2368,9 +2369,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: '__handleClickCell__REACT_HOT_LOADER__',
-	    value: function __handleClickCell__REACT_HOT_LOADER__(rowIndex, columnIndex) {
+	    value: function __handleClickCell__REACT_HOT_LOADER__(rowIndex) {
 	      var _this2 = this;
 
+	      var columnIndex = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -1;
 	      var _props3 = this.props,
 	          columns = _props3.columns,
 	          keyField = _props3.keyField,
@@ -2379,8 +2381,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          clickToExpand = _props3.selectRow.clickToExpand;
 
 	      var selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
+	      columnIndex = this._isSelectRowDefined() ? columnIndex - 1 : columnIndex;
 
-	      if (expandableRow && selectRowAndExpand && (expandBy === _Const2.default.EXPAND_BY_ROW || expandBy === _Const2.default.EXPAND_BY_COL && columns[columnIndex].expandable)) {
+	      if (expandableRow && selectRowAndExpand && (expandBy === _Const2.default.EXPAND_BY_ROW || columnIndex > 0 && expandBy === _Const2.default.EXPAND_BY_COL && columns[columnIndex].expandable)) {
 	        (function () {
 	          var rowKey = _this2.props.data[rowIndex - 1][keyField];
 	          var expanding = _this2.props.expanding;
@@ -2651,6 +2654,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.__rowClick__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+	    _this.expandRow = function () {
+	      return _this.__expandRow__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
 	    _this.rowDoubleClick = function () {
 	      return _this.__rowDoubleClick__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
@@ -2672,14 +2679,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function __rowClick__REACT_HOT_LOADER__(e) {
 	      var _this2 = this;
 
-	      if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT' && e.target.tagName !== 'TEXTAREA') {
+	      if (e.target.tagName === 'TD') {
 	        (function () {
 	          var rowIndex = _this2.props.index + 1;
+	          var cellIndex = e.target.cellIndex;
 	          var _props = _this2.props,
 	              selectRow = _props.selectRow,
 	              unselectableRow = _props.unselectableRow,
 	              isSelected = _props.isSelected,
-	              onSelectRow = _props.onSelectRow;
+	              onSelectRow = _props.onSelectRow,
+	              onExpandRow = _props.onExpandRow;
 
 	          if (selectRow) {
 	            if (selectRow.clickToSelect && !unselectableRow) {
@@ -2693,14 +2702,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	              setTimeout(function () {
 	                if (_this2.clickNum === 1) {
 	                  onSelectRow(rowIndex, !isSelected, e);
+	                  onExpandRow(rowIndex, cellIndex);
 	                }
 	                _this2.clickNum = 0;
 	              }, 200);
+	            } else {
+	              _this2.expandRow(rowIndex, cellIndex);
 	            }
+	          } else {
+	            _this2.expandRow(rowIndex, cellIndex);
 	          }
 	          if (_this2.props.onRowClick) _this2.props.onRowClick(rowIndex);
 	        })();
 	      }
+	    }
+	  }, {
+	    key: '__expandRow__REACT_HOT_LOADER__',
+	    value: function __expandRow__REACT_HOT_LOADER__(rowIndex, cellIndex) {
+	      var _this3 = this;
+
+	      this.clickNum++;
+	      setTimeout(function () {
+	        if (_this3.clickNum === 1) {
+	          _this3.props.onExpandRow(rowIndex, cellIndex);
+	        }
+	        _this3.clickNum = 0;
+	      }, 200);
 	    }
 	  }, {
 	    key: '__rowDoubleClick__REACT_HOT_LOADER__',
@@ -2768,6 +2795,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onRowClick: _react.PropTypes.func,
 	  onRowDoubleClick: _react.PropTypes.func,
 	  onSelectRow: _react.PropTypes.func,
+	  onExpandRow: _react.PropTypes.func,
 	  onRowMouseOut: _react.PropTypes.func,
 	  onRowMouseOver: _react.PropTypes.func,
 	  unselectableRow: _react.PropTypes.bool
@@ -2888,23 +2916,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      }
 	      this.props.onEdit(this.props.rIndex + 1, e.currentTarget.cellIndex, e);
+	      if (this.props.cellEdit.mode !== _Const2.default.CELL_EDIT_DBCLICK) {
+	        this.props.onClick(this.props.rIndex + 1, e.currentTarget.cellIndex, e);
+	      }
 	    }
 	  }, {
 	    key: '__handleCellClick__REACT_HOT_LOADER__',
 	    value: function __handleCellClick__REACT_HOT_LOADER__(e) {
-	      this.props.onClick(this.props.rIndex + 1, e.currentTarget.cellIndex, e);
+	      var _props = this.props,
+	          onClick = _props.onClick,
+	          rIndex = _props.rIndex;
+
+	      if (onClick) {
+	        onClick(rIndex + 1, e.currentTarget.cellIndex, e);
+	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props,
-	          children = _props.children,
-	          columnTitle = _props.columnTitle,
-	          className = _props.className,
-	          dataAlign = _props.dataAlign,
-	          hidden = _props.hidden,
-	          cellEdit = _props.cellEdit,
-	          attrs = _props.attrs;
+	      var _props2 = this.props,
+	          children = _props2.children,
+	          columnTitle = _props2.columnTitle,
+	          className = _props2.className,
+	          dataAlign = _props2.dataAlign,
+	          hidden = _props2.hidden,
+	          cellEdit = _props2.cellEdit,
+	          attrs = _props2.attrs;
 
 
 	      var tdStyle = {
@@ -11246,7 +11283,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'filterText',
-	    value: function filterText(targetVal, filterVal, cond) {
+	    value: function filterText(targetVal, filterVal) {
+	      var cond = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _Const2.default.FILTER_COND_EQ;
+
 	      targetVal = targetVal.toString();
 	      filterVal = filterVal.toString();
 	      if (cond === _Const2.default.FILTER_COND_EQ) {
@@ -11360,7 +11399,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	              }
 	            case _Const2.default.FILTER_TYPE.CUSTOM:
 	              {
-	                valid = _this4.filterCustom(targetVal, filterVal, filterObj[key].value, filterObj[key].props.cond);
+	                var cond = filterObj[key].props ? filterObj[key].props.cond : _Const2.default.FILTER_COND_EQ;
+	                valid = _this4.filterCustom(targetVal, filterVal, filterObj[key].value, cond);
 	                break;
 	              }
 	            default:
@@ -11368,7 +11408,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (filterObj[key].type === _Const2.default.FILTER_TYPE.SELECT && filterFormatted && filterFormatted && format) {
 	                  filterVal = format(filterVal, row, formatExtraData, r);
 	                }
-	                valid = _this4.filterText(targetVal, filterVal, filterObj[key].props.cond);
+	                var _cond = filterObj[key].props ? filterObj[key].props.cond : _Const2.default.FILTER_COND_EQ;
+	                valid = _this4.filterText(targetVal, filterVal, _cond);
 	                break;
 	              }
 	          }
