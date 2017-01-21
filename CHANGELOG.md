@@ -1,3 +1,11 @@
+<a name="v2.9.2"></a>
+# [v2.9.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.9.1...v2.9.2) (2017-01-21)
+## Bug fixes
+* Fix expanding row broken if configure selectRow and expandBy column([01e4261](https://github.com/AllenFang/react-bootstrap-table/commit/01e42616d76a1667ca74c626ffd5f838a46f077d))
+* Fix expanding row broken if configure cellEdit([2e9b19e](https://github.com/AllenFang/react-bootstrap-table/commit/2e9b19eec7ab57374e2ed4cb2f31cfba37b185dd))
+* Fix calling `handleFilterData` throws errors from `2.8.3`([4c5ef92](https://github.com/AllenFang/react-bootstrap-table/commit/4c5ef925a30edea87f063bdb1cae7f96507c8ba4))
+* Fix clicking on **custom** selection column will trigger selection twice([eff49cf](https://github.com/AllenFang/react-bootstrap-table/commit/eff49cfd90ba7ebbd343c2da921a041c5e310853))
+
 <a name="v2.9.1"></a>
 # [v2.9.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.9.0...v2.9.1) (2017-01-15)
 ## Bug fixes
