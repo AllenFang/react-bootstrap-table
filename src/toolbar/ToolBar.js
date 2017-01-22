@@ -121,8 +121,6 @@ class ToolBar extends Component {
         shakeEditor: false,
         isInsertModalOpen: false
       });
-      // reset form
-      this.refs.form.reset();
     }
   }
 
