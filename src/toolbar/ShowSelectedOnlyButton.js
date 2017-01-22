@@ -42,7 +42,6 @@ ShowSelectedOnlyButton.defaultProps = {
   showAllText: Const.SHOW_ALL,
   showOnlySelectText: Const.SHOW_ONLY_SELECT,
   toggle: false,
-  btnText: Const.DELETE_BTN_TEXT,
   btnContextual: 'btn-primary',
   className: '',
   onClick: undefined
