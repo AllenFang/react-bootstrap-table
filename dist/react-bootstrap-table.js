@@ -613,7 +613,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return _react2.default.createElement(
 	        'div',
-	        { className: (0, _classnames2.default)('react-bs-table-container', this.props.containerClass),
+	        { className: (0, _classnames2.default)('react-bs-table-container', this.props.className, this.props.containerClass),
 	          style: this.props.containerStyle },
 	        toolBar,
 	        showPaginationOnTop ? pagination : null,
@@ -10654,8 +10654,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          shakeEditor: false,
 	          isInsertModalOpen: false
 	        });
-	        // reset form
-	        this.refs.form.reset();
 	      }
 	    }
 	  }, {
@@ -10918,7 +10916,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _reactModal2.default,
 	        { className: 'react-bs-insert-modal modal-dialog',
 	          isOpen: this.state.isInsertModalOpen,
-	          onRequestClose: this.handleModalClose },
+	          onRequestClose: this.handleModalClose,
+	          contentLabel: 'Modal' },
 	        modal
 	      );
 	    }
@@ -13368,7 +13367,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  showAllText: _Const2.default.SHOW_ALL,
 	  showOnlySelectText: _Const2.default.SHOW_ONLY_SELECT,
 	  toggle: false,
-	  btnText: _Const2.default.DELETE_BTN_TEXT,
 	  btnContextual: 'btn-primary',
 	  className: '',
 	  onClick: undefined
