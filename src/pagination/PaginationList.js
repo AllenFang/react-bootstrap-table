@@ -182,39 +182,38 @@ class PaginationList extends Component {
 
   makePage() {
     const pages = this.getPages();
-    const pageBtns = pages.map(function(page) {
-      const isActive = page === this.props.currPage;
-      let disabled = false;
-      let hidden = false;
-      if (this.props.currPage === this.props.pageStartIndex &&
-        (page === this.props.firstPage || page === this.props.prePage)) {
-        disabled = true;
-        if (!this.props.alwaysShowAllBtns) {
-          hidden = true;
+    const isStart = (page, { currPage, pageStartIndex, firstPage, prePage }) =>
+      (currPage === pageStartIndex && (page === firstPage || page === prePage));
+    const isEnd = (page, { currPage, nextPage, lastPage }) =>
+      (currPage === this.lastPage && (page === nextPage || page === lastPage ));
+    const pageBtns = pages
+      .filter(function(page) {
+        if (this.props.alwaysShowAllBtns) {
+          return true;
         }
-      }
-      if (this.props.currPage === this.lastPage &&
-        (page === this.props.nextPage || page === this.props.lastPage)) {
-        disabled = true;
-        if (!this.props.alwaysShowAllBtns) {
-          hidden = true;
-        }
-      }
-      return (
-        <PageButton key={ page }
-          changePage={ this.changePage }
-          active={ isActive }
-          disable={ disabled }
-          hidden={ hidden }>
-          { page }
-        </PageButton>
-      );
-    }, this);
+        return (isStart(page, this.props) || isEnd(page, this.props)) ?
+          false :
+          true;
+      }, this)
+      .map(function(page) {
+        const isActive = page === this.props.currPage;
+        const isDisabled = (isStart(page, this.props) || isEnd(page, this.props)) ?
+          true :
+          false;
+        return (
+          <PageButton key={ page }
+            changePage={ this.changePage }
+            active={ isActive }
+            disable={ isDisabled }>
+            { page }
+          </PageButton>
+        );
+      }, this);
     return (
-      <ul className='react-bootstrap-table-page-btns-ul pagination'>
-        { pageBtns }
-      </ul>
-    );
+        <ul className='react-bootstrap-table-page-btns-ul pagination'>
+          { pageBtns }
+        </ul>
+      );
   }
 
   getPages() {
