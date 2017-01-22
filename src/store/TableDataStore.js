@@ -362,7 +362,7 @@ export class TableDataStore {
     return this.filterText(targetVal, filterVal, cond);
   }
 
-  filterText(targetVal, filterVal, cond) {
+  filterText(targetVal, filterVal, cond = Const.FILTER_COND_EQ) {
     targetVal = targetVal.toString();
     filterVal = filterVal.toString();
     if (cond === Const.FILTER_COND_EQ) {
@@ -462,8 +462,8 @@ export class TableDataStore {
           break;
         }
         case Const.FILTER_TYPE.CUSTOM: {
-          valid = this.filterCustom(targetVal, filterVal,
-            filterObj[key].value, filterObj[key].props.cond);
+          const cond = filterObj[key].props ? filterObj[key].props.cond : Const.FILTER_COND_EQ;
+          valid = this.filterCustom(targetVal, filterVal, filterObj[key].value, cond);
           break;
         }
         default: {
@@ -471,7 +471,8 @@ export class TableDataStore {
             filterFormatted && filterFormatted && format) {
             filterVal = format(filterVal, row, formatExtraData, r);
           }
-          valid = this.filterText(targetVal, filterVal, filterObj[key].props.cond);
+          const cond = filterObj[key].props ? filterObj[key].props.cond : Const.FILTER_COND_EQ;
+          valid = this.filterText(targetVal, filterVal, cond);
           break;
         }
         }

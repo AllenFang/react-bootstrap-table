@@ -9,11 +9,10 @@ class TableRow extends Component {
   }
 
   rowClick = e => {
-    if (e.target.tagName !== 'INPUT' &&
-        e.target.tagName !== 'SELECT' &&
-        e.target.tagName !== 'TEXTAREA') {
+    if (e.target.tagName === 'TD') {
       const rowIndex = this.props.index + 1;
-      const { selectRow, unselectableRow, isSelected, onSelectRow } = this.props;
+      const cellIndex = e.target.cellIndex;
+      const { selectRow, unselectableRow, isSelected, onSelectRow, onExpandRow } = this.props;
       if (selectRow) {
         if (selectRow.clickToSelect && !unselectableRow) {
           onSelectRow(rowIndex, !isSelected, e);
@@ -26,13 +25,28 @@ class TableRow extends Component {
           setTimeout(() => {
             if (this.clickNum === 1) {
               onSelectRow(rowIndex, !isSelected, e);
+              onExpandRow(rowIndex, cellIndex);
             }
             this.clickNum = 0;
           }, 200);
+        } else {
+          this.expandRow(rowIndex, cellIndex);
         }
+      } else {
+        this.expandRow(rowIndex, cellIndex);
       }
       if (this.props.onRowClick) this.props.onRowClick(rowIndex);
     }
+  }
+
+  expandRow = (rowIndex, cellIndex) => {
+    this.clickNum++;
+    setTimeout(() => {
+      if (this.clickNum === 1) {
+        this.props.onExpandRow(rowIndex, cellIndex);
+      }
+      this.clickNum = 0;
+    }, 200);
   }
 
   rowDoubleClick = e => {
@@ -95,6 +109,7 @@ TableRow.propTypes = {
   onRowClick: PropTypes.func,
   onRowDoubleClick: PropTypes.func,
   onSelectRow: PropTypes.func,
+  onExpandRow: PropTypes.func,
   onRowMouseOut: PropTypes.func,
   onRowMouseOver: PropTypes.func,
   unselectableRow: PropTypes.bool

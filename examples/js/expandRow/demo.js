@@ -4,6 +4,7 @@ import ExpandRow from './expandRow';
 import ExpandByColumn from './expand-row-by-column';
 import ManageExpandExternal from './manage-expanding';
 import ExpandWithSelection from './expand-row-with-selection';
+import ExpandWithCellEdit from './expand-row-with-cellEdit';
 import renderLinks from '../utils';
 
 import { Col, Panel } from 'react-bootstrap';
@@ -32,6 +33,10 @@ class Demo extends React.Component {
           configure <code>clickToExpand</code> in <code>selectRow</code> props, default is false</span>
           { renderLinks('expandRow/expand-row-with-selection.js') }
           <ExpandWithSelection/>
+        </Panel>
+        <Panel header={ 'Expand Row with CellEdit' }>
+          { renderLinks('expandRow/expand-row-with-cellEdit.js') }
+          <ExpandWithCellEdit/>
         </Panel>
       </Col>
     );
