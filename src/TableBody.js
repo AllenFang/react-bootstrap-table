@@ -294,6 +294,10 @@ class TableBody extends Component {
     return this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ||
           this.props.selectRow.mode === Const.ROW_SELECT_MULTI;
   }
+
+  getHeaderColGrouop = () => {
+    return this.refs.header.childNodes;
+  }
 }
 TableBody.propTypes = {
   data: PropTypes.array,
