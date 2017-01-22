@@ -31,9 +31,10 @@ export default {
     outer.appendChild(inner);
 
     document.body.appendChild(outer);
-    const w1 = inner.offsetWidth;
+    const w1 = inner.getBoundingClientRect().width;
     outer.style.overflow = 'scroll';
-    let w2 = inner.offsetWidth;
+    let w2 = inner.getBoundingClientRect().width;
+
     if (w1 === w2) w2 = outer.clientWidth;
 
     document.body.removeChild(outer);
