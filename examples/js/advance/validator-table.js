@@ -1,4 +1,5 @@
 /* eslint max-len: 0 */
+/* eslint no-unused-vars: 0 */
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
@@ -27,8 +28,8 @@ const cellEditProp = {
   blurToSave: true
 };
 
-// validator function pass the user input value and should return true|false.
-function jobNameValidator(value) {
+// validator function pass the user input value and row object. In addition, a bool return value is expected
+function jobNameValidator(value, row) {
   const response = { isValid: true, notification: { type: 'success', msg: '', title: '' } };
   if (!value) {
     response.isValid = false;
@@ -44,7 +45,7 @@ function jobNameValidator(value) {
   return response;
 }
 
-function jobStatusValidator(value) {
+function jobStatusValidator(value, row) {
   const nan = isNaN(parseInt(value, 10));
   if (nan) {
     return 'Job Status must be a integer!';
