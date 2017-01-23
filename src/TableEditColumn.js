@@ -62,7 +62,7 @@ class TableEditColumn extends Component {
     let valid = true;
     if (ts.props.editable.validator) {
       const input = ts.refs.inputRef;
-      const checkVal = ts.props.editable.validator(value);
+      const checkVal = ts.props.editable.validator(value, this.props.row);
       const responseType = typeof checkVal;
       if (responseType !== 'object' && checkVal !== true) {
         valid = false;
