@@ -52,8 +52,8 @@ export default {
       selectRow.mode === Const.ROW_SELECT_MULTI;
     if (isSelectRowDefined) {
       const style = {
-        width: 30,
-        minWidth: 30
+        width: selectRow.columnWidth || 30,
+        minWidth: selectRow.columnWidth || 30
       };
       if (!selectRow.hideSelectColumn) {
         selectRowHeader = (<col style={ style } key={ -1 }></col>);

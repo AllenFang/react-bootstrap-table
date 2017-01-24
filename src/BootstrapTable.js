@@ -1095,7 +1095,8 @@ BootstrapTable.propTypes = {
     clickToSelectAndEditCell: PropTypes.bool,
     clickToExpand: PropTypes.bool,
     showOnlySelected: PropTypes.bool,
-    unselectable: PropTypes.array
+    unselectable: PropTypes.array,
+    columnWidth: PropTypes.oneOfType([ PropTypes.number, PropTypes.string ])
   }),
   cellEdit: PropTypes.shape({
     mode: PropTypes.string,
