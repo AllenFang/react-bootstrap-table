@@ -1266,41 +1266,51 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_adjustTable',
 	    value: function _adjustTable() {
+	      this._adjustHeight();
 	      if (!this.props.printable) {
 	        this._adjustHeaderWidth();
 	      }
-	      this._adjustHeight();
 	    }
 	  }, {
 	    key: '_adjustHeaderWidth',
 	    value: function _adjustHeaderWidth() {
 	      var header = this.refs.header.getHeaderColGrouop();
-	      var headerContainer = this.refs.header.refs.container;
 	      var tbody = this.refs.body.refs.tbody;
+	      var bodyHeader = this.refs.body.getHeaderColGrouop();
 	      var firstRow = tbody.childNodes[0];
-	      var isScroll = headerContainer.offsetWidth !== tbody.parentNode.offsetWidth;
+	      var isScroll = tbody.parentNode.getBoundingClientRect().height > tbody.parentNode.parentNode.getBoundingClientRect().height;
+
 	      var scrollBarWidth = isScroll ? _util2.default.getScrollBarWidth() : 0;
 	      if (firstRow && this.store.getDataNum()) {
-	        var cells = firstRow.childNodes;
-	        for (var i = 0; i < cells.length; i++) {
-	          var cell = cells[i];
-	          var computedStyle = window.getComputedStyle(cell);
-	          var width = parseFloat(computedStyle.width.replace('px', ''));
-	          if (this.isIE) {
-	            var paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
-	            var paddingRightWidth = parseFloat(computedStyle.paddingRight.replace('px', ''));
-	            var borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace('px', ''));
-	            var borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace('px', ''));
-	            width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
+	        if (isScroll) {
+	          var cells = firstRow.childNodes;
+	          for (var i = 0; i < cells.length; i++) {
+	            var cell = cells[i];
+	            var computedStyle = window.getComputedStyle(cell);
+	            var width = parseFloat(computedStyle.width.replace('px', ''));
+	            if (this.isIE) {
+	              var paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
+	              var paddingRightWidth = parseFloat(computedStyle.paddingRight.replace('px', ''));
+	              var borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace('px', ''));
+	              var borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace('px', ''));
+	              width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
+	            }
+	            var lastPadding = cells.length - 1 === i ? scrollBarWidth : 0;
+	            if (width <= 0) {
+	              width = 120;
+	              cell.width = width + lastPadding + 'px';
+	            }
+	            var result = width + lastPadding + 'px';
+	            header[i].style.width = result;
+	            header[i].style.minWidth = result;
+	            if (cells.length - 1 === i) {
+	              bodyHeader[i].style.width = width + 'px';
+	              bodyHeader[i].style.minWidth = width + 'px';
+	            } else {
+	              bodyHeader[i].style.width = result;
+	              bodyHeader[i].style.minWidth = result;
+	            }
 	          }
-	          var lastPadding = cells.length - 1 === i ? scrollBarWidth : 0;
-	          if (width <= 0) {
-	            width = 120;
-	            cell.width = width + lastPadding + 'px';
-	          }
-	          var result = width + lastPadding + 'px';
-	          header[i].style.width = result;
-	          header[i].style.minWidth = result;
 	        }
 	      } else {
 	        _react2.default.Children.forEach(this.props.children, function (child, i) {
@@ -1394,7 +1404,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    clickToSelectAndEditCell: _react.PropTypes.bool,
 	    clickToExpand: _react.PropTypes.bool,
 	    showOnlySelected: _react.PropTypes.bool,
-	    unselectable: _react.PropTypes.array
+	    unselectable: _react.PropTypes.array,
+	    columnWidth: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string])
 	  }),
 	  cellEdit: _react.PropTypes.shape({
 	    mode: _react.PropTypes.string,
@@ -2149,6 +2160,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.__handleCompleteEditCell__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+	    _this.getHeaderColGrouop = function () {
+	      return _this.__getHeaderColGrouop__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
 	    _this.state = {
 	      currEditCell: null
 	    };
@@ -2453,6 +2468,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function _isSelectRowDefined() {
 	      return this.props.selectRow.mode === _Const2.default.ROW_SELECT_SINGLE || this.props.selectRow.mode === _Const2.default.ROW_SELECT_MULTI;
 	    }
+	  }, {
+	    key: '__getHeaderColGrouop__REACT_HOT_LOADER__',
+	    value: function __getHeaderColGrouop__REACT_HOT_LOADER__() {
+	      return this.refs.header.childNodes;
+	    }
 	  }]);
 
 	  return TableBody;
@@ -2552,9 +2572,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    outer.appendChild(inner);
 
 	    document.body.appendChild(outer);
-	    var w1 = inner.offsetWidth;
+	    var w1 = inner.getBoundingClientRect().width;
 	    outer.style.overflow = 'scroll';
-	    var w2 = inner.offsetWidth;
+	    var w2 = inner.getBoundingClientRect().width;
+
 	    if (w1 === w2) w2 = outer.clientWidth;
 
 	    document.body.removeChild(outer);
@@ -2569,8 +2590,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var isSelectRowDefined = selectRow.mode === _Const2.default.ROW_SELECT_SINGLE || selectRow.mode === _Const2.default.ROW_SELECT_MULTI;
 	    if (isSelectRowDefined) {
 	      var style = {
-	        width: 30,
-	        minWidth: 30
+	        width: selectRow.columnWidth || 30,
+	        minWidth: selectRow.columnWidth || 30
 	      };
 	      if (!selectRow.hideSelectColumn) {
 	        selectRowHeader = _react2.default.createElement('col', { style: style, key: -1 });
@@ -3133,7 +3154,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var valid = true;
 	      if (ts.props.editable.validator) {
 	        var input = ts.refs.inputRef;
-	        var checkVal = ts.props.editable.validator(value);
+	        var checkVal = ts.props.editable.validator(value, this.props.row);
 	        var responseType = typeof checkVal === 'undefined' ? 'undefined' : _typeof(checkVal);
 	        if (responseType !== 'object' && checkVal !== true) {
 	          valid = false;
