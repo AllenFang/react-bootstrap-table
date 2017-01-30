@@ -135,6 +135,7 @@ class BootstrapTable extends Component {
         formatExtraData: column.props.formatExtraData,
         filterFormatted: column.props.filterFormatted,
         filterValue: column.props.filterValue,
+        filterPlaceholder: column.props.filterPlaceholder,
         editable: column.props.editable,
         customEditor: column.props.customEditor,
         hidden: column.props.hidden,
@@ -888,7 +889,8 @@ class BootstrapTable extends Component {
       return (
         <TableFilter columns={ columns }
                      rowSelectType={ this.props.selectRow.mode }
-                     onFilter={ this.handleFilterData }/>
+                     onFilter={ this.handleFilterData }
+                     columnFilterClass={ this.props.columnFilterClass }/>
       );
     } else {
       return null;

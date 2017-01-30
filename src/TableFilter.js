@@ -38,23 +38,24 @@ class TableFilter extends Component {
     }
 
     const filterField = columns.map(function(column) {
-      const { hidden, width, name } = column;
+      const { hidden, width, name, filterPlaceholder } = column;
       const thStyle = {
         display: hidden ? 'none' : null,
         width
       };
+      const placeholder = filterPlaceholder || name;
       return (
         <th key={ name } style={ thStyle }>
           <div className='th-inner table-header-column'>
             <input size='10' type='text'
-              placeholder={ name } name={ name } onKeyUp={ this.handleKeyUp }/>
+              placeholder={ placeholder } name={ name } onKeyUp={ this.handleKeyUp }/>
           </div>
         </th>
       );
     }, this);
-
+    const name = tableClasses + ' ' + this.props.columnFilterClass;
     return (
-      <table className={ tableClasses } style={ { marginTop: 5 } }>
+      <table className={ name } style={ { marginTop: 5 } }>
         <thead>
           <tr style={ { borderBottomStyle: 'hidden' } }>
             { selectRowHeader }{ filterField }
@@ -64,9 +65,16 @@ class TableFilter extends Component {
     );
   }
 }
+
 TableFilter.propTypes = {
   columns: PropTypes.array,
   rowSelectType: PropTypes.string,
-  onFilter: PropTypes.func
+  onFilter: PropTypes.func,
+  className: PropTypes.string
 };
+
+TableFilter.defaultProps = {
+  columnFilterClass: 'footerFilrer'
+};
+
 export default TableFilter;
