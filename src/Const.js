@@ -25,6 +25,8 @@ export default {
   SAVE_BTN_TEXT: 'Save',
   CLOSE_BTN_TEXT: 'Close',
   FILTER_DELAY: 500,
+  SCROLL_TOP: 'Top',
+  SCROLL_BOTTOM: 'Bottom',
   FILTER_TYPE: {
     TEXT: 'TextFilter',
     REGEX: 'RegexFilter',
@@ -32,5 +34,10 @@ export default {
     NUMBER: 'NumberFilter',
     DATE: 'DateFilter',
     CUSTOM: 'CustomFilter'
-  }
+  },
+  FILTER_COND_EQ: 'eq',
+  FILTER_COND_LIKE: 'like',
+  EXPAND_BY_ROW: 'row',
+  EXPAND_BY_COL: 'column',
+  CANCEL_TOASTR: 'Pressed ESC can cancel'
 };

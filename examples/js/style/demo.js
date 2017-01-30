@@ -5,6 +5,7 @@ import TrClassStringTable from './tr-class-string-table';
 import TrClassFunctionTable from './tr-class-function-table';
 import TdClassStringTable from './td-class-string-table';
 import TdClassFunctionTable from './td-class-function-table';
+import EditTdClassTable from './edit-td-class-table';
 import InlineStylingTable from './inline-style-table';
 import TableClassTable from './table-class-table';
 
@@ -54,6 +55,15 @@ class Demo extends React.Component {
             <div className='panel-body'>
               <h5>Source in /examples/js/style/td-class-function-table.js</h5>
               <TdClassFunctionTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Set String or Function to <code>editColumnClassName</code> on &lt;TableHeaderColumn&gt;</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/style/edit-td-class-table.js</h5>
+              <EditTdClassTable />
             </div>
           </div>
         </div>

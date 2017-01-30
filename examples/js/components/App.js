@@ -38,6 +38,9 @@ class App extends React.Component {
       text: 'Column Filter',
       href: 'column-filter'
     }, {
+      text: 'Column Header Span',
+      href: 'column-header-span'
+    }, {
       text: 'Row Selection',
       href: 'selection'
     }, {
@@ -58,6 +61,9 @@ class App extends React.Component {
     }, {
       text: 'Advance data edit&insert',
       href: 'advance'
+    }, {
+      text: 'Expandable Row',
+      href: 'expandRow'
     }, {
       text: 'Other',
       href: 'others'

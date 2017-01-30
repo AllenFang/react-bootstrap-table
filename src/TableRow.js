@@ -9,11 +9,10 @@ class TableRow extends Component {
   }
 
   rowClick = e => {
-    if (e.target.tagName !== 'INPUT' &&
-        e.target.tagName !== 'SELECT' &&
-        e.target.tagName !== 'TEXTAREA') {
-      const rowIndex = e.currentTarget.rowIndex + 1;
-      const { selectRow, unselectableRow, isSelected, onSelectRow } = this.props;
+    if (e.target.tagName === 'TD') {
+      const rowIndex = this.props.index + 1;
+      const cellIndex = e.target.cellIndex;
+      const { selectRow, unselectableRow, isSelected, onSelectRow, onExpandRow } = this.props;
       if (selectRow) {
         if (selectRow.clickToSelect && !unselectableRow) {
           onSelectRow(rowIndex, !isSelected, e);
@@ -26,35 +25,51 @@ class TableRow extends Component {
           setTimeout(() => {
             if (this.clickNum === 1) {
               onSelectRow(rowIndex, !isSelected, e);
+              onExpandRow(rowIndex, cellIndex);
             }
             this.clickNum = 0;
           }, 200);
+        } else {
+          this.expandRow(rowIndex, cellIndex);
         }
+      } else {
+        this.expandRow(rowIndex, cellIndex);
       }
       if (this.props.onRowClick) this.props.onRowClick(rowIndex);
     }
+  }
+
+  expandRow = (rowIndex, cellIndex) => {
+    this.clickNum++;
+    setTimeout(() => {
+      if (this.clickNum === 1) {
+        this.props.onExpandRow(rowIndex, cellIndex);
+      }
+      this.clickNum = 0;
+    }, 200);
   }
 
   rowDoubleClick = e => {
     if (e.target.tagName !== 'INPUT' &&
         e.target.tagName !== 'SELECT' &&
         e.target.tagName !== 'TEXTAREA') {
-      const rowIndex = e.currentTarget.rowIndex + 1;
       if (this.props.onRowDoubleClick) {
-        this.props.onRowDoubleClick(rowIndex);
+        this.props.onRowDoubleClick(this.props.index);
       }
     }
   }
 
   rowMouseOut = e => {
+    const rowIndex = this.props.index;
     if (this.props.onRowMouseOut) {
-      this.props.onRowMouseOut(e.currentTarget.rowIndex, e);
+      this.props.onRowMouseOut(rowIndex, e);
     }
   }
 
   rowMouseOver = e => {
+    const rowIndex = this.props.index;
     if (this.props.onRowMouseOver) {
-      this.props.onRowMouseOver(e.currentTarget.rowIndex, e);
+      this.props.onRowMouseOver(rowIndex, e);
     }
   }
 
@@ -88,11 +103,13 @@ class TableRow extends Component {
   }
 }
 TableRow.propTypes = {
+  index: PropTypes.number,
   isSelected: PropTypes.bool,
   enableCellEdit: PropTypes.bool,
   onRowClick: PropTypes.func,
   onRowDoubleClick: PropTypes.func,
   onSelectRow: PropTypes.func,
+  onExpandRow: PropTypes.func,
   onRowMouseOut: PropTypes.func,
   onRowMouseOver: PropTypes.func,
   unselectableRow: PropTypes.bool

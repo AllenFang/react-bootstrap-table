@@ -2,13 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import editor from './Editor';
 import Notifier from './Notification.js';
 import classSet from 'classnames';
+import Const from './Const';
 
 class TableEditColumn extends Component {
   constructor(props) {
     super(props);
     this.timeouteClear = 0;
+    const { fieldValue, row, className } = this.props;
     this.state = {
-      shakeEditor: false
+      shakeEditor: false,
+      className: typeof className === 'function' ? className(fieldValue, row) : className
     };
   }
 
@@ -59,21 +62,35 @@ class TableEditColumn extends Component {
     let valid = true;
     if (ts.props.editable.validator) {
       const input = ts.refs.inputRef;
-      const checkVal = ts.props.editable.validator(value);
+      const checkVal = ts.props.editable.validator(value, this.props.row);
       const responseType = typeof checkVal;
       if (responseType !== 'object' && checkVal !== true) {
         valid = false;
-        ts.refs.notifier.notice('error', checkVal, 'Pressed ESC can cancel');
+        const toastr = this.props.beforeShowError &&
+          this.props.beforeShowError('error', checkVal, Const.CANCEL_TOASTR);
+        if (toastr) {
+          ts.refs.notifier.notice('error', checkVal, Const.CANCEL_TOASTR);
+        }
       } else if (responseType === 'object' && checkVal.isValid !== true) {
         valid = false;
-        ts.refs.notifier.notice(checkVal.notification.type,
-                                checkVal.notification.msg,
-                                checkVal.notification.title);
+        const toastr = this.props.beforeShowError &&
+          this.props.beforeShowError(checkVal.notification.type,
+                                     checkVal.notification.msg,
+                                     checkVal.notification.title);
+        if (toastr) {
+          ts.refs.notifier.notice(checkVal.notification.type,
+                                  checkVal.notification.msg,
+                                  checkVal.notification.title);
+        }
       }
       if (!valid) {
         // animate input
         ts.clearTimeout();
-        ts.setState({ shakeEditor: true });
+        const { invalidColumnClassName, row } = this.props;
+        const className = typeof invalidColumnClassName === 'function' ?
+          invalidColumnClassName(value, row) :
+          invalidColumnClassName;
+        ts.setState({ shakeEditor: true, className });
         ts.timeouteClear = setTimeout(() => {
           ts.setState({ shakeEditor: false });
         }, 300);
@@ -101,7 +118,7 @@ class TableEditColumn extends Component {
 
   render() {
     const { editable, format, customEditor } = this.props;
-    const { shakeEditor } = this.state;
+    const { shakeEditor, className } = this.state;
     const attr = {
       ref: 'inputRef',
       onKeyDown: this.handleKeyPress,
@@ -127,7 +144,9 @@ class TableEditColumn extends Component {
     }
 
     return (
-      <td ref='td' style={ { position: 'relative' } }>
+      <td ref='td'
+        style={ { position: 'relative' } }
+        className={ className }>
         { cellEditor }
         <Notifier ref='notifier'/>
       </td>
@@ -156,7 +175,9 @@ TableEditColumn.propTypes = {
     PropTypes.number,
     PropTypes.array,
     PropTypes.object
-  ])
+  ]),
+  className: PropTypes.any,
+  beforeShowError: PropTypes.func
 };
 
 

@@ -33,6 +33,12 @@ class ToolBar extends Component {
     this.clearTimeout();
   }
 
+  setSearchInput(text) {
+    if (this.refs.seachInput.value !== text) {
+      this.refs.seachInput.value = text;
+    }
+  }
+
   clearTimeout() {
     if (this.timeouteClear) {
       clearTimeout(this.timeouteClear);
@@ -57,7 +63,7 @@ class ToolBar extends Component {
         tempValue = typeof column.autoValue === 'function' ?
           column.autoValue() :
           (`autovalue-${time}`);
-      } else if (column.hiddenOnInsert) {
+      } else if (column.hiddenOnInsert || !column.field) {
         tempValue = '';
       } else {
         const dom = this.refs[column.field + i];
@@ -310,7 +316,7 @@ class ToolBar extends Component {
         placeholder: editable.placeholder ? editable.placeholder : name
       };
 
-      if (autoValue || hiddenOnInsert) {
+      if (autoValue || hiddenOnInsert || !column.field) {
         // when you want same auto generate value
         // and not allow edit, for example ID field
         return null;

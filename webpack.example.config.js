@@ -5,7 +5,10 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: {
-    app: './examples/js/app.js',
+    app: [
+      'react-hot-loader/patch',
+      './examples/js/app.js'
+    ],
     vendors: ['webpack-dev-server/client?http://localhost:3004', 'webpack/hot/only-dev-server']
   },
   debug: true,
@@ -37,7 +40,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ['react-hot', 'babel']
+        loaders: ['babel']
       }, {
         test: /\.css$/, loader: 'style-loader!css-loader'
       }
