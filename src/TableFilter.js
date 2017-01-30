@@ -74,7 +74,7 @@ TableFilter.propTypes = {
 };
 
 TableFilter.defaultProps = {
-  columnFilterClass: 'footerFilrer'
+  columnFilterClass: 'footerFilter'
 };
 
 export default TableFilter;
