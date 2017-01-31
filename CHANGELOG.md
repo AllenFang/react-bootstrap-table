@@ -1,3 +1,8 @@
+<a name="v2.10.2"></a>
+# [v2.10.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.10.0...v2.10.2) (2017-01-31)
+## Bug fixes
+* Change the default condition from `eq` to `like` for text, select, custom filter([561a6c3](https://github.com/AllenFang/react-bootstrap-table/commit/561a6c3590666c0a650e6fbee83af6d39c09ba41), [ee4252b](https://github.com/AllenFang/react-bootstrap-table/commit/ee4252b5291ec73062eb42b22547a779fafafdb0))
+
 <a name="v2.10.0"></a>
 # [v2.10.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.9.2...v2.10.0) (2017-01-26)
 ## Bug fixes
