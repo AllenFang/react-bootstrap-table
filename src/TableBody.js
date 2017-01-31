@@ -235,7 +235,10 @@ class TableBody extends Component {
     if (expandableRow &&
       selectRowAndExpand &&
       (expandBy === Const.EXPAND_BY_ROW ||
-      (columnIndex > -1 && expandBy === Const.EXPAND_BY_COL && columns[columnIndex].expandable))) {
+      /* Below will allow expanding trigger by clicking on selection column
+      if configure as expanding by column */
+      (expandBy === Const.EXPAND_BY_COL && columnIndex < 0) ||
+      (expandBy === Const.EXPAND_BY_COL && columns[columnIndex].expandable))) {
       const rowKey = this.props.data[rowIndex - 1][keyField];
       let expanding = this.props.expanding;
       if (expanding.indexOf(rowKey) > -1) {
