@@ -11305,7 +11305,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'filterText',
 	    value: function filterText(targetVal, filterVal) {
-	      var cond = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _Const2.default.FILTER_COND_EQ;
+	      var cond = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _Const2.default.FILTER_COND_LIKE;
 
 	      targetVal = targetVal.toString();
 	      filterVal = filterVal.toString();
