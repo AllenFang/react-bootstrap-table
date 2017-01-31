@@ -11,31 +11,29 @@ class TableRow extends Component {
   rowClick = e => {
     const rowIndex = this.props.index + 1;
     if (this.props.onRowClick) this.props.onRowClick(rowIndex);
-    if (e.target.tagName === 'TD') {
-      const cellIndex = e.target.cellIndex;
-      const { selectRow, unselectableRow, isSelected, onSelectRow, onExpandRow } = this.props;
-      if (selectRow) {
-        if (selectRow.clickToSelect && !unselectableRow) {
-          onSelectRow(rowIndex, !isSelected, e);
-        } else if (selectRow.clickToSelectAndEditCell && !unselectableRow) {
-          this.clickNum++;
-          /** if clickToSelectAndEditCell is enabled,
-           *  there should be a delay to prevent a selection changed when
-           *  user dblick to edit cell on same row but different cell
-          **/
-          setTimeout(() => {
-            if (this.clickNum === 1) {
-              onSelectRow(rowIndex, !isSelected, e);
-              onExpandRow(rowIndex, cellIndex);
-            }
-            this.clickNum = 0;
-          }, 200);
-        } else {
-          this.expandRow(rowIndex, cellIndex);
-        }
+    const cellIndex = e.target.cellIndex;
+    const { selectRow, unselectableRow, isSelected, onSelectRow, onExpandRow } = this.props;
+    if (selectRow) {
+      if (selectRow.clickToSelect && !unselectableRow) {
+        onSelectRow(rowIndex, !isSelected, e);
+      } else if (selectRow.clickToSelectAndEditCell && !unselectableRow) {
+        this.clickNum++;
+        /** if clickToSelectAndEditCell is enabled,
+         *  there should be a delay to prevent a selection changed when
+         *  user dblick to edit cell on same row but different cell
+        **/
+        setTimeout(() => {
+          if (this.clickNum === 1) {
+            onSelectRow(rowIndex, !isSelected, e);
+            onExpandRow(rowIndex, cellIndex);
+          }
+          this.clickNum = 0;
+        }, 200);
       } else {
         this.expandRow(rowIndex, cellIndex);
       }
+    } else {
+      this.expandRow(rowIndex, cellIndex);
     }
   }
 

@@ -116,6 +116,12 @@ class TableEditColumn extends Component {
     this.clearTimeout();
   }
 
+  handleClick = e => {
+    if (e.target.tagName !== 'TD') {
+      e.stopPropagation();
+    }
+  }
+
   render() {
     const { editable, format, customEditor } = this.props;
     const { shakeEditor, className } = this.state;
@@ -146,7 +152,8 @@ class TableEditColumn extends Component {
     return (
       <td ref='td'
         style={ { position: 'relative' } }
-        className={ className }>
+        className={ className }
+        onClick={ this.handleClick }>
         { cellEditor }
         <Notifier ref='notifier'/>
       </td>
