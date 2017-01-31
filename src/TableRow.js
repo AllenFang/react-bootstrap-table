@@ -32,8 +32,6 @@ class TableRow extends Component {
       } else {
         this.expandRow(rowIndex, cellIndex);
       }
-    } else {
-      this.expandRow(rowIndex, cellIndex);
     }
   }
 
