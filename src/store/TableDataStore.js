@@ -362,7 +362,7 @@ export class TableDataStore {
     return this.filterText(targetVal, filterVal, cond);
   }
 
-  filterText(targetVal, filterVal, cond = Const.FILTER_COND_EQ) {
+  filterText(targetVal, filterVal, cond = Const.FILTER_COND_LIKE) {
     targetVal = targetVal.toString();
     filterVal = filterVal.toString();
     if (cond === Const.FILTER_COND_EQ) {
