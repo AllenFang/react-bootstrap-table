@@ -9,8 +9,9 @@ class TableRow extends Component {
   }
 
   rowClick = e => {
+    const rowIndex = this.props.index + 1;
+    if (this.props.onRowClick) this.props.onRowClick(rowIndex);
     if (e.target.tagName === 'TD') {
-      const rowIndex = this.props.index + 1;
       const cellIndex = e.target.cellIndex;
       const { selectRow, unselectableRow, isSelected, onSelectRow, onExpandRow } = this.props;
       if (selectRow) {
@@ -35,7 +36,6 @@ class TableRow extends Component {
       } else {
         this.expandRow(rowIndex, cellIndex);
       }
-      if (this.props.onRowClick) this.props.onRowClick(rowIndex);
     }
   }
 
