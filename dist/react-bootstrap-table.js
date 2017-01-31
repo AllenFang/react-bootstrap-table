@@ -11420,7 +11420,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              }
 	            case _Const2.default.FILTER_TYPE.CUSTOM:
 	              {
-	                var cond = filterObj[key].props ? filterObj[key].props.cond : _Const2.default.FILTER_COND_EQ;
+	                var cond = filterObj[key].props ? filterObj[key].props.cond : _Const2.default.FILTER_COND_LIKE;
 	                valid = _this4.filterCustom(targetVal, filterVal, filterObj[key].value, cond);
 	                break;
 	              }
@@ -11429,7 +11429,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (filterObj[key].type === _Const2.default.FILTER_TYPE.SELECT && filterFormatted && filterFormatted && format) {
 	                  filterVal = format(filterVal, row, formatExtraData, r);
 	                }
-	                var _cond = filterObj[key].props ? filterObj[key].props.cond : _Const2.default.FILTER_COND_EQ;
+	                var _cond = filterObj[key].props ? filterObj[key].props.cond : _Const2.default.FILTER_COND_LIKE;
 	                valid = _this4.filterText(targetVal, filterVal, _cond);
 	                break;
 	              }
