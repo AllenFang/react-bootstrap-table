@@ -281,7 +281,8 @@ class TableBody extends Component {
 
   handleClickonSelectColumn = (e, isSelect, rowIndex, row) => {
     e.stopPropagation();
-    if (e.target.tagName === 'TD' && this.props.selectRow.clickToSelect) {
+    if (e.target.tagName === 'TD' &&
+    (this.props.selectRow.clickToSelect || this.props.selectRow.clickToSelectAndEditCell)) {
       const unselectable = this.props.selectRow.unselectable || [];
       if (unselectable.indexOf(row[this.props.keyField]) === -1) {
         this.handleSelectRow(rowIndex + 1, isSelect, e);
