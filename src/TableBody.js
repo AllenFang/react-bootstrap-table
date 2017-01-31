@@ -235,7 +235,7 @@ class TableBody extends Component {
     if (expandableRow &&
       selectRowAndExpand &&
       (expandBy === Const.EXPAND_BY_ROW ||
-      (columnIndex > 0 && expandBy === Const.EXPAND_BY_COL && columns[columnIndex].expandable))) {
+      (columnIndex > -1 && expandBy === Const.EXPAND_BY_COL && columns[columnIndex].expandable))) {
       const rowKey = this.props.data[rowIndex - 1][keyField];
       let expanding = this.props.expanding;
       if (expanding.indexOf(rowKey) > -1) {
@@ -282,6 +282,7 @@ class TableBody extends Component {
       const unselectable = this.props.selectRow.unselectable || [];
       if (unselectable.indexOf(row[this.props.keyField]) === -1) {
         this.handleSelectRow(rowIndex + 1, isSelect, e);
+        this.handleClickCell(rowIndex + 1);
       }
     }
   }
