@@ -45,10 +45,8 @@ class PaginationList extends Component {
     }
   }
 
-  changeSizePerPage = e => {
-    e.preventDefault();
-
-    const selectSize = parseInt(e.currentTarget.getAttribute('data-page'), 10);
+  changeSizePerPage = pageNum => {
+    const selectSize = typeof pageNum === 'string' ? parseInt(pageNum, 10) : pageNum;
     let { currPage } = this.props;
     if (selectSize !== this.props.sizePerPage) {
       this.totalPages = Math.ceil(this.props.dataSize / selectSize);
@@ -164,7 +162,10 @@ class PaginationList extends Component {
             <a role='menuitem'
               tabIndex='-1' href='#'
               data-page={ pageNum }
-              onClick={ this.changeSizePerPage }>{ pageText }</a>
+              onClick={ e => {
+                e.preventDefault();
+                this.changeSizePerPage(pageNum);
+              } }>{ pageText }</a>
           </li>
         );
       });
