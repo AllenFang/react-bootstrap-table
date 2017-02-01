@@ -26,6 +26,7 @@ class SearchField extends Component {
         defaultValue={ defaultValue }
         placeholder={ placeholder || SearchField.defaultProps.placeholder }
         onKeyUp={ onKeyUp }
+        style={ { zIndex: 0 } }
         { ...rest }/>
     );
   }
