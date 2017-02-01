@@ -33,7 +33,8 @@ class ToolBar extends Component {
   componentWillMount() {
     const delay = this.props.searchDelayTime ? this.props.searchDelayTime : 0;
     this.debounceCallback = this.handleDebounce(() => {
-      this.props.onSearch(this.refs.seachInput.getValue());
+      const { seachInput } = this.refs;
+      seachInput && this.props.onSearch(seachInput.getValue());
     },
       delay
     );
@@ -44,8 +45,9 @@ class ToolBar extends Component {
   }
 
   setSearchInput(text) {
-    if (this.refs.seachInput.value !== text) {
-      this.refs.seachInput.value = text;
+    const { seachInput } = this.refs;
+    if (seachInput && seachInput.value !== text) {
+      seachInput.value = text;
     }
   }
 
@@ -181,7 +183,8 @@ class ToolBar extends Component {
   }
 
   handleClearBtnClick = () => {
-    this.refs.seachInput.setValue('');
+    const { seachInput } = this.refs;
+    seachInput && seachInput.setValue('');
     this.props.onSearch('');
   }
 
