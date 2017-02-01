@@ -25,10 +25,10 @@ export default class CustomSizePerPageDropDown extends React.Component {
     super(props);
   }
 
-  onToggleDropDown = (onToggleDropDown) => {
+  onToggleDropDown = (toggleDropDown) => {
     // do your stuff here
     console.log('toggle dropdown');
-    onToggleDropDown();
+    toggleDropDown();
   }
 
   renderSizePerPageDropDown = (props) => {
@@ -37,7 +37,7 @@ export default class CustomSizePerPageDropDown extends React.Component {
         className='my-size-per-page'
         btnContextual='btn-warning'
         variation='dropup'
-        onClick={ () => this.onToggleDropDown(props.onToggleDropDown) }/>
+        onClick={ () => this.onToggleDropDown(props.toggleDropDown) }/>
     );
   }
 
