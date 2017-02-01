@@ -116,7 +116,7 @@ class TableBody extends Component {
       const disable = unselectable.indexOf(key) !== -1;
       const selected = this.props.selectedRowKeys.indexOf(key) !== -1;
       const selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ?
-              this.renderSelectRowColumn(selected, inputType, disable, CustomComponent, r, data) : null;
+        this.renderSelectRowColumn(selected, inputType, disable, CustomComponent, r, data) : null;
       // add by bluespring for className customize
       let trClassName = this.props.trClassName;
       if (isFun(this.props.trClassName)) {
@@ -291,7 +291,8 @@ class TableBody extends Component {
     }
   }
 
-  renderSelectRowColumn(selected, inputType, disabled, CustomComponent = null, rowIndex = null, row) {
+  renderSelectRowColumn(selected, inputType, disabled,
+    CustomComponent = null, rowIndex = null, row) {
     return (
       <td onClick={ e => {
         this.handleClickonSelectColumn(e, !selected, rowIndex, row);
