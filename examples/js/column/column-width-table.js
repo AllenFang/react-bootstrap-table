@@ -24,7 +24,7 @@ export default class ColumnWidthTable extends React.Component {
     return (
       <BootstrapTable data={ products }>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField='name' width='150'>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='name' width='50%'>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price' width='90'>Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
