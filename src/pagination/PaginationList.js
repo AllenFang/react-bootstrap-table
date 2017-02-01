@@ -100,6 +100,7 @@ class PaginationList extends Component {
       sizePerPage,
       sizePerPageList,
       pageStartIndex,
+      changePage: this.changePage,
       toggleDropDown: this.toggleDropDown,
       changeSizePerPage: this.changeSizePerPage,
       components: {
