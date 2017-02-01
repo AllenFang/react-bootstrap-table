@@ -57,8 +57,8 @@ export class TableDataStore {
       if (order.length !== sortField.length) {
         throw new Error('The length of sort fields and orders should be equivalent');
       }
-      order = order.reverse();
-      this.sortList = sortField.reverse().map((field, i) => {
+      order = order.slice().reverse();
+      this.sortList = sortField.slice().reverse().map((field, i) => {
         return {
           order: order[i],
           sortField: field
