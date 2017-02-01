@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import classSet from 'classnames';
 import PageButton from './PageButton.js';
 import SizePerPageDropDown from './SizePerPageDropDown';
 import Const from '../Const';
@@ -80,7 +81,7 @@ class PaginationList extends Component {
     } = this.props;
     this.totalPages = Math.ceil(dataSize / sizePerPage);
     this.lastPage = this.props.pageStartIndex + this.totalPages - 1;
-    const pageBtns = this.makePage();
+    const pageBtns = this.makePage(typeof paginationPanel === 'function');
     const dropdown = this.makeDropDown();
 
     const offset = Math.abs(Const.PAGE_START_INDEX - pageStartIndex);
@@ -180,7 +181,7 @@ class PaginationList extends Component {
     return dropdown;
   }
 
-  makePage() {
+  makePage(isCustomPagingPanel = false) {
     const pages = this.getPages();
     const isStart = (page, { currPage, pageStartIndex, firstPage, prePage }) =>
       (currPage === pageStartIndex && (page === firstPage || page === prePage));
@@ -209,8 +210,12 @@ class PaginationList extends Component {
           </PageButton>
         );
       }, this);
+    const classname = classSet(
+      isCustomPagingPanel ? null : 'react-bootstrap-table-page-btns-ul',
+      'pagination'
+    );
     return (
-        <ul className='react-bootstrap-table-page-btns-ul pagination'>
+        <ul className={ classname }>
           { pageBtns }
         </ul>
       );
