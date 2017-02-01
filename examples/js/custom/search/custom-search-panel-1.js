@@ -25,20 +25,17 @@ addProducts(5);
 class MySearchPanel extends React.Component {
   render() {
     return (
-      <div className='input-group'>
-        <span className='input-group-btn'>
-          <button
-            className='btn btn-primary'
-            type='button'>
-            CustomButton1
-          </button>
-          { this.props.clearBtn }
-          <button
-            className='btn btn-warning'
-            type='button'>
-            CustomButton2
-          </button>
-        </span>
+      <div>
+        <div className='input-group'>
+          <span className='input-group-btn'>
+            <button
+              className='btn btn-primary'
+              type='button'>
+              CustomButton1
+            </button>
+            { this.props.clearBtn }
+          </span>
+        </div>
         { this.props.searchField }
       </div>
     );
