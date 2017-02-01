@@ -34,7 +34,9 @@ Check [this](http://allenfang.github.io/react-bootstrap-table/advance.html) for 
 Check the <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/CHANGELOG.md'>CHANGELOG</a> for more detail release notes.
 
 ## Notes
-***```v3.0.0-beta.5``` released, check [release page](https://github.com/AllenFang/react-bootstrap-table/releases). [There](https://github.com/AllenFang/react-bootstrap-table/tree/v3.0.0-dev/examples/js/custom) are a lots of example for customization component, you can also check the [online](http://allenfang.github.io/react-bootstrap-table/example.html#custom) version<br/>***
+***```v2.10.0-beta.1``` is a revised version for fixing couples unalign column and incorrect height etc. If you have any unalign problems before `v2.9.2`, give this beta version a try and any feedback is welcome***
+
+***```v3.0.0-beta.7``` released, check [release page](https://github.com/AllenFang/react-bootstrap-table/releases). [There](https://github.com/AllenFang/react-bootstrap-table/tree/v3.0.0-dev/examples/js/custom) are a lots of example for customization component, you can also check the [online](http://allenfang.github.io/react-bootstrap-table/example.html#custom) version<br/>***
 
 ***```v3.0.0``` is under planning, check [Milestone to v3.0.0](https://github.com/AllenFang/react-bootstrap-table/issues/497).<br/>***
 
@@ -43,7 +45,7 @@ Check the <a href='https://github.com/AllenFang/react-bootstrap-table/blob/maste
 ***```v2.0.0``` has been released, the main patches are fixing the unalign or wrong size column on different browsers and improving the table structure. Please check [this](https://github.com/AllenFang/react-bootstrap-table/issues/331) for more detail explanation.<br/>***
 
 ## Development
-```react-bootstrap-table``` dependencies on react 0.14.x and Bootstrap 3 written by ES6 and use gulp and browserify for building and bundling.
+```react-bootstrap-table``` dependencies on react.js and Bootstrap 3, also written by ES6 and use gulp and browserify for building and bundling.
 
 You can use the following commands to prepare development
 ```bash
@@ -51,11 +53,9 @@ $ git clone https://github.com/AllenFang/react-bootstrap-table.git
 $ cd react-bootstrap-table
 $ npm install
 ```
-Use gulp to build the react-bootstrap-table
+See the examples for `react-bootstrap-table`
 ```bash
-$ gulp dev  #for development
-$ gulp example-server #see all examples, go to localhost:3004
-$ gulp prod #for production
+$ npm start # see all examples, go to localhost:3004
 ```
 
 ## Usage

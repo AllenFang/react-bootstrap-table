@@ -1,3 +1,30 @@
+<a name="v2.11.0"></a>
+# [v2.11.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.10.2...v2.11.0) (2017-02-01)
+## Bug fixes
+* Selection broken if click on a custom cell(`dataFormat`) since from from `v2.9.2`([d149941](https://github.com/AllenFang/react-bootstrap-table/commit/d149941dbdf57c7f95e936aec8db9909cf3408dd))
+* Fixed the `onRowClick` broken since from `v2.9.2`([2d8212a](https://github.com/AllenFang/react-bootstrap-table/commit/2d8212ae880cf675f972db83382cc6c5bb161700))
+* Fixed [#996](https://github.com/AllenFang/react-bootstrap-table/pull/996)([b2ff491](https://github.com/AllenFang/react-bootstrap-table/commit/b2ff4919ccc936e1f4a0773eca8553ca5878ac09))
+
+## Features
+* Support to configure the column width with percentage([08c7cbc](https://github.com/AllenFang/react-bootstrap-table/commit/08c7cbcc155df6257bb5f1c320a316e9fbb9e2a6))
+
+<a name="v2.10.2"></a>
+# [v2.10.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.10.0...v2.10.2) (2017-01-31)
+## Bug fixes
+* Change the default condition from `eq` to `like` for text, select, custom filter([561a6c3](https://github.com/AllenFang/react-bootstrap-table/commit/561a6c3590666c0a650e6fbee83af6d39c09ba41), [ee4252b](https://github.com/AllenFang/react-bootstrap-table/commit/ee4252b5291ec73062eb42b22547a779fafafdb0))
+
+<a name="v2.10.0"></a>
+# [v2.10.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.9.2...v2.10.0) (2017-01-26)
+## Bug fixes
+* Fix couple unalign column issue([98a586c](https://github.com/AllenFang/react-bootstrap-table/commit/98a586c77f0e64884b7d41c3ed8c7bfb819c1c4d), [0390b8e](https://github.com/AllenFang/react-bootstrap-table/commit/0390b8eb61418e9bae2f2ab8dfc4c46454d23bd3), [5cdfefe](https://github.com/AllenFang/react-bootstrap-table/commit/5cdfefe1e83564dcfc9ae2f9a1bacb03415b6909))
+
+## Enhancement
+* Pass `row` to validator for cell editing([4e77a11](https://github.com/AllenFang/react-bootstrap-table/commit/4e77a1182d26aaa51574a0def2ee9b0288e36f49))
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/advance/validator-table.js#L32)
+* Support to configure the width of selection column([6e52226](https://github.com/AllenFang/react-bootstrap-table/commit/6e5222666f2882c2cb349a96ac4579eefd136045))
+	* use `columnWidth` in `selectRow` prop
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/selection/selection-column-width-table.js#L24)
+
 <a name="v2.9.2"></a>
 # [v2.9.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.9.1...v2.9.2) (2017-01-21)
 ## Bug fixes

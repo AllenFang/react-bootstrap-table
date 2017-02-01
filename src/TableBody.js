@@ -116,7 +116,7 @@ class TableBody extends Component {
       const disable = unselectable.indexOf(key) !== -1;
       const selected = this.props.selectedRowKeys.indexOf(key) !== -1;
       const selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ?
-              this.renderSelectRowColumn(selected, inputType, disable, CustomComponent, r) : null;
+        this.renderSelectRowColumn(selected, inputType, disable, CustomComponent, r, data) : null;
       // add by bluespring for className customize
       let trClassName = this.props.trClassName;
       if (isFun(this.props.trClassName)) {
@@ -235,7 +235,10 @@ class TableBody extends Component {
     if (expandableRow &&
       selectRowAndExpand &&
       (expandBy === Const.EXPAND_BY_ROW ||
-      (columnIndex > 0 && expandBy === Const.EXPAND_BY_COL && columns[columnIndex].expandable))) {
+      /* Below will allow expanding trigger by clicking on selection column
+      if configure as expanding by column */
+      (expandBy === Const.EXPAND_BY_COL && columnIndex < 0) ||
+      (expandBy === Const.EXPAND_BY_COL && columns[columnIndex].expandable))) {
       const rowKey = this.props.data[rowIndex - 1][keyField];
       let expanding = this.props.expanding;
       if (expanding.indexOf(rowKey) > -1) {
@@ -276,9 +279,24 @@ class TableBody extends Component {
     }
   }
 
-  renderSelectRowColumn(selected, inputType, disabled, CustomComponent = null, rowIndex = null) {
+  handleClickonSelectColumn = (e, isSelect, rowIndex, row) => {
+    e.stopPropagation();
+    if (e.target.tagName === 'TD' &&
+    (this.props.selectRow.clickToSelect || this.props.selectRow.clickToSelectAndEditCell)) {
+      const unselectable = this.props.selectRow.unselectable || [];
+      if (unselectable.indexOf(row[this.props.keyField]) === -1) {
+        this.handleSelectRow(rowIndex + 1, isSelect, e);
+        this.handleClickCell(rowIndex + 1);
+      }
+    }
+  }
+
+  renderSelectRowColumn(selected, inputType, disabled,
+    CustomComponent = null, rowIndex = null, row) {
     return (
-      <TableColumn dataAlign='center'>
+      <td onClick={ e => {
+        this.handleClickonSelectColumn(e, !selected, rowIndex, row);
+      } } style={ { textAlign: 'center' } }>
       { CustomComponent ?
         <CustomComponent type={ inputType } checked={ selected } disabled={ disabled }
           rowIndex={ rowIndex }
@@ -286,13 +304,17 @@ class TableBody extends Component {
         <input type={ inputType } checked={ selected } disabled={ disabled }
           onChange={ e=>this.handleSelectRowColumChange(e, rowIndex) }/>
       }
-      </TableColumn>
+      </td>
     );
   }
 
   _isSelectRowDefined() {
     return this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ||
           this.props.selectRow.mode === Const.ROW_SELECT_MULTI;
+  }
+
+  getHeaderColGrouop = () => {
+    return this.refs.header.childNodes;
   }
 }
 TableBody.propTypes = {

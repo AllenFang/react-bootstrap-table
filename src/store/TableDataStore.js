@@ -57,8 +57,8 @@ export class TableDataStore {
       if (order.length !== sortField.length) {
         throw new Error('The length of sort fields and orders should be equivalent');
       }
-      order = order.reverse();
-      this.sortList = sortField.reverse().map((field, i) => {
+      order = order.slice().reverse();
+      this.sortList = sortField.slice().reverse().map((field, i) => {
         return {
           order: order[i],
           sortField: field
@@ -362,7 +362,7 @@ export class TableDataStore {
     return this.filterText(targetVal, filterVal, cond);
   }
 
-  filterText(targetVal, filterVal, cond = Const.FILTER_COND_EQ) {
+  filterText(targetVal, filterVal, cond = Const.FILTER_COND_LIKE) {
     targetVal = targetVal.toString();
     filterVal = filterVal.toString();
     if (cond === Const.FILTER_COND_EQ) {
@@ -462,7 +462,7 @@ export class TableDataStore {
           break;
         }
         case Const.FILTER_TYPE.CUSTOM: {
-          const cond = filterObj[key].props ? filterObj[key].props.cond : Const.FILTER_COND_EQ;
+          const cond = filterObj[key].props ? filterObj[key].props.cond : Const.FILTER_COND_LIKE;
           valid = this.filterCustom(targetVal, filterVal, filterObj[key].value, cond);
           break;
         }
@@ -471,7 +471,7 @@ export class TableDataStore {
             filterFormatted && filterFormatted && format) {
             filterVal = format(filterVal, row, formatExtraData, r);
           }
-          const cond = filterObj[key].props ? filterObj[key].props.cond : Const.FILTER_COND_EQ;
+          const cond = filterObj[key].props ? filterObj[key].props.cond : Const.FILTER_COND_LIKE;
           valid = this.filterText(targetVal, filterVal, cond);
           break;
         }

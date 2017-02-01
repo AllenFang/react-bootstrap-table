@@ -31,9 +31,10 @@ export default {
     outer.appendChild(inner);
 
     document.body.appendChild(outer);
-    const w1 = inner.offsetWidth;
+    const w1 = inner.getBoundingClientRect().width;
     outer.style.overflow = 'scroll';
-    let w2 = inner.offsetWidth;
+    let w2 = inner.getBoundingClientRect().width;
+
     if (w1 === w2) w2 = outer.clientWidth;
 
     document.body.removeChild(outer);
@@ -51,8 +52,8 @@ export default {
       selectRow.mode === Const.ROW_SELECT_MULTI;
     if (isSelectRowDefined) {
       const style = {
-        width: 30,
-        minWidth: 30
+        width: selectRow.columnWidth || 30,
+        minWidth: selectRow.columnWidth || 30
       };
       if (!selectRow.hideSelectColumn) {
         selectRowHeader = (<col style={ style } key={ -1 }></col>);
@@ -63,11 +64,10 @@ export default {
         display: column.hidden ? 'none' : null
       };
       if (column.width) {
-        const width = parseInt(column.width, 10);
-        style.width = width;
+        style.width = column.width;
         /** add min-wdth to fix user assign column width
         not eq offsetWidth in large column table **/
-        style.minWidth = width;
+        style.minWidth = column.width;
       }
       return (<col style={ style } key={ i } className={ column.className }></col>);
     });

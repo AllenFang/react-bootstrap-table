@@ -981,40 +981,51 @@ class BootstrapTable extends Component {
   }
 
   _adjustTable() {
+    this._adjustHeight();
     if (!this.props.printable) {
       this._adjustHeaderWidth();
     }
-    this._adjustHeight();
   }
 
   _adjustHeaderWidth() {
     const header = this.refs.header.getHeaderColGrouop();
-    const headerContainer = this.refs.header.refs.container;
     const tbody = this.refs.body.refs.tbody;
+    const bodyHeader = this.refs.body.getHeaderColGrouop();
     const firstRow = tbody.childNodes[0];
-    const isScroll = headerContainer.offsetWidth !== tbody.parentNode.offsetWidth;
+    const isScroll = tbody.parentNode.getBoundingClientRect().height >
+      tbody.parentNode.parentNode.getBoundingClientRect().height;
+
     const scrollBarWidth = isScroll ? Util.getScrollBarWidth() : 0;
     if (firstRow && this.store.getDataNum()) {
-      const cells = firstRow.childNodes;
-      for (let i = 0; i < cells.length; i++) {
-        const cell = cells[i];
-        const computedStyle = window.getComputedStyle(cell);
-        let width = parseFloat(computedStyle.width.replace('px', ''));
-        if (this.isIE) {
-          const paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
-          const paddingRightWidth = parseFloat(computedStyle.paddingRight.replace('px', ''));
-          const borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace('px', ''));
-          const borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace('px', ''));
-          width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
+      if (isScroll) {
+        const cells = firstRow.childNodes;
+        for (let i = 0; i < cells.length; i++) {
+          const cell = cells[i];
+          const computedStyle = window.getComputedStyle(cell);
+          let width = parseFloat(computedStyle.width.replace('px', ''));
+          if (this.isIE) {
+            const paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
+            const paddingRightWidth = parseFloat(computedStyle.paddingRight.replace('px', ''));
+            const borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace('px', ''));
+            const borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace('px', ''));
+            width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
+          }
+          const lastPadding = (cells.length - 1 === i ? scrollBarWidth : 0);
+          if (width <= 0) {
+            width = 120;
+            cell.width = width + lastPadding + 'px';
+          }
+          const result = width + lastPadding + 'px';
+          header[i].style.width = result;
+          header[i].style.minWidth = result;
+          if (cells.length - 1 === i) {
+            bodyHeader[i].style.width = width + 'px';
+            bodyHeader[i].style.minWidth = width + 'px';
+          } else {
+            bodyHeader[i].style.width = result;
+            bodyHeader[i].style.minWidth = result;
+          }
         }
-        const lastPadding = (cells.length - 1 === i ? scrollBarWidth : 0);
-        if (width <= 0) {
-          width = 120;
-          cell.width = width + lastPadding + 'px';
-        }
-        const result = width + lastPadding + 'px';
-        header[i].style.width = result;
-        header[i].style.minWidth = result;
       }
     } else {
       React.Children.forEach(this.props.children, (child, i) => {
@@ -1109,7 +1120,8 @@ BootstrapTable.propTypes = {
     clickToSelectAndEditCell: PropTypes.bool,
     clickToExpand: PropTypes.bool,
     showOnlySelected: PropTypes.bool,
-    unselectable: PropTypes.array
+    unselectable: PropTypes.array,
+    columnWidth: PropTypes.oneOfType([ PropTypes.number, PropTypes.string ])
   }),
   cellEdit: PropTypes.shape({
     mode: PropTypes.string,

@@ -11,7 +11,7 @@ function addProducts(quantity) {
     const id = startId + i;
     products.push({
       id: id,
-      name: 'Item name aaaaaaaaaaaaaa' + id,
+      name: 'Item name ' + id,
       price: 2100 + i
     });
   }
@@ -19,13 +19,18 @@ function addProducts(quantity) {
 
 addProducts(5);
 
-export default class ColumnWidthTable extends React.Component {
+const selectRowProp = {
+  mode: 'checkbox',
+  columnWidth: '60px'
+};
+
+export default class SelectionColumnWidthTable extends React.Component {
   render() {
     return (
-      <BootstrapTable data={ products }>
+      <BootstrapTable data={ products } selectRow={ selectRowProp }>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField='name' width='50%'>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField='price' width='90'>Product Price</TableHeaderColumn>
+          <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
   }

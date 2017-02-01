@@ -9,33 +9,29 @@ class TableRow extends Component {
   }
 
   rowClick = e => {
-    if (e.target.tagName === 'TD') {
-      const rowIndex = this.props.index + 1;
-      const cellIndex = e.target.cellIndex;
-      const { selectRow, unselectableRow, isSelected, onSelectRow, onExpandRow } = this.props;
-      if (selectRow) {
-        if (selectRow.clickToSelect && !unselectableRow) {
-          onSelectRow(rowIndex, !isSelected, e);
-        } else if (selectRow.clickToSelectAndEditCell && !unselectableRow) {
-          this.clickNum++;
-          /** if clickToSelectAndEditCell is enabled,
-           *  there should be a delay to prevent a selection changed when
-           *  user dblick to edit cell on same row but different cell
-          **/
-          setTimeout(() => {
-            if (this.clickNum === 1) {
-              onSelectRow(rowIndex, !isSelected, e);
-              onExpandRow(rowIndex, cellIndex);
-            }
-            this.clickNum = 0;
-          }, 200);
-        } else {
-          this.expandRow(rowIndex, cellIndex);
-        }
+    const rowIndex = this.props.index + 1;
+    if (this.props.onRowClick) this.props.onRowClick(rowIndex);
+    const cellIndex = e.target.cellIndex;
+    const { selectRow, unselectableRow, isSelected, onSelectRow, onExpandRow } = this.props;
+    if (selectRow) {
+      if (selectRow.clickToSelect && !unselectableRow) {
+        onSelectRow(rowIndex, !isSelected, e);
+      } else if (selectRow.clickToSelectAndEditCell && !unselectableRow) {
+        this.clickNum++;
+        /** if clickToSelectAndEditCell is enabled,
+         *  there should be a delay to prevent a selection changed when
+         *  user dblick to edit cell on same row but different cell
+        **/
+        setTimeout(() => {
+          if (this.clickNum === 1) {
+            onSelectRow(rowIndex, !isSelected, e);
+            onExpandRow(rowIndex, cellIndex);
+          }
+          this.clickNum = 0;
+        }, 200);
       } else {
         this.expandRow(rowIndex, cellIndex);
       }
-      if (this.props.onRowClick) this.props.onRowClick(rowIndex);
     }
   }
 
