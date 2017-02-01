@@ -25,25 +25,18 @@ export default class CustomPaginationPanel extends React.Component {
     super(props);
   }
 
-  onToggleDropDown = (onToggleDropDown) => {
-    // do your stuff here
-    console.log('toggle dropdown');
-    onToggleDropDown();
-  }
-
   renderPaginationPanel = (props) => {
     return (
       <div>
-        <div className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
-          <div className='btn-group' role='group'>
-            <button type='button' className='btn btn-default'>Left</button>
-            <button type='button' className='btn btn-default'>Middle</button>
-            <button type='button' className='btn btn-default'>Right</button>
-          </div>
-        </div>
-        <div className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
+        <div>{ props.components.pageList }</div>
+        <div>
+          <span>Change size per page: </span>
           { props.components.sizePerPageDropdown }
-          { props.components.pageList }
+        </div>
+        <div>
+          <button onClick={ () => props.changeSizePerPage(25) } className='btn btn-default'>Click to force size per page as 25</button>
+          <button onClick={ () => props.toggleDropDown() } className='btn btn-default'>Click to force toggle dropdown</button>
+          <button onClick={ () => props.changePage(3) } className='btn btn-default'>Jump to page 3</button>
         </div>
       </div>
     );
