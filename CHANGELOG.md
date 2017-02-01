@@ -1,3 +1,13 @@
+<a name="v2.11.0"></a>
+# [v2.11.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.10.2...v2.11.0) (2017-02-01)
+## Bug fixes
+* Selection broken if click on a custom cell(`dataFormat`) since from from `v2.9.2`([d149941](https://github.com/AllenFang/react-bootstrap-table/commit/d149941dbdf57c7f95e936aec8db9909cf3408dd))
+* Fixed the `onRowClick` broken since from `v2.9.2`([2d8212a](https://github.com/AllenFang/react-bootstrap-table/commit/2d8212ae880cf675f972db83382cc6c5bb161700))
+* Fixed [#996](https://github.com/AllenFang/react-bootstrap-table/pull/996)([b2ff491](https://github.com/AllenFang/react-bootstrap-table/commit/b2ff4919ccc936e1f4a0773eca8553ca5878ac09))
+
+## Features
+* Support to configure the column width with percentage([08c7cbc](https://github.com/AllenFang/react-bootstrap-table/commit/08c7cbcc155df6257bb5f1c320a316e9fbb9e2a6))
+
 <a name="v2.10.2"></a>
 # [v2.10.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.10.0...v2.10.2) (2017-01-31)
 ## Bug fixes
