@@ -9883,6 +9883,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _classnames = __webpack_require__(3);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
 	var _PageButton = __webpack_require__(181);
 
 	var _PageButton2 = _interopRequireDefault(_PageButton);
@@ -9965,10 +9969,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: '__changeSizePerPage__REACT_HOT_LOADER__',
-	    value: function __changeSizePerPage__REACT_HOT_LOADER__(e) {
-	      e.preventDefault();
-
-	      var selectSize = parseInt(e.currentTarget.getAttribute('data-page'), 10);
+	    value: function __changeSizePerPage__REACT_HOT_LOADER__(pageNum) {
+	      var selectSize = typeof pageNum === 'string' ? parseInt(pageNum, 10) : pageNum;
 	      var currPage = this.props.currPage;
 
 	      if (selectSize !== this.props.sizePerPage) {
@@ -10004,7 +10006,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.totalPages = Math.ceil(dataSize / sizePerPage);
 	      this.lastPage = this.props.pageStartIndex + this.totalPages - 1;
-	      var pageBtns = this.makePage();
+	      var pageBtns = this.makePage(typeof paginationPanel === 'function');
 	      var dropdown = this.makeDropDown();
 
 	      var offset = Math.abs(_Const2.default.PAGE_START_INDEX - pageStartIndex);
@@ -10032,6 +10034,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        sizePerPage: sizePerPage,
 	        sizePerPageList: sizePerPageList,
 	        pageStartIndex: pageStartIndex,
+	        changePage: this.changePage,
 	        toggleDropDown: this.toggleDropDown,
 	        changeSizePerPage: this.changeSizePerPage,
 	        components: {
@@ -10104,7 +10107,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	              { role: 'menuitem',
 	                tabIndex: '-1', href: '#',
 	                'data-page': pageNum,
-	                onClick: _this2.changeSizePerPage },
+	                onClick: function onClick(e) {
+	                  e.preventDefault();
+	                  _this2.changeSizePerPage(pageNum);
+	                } },
 	              pageText
 	            )
 	          );
@@ -10123,6 +10129,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'makePage',
 	    value: function makePage() {
 	      var _this3 = this;
+
+	      var isCustomPagingPanel = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
 	      var pages = this.getPages();
 	      var isStart = function isStart(page, _ref) {
@@ -10155,9 +10163,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	          page
 	        );
 	      }, this);
+	      var classname = (0, _classnames2.default)(isCustomPagingPanel ? null : 'react-bootstrap-table-page-btns-ul', 'pagination');
 	      return _react2.default.createElement(
 	        'ul',
-	        { className: 'react-bootstrap-table-page-btns-ul pagination' },
+	        { className: classname },
 	        pageBtns
 	      );
 	    }
@@ -10608,7 +10617,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var delay = this.props.searchDelayTime ? this.props.searchDelayTime : 0;
 	      this.debounceCallback = this.handleDebounce(function () {
-	        _this2.props.onSearch(_this2.refs.seachInput.getValue());
+	        var seachInput = _this2.refs.seachInput;
+
+	        seachInput && _this2.props.onSearch(seachInput.getValue());
 	      }, delay);
 	    }
 	  }, {
@@ -10619,8 +10630,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'setSearchInput',
 	    value: function setSearchInput(text) {
-	      if (this.refs.seachInput.value !== text) {
-	        this.refs.seachInput.value = text;
+	      var seachInput = this.refs.seachInput;
+
+	      if (seachInput && seachInput.value !== text) {
+	        seachInput.value = text;
 	      }
 	    }
 	  }, {
@@ -10753,7 +10766,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleClearBtnClick__REACT_HOT_LOADER__',
 	    value: function __handleClearBtnClick__REACT_HOT_LOADER__() {
-	      this.refs.seachInput.setValue('');
+	      var seachInput = this.refs.seachInput;
+
+	      seachInput && seachInput.setValue('');
 	      this.props.onSearch('');
 	    }
 	  }, {
@@ -13511,7 +13526,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        type: 'text',
 	        defaultValue: defaultValue,
 	        placeholder: placeholder || SearchField.defaultProps.placeholder,
-	        onKeyUp: onKeyUp
+	        onKeyUp: onKeyUp,
+	        style: { zIndex: 0 }
 	      }, rest));
 	    }
 	  }]);
