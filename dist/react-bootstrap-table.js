@@ -2160,6 +2160,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.__handleCompleteEditCell__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+	    _this.handleClickonSelectColumn = function () {
+	      return _this.__handleClickonSelectColumn__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
 	    _this.getHeaderColGrouop = function () {
 	      return _this.__getHeaderColGrouop__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
@@ -2266,7 +2270,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var key = data[this.props.keyField];
 	        var disable = unselectable.indexOf(key) !== -1;
 	        var selected = this.props.selectedRowKeys.indexOf(key) !== -1;
-	        var selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ? this.renderSelectRowColumn(selected, inputType, disable, CustomComponent, r) : null;
+	        var selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ? this.renderSelectRowColumn(selected, inputType, disable, CustomComponent, r, data) : null;
 	        // add by bluespring for className customize
 	        var trClassName = this.props.trClassName;
 	        if (isFun(this.props.trClassName)) {
@@ -2398,7 +2402,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
 	      columnIndex = this._isSelectRowDefined() ? columnIndex - 1 : columnIndex;
 
-	      if (expandableRow && selectRowAndExpand && (expandBy === _Const2.default.EXPAND_BY_ROW || columnIndex > 0 && expandBy === _Const2.default.EXPAND_BY_COL && columns[columnIndex].expandable)) {
+	      if (expandableRow && selectRowAndExpand && (expandBy === _Const2.default.EXPAND_BY_ROW ||
+	      /* Below will allow expanding trigger by clicking on selection column
+	      if configure as expanding by column */
+	      expandBy === _Const2.default.EXPAND_BY_COL && columnIndex < 0 || expandBy === _Const2.default.EXPAND_BY_COL && columns[columnIndex].expandable)) {
 	        (function () {
 	          var rowKey = _this2.props.data[rowIndex - 1][keyField];
 	          var expanding = _this2.props.expanding;
@@ -2443,16 +2450,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  }, {
+	    key: '__handleClickonSelectColumn__REACT_HOT_LOADER__',
+	    value: function __handleClickonSelectColumn__REACT_HOT_LOADER__(e, isSelect, rowIndex, row) {
+	      e.stopPropagation();
+	      if (e.target.tagName === 'TD' && (this.props.selectRow.clickToSelect || this.props.selectRow.clickToSelectAndEditCell)) {
+	        var unselectable = this.props.selectRow.unselectable || [];
+	        if (unselectable.indexOf(row[this.props.keyField]) === -1) {
+	          this.handleSelectRow(rowIndex + 1, isSelect, e);
+	          this.handleClickCell(rowIndex + 1);
+	        }
+	      }
+	    }
+	  }, {
 	    key: 'renderSelectRowColumn',
 	    value: function renderSelectRowColumn(selected, inputType, disabled) {
+	      var CustomComponent = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+
 	      var _this3 = this;
 
-	      var CustomComponent = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
 	      var rowIndex = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+	      var row = arguments[5];
 
 	      return _react2.default.createElement(
-	        _TableColumn2.default,
-	        { dataAlign: 'center' },
+	        'td',
+	        { onClick: function onClick(e) {
+	            _this3.handleClickonSelectColumn(e, !selected, rowIndex, row);
+	          }, style: { textAlign: 'center' } },
 	        CustomComponent ? _react2.default.createElement(CustomComponent, { type: inputType, checked: selected, disabled: disabled,
 	          rowIndex: rowIndex,
 	          onChange: function onChange(e) {
@@ -2602,11 +2625,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        display: column.hidden ? 'none' : null
 	      };
 	      if (column.width) {
-	        var width = parseInt(column.width, 10);
-	        style.width = width;
+	        style.width = column.width;
 	        /** add min-wdth to fix user assign column width
 	        not eq offsetWidth in large column table **/
-	        style.minWidth = width;
+	        style.minWidth = column.width;
 	      }
 	      return _react2.default.createElement('col', { style: style, key: i, className: column.className });
 	    });
@@ -2700,41 +2722,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function __rowClick__REACT_HOT_LOADER__(e) {
 	      var _this2 = this;
 
-	      if (e.target.tagName === 'TD') {
-	        (function () {
-	          var rowIndex = _this2.props.index + 1;
-	          var cellIndex = e.target.cellIndex;
-	          var _props = _this2.props,
-	              selectRow = _props.selectRow,
-	              unselectableRow = _props.unselectableRow,
-	              isSelected = _props.isSelected,
-	              onSelectRow = _props.onSelectRow,
-	              onExpandRow = _props.onExpandRow;
+	      var rowIndex = this.props.index + 1;
+	      if (this.props.onRowClick) this.props.onRowClick(rowIndex);
+	      var cellIndex = e.target.cellIndex;
+	      var _props = this.props,
+	          selectRow = _props.selectRow,
+	          unselectableRow = _props.unselectableRow,
+	          isSelected = _props.isSelected,
+	          onSelectRow = _props.onSelectRow,
+	          onExpandRow = _props.onExpandRow;
 
-	          if (selectRow) {
-	            if (selectRow.clickToSelect && !unselectableRow) {
+	      if (selectRow) {
+	        if (selectRow.clickToSelect && !unselectableRow) {
+	          onSelectRow(rowIndex, !isSelected, e);
+	        } else if (selectRow.clickToSelectAndEditCell && !unselectableRow) {
+	          this.clickNum++;
+	          /** if clickToSelectAndEditCell is enabled,
+	           *  there should be a delay to prevent a selection changed when
+	           *  user dblick to edit cell on same row but different cell
+	          **/
+	          setTimeout(function () {
+	            if (_this2.clickNum === 1) {
 	              onSelectRow(rowIndex, !isSelected, e);
-	            } else if (selectRow.clickToSelectAndEditCell && !unselectableRow) {
-	              _this2.clickNum++;
-	              /** if clickToSelectAndEditCell is enabled,
-	               *  there should be a delay to prevent a selection changed when
-	               *  user dblick to edit cell on same row but different cell
-	              **/
-	              setTimeout(function () {
-	                if (_this2.clickNum === 1) {
-	                  onSelectRow(rowIndex, !isSelected, e);
-	                  onExpandRow(rowIndex, cellIndex);
-	                }
-	                _this2.clickNum = 0;
-	              }, 200);
-	            } else {
-	              _this2.expandRow(rowIndex, cellIndex);
+	              onExpandRow(rowIndex, cellIndex);
 	            }
-	          } else {
-	            _this2.expandRow(rowIndex, cellIndex);
-	          }
-	          if (_this2.props.onRowClick) _this2.props.onRowClick(rowIndex);
-	        })();
+	            _this2.clickNum = 0;
+	          }, 200);
+	        } else {
+	          this.expandRow(rowIndex, cellIndex);
+	        }
 	      }
 	    }
 	  }, {
@@ -3091,6 +3107,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.__handleCustomUpdate__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+	    _this.handleClick = function () {
+	      return _this.__handleClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
 	    _this.timeouteClear = 0;
 	    var _this$props = _this.props,
 	        fieldValue = _this$props.fieldValue,
@@ -3218,6 +3238,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.clearTimeout();
 	    }
 	  }, {
+	    key: '__handleClick__REACT_HOT_LOADER__',
+	    value: function __handleClick__REACT_HOT_LOADER__(e) {
+	      if (e.target.tagName !== 'TD') {
+	        e.stopPropagation();
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _props2 = this.props,
@@ -3256,7 +3283,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'td',
 	        { ref: 'td',
 	          style: { position: 'relative' },
-	          className: className },
+	          className: className,
+	          onClick: this.handleClick },
 	        cellEditor,
 	        _react2.default.createElement(_Notification2.default, { ref: 'notifier' })
 	      );
@@ -10958,8 +10986,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (order.length !== sortField.length) {
 	          throw new Error('The length of sort fields and orders should be equivalent');
 	        }
-	        order = order.reverse();
-	        this.sortList = sortField.reverse().map(function (field, i) {
+	        order = order.slice().reverse();
+	        this.sortList = sortField.slice().reverse().map(function (field, i) {
 	          return {
 	            order: order[i],
 	            sortField: field
