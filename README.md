@@ -45,7 +45,7 @@ Check the <a href='https://github.com/AllenFang/react-bootstrap-table/blob/maste
 ***```v2.0.0``` has been released, the main patches are fixing the unalign or wrong size column on different browsers and improving the table structure. Please check [this](https://github.com/AllenFang/react-bootstrap-table/issues/331) for more detail explanation.<br/>***
 
 ## Development
-```react-bootstrap-table``` dependencies on react 0.14.x and Bootstrap 3 written by ES6 and use gulp and browserify for building and bundling.
+```react-bootstrap-table``` dependencies on react.js and Bootstrap 3, also written by ES6 and use gulp and browserify for building and bundling.
 
 You can use the following commands to prepare development
 ```bash
