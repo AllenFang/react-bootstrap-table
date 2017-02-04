@@ -287,7 +287,26 @@ class BootstrapTable extends Component {
    * @return {Boolean}
    */
   isRemoteDataSource(props) {
-    return (props || this.props).remote;
+    const { remote } = (props || this.props);
+    return remote === true || typeof remote === 'function';
+  }
+
+  /**
+   * Returns true if this action can be handled remote store
+   * From #990, Sometimes, we need some actions as remote, some actions are handled by default
+   * so function will tell you the target action is can be handled as remote or not.
+   * @param  {String}  [action] Required.
+   * @param  {Object}  [props] Optional. If not given, this.props will be used
+   * @return {Boolean}
+   */
+  allowRemote(action, props) {
+    const { remote } = (props || this.props);
+    if (typeof remote === 'function') {
+      const remoteObj = remote(Const.REMOTE);
+      return remoteObj[action];
+    } else {
+      return remote;
+    }
   }
 
   render() {
@@ -411,7 +430,7 @@ class BootstrapTable extends Component {
       this.props.options.onSortChange(sortField, order, this.props);
     }
     this.store.setSortInfo(order, sortField);
-    if (this.isRemoteDataSource()) {
+    if (this.allowRemote(Const.REMOTE_SORT)) {
       return;
     }
 
@@ -440,7 +459,7 @@ class BootstrapTable extends Component {
       reset: false
     });
 
-    if (this.isRemoteDataSource()) {
+    if (this.allowRemote(Const.REMOTE_PAGE)) {
       return;
     }
 
@@ -600,7 +619,7 @@ class BootstrapTable extends Component {
       newVal = onCellEdit(this.state.data[rowIndex], fieldName, newVal);
     }
 
-    if (this.isRemoteDataSource()) {
+    if (this.allowRemote(Const.REMOTE_CELL_EDIT)) {
       if (afterSaveCell) {
         afterSaveCell(this.state.data[rowIndex], fieldName, newVal);
       }
@@ -634,7 +653,7 @@ class BootstrapTable extends Component {
       onAddRow(newObj, colInfos);
     }
 
-    if (this.isRemoteDataSource()) {
+    if (this.allowRemote(Const.REMOTE_INSERT_ROW)) {
       if (this.props.options.afterInsertRow) {
         this.props.options.afterInsertRow(newObj);
       }
@@ -695,7 +714,7 @@ class BootstrapTable extends Component {
 
     this.store.setSelectedRowKey([]);  // clear selected row key
 
-    if (this.isRemoteDataSource()) {
+    if (this.allowRemote(Const.REMOTE_DROP_ROW)) {
       if (this.props.options.afterDeleteRow) {
         this.props.options.afterDeleteRow(dropRowKeys);
       }
@@ -741,7 +760,7 @@ class BootstrapTable extends Component {
       reset: false
     });
 
-    if (this.isRemoteDataSource()) {
+    if (this.allowRemote(Const.REMOTE_FILTER)) {
       if (this.props.options.afterColumnFilter) {
         this.props.options.afterColumnFilter(filterObj, this.store.getDataIgnoringPagination());
       }
@@ -825,7 +844,7 @@ class BootstrapTable extends Component {
       reset: false
     });
 
-    if (this.isRemoteDataSource()) {
+    if (this.allowRemote(Const.REMOTE_SEARCH)) {
       if (this.props.options.afterSearch) {
         this.props.options.afterSearch(searchText, this.store.getDataIgnoringPagination());
       }
@@ -1104,7 +1123,7 @@ BootstrapTable.propTypes = {
   height: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   maxHeight: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   data: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
-  remote: PropTypes.bool, // remote data, default is false
+  remote: PropTypes.oneOfType([ PropTypes.bool, PropTypes.func ]), // remote data, default is false
   scrollTop: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   striped: PropTypes.bool,
   bordered: PropTypes.bool,
