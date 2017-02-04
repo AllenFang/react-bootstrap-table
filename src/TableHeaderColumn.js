@@ -17,6 +17,12 @@ class TableHeaderColumn extends Component {
     this.handleFilter = this.handleFilter.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.reset) {
+      this.cleanFiltered();
+    }
+  }
+
   handleColumnClick = () => {
     if (this.props.isOnlyHead || !this.props.dataSort) return;
     const order = this.props.sort === Const.SORT_DESC ? Const.SORT_ASC : Const.SORT_DESC;

@@ -46,7 +46,8 @@ class BootstrapTable extends Component {
       currPage: currPage,
       expanding: this.props.options.expanding || [],
       sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
-      selectedRowKeys: this.store.getSelectedRowKeys()
+      selectedRowKeys: this.store.getSelectedRowKeys(),
+      reset: false
     };
   }
 
@@ -172,6 +173,18 @@ class BootstrapTable extends Component {
     });
   }
 
+  reset() {
+    this.store.clean();
+    this.setState({
+      data: this.getTableData(),
+      currPage: 1,
+      expanding: [],
+      sizePerPage: Const.SIZE_PER_PAGE_LIST[0],
+      selectedRowKeys: this.store.getSelectedRowKeys(),
+      reset: true
+    });
+  }
+
   componentWillReceiveProps(nextProps) {
     this.initTable(nextProps);
     const { options, selectRow } = nextProps;
@@ -193,7 +206,8 @@ class BootstrapTable extends Component {
       this.setState({
         data: nextProps.data.slice(),
         currPage: page,
-        sizePerPage
+        sizePerPage,
+        reset: false
       });
     } else {
       // #125
@@ -214,7 +228,8 @@ class BootstrapTable extends Component {
       this.setState({
         data,
         currPage: page,
-        sizePerPage
+        sizePerPage,
+        reset: false
       });
     }
 
@@ -223,7 +238,8 @@ class BootstrapTable extends Component {
       const copy = selectRow.selected.slice();
       this.store.setSelectedRowKey(copy);
       this.setState({
-        selectedRowKeys: copy
+        selectedRowKeys: copy,
+        reset: false
       });
     }
   }
@@ -314,7 +330,8 @@ class BootstrapTable extends Component {
             bordered={ this.props.bordered }
             condensed={ this.props.condensed }
             isFiltered={ this.filter ? true : false }
-            isSelectAll={ isSelectAll }>
+            isSelectAll={ isSelectAll }
+            reset={ this.state.reset }>
             { this.props.children }
           </TableHeader>
           <TableBody ref='body'
@@ -384,7 +401,8 @@ class BootstrapTable extends Component {
   cleanSelected() {
     this.store.setSelectedRowKey([]);
     this.setState({
-      selectedRowKeys: []
+      selectedRowKeys: [],
+      reset: false
     });
   }
 
@@ -399,12 +417,13 @@ class BootstrapTable extends Component {
 
     const result = this.store.sort().get();
     this.setState({
-      data: result
+      data: result,
+      reset: false
     });
   }
 
   handleExpandRow = expanding => {
-    this.setState({ expanding }, () => {
+    this.setState({ expanding, reset: false }, () => {
       this._adjustHeaderWidth();
     });
   }
@@ -417,7 +436,8 @@ class BootstrapTable extends Component {
 
     this.setState({
       currPage: page,
-      sizePerPage
+      sizePerPage,
+      reset: false
     });
 
     if (this.isRemoteDataSource()) {
@@ -436,7 +456,7 @@ class BootstrapTable extends Component {
 
     const result = this.store.page(normalizedPage, sizePerPage).get();
 
-    this.setState({ data: result });
+    this.setState({ data: result, reset: false });
   }
 
   handleMouseLeave = () => {
@@ -512,7 +532,7 @@ class BootstrapTable extends Component {
       }
 
       this.store.setSelectedRowKey(selectedRowKeys);
-      this.setState({ selectedRowKeys });
+      this.setState({ selectedRowKeys, reset: false });
     }
   }
 
@@ -526,6 +546,7 @@ class BootstrapTable extends Component {
     }
     this.setState({
       data: result,
+      reset: false,
       currPage: this.props.options.pageStartIndex || Const.PAGE_START_INDEX
     });
   }
@@ -552,7 +573,8 @@ class BootstrapTable extends Component {
 
       this.store.setSelectedRowKey(currSelected);
       this.setState({
-        selectedRowKeys: currSelected
+        selectedRowKeys: currSelected,
+        reset: false
       });
     }
   }
@@ -567,7 +589,8 @@ class BootstrapTable extends Component {
       const isValid = beforeSaveCell(this.state.data[rowIndex], fieldName, newVal);
       if (!isValid && typeof isValid !== 'undefined') {
         this.setState({
-          data: this.store.get()
+          data: this.store.get(),
+          reset: false
         });
         return;
       }
@@ -586,7 +609,8 @@ class BootstrapTable extends Component {
 
     const result = this.store.edit(newVal, rowIndex, fieldName).get();
     this.setState({
-      data: result
+      data: result,
+      reset: false
     });
 
     if (afterSaveCell) {
@@ -689,12 +713,14 @@ class BootstrapTable extends Component {
       this.setState({
         data: result,
         selectedRowKeys: this.store.getSelectedRowKeys(),
-        currPage
+        currPage,
+        reset: false
       });
     } else {
       result = this.store.get();
       this.setState({
         data: result,
+        reset: false,
         selectedRowKeys: this.store.getSelectedRowKeys()
       });
     }
@@ -711,7 +737,8 @@ class BootstrapTable extends Component {
     }
 
     this.setState({
-      currPage: this.props.options.pageStartIndex || Const.PAGE_START_INDEX
+      currPage: this.props.options.pageStartIndex || Const.PAGE_START_INDEX,
+      reset: false
     });
 
     if (this.isRemoteDataSource()) {
@@ -742,7 +769,8 @@ class BootstrapTable extends Component {
         this.store.getDataIgnoringPagination());
     }
     this.setState({
-      data: result
+      data: result,
+      reset: false
     });
   }
 
@@ -793,7 +821,8 @@ class BootstrapTable extends Component {
     }
 
     this.setState({
-      currPage: this.props.options.pageStartIndex || Const.PAGE_START_INDEX
+      currPage: this.props.options.pageStartIndex || Const.PAGE_START_INDEX,
+      reset: false
     });
 
     if (this.isRemoteDataSource()) {
@@ -824,7 +853,8 @@ class BootstrapTable extends Component {
         this.store.getDataIgnoringPagination());
     }
     this.setState({
-      data: result
+      data: result,
+      reset: false
     });
   }
 
@@ -921,7 +951,8 @@ class BootstrapTable extends Component {
             onDropRow={ this.handleDropRow }
             onSearch={ this.handleSearch }
             onExportCSV={ this.handleExportCSV }
-            onShowOnlySelected={ this.handleShowOnlySelected }/>
+            onShowOnlySelected={ this.handleShowOnlySelected }
+            reset={ this.state.reset } />
         </div>
       );
     } else {
@@ -1042,20 +1073,23 @@ class BootstrapTable extends Component {
         result = this.store.page(firstPage, sizePerPage).get();
         this.setState({
           data: result,
-          currPage: firstPage
+          currPage: firstPage,
+          reset: false
         });
       } else {
         const currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
         result = this.store.page(currLastPage, sizePerPage).get();
         this.setState({
           data: result,
-          currPage: currLastPage
+          currPage: currLastPage,
+          reset: false
         });
       }
     } else {
       result = this.store.get();
       this.setState({
-        data: result
+        data: result,
+        reset: false
       });
     }
 

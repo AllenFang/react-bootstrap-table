@@ -32,6 +32,16 @@ export class TableDataStore {
     this.multiColumnSort = props.multiColumnSort;
   }
 
+  clean() {
+    this.filteredData = null;
+    this.isOnFilter = false;
+    this.filterObj = null;
+    this.searchText = null;
+    this.sortList = [];
+    this.pageObj = {};
+    this.selected = [];
+  }
+
   setData(data) {
     this.data = data;
     if (this.remote) {
