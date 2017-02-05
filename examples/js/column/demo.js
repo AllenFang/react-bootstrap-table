@@ -3,6 +3,7 @@ import React from 'react';
 import ColumnAlignTable from './column-align-table';
 import ColumnWidthTable from './column-width-table';
 import ColumnHideTable from './column-hide-table';
+import ColumnWordWrapTable from './column-style-table';
 import ColumnTitleTable from './column-title-table';
 import TdAttributeTable from './td-attribute-table';
 
@@ -34,6 +35,19 @@ class Demo extends React.Component {
             <div className='panel-body'>
               <h5>Source in /examples/js/column/column-hide-table.js</h5>
               <ColumnHideTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Column Word Wrap Example</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/column/column-style-table.js</h5>
+              <span>This example show you how to configure style on td cell for tuning Product Name as word wrap<br/></span>
+              <span style={ { color: 'red' } }>
+                <b>You can use <code>tdStyle</code> ro <code>thStyle</code> to configure your own css, but we highly recommend you do not set <code>width</code>, <code>min-width</code> and <code>max-width</code></b>
+              </span>
+              <ColumnWordWrapTable />
             </div>
           </div>
         </div>
