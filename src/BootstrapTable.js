@@ -880,7 +880,7 @@ class BootstrapTable extends Component {
   renderPagination() {
     if (this.props.pagination) {
       let dataSize;
-      if (this.isRemoteDataSource()) {
+      if (this.allowRemote(Const.REMOTE_PAGE)) {
         dataSize = this.props.fetchInfo.dataTotalSize;
       } else {
         dataSize = this.store.getDataNum();
@@ -899,7 +899,6 @@ class BootstrapTable extends Component {
             pageStartIndex={ options.pageStartIndex }
             paginationShowsTotal={ options.paginationShowsTotal }
             paginationSize={ options.paginationSize || Const.PAGINATION_SIZE }
-            remote={ this.isRemoteDataSource() }
             dataSize={ dataSize }
             onSizePerPageList={ options.onSizePerPageList }
             prePage={ options.prePage || Const.PRE_PAGE }

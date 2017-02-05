@@ -215,7 +215,6 @@ PaginationList.propTypes = {
   sizePerPageList: PropTypes.array,
   paginationShowsTotal: PropTypes.oneOfType([ PropTypes.bool, PropTypes.func ]),
   paginationSize: PropTypes.number,
-  remote: PropTypes.bool,
   onSizePerPageList: PropTypes.func,
   prePage: PropTypes.string,
   pageStartIndex: PropTypes.number,
