@@ -1,3 +1,4 @@
+/* eslint max-len: 0 */
 import React from 'react';
 import RemoteStoreSorting from './remote-store-sorting';
 import RemoteStoreFiltering from './remote-store-filtering';
