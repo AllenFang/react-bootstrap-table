@@ -96,7 +96,7 @@ class BootstrapTable extends Component {
       colInfos: this.colInfos,
       multiColumnSearch: props.multiColumnSearch,
       multiColumnSort: props.multiColumnSort,
-      remote: this.isRemoteDataSource()
+      remote: this.props.remote
     });
   }
 
@@ -203,8 +203,12 @@ class BootstrapTable extends Component {
     }
 
     if (this.isRemoteDataSource()) {
+      let data = nextProps.data.slice();
+      if (nextProps.pagination && !this.allowRemote(Const.REMOTE_PAGE)) {
+        data = this.store.page(page, sizePerPage).get();
+      }
       this.setState({
-        data: nextProps.data.slice(),
+        data,
         currPage: page,
         sizePerPage,
         reset: false

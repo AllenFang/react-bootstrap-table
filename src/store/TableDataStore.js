@@ -599,7 +599,10 @@ export class TableDataStore {
 
     if (_data.length === 0) return _data;
 
-    if (this.remote || !this.enablePagination) {
+    const remote = typeof this.remote === 'function' ?
+      (this.remote(Const.REMOTE))[Const.REMOTE_PAGE] : this.remote;
+
+    if (remote || !this.enablePagination) {
       return _data;
     } else {
       const result = [];
