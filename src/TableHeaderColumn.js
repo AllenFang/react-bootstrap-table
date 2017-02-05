@@ -262,8 +262,8 @@ TableHeaderColumn.propTypes = {
   export: PropTypes.bool,
   expandable: PropTypes.bool,
   tdAttr: PropTypes.object,
-  tdStyle: PropTypes.Object,
-  thStyle: PropTypes.Object
+  tdStyle: PropTypes.object,
+  thStyle: PropTypes.object
 };
 
 TableHeaderColumn.defaultProps = {
