@@ -96,11 +96,13 @@ class TableHeaderColumn extends Component {
       children,
       caretRender,
       className,
-      isOnlyHead
+      isOnlyHead,
+      thStyle: style
     } = this.props;
     const thStyle = {
       textAlign: headerAlign || dataAlign,
-      display: hidden ? 'none' : null
+      display: hidden ? 'none' : null,
+      ...style
     };
     if (!isOnlyHead) {
       if (sortIndicator) {
@@ -259,7 +261,9 @@ TableHeaderColumn.propTypes = {
   sortIndicator: PropTypes.bool,
   export: PropTypes.bool,
   expandable: PropTypes.bool,
-  tdAttr: PropTypes.object
+  tdAttr: PropTypes.object,
+  tdStyle: PropTypes.Object,
+  thStyle: PropTypes.Object
 };
 
 TableHeaderColumn.defaultProps = {
@@ -291,7 +295,9 @@ TableHeaderColumn.defaultProps = {
   filter: undefined,
   sortIndicator: true,
   expandable: true,
-  tdAttr: undefined
+  tdAttr: undefined,
+  tdStyle: undefined,
+  thStyle: undefined
 };
 
 export default TableHeaderColumn;

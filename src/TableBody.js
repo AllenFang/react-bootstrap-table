@@ -106,7 +106,8 @@ class TableBody extends Component {
               onEdit={ this.handleEditCell }
               width={ column.width }
               onClick={ this.handleClickCell }
-              attrs={ column.attrs }>
+              attrs={ column.attrs }
+              style={ column.style }>
               { columnChild }
             </TableColumn>
           );
