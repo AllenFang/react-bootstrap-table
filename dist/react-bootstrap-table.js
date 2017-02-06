@@ -1370,7 +1370,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onSearch: this.handleSearch,
 	            onExportCSV: this.handleExportCSV,
 	            onShowOnlySelected: this.handleShowOnlySelected,
-<<<<<<< HEAD
 	            insertModalHeader: this.props.options.insertModalHeader,
 	            insertModalFooter: this.props.options.insertModalFooter,
 	            insertModalBody: this.props.options.insertModalBody,
@@ -1383,10 +1382,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            searchField: this.props.options.searchField,
 	            searchPanel: this.props.options.searchPanel,
 	            btnGroup: this.props.options.btnGroup,
-	            toolBar: this.props.options.toolBar })
-=======
+	            toolBar: this.props.options.toolBar,
 	            reset: this.state.reset })
->>>>>>> master
 	        );
 	      } else {
 	        return null;
@@ -11142,10 +11139,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  searchPanel: _react.PropTypes.func,
 	  btnGroup: _react.PropTypes.func,
 	  toolBar: _react.PropTypes.func,
-	  searchPosition: _react.PropTypes.string
+	  searchPosition: _react.PropTypes.string,
+	  reset: _react.PropTypes.bool
 	};
 
 	ToolBar.defaultProps = {
+	  reset: false,
 	  enableInsert: false,
 	  enableDelete: false,
 	  enableSearch: false,
@@ -13735,7 +13734,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return ClearSearchButton;
 	}(_react.Component);
 
-<<<<<<< HEAD
 	ClearSearchButton.propTypes = {
 	  btnContextual: _react.PropTypes.string,
 	  className: _react.PropTypes.string,
@@ -13747,45 +13745,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  className: '',
 	  btnText: 'Clear',
 	  onClick: undefined
-=======
-	ToolBar.modalSeq = 0;
-
-
-	ToolBar.propTypes = {
-	  onAddRow: _react.PropTypes.func,
-	  onDropRow: _react.PropTypes.func,
-	  onShowOnlySelected: _react.PropTypes.func,
-	  enableInsert: _react.PropTypes.bool,
-	  enableDelete: _react.PropTypes.bool,
-	  enableSearch: _react.PropTypes.bool,
-	  enableShowOnlySelected: _react.PropTypes.bool,
-	  columns: _react.PropTypes.array,
-	  searchPlaceholder: _react.PropTypes.string,
-	  exportCSVText: _react.PropTypes.string,
-	  insertText: _react.PropTypes.string,
-	  deleteText: _react.PropTypes.string,
-	  saveText: _react.PropTypes.string,
-	  closeText: _react.PropTypes.string,
-	  clearSearch: _react.PropTypes.bool,
-	  ignoreEditable: _react.PropTypes.bool,
-	  defaultSearch: _react.PropTypes.string,
-	  reset: _react.PropTypes.bool
-	};
-
-	ToolBar.defaultProps = {
-	  reset: false,
-	  enableInsert: false,
-	  enableDelete: false,
-	  enableSearch: false,
-	  enableShowOnlySelected: false,
-	  clearSearch: false,
-	  ignoreEditable: false,
-	  exportCSVText: _Const2.default.EXPORT_CSV_TEXT,
-	  insertText: _Const2.default.INSERT_BTN_TEXT,
-	  deleteText: _Const2.default.DELETE_BTN_TEXT,
-	  saveText: _Const2.default.SAVE_BTN_TEXT,
-	  closeText: _Const2.default.CLOSE_BTN_TEXT
->>>>>>> master
 	};
 
 	var _default = ClearSearchButton;
