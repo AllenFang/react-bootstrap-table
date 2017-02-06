@@ -12901,8 +12901,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  export: _react.PropTypes.bool,
 	  expandable: _react.PropTypes.bool,
 	  tdAttr: _react.PropTypes.object,
-	  tdStyle: _react.PropTypes.Object,
-	  thStyle: _react.PropTypes.Object
+	  tdStyle: _react.PropTypes.object,
+	  thStyle: _react.PropTypes.object
 	};
 
 	TableHeaderColumn.defaultProps = {
