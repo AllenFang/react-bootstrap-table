@@ -1,3 +1,8 @@
+<a name="v2.11.2"></a>
+# [v2.11.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.11.1...v2.11.2) (2017-02-06)
+## Bug fixes
+* Fix wrong propTypes for `tdStyle` and `thStyle`([37032fb](https://github.com/AllenFang/react-bootstrap-table/commit/37032fb2d80d99c5ec6bc4244c7a57a08aaf23a7))
+
 <a name="v2.11.1"></a>
 # [v2.11.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.11.0...v2.11.1) (2017-02-05)
 ## Features
