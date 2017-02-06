@@ -40,6 +40,12 @@ class ToolBar extends Component {
     );
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.reset) {
+      this.setSearchInput('');
+    }
+  }
+
   componentWillUnmount() {
     this.clearTimeout();
   }
@@ -462,10 +468,12 @@ ToolBar.propTypes = {
   searchPanel: PropTypes.func,
   btnGroup: PropTypes.func,
   toolBar: PropTypes.func,
-  searchPosition: PropTypes.string
+  searchPosition: PropTypes.string,
+  reset: PropTypes.bool
 };
 
 ToolBar.defaultProps = {
+  reset: false,
   enableInsert: false,
   enableDelete: false,
   enableSearch: false,

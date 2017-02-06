@@ -1,3 +1,4 @@
+/* eslint max-len: 0 */
 import React from 'react';
 import RemoteStoreSorting from './remote-store-sorting';
 import RemoteStoreFiltering from './remote-store-filtering';
@@ -7,6 +8,7 @@ import RemoteStoreInsertRow from './remote-store-insert-row';
 import RemoteStoreDeleteRow from './remote-store-delete-row';
 import RemoteStoreCellEdit from './remote-store-cell-edit';
 import RemoteStoreExportCSV from './remote-store-export-csv';
+import RemoteStoreAlternative from './remote-store-alternative';
 import RemoteStoreAll from './remote-store-all';
 
 class Demo extends React.Component {
@@ -90,6 +92,17 @@ class Demo extends React.Component {
               <h5>Source in /examples/js/remote/remote-store-export-csv.js and
                 /examples/js/remote/remote-export-csv.js</h5>
               <RemoteStoreExportCSV />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Alternative Configure Remote Example</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/remote/remote-store-alternative.js and
+                /examples/js/remote/remote-alternative.js</h5>
+              <span>Remote mode also allow you to choose which functionality should be handle by remote.</span>
+              <RemoteStoreAlternative />
             </div>
           </div>
         </div>

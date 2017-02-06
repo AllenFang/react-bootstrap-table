@@ -1,3 +1,21 @@
+<a name="v2.11.2"></a>
+# [v2.11.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.11.1...v2.11.2) (2017-02-06)
+## Bug fixes
+* Fix wrong propTypes for `tdStyle` and `thStyle`([37032fb](https://github.com/AllenFang/react-bootstrap-table/commit/37032fb2d80d99c5ec6bc4244c7a57a08aaf23a7))
+
+<a name="v2.11.1"></a>
+# [v2.11.1](https://github.com/AllenFang/react-bootstrap-table/compare/v2.11.0...v2.11.1) (2017-02-05)
+## Features
+* Support to configure the `td` and `th` style object([94b4451](https://github.com/AllenFang/react-bootstrap-table/commit/94b4451d15d972de09d36de9af514b994858b113))
+	* Use `tdStyle` on `TableHeaderColumn` to configure the `td` styles, aceept an object
+	* Use `thStyle` on `TableHeaderColumn` to configure the `th` styles, aceept an object
+	* [example](https://github.com/AllenFang/react-bootstrap-table/commit/0dfded4db99bc00f6a2134d919cc0e6864fa9bf9)
+
+## Enhancement
+* Able to clean table by calling `reset` which is exposed by `BootstrapTable`([6893be6](https://github.com/AllenFang/react-bootstrap-table/commit/6893be6c4b425ec49a5f792941a1ec137cfe3bfe))
+* Support to configure which functionality should be handled by `remote`([d31c71f](https://github.com/AllenFang/react-bootstrap-table/commit/d31c71f25114f42487e618860e93b33919ba27c3))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-store-alternative.js)
+
 <a name="v2.11.0"></a>
 # [v2.11.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.10.2...v2.11.0) (2017-02-01)
 ## Bug fixes

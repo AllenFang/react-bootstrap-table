@@ -32,6 +32,16 @@ export class TableDataStore {
     this.multiColumnSort = props.multiColumnSort;
   }
 
+  clean() {
+    this.filteredData = null;
+    this.isOnFilter = false;
+    this.filterObj = null;
+    this.searchText = null;
+    this.sortList = [];
+    this.pageObj = {};
+    this.selected = [];
+  }
+
   setData(data) {
     this.data = data;
     if (this.remote) {
@@ -589,7 +599,10 @@ export class TableDataStore {
 
     if (_data.length === 0) return _data;
 
-    if (this.remote || !this.enablePagination) {
+    const remote = typeof this.remote === 'function' ?
+      (this.remote(Const.REMOTE))[Const.REMOTE_PAGE] : this.remote;
+
+    if (remote || !this.enablePagination) {
       return _data;
     } else {
       const result = [];

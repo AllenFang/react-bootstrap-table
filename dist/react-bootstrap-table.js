@@ -338,7 +338,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      currPage: currPage,
 	      expanding: _this.props.options.expanding || [],
 	      sizePerPage: _this.props.options.sizePerPage || _Const2.default.SIZE_PER_PAGE_LIST[0],
-	      selectedRowKeys: _this.store.getSelectedRowKeys()
+	      selectedRowKeys: _this.store.getSelectedRowKeys(),
+	      reset: false
 	    };
 	    return _this;
 	  }
@@ -392,7 +393,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        colInfos: this.colInfos,
 	        multiColumnSearch: props.multiColumnSearch,
 	        multiColumnSort: props.multiColumnSort,
-	        remote: this.isRemoteDataSource()
+	        remote: this.props.remote
 	      });
 	    }
 	  }, {
@@ -470,9 +471,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	            export: column.props.export,
 	            expandable: column.props.expandable,
 	            index: i,
-	            attrs: column.props.tdAttr
+	            attrs: column.props.tdAttr,
+	            style: column.props.tdStyle
 	          };
 	        }
+	      });
+	    }
+	  }, {
+	    key: 'reset',
+	    value: function reset() {
+	      this.store.clean();
+	      this.setState({
+	        data: this.getTableData(),
+	        currPage: 1,
+	        expanding: [],
+	        sizePerPage: _Const2.default.SIZE_PER_PAGE_LIST[0],
+	        selectedRowKeys: this.store.getSelectedRowKeys(),
+	        reset: true
 	      });
 	    }
 	  }, {
@@ -497,10 +512,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      if (this.isRemoteDataSource()) {
+	        var data = nextProps.data.slice();
+	        if (nextProps.pagination && !this.allowRemote(_Const2.default.REMOTE_PAGE)) {
+	          data = this.store.page(page, sizePerPage).get();
+	        }
 	        this.setState({
-	          data: nextProps.data.slice(),
+	          data: data,
 	          currPage: page,
-	          sizePerPage: sizePerPage
+	          sizePerPage: sizePerPage,
+	          reset: false
 	        });
 	      } else {
 	        // #125
@@ -517,11 +537,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        } else if (sortList.length > 0) {
 	          this.store.sort();
 	        }
-	        var data = this.store.page(page, sizePerPage).get();
+	        var _data = this.store.page(page, sizePerPage).get();
 	        this.setState({
-	          data: data,
+	          data: _data,
 	          currPage: page,
-	          sizePerPage: sizePerPage
+	          sizePerPage: sizePerPage,
+	          reset: false
 	        });
 	      }
 
@@ -530,7 +551,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var copy = selectRow.selected.slice();
 	        this.store.setSelectedRowKey(copy);
 	        this.setState({
-	          selectedRowKeys: copy
+	          selectedRowKeys: copy,
+	          reset: false
 	        });
 	      }
 	    }
@@ -586,7 +608,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'isRemoteDataSource',
 	    value: function isRemoteDataSource(props) {
-	      return (props || this.props).remote;
+	      var _ref2 = props || this.props,
+	          remote = _ref2.remote;
+
+	      return remote === true || typeof remote === 'function';
+	    }
+
+	    /**
+	     * Returns true if this action can be handled remote store
+	     * From #990, Sometimes, we need some actions as remote, some actions are handled by default
+	     * so function will tell you the target action is can be handled as remote or not.
+	     * @param  {String}  [action] Required.
+	     * @param  {Object}  [props] Optional. If not given, this.props will be used
+	     * @return {Boolean}
+	     */
+
+	  }, {
+	    key: 'allowRemote',
+	    value: function allowRemote(action, props) {
+	      var _ref3 = props || this.props,
+	          remote = _ref3.remote;
+
+	      if (typeof remote === 'function') {
+	        var remoteObj = remote(_Const2.default.REMOTE);
+	        return remoteObj[action];
+	      } else {
+	        return remote;
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -642,7 +690,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	              bordered: this.props.bordered,
 	              condensed: this.props.condensed,
 	              isFiltered: this.filter ? true : false,
-	              isSelectAll: isSelectAll },
+	              isSelectAll: isSelectAll,
+	              reset: this.state.reset },
 	            this.props.children
 	          ),
 	          _react2.default.createElement(_TableBody2.default, { ref: 'body',
@@ -709,7 +758,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function cleanSelected() {
 	      this.store.setSelectedRowKey([]);
 	      this.setState({
-	        selectedRowKeys: []
+	        selectedRowKeys: [],
+	        reset: false
 	      });
 	    }
 	  }, {
@@ -719,13 +769,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.props.options.onSortChange(sortField, order, this.props);
 	      }
 	      this.store.setSortInfo(order, sortField);
-	      if (this.isRemoteDataSource()) {
+	      if (this.allowRemote(_Const2.default.REMOTE_SORT)) {
 	        return;
 	      }
 
 	      var result = this.store.sort().get();
 	      this.setState({
-	        data: result
+	        data: result,
+	        reset: false
 	      });
 	    }
 	  }, {
@@ -733,7 +784,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function __handleExpandRow__REACT_HOT_LOADER__(expanding) {
 	      var _this3 = this;
 
-	      this.setState({ expanding: expanding }, function () {
+	      this.setState({ expanding: expanding, reset: false }, function () {
 	        _this3._adjustHeaderWidth();
 	      });
 	    }
@@ -750,10 +801,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.setState({
 	        currPage: page,
-	        sizePerPage: sizePerPage
+	        sizePerPage: sizePerPage,
+	        reset: false
 	      });
 
-	      if (this.isRemoteDataSource()) {
+	      if (this.allowRemote(_Const2.default.REMOTE_PAGE)) {
 	        return;
 	      }
 
@@ -769,7 +821,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var result = this.store.page(normalizedPage, sizePerPage).get();
 
-	      this.setState({ data: result });
+	      this.setState({ data: result, reset: false });
 	    }
 	  }, {
 	    key: '__handleMouseLeave__REACT_HOT_LOADER__',
@@ -857,7 +909,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        this.store.setSelectedRowKey(selectedRowKeys);
-	        this.setState({ selectedRowKeys: selectedRowKeys });
+	        this.setState({ selectedRowKeys: selectedRowKeys, reset: false });
 	      }
 	    }
 	  }, {
@@ -872,6 +924,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      this.setState({
 	        data: result,
+	        reset: false,
 	        currPage: this.props.options.pageStartIndex || _Const2.default.PAGE_START_INDEX
 	      });
 	    }
@@ -902,7 +955,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        this.store.setSelectedRowKey(currSelected);
 	        this.setState({
-	          selectedRowKeys: currSelected
+	          selectedRowKeys: currSelected,
+	          reset: false
 	        });
 	      }
 	    }
@@ -921,7 +975,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var isValid = beforeSaveCell(this.state.data[rowIndex], fieldName, newVal);
 	        if (!isValid && typeof isValid !== 'undefined') {
 	          this.setState({
-	            data: this.store.get()
+	            data: this.store.get(),
+	            reset: false
 	          });
 	          return;
 	        }
@@ -931,7 +986,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        newVal = onCellEdit(this.state.data[rowIndex], fieldName, newVal);
 	      }
 
-	      if (this.isRemoteDataSource()) {
+	      if (this.allowRemote(_Const2.default.REMOTE_CELL_EDIT)) {
 	        if (afterSaveCell) {
 	          afterSaveCell(this.state.data[rowIndex], fieldName, newVal);
 	        }
@@ -940,7 +995,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var result = this.store.edit(newVal, rowIndex, fieldName).get();
 	      this.setState({
-	        data: result
+	        data: result,
+	        reset: false
 	      });
 
 	      if (afterSaveCell) {
@@ -967,7 +1023,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        onAddRow(newObj, colInfos);
 	      }
 
-	      if (this.isRemoteDataSource()) {
+	      if (this.allowRemote(_Const2.default.REMOTE_INSERT_ROW)) {
 	        if (this.props.options.afterInsertRow) {
 	          this.props.options.afterInsertRow(newObj);
 	        }
@@ -1040,7 +1096,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.store.setSelectedRowKey([]); // clear selected row key
 
-	      if (this.isRemoteDataSource()) {
+	      if (this.allowRemote(_Const2.default.REMOTE_DROP_ROW)) {
 	        if (this.props.options.afterDeleteRow) {
 	          this.props.options.afterDeleteRow(dropRowKeys);
 	        }
@@ -1060,12 +1116,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.setState({
 	          data: result,
 	          selectedRowKeys: this.store.getSelectedRowKeys(),
-	          currPage: currPage
+	          currPage: currPage,
+	          reset: false
 	        });
 	      } else {
 	        result = this.store.get();
 	        this.setState({
 	          data: result,
+	          reset: false,
 	          selectedRowKeys: this.store.getSelectedRowKeys()
 	        });
 	      }
@@ -1084,10 +1142,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      this.setState({
-	        currPage: this.props.options.pageStartIndex || _Const2.default.PAGE_START_INDEX
+	        currPage: this.props.options.pageStartIndex || _Const2.default.PAGE_START_INDEX,
+	        reset: false
 	      });
 
-	      if (this.isRemoteDataSource()) {
+	      if (this.allowRemote(_Const2.default.REMOTE_FILTER)) {
 	        if (this.props.options.afterColumnFilter) {
 	          this.props.options.afterColumnFilter(filterObj, this.store.getDataIgnoringPagination());
 	        }
@@ -1115,7 +1174,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.props.options.afterColumnFilter(filterObj, this.store.getDataIgnoringPagination());
 	      }
 	      this.setState({
-	        data: result
+	        data: result,
+	        reset: false
 	      });
 	    }
 	  }, {
@@ -1168,10 +1228,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      this.setState({
-	        currPage: this.props.options.pageStartIndex || _Const2.default.PAGE_START_INDEX
+	        currPage: this.props.options.pageStartIndex || _Const2.default.PAGE_START_INDEX,
+	        reset: false
 	      });
 
-	      if (this.isRemoteDataSource()) {
+	      if (this.allowRemote(_Const2.default.REMOTE_SEARCH)) {
 	        if (this.props.options.afterSearch) {
 	          this.props.options.afterSearch(searchText, this.store.getDataIgnoringPagination());
 	        }
@@ -1198,7 +1259,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.props.options.afterSearch(searchText, this.store.getDataIgnoringPagination());
 	      }
 	      this.setState({
-	        data: result
+	        data: result,
+	        reset: false
 	      });
 	    }
 	  }, {
@@ -1206,7 +1268,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function renderPagination() {
 	      if (this.props.pagination) {
 	        var dataSize = void 0;
-	        if (this.isRemoteDataSource()) {
+	        if (this.allowRemote(_Const2.default.REMOTE_PAGE)) {
 	          dataSize = this.props.fetchInfo.dataTotalSize;
 	        } else {
 	          dataSize = this.store.getDataNum();
@@ -1229,7 +1291,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            pageStartIndex: options.pageStartIndex,
 	            paginationShowsTotal: options.paginationShowsTotal,
 	            paginationSize: options.paginationSize || _Const2.default.PAGINATION_SIZE,
-	            remote: this.isRemoteDataSource(),
 	            dataSize: dataSize,
 	            onSizePerPageList: options.onSizePerPageList,
 	            prePage: options.prePage || _Const2.default.PRE_PAGE,
@@ -1309,6 +1370,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onSearch: this.handleSearch,
 	            onExportCSV: this.handleExportCSV,
 	            onShowOnlySelected: this.handleShowOnlySelected,
+<<<<<<< HEAD
 	            insertModalHeader: this.props.options.insertModalHeader,
 	            insertModalFooter: this.props.options.insertModalFooter,
 	            insertModalBody: this.props.options.insertModalBody,
@@ -1322,6 +1384,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            searchPanel: this.props.options.searchPanel,
 	            btnGroup: this.props.options.btnGroup,
 	            toolBar: this.props.options.toolBar })
+=======
+	            reset: this.state.reset })
+>>>>>>> master
 	        );
 	      } else {
 	        return null;
@@ -1445,20 +1510,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	          result = this.store.page(firstPage, sizePerPage).get();
 	          this.setState({
 	            data: result,
-	            currPage: firstPage
+	            currPage: firstPage,
+	            reset: false
 	          });
 	        } else {
 	          var currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
 	          result = this.store.page(currLastPage, sizePerPage).get();
 	          this.setState({
 	            data: result,
-	            currPage: currLastPage
+	            currPage: currLastPage,
+	            reset: false
 	          });
 	        }
 	      } else {
 	        result = this.store.get();
 	        this.setState({
-	          data: result
+	          data: result,
+	          reset: false
 	        });
 	      }
 
@@ -1476,7 +1544,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  height: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
 	  maxHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
 	  data: _react.PropTypes.oneOfType([_react.PropTypes.array, _react.PropTypes.object]),
-	  remote: _react.PropTypes.bool, // remote data, default is false
+	  remote: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.func]), // remote data, default is false
 	  scrollTop: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
 	  striped: _react.PropTypes.bool,
 	  bordered: _react.PropTypes.bool,
@@ -1808,7 +1876,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var _default = {
+	var CONST_VAR = {
 	  SORT_DESC: 'desc',
 	  SORT_ASC: 'asc',
 	  SIZE_PER_PAGE: 10,
@@ -1852,8 +1920,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	  FILTER_COND_LIKE: 'like',
 	  EXPAND_BY_ROW: 'row',
 	  EXPAND_BY_COL: 'column',
-	  CANCEL_TOASTR: 'Pressed ESC can cancel'
+	  CANCEL_TOASTR: 'Pressed ESC can cancel',
+	  REMOTE_SORT: 'sort',
+	  REMOTE_PAGE: 'pagination',
+	  REMOTE_CELL_EDIT: 'cellEdit',
+	  REMOTE_INSERT_ROW: 'insertRow',
+	  REMOTE_DROP_ROW: 'dropRow',
+	  REMOTE_FILTER: 'filter',
+	  REMOTE_SEARCH: 'search',
+	  REMOTE_EXPORT_CSV: 'exportCSV'
 	};
+
+	CONST_VAR.REMOTE = {};
+	CONST_VAR.REMOTE[CONST_VAR.REMOTE_SORT] = false;
+	CONST_VAR.REMOTE[CONST_VAR.REMOTE_PAGE] = false;
+	CONST_VAR.REMOTE[CONST_VAR.REMOTE_CELL_EDIT] = false;
+	CONST_VAR.REMOTE[CONST_VAR.REMOTE_INSERT_ROW] = false;
+	CONST_VAR.REMOTE[CONST_VAR.REMOTE_DROP_ROW] = false;
+	CONST_VAR.REMOTE[CONST_VAR.REMOTE_FILTER] = false;
+	CONST_VAR.REMOTE[CONST_VAR.REMOTE_SEARCH] = false;
+	CONST_VAR.REMOTE[CONST_VAR.REMOTE_EXPORT_CSV] = false;
+
+	var _default = CONST_VAR;
 	exports.default = _default;
 	;
 
@@ -1861,6 +1949,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
 	    return;
 	  }
+
+	  __REACT_HOT_LOADER__.register(CONST_VAR, 'CONST_VAR', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/Const.js');
 
 	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/Const.js');
 	}();
@@ -2002,7 +2092,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props = this.props,
 	          sortIndicator = _props.sortIndicator,
 	          sortList = _props.sortList,
-	          onSort = _props.onSort;
+	          onSort = _props.onSort,
+	          reset = _props.reset;
 
 
 	      _react2.default.Children.forEach(this.props.children, function (elm) {
@@ -2017,7 +2108,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          rows[rowIndex] = [];
 	        }
 	        if (rowSpan + rowIndex === rowCount + 1) {
-	          rows[rowIndex].push(_react2.default.cloneElement(elm, { key: rowKey++, onSort: onSort, sort: sort, sortIndicator: sortIndicator, isOnlyHead: false }));
+	          rows[rowIndex].push(_react2.default.cloneElement(elm, { reset: reset, key: rowKey++, onSort: onSort, sort: sort, sortIndicator: sortIndicator, isOnlyHead: false }));
 	        } else {
 	          rows[rowIndex].push(_react2.default.cloneElement(elm, { key: rowKey++, isOnlyHead: true }));
 	        }
@@ -2097,7 +2188,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  isSelectAll: _react.PropTypes.oneOf([true, 'indeterminate', false]),
 	  sortIndicator: _react.PropTypes.bool,
 	  customComponent: _react.PropTypes.func,
-	  colGroups: _react.PropTypes.element
+	  colGroups: _react.PropTypes.element,
+	  reset: _react.PropTypes.bool
 	};
 
 	var _default = TableHeader;
@@ -2396,7 +2488,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                onEdit: this.handleEditCell,
 	                width: column.width,
 	                onClick: this.handleClickCell,
-	                attrs: column.attrs },
+	                attrs: column.attrs,
+	                style: column.style },
 	              columnChild
 	            );
 	          }
@@ -3112,13 +3205,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	          dataAlign = _props2.dataAlign,
 	          hidden = _props2.hidden,
 	          cellEdit = _props2.cellEdit,
-	          attrs = _props2.attrs;
+	          attrs = _props2.attrs,
+	          style = _props2.style;
 
 
-	      var tdStyle = {
+	      var tdStyle = _extends({
 	        textAlign: dataAlign,
 	        display: hidden ? 'none' : null
-	      };
+	      }, style);
 
 	      var opts = {};
 
@@ -3153,7 +3247,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  columnTitle: _react.PropTypes.string,
 	  children: _react.PropTypes.node,
 	  onClick: _react.PropTypes.func,
-	  attrs: _react.PropTypes.object
+	  attrs: _react.PropTypes.object,
+	  style: _react.PropTypes.object
 	};
 
 	TableColumn.defaultProps = {
@@ -10218,7 +10313,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  sizePerPageList: _react.PropTypes.array,
 	  paginationShowsTotal: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.func]),
 	  paginationSize: _react.PropTypes.number,
-	  remote: _react.PropTypes.bool,
 	  onSizePerPageList: _react.PropTypes.func,
 	  prePage: _react.PropTypes.string,
 	  pageStartIndex: _react.PropTypes.number,
@@ -10621,6 +10715,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        seachInput && _this2.props.onSearch(seachInput.getValue());
 	      }, delay);
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      if (nextProps.reset) {
+	        this.setSearchInput('');
+	      }
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -13634,6 +13735,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return ClearSearchButton;
 	}(_react.Component);
 
+<<<<<<< HEAD
 	ClearSearchButton.propTypes = {
 	  btnContextual: _react.PropTypes.string,
 	  className: _react.PropTypes.string,
@@ -13645,6 +13747,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	  className: '',
 	  btnText: 'Clear',
 	  onClick: undefined
+=======
+	ToolBar.modalSeq = 0;
+
+
+	ToolBar.propTypes = {
+	  onAddRow: _react.PropTypes.func,
+	  onDropRow: _react.PropTypes.func,
+	  onShowOnlySelected: _react.PropTypes.func,
+	  enableInsert: _react.PropTypes.bool,
+	  enableDelete: _react.PropTypes.bool,
+	  enableSearch: _react.PropTypes.bool,
+	  enableShowOnlySelected: _react.PropTypes.bool,
+	  columns: _react.PropTypes.array,
+	  searchPlaceholder: _react.PropTypes.string,
+	  exportCSVText: _react.PropTypes.string,
+	  insertText: _react.PropTypes.string,
+	  deleteText: _react.PropTypes.string,
+	  saveText: _react.PropTypes.string,
+	  closeText: _react.PropTypes.string,
+	  clearSearch: _react.PropTypes.bool,
+	  ignoreEditable: _react.PropTypes.bool,
+	  defaultSearch: _react.PropTypes.string,
+	  reset: _react.PropTypes.bool
+	};
+
+	ToolBar.defaultProps = {
+	  reset: false,
+	  enableInsert: false,
+	  enableDelete: false,
+	  enableSearch: false,
+	  enableShowOnlySelected: false,
+	  clearSearch: false,
+	  ignoreEditable: false,
+	  exportCSVText: _Const2.default.EXPORT_CSV_TEXT,
+	  insertText: _Const2.default.INSERT_BTN_TEXT,
+	  deleteText: _Const2.default.DELETE_BTN_TEXT,
+	  saveText: _Const2.default.SAVE_BTN_TEXT,
+	  closeText: _Const2.default.CLOSE_BTN_TEXT
+>>>>>>> master
 	};
 
 	var _default = ClearSearchButton;
@@ -13873,6 +14014,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.remote = props.remote;
 	      this.multiColumnSearch = props.multiColumnSearch;
 	      this.multiColumnSort = props.multiColumnSort;
+	    }
+	  }, {
+	    key: 'clean',
+	    value: function clean() {
+	      this.filteredData = null;
+	      this.isOnFilter = false;
+	      this.filterObj = null;
+	      this.searchText = null;
+	      this.sortList = [];
+	      this.pageObj = {};
+	      this.selected = [];
 	    }
 	  }, {
 	    key: 'setData',
@@ -14505,7 +14657,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if (_data.length === 0) return _data;
 
-	      if (this.remote || !this.enablePagination) {
+	      var remote = typeof this.remote === 'function' ? this.remote(_Const2.default.REMOTE)[_Const2.default.REMOTE_PAGE] : this.remote;
+
+	      if (remote || !this.enablePagination) {
 	        return _data;
 	      } else {
 	        var result = [];
@@ -15438,6 +15592,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  _createClass(TableHeaderColumn, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      if (nextProps.reset) {
+	        this.cleanFiltered();
+	      }
+	    }
+	  }, {
 	    key: '__handleColumnClick__REACT_HOT_LOADER__',
 	    value: function __handleColumnClick__REACT_HOT_LOADER__() {
 	      if (this.props.isOnlyHead || !this.props.dataSort) return;
@@ -15515,12 +15676,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	          children = _props2.children,
 	          caretRender = _props2.caretRender,
 	          className = _props2.className,
-	          isOnlyHead = _props2.isOnlyHead;
+	          isOnlyHead = _props2.isOnlyHead,
+	          style = _props2.thStyle;
 
-	      var thStyle = {
+	      var thStyle = _extends({
 	        textAlign: headerAlign || dataAlign,
 	        display: hidden ? 'none' : null
-	      };
+	      }, style);
 	      if (!isOnlyHead) {
 	        if (sortIndicator) {
 	          defaultCaret = !dataSort ? null : _react2.default.createElement(
@@ -15697,7 +15859,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  sortIndicator: _react.PropTypes.bool,
 	  export: _react.PropTypes.bool,
 	  expandable: _react.PropTypes.bool,
-	  tdAttr: _react.PropTypes.object
+	  tdAttr: _react.PropTypes.object,
+	  tdStyle: _react.PropTypes.object,
+	  thStyle: _react.PropTypes.object
 	};
 
 	TableHeaderColumn.defaultProps = {
@@ -15729,7 +15893,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  filter: undefined,
 	  sortIndicator: true,
 	  expandable: true,
-	  tdAttr: undefined
+	  tdAttr: undefined,
+	  tdStyle: undefined,
+	  thStyle: undefined
 	};
 
 	var _default = TableHeaderColumn;

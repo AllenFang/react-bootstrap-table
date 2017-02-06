@@ -76,12 +76,14 @@ class TableColumn extends Component {
       dataAlign,
       hidden,
       cellEdit,
-      attrs
+      attrs,
+      style
     } = this.props;
 
     const tdStyle = {
       textAlign: dataAlign,
-      display: hidden ? 'none' : null
+      display: hidden ? 'none' : null,
+      ...style
     };
 
     const opts = {};
@@ -113,7 +115,8 @@ TableColumn.propTypes = {
   columnTitle: PropTypes.string,
   children: PropTypes.node,
   onClick: PropTypes.func,
-  attrs: PropTypes.object
+  attrs: PropTypes.object,
+  style: PropTypes.object
 };
 
 TableColumn.defaultProps = {

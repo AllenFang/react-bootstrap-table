@@ -17,6 +17,12 @@ class TableHeaderColumn extends Component {
     this.handleFilter = this.handleFilter.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.reset) {
+      this.cleanFiltered();
+    }
+  }
+
   handleColumnClick = () => {
     if (this.props.isOnlyHead || !this.props.dataSort) return;
     const order = this.props.sort === Const.SORT_DESC ? Const.SORT_ASC : Const.SORT_DESC;
@@ -90,11 +96,13 @@ class TableHeaderColumn extends Component {
       children,
       caretRender,
       className,
-      isOnlyHead
+      isOnlyHead,
+      thStyle: style
     } = this.props;
     const thStyle = {
       textAlign: headerAlign || dataAlign,
-      display: hidden ? 'none' : null
+      display: hidden ? 'none' : null,
+      ...style
     };
     if (!isOnlyHead) {
       if (sortIndicator) {
@@ -253,7 +261,9 @@ TableHeaderColumn.propTypes = {
   sortIndicator: PropTypes.bool,
   export: PropTypes.bool,
   expandable: PropTypes.bool,
-  tdAttr: PropTypes.object
+  tdAttr: PropTypes.object,
+  tdStyle: PropTypes.object,
+  thStyle: PropTypes.object
 };
 
 TableHeaderColumn.defaultProps = {
@@ -285,7 +295,9 @@ TableHeaderColumn.defaultProps = {
   filter: undefined,
   sortIndicator: true,
   expandable: true,
-  tdAttr: undefined
+  tdAttr: undefined,
+  tdStyle: undefined,
+  thStyle: undefined
 };
 
 export default TableHeaderColumn;

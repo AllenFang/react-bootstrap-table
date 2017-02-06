@@ -35,6 +35,7 @@ export default class ExternalMultiSort extends React.Component {
       sortOrder: []
     };
     this.onSortChange = this.onSortChange.bind(this);
+    this.cleanSort = this.cleanSort.bind(this);
   }
 
   onSortChange(name, order) {
@@ -56,6 +57,13 @@ export default class ExternalMultiSort extends React.Component {
     });
   }
 
+  cleanSort() {
+    this.setState({
+      sortName: [],
+      sortOrder: []
+    });
+  }
+
   render() {
     const options = {
       // reassign the multi sort list by an Array
@@ -66,6 +74,7 @@ export default class ExternalMultiSort extends React.Component {
     };
     return (
       <div>
+        <button className='btn ben-default' onClick={ this.cleanSort }>Clean</button>
         <p style={ { color: 'red' } }>sort: sortName={ this.state.sortName }, sortOrder={ this.state.sortOrder }</p>
         <BootstrapTable data={ products } options={ options } multiColumnSort={ 2 }>
           <TableHeaderColumn dataField='id' isKey={ true } dataSort={ true }>Product ID</TableHeaderColumn>

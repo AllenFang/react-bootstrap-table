@@ -1,4 +1,4 @@
-export default {
+const CONST_VAR = {
   SORT_DESC: 'desc',
   SORT_ASC: 'asc',
   SIZE_PER_PAGE: 10,
@@ -42,5 +42,25 @@ export default {
   FILTER_COND_LIKE: 'like',
   EXPAND_BY_ROW: 'row',
   EXPAND_BY_COL: 'column',
-  CANCEL_TOASTR: 'Pressed ESC can cancel'
+  CANCEL_TOASTR: 'Pressed ESC can cancel',
+  REMOTE_SORT: 'sort',
+  REMOTE_PAGE: 'pagination',
+  REMOTE_CELL_EDIT: 'cellEdit',
+  REMOTE_INSERT_ROW: 'insertRow',
+  REMOTE_DROP_ROW: 'dropRow',
+  REMOTE_FILTER: 'filter',
+  REMOTE_SEARCH: 'search',
+  REMOTE_EXPORT_CSV: 'exportCSV'
 };
+
+CONST_VAR.REMOTE = {};
+CONST_VAR.REMOTE[CONST_VAR.REMOTE_SORT] = false;
+CONST_VAR.REMOTE[CONST_VAR.REMOTE_PAGE] = false;
+CONST_VAR.REMOTE[CONST_VAR.REMOTE_CELL_EDIT] = false;
+CONST_VAR.REMOTE[CONST_VAR.REMOTE_INSERT_ROW] = false;
+CONST_VAR.REMOTE[CONST_VAR.REMOTE_DROP_ROW] = false;
+CONST_VAR.REMOTE[CONST_VAR.REMOTE_FILTER] = false;
+CONST_VAR.REMOTE[CONST_VAR.REMOTE_SEARCH] = false;
+CONST_VAR.REMOTE[CONST_VAR.REMOTE_EXPORT_CSV] = false;
+
+export default CONST_VAR;

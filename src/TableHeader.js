@@ -55,7 +55,7 @@ class TableHeader extends Component {
       rows[0] = [ this.renderSelectRowHeader(rowCount + 1, rowKey++) ];
     }
 
-    const { sortIndicator, sortList, onSort } = this.props;
+    const { sortIndicator, sortList, onSort, reset } = this.props;
 
     React.Children.forEach(this.props.children, (elm) => {
       const { dataField, dataSort } = elm.props;
@@ -67,7 +67,7 @@ class TableHeader extends Component {
       }
       if ((rowSpan + rowIndex) === (rowCount + 1)) {
         rows[rowIndex].push(React.cloneElement(
-          elm, { key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false }
+          elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false }
           ));
       } else {
         rows[rowIndex].push(React.cloneElement(
@@ -140,7 +140,8 @@ TableHeader.propTypes = {
   isSelectAll: PropTypes.oneOf([ true, 'indeterminate', false ]),
   sortIndicator: PropTypes.bool,
   customComponent: PropTypes.func,
-  colGroups: PropTypes.element
+  colGroups: PropTypes.element,
+  reset: PropTypes.bool
 };
 
 export default TableHeader;
