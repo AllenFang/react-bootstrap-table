@@ -29,10 +29,10 @@ export default class FullyCustomSizePerPageDropDown extends React.Component {
     return (
       <div className='btn-group'>
         {
-          [ 10, 25, 30 ].map(n => {
+          [ 10, 25, 30 ].map((n, idx) => {
             const isActive = (n === props.currSizePerPage) ? 'active' : null;
             return (
-              <button type='button' className={ `btn btn-info ${isActive}` } onClick={ () => props.changeSizePerPage(n) }>{ n }</button>
+              <button key={ idx } type='button' className={ `btn btn-info ${isActive}` } onClick={ () => props.changeSizePerPage(n) }>{ n }</button>
             );
           })
         }
