@@ -65,6 +65,7 @@ class TableBody extends Component {
                 format={ column.format ? format : false }
                 key={ i }
                 blurToSave={ cellEdit.blurToSave }
+                onTab={ this.handleEditCell }
                 rowIndex={ r }
                 colIndex={ i }
                 row={ data }
@@ -232,7 +233,6 @@ class TableBody extends Component {
     } = this.props;
     const selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
     columnIndex = this._isSelectRowDefined() ? columnIndex - 1 : columnIndex;
-
     if (expandableRow &&
       selectRowAndExpand &&
       (expandBy === Const.EXPAND_BY_ROW ||
@@ -251,12 +251,21 @@ class TableBody extends Component {
     }
   }
 
-  handleEditCell = (rowIndex, columnIndex, e) => {
+  handleEditCell = (rowIndex, columnIndex, action, e) => {
     if (this._isSelectRowDefined()) {
       columnIndex--;
       if (this.props.selectRow.hideSelectColumn) columnIndex++;
     }
     rowIndex--;
+
+    if (action === 'tab') {
+      this.handleCompleteEditCell(e.target.value, rowIndex, columnIndex - 1);
+      if (columnIndex >= this.props.columns.length) {
+        rowIndex = rowIndex + 1;
+        columnIndex = 1;
+      }
+    }
+
     const stateObj = {
       currEditCell: {
         rid: rowIndex,
