@@ -13,6 +13,7 @@ class TableColumn extends Component {
       || this.props.className !== nextProps.className
       || this.props.hidden !== nextProps.hidden
       || this.props.dataAlign !== nextProps.dataAlign
+      || this.props.isFocus !== nextProps.isFocus
       || typeof children !== typeof nextProps.children
       || ('' + this.props.onEdit).toString() !== ('' + nextProps.onEdit).toString();
 
@@ -68,23 +69,34 @@ class TableColumn extends Component {
     }
   }
 
+  handleKeyDown = e => {
+    if (this.props.keyBoardNav) {
+      this.onKeyDown(e);
+    }
+  }
+
   render() {
     const {
       children,
       columnTitle,
-      className,
       dataAlign,
       hidden,
       cellEdit,
       attrs,
-      style
+      style,
+      isFocus,
+      keyBoardNav
     } = this.props;
+
+    let { className } = this.props;
 
     const tdStyle = {
       textAlign: dataAlign,
       display: hidden ? 'none' : null,
       ...style
     };
+
+    className = isFocus ? `${className} default-focus-cell` : className;
 
     const opts = {};
 
@@ -96,6 +108,10 @@ class TableColumn extends Component {
       } else {
         opts.onClick = this.handleCellClick;
       }
+    }
+
+    if (keyBoardNav && isFocus) {
+      opts.onKeyDown = this.handleKeyDown;
     }
     return (
       <td style={ tdStyle }
@@ -116,12 +132,17 @@ TableColumn.propTypes = {
   children: PropTypes.node,
   onClick: PropTypes.func,
   attrs: PropTypes.object,
-  style: PropTypes.object
+  style: PropTypes.object,
+  isFocus: PropTypes.bool,
+  onKeyDown: PropTypes.func,
+  keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ])
 };
 
 TableColumn.defaultProps = {
   dataAlign: 'left',
   hidden: false,
-  className: ''
+  className: '',
+  isFocus: false,
+  keyBoardNav: false
 };
 export default TableColumn;

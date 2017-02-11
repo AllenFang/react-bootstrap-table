@@ -20,7 +20,9 @@ class TableBody extends Component {
   }
 
   render() {
-    const { cellEdit, beforeShowError } = this.props;
+    const { cellEdit, beforeShowError, x, y, keyBoardNav } = this.props;
+    console.log(x);
+    console.log(y);
     const tableClasses = classSet('table', {
       'table-striped': this.props.striped,
       'table-bordered': this.props.bordered,
@@ -42,6 +44,7 @@ class TableBody extends Component {
     const tableRows = this.props.data.map(function(data, r) {
       const tableColumns = this.props.columns.map(function(column, i) {
         const fieldValue = data[column.name];
+        const isFocusCell = r === x && i === y;
         if (column.name !== this.props.keyField && // Key field can't be edit
           column.editable && // column is editable? default is true, user can set it false
           this.state.currEditCell !== null &&
@@ -108,7 +111,10 @@ class TableBody extends Component {
               width={ column.width }
               onClick={ this.handleClickCell }
               attrs={ column.attrs }
-              style={ column.style }>
+              style={ column.style }
+              isFocus={ isFocusCell }
+              keyBoardNav={ keyBoardNav }
+              onKeyDown={ this.handleCellKeyDown }>
               { columnChild }
             </TableColumn>
           );
@@ -179,6 +185,22 @@ class TableBody extends Component {
     );
   }
 
+  handleCellKeyDown = e => {
+    let offset;
+    if (e.keyCode === 33) {
+      offset = { x: 0, y: -1 };
+    } else if (e.keyCode === 34) {
+      offset = { x: 0, y: 1 };
+    } else if (e.keyCode === 91) {
+      offset = { x: -1, y: 0 };
+    } else if (e.keyCode === 92) {
+      offset = { x: 1, y: 0 };
+    }
+    if (offset && this.props.keyBoardNav) {
+      this.props.onNavigateCell(offset);
+    }
+  }
+
   handleRowMouseOut = (rowIndex, event) => {
     const targetRow = this.props.data[rowIndex];
     this.props.onRowMouseOut(targetRow, event);
@@ -189,8 +211,8 @@ class TableBody extends Component {
     this.props.onRowMouseOver(targetRow, event);
   }
 
-  handleRowClick = rowIndex => {
-    this.props.onRowClick(this.props.data[rowIndex - 1]);
+  handleRowClick = (rowIndex, cellIndex) => {
+    this.props.onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex);
   }
 
   handleRowDoubleClick = rowIndex => {
@@ -350,6 +372,10 @@ TableBody.propTypes = {
   expandBy: PropTypes.string,
   expanding: PropTypes.array,
   onExpand: PropTypes.func,
-  beforeShowError: PropTypes.func
+  beforeShowError: PropTypes.func,
+  keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
+  x: PropTypes.bool,
+  y: PropTypes.bool,
+  onNavigateCell: PropTypes.func
 };
 export default TableBody;

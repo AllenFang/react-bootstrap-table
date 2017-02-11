@@ -47,7 +47,9 @@ class BootstrapTable extends Component {
       expanding: this.props.options.expanding || [],
       sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
       selectedRowKeys: this.store.getSelectedRowKeys(),
-      reset: false
+      reset: false,
+      x: this.props.keyBoardNav ? 0 : -1,
+      y: this.props.keyBoardNav ? 0 : -1
     };
   }
 
@@ -391,7 +393,11 @@ class BootstrapTable extends Component {
             withoutNoDataText={ this.props.options.withoutNoDataText }
             expanding={ this.state.expanding }
             onExpand={ this.handleExpandRow }
-            beforeShowError={ this.props.options.beforeShowError } />
+            beforeShowError={ this.props.options.beforeShowError }
+            keyBoardNav={ this.props.keyBoardNav }
+            onNavigateCell={ this.handleNavigateCell }
+            x={ this.state.x }
+            y={ this.state.y } />
         </div>
         { tableFilter }
         { showPaginationOnBottom ? pagination : null }
@@ -512,9 +518,26 @@ class BootstrapTable extends Component {
     }
   }
 
-  handleRowClick = row => {
+  handleNavigateCell = ({ x: offSetX, y: offSetY }) => {
+    // let { x, y, currPage } = this.state;
+    // x += offSetX;
+    // y += offSetY;
+
+    // if (x >= this.state.sizePerPage) {
+    //   currPage += 1;
+    // } else if (x !!!!!!)
+  }
+
+  handleRowClick = (row, rowIndex, cellIndex) => {
     if (this.props.options.onRowClick) {
       this.props.options.onRowClick(row);
+    }
+    if (this.props.keyBoardNav) {
+      this.setState({
+        x: rowIndex,
+        y: cellIndex,
+        reset: false
+      });
     }
   }
 
@@ -1160,6 +1183,7 @@ BootstrapTable.propTypes = {
   condensed: PropTypes.bool,
   pagination: PropTypes.bool,
   printable: PropTypes.bool,
+  keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
   searchPlaceholder: PropTypes.string,
   selectRow: PropTypes.shape({
     mode: PropTypes.oneOf([
@@ -1295,6 +1319,7 @@ BootstrapTable.defaultProps = {
   condensed: false,
   pagination: false,
   printable: false,
+  keyBoardNav: false,
   searchPlaceholder: undefined,
   selectRow: {
     mode: Const.ROW_SELECT_NONE,
