@@ -10,8 +10,8 @@ class TableRow extends Component {
 
   rowClick = e => {
     const rowIndex = this.props.index + 1;
-    if (this.props.onRowClick) this.props.onRowClick(rowIndex);
     const cellIndex = e.target.cellIndex;
+    if (this.props.onRowClick) this.props.onRowClick(rowIndex, cellIndex);
     const { selectRow, unselectableRow, isSelected, onSelectRow, onExpandRow } = this.props;
     if (selectRow) {
       if (selectRow.clickToSelect && !unselectableRow) {
@@ -81,21 +81,13 @@ class TableRow extends Component {
       )
     };
 
-    if (this.props.selectRow && (this.props.selectRow.clickToSelect ||
-      this.props.selectRow.clickToSelectAndEditCell) ||
-      (this.props.onRowClick || this.props.onRowDoubleClick)) {
-      return (
-        <tr { ...trCss }
-            onMouseOver={ this.rowMouseOver }
-            onMouseOut={ this.rowMouseOut }
-            onClick={ this.rowClick }
-            onDoubleClick={ this.rowDoubleClick }>{ this.props.children }</tr>
-      );
-    } else {
-      return (
-        <tr { ...trCss }>{ this.props.children }</tr>
-      );
-    }
+    return (
+      <tr { ...trCss }
+          onMouseOver={ this.rowMouseOver }
+          onMouseOut={ this.rowMouseOut }
+          onClick={ this.rowClick }
+          onDoubleClick={ this.rowDoubleClick }>{ this.props.children }</tr>
+    );
   }
 }
 TableRow.propTypes = {
