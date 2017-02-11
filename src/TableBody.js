@@ -21,8 +21,6 @@ class TableBody extends Component {
 
   render() {
     const { cellEdit, beforeShowError, x, y, keyBoardNav } = this.props;
-    console.log(x);
-    console.log(y);
     const tableClasses = classSet('table', {
       'table-striped': this.props.striped,
       'table-bordered': this.props.bordered,
@@ -40,11 +38,11 @@ class TableBody extends Component {
     if (isSelectRowDefined && !this.props.selectRow.hideSelectColumn) {
       expandColSpan += 1;
     }
-
+    let tabIndex = 1;
     const tableRows = this.props.data.map(function(data, r) {
       const tableColumns = this.props.columns.map(function(column, i) {
         const fieldValue = data[column.name];
-        const isFocusCell = r === x && i === y;
+        const isFocusCell = r === y && i === x;
         if (column.name !== this.props.keyField && // Key field can't be edit
           column.editable && // column is editable? default is true, user can set it false
           this.state.currEditCell !== null &&
@@ -112,6 +110,7 @@ class TableBody extends Component {
               onClick={ this.handleClickCell }
               attrs={ column.attrs }
               style={ column.style }
+              tabIndex={ (tabIndex++) + '' }
               isFocus={ isFocusCell }
               keyBoardNav={ keyBoardNav }
               onKeyDown={ this.handleCellKeyDown }>
@@ -186,15 +185,16 @@ class TableBody extends Component {
   }
 
   handleCellKeyDown = e => {
+    e.preventDefault();
     let offset;
-    if (e.keyCode === 33) {
-      offset = { x: 0, y: -1 };
-    } else if (e.keyCode === 34) {
-      offset = { x: 0, y: 1 };
-    } else if (e.keyCode === 91) {
+    if (e.keyCode === 37) {
       offset = { x: -1, y: 0 };
-    } else if (e.keyCode === 92) {
+    } else if (e.keyCode === 38) {
+      offset = { x: 0, y: -1 };
+    } else if (e.keyCode === 39 || e.keyCode === 9) {
       offset = { x: 1, y: 0 };
+    } else if (e.keyCode === 40) {
+      offset = { x: 0, y: 1 };
     }
     if (offset && this.props.keyBoardNav) {
       this.props.onNavigateCell(offset);
@@ -374,8 +374,8 @@ TableBody.propTypes = {
   onExpand: PropTypes.func,
   beforeShowError: PropTypes.func,
   keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
-  x: PropTypes.bool,
-  y: PropTypes.bool,
+  x: PropTypes.number,
+  y: PropTypes.number,
   onNavigateCell: PropTypes.func
 };
 export default TableBody;

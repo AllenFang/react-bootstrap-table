@@ -519,13 +519,64 @@ class BootstrapTable extends Component {
   }
 
   handleNavigateCell = ({ x: offSetX, y: offSetY }) => {
-    // let { x, y, currPage } = this.state;
-    // x += offSetX;
-    // y += offSetY;
+    let { x, y, currPage } = this.state;
+    x += offSetX;
+    y += offSetY;
+    // currPage += 1;
+    // console.log(currPage);
 
-    // if (x >= this.state.sizePerPage) {
-    //   currPage += 1;
-    // } else if (x !!!!!!)
+    const columns = this.store.getColInfos();
+    const visibleRowSize = this.state.data.length;
+    const visibleColumnSize = Object.keys(columns).filter(k => !columns[k].hidden).length;
+
+    if (y >= visibleRowSize) {
+      currPage++;
+      const lastPage = this.refs.pagination.getLastPage();
+      if (currPage <= lastPage) {
+        this.handlePaginationData(currPage, this.state.sizePerPage);
+      } else {
+        return;
+      }
+      y = 0;
+    } else if (y < 0) {
+      currPage--;
+      if (currPage > 0) {
+        this.handlePaginationData(currPage, this.state.sizePerPage);
+      } else {
+        return;
+      }
+      y = visibleRowSize - 1;
+    } else if (x >= visibleColumnSize) {
+      if ((y + 1) === visibleRowSize) {
+        currPage++;
+        const lastPage = this.refs.pagination.getLastPage();
+        if (currPage <= lastPage) {
+          this.handlePaginationData(currPage, this.state.sizePerPage);
+        } else {
+          return;
+        }
+        y = 0;
+      } else {
+        y++;
+      }
+      x = 0;
+    } else if (x < 0) {
+      x = visibleColumnSize - 1;
+      if (y === 0) {
+        currPage--;
+        if (currPage > 0) {
+          this.handlePaginationData(currPage, this.state.sizePerPage);
+        } else {
+          return;
+        }
+        y = this.state.sizePerPage - 1;
+      } else {
+        y--;
+      }
+    }
+    this.setState({
+      x, y, currPage, reset: false
+    });
   }
 
   handleRowClick = (row, rowIndex, cellIndex) => {
@@ -534,8 +585,8 @@ class BootstrapTable extends Component {
     }
     if (this.props.keyBoardNav) {
       this.setState({
-        x: rowIndex,
-        y: cellIndex,
+        x: cellIndex,
+        y: rowIndex,
         reset: false
       });
     }

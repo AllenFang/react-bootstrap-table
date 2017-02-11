@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import Const from './Const';
 
 class TableColumn extends Component {
@@ -46,6 +47,24 @@ class TableColumn extends Component {
     }
   }
 
+  componentDidMount() {
+    const dom = ReactDOM.findDOMNode(this);
+    if (this.props.isFocus) {
+      dom.focus();
+    } else {
+      dom.blur();
+    }
+  }
+
+  componentDidUpdate() {
+    const dom = ReactDOM.findDOMNode(this);
+    if (this.props.isFocus) {
+      dom.focus();
+    } else {
+      dom.blur();
+    }
+  }
+
   handleCellEdit = e => {
     if (this.props.cellEdit.mode === Const.CELL_EDIT_DBCLICK) {
       if (document.selection && document.selection.empty) {
@@ -71,7 +90,7 @@ class TableColumn extends Component {
 
   handleKeyDown = e => {
     if (this.props.keyBoardNav) {
-      this.onKeyDown(e);
+      this.props.onKeyDown(e);
     }
   }
 
@@ -85,7 +104,8 @@ class TableColumn extends Component {
       attrs,
       style,
       isFocus,
-      keyBoardNav
+      keyBoardNav,
+      tabIndex
     } = this.props;
 
     let { className } = this.props;
@@ -114,7 +134,7 @@ class TableColumn extends Component {
       opts.onKeyDown = this.handleKeyDown;
     }
     return (
-      <td style={ tdStyle }
+      <td tabIndex={ tabIndex } style={ tdStyle }
           title={ columnTitle }
           className={ className }
           { ...opts } { ...attrs }>
@@ -135,6 +155,7 @@ TableColumn.propTypes = {
   style: PropTypes.object,
   isFocus: PropTypes.bool,
   onKeyDown: PropTypes.func,
+  tabIndex: PropTypes.string,
   keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ])
 };
 
