@@ -34,6 +34,7 @@ class TableBody extends Component {
     const tableHeader = Utils.renderColGroup(this.props.columns, this.props.selectRow, 'header');
     const inputType = this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
     const CustomComponent = this.props.selectRow.customComponent;
+    const enableKeyBoardNav = (keyBoardNav === true || typeof keyBoardNav === 'object');
     let expandColSpan = this.props.columns.filter(col => !col.hidden).length;
     if (isSelectRowDefined && !this.props.selectRow.hideSelectColumn) {
       expandColSpan += 1;
@@ -112,7 +113,7 @@ class TableBody extends Component {
               style={ column.style }
               tabIndex={ (tabIndex++) + '' }
               isFocus={ isFocusCell }
-              keyBoardNav={ keyBoardNav }
+              keyBoardNav={ enableKeyBoardNav }
               onKeyDown={ this.handleCellKeyDown }>
               { columnChild }
             </TableColumn>
@@ -212,7 +213,9 @@ class TableBody extends Component {
   }
 
   handleRowClick = (rowIndex, cellIndex) => {
-    this.props.onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex);
+    const { onRowClick } = this.props;
+    onRowClick(this.props.data[rowIndex - 1],
+      rowIndex - 1, this._isSelectRowDefined() ? cellIndex - 1 : cellIndex);
   }
 
   handleRowDoubleClick = rowIndex => {
