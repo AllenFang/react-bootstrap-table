@@ -195,7 +195,7 @@ class TableBody extends Component {
     );
   }
 
-  handleCellKeyDown = e => {
+  handleCellKeyDown = (e, lastEditCell) => {
     e.preventDefault();
     let offset;
     if (e.keyCode === 37) {
@@ -204,6 +204,12 @@ class TableBody extends Component {
       offset = { x: 0, y: -1 };
     } else if (e.keyCode === 39 || e.keyCode === 9) {
       offset = { x: 1, y: 0 };
+      if (e.keyCode === 9 && lastEditCell) {
+        offset = {
+          ...offset,
+          lastEditCell
+        };
+      }
     } else if (e.keyCode === 40) {
       offset = { x: 0, y: 1 };
     }
@@ -298,6 +304,9 @@ class TableBody extends Component {
       if (columnIndex >= this.props.columns.length) {
         rowIndex = rowIndex + 1;
         columnIndex = 1;
+        this.handleCellKeyDown(e, true);
+      } else {
+        this.handleCellKeyDown(e);
       }
     }
 

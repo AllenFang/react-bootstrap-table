@@ -518,7 +518,7 @@ class BootstrapTable extends Component {
     }
   }
 
-  handleNavigateCell = ({ x: offSetX, y: offSetY }) => {
+  handleNavigateCell = ({ x: offSetX, y: offSetY, lastEditCell }) => {
     const { pagination } = this.props;
     let { x, y, currPage } = this.state;
     x += offSetX;
@@ -560,7 +560,7 @@ class BootstrapTable extends Component {
       } else {
         y++;
       }
-      x = 0;
+      x = lastEditCell ? 1 : 0;
     } else if (x < 0) {
       x = visibleColumnSize - 1;
       if (y === 0) {
