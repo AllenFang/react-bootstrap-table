@@ -223,6 +223,10 @@ class PaginationList extends Component {
       );
   }
 
+  getLastPage() {
+    return this.lastPage;
+  }
+
   getPages() {
     let pages;
     let endPage = this.totalPages;

@@ -47,7 +47,9 @@ class BootstrapTable extends Component {
       expanding: this.props.options.expanding || [],
       sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
       selectedRowKeys: this.store.getSelectedRowKeys(),
-      reset: false
+      reset: false,
+      x: this.props.keyBoardNav ? 0 : -1,
+      y: this.props.keyBoardNav ? 0 : -1
     };
   }
 
@@ -391,7 +393,11 @@ class BootstrapTable extends Component {
             withoutNoDataText={ this.props.options.withoutNoDataText }
             expanding={ this.state.expanding }
             onExpand={ this.handleExpandRow }
-            beforeShowError={ this.props.options.beforeShowError } />
+            beforeShowError={ this.props.options.beforeShowError }
+            keyBoardNav={ this.props.keyBoardNav }
+            onNavigateCell={ this.handleNavigateCell }
+            x={ this.state.x }
+            y={ this.state.y } />
         </div>
         { tableFilter }
         { showPaginationOnBottom ? pagination : null }
@@ -512,9 +518,83 @@ class BootstrapTable extends Component {
     }
   }
 
-  handleRowClick = row => {
-    if (this.props.options.onRowClick) {
-      this.props.options.onRowClick(row);
+  handleNavigateCell = ({ x: offSetX, y: offSetY, lastEditCell }) => {
+    const { pagination } = this.props;
+    let { x, y, currPage } = this.state;
+    x += offSetX;
+    y += offSetY;
+    // currPage += 1;
+    // console.log(currPage);
+
+    const columns = this.store.getColInfos();
+    const visibleRowSize = this.state.data.length;
+    const visibleColumnSize = Object.keys(columns).filter(k => !columns[k].hidden).length;
+
+    if (y >= visibleRowSize) {
+      currPage++;
+      const lastPage = pagination ? this.refs.pagination.getLastPage() : -1;
+      if (currPage <= lastPage) {
+        this.handlePaginationData(currPage, this.state.sizePerPage);
+      } else {
+        return;
+      }
+      y = 0;
+    } else if (y < 0) {
+      currPage--;
+      if (currPage > 0) {
+        this.handlePaginationData(currPage, this.state.sizePerPage);
+      } else {
+        return;
+      }
+      y = visibleRowSize - 1;
+    } else if (x >= visibleColumnSize) {
+      if ((y + 1) === visibleRowSize) {
+        currPage++;
+        const lastPage = pagination ? this.refs.pagination.getLastPage() : -1;
+        if (currPage <= lastPage) {
+          this.handlePaginationData(currPage, this.state.sizePerPage);
+        } else {
+          return;
+        }
+        y = 0;
+      } else {
+        y++;
+      }
+      x = lastEditCell ? 1 : 0;
+    } else if (x < 0) {
+      x = visibleColumnSize - 1;
+      if (y === 0) {
+        currPage--;
+        if (currPage > 0) {
+          this.handlePaginationData(currPage, this.state.sizePerPage);
+        } else {
+          return;
+        }
+        y = this.state.sizePerPage - 1;
+      } else {
+        y--;
+      }
+    }
+    this.setState({
+      x, y, currPage, reset: false
+    });
+  }
+
+  handleRowClick = (row, rowIndex, cellIndex) => {
+    const { options, keyBoardNav } = this.props;
+    if (options.onRowClick) {
+      options.onRowClick(row);
+    }
+    if (keyBoardNav) {
+      let { clickToNav } = typeof keyBoardNav === 'object' ? keyBoardNav : {};
+      clickToNav = clickToNav === false ? clickToNav : true;
+      if (clickToNav) {
+        this.setState({
+          x: cellIndex,
+          y: rowIndex,
+          reset: false
+        });
+      }
     }
   }
 
@@ -1160,6 +1240,7 @@ BootstrapTable.propTypes = {
   condensed: PropTypes.bool,
   pagination: PropTypes.bool,
   printable: PropTypes.bool,
+  keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
   searchPlaceholder: PropTypes.string,
   selectRow: PropTypes.shape({
     mode: PropTypes.oneOf([
@@ -1295,6 +1376,7 @@ BootstrapTable.defaultProps = {
   condensed: false,
   pagination: false,
   printable: false,
+  keyBoardNav: false,
   searchPlaceholder: undefined,
   selectRow: {
     mode: Const.ROW_SELECT_NONE,

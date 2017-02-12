@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import Const from './Const';
 
 class TableColumn extends Component {
@@ -13,6 +14,7 @@ class TableColumn extends Component {
       || this.props.className !== nextProps.className
       || this.props.hidden !== nextProps.hidden
       || this.props.dataAlign !== nextProps.dataAlign
+      || this.props.isFocus !== nextProps.isFocus
       || typeof children !== typeof nextProps.children
       || ('' + this.props.onEdit).toString() !== ('' + nextProps.onEdit).toString();
 
@@ -45,6 +47,24 @@ class TableColumn extends Component {
     }
   }
 
+  componentDidMount() {
+    const dom = ReactDOM.findDOMNode(this);
+    if (this.props.isFocus) {
+      dom.focus();
+    } else {
+      dom.blur();
+    }
+  }
+
+  componentDidUpdate() {
+    const dom = ReactDOM.findDOMNode(this);
+    if (this.props.isFocus) {
+      dom.focus();
+    } else {
+      dom.blur();
+    }
+  }
+
   handleCellEdit = e => {
     if (this.props.cellEdit.mode === Const.CELL_EDIT_DBCLICK) {
       if (document.selection && document.selection.empty) {
@@ -68,19 +88,31 @@ class TableColumn extends Component {
     }
   }
 
+  handleKeyDown = e => {
+    if (this.props.keyBoardNav) {
+      this.props.onKeyDown(e);
+    }
+  }
+
   render() {
     const {
       children,
       columnTitle,
-      className,
       dataAlign,
       hidden,
       cellEdit,
       attrs,
-      style
+      style,
+      isFocus,
+      keyBoardNav,
+      tabIndex,
+      customNavStyle,
+      row
     } = this.props;
 
-    const tdStyle = {
+    let { className } = this.props;
+
+    let tdStyle = {
       textAlign: dataAlign,
       display: hidden ? 'none' : null,
       ...style
@@ -97,8 +129,25 @@ class TableColumn extends Component {
         opts.onClick = this.handleCellClick;
       }
     }
+
+    if (keyBoardNav && isFocus) {
+      opts.onKeyDown = this.handleKeyDown;
+    }
+
+    if (isFocus) {
+      if (customNavStyle) {
+        const cusmtStyle = typeof customNavStyle === 'function' ?
+          customNavStyle(children, row) : customNavStyle;
+        tdStyle = {
+          ...tdStyle,
+          ...cusmtStyle
+        };
+      } else {
+        className = `${className} default-focus-cell`;
+      }
+    }
     return (
-      <td style={ tdStyle }
+      <td tabIndex={ tabIndex } style={ tdStyle }
           title={ columnTitle }
           className={ className }
           { ...opts } { ...attrs }>
@@ -116,12 +165,20 @@ TableColumn.propTypes = {
   children: PropTypes.node,
   onClick: PropTypes.func,
   attrs: PropTypes.object,
-  style: PropTypes.object
+  style: PropTypes.object,
+  isFocus: PropTypes.bool,
+  onKeyDown: PropTypes.func,
+  tabIndex: PropTypes.string,
+  keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
+  customNavStyle: PropTypes.oneOfType([ PropTypes.func, PropTypes.object ]),
+  row: PropTypes.any  /* only used on custom styling for navigation */
 };
 
 TableColumn.defaultProps = {
   dataAlign: 'left',
   hidden: false,
-  className: ''
+  className: '',
+  isFocus: false,
+  keyBoardNav: false
 };
 export default TableColumn;
