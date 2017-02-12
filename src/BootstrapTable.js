@@ -581,15 +581,20 @@ class BootstrapTable extends Component {
   }
 
   handleRowClick = (row, rowIndex, cellIndex) => {
-    if (this.props.options.onRowClick) {
-      this.props.options.onRowClick(row);
+    const { options, keyBoardNav } = this.props;
+    if (options.onRowClick) {
+      options.onRowClick(row);
     }
-    if (this.props.keyBoardNav) {
-      this.setState({
-        x: cellIndex,
-        y: rowIndex,
-        reset: false
-      });
+    if (keyBoardNav) {
+      let { clickToNav } = typeof keyBoardNav === 'object' ? keyBoardNav : {};
+      clickToNav = clickToNav === false ? clickToNav : true;
+      if (clickToNav) {
+        this.setState({
+          x: cellIndex,
+          y: rowIndex,
+          reset: false
+        });
+      }
     }
   }
 

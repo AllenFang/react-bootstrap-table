@@ -53,6 +53,7 @@
 
 .react-bs-table .table-bordered {
     border: 0;
+    outline: none !important;
 }
 
 .react-bs-table .table-bordered > thead > tr > th,
@@ -60,8 +61,12 @@
   border-bottom-width: 2px;
 }
 
+.react-bs-table .table-bordered > tbody > tr > td {
+  outline: none !important;
+}
+
 .react-bs-table .table-bordered > tbody > tr > td.default-focus-cell {
-  outline: 3px solid #3366FF;
+  outline: 3px solid #3366FF !important;;
   outline-offset: -1px;
 }
 
