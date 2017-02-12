@@ -163,6 +163,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -257,6 +259,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.__handleRowMouseOver__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+	    _this.handleNavigateCell = function () {
+	      return _this.__handleNavigateCell__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
 	    _this.handleRowClick = function () {
 	      return _this.__handleRowClick__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
@@ -339,7 +345,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      expanding: _this.props.options.expanding || [],
 	      sizePerPage: _this.props.options.sizePerPage || _Const2.default.SIZE_PER_PAGE_LIST[0],
 	      selectedRowKeys: _this.store.getSelectedRowKeys(),
-	      reset: false
+	      reset: false,
+	      x: _this.props.keyBoardNav ? 0 : -1,
+	      y: _this.props.keyBoardNav ? 0 : -1
 	    };
 	    return _this;
 	  }
@@ -722,7 +730,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            withoutNoDataText: this.props.options.withoutNoDataText,
 	            expanding: this.state.expanding,
 	            onExpand: this.handleExpandRow,
-	            beforeShowError: this.props.options.beforeShowError })
+	            beforeShowError: this.props.options.beforeShowError,
+	            keyBoardNav: this.props.keyBoardNav,
+	            onNavigateCell: this.handleNavigateCell,
+	            x: this.state.x,
+	            y: this.state.y })
 	        ),
 	        tableFilter,
 	        showPaginationOnBottom ? pagination : null
@@ -852,10 +864,99 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  }, {
+	    key: '__handleNavigateCell__REACT_HOT_LOADER__',
+	    value: function __handleNavigateCell__REACT_HOT_LOADER__(_ref4) {
+	      var offSetX = _ref4.x,
+	          offSetY = _ref4.y,
+	          lastEditCell = _ref4.lastEditCell;
+	      var pagination = this.props.pagination;
+	      var _state = this.state,
+	          x = _state.x,
+	          y = _state.y,
+	          currPage = _state.currPage;
+
+	      x += offSetX;
+	      y += offSetY;
+	      // currPage += 1;
+	      // console.log(currPage);
+
+	      var columns = this.store.getColInfos();
+	      var visibleRowSize = this.state.data.length;
+	      var visibleColumnSize = Object.keys(columns).filter(function (k) {
+	        return !columns[k].hidden;
+	      }).length;
+
+	      if (y >= visibleRowSize) {
+	        currPage++;
+	        var lastPage = pagination ? this.refs.pagination.getLastPage() : -1;
+	        if (currPage <= lastPage) {
+	          this.handlePaginationData(currPage, this.state.sizePerPage);
+	        } else {
+	          return;
+	        }
+	        y = 0;
+	      } else if (y < 0) {
+	        currPage--;
+	        if (currPage > 0) {
+	          this.handlePaginationData(currPage, this.state.sizePerPage);
+	        } else {
+	          return;
+	        }
+	        y = visibleRowSize - 1;
+	      } else if (x >= visibleColumnSize) {
+	        if (y + 1 === visibleRowSize) {
+	          currPage++;
+	          var _lastPage = pagination ? this.refs.pagination.getLastPage() : -1;
+	          if (currPage <= _lastPage) {
+	            this.handlePaginationData(currPage, this.state.sizePerPage);
+	          } else {
+	            return;
+	          }
+	          y = 0;
+	        } else {
+	          y++;
+	        }
+	        x = lastEditCell ? 1 : 0;
+	      } else if (x < 0) {
+	        x = visibleColumnSize - 1;
+	        if (y === 0) {
+	          currPage--;
+	          if (currPage > 0) {
+	            this.handlePaginationData(currPage, this.state.sizePerPage);
+	          } else {
+	            return;
+	          }
+	          y = this.state.sizePerPage - 1;
+	        } else {
+	          y--;
+	        }
+	      }
+	      this.setState({
+	        x: x, y: y, currPage: currPage, reset: false
+	      });
+	    }
+	  }, {
 	    key: '__handleRowClick__REACT_HOT_LOADER__',
-	    value: function __handleRowClick__REACT_HOT_LOADER__(row) {
-	      if (this.props.options.onRowClick) {
-	        this.props.options.onRowClick(row);
+	    value: function __handleRowClick__REACT_HOT_LOADER__(row, rowIndex, cellIndex) {
+	      var _props2 = this.props,
+	          options = _props2.options,
+	          keyBoardNav = _props2.keyBoardNav;
+
+	      if (options.onRowClick) {
+	        options.onRowClick(row);
+	      }
+	      if (keyBoardNav) {
+	        var _ref5 = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav : {},
+	            clickToNav = _ref5.clickToNav;
+
+	        clickToNav = clickToNav === false ? clickToNav : true;
+	        if (clickToNav) {
+	          this.setState({
+	            x: cellIndex,
+	            y: rowIndex,
+	            reset: false
+	          });
+	        }
 	      }
 	    }
 	  }, {
@@ -1308,12 +1409,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'renderToolBar',
 	    value: function renderToolBar() {
-	      var _props2 = this.props,
-	          selectRow = _props2.selectRow,
-	          insertRow = _props2.insertRow,
-	          deleteRow = _props2.deleteRow,
-	          search = _props2.search,
-	          children = _props2.children;
+	      var _props3 = this.props,
+	          selectRow = _props3.selectRow,
+	          insertRow = _props3.insertRow,
+	          deleteRow = _props3.deleteRow,
+	          search = _props3.search,
+	          children = _props3.children;
 
 	      var enableShowOnlySelected = selectRow && selectRow.showOnlySelected;
 	      if (enableShowOnlySelected || insertRow || deleteRow || search || this.props.exportCSV) {
@@ -1549,6 +1650,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  condensed: _react.PropTypes.bool,
 	  pagination: _react.PropTypes.bool,
 	  printable: _react.PropTypes.bool,
+	  keyBoardNav: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.object]),
 	  searchPlaceholder: _react.PropTypes.string,
 	  selectRow: _react.PropTypes.shape({
 	    mode: _react.PropTypes.oneOf([_Const2.default.ROW_SELECT_NONE, _Const2.default.ROW_SELECT_SINGLE, _Const2.default.ROW_SELECT_MULTI]),
@@ -1676,6 +1778,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  condensed: false,
 	  pagination: false,
 	  printable: false,
+	  keyBoardNav: false,
 	  searchPlaceholder: undefined,
 	  selectRow: {
 	    mode: _Const2.default.ROW_SELECT_NONE,
@@ -2293,6 +2396,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(2);
@@ -2346,6 +2453,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _classCallCheck(this, TableBody);
 
 	    var _this = _possibleConstructorReturn(this, (TableBody.__proto__ || Object.getPrototypeOf(TableBody)).call(this, props));
+
+	    _this.handleCellKeyDown = function () {
+	      return _this.__handleCellKeyDown__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
 
 	    _this.handleRowMouseOut = function () {
 	      return _this.__handleRowMouseOut__REACT_HOT_LOADER__.apply(_this, arguments);
@@ -2402,7 +2513,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function render() {
 	      var _props = this.props,
 	          cellEdit = _props.cellEdit,
-	          beforeShowError = _props.beforeShowError;
+	          beforeShowError = _props.beforeShowError,
+	          x = _props.x,
+	          y = _props.y,
+	          keyBoardNav = _props.keyBoardNav;
 
 	      var tableClasses = (0, _classnames2.default)('table', {
 	        'table-striped': this.props.striped,
@@ -2417,16 +2531,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var tableHeader = _util2.default.renderColGroup(this.props.columns, this.props.selectRow, 'header');
 	      var inputType = this.props.selectRow.mode === _Const2.default.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
 	      var CustomComponent = this.props.selectRow.customComponent;
+	      var enableKeyBoardNav = keyBoardNav === true || (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object';
+	      var customEditAndNavStyle = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.customStyleOnEditCell : null;
+	      var customNavStyle = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.customStyle : null;
 	      var expandColSpan = this.props.columns.filter(function (col) {
 	        return !col.hidden;
 	      }).length;
 	      if (isSelectRowDefined && !this.props.selectRow.hideSelectColumn) {
 	        expandColSpan += 1;
 	      }
-
+	      var tabIndex = 1;
 	      var tableRows = this.props.data.map(function (data, r) {
 	        var tableColumns = this.props.columns.map(function (column, i) {
 	          var fieldValue = data[column.name];
+	          var isFocusCell = r === y && i === x;
 	          if (column.name !== this.props.keyField && // Key field can't be edit
 	          column.editable && // column is editable? default is true, user can set it false
 	          this.state.currEditCell !== null && this.state.currEditCell.rid === r && this.state.currEditCell.cid === i && noneditableRows.indexOf(data[this.props.keyField]) === -1) {
@@ -2446,13 +2564,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	              format: column.format ? format : false,
 	              key: i,
 	              blurToSave: cellEdit.blurToSave,
+	              onTab: this.handleEditCell,
 	              rowIndex: r,
 	              colIndex: i,
 	              row: data,
 	              fieldValue: fieldValue,
 	              className: column.editClassName,
 	              invalidColumnClassName: column.invalidEditColumnClassName,
-	              beforeShowError: beforeShowError });
+	              beforeShowError: beforeShowError,
+	              isFocus: isFocusCell,
+	              customStyleWithNav: customEditAndNavStyle });
 	          } else {
 	            // add by bluespring for className customize
 	            var columnChild = fieldValue && fieldValue.toString();
@@ -2486,7 +2607,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                width: column.width,
 	                onClick: this.handleClickCell,
 	                attrs: column.attrs,
-	                style: column.style },
+	                style: column.style,
+	                tabIndex: tabIndex++ + '',
+	                isFocus: isFocusCell,
+	                keyBoardNav: enableKeyBoardNav,
+	                onKeyDown: this.handleCellKeyDown,
+	                customNavStyle: customNavStyle,
+	                row: data },
 	              columnChild
 	            );
 	          }
@@ -2563,6 +2690,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	      );
 	    }
 	  }, {
+	    key: '__handleCellKeyDown__REACT_HOT_LOADER__',
+	    value: function __handleCellKeyDown__REACT_HOT_LOADER__(e, lastEditCell) {
+	      e.preventDefault();
+	      var _props2 = this.props,
+	          keyBoardNav = _props2.keyBoardNav,
+	          onNavigateCell = _props2.onNavigateCell,
+	          cellEdit = _props2.cellEdit;
+
+	      var offset = void 0;
+	      if (e.keyCode === 37) {
+	        offset = { x: -1, y: 0 };
+	      } else if (e.keyCode === 38) {
+	        offset = { x: 0, y: -1 };
+	      } else if (e.keyCode === 39 || e.keyCode === 9) {
+	        offset = { x: 1, y: 0 };
+	        if (e.keyCode === 9 && lastEditCell) {
+	          offset = _extends({}, offset, {
+	            lastEditCell: lastEditCell
+	          });
+	        }
+	      } else if (e.keyCode === 40) {
+	        offset = { x: 0, y: 1 };
+	      } else if (e.keyCode === 13) {
+	        var enterToEdit = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.enterToEdit : false;
+	        if (cellEdit && enterToEdit) {
+	          this.handleEditCell(e.target.parentElement.rowIndex + 1, e.currentTarget.cellIndex, '', e);
+	        }
+	      }
+	      if (offset && keyBoardNav) {
+	        onNavigateCell(offset);
+	      }
+	    }
+	  }, {
 	    key: '__handleRowMouseOut__REACT_HOT_LOADER__',
 	    value: function __handleRowMouseOut__REACT_HOT_LOADER__(rowIndex, event) {
 	      var targetRow = this.props.data[rowIndex];
@@ -2576,8 +2736,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: '__handleRowClick__REACT_HOT_LOADER__',
-	    value: function __handleRowClick__REACT_HOT_LOADER__(rowIndex) {
-	      this.props.onRowClick(this.props.data[rowIndex - 1]);
+	    value: function __handleRowClick__REACT_HOT_LOADER__(rowIndex, cellIndex) {
+	      var onRowClick = this.props.onRowClick;
+
+	      onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, this._isSelectRowDefined() ? cellIndex - 1 : cellIndex);
 	    }
 	  }, {
 	    key: '__handleRowDoubleClick__REACT_HOT_LOADER__',
@@ -2591,9 +2753,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: '__handleSelectRow__REACT_HOT_LOADER__',
 	    value: function __handleSelectRow__REACT_HOT_LOADER__(rowIndex, isSelected, e) {
 	      var selectedRow = void 0;
-	      var _props2 = this.props,
-	          data = _props2.data,
-	          onSelectRow = _props2.onSelectRow;
+	      var _props3 = this.props,
+	          data = _props3.data,
+	          onSelectRow = _props3.onSelectRow;
 
 	      data.forEach(function (row, i) {
 	        if (i === rowIndex - 1) {
@@ -2616,16 +2778,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _this2 = this;
 
 	      var columnIndex = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -1;
-	      var _props3 = this.props,
-	          columns = _props3.columns,
-	          keyField = _props3.keyField,
-	          expandBy = _props3.expandBy,
-	          expandableRow = _props3.expandableRow,
-	          clickToExpand = _props3.selectRow.clickToExpand;
+	      var _props4 = this.props,
+	          columns = _props4.columns,
+	          keyField = _props4.keyField,
+	          expandBy = _props4.expandBy,
+	          expandableRow = _props4.expandableRow,
+	          clickToExpand = _props4.selectRow.clickToExpand;
 
 	      var selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
 	      columnIndex = this._isSelectRowDefined() ? columnIndex - 1 : columnIndex;
-
 	      if (expandableRow && selectRowAndExpand && (expandBy === _Const2.default.EXPAND_BY_ROW ||
 	      /* Below will allow expanding trigger by clicking on selection column
 	      if configure as expanding by column */
@@ -2646,12 +2807,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: '__handleEditCell__REACT_HOT_LOADER__',
-	    value: function __handleEditCell__REACT_HOT_LOADER__(rowIndex, columnIndex, e) {
+	    value: function __handleEditCell__REACT_HOT_LOADER__(rowIndex, columnIndex, action, e) {
 	      if (this._isSelectRowDefined()) {
 	        columnIndex--;
 	        if (this.props.selectRow.hideSelectColumn) columnIndex++;
 	      }
 	      rowIndex--;
+
+	      if (action === 'tab') {
+	        this.handleCompleteEditCell(e.target.value, rowIndex, columnIndex - 1);
+	        if (columnIndex >= this.props.columns.length) {
+	          rowIndex = rowIndex + 1;
+	          columnIndex = 1;
+	          this.handleCellKeyDown(e, true);
+	        } else {
+	          this.handleCellKeyDown(e);
+	        }
+	      }
+
 	      var stateObj = {
 	        currEditCell: {
 	          rid: rowIndex,
@@ -2748,7 +2921,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  expandBy: _react.PropTypes.string,
 	  expanding: _react.PropTypes.array,
 	  onExpand: _react.PropTypes.func,
-	  beforeShowError: _react.PropTypes.func
+	  beforeShowError: _react.PropTypes.func,
+	  keyBoardNav: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.object]),
+	  x: _react.PropTypes.number,
+	  y: _react.PropTypes.number,
+	  onNavigateCell: _react.PropTypes.func
 	};
 	var _default = TableBody;
 	exports.default = _default;
@@ -2947,8 +3124,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _this2 = this;
 
 	      var rowIndex = this.props.index + 1;
-	      if (this.props.onRowClick) this.props.onRowClick(rowIndex);
 	      var cellIndex = e.target.cellIndex;
+	      if (this.props.onRowClick) this.props.onRowClick(rowIndex, cellIndex);
 	      var _props = this.props,
 	          selectRow = _props.selectRow,
 	          unselectableRow = _props.unselectableRow,
@@ -3026,23 +3203,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        className: (0, _classnames2.default)(this.props.isSelected ? this.props.selectRow.className : null, this.props.className)
 	      };
 
-	      if (this.props.selectRow && (this.props.selectRow.clickToSelect || this.props.selectRow.clickToSelectAndEditCell) || this.props.onRowClick || this.props.onRowDoubleClick) {
-	        return _react2.default.createElement(
-	          'tr',
-	          _extends({}, trCss, {
-	            onMouseOver: this.rowMouseOver,
-	            onMouseOut: this.rowMouseOut,
-	            onClick: this.rowClick,
-	            onDoubleClick: this.rowDoubleClick }),
-	          this.props.children
-	        );
-	      } else {
-	        return _react2.default.createElement(
-	          'tr',
-	          trCss,
-	          this.props.children
-	        );
-	      }
+	      return _react2.default.createElement(
+	        'tr',
+	        _extends({}, trCss, {
+	          onMouseOver: this.rowMouseOver,
+	          onMouseOut: this.rowMouseOut,
+	          onClick: this.rowClick,
+	          onDoubleClick: this.rowDoubleClick }),
+	        this.props.children
+	      );
 	    }
 	  }]);
 
@@ -3101,6 +3270,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactDom = __webpack_require__(6);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
 	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
@@ -3129,6 +3302,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.__handleCellClick__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+	    _this.handleKeyDown = function () {
+	      return _this.__handleKeyDown__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
 	    return _this;
 	  }
 	  /* eslint no-unused-vars: [0, { "args": "after-used" }] */
@@ -3139,7 +3316,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function shouldComponentUpdate(nextProps, nextState) {
 	      var children = this.props.children;
 
-	      var shouldUpdated = this.props.width !== nextProps.width || this.props.className !== nextProps.className || this.props.hidden !== nextProps.hidden || this.props.dataAlign !== nextProps.dataAlign || (typeof children === 'undefined' ? 'undefined' : _typeof(children)) !== _typeof(nextProps.children) || ('' + this.props.onEdit).toString() !== ('' + nextProps.onEdit).toString();
+	      var shouldUpdated = this.props.width !== nextProps.width || this.props.className !== nextProps.className || this.props.hidden !== nextProps.hidden || this.props.dataAlign !== nextProps.dataAlign || this.props.isFocus !== nextProps.isFocus || (typeof children === 'undefined' ? 'undefined' : _typeof(children)) !== _typeof(nextProps.children) || ('' + this.props.onEdit).toString() !== ('' + nextProps.onEdit).toString();
 
 	      if (shouldUpdated) {
 	        return shouldUpdated;
@@ -3163,6 +3340,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return false;
 	      } else {
 	        return shouldUpdated || this.props.cellEdit.mode !== nextProps.cellEdit.mode;
+	      }
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var dom = _reactDom2.default.findDOMNode(this);
+	      if (this.props.isFocus) {
+	        dom.focus();
+	      } else {
+	        dom.blur();
+	      }
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      var dom = _reactDom2.default.findDOMNode(this);
+	      if (this.props.isFocus) {
+	        dom.focus();
+	      } else {
+	        dom.blur();
 	      }
 	    }
 	  }, {
@@ -3193,17 +3390,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  }, {
+	    key: '__handleKeyDown__REACT_HOT_LOADER__',
+	    value: function __handleKeyDown__REACT_HOT_LOADER__(e) {
+	      if (this.props.keyBoardNav) {
+	        this.props.onKeyDown(e);
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _props2 = this.props,
 	          children = _props2.children,
 	          columnTitle = _props2.columnTitle,
-	          className = _props2.className,
 	          dataAlign = _props2.dataAlign,
 	          hidden = _props2.hidden,
 	          cellEdit = _props2.cellEdit,
 	          attrs = _props2.attrs,
-	          style = _props2.style;
+	          style = _props2.style,
+	          isFocus = _props2.isFocus,
+	          keyBoardNav = _props2.keyBoardNav,
+	          tabIndex = _props2.tabIndex,
+	          customNavStyle = _props2.customNavStyle,
+	          row = _props2.row;
+	      var className = this.props.className;
 
 
 	      var tdStyle = _extends({
@@ -3222,9 +3431,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	          opts.onClick = this.handleCellClick;
 	        }
 	      }
+
+	      if (keyBoardNav && isFocus) {
+	        opts.onKeyDown = this.handleKeyDown;
+	      }
+
+	      if (isFocus) {
+	        if (customNavStyle) {
+	          var cusmtStyle = typeof customNavStyle === 'function' ? customNavStyle(children, row) : customNavStyle;
+	          tdStyle = _extends({}, tdStyle, cusmtStyle);
+	        } else {
+	          className = className + ' default-focus-cell';
+	        }
+	      }
 	      return _react2.default.createElement(
 	        'td',
-	        _extends({ style: tdStyle,
+	        _extends({ tabIndex: tabIndex, style: tdStyle,
 	          title: columnTitle,
 	          className: className
 	        }, opts, attrs),
@@ -3245,13 +3467,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	  children: _react.PropTypes.node,
 	  onClick: _react.PropTypes.func,
 	  attrs: _react.PropTypes.object,
-	  style: _react.PropTypes.object
+	  style: _react.PropTypes.object,
+	  isFocus: _react.PropTypes.bool,
+	  onKeyDown: _react.PropTypes.func,
+	  tabIndex: _react.PropTypes.string,
+	  keyBoardNav: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.object]),
+	  customNavStyle: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.object]),
+	  row: _react.PropTypes.any /* only used on custom styling for navigation */
 	};
 
 	TableColumn.defaultProps = {
 	  dataAlign: 'left',
 	  hidden: false,
-	  className: ''
+	  className: '',
+	  isFocus: false,
+	  keyBoardNav: false
 	};
 	var _default = TableColumn;
 	exports.default = _default;
@@ -3288,6 +3518,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(6);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
 
 	var _Editor = __webpack_require__(13);
 
@@ -3363,6 +3597,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
 	      } else if (e.keyCode === 27) {
 	        this.props.completeEdit(null, this.props.rowIndex, this.props.colIndex);
+	      } else if (e.keyCode === 9) {
+	        this.props.onTab(this.props.rowIndex + 1, this.props.colIndex + 1, 'tab', e);
+	        e.preventDefault();
 	      } else if (e.type === 'click' && !this.props.blurToSave) {
 	        // textarea click save button
 	        var _value = e.target.parentElement.firstChild.value;
@@ -3457,6 +3694,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      this.refs.inputRef.focus();
+	      var dom = _reactDom2.default.findDOMNode(this);
+	      if (this.props.isFocus) {
+	        dom.focus();
+	      } else {
+	        dom.blur();
+	      }
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      var dom = _reactDom2.default.findDOMNode(this);
+	      if (this.props.isFocus) {
+	        dom.focus();
+	      } else {
+	        dom.blur();
+	      }
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -3476,17 +3729,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props2 = this.props,
 	          editable = _props2.editable,
 	          format = _props2.format,
-	          customEditor = _props2.customEditor;
-	      var _state = this.state,
-	          shakeEditor = _state.shakeEditor,
-	          className = _state.className;
+	          customEditor = _props2.customEditor,
+	          isFocus = _props2.isFocus,
+	          customStyleWithNav = _props2.customStyleWithNav,
+	          row = _props2.row;
+	      var shakeEditor = this.state.shakeEditor;
 
 	      var attr = {
 	        ref: 'inputRef',
 	        onKeyDown: this.handleKeyPress,
 	        onBlur: this.handleBlur
 	      };
+	      var style = { position: 'relative' };
 	      var fieldValue = this.props.fieldValue;
+	      var className = this.state.className;
 	      // put placeholder if exist
 
 	      editable.placeholder && (attr.placeholder = editable.placeholder);
@@ -3495,7 +3751,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var cellEditor = void 0;
 	      if (customEditor) {
 	        var customEditorProps = _extends({
-	          row: this.props.row
+	          row: row
 	        }, attr, {
 	          defaultValue: fieldValue || ''
 	        }, customEditor.customEditorParameters);
@@ -3505,10 +3761,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	        cellEditor = (0, _Editor2.default)(editable, attr, format, editorClass, fieldValue || '');
 	      }
 
+	      if (isFocus) {
+	        if (customStyleWithNav) {
+	          var customStyle = typeof customStyleWithNav === 'function' ? customStyleWithNav(fieldValue, row) : customStyleWithNav;
+	          style = _extends({}, style, customStyle);
+	        } else {
+	          className = className + ' default-focus-cell';
+	        }
+	      }
+
 	      return _react2.default.createElement(
 	        'td',
 	        { ref: 'td',
-	          style: { position: 'relative' },
+	          style: style,
 	          className: className,
 	          onClick: this.handleClick },
 	        cellEditor,
@@ -3538,7 +3803,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  row: _react.PropTypes.any,
 	  fieldValue: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.bool, _react.PropTypes.number, _react.PropTypes.array, _react.PropTypes.object]),
 	  className: _react.PropTypes.any,
-	  beforeShowError: _react.PropTypes.func
+	  beforeShowError: _react.PropTypes.func,
+	  isFocus: _react.PropTypes.bool,
+	  customStyleWithNav: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.object])
 	};
 
 	var _default = TableEditColumn;
@@ -10261,6 +10528,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        { className: classname },
 	        pageBtns
 	      );
+	    }
+	  }, {
+	    key: 'getLastPage',
+	    value: function getLastPage() {
+	      return this.lastPage;
 	    }
 	  }, {
 	    key: 'getPages',
