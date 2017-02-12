@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import editor from './Editor';
 import Notifier from './Notification.js';
 import classSet from 'classnames';
@@ -111,8 +112,24 @@ class TableEditColumn extends Component {
       this.timeouteClear = 0;
     }
   }
+
   componentDidMount() {
     this.refs.inputRef.focus();
+    const dom = ReactDOM.findDOMNode(this);
+    if (this.props.isFocus) {
+      dom.focus();
+    } else {
+      dom.blur();
+    }
+  }
+
+  componentDidUpdate() {
+    const dom = ReactDOM.findDOMNode(this);
+    if (this.props.isFocus) {
+      dom.focus();
+    } else {
+      dom.blur();
+    }
   }
 
   componentWillUnmount() {
@@ -126,14 +143,23 @@ class TableEditColumn extends Component {
   }
 
   render() {
-    const { editable, format, customEditor } = this.props;
-    const { shakeEditor, className } = this.state;
+    const {
+      editable,
+      format,
+      customEditor,
+      isFocus,
+      customStyleWithNav,
+      row
+    } = this.props;
+    const { shakeEditor } = this.state;
     const attr = {
       ref: 'inputRef',
       onKeyDown: this.handleKeyPress,
       onBlur: this.handleBlur
     };
+    let style = { position: 'relative' };
     let { fieldValue } = this.props;
+    let { className } = this.state;
     // put placeholder if exist
     editable.placeholder && (attr.placeholder = editable.placeholder);
 
@@ -141,7 +167,7 @@ class TableEditColumn extends Component {
     let cellEditor;
     if (customEditor) {
       const customEditorProps = {
-        row: this.props.row,
+        row,
         ...attr,
         defaultValue: fieldValue || '',
         ...customEditor.customEditorParameters
@@ -152,9 +178,22 @@ class TableEditColumn extends Component {
       cellEditor = editor(editable, attr, format, editorClass, fieldValue || '');
     }
 
+    if (isFocus) {
+      if (customStyleWithNav) {
+        const customStyle = typeof customStyleWithNav === 'function' ?
+          customStyleWithNav(fieldValue, row) : customStyleWithNav;
+        style = {
+          ...style,
+          ...customStyle
+        };
+      } else {
+        className = `${className} default-focus-cell`;
+      }
+    }
+
     return (
       <td ref='td'
-        style={ { position: 'relative' } }
+        style={ style }
         className={ className }
         onClick={ this.handleClick }>
         { cellEditor }
@@ -187,7 +226,9 @@ TableEditColumn.propTypes = {
     PropTypes.object
   ]),
   className: PropTypes.any,
-  beforeShowError: PropTypes.func
+  beforeShowError: PropTypes.func,
+  isFocus: PropTypes.bool,
+  customStyleWithNav: PropTypes.oneOfType([ PropTypes.func, PropTypes.object ])
 };
 
 

@@ -35,6 +35,9 @@ class TableBody extends Component {
     const inputType = this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
     const CustomComponent = this.props.selectRow.customComponent;
     const enableKeyBoardNav = (keyBoardNav === true || typeof keyBoardNav === 'object');
+    const customEditAndNavStyle = typeof keyBoardNav === 'object' ?
+      keyBoardNav.customStyleOnEditCell :
+      null;
     let expandColSpan = this.props.columns.filter(col => !col.hidden).length;
     if (isSelectRowDefined && !this.props.selectRow.hideSelectColumn) {
       expandColSpan += 1;
@@ -74,7 +77,9 @@ class TableBody extends Component {
                 fieldValue={ fieldValue }
                 className={ column.editClassName }
                 invalidColumnClassName={ column.invalidEditColumnClassName }
-                beforeShowError={ beforeShowError } />
+                beforeShowError={ beforeShowError }
+                isFocus={ isFocusCell }
+                customStyleWithNav={ customEditAndNavStyle } />
             );
         } else {
           // add by bluespring for className customize
