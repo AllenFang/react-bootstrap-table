@@ -105,18 +105,18 @@ class TableColumn extends Component {
       style,
       isFocus,
       keyBoardNav,
-      tabIndex
+      tabIndex,
+      customNavStyle,
+      row
     } = this.props;
 
     let { className } = this.props;
 
-    const tdStyle = {
+    let tdStyle = {
       textAlign: dataAlign,
       display: hidden ? 'none' : null,
       ...style
     };
-
-    className = isFocus ? `${className} default-focus-cell` : className;
 
     const opts = {};
 
@@ -132,6 +132,19 @@ class TableColumn extends Component {
 
     if (keyBoardNav && isFocus) {
       opts.onKeyDown = this.handleKeyDown;
+    }
+
+    if (isFocus) {
+      if (customNavStyle) {
+        const cusmtStyle = typeof customNavStyle === 'function' ?
+          customNavStyle(children, row) : customNavStyle;
+        tdStyle = {
+          ...tdStyle,
+          ...cusmtStyle
+        };
+      } else {
+        className = `${className} default-focus-cell`;
+      }
     }
     return (
       <td tabIndex={ tabIndex } style={ tdStyle }
@@ -156,7 +169,9 @@ TableColumn.propTypes = {
   isFocus: PropTypes.bool,
   onKeyDown: PropTypes.func,
   tabIndex: PropTypes.string,
-  keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ])
+  keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
+  customNavStyle: PropTypes.oneOfType([ PropTypes.func, PropTypes.object ]),
+  row: PropTypes.any  /* only used on custom styling for navigation */
 };
 
 TableColumn.defaultProps = {

@@ -38,6 +38,9 @@ class TableBody extends Component {
     const customEditAndNavStyle = typeof keyBoardNav === 'object' ?
       keyBoardNav.customStyleOnEditCell :
       null;
+    const customNavStyle = typeof keyBoardNav === 'object' ?
+      keyBoardNav.customStyle :
+      null;
     let expandColSpan = this.props.columns.filter(col => !col.hidden).length;
     if (isSelectRowDefined && !this.props.selectRow.hideSelectColumn) {
       expandColSpan += 1;
@@ -119,7 +122,9 @@ class TableBody extends Component {
               tabIndex={ (tabIndex++) + '' }
               isFocus={ isFocusCell }
               keyBoardNav={ enableKeyBoardNav }
-              onKeyDown={ this.handleCellKeyDown }>
+              onKeyDown={ this.handleCellKeyDown }
+              customNavStyle={ customNavStyle }
+              row={ data }>
               { columnChild }
             </TableColumn>
           );
