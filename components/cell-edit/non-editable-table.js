@@ -19,14 +19,17 @@ function addProducts(quantity) {
 
 addProducts(5);
 
-const cellEditProp = {
-  mode: 'click'
-};
-
-
 // make colum 'Product Name' is non editable
 export default class NonEditableTable extends React.Component {
   render() {
+    const cellEditProp = {
+      mode: 'click',
+      nonEditableRows: function() {
+        // if product id less than 3, will cause the whole row noneditable
+        // this function should return an array of row keys
+        return products.filter(p => p.id < 3).map(p => p.id);
+      }
+    };
     return (
       <BootstrapTable data={ products } cellEdit={ cellEditProp } insertRow={ true }>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
