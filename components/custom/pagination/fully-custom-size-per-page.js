@@ -1,7 +1,7 @@
 /* eslint max-len: 0 */
 /* eslint no-console: 0 */
 import React from 'react';
-import { BootstrapTable, TableHeaderColumn, SizePerPageDropDown } from 'react-bootstrap-table';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 
 const products = [];
@@ -20,24 +20,23 @@ function addProducts(quantity) {
 
 addProducts(70);
 
-export default class CustomSizePerPageDropDown extends React.Component {
+export default class FullyCustomSizePerPageDropDown extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  onToggleDropDown = (toggleDropDown) => {
-    // do your stuff here
-    console.log('toggle dropdown');
-    toggleDropDown();
-  }
-
-  renderSizePerPageDropDown = (props) => {
+  renderSizePerPageDropDown = props => {
     return (
-      <SizePerPageDropDown
-        className='my-size-per-page'
-        btnContextual='btn-warning'
-        variation='dropup'
-        onClick={ () => this.onToggleDropDown(props.toggleDropDown) }/>
+      <div className='btn-group'>
+        {
+          [ 10, 25, 30 ].map((n, idx) => {
+            const isActive = (n === props.currSizePerPage) ? 'active' : null;
+            return (
+              <button key={ idx } type='button' className={ `btn btn-info ${isActive}` } onClick={ () => props.changeSizePerPage(n) }>{ n }</button>
+            );
+          })
+        }
+      </div>
     );
   }
 
