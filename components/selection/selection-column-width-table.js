@@ -1,7 +1,4 @@
 /* eslint max-len: 0 */
-/* eslint no-alert: 0 */
-/* eslint guard-for-in: 0 */
-/* eslint no-console: 0 */
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
@@ -20,27 +17,17 @@ function addProducts(quantity) {
   }
 }
 
-addProducts(50);
+addProducts(5);
 
-export default class SelectAllOnAllPage extends React.Component {
+const selectRowProp = {
+  mode: 'checkbox',
+  columnWidth: '60px'
+};
 
-  onSelectAll = (isSelected) => {
-    if (isSelected) {
-      return products.map(row => row.id);
-    } else {
-      return [];
-    }
-  }
-
+export default class SelectionColumnWidthTable extends React.Component {
   render() {
-    const selectRowProp = {
-      mode: 'checkbox',
-      clickToSelect: true,
-      onSelectAll: this.onSelectAll
-    };
-
     return (
-      <BootstrapTable ref='table' data={ products } selectRow={ selectRowProp } pagination>
+      <BootstrapTable data={ products } selectRow={ selectRowProp }>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
