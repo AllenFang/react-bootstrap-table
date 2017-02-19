@@ -160,10 +160,13 @@
                 <li><a href="#bodyContainerClass" class="prop">bodyContainerClass</a></li>
                 <li><a href="#tableHeaderClass" class="prop">tableHeaderClass</a></li>
                 <li><a href="#tableBodyClass" class="prop">tableBodyClass</a></li>
+                <li><a href="#expandableRow" class="prop">expandableRow</a></li>
+                <li><a href="#expandComponent" class="prop">expandComponent</a></li>
                 <li><a href="#selectRow" class="prop">selectRow</a></li>
                 <li><a href="#select-mode" class="sub-prop prop">mode</a></li>
                 <li><a href="#clickToSelect" class="sub-prop prop">clickToSelect</a></li>
                 <li><a href="#clickToSelectAndEditCell" class="sub-prop prop">clickToSelectAndEditCell</a></li>
+                <li><a href="#clickToExpand" class="sub-prop prop">clickToExpand</a></li>
                 <li><a href="#bgColor" class="sub-prop prop">bgColor</a></li>
                 <li><a href="#select-className" class="sub-prop prop">className</a></li>
                 <li><a href="#selected" class="sub-prop prop">selected</a></li>
@@ -221,6 +224,8 @@
                 <li><a href="#pageStartIndex" class="sub-prop prop">pageStartIndex</a></li>
                 <li><a href="#onPageChange" class="sub-prop prop">onPageChange</a></li>
                 <li><a href="#onSizePerPageList" class="sub-prop prop">onSizePerPageList</a></li>
+                <li><a href="#expandRowBgColor" class="sub-prop prop">expandRowBgColor</a></li>
+                <li><a href="#expandBy" class="sub-prop prop">expandBy</a></li>
                 <li><a href="#insertText" class="sub-prop prop">insertText</a></li>
                 <li><a href="#deleteText" class="sub-prop prop">deleteText</a></li>
                 <li><a href="#saveText" class="sub-prop prop">saveText</a></li>
@@ -260,6 +265,7 @@
                 <li><a href="#csvHeader" class="prop">csvHeader</a></li>
                 <li><a href="#hidden" class="prop">hidden</a></li>
                 <li><a href="#export" class="prop">export</a></li>
+                <li><a href="#expandable" class="prop">expandable</a></li>
                 <li><a href="#hiddenOnInsert" class="prop">hiddenOnInsert</a></li>
                 <li><a href="#autoValue" class="prop">autoValue</a></li>
                 <li><a href="#searchable" class="prop">searchable</a></li>
@@ -986,6 +992,7 @@ render() {
                             <li><a class="internal-anchor" href='#select-mode'>mode</a></li>
                             <li><a class="internal-anchor" href='#clickToSelect'>clickToSelect</a></li>
                             <li><a class="internal-anchor" href='#clickToSelectAndEditCell'>clickToSelectAndEditCell</a></li>
+                            <li><a class="internal-anchor" href='#clickToExpand'>clickToExpand</a></li>
                             <li><a class="internal-anchor" href='#bgColor'>bgColor</a></li>
                             <li><a class="internal-anchor" href='#select-className'>className</a></li>
                             <li><a class="internal-anchor" href='#selected'>selected</a></li>
@@ -1111,6 +1118,47 @@ render() {
   return(
     &lt;BootstrapTable
       data={ data }
+      selectRow={ selectRow }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane active" id="clickToExpand">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#clickToExpand'>selectRow: clickToExpand : Bool</a></h1>
+                        <span>
+                          Default is false, it will trigger expanding row also if true assigned.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">isExpandableRow(row) {
+  if (row.id < 2) return true;
+    else return false;
+}
+
+expandComponent(row) {
+  return (
+    ...
+  );
+}
+render() {
+  const selectRow = {
+    mode: 'checkbox',
+    clickToExpand: true   // Trigger expand and selection together
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      expandableRow={ this.isExpandableRow }
+      expandComponent={ this.expandComponent }
       selectRow={ selectRow }&gt;
       //...
     &lt;/BootstrapTable&gt;
@@ -1639,6 +1687,11 @@ render() {
                             <li><a class="internal-anchor" href='#pageStartIndex'>pageStartIndex</a></li>
                             <li><a class="internal-anchor" href='#onPageChange'>onPageChange</a></li>
                             <li><a class="internal-anchor" href='#onSizePerPageList'>onSizePerPageList</a></li>
+                          </ul>
+                          <strong><b>Following is all about configuring expanding row</b></strong>
+                          <ul>
+                            <li><a class="internal-anchor" href='#expandRowBgColor'>expandRowBgColor</a></li>
+                            <li><a class="internal-anchor" href='#expandBy'>expandBy</a></li>
                           </ul>
                           <strong><b>Following is another options</b></strong>
                           <ul>
@@ -3093,6 +3146,77 @@ render() {
                   </div>
               </div>
           </div>
+          <div class="tab-pane" id="expandRowBgColor">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#expandRowBgColor'>expandRowBgColor : String</a></h1>
+                        <span>
+                         Assign a color for custom the background color of expanding row.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">expandComponent(row) {
+  return (
+    ...
+  );
+}
+render() {
+  const options = {
+    expandRowBgColor: 'rgb(242, 255, 163)'
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options= { options }
+      expandableRow={ () => { return true; } }
+      expandComponent={ this.expandComponent }&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="expandBy">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#expandBy'>expandBy : String</a></h1>
+                        <span>
+                         Tell <code>react-bootstrap-table</code> how to trigger expanding by clicking on <code>row</code> or <code>column</code> level.</br>
+                         It value is <code>column</code>, default all the columns are expandable, if you want some column as unexpandable, check <a class="internal-anchor" href='#expandable'>expandable</a>.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">expandComponent(row) {
+  return (
+    ...
+  );
+}
+render() {
+  const options = {
+    expandBy: 'column'  // Currently, available value is row and column, default is row
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options= { options }
+      expandableRow={ () => { return true; } }
+      expandComponent={ this.expandComponent }&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
           <div class="tab-pane" id="insertText">
               <div class="container-fluid">
                   <div class="row">
@@ -3228,6 +3352,80 @@ render() {
       data={ products } 
       options={ options }
       exportCSV&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="expandableRow">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#expandableRow'>expandableRow : Function</a></h1>
+                        <span>
+                          Tell <code>react-bootstrap-table</code> which rows are able to expand. This props accept a callback function and is suppose to be return an Array of row keys</br>
+                          <code>expandableRow</code> always used with <a class="internal-anchor" href='#expandComponent'>expandComponent</a>, both of props are enable the expand row functionality on table.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">isExpandableRow(row) {
+  if (row.id < 2) return true;
+    else return false;
+}
+
+expandComponent(row) {
+  return (
+    ...
+  );
+}
+render() {
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      expandableRow={ this.isExpandableRow }
+      expandComponent={ this.expandComponent }&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="expandComponent">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#expandComponent'>expandComponent : Function</a></h1>
+                        <span>
+                          Tell <code>react-bootstrap-table</code> what's content should be rendered in the expanding content. This props accept a callback function and is suppose to be return JSX or String</br>
+                          <code>expandComponent</code> always used with <a class="internal-anchor"  href='#expandableRow'>expandableRow</a>, both of props are enable the expand row functionality on table.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">isExpandableRow(row) {
+  if (row.id < 2) return true;
+    else return false;
+}
+
+expandComponent(row) {
+  return (
+    ...
+  );
+}
+render() {
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      expandableRow={ this.isExpandableRow }
+      expandComponent={ this.expandComponent }&gt;
       // ...
     &lt;/BootstrapTable&gt;
   );
@@ -3815,6 +4013,44 @@ render() {
   &lt;TableHeaderColumn dataField='name' export hidden&gt;Product Name&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
 &lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="expandable">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#expandable'>expandable : Bool</a></h1>
+                        <span>
+                          Usually use with <a class="internal-anchor" href='#expandBy'>options.expandBy</a> is <code>column</code> level.</br>. You can assign which columns are expandable or not by <code>expandable</code>.</br>
+                          For example, following we disable Product Name and Product Price as unexpandable, so use click on this both column will not trigger expanding row.
+                          </br></br>
+                        </span>
+<pre>
+<code class="html">expandComponent(row) {
+  return (
+    ...
+  );
+}
+render() {
+  const options = {
+    expandBy: 'column'  // Currently, available value is row and column, default is row
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options= { options }
+      expandableRow={ () => { return true; } }
+      expandComponent={ this.expandComponent }&gt;
+      &lt;TableHeaderColumn dataField='id' isKey&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name' expandable={ false }&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='price' expandable={ false }&gt;Product Price&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
 </code>
 </pre>
                       </div>
