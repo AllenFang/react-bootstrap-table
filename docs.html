@@ -399,21 +399,14 @@ const data = [ ... ];
               <div class="container-fluid">
                   <div class="row">
                       <div class="col-lg-12">
-                        <h1><a href='#height'>height : String | Number</a></h1>
+                        <h1><a href='#height'>height : String</a></h1>
                         <span>
-                          Use <code>height</code> to adjust the height of table. You can give a string or a number value like following:</br>
-                          <strong>Tips</strong>: <code>react-bootstrap-table</code> will add pixels as default unit, so there's no need to add it when you assign the <code>height</code>.</span></br>
-                          <strong>Tips</strong>: <code>react-bootstrap-table</code> display all the data without fixed header, because height is auto by default. if you give a height, the header will fixed when data is too long.
+                          Use <code>height</code> to adjust the height of table. You need give a string with an unit(px) value like following:</br>
+                          <strong>Tips</strong>: <code>react-bootstrap-table</code> display all the data without fixed header, because height is auto by default. If you give a height, the header will fixed when data is too long.
                           </br></br>
                         </span>
 <pre>
-<code class="html">&lt;BootstrapTable data={ data } height='120'&gt;
-//...
-&lt;/BootstrapTable&gt;
-</code>
-</pre>
-<pre>
-<code class="html">&lt;BootstrapTable data={ data } height={ 120 }&gt;
+<code class="html">&lt;BootstrapTable data={ data } height='120px'&gt;
 //...
 &lt;/BootstrapTable&gt;
 </code>
@@ -426,18 +419,12 @@ const data = [ ... ];
               <div class="container-fluid">
                   <div class="row">
                       <div class="col-lg-12">
-                        <h1><a href='#maxHeight'>maxHeight : String | Number</a></h1>
+                        <h1><a href='#maxHeight'>maxHeight : String</a></h1>
                         <span>
-                          Use <code>maxHeight</code> to set the maximum height of table. You can give a string or a number value like <code>height</code>:</br></br>
+                          Use <code>maxHeight</code> to set the maximum height of table. You need give a string with an unit(px) value like <a href='#height'>height</a>:</br></br>
                         </span>
 <pre>
-<code class="html">&lt;BootstrapTable data={ data } maxHeight='120'&gt;
-//...
-&lt;/BootstrapTable&gt;
-</code>
-</pre>
-<pre>
-<code class="html">&lt;BootstrapTable data={ data } maxHeight={ 120 }&gt;
+<code class="html">&lt;BootstrapTable data={ data } maxHeight='120px'&gt;
 //...
 &lt;/BootstrapTable&gt;
 </code>
