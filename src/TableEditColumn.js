@@ -56,6 +56,9 @@ class TableEditColumn extends Component {
   }
 
   handleCustomUpdate = value => {
+    if (!this.validator(value)) {
+      return;
+    }
     this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
   }
 
