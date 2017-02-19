@@ -12,6 +12,29 @@ class SelectFilter extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    const isPlaceholderSelected = (nextProps.defaultValue === undefined ||
+      !nextProps.options.hasOwnProperty(nextProps.defaultValue));
+    this.setState({
+      isPlaceholderSelected
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    let needFilter = false;
+    if (this.props.defaultValue !== prevProps.defaultValue) {
+      needFilter = true;
+    } else if (this.props.options !== prevProps.options) {
+      needFilter = true;
+    }
+    if (needFilter) {
+      const value = this.refs.selectInput.value;
+      if (value) {
+        this.props.filterHandler(value, Const.FILTER_TYPE.SELECT);
+      }
+    }
+  }
+
   filter(event) {
     const { value } = event.target;
     this.setState({ isPlaceholderSelected: (value === '') });
