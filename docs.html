@@ -154,6 +154,10 @@
                 <li><a href="#tableStyle" class="prop">tableStyle</a></li>
                 <li><a href="#headerStyle" class="prop">headerStyle</a></li>
                 <li><a href="#bodyStyle" class="prop">bodyStyle</a></li>
+                <li><a href="#containerClass" class="prop">containerClass</a></li>
+                <li><a href="#tableContainerClass" class="prop">tableContainerClass</a></li>
+                <li><a href="#headerContainerClass" class="prop">headerContainerClass</a></li>
+                <li><a href="#bodyContainerClass" class="prop">bodyContainerClass</a></li>
                 <li><a href="#tableHeaderClass" class="prop">tableHeaderClass</a></li>
                 <li><a href="#tableBodyClass" class="prop">tableBodyClass</a></li>
                 <li><a href="#selectRow" class="prop">selectRow</a></li>
@@ -168,6 +172,7 @@
                 <li><a href="#showOnlySelected" class="sub-prop prop">showOnlySelected</a></li>
                 <li><a href="#onSelect" class="sub-prop prop">onSelect</a></li>
                 <li><a href="#onSelectAll" class="sub-prop prop">onSelectAll</a></li>
+                <li><a href="#customComponent" class="sub-prop prop">customComponent</a></li>
                 <li><a href="#cellEdit" class="prop">cellEdit</a></li>
                 <li><a href="#edit-mode" class="sub-prop prop">mode</a></li>
                 <li><a href="#blurToSave" class="sub-prop prop">blurToSave</a></li>
@@ -259,6 +264,7 @@
                 <li><a href="#autoValue" class="prop">autoValue</a></li>
                 <li><a href="#searchable" class="prop">searchable</a></li>
                 <li><a href="#columnTitle" class="prop">columnTitle</a></li>
+                <li><a href="#headerTitle" class="prop">headerTitle</a></li>
                 <li><a href="#sortFunc" class="prop">sortFunc</a></li>
                 <li><a href="#className" class="prop">className</a></li>
                 <li><a href="#columnClassName" class="prop">columnClassName</a></li>
@@ -761,7 +767,7 @@ render() {
                       <div class="col-lg-12">
                         <h1><a href='#containerStyle'>containerStyle : Object</a></h1>
                         <span>
-                          Add your own styles object to the class of <code>react-bs-table-container</code>
+                          Add your own styles object to the <code>react-bs-table-container</code> class
                         </br></br>
                         </span>
 <pre>
@@ -782,7 +788,7 @@ render() {
                       <div class="col-lg-12">
                         <h1><a href='#tableStyle'>tableStyle : Object</a></h1>
                         <span>
-                          Add your own styles object to the class of <code>react-bs-table</code>
+                          Add your own styles object to the <code>react-bs-table</code> class
                         </br></br>
                         </span>
 <pre>
@@ -803,7 +809,7 @@ render() {
                       <div class="col-lg-12">
                         <h1><a href='#headerStyle'>headerStyle : Object</a></h1>
                         <span>
-                          Add your own styles object to the class of <code>react-bs-container-header</code>
+                          Add your own styles object to the <code>react-bs-container-header</code> class
                         </br></br>
                         </span>
 <pre>
@@ -824,13 +830,97 @@ render() {
                       <div class="col-lg-12">
                         <h1><a href='#bodyStyle'>bodyStyle : Object</a></h1>
                         <span>
-                          Add your own styles object to the class of <code>react-bs-container-body</code>
+                          Add your own styles object to the <code>react-bs-container-body</code> class
                         </br></br>
                         </span>
 <pre>
 <code class="html">&lt;BootstrapTable
   data={ data }
   bodyStyle={ { background: '#00ff00' } }&gt;
+    //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane active" id="containerClass">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#containerClass'>containerClass : String</a></h1>
+                        <span>
+                          Add your own class names on the <code>react-bs-table-container</code> class
+                        </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable
+  data={ data }
+  containerClass='my-custom-class'&gt;
+    //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane active" id="tableContainerClass">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#tableContainerClass'>tableContainerClass : String</a></h1>
+                        <span>
+                          Add your own class names on the <code>react-bs-table</code> class
+                        </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable
+  data={ data }
+  tableContainerClass='my-custom-class'&gt;
+    //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane active" id="headerContainerClass">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#headerContainerClass'>headerContainerClass : String</a></h1>
+                        <span>
+                          Add your own class names on the <code>react-bs-container-header</code> class
+                        </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable
+  data={ data }
+  headerContainerClass='my-custom-class'&gt;
+    //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane active" id="bodyContainerClass">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#bodyContainerClass'>bodyContainerClass : String</a></h1>
+                        <span>
+                          Add your own class names on the <code>react-bs-container-body</code> class
+                        </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable
+  data={ data }
+  bodyContainerClass='my-custom-class'&gt;
     //...
 &lt;/BootstrapTable&gt;
 </code>
@@ -904,6 +994,7 @@ render() {
                             <li><a class="internal-anchor" href='#showOnlySelected'>showOnlySelected</a></li>
                             <li><a class="internal-anchor" href='#onSelect'>onSelect</a></li>
                             <li><a class="internal-anchor" href='#onSelectAll'>onSelectAll</a></li>
+                            <li><a class="internal-anchor" href='#customComponent'>customComponent</a></li>
                           </ul>
                         Be carefully, when you enable <code>selectRow</code>, you should tell <code>react-bootstrap-table</code> which the <a class="internal-anchor" href='#select-mode'>mode</a> you wanted.
                         Following is a most simple example for configuring the <code>selectRow</code>
@@ -1292,6 +1383,27 @@ render() {
 }
 </code>
 </pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane active" id="customComponent">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#customComponent'>selectRow: customComponent : Function</a></h1>
+                        <span>
+                          Though <code>customComponent</code>, you can custom your own selection checkbox or radio button. This function take one argument: <code>props</code> 
+                          and have following properties:
+                          <ul>
+                            <li>type</li>
+                            <li>checked</li>
+                            <li>disabled</li>
+                            <li>onChange</li>
+                            <li>rowIndex</li>
+                          </ul>
+                          <strong>Tips</strong>: <br/>
+                          <span><b>You can follow this <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/selection/custom-multi-select-table.js' target='_blank'>example</a> to learn how ot customize the selection column</b></span>
                       </div>
                   </div>
               </div>
@@ -3444,11 +3556,13 @@ this.refs.table.handleExportCSV();  // this.refs.table is a ref for BootstrapTab
                         <h1><a href='#caretRender'>caretRender : Function</a></h1>
                         <span>
                           Allow user to render a custom sort caret. You should give a function and should return a JSX.</br>
-                          This function taking an arguments: <code>direction</code> which present the sort order currently.
+                          This function taking two arguments: </br>
+                          <code>direction</code> which present the sort order currently.</br>
+                          <code>fieldName</code> is the on sorting field name.
                           </br></br>
                         </span>
 <pre>
-<code class="javascript">renderCaret = (direction) => {
+<code class="javascript">renderCaret = (direction, fieldName) => {
   if (direction === 'asc') {
     return (
       <span> up</span>
@@ -3795,6 +3909,27 @@ render() {
                   </div>
               </div>
           </div>
+          <div class="tab-pane" id="headerTitle">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#headerTitle'>headerTitle : Bool</a></h1>
+                        <span>
+                          Enable/Disable the title showing on the header column, default is true
+                          </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ products }&gt;
+  &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name' headerTitle={ false }&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
           <div class="tab-pane" id="sortFunc">
               <div class="container-fluid">
                   <div class="row">
@@ -3932,7 +4067,7 @@ render() {
                           True to set the column editable, false is non-editable, default is editable.
                           If <code>Object</code>, you can give more customization on editing cell. This object have following properties:</br>
                           <code>type</code>: what edit type on editing cell, available values are <code>textarea</code>, <code>select</code>, <code>checkbox</code>, and <code>datetime</code></br>
-                          <code>validator</code>: give a callback function for validation which takes only one "cellValue" as an argument. This function should return a boolean value.</br>
+                          <code>validator</code>: give a callback function for validation which takes only one "cellValue" as an argument. This function should return a boolean or object value.</br>
                           <code>options.values</code>: options.values means the data in select or checkbox. If checkbox, use a ':' (colon) to separate the values, e.g. Y:N.
                           </br></br>
                         </span>
@@ -3955,6 +4090,7 @@ render() {
 </pre>
 <pre>
 <code class="javascript">jobNameValidator(value) {
+  // If this function return an object, you got some ability to customize your error message
   const response = { isValid: true, notification: { type: 'success', msg: '', title: '' } };
   if (!value) {
     response.isValid = false;
