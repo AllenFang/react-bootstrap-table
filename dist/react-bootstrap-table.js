@@ -320,7 +320,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (_util2.default.canUseDOM()) {
 	      _this.isIE = document.documentMode;
 	    }
-	    _this.store = new _TableDataStore.TableDataStore(_this.props.data.slice());
+	    _this.store = new _TableDataStore.TableDataStore(_this.props.data ? _this.props.data.slice() : []);
 
 	    _this.initTable(_this.props);
 
@@ -3014,8 +3014,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var isSelectRowDefined = selectRow.mode === _Const2.default.ROW_SELECT_SINGLE || selectRow.mode === _Const2.default.ROW_SELECT_MULTI;
 	    if (isSelectRowDefined) {
 	      var style = {
-	        width: selectRow.columnWidth || 30,
-	        minWidth: selectRow.columnWidth || 30
+	        width: selectRow.columnWidth || '30px',
+	        minWidth: selectRow.columnWidth || '30px'
 	      };
 	      if (!selectRow.hideSelectColumn) {
 	        selectRowHeader = _react2.default.createElement('col', { style: style, key: -1 });
@@ -3026,10 +3026,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        display: column.hidden ? 'none' : null
 	      };
 	      if (column.width) {
-	        style.width = column.width;
+	        var width = !isNaN(column.width) ? column.width + 'px' : column.width;
+	        style.width = width;
 	        /** add min-wdth to fix user assign column width
 	        not eq offsetWidth in large column table **/
-	        style.minWidth = column.width;
+	        style.minWidth = width;
 	      }
 	      return _react2.default.createElement('col', { style: style, key: i, className: column.className });
 	    });
@@ -3628,6 +3629,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // modified by iuculanop
 	    // BEGIN
 	    value: function __handleCustomUpdate__REACT_HOT_LOADER__(value) {
+	      if (!this.validator(value)) {
+	        return;
+	      }
 	      this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
 	    }
 	  }, {
@@ -16654,6 +16658,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  _createClass(SelectFilter, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      var isPlaceholderSelected = nextProps.defaultValue === undefined || !nextProps.options.hasOwnProperty(nextProps.defaultValue);
+	      this.setState({
+	        isPlaceholderSelected: isPlaceholderSelected
+	      });
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(prevProps) {
+	      var needFilter = false;
+	      if (this.props.defaultValue !== prevProps.defaultValue) {
+	        needFilter = true;
+	      } else if (this.props.options !== prevProps.options) {
+	        needFilter = true;
+	      }
+	      if (needFilter) {
+	        var value = this.refs.selectInput.value;
+	        if (value) {
+	          this.props.filterHandler(value, _Const2.default.FILTER_TYPE.SELECT);
+	        }
+	      }
+	    }
+	  }, {
 	    key: 'filter',
 	    value: function filter(event) {
 	      var value = event.target.value;
