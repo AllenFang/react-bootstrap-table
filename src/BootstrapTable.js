@@ -10,7 +10,7 @@ import ToolBar from './toolbar/ToolBar';
 import TableFilter from './TableFilter';
 import { TableDataStore } from './store/TableDataStore';
 import Util from './util';
-import exportCSV from './csv_export_util';
+import exportCSVUtil from './csv_export_util';
 import { Filter } from './Filter';
 
 class BootstrapTable extends Component {
@@ -914,7 +914,7 @@ class BootstrapTable extends Component {
       csvFileName = csvFileName();
     }
 
-    exportCSV(result, keys, csvFileName);
+    exportCSVUtil(result, keys, csvFileName);
   }
 
   handleSearch = searchText => {
@@ -1009,13 +1009,16 @@ class BootstrapTable extends Component {
   }
 
   renderToolBar() {
-    const { selectRow, insertRow, deleteRow, search, children } = this.props;
+    const { exportCSV, selectRow, insertRow, deleteRow, search, children } = this.props;
     const enableShowOnlySelected = selectRow && selectRow.showOnlySelected;
     if (enableShowOnlySelected
       || insertRow
       || deleteRow
       || search
-      || this.props.exportCSV) {
+      || exportCSV
+      || this.props.options.searchPanel
+      || this.props.options.btnGroup
+      || this.props.options.toolBar) {
       let columns;
       if (Array.isArray(children)) {
         columns = children.map((column, r) => {
@@ -1052,7 +1055,7 @@ class BootstrapTable extends Component {
             enableInsert={ insertRow }
             enableDelete={ deleteRow }
             enableSearch={ search }
-            enableExportCSV={ this.props.exportCSV }
+            enableExportCSV={ exportCSV }
             enableShowOnlySelected={ enableShowOnlySelected }
             columns={ columns }
             searchPlaceholder={ this.props.searchPlaceholder }
