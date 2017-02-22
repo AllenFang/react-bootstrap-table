@@ -20,7 +20,7 @@ class TableBody extends Component {
   }
 
   render() {
-    const { cellEdit, beforeShowError } = this.props;
+    const { cellEdit, beforeShowError, x, y, keyBoardNav } = this.props;
     const tableClasses = classSet('table', {
       'table-striped': this.props.striped,
       'table-bordered': this.props.bordered,
@@ -34,14 +34,22 @@ class TableBody extends Component {
     const tableHeader = Utils.renderColGroup(this.props.columns, this.props.selectRow, 'header');
     const inputType = this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
     const CustomComponent = this.props.selectRow.customComponent;
+    const enableKeyBoardNav = (keyBoardNav === true || typeof keyBoardNav === 'object');
+    const customEditAndNavStyle = typeof keyBoardNav === 'object' ?
+      keyBoardNav.customStyleOnEditCell :
+      null;
+    const customNavStyle = typeof keyBoardNav === 'object' ?
+      keyBoardNav.customStyle :
+      null;
     let expandColSpan = this.props.columns.filter(col => !col.hidden).length;
     if (isSelectRowDefined && !this.props.selectRow.hideSelectColumn) {
       expandColSpan += 1;
     }
-
+    let tabIndex = 1;
     const tableRows = this.props.data.map(function(data, r) {
       const tableColumns = this.props.columns.map(function(column, i) {
         const fieldValue = data[column.name];
+        const isFocusCell = r === y && i === x;
         if (column.name !== this.props.keyField && // Key field can't be edit
           column.editable && // column is editable? default is true, user can set it false
           this.state.currEditCell !== null &&
@@ -65,13 +73,16 @@ class TableBody extends Component {
                 format={ column.format ? format : false }
                 key={ i }
                 blurToSave={ cellEdit.blurToSave }
+                onTab={ this.handleEditCell }
                 rowIndex={ r }
                 colIndex={ i }
                 row={ data }
                 fieldValue={ fieldValue }
                 className={ column.editClassName }
                 invalidColumnClassName={ column.invalidEditColumnClassName }
-                beforeShowError={ beforeShowError } />
+                beforeShowError={ beforeShowError }
+                isFocus={ isFocusCell }
+                customStyleWithNav={ customEditAndNavStyle } />
             );
         } else {
           // add by bluespring for className customize
@@ -107,7 +118,13 @@ class TableBody extends Component {
               width={ column.width }
               onClick={ this.handleClickCell }
               attrs={ column.attrs }
-              style={ column.style }>
+              style={ column.style }
+              tabIndex={ (tabIndex++) + '' }
+              isFocus={ isFocusCell }
+              keyBoardNav={ enableKeyBoardNav }
+              onKeyDown={ this.handleCellKeyDown }
+              customNavStyle={ customNavStyle }
+              row={ data }>
               { columnChild }
             </TableColumn>
           );
@@ -178,6 +195,38 @@ class TableBody extends Component {
     );
   }
 
+  handleCellKeyDown = (e, lastEditCell) => {
+    e.preventDefault();
+    const { keyBoardNav, onNavigateCell, cellEdit } = this.props;
+    let offset;
+    if (e.keyCode === 37) {
+      offset = { x: -1, y: 0 };
+    } else if (e.keyCode === 38) {
+      offset = { x: 0, y: -1 };
+    } else if (e.keyCode === 39 || e.keyCode === 9) {
+      offset = { x: 1, y: 0 };
+      if (e.keyCode === 9 && lastEditCell) {
+        offset = {
+          ...offset,
+          lastEditCell
+        };
+      }
+    } else if (e.keyCode === 40) {
+      offset = { x: 0, y: 1 };
+    } else if (e.keyCode === 13) {
+      const enterToEdit = typeof keyBoardNav === 'object' ?
+        keyBoardNav.enterToEdit :
+        false;
+      if (cellEdit && enterToEdit) {
+        this.handleEditCell(e.target.parentElement.rowIndex + 1,
+          e.currentTarget.cellIndex, '', e);
+      }
+    }
+    if (offset && keyBoardNav) {
+      onNavigateCell(offset);
+    }
+  }
+
   handleRowMouseOut = (rowIndex, event) => {
     const targetRow = this.props.data[rowIndex];
     this.props.onRowMouseOut(targetRow, event);
@@ -188,8 +237,10 @@ class TableBody extends Component {
     this.props.onRowMouseOver(targetRow, event);
   }
 
-  handleRowClick = rowIndex => {
-    this.props.onRowClick(this.props.data[rowIndex - 1]);
+  handleRowClick = (rowIndex, cellIndex) => {
+    const { onRowClick } = this.props;
+    onRowClick(this.props.data[rowIndex - 1],
+      rowIndex - 1, this._isSelectRowDefined() ? cellIndex - 1 : cellIndex);
   }
 
   handleRowDoubleClick = rowIndex => {
@@ -232,7 +283,6 @@ class TableBody extends Component {
     } = this.props;
     const selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
     columnIndex = this._isSelectRowDefined() ? columnIndex - 1 : columnIndex;
-
     if (expandableRow &&
       selectRowAndExpand &&
       (expandBy === Const.EXPAND_BY_ROW ||
@@ -251,12 +301,24 @@ class TableBody extends Component {
     }
   }
 
-  handleEditCell = (rowIndex, columnIndex, e) => {
+  handleEditCell = (rowIndex, columnIndex, action, e) => {
     if (this._isSelectRowDefined()) {
       columnIndex--;
       if (this.props.selectRow.hideSelectColumn) columnIndex++;
     }
     rowIndex--;
+
+    if (action === 'tab') {
+      this.handleCompleteEditCell(e.target.value, rowIndex, columnIndex - 1);
+      if (columnIndex >= this.props.columns.length) {
+        rowIndex = rowIndex + 1;
+        columnIndex = 1;
+        this.handleCellKeyDown(e, true);
+      } else {
+        this.handleCellKeyDown(e);
+      }
+    }
+
     const stateObj = {
       currEditCell: {
         rid: rowIndex,
@@ -341,6 +403,10 @@ TableBody.propTypes = {
   expandBy: PropTypes.string,
   expanding: PropTypes.array,
   onExpand: PropTypes.func,
-  beforeShowError: PropTypes.func
+  beforeShowError: PropTypes.func,
+  keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
+  x: PropTypes.number,
+  y: PropTypes.number,
+  onNavigateCell: PropTypes.func
 };
 export default TableBody;

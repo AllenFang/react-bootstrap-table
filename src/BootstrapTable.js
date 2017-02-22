@@ -10,7 +10,7 @@ import ToolBar from './toolbar/ToolBar';
 import TableFilter from './TableFilter';
 import { TableDataStore } from './store/TableDataStore';
 import Util from './util';
-import exportCSV from './csv_export_util';
+import exportCSVUtil from './csv_export_util';
 import { Filter } from './Filter';
 
 class BootstrapTable extends Component {
@@ -22,7 +22,7 @@ class BootstrapTable extends Component {
     if (Util.canUseDOM()) {
       this.isIE = document.documentMode;
     }
-    this.store = new TableDataStore(this.props.data.slice());
+    this.store = new TableDataStore(this.props.data ? this.props.data.slice() : []);
 
     this.initTable(this.props);
 
@@ -47,7 +47,9 @@ class BootstrapTable extends Component {
       expanding: this.props.options.expanding || [],
       sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
       selectedRowKeys: this.store.getSelectedRowKeys(),
-      reset: false
+      reset: false,
+      x: this.props.keyBoardNav ? 0 : -1,
+      y: this.props.keyBoardNav ? 0 : -1
     };
   }
 
@@ -329,10 +331,15 @@ class BootstrapTable extends Component {
     const colGroups = Util.renderColGroup(columns, this.props.selectRow);
     let sortIndicator = this.props.options.sortIndicator;
     if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
+    const { paginationPosition = Const.PAGINATION_POS_BOTTOM } = this.props.options;
+    const showPaginationOnTop = paginationPosition !== Const.PAGINATION_POS_BOTTOM;
+    const showPaginationOnBottom = paginationPosition !== Const.PAGINATION_POS_TOP;
+
     return (
-      <div className={ classSet('react-bs-table-container', this.props.containerClass) }
+      <div className={ classSet('react-bs-table-container', this.props.className, this.props.containerClass) }
         style={ this.props.containerStyle }>
         { toolBar }
+        { showPaginationOnTop ? pagination : null }
         <div ref='table'
             className={ classSet('react-bs-table', this.props.tableContainerClass) }
             style={ { ...style, ...this.props.tableStyle } }
@@ -386,10 +393,14 @@ class BootstrapTable extends Component {
             withoutNoDataText={ this.props.options.withoutNoDataText }
             expanding={ this.state.expanding }
             onExpand={ this.handleExpandRow }
-            beforeShowError={ this.props.options.beforeShowError } />
+            beforeShowError={ this.props.options.beforeShowError }
+            keyBoardNav={ this.props.keyBoardNav }
+            onNavigateCell={ this.handleNavigateCell }
+            x={ this.state.x }
+            y={ this.state.y } />
         </div>
         { tableFilter }
-        { pagination }
+        { showPaginationOnBottom ? pagination : null }
       </div>
     );
   }
@@ -507,9 +518,83 @@ class BootstrapTable extends Component {
     }
   }
 
-  handleRowClick = row => {
-    if (this.props.options.onRowClick) {
-      this.props.options.onRowClick(row);
+  handleNavigateCell = ({ x: offSetX, y: offSetY, lastEditCell }) => {
+    const { pagination } = this.props;
+    let { x, y, currPage } = this.state;
+    x += offSetX;
+    y += offSetY;
+    // currPage += 1;
+    // console.log(currPage);
+
+    const columns = this.store.getColInfos();
+    const visibleRowSize = this.state.data.length;
+    const visibleColumnSize = Object.keys(columns).filter(k => !columns[k].hidden).length;
+
+    if (y >= visibleRowSize) {
+      currPage++;
+      const lastPage = pagination ? this.refs.pagination.getLastPage() : -1;
+      if (currPage <= lastPage) {
+        this.handlePaginationData(currPage, this.state.sizePerPage);
+      } else {
+        return;
+      }
+      y = 0;
+    } else if (y < 0) {
+      currPage--;
+      if (currPage > 0) {
+        this.handlePaginationData(currPage, this.state.sizePerPage);
+      } else {
+        return;
+      }
+      y = visibleRowSize - 1;
+    } else if (x >= visibleColumnSize) {
+      if ((y + 1) === visibleRowSize) {
+        currPage++;
+        const lastPage = pagination ? this.refs.pagination.getLastPage() : -1;
+        if (currPage <= lastPage) {
+          this.handlePaginationData(currPage, this.state.sizePerPage);
+        } else {
+          return;
+        }
+        y = 0;
+      } else {
+        y++;
+      }
+      x = lastEditCell ? 1 : 0;
+    } else if (x < 0) {
+      x = visibleColumnSize - 1;
+      if (y === 0) {
+        currPage--;
+        if (currPage > 0) {
+          this.handlePaginationData(currPage, this.state.sizePerPage);
+        } else {
+          return;
+        }
+        y = this.state.sizePerPage - 1;
+      } else {
+        y--;
+      }
+    }
+    this.setState({
+      x, y, currPage, reset: false
+    });
+  }
+
+  handleRowClick = (row, rowIndex, cellIndex) => {
+    const { options, keyBoardNav } = this.props;
+    if (options.onRowClick) {
+      options.onRowClick(row);
+    }
+    if (keyBoardNav) {
+      let { clickToNav } = typeof keyBoardNav === 'object' ? keyBoardNav : {};
+      clickToNav = clickToNav === false ? clickToNav : true;
+      if (clickToNav) {
+        this.setState({
+          x: cellIndex,
+          y: rowIndex,
+          reset: false
+        });
+      }
     }
   }
 
@@ -829,7 +914,7 @@ class BootstrapTable extends Component {
       csvFileName = csvFileName();
     }
 
-    exportCSV(result, keys, csvFileName);
+    exportCSVUtil(result, keys, csvFileName);
   }
 
   handleSearch = searchText => {
@@ -891,12 +976,15 @@ class BootstrapTable extends Component {
         dataSize = this.store.getDataNum();
       }
       const { options } = this.props;
+      const withFirstAndLast = options.withFirstAndLast === undefined ? true : options.withFirstAndLast;
       if (Math.ceil(dataSize / this.state.sizePerPage) <= 1 &&
         this.props.ignoreSinglePage) return null;
       return (
         <div className='react-bs-table-pagination'>
           <PaginationList
             ref='pagination'
+            withFirstAndLast={ withFirstAndLast }
+            alwaysShowAllBtns={ options.alwaysShowAllBtns }
             currPage={ this.state.currPage }
             changePage={ this.handlePaginationData }
             sizePerPage={ this.state.sizePerPage }
@@ -910,7 +998,10 @@ class BootstrapTable extends Component {
             nextPage={ options.nextPage || Const.NEXT_PAGE }
             firstPage={ options.firstPage || Const.FIRST_PAGE }
             lastPage={ options.lastPage || Const.LAST_PAGE }
-            hideSizePerPage={ options.hideSizePerPage }/>
+            hideSizePerPage={ options.hideSizePerPage }
+            sizePerPageDropDown={ options.sizePerPageDropDown }
+            paginationPanel={ options.paginationPanel }
+            open={ false }/>
         </div>
       );
     }
@@ -918,13 +1009,16 @@ class BootstrapTable extends Component {
   }
 
   renderToolBar() {
-    const { selectRow, insertRow, deleteRow, search, children } = this.props;
+    const { exportCSV, selectRow, insertRow, deleteRow, search, children } = this.props;
     const enableShowOnlySelected = selectRow && selectRow.showOnlySelected;
     if (enableShowOnlySelected
       || insertRow
       || deleteRow
       || search
-      || this.props.exportCSV) {
+      || exportCSV
+      || this.props.options.searchPanel
+      || this.props.options.btnGroup
+      || this.props.options.toolBar) {
       let columns;
       if (Array.isArray(children)) {
         columns = children.map((column, r) => {
@@ -956,11 +1050,12 @@ class BootstrapTable extends Component {
             ref='toolbar'
             defaultSearch={ this.props.options.defaultSearch }
             clearSearch={ this.props.options.clearSearch }
+            searchPosition={ this.props.options.searchPosition }
             searchDelayTime={ this.props.options.searchDelayTime }
             enableInsert={ insertRow }
             enableDelete={ deleteRow }
             enableSearch={ search }
-            enableExportCSV={ this.props.exportCSV }
+            enableExportCSV={ exportCSV }
             enableShowOnlySelected={ enableShowOnlySelected }
             columns={ columns }
             searchPlaceholder={ this.props.searchPlaceholder }
@@ -975,6 +1070,19 @@ class BootstrapTable extends Component {
             onSearch={ this.handleSearch }
             onExportCSV={ this.handleExportCSV }
             onShowOnlySelected={ this.handleShowOnlySelected }
+            insertModalHeader={ this.props.options.insertModalHeader }
+            insertModalFooter={ this.props.options.insertModalFooter }
+            insertModalBody={ this.props.options.insertModalBody }
+            insertModal={ this.props.options.insertModal }
+            insertBtn={ this.props.options.insertBtn }
+            deleteBtn={ this.props.options.deleteBtn }
+            showSelectedOnlyBtn={ this.props.options.showSelectedOnlyBtn }
+            exportCSVBtn={ this.props.options.exportCSVBtn }
+            clearSearchBtn={ this.props.options.clearSearchBtn }
+            searchField={ this.props.options.searchField }
+            searchPanel={ this.props.options.searchPanel }
+            btnGroup={ this.props.options.btnGroup }
+            toolBar={ this.props.options.toolBar }
             reset={ this.state.reset } />
         </div>
       );
@@ -1135,6 +1243,7 @@ BootstrapTable.propTypes = {
   condensed: PropTypes.bool,
   pagination: PropTypes.bool,
   printable: PropTypes.bool,
+  keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
   searchPlaceholder: PropTypes.string,
   selectRow: PropTypes.shape({
     mode: PropTypes.oneOf([
@@ -1197,7 +1306,14 @@ BootstrapTable.propTypes = {
     sizePerPageList: PropTypes.array,
     sizePerPage: PropTypes.number,
     paginationSize: PropTypes.number,
+    paginationPosition: PropTypes.oneOf([
+      Const.PAGINATION_POS_TOP,
+      Const.PAGINATION_POS_BOTTOM,
+      Const.PAGINATION_POS_BOTH
+    ]),
     hideSizePerPage: PropTypes.bool,
+    alwaysShowAllBtns: PropTypes.bool,
+    withFirstAndLast: PropTypes.bool,
     onSortChange: PropTypes.func,
     onPageChange: PropTypes.func,
     onSizePerPageList: PropTypes.func,
@@ -1221,6 +1337,22 @@ BootstrapTable.propTypes = {
     closeText: PropTypes.string,
     ignoreEditable: PropTypes.bool,
     defaultSearch: PropTypes.string,
+    insertModalHeader: PropTypes.func,
+    insertModalBody: PropTypes.func,
+    insertModalFooter: PropTypes.func,
+    insertModal: PropTypes.func,
+    insertBtn: PropTypes.func,
+    deleteBtn: PropTypes.func,
+    showSelectedOnlyBtn: PropTypes.func,
+    exportCSVBtn: PropTypes.func,
+    clearSearchBtn: PropTypes.func,
+    searchField: PropTypes.func,
+    searchPanel: PropTypes.func,
+    btnGroup: PropTypes.func,
+    toolBar: PropTypes.func,
+    sizePerPageDropDown: PropTypes.func,
+    paginationPanel: PropTypes.func,
+    searchPosition: PropTypes.string,
     expandRowBgColor: PropTypes.string,
     expandBy: PropTypes.string,
     expanding: PropTypes.array,
@@ -1247,6 +1379,7 @@ BootstrapTable.defaultProps = {
   condensed: false,
   pagination: false,
   printable: false,
+  keyBoardNav: false,
   searchPlaceholder: undefined,
   selectRow: {
     mode: Const.ROW_SELECT_NONE,
@@ -1309,7 +1442,10 @@ BootstrapTable.defaultProps = {
     sizePerPageList: Const.SIZE_PER_PAGE_LIST,
     sizePerPage: undefined,
     paginationSize: Const.PAGINATION_SIZE,
+    paginationPosition: Const.PAGINATION_POS_BOTTOM,
     hideSizePerPage: false,
+    alwaysShowAllBtns: false,
+    withFirstAndLast: true,
     onSizePerPageList: undefined,
     noDataText: undefined,
     withoutNoDataText: false,
@@ -1327,6 +1463,22 @@ BootstrapTable.defaultProps = {
     closeText: Const.CLOSE_BTN_TEXT,
     ignoreEditable: false,
     defaultSearch: '',
+    insertModalHeader: undefined,
+    insertModalBody: undefined,
+    insertModalFooter: undefined,
+    insertModal: undefined,
+    insertBtn: undefined,
+    deleteBtn: undefined,
+    showSelectedOnlyBtn: undefined,
+    exportCSVBtn: undefined,
+    clearSearchBtn: undefined,
+    searchField: undefined,
+    searchPanel: undefined,
+    btnGroup: undefined,
+    toolBar: undefined,
+    sizePerPageDropDown: undefined,
+    paginationPanel: undefined,
+    searchPosition: 'right',
     expandRowBgColor: undefined,
     expandBy: Const.EXPAND_BY_ROW,
     expanding: [],

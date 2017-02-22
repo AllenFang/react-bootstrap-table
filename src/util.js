@@ -52,8 +52,8 @@ export default {
       selectRow.mode === Const.ROW_SELECT_MULTI;
     if (isSelectRowDefined) {
       const style = {
-        width: selectRow.columnWidth || 30,
-        minWidth: selectRow.columnWidth || 30
+        width: selectRow.columnWidth || '30px',
+        minWidth: selectRow.columnWidth || '30px'
       };
       if (!selectRow.hideSelectColumn) {
         selectRowHeader = (<col style={ style } key={ -1 }></col>);
@@ -64,10 +64,11 @@ export default {
         display: column.hidden ? 'none' : null
       };
       if (column.width) {
-        style.width = column.width;
+        const width = !isNaN(column.width) ? column.width + 'px' : column.width;
+        style.width = width;
         /** add min-wdth to fix user assign column width
         not eq offsetWidth in large column table **/
-        style.minWidth = column.width;
+        style.minWidth = width;
       }
       return (<col style={ style } key={ i } className={ column.className }></col>);
     });

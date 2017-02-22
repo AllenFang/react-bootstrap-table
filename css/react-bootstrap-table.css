@@ -45,13 +45,29 @@
   width: 100%;
 }
 
+.react-bootstrap-table-page-btns-ul {
+  float: right;
+  /* override the margin-top defined in .pagination class in bootstrap. */
+  margin-top: 0;
+}
+
 .react-bs-table .table-bordered {
     border: 0;
+    outline: none !important;
 }
 
 .react-bs-table .table-bordered > thead > tr > th,
 .react-bs-table .table-bordered > thead > tr > td {
   border-bottom-width: 2px;
+}
+
+.react-bs-table .table-bordered > tbody > tr > td {
+  outline: none !important;
+}
+
+.react-bs-table .table-bordered > tbody > tr > td.default-focus-cell {
+  outline: 3px solid cornflowerblue !important;
+  outline-offset: -1px;
 }
 
 .react-bs-table .table-bordered > tfoot > tr > th,
@@ -157,6 +173,47 @@
 
 .react-bs-table-no-data {
   text-align: center;
+}
+
+
+.ReactModal__Overlay {
+  -webkit-perspective: 600;
+  perspective: 600;
+  opacity: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+  transition: opacity 150ms ease-out;
+}
+
+.ReactModal__Content {
+  -webkit-transform: scale(0.5) rotateX(-30deg);
+  transform: scale(0.5) rotateX(-30deg);
+}
+
+.ReactModal__Content--after-open {
+  -webkit-transform: scale(1) rotateX(0deg);
+  transform: scale(1) rotateX(0deg);
+  transition: all 150ms ease-in;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
+.ReactModal__Content--before-close {
+  -webkit-transform: scale(0.5) rotateX(30deg);
+  transform: scale(0.5) rotateX(30deg);
+  transition: all 150ms ease-in;
+}
+
+.ReactModal__Content.modal-dialog {
+  border: none;
+  background-color: transparent;
 }
 
 /*error tip style*/

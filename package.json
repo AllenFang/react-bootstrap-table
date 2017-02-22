@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-table",
-  "version": "2.11.2",
+  "version": "3.0.0",
   "description": "It's a react table for bootstrap",
   "main": "./lib/index.js",
   "repository": {
@@ -59,6 +59,7 @@
     "react-hot-loader": "^3.0.0-beta.6",
     "react-router": "^3.0.0",
     "style-loader": "^0.13.0",
+    "styled-components": "^1.2.1",
     "toastr": "^2.1.2",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.0.0",
@@ -67,6 +68,7 @@
   },
   "dependencies": {
     "classnames": "^2.1.2",
+    "react-modal": "^1.4.0",
     "@allenfang/react-toastr": "2.8.2"
   },
   "peerDependencies": {

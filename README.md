@@ -9,23 +9,24 @@
 [![peerDependency Status][peer-deps-badge]][peer-deps]   
 It's a [react.js](http://facebook.github.io/react/) table for bootstrap, named react-bootstrap-table. It's a configurable, functional table component and make you build a Bootstrap Table more efficiency and easy in your React application, However ```react-bootstrap-table``` support these features:
 
-- striped, borderless, condensed table
-- column align, hidden, width, sort, title
-- scrolling table
-- cell format
-- pagination
-- row selection
-- column filter with multi type
-- cell edit with multi type editor
-- insert & delete Row
-- table, row and column styling
-- global search
-- export to CSV
-- rich function hooks
-- large columns table
-- header colum span
-- remote mode
-- expandable row
+- Striped, Borderless, Condensed table
+- Column align, hidden, width, sort, title, styling
+- Scrolling table
+- Cell format
+- Pagination
+- Row selection
+- Column filter with multi type
+- Cell edit with multi type editor
+- Insert & delete Row
+- Table, row and column styling
+- Search
+- Export to CSV
+- Rich function hooks
+- Header colum span
+- Remote mode
+- Expandable row
+- Key board Navigation
+- Customization
 
 ![Example](http://i.imgur.com/Ov1wMse.png)
 Explore more example on [examples](https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js) folder</br>
@@ -34,15 +35,16 @@ Check [this](http://allenfang.github.io/react-bootstrap-table/advance.html) for 
 Check the <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/CHANGELOG.md'>CHANGELOG</a> for more detail release notes.
 
 ## Notes
-***```v2.10.0-beta.1``` is a revised version for fixing couples unalign column and incorrect height etc. If you have any unalign problems before `v2.9.2`, give this beta version a try and any feedback is welcome***
+***```v3.0.0``` released, check [examples](https://github.com/AllenFang/react-bootstrap-table/tree/v3.0.0-dev/examples/js/custom) to learn how to customize the component. following
+is the major things we completed in this release***
+- Remove the `bootstrap.js` and `jQuery` dependencies
+- More easy and have ability to customize the components(search, pagination, insert modal etc.)
 
-***```v3.0.0-beta.7``` released, check [release page](https://github.com/AllenFang/react-bootstrap-table/releases). [There](https://github.com/AllenFang/react-bootstrap-table/tree/v3.0.0-dev/examples/js/custom) are a lots of example for customization component, you can also check the [online](http://allenfang.github.io/react-bootstrap-table/example.html#custom) version<br/>***
+***```v2.10.0-beta.1``` is a revised version for fixing couples unalign column and incorrect height etc. If you have any unalign problems before `v2.9.2`, give this beta version a try and any feedback is welcome***
 
 ***```v3.0.0``` is under planning, check [Milestone to v3.0.0](https://github.com/AllenFang/react-bootstrap-table/issues/497).<br/>***
 
 ***After ```v2.4.4```, we move the css files to ```dist``` folder for allowing this repo can be hosted on [cdnjs](https://github.com/cdnjs/cdnjs)<br/>***
-
-***```v2.0.0``` has been released, the main patches are fixing the unalign or wrong size column on different browsers and improving the table structure. Please check [this](https://github.com/AllenFang/react-bootstrap-table/issues/331) for more detail explanation.<br/>***
 
 ## Development
 ```react-bootstrap-table``` dependencies on react.js and Bootstrap 3, also written by ES6 and use gulp and browserify for building and bundling.
@@ -141,7 +143,7 @@ The example source codes is in the [examples](https://github.com/AllenFang/react
 $ git clone https://github.com/AllenFang/react-bootstrap-table.git
 $ cd react-bootstrap-table
 $ npm install
-$ gulp example-server #after start, open browser and go to http://localhost:3004
+$ npm start # after start, open browser and go to http://localhost:3004
 ```
 
 ### [Documentation](http://allenfang.github.io/react-bootstrap-table/docs.html)

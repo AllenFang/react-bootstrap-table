@@ -22,7 +22,9 @@ import Other from './others/demo';
 import Complex from './complex/demo';
 import Remote from './remote/demo';
 import Expand from './expandRow/demo';
+import Custom from './custom/demo';
 import Span from './column-header-span/demo';
+import KeyBoardNav from './keyboard-nav/demo';
 
 const renderApp = () => {
   ReactDOM.render(
@@ -47,7 +49,9 @@ const renderApp = () => {
             <Route path='others' component={ Other } />
             <Route path='complex' component={ Complex } />
             <Route path='remote' component={ Remote } />
+            <Route path='custom' component={ Custom } />
             <Route path='expandRow' component={ Expand } />
+            <Route path='keyboard-nav' component={ KeyBoardNav } />
           </Route>
           <Route path='*' component={ PageNotFound }/>
         </Route>

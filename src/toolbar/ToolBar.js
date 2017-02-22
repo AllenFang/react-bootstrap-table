@@ -1,8 +1,18 @@
+/* eslint no-console: 0 */
+
 import React, { Component, PropTypes } from 'react';
-import classSet from 'classnames';
+import Modal from 'react-modal';
+// import classSet from 'classnames';
 import Const from '../Const';
-import editor from '../Editor';
+// import editor from '../Editor';
 import Notifier from '../Notification.js';
+import InsertModal from './InsertModal';
+import InsertButton from './InsertButton';
+import DeleteButton from './DeleteButton';
+import ExportCSVButton from './ExportCSVButton';
+import ShowSelectedOnlyButton from './ShowSelectedOnlyButton';
+import SearchField from './SearchField';
+import ClearSearchButton from './ClearSearchButton';
 
 class ToolBar extends Component {
 
@@ -13,7 +23,7 @@ class ToolBar extends Component {
     this.timeouteClear = 0;
     this.modalClassName;
     this.state = {
-      isInsertRowTrigger: true,
+      isInsertModalOpen: false,
       validateState: null,
       shakeEditor: false,
       showSelected: false
@@ -23,7 +33,8 @@ class ToolBar extends Component {
   componentWillMount() {
     const delay = this.props.searchDelayTime ? this.props.searchDelayTime : 0;
     this.debounceCallback = this.handleDebounce(() => {
-      this.props.onSearch(this.refs.seachInput.value);
+      const { seachInput } = this.refs;
+      seachInput && this.props.onSearch(seachInput.getValue());
     },
       delay
     );
@@ -40,8 +51,9 @@ class ToolBar extends Component {
   }
 
   setSearchInput(text) {
-    if (this.refs.seachInput.value !== text) {
-      this.refs.seachInput.value = text;
+    const { seachInput } = this.refs;
+    if (seachInput && seachInput.value !== text) {
+      seachInput.value = text;
     }
   }
 
@@ -52,60 +64,36 @@ class ToolBar extends Component {
     }
   }
 
-  // modified by iuculanop
-  // BEGIN
-  checkAndParseForm() {
-    const newObj = {};
+  validateNewRow(newRow) {
     const validateState = {};
     let isValid = true;
-    let checkVal;
+    let tempMsg;
     let responseType;
-    let tempValue;
 
-    this.props.columns.forEach(function(column, i) {
-      if (column.autoValue) {
-        // when you want same auto generate value and not allow edit, example ID field
-        const time = new Date().getTime();
-        tempValue = typeof column.autoValue === 'function' ?
-          column.autoValue() :
-          (`autovalue-${time}`);
-      } else if (column.hiddenOnInsert || !column.field) {
-        tempValue = '';
-      } else {
-        const dom = this.refs[column.field + i];
-        tempValue = dom.value;
-
-        if (column.editable && column.editable.type === 'checkbox') {
-          const values = tempValue.split(':');
-          tempValue = dom.checked ? values[0] : values[1];
-        }
-
-        if (column.editable && column.editable.validator) { // process validate
-          checkVal = column.editable.validator(tempValue);
-          responseType = typeof checkVal;
-          if (responseType !== 'object' && checkVal !== true) {
-            this.refs.notifier.notice(
+    this.props.columns.forEach(column => {
+      if (column.editable && column.editable.validator) { // process validate
+        tempMsg = column.editable.validator(newRow[column.field]);
+        responseType = typeof tempMsg;
+        if (responseType !== 'object' && tempMsg !== true) {
+          this.refs.notifier.notice(
               'error',
               'Form validate errors, please checking!',
               'Pressed ESC can cancel');
-            isValid = false;
-            validateState[column.field] = checkVal;
-          } else if (responseType === 'object' && checkVal.isValid !== true) {
-            this.refs.notifier.notice(
-              checkVal.notification.type,
-              checkVal.notification.msg,
-              checkVal.notification.title);
-            isValid = false;
-            validateState[column.field] = checkVal.notification.msg;
-          }
+          isValid = false;
+          validateState[column.field] = tempMsg;
+        } else if (responseType === 'object' && tempMsg.isValid !== true) {
+          this.refs.notifier.notice(
+              tempMsg.notification.type,
+              tempMsg.notification.msg,
+              tempMsg.notification.title);
+          isValid = false;
+          validateState[column.field] = tempMsg.notification.msg;
         }
       }
-
-      newObj[column.field] = tempValue;
-    }, this);
+    });
 
     if (isValid) {
-      return newObj;
+      return true;
     } else {
       this.clearTimeout();
       // show error in form and shake it
@@ -116,14 +104,12 @@ class ToolBar extends Component {
       return null;
     }
   }
-  // END
 
-  handleSaveBtnClick = () => {
-    const newObj = this.checkAndParseForm();
-    if (!newObj) { // validate errors
+  handleSaveBtnClick = (newRow) => {
+    if (!this.validateNewRow(newRow)) { // validation fail
       return;
     }
-    const msg = this.props.onAddRow(newObj);
+    const msg = this.props.onAddRow(newRow);
     if (msg) {
       this.refs.notifier.notice('error', msg, 'Pressed ESC can cancel');
       this.clearTimeout();
@@ -140,14 +126,18 @@ class ToolBar extends Component {
       // reset state and hide modal hide
       this.setState({
         validateState: null,
-        shakeEditor: false
-      }, () => {
-        document.querySelector('.modal-backdrop').click();
-        document.querySelector('.' + this.modalClassName).click();
+        shakeEditor: false,
+        isInsertModalOpen: false
       });
-      // reset form
-      this.refs.form.reset();
     }
+  }
+
+  handleModalClose = () => {
+    this.setState({ isInsertModalOpen: false });
+  }
+
+  handleModalOpen = () => {
+    this.setState({ isInsertModalOpen: true });
   }
 
   handleShowOnlyToggle = () => {
@@ -199,79 +189,127 @@ class ToolBar extends Component {
   }
 
   handleClearBtnClick = () => {
-    this.refs.seachInput.value = '';
+    const { seachInput } = this.refs;
+    seachInput && seachInput.setValue('');
     this.props.onSearch('');
   }
 
   render() {
     this.modalClassName = 'bs-table-modal-sm' + ToolBar.modalSeq++;
+    let toolbar = null;
+    let btnGroup = null;
     let insertBtn = null;
     let deleteBtn = null;
-    let exportCSV = null;
+    let exportCSVBtn = null;
     let showSelectedOnlyBtn = null;
 
     if (this.props.enableInsert) {
-      insertBtn = (
-        <button type='button'
-          className='btn btn-info react-bs-table-add-btn'
-          data-toggle='modal'
-          data-target={ '.' + this.modalClassName }>
-          <i className='glyphicon glyphicon-plus'></i> { this.props.insertText }
-        </button>
-      );
+      if (this.props.insertBtn) {
+        insertBtn = this.renderCustomBtn(this.props.insertBtn,
+          [ this.handleModalOpen ], InsertButton.name, 'onClick', this.handleModalOpen);
+      } else {
+        insertBtn = (
+          <InsertButton btnText={ this.props.insertText }
+            onClick={ this.handleModalOpen }/>
+        );
+      }
     }
 
     if (this.props.enableDelete) {
-      deleteBtn = (
-        <button type='button'
-          className='btn btn-warning react-bs-table-del-btn'
-          data-toggle='tooltip'
-          data-placement='right'
-          title='Drop selected row'
-          onClick={ this.handleDropRowBtnClick }>
-          <i className='glyphicon glyphicon-trash'></i> { this.props.deleteText }
-        </button>
-      );
+      if (this.props.deleteBtn) {
+        deleteBtn = this.renderCustomBtn(this.props.deleteBtn,
+          [ this.handleDropRowBtnClick ], DeleteButton.name, 'onClick', this.handleDropRowBtnClick);
+      } else {
+        deleteBtn = (
+          <DeleteButton btnText={ this.props.deleteText }
+            onClick={ this.handleDropRowBtnClick }/>
+        );
+      }
     }
 
     if (this.props.enableShowOnlySelected) {
-      showSelectedOnlyBtn = (
-        <button type='button'
-          onClick={ this.handleShowOnlyToggle }
-          className='btn btn-primary'
-          data-toggle='button'
-          aria-pressed='false'>
-          { this.state.showSelected ? Const.SHOW_ALL : Const.SHOW_ONLY_SELECT }
-        </button>
-      );
+      if (this.props.showSelectedOnlyBtn) {
+        showSelectedOnlyBtn = this.renderCustomBtn(this.props.showSelectedOnlyBtn,
+          [ this.handleShowOnlyToggle, this.state.showSelected ], ShowSelectedOnlyButton.name,
+          'onClick', this.handleShowOnlyToggle);
+      } else {
+        showSelectedOnlyBtn = (
+          <ShowSelectedOnlyButton toggle={ this.state.showSelected }
+            onClick={ this.handleShowOnlyToggle }/>
+        );
+      }
     }
 
     if (this.props.enableExportCSV) {
-      exportCSV = (
-        <button type='button'
-          className='btn btn-success hidden-print'
-          onClick={ this.handleExportCSV }>
-            <i className='glyphicon glyphicon-export'></i>{ this.props.exportCSVText }
-        </button>
+      if (this.props.exportCSVBtn) {
+        exportCSVBtn = this.renderCustomBtn(this.props.exportCSVBtn,
+          [ this.handleExportCSV ], ExportCSVButton.name, 'onClick', this.handleExportCSV);
+      } else {
+        exportCSVBtn = (
+          <ExportCSVButton btnText={ this.props.exportCSVText }
+            onClick={ this.handleExportCSV }/>
+        );
+      }
+    }
+
+    if (this.props.btnGroup) {
+      btnGroup = this.props.btnGroup({
+        exportCSVBtn,
+        insertBtn,
+        deleteBtn,
+        showSelectedOnlyBtn
+      });
+    } else {
+      btnGroup = (
+        <div className='btn-group btn-group-sm' role='group'>
+          { exportCSVBtn }
+          { insertBtn }
+          { deleteBtn }
+          { showSelectedOnlyBtn }
+        </div>
       );
     }
 
-    const searchTextInput = this.renderSearchPanel();
+    const [ searchPanel, searchField, clearBtn ] = this.renderSearchPanel();
     const modal = this.props.enableInsert ? this.renderInsertRowModal() : null;
+
+    if (this.props.toolBar) {
+      toolbar = this.props.toolBar({
+        components: {
+          exportCSVBtn,
+          insertBtn,
+          deleteBtn,
+          showSelectedOnlyBtn,
+          searchPanel,
+          btnGroup,
+          searchField,
+          clearBtn
+        },
+        event: {
+          openInsertModal: this.handleModalOpen,
+          closeInsertModal: this.handleModalClose,
+          dropRow: this.handleDropRowBtnClick,
+          showOnlyToogle: this.handleShowOnlyToggle,
+          exportCSV: this.handleExportCSV,
+          search: this.props.onSearch
+        }
+      });
+    } else {
+      toolbar = (
+        <div>
+          <div className='col-xs-6 col-sm-6 col-md-6 col-lg-8'>
+            { this.props.searchPosition === 'left' ? searchPanel : btnGroup }
+          </div>
+          <div className='col-xs-6 col-sm-6 col-md-6 col-lg-4'>
+            { this.props.searchPosition === 'left' ? btnGroup : searchPanel }
+          </div>
+        </div>
+      );
+    }
 
     return (
       <div className='row'>
-        <div className='col-xs-12 col-sm-6 col-md-6 col-lg-8'>
-          <div className='btn-group btn-group-sm' role='group'>
-            { exportCSV }
-            { insertBtn }
-            { deleteBtn }
-            { showSelectedOnlyBtn }
-          </div>
-        </div>
-        <div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-          { searchTextInput }
-        </div>
+        { toolbar }
         <Notifier ref='notifier' />
         { modal }
       </div>
@@ -282,107 +320,120 @@ class ToolBar extends Component {
     if (this.props.enableSearch) {
       let classNames = 'form-group form-group-sm react-bs-table-search-form';
       let clearBtn = null;
+      let searchField = null;
+      let searchPanel = null;
       if (this.props.clearSearch) {
-        clearBtn = (
-          <span className='input-group-btn'>
-            <button
-              className='btn btn-default'
-              type='button'
-              onClick={ this.handleClearBtnClick }>
-              Clear
-            </button>
-          </span>
-        );
+        if (this.props.clearSearchBtn) {
+          clearBtn = this.renderCustomBtn(this.props.clearSearchBtn,
+            [ this.handleClearBtnClick ], ClearSearchButton.name, 'onClick', this.handleClearBtnClick); /* eslint max-len: 0*/
+        } else {
+          clearBtn = (
+            <ClearSearchButton onClick={ this.handleClearBtnClick }/>
+          );
+        }
         classNames += ' input-group input-group-sm';
       }
 
-      return (
-        <div className={ classNames }>
-          <input ref='seachInput'
-            className='form-control'
-            type='text'
+      if (this.props.searchField) {
+        searchField = this.props.searchField({
+          search: this.handleKeyUp,
+          defaultValue: this.props.defaultSearch,
+          placeholder: this.props.searchPlaceholder
+        });
+        if (searchField.type.name === SearchField.name) {
+          searchField = React.cloneElement(searchField, {
+            ref: 'seachInput',
+            onKeyUp: this.handleKeyUp
+          });
+        } else {
+          searchField = React.cloneElement(searchField, {
+            ref: 'seachInput'
+          });
+        }
+      } else {
+        searchField = (
+          <SearchField ref='seachInput'
             defaultValue={ this.props.defaultSearch }
-            placeholder={ this.props.searchPlaceholder ? this.props.searchPlaceholder : 'Search' }
+            placeholder={ this.props.searchPlaceholder }
             onKeyUp={ this.handleKeyUp }/>
-            { clearBtn }
-        </div>
-      );
+        );
+      }
+      if (this.props.searchPanel) {
+        searchPanel = this.props.searchPanel({
+          searchField, clearBtn,
+          search: this.props.onSearch,
+          defaultValue: this.props.defaultSearch,
+          placeholder: this.props.searchPlaceholder,
+          clearBtnClick: this.handleClearBtnClick
+        });
+      } else {
+        searchPanel = (
+          <div className={ classNames }>
+            { searchField }
+            <span className='input-group-btn'>
+              { clearBtn }
+            </span>
+          </div>
+        );
+      }
+      return [ searchPanel, searchField, clearBtn ];
     } else {
-      return null;
+      return [];
     }
   }
 
   renderInsertRowModal() {
     const validateState = this.state.validateState || {};
-    const shakeEditor = this.state.shakeEditor;
-    const inputField = this.props.columns.map((column, i) => {
-      const { editable, format, field, name, autoValue, hiddenOnInsert } = column;
-      const attr = {
-        ref: field + i,
-        placeholder: editable.placeholder ? editable.placeholder : name
-      };
+    const {
+      columns,
+      ignoreEditable,
+      insertModalHeader,
+      insertModalBody,
+      insertModalFooter,
+      insertModal
+    } = this.props;
 
-      if (autoValue || hiddenOnInsert || !column.field) {
-        // when you want same auto generate value
-        // and not allow edit, for example ID field
-        return null;
-      }
-      const error = validateState[field] ?
-        (<span className='help-block bg-danger'>{ validateState[field] }</span>) :
-        null;
-
-      // let editor = Editor(editable,attr,format);
-      // if(editor.props.type && editor.props.type == 'checkbox'){
-      return (
-        <div className='form-group' key={ field }>
-          <label>{ name }</label>
-          { editor(editable, attr, format, '', undefined, this.props.ignoreEditable) }
-          { error }
-        </div>
-      );
-    });
-    const modalClass = classSet('modal', 'fade', this.modalClassName, {
-      // hack prevent bootstrap modal hide by reRender
-      'in': shakeEditor || this.state.validateState
-    });
-    const dialogClass = classSet('modal-dialog', 'modal-sm', {
-      'animated': shakeEditor,
-      'shake': shakeEditor
-    });
-    return (
-      <div ref='modal' className={ modalClass } tabIndex='-1' role='dialog'>
-        <div className={ dialogClass }>
-          <div className='modal-content'>
-            <div className='modal-header'>
-              <button type='button'
-                className='close'
-                data-dismiss='modal'
-                aria-label='Close'>
-                <span aria-hidden='true'>&times;</span>
-              </button>
-              <h4 className='modal-title'>New Record</h4>
-            </div>
-            <div className='modal-body'>
-              <form ref='form'>
-              { inputField }
-              </form>
-            </div>
-            <div className='modal-footer'>
-              <button type='button'
-                className='btn btn-default'
-                data-dismiss='modal'>
-                { this.props.closeText }
-              </button>
-              <button type='button'
-                className='btn btn-primary'
-                onClick={ this.handleSaveBtnClick }>
-                { this.props.saveText }
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+    let modal;
+    modal = insertModal && insertModal(
+      this.handleModalClose,
+      this.handleSaveBtnClick,
+      columns,
+      validateState,
+      ignoreEditable
     );
+
+    if (!modal) {
+      modal = (
+        <InsertModal
+          columns={ columns }
+          validateState={ validateState }
+          ignoreEditable={ ignoreEditable }
+          onModalClose={ this.handleModalClose }
+          onSave={ this.handleSaveBtnClick }
+          headerComponent={ insertModalHeader }
+          bodyComponent={ insertModalBody }
+          footerComponent={ insertModalFooter }/>
+      );
+    }
+
+    return (
+      <Modal className='react-bs-insert-modal modal-dialog'
+        isOpen={ this.state.isInsertModalOpen }
+        onRequestClose={ this.handleModalClose }
+        contentLabel='Modal'>
+        { modal }
+      </Modal>
+    );
+  }
+
+  renderCustomBtn(cb, params, componentName, eventName, event) {
+    let element = cb.apply(null, params);
+    if (element.type.name === componentName && !element.props[eventName]) {
+      const props = {};
+      props[eventName] = event;
+      element = React.cloneElement(element, props);
+    }
+    return element;
   }
 }
 
@@ -404,6 +455,20 @@ ToolBar.propTypes = {
   clearSearch: PropTypes.bool,
   ignoreEditable: PropTypes.bool,
   defaultSearch: PropTypes.string,
+  insertModalHeader: PropTypes.func,
+  insertModalBody: PropTypes.func,
+  insertModalFooter: PropTypes.func,
+  insertModal: PropTypes.func,
+  insertBtn: PropTypes.func,
+  deleteBtn: PropTypes.func,
+  showSelectedOnlyBtn: PropTypes.func,
+  exportCSVBtn: PropTypes.func,
+  clearSearchBtn: PropTypes.func,
+  searchField: PropTypes.func,
+  searchPanel: PropTypes.func,
+  btnGroup: PropTypes.func,
+  toolBar: PropTypes.func,
+  searchPosition: PropTypes.string,
   reset: PropTypes.bool
 };
 
