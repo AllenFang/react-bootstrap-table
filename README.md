@@ -39,6 +39,7 @@ Check the <a href='https://github.com/AllenFang/react-bootstrap-table/blob/maste
 is the major things we completed in this release***
 - Remove the `bootstrap.js` and `jQuery` dependencies
 - More easy and have ability to customize the components(search, pagination, insert modal etc.)
+- Key board Navigation
 
 ***```v2.10.0-beta.1``` is a revised version for fixing couples unalign column and incorrect height etc. If you have any unalign problems before `v2.9.2`, give this beta version a try and any feedback is welcome***
 
