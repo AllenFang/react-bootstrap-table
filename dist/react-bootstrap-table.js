@@ -1410,6 +1410,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'renderToolBar',
 	    value: function renderToolBar() {
 	      var _props3 = this.props,
+	          exportCSV = _props3.exportCSV,
 	          selectRow = _props3.selectRow,
 	          insertRow = _props3.insertRow,
 	          deleteRow = _props3.deleteRow,
@@ -1417,7 +1418,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          children = _props3.children;
 
 	      var enableShowOnlySelected = selectRow && selectRow.showOnlySelected;
-	      if (enableShowOnlySelected || insertRow || deleteRow || search || this.props.exportCSV) {
+	      if (enableShowOnlySelected || insertRow || deleteRow || search || exportCSV || this.props.options.searchPanel || this.props.options.btnGroup || this.props.options.toolBar) {
 	        var columns = void 0;
 	        if (Array.isArray(children)) {
 	          columns = children.map(function (column, r) {
@@ -1456,7 +1457,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            enableInsert: insertRow,
 	            enableDelete: deleteRow,
 	            enableSearch: search,
-	            enableExportCSV: this.props.exportCSV,
+	            enableExportCSV: exportCSV,
 	            enableShowOnlySelected: enableShowOnlySelected,
 	            columns: columns,
 	            searchPlaceholder: this.props.searchPlaceholder,
