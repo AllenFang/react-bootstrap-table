@@ -31,11 +31,16 @@ class TableBody extends Component {
     const noneditableRows = (cellEdit.nonEditableRows && cellEdit.nonEditableRows()) || [];
     const unselectable = this.props.selectRow.unselectable || [];
     const isSelectRowDefined = this._isSelectRowDefined();
-    const tableHeader = Utils.renderColGroup(this.props.columns, this.props.selectRow, 'header');
+    const tableHeader = Utils.renderColGroup(this.props.columns,
+        this.props.selectRow, this.props.expandColumnOptions);
     const inputType = this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
     const CustomComponent = this.props.selectRow.customComponent;
+    const ExpandColumnCustomComponent = this.props.expandColumnOptions.expandColumnComponent;
     let expandColSpan = this.props.columns.filter(col => !col.hidden).length;
     if (isSelectRowDefined && !this.props.selectRow.hideSelectColumn) {
+      expandColSpan += 1;
+    }
+    if (this.props.expandColumnOptions.expandColumnVisible) {
       expandColSpan += 1;
     }
 
@@ -118,6 +123,11 @@ class TableBody extends Component {
       const selected = this.props.selectedRowKeys.indexOf(key) !== -1;
       const selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ?
         this.renderSelectRowColumn(selected, inputType, disable, CustomComponent, r, data) : null;
+      const expandedRowColumn = this.renderExpandRowColumn(
+          this.props.expandableRow && this.props.expandableRow(data),
+          this.props.expanding.indexOf(key) > -1,
+          ExpandColumnCustomComponent, r, data
+      );
       // add by bluespring for className customize
       let trClassName = this.props.trClassName;
       if (isFun(this.props.trClassName)) {
@@ -134,7 +144,13 @@ class TableBody extends Component {
         onSelectRow={ this.handleSelectRow }
         onExpandRow={ this.handleClickCell }
         unselectableRow={ disable }>
+        { this.props.expandColumnOptions.expandColumnVisible &&
+            this.props.expandColumnOptions.expandColumnBeforeSelectColumn &&
+            expandedRowColumn }
         { selectRowColumn }
+        { this.props.expandColumnOptions.expandColumnVisible &&
+            !this.props.expandColumnOptions.expandColumnBeforeSelectColumn &&
+            expandedRowColumn }
         { tableColumns }
       </TableRow> ];
 
@@ -232,6 +248,7 @@ class TableBody extends Component {
     } = this.props;
     const selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
     columnIndex = this._isSelectRowDefined() ? columnIndex - 1 : columnIndex;
+    columnIndex = this._isExpandColumnVisible() ? columnIndex - 1 : columnIndex;
 
     if (expandableRow &&
       selectRowAndExpand &&
@@ -309,9 +326,32 @@ class TableBody extends Component {
     );
   }
 
+  renderExpandRowColumn(isExpandableRow, isExpanded, CustomComponent, rowIndex = null) {
+    let content = null;
+    if (CustomComponent) {
+      content = (<CustomComponent isExpandableRow={ isExpandableRow } isExpanded={ isExpanded } />);
+    } else if (isExpandableRow) {
+      content = (isExpanded ? '-' : '+' );
+    } else {
+      content = ' ';
+    }
+
+    return (
+      <td
+        className='react-bs-table-expand-cell'
+        onClick={ () => this.handleClickCell(rowIndex + 1) }>
+        { content }
+      </td>
+    );
+  }
+
   _isSelectRowDefined() {
     return this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ||
           this.props.selectRow.mode === Const.ROW_SELECT_MULTI;
+  }
+
+  _isExpandColumnVisible() {
+    return this.props.expandColumnOptions.expandColumnVisible;
   }
 
   getHeaderColGrouop = () => {

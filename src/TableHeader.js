@@ -51,10 +51,18 @@ class TableHeader extends Component {
     const rows = [];
     let rowKey = 0;
 
-    if (!this.props.hideSelectColumn) {
-      rows[0] = [ this.renderSelectRowHeader(rowCount + 1, rowKey++) ];
-    }
-
+    rows[0] = [];
+    rows[0].push( [
+      this.props.expandColumnVisible &&
+        this.props.expandColumnBeforeSelectColumn &&
+          <th className='react-bs-table-expand-cell'> </th>
+    ], [
+      this.renderSelectRowHeader(rowCount + 1, rowKey++)
+    ], [
+      this.props.expandColumnVisible &&
+        !this.props.expandColumnBeforeSelectColumn &&
+          <th className='react-bs-table-expand-cell'> </th>
+    ]);
     const { sortIndicator, sortList, onSort, reset } = this.props;
 
     React.Children.forEach(this.props.children, (elm) => {
@@ -141,7 +149,10 @@ TableHeader.propTypes = {
   sortIndicator: PropTypes.bool,
   customComponent: PropTypes.func,
   colGroups: PropTypes.element,
-  reset: PropTypes.bool
+  reset: PropTypes.bool,
+  expandColumnVisible: PropTypes.bool,
+  expandColumnComponent: PropTypes.func,
+  expandColumnBeforeSelectColumn: PropTypes.bool
 };
 
 export default TableHeader;
