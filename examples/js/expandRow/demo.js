@@ -28,7 +28,7 @@ class Demo extends React.Component {
           { renderLinks('expandRow/expand-row-by-column.js') }
           <ManageExpandExternal/>
         </Panel>
-        <Panel header={ 'Expand Row with Selection' }>
+        <Panel header={ 'Expand Row with Selection - Keep select column first' }>
           <span>You can enable/disable the expanding if you click row to select,
           configure <code>clickToExpand</code> in <code>selectRow</code> props, default is false</span>
           { renderLinks('expandRow/expand-row-with-selection.js') }
