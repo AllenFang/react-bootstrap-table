@@ -169,15 +169,19 @@ class TableBody extends Component {
       }
       return (result);
     }, this);
+
+    var tableRowsOutput = tableRows;
+    
     if (tableRows.length === 0 && !this.props.withoutNoDataText) {
-      tableRows.push(
-        <TableRow key='##table-empty##'>
-          <td data-toggle='collapse'
-              colSpan={ this.props.columns.length + (isSelectRowDefined ? 1 : 0) }
-              className='react-bs-table-no-data'>
-              { this.props.noDataText || Const.NO_DATA_TEXT }
-          </td>
-        </TableRow>
+      tableRowsOutput = [
+          <TableRow key='##table-empty##'>
+            <td data-toggle='collapse'
+                colSpan={ this.props.columns.length + (isSelectRowDefined ? 1 : 0) }
+                className='react-bs-table-no-data'>
+                { this.props.noDataText || Const.NO_DATA_TEXT }
+            </td>
+          </TableRow>
+        ]
       );
     }
 
@@ -188,7 +192,7 @@ class TableBody extends Component {
         <table className={ tableClasses }>
           { React.cloneElement(tableHeader, { ref: 'header' }) }
           <tbody ref='tbody'>
-            { tableRows }
+            { tableRowsOutput }
           </tbody>
         </table>
       </div>
