@@ -170,19 +170,18 @@ class TableBody extends Component {
       return (result);
     }, this);
 
-    var tableRowsOutput = tableRows;
-    
+    let tableRowsOutput = tableRows;
+
     if (tableRows.length === 0 && !this.props.withoutNoDataText) {
       tableRowsOutput = [
-          <TableRow key='##table-empty##'>
-            <td data-toggle='collapse'
-                colSpan={ this.props.columns.length + (isSelectRowDefined ? 1 : 0) }
-                className='react-bs-table-no-data'>
-                { this.props.noDataText || Const.NO_DATA_TEXT }
-            </td>
-          </TableRow>
-        ]
-      );
+        <TableRow key='##table-empty##'>
+          <td data-toggle='collapse'
+              colSpan={ this.props.columns.length + (isSelectRowDefined ? 1 : 0) }
+              className='react-bs-table-no-data'>
+              { this.props.noDataText || Const.NO_DATA_TEXT }
+          </td>
+        </TableRow>
+      ];
     }
 
     return (
