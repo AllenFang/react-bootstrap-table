@@ -203,7 +203,7 @@ if (window.location.hash === '#basic') {
     $("#example-section").empty();
     const sources = [{
         id: 'basic_s',
-        title: 'Baisc Table',
+        title: 'Basic Table',
         gist: 'https://gist.github.com/AllenFang/025e43e818d4d00d4577f5aabd335d0a.js',
         component: (<BasicTable />)
     }, {
