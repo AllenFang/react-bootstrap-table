@@ -68,6 +68,19 @@ export default class ExpandRow extends React.Component {
     );
   }
 
+  expandColumnComponent({ isExpandableRow, isExpanded }) {
+    let content = '';
+
+    if (isExpandableRow) {
+      content = (isExpanded ? '(-)' : '(+)' );
+    } else {
+      content = ' ';
+    }
+    return (
+      <div> { content } </div>
+    );
+  }
+
   render() {
     const options = {
       expandRowBgColor: 'rgb(242, 255, 163)'
@@ -77,6 +90,7 @@ export default class ExpandRow extends React.Component {
         options={ options }
         expandableRow={ this.isExpandableRow }
         expandComponent={ this.expandComponent }
+        expandColumnOptions={ { expandColumnVisible: true, expandColumnComponent: this.expandColumnComponent } }
         search>
         <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
