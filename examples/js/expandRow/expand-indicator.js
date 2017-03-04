@@ -72,18 +72,13 @@ export default class ExpandRow extends React.Component {
     const options = {
       expandRowBgColor: 'rgb(242, 255, 163)'
     };
-    const selectRow = {
-      mode: 'checkbox',
-      clickToSelect: true,  // click to select, default is false
-      clickToExpand: true  // click to expand row, default is false
-    };
     return (
       <BootstrapTable data={ products }
         options={ options }
         expandableRow={ this.isExpandableRow }
         expandComponent={ this.expandComponent }
-        expandColumnOptions={ { expandColumnVisible: true, expandColumnBeforeSelectColumn: false } }
-        selectRow={ selectRow }>
+        expandColumnOptions={ { expandColumnVisible: true } }
+        search>
         <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
         <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>

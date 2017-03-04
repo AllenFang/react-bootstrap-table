@@ -230,6 +230,10 @@
   animation-duration: .3s;
 }
 
+td.react-bs-table-expand-cell {
+    cursor: pointer;
+}
+
 @keyframes shake {
   from, to {
     transform: translate3d(0, 0, 0);

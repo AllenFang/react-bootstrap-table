@@ -328,7 +328,11 @@ class BootstrapTable extends Component {
     const toolBar = this.renderToolBar();
     const tableFilter = this.renderTableFilter(columns);
     const isSelectAll = this.isSelectAll();
-    const colGroups = Util.renderColGroup(columns, this.props.selectRow);
+    const expandColumnOptions = this.props.expandColumnOptions;
+    if (typeof expandColumnOptions.expandColumnBeforeSelectColumn === 'undefined') {
+      expandColumnOptions.expandColumnBeforeSelectColumn = true;
+    }
+    const colGroups = Util.renderColGroup(columns, this.props.selectRow, expandColumnOptions);
     let sortIndicator = this.props.options.sortIndicator;
     if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
     const { paginationPosition = Const.PAGINATION_POS_BOTTOM } = this.props.options;
@@ -362,7 +366,10 @@ class BootstrapTable extends Component {
             condensed={ this.props.condensed }
             isFiltered={ this.filter ? true : false }
             isSelectAll={ isSelectAll }
-            reset={ this.state.reset }>
+            reset={ this.state.reset }
+            expandColumnVisible={ expandColumnOptions.expandColumnVisible }
+            expandColumnComponent={ expandColumnOptions.expandColumnComponent }
+            expandColumnBeforeSelectColumn={ expandColumnOptions.expandColumnBeforeSelectColumn }>
             { this.props.children }
           </TableHeader>
           <TableBody ref='body'
@@ -382,6 +389,7 @@ class BootstrapTable extends Component {
             keyField={ this.store.getKeyField() }
             condensed={ this.props.condensed }
             selectRow={ this.props.selectRow }
+            expandColumnOptions={ this.props.expandColumnOptions }
             cellEdit={ this.props.cellEdit }
             selectedRowKeys={ this.state.selectedRowKeys }
             onRowClick={ this.handleRowClick }
@@ -1365,12 +1373,23 @@ BootstrapTable.propTypes = {
   csvFileName: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
   ignoreSinglePage: PropTypes.bool,
   expandableRow: PropTypes.func,
-  expandComponent: PropTypes.func
+  expandComponent: PropTypes.func,
+  expandColumnOptions: PropTypes.shape({
+    columnWidth: PropTypes.oneOfType([ PropTypes.number, PropTypes.string ]),
+    expandColumnVisible: PropTypes.bool,
+    expandColumnComponent: PropTypes.func,
+    expandColumnBeforeSelectColumn: PropTypes.bool
+  })
 };
 BootstrapTable.defaultProps = {
   scrollTop: undefined,
   expandComponent: undefined,
   expandableRow: undefined,
+  expandColumnOptions: {
+    expandColumnVisible: false,
+    expandColumnComponent: undefined,
+    expandColumnBeforeSelectColumn: true
+  },
   height: '100%',
   maxHeight: undefined,
   striped: false,
