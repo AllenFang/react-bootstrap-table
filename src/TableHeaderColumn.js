@@ -244,6 +244,7 @@ TableHeaderColumn.propTypes = {
   sort: PropTypes.string,
   caretRender: PropTypes.func,
   formatExtraData: PropTypes.any,
+  csvFormatExtraData: PropTypes.any,
   filter: PropTypes.shape({
     type: PropTypes.oneOf(filterTypeArray),
     delay: PropTypes.number,

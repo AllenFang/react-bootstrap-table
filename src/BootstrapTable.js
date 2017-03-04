@@ -910,6 +910,7 @@ class BootstrapTable extends Component {
         keys.push({
           field: column.props.dataField,
           format: column.props.csvFormat,
+          extraData: column.props.csvFormatExtraData,
           header: column.props.csvHeader || column.props.dataField,
           row: Number(column.props.row) || 0,
           rowSpan: Number(column.props.rowSpan) || 1,
