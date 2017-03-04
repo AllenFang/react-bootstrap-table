@@ -394,7 +394,8 @@ class TableBody extends Component {
     if (CustomComponent) {
       content = (<CustomComponent isExpandableRow={ isExpandableRow } isExpanded={ isExpanded } />);
     } else if (isExpandableRow) {
-      content = (isExpanded ? '-' : '+' );
+      content = (isExpanded ? (<span className='glyphicon glyphicon-minus'></span>) :
+        (<span className='glyphicon glyphicon-plus'></span>) );
     } else {
       content = ' ';
     }
