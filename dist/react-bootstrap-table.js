@@ -658,7 +658,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var toolBar = this.renderToolBar();
 	      var tableFilter = this.renderTableFilter(columns);
 	      var isSelectAll = this.isSelectAll();
-	      var colGroups = _util2.default.renderColGroup(columns, this.props.selectRow);
+	      var expandColumnOptions = this.props.expandColumnOptions;
+	      if (typeof expandColumnOptions.expandColumnBeforeSelectColumn === 'undefined') {
+	        expandColumnOptions.expandColumnBeforeSelectColumn = true;
+	      }
+	      var colGroups = _util2.default.renderColGroup(columns, this.props.selectRow, expandColumnOptions);
 	      var sortIndicator = this.props.options.sortIndicator;
 	      if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
 	      var _props$options$pagina = this.props.options.paginationPosition,
@@ -699,7 +703,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	              condensed: this.props.condensed,
 	              isFiltered: this.filter ? true : false,
 	              isSelectAll: isSelectAll,
-	              reset: this.state.reset },
+	              reset: this.state.reset,
+	              expandColumnVisible: expandColumnOptions.expandColumnVisible,
+	              expandColumnComponent: expandColumnOptions.expandColumnComponent,
+	              expandColumnBeforeSelectColumn: expandColumnOptions.expandColumnBeforeSelectColumn },
 	            this.props.children
 	          ),
 	          _react2.default.createElement(_TableBody2.default, { ref: 'body',
@@ -719,6 +726,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            keyField: this.store.getKeyField(),
 	            condensed: this.props.condensed,
 	            selectRow: this.props.selectRow,
+	            expandColumnOptions: this.props.expandColumnOptions,
 	            cellEdit: this.props.cellEdit,
 	            selectedRowKeys: this.state.selectedRowKeys,
 	            onRowClick: this.handleRowClick,
@@ -1299,6 +1307,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          keys.push({
 	            field: column.props.dataField,
 	            format: column.props.csvFormat,
+	            extraData: column.props.csvFormatExtraData,
 	            header: column.props.csvHeader || column.props.dataField,
 	            row: Number(column.props.row) || 0,
 	            rowSpan: Number(column.props.rowSpan) || 1,
@@ -1398,8 +1407,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            nextPage: options.nextPage || _Const2.default.NEXT_PAGE,
 	            firstPage: options.firstPage || _Const2.default.FIRST_PAGE,
 	            lastPage: options.lastPage || _Const2.default.LAST_PAGE,
+	            prePageTitle: options.prePageTitle || _Const2.default.PRE_PAGE_TITLE,
+	            nextPageTitle: options.nextPageTitle || _Const2.default.NEXT_PAGE_TITLE,
+	            firstPageTitle: options.firstPageTitle || _Const2.default.FIRST_PAGE_TITLE,
+	            lastPageTitle: options.lastPageTitle || _Const2.default.LAST_PAGE_TITLE,
 	            hideSizePerPage: options.hideSizePerPage,
 	            sizePerPageDropDown: options.sizePerPageDropDown,
+	            hidePageListOnlyOnePage: options.hidePageListOnlyOnePage,
 	            paginationPanel: options.paginationPanel,
 	            open: false })
 	        );
@@ -1712,6 +1726,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    paginationSize: _react.PropTypes.number,
 	    paginationPosition: _react.PropTypes.oneOf([_Const2.default.PAGINATION_POS_TOP, _Const2.default.PAGINATION_POS_BOTTOM, _Const2.default.PAGINATION_POS_BOTH]),
 	    hideSizePerPage: _react.PropTypes.bool,
+	    hidePageListOnlyOnePage: _react.PropTypes.bool,
 	    alwaysShowAllBtns: _react.PropTypes.bool,
 	    withFirstAndLast: _react.PropTypes.bool,
 	    onSortChange: _react.PropTypes.func,
@@ -1729,6 +1744,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    nextPage: _react.PropTypes.string,
 	    firstPage: _react.PropTypes.string,
 	    lastPage: _react.PropTypes.string,
+	    prePageTitle: _react.PropTypes.string,
+	    nextPageTitle: _react.PropTypes.string,
+	    firstPageTitle: _react.PropTypes.string,
+	    lastPageTitle: _react.PropTypes.string,
 	    searchDelayTime: _react.PropTypes.number,
 	    exportCSVText: _react.PropTypes.string,
 	    insertText: _react.PropTypes.string,
@@ -1765,12 +1784,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	  csvFileName: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
 	  ignoreSinglePage: _react.PropTypes.bool,
 	  expandableRow: _react.PropTypes.func,
-	  expandComponent: _react.PropTypes.func
+	  expandComponent: _react.PropTypes.func,
+	  expandColumnOptions: _react.PropTypes.shape({
+	    columnWidth: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
+	    expandColumnVisible: _react.PropTypes.bool,
+	    expandColumnComponent: _react.PropTypes.func,
+	    expandColumnBeforeSelectColumn: _react.PropTypes.bool
+	  })
 	};
 	BootstrapTable.defaultProps = {
 	  scrollTop: undefined,
 	  expandComponent: undefined,
 	  expandableRow: undefined,
+	  expandColumnOptions: {
+	    expandColumnVisible: false,
+	    expandColumnComponent: undefined,
+	    expandColumnBeforeSelectColumn: true
+	  },
 	  height: '100%',
 	  maxHeight: undefined,
 	  striped: false,
@@ -1844,6 +1874,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    paginationSize: _Const2.default.PAGINATION_SIZE,
 	    paginationPosition: _Const2.default.PAGINATION_POS_BOTTOM,
 	    hideSizePerPage: false,
+	    hidePageListOnlyOnePage: false,
 	    alwaysShowAllBtns: false,
 	    withFirstAndLast: true,
 	    onSizePerPageList: undefined,
@@ -1854,6 +1885,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    nextPage: _Const2.default.NEXT_PAGE,
 	    firstPage: _Const2.default.FIRST_PAGE,
 	    lastPage: _Const2.default.LAST_PAGE,
+	    prePageTitle: _Const2.default.PRE_PAGE_TITLE,
+	    nextPageTitle: _Const2.default.NEXT_PAGE_TITLE,
+	    firstPageTitle: _Const2.default.FIRST_PAGE_TITLE,
+	    lastPageTitle: _Const2.default.LAST_PAGE_TITLE,
 	    pageStartIndex: undefined,
 	    searchDelayTime: undefined,
 	    exportCSVText: _Const2.default.EXPORT_CSV_TEXT,
@@ -1982,9 +2017,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  SORT_ASC: 'asc',
 	  SIZE_PER_PAGE: 10,
 	  NEXT_PAGE: '>',
+	  NEXT_PAGE_TITLE: 'next page',
 	  LAST_PAGE: '>>',
+	  LAST_PAGE_TITLE: 'last page',
 	  PRE_PAGE: '<',
+	  PRE_PAGE_TITLE: 'previous page',
 	  FIRST_PAGE: '<<',
+	  FIRST_PAGE_TITLE: 'first page',
 	  PAGE_START_INDEX: 1,
 	  ROW_SELECT_BG_COLOR: '',
 	  ROW_SELECT_NONE: 'none',
@@ -2186,10 +2225,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var rows = [];
 	      var rowKey = 0;
 
-	      if (!this.props.hideSelectColumn) {
-	        rows[0] = [this.renderSelectRowHeader(rowCount + 1, rowKey++)];
-	      }
-
+	      rows[0] = [];
+	      rows[0].push([this.props.expandColumnVisible && this.props.expandColumnBeforeSelectColumn && _react2.default.createElement(
+	        'th',
+	        { className: 'react-bs-table-expand-cell' },
+	        ' '
+	      )], [this.renderSelectRowHeader(rowCount + 1, rowKey++)], [this.props.expandColumnVisible && !this.props.expandColumnBeforeSelectColumn && _react2.default.createElement(
+	        'th',
+	        { className: 'react-bs-table-expand-cell' },
+	        ' '
+	      )]);
 	      var _props = this.props,
 	          sortIndicator = _props.sortIndicator,
 	          sortList = _props.sortList,
@@ -2290,7 +2335,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  sortIndicator: _react.PropTypes.bool,
 	  customComponent: _react.PropTypes.func,
 	  colGroups: _react.PropTypes.element,
-	  reset: _react.PropTypes.bool
+	  reset: _react.PropTypes.bool,
+	  expandColumnVisible: _react.PropTypes.bool,
+	  expandColumnComponent: _react.PropTypes.func,
+	  expandColumnBeforeSelectColumn: _react.PropTypes.bool
 	};
 
 	var _default = TableHeader;
@@ -2529,12 +2577,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var noneditableRows = cellEdit.nonEditableRows && cellEdit.nonEditableRows() || [];
 	      var unselectable = this.props.selectRow.unselectable || [];
 	      var isSelectRowDefined = this._isSelectRowDefined();
-	      var tableHeader = _util2.default.renderColGroup(this.props.columns, this.props.selectRow, 'header');
+	      var tableHeader = _util2.default.renderColGroup(this.props.columns, this.props.selectRow, this.props.expandColumnOptions);
 	      var inputType = this.props.selectRow.mode === _Const2.default.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
 	      var CustomComponent = this.props.selectRow.customComponent;
 	      var enableKeyBoardNav = keyBoardNav === true || (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object';
 	      var customEditAndNavStyle = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.customStyleOnEditCell : null;
 	      var customNavStyle = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.customStyle : null;
+	      var ExpandColumnCustomComponent = this.props.expandColumnOptions.expandColumnComponent;
 	      var expandColSpan = this.props.columns.filter(function (col) {
 	        return !col.hidden;
 	      }).length;
@@ -2542,6 +2591,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        expandColSpan += 1;
 	      }
 	      var tabIndex = 1;
+	      if (this.props.expandColumnOptions.expandColumnVisible) {
+	        expandColSpan += 1;
+	      }
+
 	      var tableRows = this.props.data.map(function (data, r) {
 	        var tableColumns = this.props.columns.map(function (column, i) {
 	          var fieldValue = data[column.name];
@@ -2623,6 +2676,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var disable = unselectable.indexOf(key) !== -1;
 	        var selected = this.props.selectedRowKeys.indexOf(key) !== -1;
 	        var selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ? this.renderSelectRowColumn(selected, inputType, disable, CustomComponent, r, data) : null;
+	        var expandedRowColumn = this.renderExpandRowColumn(this.props.expandableRow && this.props.expandableRow(data), this.props.expanding.indexOf(key) > -1, ExpandColumnCustomComponent, r, data);
 	        // add by bluespring for className customize
 	        var trClassName = this.props.trClassName;
 	        if (isFun(this.props.trClassName)) {
@@ -2641,7 +2695,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onSelectRow: this.handleSelectRow,
 	            onExpandRow: this.handleClickCell,
 	            unselectableRow: disable },
+	          this.props.expandColumnOptions.expandColumnVisible && this.props.expandColumnOptions.expandColumnBeforeSelectColumn && expandedRowColumn,
 	          selectRowColumn,
+	          this.props.expandColumnOptions.expandColumnVisible && !this.props.expandColumnOptions.expandColumnBeforeSelectColumn && expandedRowColumn,
 	          tableColumns
 	        )];
 
@@ -2649,6 +2705,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          result.push(_react2.default.createElement(
 	            _ExpandComponent2.default,
 	            {
+	              key: key + '-expand',
 	              className: trClassName,
 	              bgColor: this.props.expandRowBgColor || this.props.selectRow.bgColor || undefined,
 	              hidden: !(this.props.expanding.indexOf(key) > -1),
@@ -2740,7 +2797,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function __handleRowClick__REACT_HOT_LOADER__(rowIndex, cellIndex) {
 	      var onRowClick = this.props.onRowClick;
 
-	      onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, this._isSelectRowDefined() ? cellIndex - 1 : cellIndex);
+	      if (this._isSelectRowDefined()) cellIndex--;
+	      if (this._isExpandColumnVisible()) cellIndex--;
+	      onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex);
 	    }
 	  }, {
 	    key: '__handleRowDoubleClick__REACT_HOT_LOADER__',
@@ -2788,6 +2847,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
 	      columnIndex = this._isSelectRowDefined() ? columnIndex - 1 : columnIndex;
+	      columnIndex = this._isExpandColumnVisible() ? columnIndex - 1 : columnIndex;
 	      if (expandableRow && selectRowAndExpand && (expandBy === _Const2.default.EXPAND_BY_ROW ||
 	      /* Below will allow expanding trigger by clicking on selection column
 	      if configure as expanding by column */
@@ -2809,13 +2869,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleEditCell__REACT_HOT_LOADER__',
 	    value: function __handleEditCell__REACT_HOT_LOADER__(rowIndex, columnIndex, action, e) {
-	      if (this._isSelectRowDefined()) {
+	      var defineSelectRow = this._isSelectRowDefined();
+	      var expandColumnVisible = this._isExpandColumnVisible();
+	      if (defineSelectRow) {
 	        columnIndex--;
 	        if (this.props.selectRow.hideSelectColumn) columnIndex++;
+	      }
+	      if (expandColumnVisible) {
+	        columnIndex--;
 	      }
 	      rowIndex--;
 
 	      if (action === 'tab') {
+	        if (defineSelectRow) columnIndex++;
+	        if (expandColumnVisible) columnIndex++;
 	        this.handleCompleteEditCell(e.target.value, rowIndex, columnIndex - 1);
 	        if (columnIndex >= this.props.columns.length) {
 	          rowIndex = rowIndex + 1;
@@ -2885,9 +2952,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	      );
 	    }
 	  }, {
+	    key: 'renderExpandRowColumn',
+	    value: function renderExpandRowColumn(isExpandableRow, isExpanded, CustomComponent) {
+	      var _this4 = this;
+
+	      var rowIndex = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+
+	      var content = null;
+	      if (CustomComponent) {
+	        content = _react2.default.createElement(CustomComponent, { isExpandableRow: isExpandableRow, isExpanded: isExpanded });
+	      } else if (isExpandableRow) {
+	        content = isExpanded ? _react2.default.createElement('span', { className: 'glyphicon glyphicon-minus' }) : _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus' });
+	      } else {
+	        content = ' ';
+	      }
+
+	      return _react2.default.createElement(
+	        'td',
+	        {
+	          className: 'react-bs-table-expand-cell',
+	          onClick: function onClick() {
+	            return _this4.handleClickCell(rowIndex + 1);
+	          } },
+	        content
+	      );
+	    }
+	  }, {
 	    key: '_isSelectRowDefined',
 	    value: function _isSelectRowDefined() {
 	      return this.props.selectRow.mode === _Const2.default.ROW_SELECT_SINGLE || this.props.selectRow.mode === _Const2.default.ROW_SELECT_MULTI;
+	    }
+	  }, {
+	    key: '_isExpandColumnVisible',
+	    value: function _isExpandColumnVisible() {
+	      return this.props.expandColumnOptions.expandColumnVisible;
 	    }
 	  }, {
 	    key: '__getHeaderColGrouop__REACT_HOT_LOADER__',
@@ -3011,7 +3109,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return typeof window !== 'undefined' && typeof window.document !== 'undefined';
 	  },
 	  renderColGroup: function renderColGroup(columns, selectRow) {
+	    var expandColumnOptions = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
 	    var selectRowHeader = null;
+	    var expandRowHeader = null;
 	    var isSelectRowDefined = selectRow.mode === _Const2.default.ROW_SELECT_SINGLE || selectRow.mode === _Const2.default.ROW_SELECT_MULTI;
 	    if (isSelectRowDefined) {
 	      var style = {
@@ -3019,8 +3120,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        minWidth: selectRow.columnWidth || '30px'
 	      };
 	      if (!selectRow.hideSelectColumn) {
-	        selectRowHeader = _react2.default.createElement('col', { style: style, key: -1 });
+	        selectRowHeader = _react2.default.createElement('col', { key: 'select-col', style: style });
 	      }
+	    }
+	    if (expandColumnOptions.expandColumnVisible) {
+	      var _style = {
+	        width: expandColumnOptions.columnWidth || 30,
+	        minWidth: expandColumnOptions.columnWidth || 30
+	      };
+	      expandRowHeader = _react2.default.createElement('col', { key: 'expand-col', style: _style });
 	    }
 	    var theader = columns.map(function (column, i) {
 	      var style = {
@@ -3039,7 +3147,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return _react2.default.createElement(
 	      'colgroup',
 	      null,
+	      expandColumnOptions.expandColumnVisible && expandColumnOptions.expandColumnBeforeSelectColumn && expandRowHeader,
 	      selectRowHeader,
+	      expandColumnOptions.expandColumnVisible && !expandColumnOptions.expandColumnBeforeSelectColumn && expandRowHeader,
 	      theader
 	    );
 	  }
@@ -10366,7 +10476,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          sizePerPageList = _props2.sizePerPageList,
 	          paginationShowsTotal = _props2.paginationShowsTotal,
 	          pageStartIndex = _props2.pageStartIndex,
-	          paginationPanel = _props2.paginationPanel;
+	          paginationPanel = _props2.paginationPanel,
+	          hidePageListOnlyOnePage = _props2.hidePageListOnlyOnePage;
 
 	      this.totalPages = Math.ceil(dataSize / sizePerPage);
 	      this.lastPage = this.props.pageStartIndex + this.totalPages - 1;
@@ -10408,6 +10519,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      });
 
+	      var hidePageList = hidePageListOnlyOnePage && this.totalPages === 1 ? 'none' : 'block';
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'row', style: { marginTop: 15 } },
@@ -10422,7 +10534,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-md-6 col-xs-6 col-sm-6 col-lg-6' },
+	            { style: { display: hidePageList },
+	              className: 'col-md-6 col-xs-6 col-sm-6 col-lg-6' },
 	            pageBtns
 	          )
 	        )
@@ -10518,9 +10631,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }, this).map(function (page) {
 	        var isActive = page === this.props.currPage;
 	        var isDisabled = isStart(page, this.props) || isEnd(page, this.props) ? true : false;
+	        var title = page + '';
+
+	        if (page === this.props.nextPage) {
+	          title = this.props.nextPageTitle;
+	        } else if (page === this.props.prePage) {
+	          title = this.props.prePageTitle;
+	        } else if (page === this.props.firstPage) {
+	          title = this.props.firstPageTitle;
+	        } else if (page === this.props.lastPage) {
+	          title = this.props.lastPageTitle;
+	        }
+
 	        return _react2.default.createElement(
 	          _PageButton2.default,
 	          { key: page,
+	            title: title,
 	            changePage: this.changePage,
 	            active: isActive,
 	            disable: isDisabled },
@@ -10594,7 +10720,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  alwaysShowAllBtns: _react.PropTypes.bool,
 	  withFirstAndLast: _react.PropTypes.bool,
 	  sizePerPageDropDown: _react.PropTypes.func,
-	  paginationPanel: _react.PropTypes.func
+	  paginationPanel: _react.PropTypes.func,
+	  prePageTitle: _react.PropTypes.string,
+	  nextPageTitle: _react.PropTypes.string,
+	  firstPageTitle: _react.PropTypes.string,
+	  lastPageTitle: _react.PropTypes.string,
+	  hidePageListOnlyOnePage: _react.PropTypes.bool
 	};
 
 	PaginationList.defaultProps = {
@@ -10678,7 +10809,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	      return _react2.default.createElement(
 	        'li',
-	        { className: classes },
+	        { className: classes, title: this.props.title },
 	        _react2.default.createElement(
 	          'a',
 	          { href: '#', onClick: this.pageBtnClick, className: 'page-link' },
@@ -10692,6 +10823,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	PageButton.propTypes = {
+	  title: _react.PropTypes.string,
 	  changePage: _react.PropTypes.func,
 	  active: _react.PropTypes.bool,
 	  disable: _react.PropTypes.bool,
@@ -15018,9 +15150,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  data.map(function (row) {
 	    keys.map(function (col, i) {
 	      var field = col.field,
-	          format = col.format;
+	          format = col.format,
+	          extraData = col.extraData;
 
-	      var value = typeof format !== 'undefined' ? format(row[field], row) : row[field];
+	      var value = typeof format !== 'undefined' ? format(row[field], row, extraData) : row[field];
 	      var cell = typeof value !== 'undefined' ? '"' + value + '"' : '';
 	      dataString += cell;
 	      if (i + 1 < keys.length) dataString += ',';
@@ -16079,6 +16212,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  sort: _react.PropTypes.string,
 	  caretRender: _react.PropTypes.func,
 	  formatExtraData: _react.PropTypes.any,
+	  csvFormatExtraData: _react.PropTypes.any,
 	  filter: _react.PropTypes.shape({
 	    type: _react.PropTypes.oneOf(filterTypeArray),
 	    delay: _react.PropTypes.number,
