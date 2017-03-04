@@ -78,7 +78,6 @@ export default class ExpandRow extends React.Component {
         options={ options }
         expandableRow={ this.isExpandableRow }
         expandComponent={ this.expandComponent }
-        expandColumnOptions={ { expandColumnVisible: true } }
         search>
         <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name' expandable={ false }>Product Name</TableHeaderColumn>
