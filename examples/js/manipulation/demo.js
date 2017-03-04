@@ -116,6 +116,7 @@ class Demo extends React.Component {
               <h5>Source in /examples/js/manipulation/export-csv-table.js</h5>
               <h5><b>Use <code>csvFormat</code> to format cell when exporting.</b></h5>
               <h5><b>Use <code>csvHeader</code> to change the header text in csv.</b></h5>
+              <h5><b>Use <code>csvFormatExtraData</code> to assign your extra data for formatting csv cell data.</b></h5>
               <ExportCSVTable />
             </div>
           </div>
