@@ -175,6 +175,7 @@ class TableBody extends Component {
       if (this.props.expandableRow && this.props.expandableRow(data)) {
         result.push(
           <ExpandComponent
+            key={ key + '-expand' }
             className={ trClassName }
             bgColor={ this.props.expandRowBgColor || this.props.selectRow.bgColor || undefined }
             hidden={ !(this.props.expanding.indexOf(key) > -1) }
