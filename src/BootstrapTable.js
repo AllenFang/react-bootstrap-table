@@ -1375,6 +1375,7 @@ BootstrapTable.propTypes = {
   expandableRow: PropTypes.func,
   expandComponent: PropTypes.func,
   expandColumnOptions: PropTypes.shape({
+    columnWidth: PropTypes.oneOfType([ PropTypes.number, PropTypes.string ]),
     expandColumnVisible: PropTypes.bool,
     expandColumnComponent: PropTypes.func,
     expandColumnBeforeSelectColumn: PropTypes.bool
