@@ -257,8 +257,9 @@ class TableBody extends Component {
 
   handleRowClick = (rowIndex, cellIndex) => {
     const { onRowClick } = this.props;
-    onRowClick(this.props.data[rowIndex - 1],
-      rowIndex - 1, this._isSelectRowDefined() ? cellIndex - 1 : cellIndex);
+    if (this._isSelectRowDefined()) cellIndex--;
+    if (this._isExpandColumnVisible()) cellIndex--;
+    onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex);
   }
 
   handleRowDoubleClick = rowIndex => {
