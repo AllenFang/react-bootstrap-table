@@ -203,8 +203,21 @@ class PaginationList extends Component {
         const isDisabled = (isStart(page, this.props) || isEnd(page, this.props)) ?
           true :
           false;
+        let title = page + '';
+
+        if (page === this.props.nextPage) {
+          title = this.props.nextPageTitle;
+        } else if (page === this.props.prePage) {
+          title = this.props.prePageTitle;
+        } else if (page === this.props.firstPage) {
+          title = this.props.firstPageTitle;
+        } else if (page === this.props.lastPage) {
+          title = this.props.lastPageTitle;
+        }
+
         return (
           <PageButton key={ page }
+            title={ title }
             changePage={ this.changePage }
             active={ isActive }
             disable={ isDisabled }>
@@ -281,7 +294,11 @@ PaginationList.propTypes = {
   alwaysShowAllBtns: PropTypes.bool,
   withFirstAndLast: PropTypes.bool,
   sizePerPageDropDown: PropTypes.func,
-  paginationPanel: PropTypes.func
+  paginationPanel: PropTypes.func,
+  prePageTitle: PropTypes.string,
+  nextPageTitle: PropTypes.string,
+  firstPageTitle: PropTypes.string,
+  lastPageTitle: PropTypes.string
 };
 
 PaginationList.defaultProps = {

@@ -1007,6 +1007,10 @@ class BootstrapTable extends Component {
             nextPage={ options.nextPage || Const.NEXT_PAGE }
             firstPage={ options.firstPage || Const.FIRST_PAGE }
             lastPage={ options.lastPage || Const.LAST_PAGE }
+            prePageTitle={ options.prePageTitle || Const.PRE_PAGE_TITLE }
+            nextPageTitle={ options.nextPageTitle || Const.NEXT_PAGE_TITLE }
+            firstPageTitle={ options.firstPageTitle || Const.FIRST_PAGE_TITLE }
+            lastPageTitle={ options.lastPageTitle || Const.LAST_PAGE_TITLE }
             hideSizePerPage={ options.hideSizePerPage }
             sizePerPageDropDown={ options.sizePerPageDropDown }
             paginationPanel={ options.paginationPanel }
@@ -1338,6 +1342,10 @@ BootstrapTable.propTypes = {
     nextPage: PropTypes.string,
     firstPage: PropTypes.string,
     lastPage: PropTypes.string,
+    prePageTitle: PropTypes.string,
+    nextPageTitle: PropTypes.string,
+    firstPageTitle: PropTypes.string,
+    lastPageTitle: PropTypes.string,
     searchDelayTime: PropTypes.number,
     exportCSVText: PropTypes.string,
     insertText: PropTypes.string,
@@ -1474,6 +1482,10 @@ BootstrapTable.defaultProps = {
     nextPage: Const.NEXT_PAGE,
     firstPage: Const.FIRST_PAGE,
     lastPage: Const.LAST_PAGE,
+    prePageTitle: Const.PRE_PAGE_TITLE,
+    nextPageTitle: Const.NEXT_PAGE_TITLE,
+    firstPageTitle: Const.FIRST_PAGE_TITLE,
+    lastPageTitle: Const.LAST_PAGE_TITLE,
     pageStartIndex: undefined,
     searchDelayTime: undefined,
     exportCSVText: Const.EXPORT_CSV_TEXT,

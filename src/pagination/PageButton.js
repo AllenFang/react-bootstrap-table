@@ -20,13 +20,14 @@ class PageButton extends Component {
       'page-item': true
     });
     return (
-      <li className={ classes }>
+      <li className={ classes } title={ this.props.title }>
         <a href='#' onClick={ this.pageBtnClick } className='page-link'>{ this.props.children }</a>
       </li>
     );
   }
 }
 PageButton.propTypes = {
+  title: PropTypes.string,
   changePage: PropTypes.func,
   active: PropTypes.bool,
   disable: PropTypes.bool,
