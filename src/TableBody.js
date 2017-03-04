@@ -321,13 +321,20 @@ class TableBody extends Component {
   }
 
   handleEditCell = (rowIndex, columnIndex, action, e) => {
-    if (this._isSelectRowDefined()) {
+    const defineSelectRow = this._isSelectRowDefined();
+    const expandColumnVisible = this._isExpandColumnVisible();
+    if (defineSelectRow) {
       columnIndex--;
       if (this.props.selectRow.hideSelectColumn) columnIndex++;
+    }
+    if (expandColumnVisible) {
+      columnIndex--;
     }
     rowIndex--;
 
     if (action === 'tab') {
+      if (defineSelectRow) columnIndex++;
+      if (expandColumnVisible) columnIndex++;
       this.handleCompleteEditCell(e.target.value, rowIndex, columnIndex - 1);
       if (columnIndex >= this.props.columns.length) {
         rowIndex = rowIndex + 1;
