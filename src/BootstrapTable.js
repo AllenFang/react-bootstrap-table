@@ -1013,6 +1013,7 @@ class BootstrapTable extends Component {
             lastPageTitle={ options.lastPageTitle || Const.LAST_PAGE_TITLE }
             hideSizePerPage={ options.hideSizePerPage }
             sizePerPageDropDown={ options.sizePerPageDropDown }
+            hidePageListOnlyOnePage={ options.hidePageListOnlyOnePage }
             paginationPanel={ options.paginationPanel }
             open={ false }/>
         </div>
@@ -1325,6 +1326,7 @@ BootstrapTable.propTypes = {
       Const.PAGINATION_POS_BOTH
     ]),
     hideSizePerPage: PropTypes.bool,
+    hidePageListOnlyOnePage: PropTypes.bool,
     alwaysShowAllBtns: PropTypes.bool,
     withFirstAndLast: PropTypes.bool,
     onSortChange: PropTypes.func,
@@ -1472,6 +1474,7 @@ BootstrapTable.defaultProps = {
     paginationSize: Const.PAGINATION_SIZE,
     paginationPosition: Const.PAGINATION_POS_BOTTOM,
     hideSizePerPage: false,
+    hidePageListOnlyOnePage: false,
     alwaysShowAllBtns: false,
     withFirstAndLast: true,
     onSizePerPageList: undefined,
