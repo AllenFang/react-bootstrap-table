@@ -55,6 +55,7 @@ export default class CustomPaginationTable extends React.Component {
       // hideSizePerPage: true > You can hide the dropdown for sizePerPage
       // alwaysShowAllBtns: true // Always show next and previous button
       // withFirstAndLast: false > Hide the going to First and Last page button
+      // hidePageListOnlyOnePage: true > Hide the page list if only one page.
     };
 
     return (
