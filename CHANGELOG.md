@@ -1,3 +1,31 @@
+<a name="v3.1.0"></a>
+# [v3.1.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.0.0-beta.12...v3.1.0) (2017-02-06)
+## Bug fixes
+* Fix componentWillMount of expand content not called with pagination([fafc080](https://github.com/AllenFang/react-bootstrap-table/commit/fafc080384440e785aa932fc495bd71c5688addb))
+* Fix Cell edit on key Tab press problems if enable expand row([7320dd4](https://github.com/AllenFang/react-bootstrap-table/commit/7320dd4ee94ebf233fbeb6a96d783b39ae215d84))
+
+## Features
+* Support the expand indicator([1c31aab](https://github.com/AllenFang/react-bootstrap-table/commit/1c31aabec5fc82f366e50cad9285c5ac5113c089))
+* Support to hide page list if only one page([2da1b85](https://github.com/AllenFang/react-bootstrap-table/commit/2da1b856b01c2b3df65d7cca6d3c5417c112cb1b))
+	* Use `options.hidePageListOnlyOnePage` and set true to hide.
+
+## Enhancement
+* Fixed no buttons will be displayed on top left when only customized buttons are provided([ad7b80c](https://github.com/AllenFang/react-bootstrap-table/commit/ad7b80c0bc6fceb2212d59106e46f8bedcdff3a9))
+* Support `csvFormatExtraData` for `csvForamt`([4fe30ed](https://github.com/AllenFang/react-bootstrap-table/commit/4fe30eda9492e51d075559c29a0982110cb15233))
+	* Check [this](https://github.com/AllenFang/react-bootstrap-table/commit/e185529f37dfa6e85336a9942b6c4b3aa6f6284c) for example
+* Support default tooltip on pagination button and able to customize them([c530474](https://github.com/AllenFang/react-bootstrap-table/commit/c5304741279709d7cf7dc55a6f3a89184c6976b2))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/pagination/custom-pagination-table.js#L49-L52) to learn how to custom tooltip for page list button
+
+<a name="v3.0.0"></a>
+# [v3.0.0](https://github.com/AllenFang/react-bootstrap-table/compare/v2.11.2...v3.0.0-beta.12) (2017-02-06)
+## Features
+* Support Keyboard navigation
+	* Check [examples](https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/keyboard-nav)
+
+## Enhancement
+* More easy to custom table(toolbar, button, pagination etc.)
+	* Check [examples](https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/custom)
+
 <a name="v2.11.2"></a>
 # [v2.11.2](https://github.com/AllenFang/react-bootstrap-table/compare/v2.11.1...v2.11.2) (2017-02-06)
 ## Bug fixes
