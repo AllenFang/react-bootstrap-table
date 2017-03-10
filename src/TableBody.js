@@ -187,8 +187,11 @@ class TableBody extends Component {
       }
       return (result);
     }, this);
+
+    let tableRowsOutput = tableRows;
+
     if (tableRows.length === 0 && !this.props.withoutNoDataText) {
-      tableRows.push(
+      tableRowsOutput = [
         <TableRow key='##table-empty##'>
           <td data-toggle='collapse'
               colSpan={ this.props.columns.length + (isSelectRowDefined ? 1 : 0) }
@@ -196,7 +199,7 @@ class TableBody extends Component {
               { this.props.noDataText || Const.NO_DATA_TEXT }
           </td>
         </TableRow>
-      );
+      ];
     }
 
     return (
@@ -206,7 +209,7 @@ class TableBody extends Component {
         <table className={ tableClasses }>
           { React.cloneElement(tableHeader, { ref: 'header' }) }
           <tbody ref='tbody'>
-            { tableRows }
+            { tableRowsOutput }
           </tbody>
         </table>
       </div>
