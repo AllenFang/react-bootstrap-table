@@ -52,7 +52,7 @@ class TableBody extends Component {
       expandColSpan += 1;
     }
 
-    const tableRows = this.props.data.map(function(data, r) {
+    let tableRows = this.props.data.map(function(data, r) {
       const tableColumns = this.props.columns.map(function(column, i) {
         const fieldValue = data[column.name];
         const isFocusCell = r === y && i === x;
@@ -188,10 +188,8 @@ class TableBody extends Component {
       return (result);
     }, this);
 
-    let tableRowsOutput = tableRows;
-
     if (tableRows.length === 0 && !this.props.withoutNoDataText) {
-      tableRowsOutput = [
+      tableRows = [
         <TableRow key='##table-empty##'>
           <td data-toggle='collapse'
               colSpan={ this.props.columns.length + (isSelectRowDefined ? 1 : 0) }
@@ -209,7 +207,7 @@ class TableBody extends Component {
         <table className={ tableClasses }>
           { React.cloneElement(tableHeader, { ref: 'header' }) }
           <tbody ref='tbody'>
-            { tableRowsOutput }
+            { tableRows }
           </tbody>
         </table>
       </div>
