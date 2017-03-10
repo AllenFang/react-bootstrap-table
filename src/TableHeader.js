@@ -109,7 +109,9 @@ class TableHeader extends Component {
   }
 
   renderSelectRowHeader(rowCount, rowKey) {
-    if (this.props.customComponent) {
+    if (this.props.hideSelectColumn) {
+      return null;
+    } else if (this.props.customComponent) {
       const CustomComponent = this.props.customComponent;
       return (
         <SelectRowHeaderColumn key={ rowKey } rowCount={ rowCount }>
