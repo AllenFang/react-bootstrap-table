@@ -2,6 +2,7 @@ import React from 'react';
 import MouseEventTable from './mouse-event-table';
 import TableInTabs from './table-in-tabs';
 import GetPageNumByKeyTable from './expose-api-table';
+import PrintableTable from './printable-table';
 import { Col, Panel } from 'react-bootstrap';
 
 class Demo extends React.Component {
@@ -22,6 +23,10 @@ class Demo extends React.Component {
           <h5>Source in /examples/js/others/expose-api-table.js</h5>
           <h5>Use expose API by BootstrapTable to get page number by rowkey</h5>
           <GetPageNumByKeyTable/>
+        </Panel>
+        <Panel header={ 'Printable Table Example)' }>
+          <h5>Source in /examples/js/others/printable-table.js</h5>
+          <PrintableTable/>
         </Panel>
       </Col>
     );
