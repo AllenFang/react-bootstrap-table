@@ -1432,6 +1432,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          children = _props3.children;
 
 	      var enableShowOnlySelected = selectRow && selectRow.showOnlySelected;
+	      var print = typeof this.props.options.printToolBar === 'undefined' ? true : this.props.options.printToolBar;
 	      if (enableShowOnlySelected || insertRow || deleteRow || search || exportCSV || this.props.options.searchPanel || this.props.options.btnGroup || this.props.options.toolBar) {
 	        var columns = void 0;
 	        if (Array.isArray(children)) {
@@ -1461,7 +1462,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        return _react2.default.createElement(
 	          'div',
-	          { className: 'react-bs-table-tool-bar' },
+	          { className: 'react-bs-table-tool-bar ' + (print ? '' : 'hidden-print') },
 	          _react2.default.createElement(_ToolBar2.default, {
 	            ref: 'toolbar',
 	            defaultSearch: this.props.options.defaultSearch,
@@ -1775,7 +1776,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    expandRowBgColor: _react.PropTypes.string,
 	    expandBy: _react.PropTypes.string,
 	    expanding: _react.PropTypes.array,
-	    beforeShowError: _react.PropTypes.func
+	    beforeShowError: _react.PropTypes.func,
+	    printToolBar: _react.PropTypes.bool
 	  }),
 	  fetchInfo: _react.PropTypes.shape({
 	    dataTotalSize: _react.PropTypes.number
@@ -1917,7 +1919,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    expandRowBgColor: undefined,
 	    expandBy: _Const2.default.EXPAND_BY_ROW,
 	    expanding: [],
-	    beforeShowError: undefined
+	    beforeShowError: undefined,
+	    printToolBar: true
 	  },
 	  fetchInfo: {
 	    dataTotalSize: 0
@@ -2291,7 +2294,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'renderSelectRowHeader',
 	    value: function renderSelectRowHeader(rowCount, rowKey) {
-	      if (this.props.customComponent) {
+	      if (this.props.hideSelectColumn) {
+	        return null;
+	      } else if (this.props.customComponent) {
 	        var CustomComponent = this.props.customComponent;
 	        return _react2.default.createElement(
 	          _SelectRowHeaderColumn2.default,
@@ -2716,8 +2721,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        return result;
 	      }, this);
+
 	      if (tableRows.length === 0 && !this.props.withoutNoDataText) {
-	        tableRows.push(_react2.default.createElement(
+	        tableRows = [_react2.default.createElement(
 	          _TableRow2.default,
 	          { key: '##table-empty##' },
 	          _react2.default.createElement(
@@ -2727,7 +2733,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              className: 'react-bs-table-no-data' },
 	            this.props.noDataText || _Const2.default.NO_DATA_TEXT
 	          )
-	        ));
+	        )];
 	      }
 
 	      return _react2.default.createElement(
