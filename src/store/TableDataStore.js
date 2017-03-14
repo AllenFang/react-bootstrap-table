@@ -26,6 +26,7 @@ export class TableDataStore {
   setProps(props) {
     this.keyField = props.keyField;
     this.enablePagination = props.isPagination;
+    this.enableDragAndDrop = props.isDraggable;
     this.colInfos = props.colInfos;
     this.remote = props.remote;
     this.multiColumnSearch = props.multiColumnSearch;

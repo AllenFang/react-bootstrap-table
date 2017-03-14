@@ -6,11 +6,14 @@ import TableColumn from './TableColumn';
 import TableEditColumn from './TableEditColumn';
 import classSet from 'classnames';
 import ExpandComponent from './ExpandComponent';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 const isFun = function(obj) {
   return obj && (typeof obj === 'function');
 };
 
+@DragDropContext(HTML5Backend)
 class TableBody extends Component {
   constructor(props) {
     super(props);
@@ -130,6 +133,7 @@ class TableBody extends Component {
               keyBoardNav={ enableKeyBoardNav }
               onKeyDown={ this.handleCellKeyDown }
               customNavStyle={ customNavStyle }
+              dragRow={ this.handleDragRow }
               row={ data }>
               { columnChild }
             </TableColumn>
@@ -212,6 +216,10 @@ class TableBody extends Component {
         </table>
       </div>
     );
+  }
+
+  handleDragRow = (dragIndex, hoverIndex) => {
+    console.log("we moved. dragIndex: ", dragIndex, "hoverIndex: ", hoverIndex)
   }
 
   handleCellKeyDown = (e, lastEditCell) => {
