@@ -27,32 +27,6 @@ const rowTarget = {
       return;
     }
 
-    // Determine rectangle on screen
-    const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
-
-    // Get vertical middle
-    const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-
-    // Determine mouse position
-    const clientOffset = monitor.getClientOffset();
-
-    // Get pixels to the top
-    const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-
-    // Only perform the move when the mouse has crossed half of the items height
-    // When dragging downwards, only move when the cursor is below 50%
-    // When dragging upwards, only move when the cursor is above 50%
-
-    // Dragging downwards
-    if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-      return;
-    }
-
-    // Dragging upwards
-    if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-      return;
-    }
-
     // Time to actually perform the action
     props.dragRow(dragIndex, hoverIndex);
 
@@ -61,18 +35,12 @@ const rowTarget = {
     // but it's good here for the sake of performance
     // to avoid expensive index searches.
     monitor.getItem().index = hoverIndex;
-  },
-    // const id = props.id;
-    // const draggedId = monitor.getItem().id;
-    //
-    // if (draggedId !== id) {
-    //   props.dragRow(draggedId, id);
-    // }
-  // }
+  }
 };
 
-@DropTarget(RowTypes.ROW, rowTarget, connect => ({
-  connectDropTarget: connect.dropTarget()
+@DropTarget(RowTypes.ROW, rowTarget, (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isHovering: monitor.isOver({ shallow: true })
 }))
 @DragSource(RowTypes.ROW, rowSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
@@ -84,7 +52,8 @@ class TableRow extends Component {
     connectDragSource: PropTypes.func.isRequired,
     connectDropTarget: PropTypes.func.isRequired,
     isDragging: PropTypes.bool.isRequired,
-    dragRow: PropTypes.func.isRequired
+    dragRow: PropTypes.func.isRequired,
+    isHovering: PropTypes.bool.isRequired
   }
 
   constructor(props) {
@@ -155,9 +124,12 @@ class TableRow extends Component {
 
   render() {
     this.clickNum = 0;
+    const { isDragging, connectDragSource, connectDropTarget, isHovering } = this.props;
+
     const trCss = {
       style: {
-        backgroundColor: this.props.isSelected ? this.props.selectRow.bgColor : null
+        backgroundColor: this.props.isSelected ? this.props.selectRow.bgColor : null,
+        borderBottom: isHovering ? "2px solid" : null
       },
       className: classSet(
         this.props.isSelected ? this.props.selectRow.className : null,
@@ -165,10 +137,9 @@ class TableRow extends Component {
       )
     };
 
-    const { text, isDragging, connectDragSource, connectDropTarget } = this.props;
-
     return (
-      connectDragSource(connectDropTarget(<tr { ...trCss }
+      connectDragSource(connectDropTarget(
+        <tr { ...trCss }
           onMouseOver={ this.rowMouseOver }
           onMouseOut={ this.rowMouseOut }
           onClick={ this.rowClick }
