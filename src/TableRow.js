@@ -8,9 +8,13 @@ const rowSource = {
   beginDrag(props) {
     return {
       id: props.id,
-      index: props.index,
+      index: props.index
     };
   },
+
+  endDrag(props, monitor) {
+    console.log("here I'm gonna call your callback sir")
+  }
 };
 
 const rowTarget = {
@@ -58,16 +62,30 @@ const rowTarget = {
     // to avoid expensive index searches.
     monitor.getItem().index = hoverIndex;
   },
+    // const id = props.id;
+    // const draggedId = monitor.getItem().id;
+    //
+    // if (draggedId !== id) {
+    //   props.dragRow(draggedId, id);
+    // }
+  // }
 };
 
 @DropTarget(RowTypes.ROW, rowTarget, connect => ({
-  connectDropTarget: connect.dropTarget(),
+  connectDropTarget: connect.dropTarget()
 }))
 @DragSource(RowTypes.ROW, rowSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
-  isDragging: monitor.isDragging(),
+  isDragging: monitor.isDragging()
 }))
 class TableRow extends Component {
+  static propTypes = {
+    id: PropTypes.number.isRequired,
+    connectDragSource: PropTypes.func.isRequired,
+    connectDropTarget: PropTypes.func.isRequired,
+    isDragging: PropTypes.bool.isRequired,
+    dragRow: PropTypes.func.isRequired
+  }
 
   constructor(props) {
     super(props);
@@ -147,12 +165,14 @@ class TableRow extends Component {
       )
     };
 
+    const { text, isDragging, connectDragSource, connectDropTarget } = this.props;
+
     return (
-      <tr { ...trCss }
+      connectDragSource(connectDropTarget(<tr { ...trCss }
           onMouseOver={ this.rowMouseOver }
           onMouseOut={ this.rowMouseOut }
           onClick={ this.rowClick }
-          onDoubleClick={ this.rowDoubleClick }>{ this.props.children }</tr>
+          onDoubleClick={ this.rowDoubleClick }>{ this.props.children }</tr>))
     );
   }
 }

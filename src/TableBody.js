@@ -8,6 +8,7 @@ import classSet from 'classnames';
 import ExpandComponent from './ExpandComponent';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import update from 'immutability-helper';
 
 const isFun = function(obj) {
   return obj && (typeof obj === 'function');
@@ -18,7 +19,8 @@ class TableBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currEditCell: null
+      currEditCell: null,
+      data: this.props.data
     };
   }
 
@@ -55,7 +57,7 @@ class TableBody extends Component {
       expandColSpan += 1;
     }
 
-    let tableRows = this.props.data.map(function(data, r) {
+    let tableRows = this.state.data.map(function(data, r) {
       const tableColumns = this.props.columns.map(function(column, i) {
         const fieldValue = data[column.name];
         const isFocusCell = r === y && i === x;
@@ -133,7 +135,6 @@ class TableBody extends Component {
               keyBoardNav={ enableKeyBoardNav }
               onKeyDown={ this.handleCellKeyDown }
               customNavStyle={ customNavStyle }
-              dragRow={ this.handleDragRow }
               row={ data }>
               { columnChild }
             </TableColumn>
@@ -165,7 +166,9 @@ class TableBody extends Component {
         onRowMouseOut={ this.handleRowMouseOut }
         onSelectRow={ this.handleSelectRow }
         onExpandRow={ this.handleClickCell }
-        unselectableRow={ disable }>
+        unselectableRow={ disable }
+        dragRow={ this.handleDragRow }
+        id={ r }>
         { this.props.expandColumnOptions.expandColumnVisible &&
             this.props.expandColumnOptions.expandColumnBeforeSelectColumn &&
             expandedRowColumn }
@@ -219,7 +222,44 @@ class TableBody extends Component {
   }
 
   handleDragRow = (dragIndex, hoverIndex) => {
-    console.log("we moved. dragIndex: ", dragIndex, "hoverIndex: ", hoverIndex)
+    console.time("re-ordering");
+
+    const { data } = this.state;
+    const dragRow = data[dragIndex];
+
+    this.setState(update(this.state, {
+      data: {
+        $splice: [
+          [dragIndex, 1],
+          [hoverIndex, 0, dragRow],
+        ],
+      },
+    }));
+
+    // copied from example
+    // var rows = _.clone(this.state.data);
+    //
+    // var currentRow = _.filter(rows, function (r) { return r.id === draggedId;})[0];
+    // var afterRow = _.filter(rows, function (r) { return r.id === afterId;})[0];
+    //
+    // var currentRowIndex = rows.indexOf(currentRow);
+    // var afterRowIndex = rows.indexOf(afterRow);
+    //
+    // // remove the current row
+    // rows.splice(currentRowIndex, 1);
+    // // put it after
+    // rows.splice(afterRowIndex, 0, currentRow);
+    //
+    // this.setState({data: rows});
+
+
+    // my idea
+    // const { data } = this.state;
+    //
+    // // Move row to the new index in the data list
+    // data.splice(afterIndex, 0, data.splice(draggedIndex, 1)[0]);
+    // this.setState({ data: data })
+    console.timeEnd("re-ordering");
   }
 
   handleCellKeyDown = (e, lastEditCell) => {
@@ -255,12 +295,12 @@ class TableBody extends Component {
   }
 
   handleRowMouseOut = (rowIndex, event) => {
-    const targetRow = this.props.data[rowIndex];
+    const targetRow = this.state.data[rowIndex];
     this.props.onRowMouseOut(targetRow, event);
   }
 
   handleRowMouseOver = (rowIndex, event) => {
-    const targetRow = this.props.data[rowIndex];
+    const targetRow = this.state.data[rowIndex];
     this.props.onRowMouseOver(targetRow, event);
   }
 
@@ -268,19 +308,19 @@ class TableBody extends Component {
     const { onRowClick } = this.props;
     if (this._isSelectRowDefined()) cellIndex--;
     if (this._isExpandColumnVisible()) cellIndex--;
-    onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex);
+    onRowClick(this.state.data[rowIndex - 1], rowIndex - 1, cellIndex);
   }
 
   handleRowDoubleClick = rowIndex => {
     const { onRowDoubleClick } = this.props;
-    const targetRow = this.props.data[rowIndex];
+    const targetRow = this.state.data[rowIndex];
     onRowDoubleClick(targetRow);
   }
 
   handleSelectRow = (rowIndex, isSelected, e) => {
     let selectedRow;
-    const { data, onSelectRow } = this.props;
-    data.forEach((row, i) => {
+    const { onSelectRow } = this.props;
+    this.state.data.forEach((row, i) => {
       if (i === rowIndex - 1) {
         selectedRow = row;
         return false;
@@ -319,7 +359,7 @@ class TableBody extends Component {
       if configure as expanding by column */
       (expandBy === Const.EXPAND_BY_COL && columnIndex < 0) ||
       (expandBy === Const.EXPAND_BY_COL && columns[columnIndex].expandable))) {
-      const rowKey = this.props.data[rowIndex - 1][keyField];
+      const rowKey = this.state.data[rowIndex - 1][keyField];
       let expanding = this.props.expanding;
       if (expanding.indexOf(rowKey) > -1) {
         expanding = expanding.filter(k => k !== rowKey);
@@ -365,7 +405,7 @@ class TableBody extends Component {
     if (this.props.selectRow.clickToSelectAndEditCell &&
         this.props.cellEdit.mode !== Const.CELL_EDIT_DBCLICK) {
       const selected = this.props.selectedRowKeys.indexOf(
-        this.props.data[rowIndex][this.props.keyField]) !== -1;
+        this.state.data[rowIndex][this.props.keyField]) !== -1;
       this.handleSelectRow(rowIndex + 1, !selected, e);
     }
     this.setState(stateObj);

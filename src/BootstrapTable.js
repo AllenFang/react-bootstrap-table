@@ -399,7 +399,6 @@ class BootstrapTable extends Component {
             onRowMouseOver={ this.handleRowMouseOver }
             onRowMouseOut={ this.handleRowMouseOut }
             onSelectRow={ this.handleSelectRow }
-            onDragRow={ this.handleDragRow }
             noDataText={ this.props.options.noDataText }
             withoutNoDataText={ this.props.options.withoutNoDataText }
             expanding={ this.state.expanding }
