@@ -12,7 +12,11 @@ const rowSource = {
   },
 
   endDrag(props, monitor) {
-    console.log("here I'm gonna call your callback sir")
+    if(this.props.onDraggedRow) {
+      const dragIndex = monitor.getItem().index;
+      const hoverIndex = props.index;
+      this.props.onDraggedRow(dragIndex, hoverIndex)
+    }
   }
 };
 
@@ -155,7 +159,8 @@ TableRow.propTypes = {
   onExpandRow: PropTypes.func,
   onRowMouseOut: PropTypes.func,
   onRowMouseOver: PropTypes.func,
-  unselectableRow: PropTypes.bool
+  unselectableRow: PropTypes.bool,
+  onDraggedRow: Proptypes.func
 };
 TableRow.defaultProps = {
   onRowClick: undefined,

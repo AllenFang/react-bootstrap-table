@@ -167,7 +167,8 @@ class TableBody extends Component {
         onSelectRow={ this.handleSelectRow }
         onExpandRow={ this.handleClickCell }
         unselectableRow={ disable }
-        dragRow={ this.handleDragRow } >
+        dragRow={ this.handleDragRow }
+        onDraggedRow={ this.props.onDraggedRow }>
         { this.props.expandColumnOptions.expandColumnVisible &&
             this.props.expandColumnOptions.expandColumnBeforeSelectColumn &&
             expandedRowColumn }
@@ -479,6 +480,8 @@ TableBody.propTypes = {
   keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
   x: PropTypes.number,
   y: PropTypes.number,
-  onNavigateCell: PropTypes.func
+  onNavigateCell: PropTypes.func,
+  draggableRow: PropTypes.bool,
+  onDraggedRow: Proptypes.func
 };
 export default TableBody;

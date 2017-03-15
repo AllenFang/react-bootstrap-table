@@ -94,7 +94,6 @@ class BootstrapTable extends Component {
 
     this.store.setProps({
       isPagination: props.pagination,
-      isDraggable: props.draggable,
       keyField: keyField,
       colInfos: this.colInfos,
       multiColumnSearch: props.multiColumnSearch,
@@ -379,6 +378,7 @@ class BootstrapTable extends Component {
             style={ { ...style, ...this.props.bodyStyle } }
             data={ this.state.data }
             draggableRow={ this.props.draggable }
+            onDraggedRow= { this.props.onDraggedRow }
             expandComponent={ this.props.expandComponent }
             expandableRow={ this.props.expandableRow }
             expandRowBgColor={ this.props.options.expandRowBgColor }
@@ -1395,7 +1395,9 @@ BootstrapTable.propTypes = {
     expandColumnVisible: PropTypes.bool,
     expandColumnComponent: PropTypes.func,
     expandColumnBeforeSelectColumn: PropTypes.bool
-  })
+  }),
+  draggableRow: PropTypes.bool,
+  onDraggedRow: Proptypes.func
 };
 BootstrapTable.defaultProps = {
   scrollTop: undefined,
