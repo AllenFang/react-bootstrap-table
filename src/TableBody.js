@@ -167,8 +167,7 @@ class TableBody extends Component {
         onSelectRow={ this.handleSelectRow }
         onExpandRow={ this.handleClickCell }
         unselectableRow={ disable }
-        dragRow={ this.handleDragRow }
-        id={ r }>
+        dragRow={ this.handleDragRow } >
         { this.props.expandColumnOptions.expandColumnVisible &&
             this.props.expandColumnOptions.expandColumnBeforeSelectColumn &&
             expandedRowColumn }
@@ -222,8 +221,6 @@ class TableBody extends Component {
   }
 
   handleDragRow = (dragIndex, hoverIndex) => {
-    console.time("re-ordering");
-
     const { data } = this.state;
     const dragRow = data[dragIndex];
 
@@ -235,31 +232,6 @@ class TableBody extends Component {
         ],
       },
     }));
-
-    // copied from example
-    // var rows = _.clone(this.state.data);
-    //
-    // var currentRow = _.filter(rows, function (r) { return r.id === draggedId;})[0];
-    // var afterRow = _.filter(rows, function (r) { return r.id === afterId;})[0];
-    //
-    // var currentRowIndex = rows.indexOf(currentRow);
-    // var afterRowIndex = rows.indexOf(afterRow);
-    //
-    // // remove the current row
-    // rows.splice(currentRowIndex, 1);
-    // // put it after
-    // rows.splice(afterRowIndex, 0, currentRow);
-    //
-    // this.setState({data: rows});
-
-
-    // my idea
-    // const { data } = this.state;
-    //
-    // // Move row to the new index in the data list
-    // data.splice(afterIndex, 0, data.splice(draggedIndex, 1)[0]);
-    // this.setState({ data: data })
-    console.timeEnd("re-ordering");
   }
 
   handleCellKeyDown = (e, lastEditCell) => {

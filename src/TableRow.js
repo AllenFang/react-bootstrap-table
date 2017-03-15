@@ -7,7 +7,6 @@ import RowTypes from './RowTypes';
 const rowSource = {
   beginDrag(props) {
     return {
-      id: props.id,
       index: props.index
     };
   },
@@ -48,7 +47,6 @@ const rowTarget = {
 }))
 class TableRow extends Component {
   static propTypes = {
-    id: PropTypes.number.isRequired,
     connectDragSource: PropTypes.func.isRequired,
     connectDropTarget: PropTypes.func.isRequired,
     isDragging: PropTypes.bool.isRequired,
