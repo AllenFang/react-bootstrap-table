@@ -1,7 +1,28 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Const from './Const';
+import { DragSource } from 'react-dnd';
+import RowTypes from './RowTypes';
 
+const rowSource = {
+  beginDrag(props) {
+    return {
+      rIndex: props.rIndex
+    };
+  },
+
+  endDrag(props, monitor) {
+    if(props.onDraggedRow) {
+      const dragIndex = monitor.getItem().rIndex;
+      const hoverIndex = props.rIndex;
+      this.props.onDraggedRow(dragIndex, hoverIndex)
+    }
+  }
+};
+
+@DragSource(RowTypes.ROW, rowSource, (connect, monitor) => ({
+  connectDragSource: connect.dragSource()
+}))
 class TableColumn extends Component {
 
   constructor(props) {
@@ -107,7 +128,9 @@ class TableColumn extends Component {
       keyBoardNav,
       tabIndex,
       customNavStyle,
-      row
+      row,
+      dragHandle,
+      connectDragSource
     } = this.props;
 
     let { className } = this.props;
@@ -146,14 +169,20 @@ class TableColumn extends Component {
         className = `${className} default-focus-cell`;
       }
     }
-    return (
+    let columnOutput = (
       <td tabIndex={ tabIndex } style={ tdStyle }
-          title={ columnTitle }
-          className={ className }
-          { ...opts } { ...attrs }>
+        title={ columnTitle }
+        className={ className }
+        { ...opts } { ...attrs }>
         { typeof children === 'boolean' ? children.toString() : children }
       </td>
-    );
+    )
+
+    if (dragHandle) {
+      columnOutput = connectDragSource(columnOutput)
+    }
+
+    return columnOutput;
   }
 }
 TableColumn.propTypes = {

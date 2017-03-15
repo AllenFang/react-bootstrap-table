@@ -1397,7 +1397,7 @@ BootstrapTable.propTypes = {
     expandColumnBeforeSelectColumn: PropTypes.bool
   }),
   draggableRow: PropTypes.bool,
-  onDraggedRow: Proptypes.func
+  onDraggedRow: PropTypes.func
 };
 BootstrapTable.defaultProps = {
   scrollTop: undefined,

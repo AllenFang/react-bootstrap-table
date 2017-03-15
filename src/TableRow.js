@@ -1,29 +1,28 @@
 import classSet from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
-import { findDOMNode } from 'react-dom';
 import RowTypes from './RowTypes';
 
 const rowSource = {
   beginDrag(props) {
     return {
-      index: props.index
+      rIndex: props.rIndex
     };
   },
 
   endDrag(props, monitor) {
-    if(this.props.onDraggedRow) {
-      const dragIndex = monitor.getItem().index;
-      const hoverIndex = props.index;
+    if(props.onDraggedRow) {
+      const dragIndex = monitor.getItem().rIndex;
+      const hoverIndex = props.rIndex;
       this.props.onDraggedRow(dragIndex, hoverIndex)
     }
   }
 };
 
 const rowTarget = {
-  hover(props, monitor, component) {
-    const dragIndex = monitor.getItem().index;
-    const hoverIndex = props.index;
+  hover(props, monitor) {
+    const dragIndex = monitor.getItem().rIndex;
+    const hoverIndex = props.rIndex;
 
     // Don't replace items with themselves
     if (dragIndex === hoverIndex) {
@@ -36,8 +35,8 @@ const rowTarget = {
     // Note: we're mutating the monitor item here!
     // Generally it's better to avoid mutations,
     // but it's good here for the sake of performance
-    // to avoid expensive index searches.
-    monitor.getItem().index = hoverIndex;
+    // to avoid expensive rIndex searches.
+    monitor.getItem().rIndex = hoverIndex;
   }
 };
 
@@ -46,14 +45,11 @@ const rowTarget = {
   isHovering: monitor.isOver({ shallow: true })
 }))
 @DragSource(RowTypes.ROW, rowSource, (connect, monitor) => ({
-  connectDragSource: connect.dragSource(),
-  isDragging: monitor.isDragging()
+  connectDragPreview: connect.dragPreview()
 }))
 class TableRow extends Component {
   static propTypes = {
-    connectDragSource: PropTypes.func.isRequired,
     connectDropTarget: PropTypes.func.isRequired,
-    isDragging: PropTypes.bool.isRequired,
     dragRow: PropTypes.func.isRequired,
     isHovering: PropTypes.bool.isRequired
   }
@@ -126,7 +122,7 @@ class TableRow extends Component {
 
   render() {
     this.clickNum = 0;
-    const { isDragging, connectDragSource, connectDropTarget, isHovering } = this.props;
+    const { connectDropTarget, connectDragPreview, isHovering } = this.props;
 
     const trCss = {
       style: {
@@ -140,7 +136,7 @@ class TableRow extends Component {
     };
 
     return (
-      connectDragSource(connectDropTarget(
+      connectDragPreview(connectDropTarget(
         <tr { ...trCss }
           onMouseOver={ this.rowMouseOver }
           onMouseOut={ this.rowMouseOut }
@@ -160,7 +156,7 @@ TableRow.propTypes = {
   onRowMouseOut: PropTypes.func,
   onRowMouseOver: PropTypes.func,
   unselectableRow: PropTypes.bool,
-  onDraggedRow: Proptypes.func
+  onDraggedRow: PropTypes.func
 };
 TableRow.defaultProps = {
   onRowClick: undefined,

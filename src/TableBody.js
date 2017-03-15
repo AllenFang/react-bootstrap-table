@@ -120,6 +120,7 @@ class TableBody extends Component {
           return (
             <TableColumn key={ i }
               rIndex={ r }
+              dragHandle={ (column.name == 'dragHandle') ? true : false }
               dataAlign={ column.align }
               className={ tdClassName }
               columnTitle={ columnTitle }
@@ -158,6 +159,7 @@ class TableBody extends Component {
       }
       const result = [ <TableRow isSelected={ selected } key={ key } className={ trClassName }
         index={ r }
+        rIndex={ r }
         selectRow={ isSelectRowDefined ? this.props.selectRow : undefined }
         enableCellEdit={ cellEdit.mode !== Const.CELL_EDIT_NONE }
         onRowClick={ this.handleRowClick }
@@ -482,6 +484,6 @@ TableBody.propTypes = {
   y: PropTypes.number,
   onNavigateCell: PropTypes.func,
   draggableRow: PropTypes.bool,
-  onDraggedRow: Proptypes.func
+  onDraggedRow: PropTypes.func
 };
 export default TableBody;
