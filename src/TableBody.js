@@ -136,6 +136,7 @@ class TableBody extends Component {
               keyBoardNav={ enableKeyBoardNav }
               onKeyDown={ this.handleCellKeyDown }
               customNavStyle={ customNavStyle }
+              onDraggedRow={ this.props.onDraggedRow }
               row={ data }>
               { columnChild }
             </TableColumn>
@@ -169,8 +170,7 @@ class TableBody extends Component {
         onSelectRow={ this.handleSelectRow }
         onExpandRow={ this.handleClickCell }
         unselectableRow={ disable }
-        dragRow={ this.handleDragRow }
-        onDraggedRow={ this.props.onDraggedRow }>
+        dragRow={ this.handleDragRow }>
         { this.props.expandColumnOptions.expandColumnVisible &&
             this.props.expandColumnOptions.expandColumnBeforeSelectColumn &&
             expandedRowColumn }

@@ -3,22 +3,7 @@ import ReactDOM from 'react-dom';
 import Const from './Const';
 import { DragSource } from 'react-dnd';
 import RowTypes from './RowTypes';
-
-const rowSource = {
-  beginDrag(props) {
-    return {
-      rIndex: props.rIndex
-    };
-  },
-
-  endDrag(props, monitor) {
-    if(props.onDraggedRow) {
-      const dragIndex = monitor.getItem().rIndex;
-      const hoverIndex = props.rIndex;
-      this.props.onDraggedRow(dragIndex, hoverIndex)
-    }
-  }
-};
+import rowSource from './RowSource';
 
 @DragSource(RowTypes.ROW, rowSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource()
@@ -200,7 +185,8 @@ TableColumn.propTypes = {
   tabIndex: PropTypes.string,
   keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
   customNavStyle: PropTypes.oneOfType([ PropTypes.func, PropTypes.object ]),
-  row: PropTypes.any  /* only used on custom styling for navigation */
+  row: PropTypes.any,  /* only used on custom styling for navigation */
+  onDraggedRow: PropTypes.func
 };
 
 TableColumn.defaultProps = {

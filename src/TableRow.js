@@ -2,22 +2,7 @@ import classSet from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
 import RowTypes from './RowTypes';
-
-const rowSource = {
-  beginDrag(props) {
-    return {
-      rIndex: props.rIndex
-    };
-  },
-
-  endDrag(props, monitor) {
-    if(props.onDraggedRow) {
-      const dragIndex = monitor.getItem().rIndex;
-      const hoverIndex = props.rIndex;
-      this.props.onDraggedRow(dragIndex, hoverIndex)
-    }
-  }
-};
+import rowSource from './RowSource';
 
 const rowTarget = {
   hover(props, monitor) {
@@ -155,8 +140,7 @@ TableRow.propTypes = {
   onExpandRow: PropTypes.func,
   onRowMouseOut: PropTypes.func,
   onRowMouseOver: PropTypes.func,
-  unselectableRow: PropTypes.bool,
-  onDraggedRow: PropTypes.func
+  unselectableRow: PropTypes.bool
 };
 TableRow.defaultProps = {
   onRowClick: undefined,
