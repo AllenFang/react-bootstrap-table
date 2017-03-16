@@ -5,6 +5,12 @@ import RowTypes from './RowTypes';
 import rowSource from './RowSource';
 
 const rowTarget = {
+  drop(props, monitor, component) {
+    return {
+      afterRowId: props.afterRow.id
+    }
+  },
+
   hover(props, monitor) {
     const dragIndex = monitor.getItem().rIndex;
     const hoverIndex = props.rIndex;

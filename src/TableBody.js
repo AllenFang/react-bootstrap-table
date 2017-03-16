@@ -120,6 +120,7 @@ class TableBody extends Component {
           return (
             <TableColumn key={ i }
               rIndex={ r }
+              rowId={ data.id }
               dragHandle={ (column.name == 'dragHandle') ? true : false }
               dataAlign={ column.align }
               className={ tdClassName }
@@ -137,6 +138,7 @@ class TableBody extends Component {
               onKeyDown={ this.handleCellKeyDown }
               customNavStyle={ customNavStyle }
               onDraggedRow={ this.props.onDraggedRow }
+              afterRow={ this.state.afterRow }
               row={ data }>
               { columnChild }
             </TableColumn>
@@ -161,6 +163,7 @@ class TableBody extends Component {
       const result = [ <TableRow isSelected={ selected } key={ key } className={ trClassName }
         index={ r }
         rIndex={ r }
+        rowId={ data.id }
         selectRow={ isSelectRowDefined ? this.props.selectRow : undefined }
         enableCellEdit={ cellEdit.mode !== Const.CELL_EDIT_NONE }
         onRowClick={ this.handleRowClick }
@@ -170,7 +173,8 @@ class TableBody extends Component {
         onSelectRow={ this.handleSelectRow }
         onExpandRow={ this.handleClickCell }
         unselectableRow={ disable }
-        dragRow={ this.handleDragRow }>
+        dragRow={ this.handleDragRow }
+        afterRow={ this.state.afterRow } >
         { this.props.expandColumnOptions.expandColumnVisible &&
             this.props.expandColumnOptions.expandColumnBeforeSelectColumn &&
             expandedRowColumn }
@@ -226,8 +230,10 @@ class TableBody extends Component {
   handleDragRow = (dragIndex, hoverIndex) => {
     const { data } = this.state;
     const dragRow = data[dragIndex];
+    const afterRow = data[hoverIndex];
 
     this.setState(update(this.state, {
+      afterRow: { $set: afterRow },
       data: {
         $splice: [
           [dragIndex, 1],
