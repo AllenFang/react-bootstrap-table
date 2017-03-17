@@ -5,10 +5,10 @@ import RowTypes from './RowTypes';
 import rowSource from './RowSource';
 
 const rowTarget = {
-  drop(props, monitor, component) {
+  drop(props) {
     return {
       afterRowId: props.afterRow.id
-    }
+    };
   },
 
   hover(props, monitor) {
@@ -35,7 +35,7 @@ const rowTarget = {
   connectDropTarget: connect.dropTarget(),
   isHovering: monitor.isOver({ shallow: true })
 }))
-@DragSource(RowTypes.ROW, rowSource, (connect, monitor) => ({
+@DragSource(RowTypes.ROW, rowSource, (connect) => ({
   connectDragPreview: connect.dragPreview()
 }))
 class TableRow extends Component {
@@ -118,7 +118,7 @@ class TableRow extends Component {
     const trCss = {
       style: {
         backgroundColor: this.props.isSelected ? this.props.selectRow.bgColor : null,
-        borderBottom: isHovering ? "2px solid" : null
+        borderBottom: isHovering ? '2px solid' : null
       },
       className: classSet(
         this.props.isSelected ? this.props.selectRow.className : null,

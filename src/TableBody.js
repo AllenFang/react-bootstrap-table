@@ -121,7 +121,7 @@ class TableBody extends Component {
             <TableColumn key={ i }
               rIndex={ r }
               rowId={ data.id }
-              dragHandle={ (column.name == 'dragHandle') ? true : false }
+              dragHandle={ (column.name === 'dragHandle') ? true : false }
               dataAlign={ column.align }
               className={ tdClassName }
               columnTitle={ columnTitle }
@@ -236,10 +236,10 @@ class TableBody extends Component {
       afterRow: { $set: afterRow },
       data: {
         $splice: [
-          [dragIndex, 1],
-          [hoverIndex, 0, dragRow],
-        ],
-      },
+          [ dragIndex, 1 ],
+          [ hoverIndex, 0, dragRow ]
+        ]
+      }
     }));
   }
 

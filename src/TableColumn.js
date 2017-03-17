@@ -161,10 +161,10 @@ class TableColumn extends Component {
         { ...opts } { ...attrs }>
         { typeof children === 'boolean' ? children.toString() : children }
       </td>
-    )
+    );
 
     if (dragHandle) {
-      columnOutput = connectDragSource(columnOutput)
+      columnOutput = connectDragSource(columnOutput);
     }
 
     return columnOutput;

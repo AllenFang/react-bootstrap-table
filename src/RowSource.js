@@ -7,10 +7,10 @@ export default {
   },
 
   endDrag(props, monitor) {
-    if(props.onDraggedRow) {
+    if (props.onDraggedRow) {
       const draggedRowId = monitor.getItem().rowId;
       const afterRowId = monitor.getDropResult().afterRowId;
-      props.onDraggedRow(draggedRowId, afterRowId)
+      props.onDraggedRow(draggedRowId, afterRowId);
     }
   }
 };
