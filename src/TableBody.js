@@ -24,6 +24,14 @@ class TableBody extends Component {
     };
   }
 
+  componentWillReceiveProps(props) {
+    this.setState(update(this.state, {
+      data: {
+        $set: props.data
+      }
+    }));
+  }
+
   render() {
     const { cellEdit, beforeShowError, x, y, keyBoardNav } = this.props;
     const tableClasses = classSet('table', {
