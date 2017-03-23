@@ -17,7 +17,7 @@ function addProducts(quantity) {
   }
 }
 
-addProducts(70);
+addProducts(10);
 
 const DragHandle = () => {
   return (
