@@ -3,6 +3,8 @@
 /* eslint no-console: 0 */
 /* eslint eqeqeq: 0 */
 /* eslint one-var: 0 */
+import update from 'immutability-helper';
+
 import Const from '../Const';
 
 export class TableDataStore {
@@ -162,6 +164,19 @@ export class TableDataStore {
   page(page, sizePerPage) {
     this.pageObj.end = page * sizePerPage - 1;
     this.pageObj.start = this.pageObj.end - (sizePerPage - 1);
+    return this;
+  }
+
+  drag(dragIndex, hoverIndex) {
+    const dragRow = this.data[dragIndex];
+
+    this.setData(update(this.data, {
+      $splice: [
+        [ dragIndex, 1 ],
+        [ hoverIndex, 0, dragRow ]
+      ]
+    }));
+
     return this;
   }
 

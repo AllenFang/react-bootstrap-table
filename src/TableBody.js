@@ -19,17 +19,8 @@ class TableBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currEditCell: null,
-      data: this.props.data
+      currEditCell: null
     };
-  }
-
-  componentWillReceiveProps(props) {
-    this.setState(update(this.state, {
-      data: {
-        $set: props.data
-      }
-    }));
   }
 
   render() {
@@ -65,7 +56,7 @@ class TableBody extends Component {
       expandColSpan += 1;
     }
 
-    let tableRows = this.state.data.map(function(data, r) {
+    let tableRows = this.props.data.map(function(data, r) {
       const tableColumns = this.props.columns.map(function(column, i) {
         const fieldValue = data[column.name];
         const isFocusCell = r === y && i === x;
@@ -236,19 +227,14 @@ class TableBody extends Component {
   }
 
   handleDragRow = (dragIndex, hoverIndex) => {
-    const { data } = this.state;
-    const dragRow = data[dragIndex];
+    const { data } = this.props;
     const afterRow = data[hoverIndex];
 
     this.setState(update(this.state, {
-      afterRow: { $set: afterRow },
-      data: {
-        $splice: [
-          [ dragIndex, 1 ],
-          [ hoverIndex, 0, dragRow ]
-        ]
-      }
+      afterRow: { $set: afterRow }
     }));
+
+    this.props.handleDragRow(dragIndex, hoverIndex);
   }
 
   handleCellKeyDown = (e, lastEditCell) => {
@@ -284,12 +270,12 @@ class TableBody extends Component {
   }
 
   handleRowMouseOut = (rowIndex, event) => {
-    const targetRow = this.state.data[rowIndex];
+    const targetRow = this.props.data[rowIndex];
     this.props.onRowMouseOut(targetRow, event);
   }
 
   handleRowMouseOver = (rowIndex, event) => {
-    const targetRow = this.state.data[rowIndex];
+    const targetRow = this.props.data[rowIndex];
     this.props.onRowMouseOver(targetRow, event);
   }
 
@@ -297,19 +283,19 @@ class TableBody extends Component {
     const { onRowClick } = this.props;
     if (this._isSelectRowDefined()) cellIndex--;
     if (this._isExpandColumnVisible()) cellIndex--;
-    onRowClick(this.state.data[rowIndex - 1], rowIndex - 1, cellIndex);
+    onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex);
   }
 
   handleRowDoubleClick = rowIndex => {
     const { onRowDoubleClick } = this.props;
-    const targetRow = this.state.data[rowIndex];
+    const targetRow = this.props.data[rowIndex];
     onRowDoubleClick(targetRow);
   }
 
   handleSelectRow = (rowIndex, isSelected, e) => {
     let selectedRow;
     const { onSelectRow } = this.props;
-    this.state.data.forEach((row, i) => {
+    this.props.data.forEach((row, i) => {
       if (i === rowIndex - 1) {
         selectedRow = row;
         return false;
@@ -348,7 +334,7 @@ class TableBody extends Component {
       if configure as expanding by column */
       (expandBy === Const.EXPAND_BY_COL && columnIndex < 0) ||
       (expandBy === Const.EXPAND_BY_COL && columns[columnIndex].expandable))) {
-      const rowKey = this.state.data[rowIndex - 1][keyField];
+      const rowKey = this.props.data[rowIndex - 1][keyField];
       let expanding = this.props.expanding;
       if (expanding.indexOf(rowKey) > -1) {
         expanding = expanding.filter(k => k !== rowKey);
@@ -394,7 +380,7 @@ class TableBody extends Component {
     if (this.props.selectRow.clickToSelectAndEditCell &&
         this.props.cellEdit.mode !== Const.CELL_EDIT_DBCLICK) {
       const selected = this.props.selectedRowKeys.indexOf(
-        this.state.data[rowIndex][this.props.keyField]) !== -1;
+        this.props.data[rowIndex][this.props.keyField]) !== -1;
       this.handleSelectRow(rowIndex + 1, !selected, e);
     }
     this.setState(stateObj);
