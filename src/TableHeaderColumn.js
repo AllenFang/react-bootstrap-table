@@ -14,7 +14,6 @@ class TableHeaderColumn extends Component {
 
   constructor(props) {
     super(props);
-    this.clear = props.filter && props.filter.clear;
     this.handleFilter = this.handleFilter.bind(this);
 
     this.activeEl = null;
@@ -83,16 +82,9 @@ class TableHeaderColumn extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.filter && nextProps.filter.clear) {
-      this.clear = true;
-      this.cleanFiltered();
-    }
-  }
-
   componentDidMount() {
     this.refs['header-col'].setAttribute('data-field', this.props.dataField);
-    this.clear = false;
+
     const handlers = this.refs['header-col'].getElementsByClassName('resize-handler');
     for (let i = 0; i < handlers.length; i++) {
       const handler = handlers[i];
@@ -175,13 +167,14 @@ class TableHeaderColumn extends Component {
     if (!this.inResize) {
       return;
     }
+
     event.preventDefault();
     const mouseEvent = event || window.event;
 
     const changeValue = mouseEvent.clientX - this.nMouseX;
 
     if ((this.headerStartWidth + changeValue) <= 20 ||
-      (this.nextHeaderStartWidth - changeValue) <= 20) {
+        (this.nextHeaderStartWidth - changeValue) <= 20) {
       return;
     }
 
@@ -214,8 +207,8 @@ class TableHeaderColumn extends Component {
     }
     event.stopImmediatePropagation();
     this.inResize = true;
-    this.headerStartWidth = parseInt(this.activeEl.style.width, 10) || 0;
-    this.nextHeaderStartWidth = parseInt(this.activeEl.nextSibling.style.width, 10) || 0;
+    this.headerStartWidth = parseInt(window.getComputedStyle(this.activeEl).width, 10) || 0;
+    this.nextHeaderStartWidth = parseInt(window.getComputedStyle(this.activeEl.nextSibling).width, 10) || 0;
     this.nMouseX = mouseEvent.clientX;
 
     event.preventDefault();
@@ -252,7 +245,6 @@ class TableHeaderColumn extends Component {
       break;
     }
     }
-    this.clear = false;
   }
 
   applyFilter(val) {
@@ -336,7 +328,6 @@ TableHeaderColumn.propTypes = {
   }),
   sortIndicator: PropTypes.bool,
   export: PropTypes.bool,
-  onResize: PropTypes.func,
   expandable: PropTypes.bool,
   tdAttr: PropTypes.object,
   tdStyle: PropTypes.object,

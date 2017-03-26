@@ -366,11 +366,11 @@ class BootstrapTable extends Component {
             condensed={ this.props.condensed }
             isFiltered={ this.filter ? true : false }
             isSelectAll={ isSelectAll }
-            onResize={ this._adjustBodyWidth }>
             reset={ this.state.reset }
             expandColumnVisible={ expandColumnOptions.expandColumnVisible }
             expandColumnComponent={ expandColumnOptions.expandColumnComponent }
-            expandColumnBeforeSelectColumn={ expandColumnOptions.expandColumnBeforeSelectColumn }>
+            expandColumnBeforeSelectColumn={ expandColumnOptions.expandColumnBeforeSelectColumn }
+            onResize= { this._adjustBodyWidth }>
             { this.props.children }
           </TableHeader>
           <TableBody ref='body'
@@ -1144,38 +1144,39 @@ class BootstrapTable extends Component {
   _adjustBodyWidth = () => {
     const header = this.refs.header.refs.header;
     const headerContainer = this.refs.header.refs.container;
-    const bodyHeader = this.refs.body.refs.header;
     const headerRow = header.childNodes;
-    const isScroll = headerContainer.offsetWidth !== bodyHeader.parentNode.offsetWidth;
+    const bodyHeader = this.refs.body.getHeaderColGrouop();
+    const bodyContainer = this.refs.body.refs.container;
+
+    const isScroll = headerContainer.offsetWidth !== bodyContainer.offsetWidth;
     const scrollBarWidth = isScroll ? Util.getScrollBarWidth() : 0;
-    if (headerRow) {
-      for (let i = 0; i < headerRow.length; i++) {
-        const cell = headerRow[i];
-        const computedStyle = getComputedStyle(cell);
-        let width = parseFloat(computedStyle.width.replace('px', ''));
+    if (headerRow && headerRow[0]) {
+      for (let i = 0; i < headerRow[0].childNodes.length; i++) {
+        const cell = headerRow[0].childNodes[i];
+        let width = parseFloat(window.getComputedStyle(cell).width.replace('px', ''));
 
         if (this.isIE) {
-          const paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
-          const paddingRightWidth = parseFloat(computedStyle.paddingRight.replace('px', ''));
-          const borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace('px', ''));
-          const borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace('px', ''));
+          const paddingLeftWidth = parseFloat(window.getComputedStyle(cell).paddingLeft.replace('px', ''));
+          const paddingRightWidth = parseFloat(window.getComputedStyle(cell).paddingRight.replace('px', ''));
+          const borderRightWidth = parseFloat(window.getComputedStyle(cell).borderRightWidth.replace('px', ''));
+          const borderLeftWidth = parseFloat(window.getComputedStyle(cell).borderLeftWidth.replace('px', ''));
           width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
         }
 
-        const lastPadding = (headerRow.length - 1 === i ? scrollBarWidth : 0);
+        const lastPadding = (headerRow[0].childNodes.length - 1 === i ? scrollBarWidth : 0);
         if (width <= 0) {
           width = 120;
           cell.width = width + lastPadding + 'px';
         }
         const result = width + lastPadding + 'px';
 
-        bodyHeader.childNodes[i].style.width = result;
-        bodyHeader.childNodes[i].style.minWidth = result;
+        bodyHeader[i].style.width = result;
+        bodyHeader[i].style.minWidth = result;
       }
     }
   }
 
-  _adjustHeaderWidth = () => {
+  _adjustHeaderWidth() {
     const header = this.refs.header.getHeaderColGrouop();
     const tbody = this.refs.body.refs.tbody;
     const bodyHeader = this.refs.body.getHeaderColGrouop();
