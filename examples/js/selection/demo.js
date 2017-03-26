@@ -13,6 +13,7 @@ import RowClickTable from './row-click-table';
 import OnlySelectedTable from './only-show-selected-table';
 import ExternallyManagedSelection from './externally-managed-selection';
 import CustomMultiSelectTable from './custom-multi-select-table';
+import SelectionColumnWidthTable from './selection-column-width-table';
 import SelectAll from './all-select';
 
 class Demo extends React.Component {
@@ -139,10 +140,19 @@ class Demo extends React.Component {
         </div>
         <div className='col-md-offset-1 col-md-8'>
           <div className='panel panel-default'>
-            <div className='panel-heading'>Select All Which Only Active on Current Page</div>
+            <div className='panel-heading'>Select All on All Pages</div>
             <div className='panel-body'>
               <h5>Source in all-select.js</h5>
               <SelectAll />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Configure Selection Column Width</div>
+            <div className='panel-body'>
+              <h5>Source in selection-column-width-table.js</h5>
+              <SelectionColumnWidthTable />
             </div>
           </div>
         </div>

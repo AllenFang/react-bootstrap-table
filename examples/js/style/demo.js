@@ -5,8 +5,10 @@ import TrClassStringTable from './tr-class-string-table';
 import TrClassFunctionTable from './tr-class-function-table';
 import TdClassStringTable from './td-class-string-table';
 import TdClassFunctionTable from './td-class-function-table';
+import EditTdClassTable from './edit-td-class-table';
 import InlineStylingTable from './inline-style-table';
 import TableClassTable from './table-class-table';
+import StyledComponentTable from './table-styled-components';
 
 class Demo extends React.Component {
   render() {
@@ -59,10 +61,28 @@ class Demo extends React.Component {
         </div>
         <div className='col-md-offset-1 col-md-8'>
           <div className='panel panel-default'>
+            <div className='panel-heading'>Set String or Function to <code>editColumnClassName</code> on &lt;TableHeaderColumn&gt;</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/style/edit-td-class-table.js</h5>
+              <EditTdClassTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
             <div className='panel-heading'>Support Inline Style for Bootstrap Table</div>
             <div className='panel-body'>
               <h5>Source in /examples/js/style/inline-style-table.js</h5>
               <InlineStylingTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Support <a href='https://github.com/styled-components/styled-components' target='_blank'>styled-components</a></div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/style/table-styled-components.js</h5>
+              <StyledComponentTable />
             </div>
           </div>
         </div>

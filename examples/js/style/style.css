@@ -45,3 +45,7 @@
 .my-table-container-class {
   border: #FFBB73 5px solid;
 }
+
+.class-for-editing-cell {
+    background-color: #FFBB73;
+}

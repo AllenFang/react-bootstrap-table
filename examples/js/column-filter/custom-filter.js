@@ -43,6 +43,12 @@ class CheckboxFilter extends React.Component {
     }
   }
 
+  cleanFiltered() {
+    this.refs.okCheckbox.checked = true;
+    this.refs.nokCheckbox.checked = true;
+    this.props.filterHandler();
+  }
+
   render() {
     return (
       <div>
@@ -71,13 +77,20 @@ function getCustomFilter(filterHandler, customFilterParameters) {
 }
 
 export default class CustomFilter extends React.Component {
+  handleClick = () => {
+    this.refs.isInStock.cleanFiltered();
+  }
+
   render() {
     return (
-      <BootstrapTable data={ products }>
-        <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
-        <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
-        <TableHeaderColumn dataField='isInStock' filter={ { type: 'CustomFilter', getElement: getCustomFilter, customFilterParameters: { textOK: 'yes', textNOK: 'no' } } }>Product Is In Stock</TableHeaderColumn>
-      </BootstrapTable>
+      <div>
+        <button className='btn btn-default' onClick={ this.handleClick }>Clear Filter</button>
+        <BootstrapTable data={ products }>
+          <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
+          <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
+          <TableHeaderColumn ref='isInStock' dataField='isInStock' filter={ { type: 'CustomFilter', getElement: getCustomFilter, customFilterParameters: { textOK: 'yes', textNOK: 'no' } } }>Product Is In Stock</TableHeaderColumn>
+        </BootstrapTable>
+      </div>
     );
   }
 }

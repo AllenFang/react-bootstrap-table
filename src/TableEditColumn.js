@@ -1,14 +1,18 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import editor from './Editor';
 import Notifier from './Notification.js';
 import classSet from 'classnames';
+import Const from './Const';
 
 class TableEditColumn extends Component {
   constructor(props) {
     super(props);
     this.timeouteClear = 0;
+    const { fieldValue, row, className } = this.props;
     this.state = {
-      shakeEditor: false
+      shakeEditor: false,
+      className: typeof className === 'function' ? className(fieldValue, row) : className
     };
   }
 
@@ -25,6 +29,9 @@ class TableEditColumn extends Component {
     } else if (e.keyCode === 27) {
       this.props.completeEdit(
         null, this.props.rowIndex, this.props.colIndex);
+    } else if (e.keyCode === 9) {
+      this.props.onTab(this.props.rowIndex + 1, this.props.colIndex + 1, 'tab', e);
+      e.preventDefault();
     } else if (e.type === 'click' && !this.props.blurToSave) {  // textarea click save button
       const value = e.target.parentElement.firstChild.value;
       if (!this.validator(value)) {
@@ -49,6 +56,9 @@ class TableEditColumn extends Component {
   }
 
   handleCustomUpdate = value => {
+    if (!this.validator(value)) {
+      return;
+    }
     this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
   }
 
@@ -59,21 +69,35 @@ class TableEditColumn extends Component {
     let valid = true;
     if (ts.props.editable.validator) {
       const input = ts.refs.inputRef;
-      const checkVal = ts.props.editable.validator(value);
+      const checkVal = ts.props.editable.validator(value, this.props.row);
       const responseType = typeof checkVal;
       if (responseType !== 'object' && checkVal !== true) {
         valid = false;
-        ts.refs.notifier.notice('error', checkVal, 'Pressed ESC can cancel');
+        const toastr = this.props.beforeShowError &&
+          this.props.beforeShowError('error', checkVal, Const.CANCEL_TOASTR);
+        if (toastr) {
+          ts.refs.notifier.notice('error', checkVal, Const.CANCEL_TOASTR);
+        }
       } else if (responseType === 'object' && checkVal.isValid !== true) {
         valid = false;
-        ts.refs.notifier.notice(checkVal.notification.type,
-                                checkVal.notification.msg,
-                                checkVal.notification.title);
+        const toastr = this.props.beforeShowError &&
+          this.props.beforeShowError(checkVal.notification.type,
+                                     checkVal.notification.msg,
+                                     checkVal.notification.title);
+        if (toastr) {
+          ts.refs.notifier.notice(checkVal.notification.type,
+                                  checkVal.notification.msg,
+                                  checkVal.notification.title);
+        }
       }
       if (!valid) {
         // animate input
         ts.clearTimeout();
-        ts.setState({ shakeEditor: true });
+        const { invalidColumnClassName, row } = this.props;
+        const className = typeof invalidColumnClassName === 'function' ?
+          invalidColumnClassName(value, row) :
+          invalidColumnClassName;
+        ts.setState({ shakeEditor: true, className });
         ts.timeouteClear = setTimeout(() => {
           ts.setState({ shakeEditor: false });
         }, 300);
@@ -91,23 +115,54 @@ class TableEditColumn extends Component {
       this.timeouteClear = 0;
     }
   }
+
   componentDidMount() {
     this.refs.inputRef.focus();
+    const dom = ReactDOM.findDOMNode(this);
+    if (this.props.isFocus) {
+      dom.focus();
+    } else {
+      dom.blur();
+    }
+  }
+
+  componentDidUpdate() {
+    const dom = ReactDOM.findDOMNode(this);
+    if (this.props.isFocus) {
+      dom.focus();
+    } else {
+      dom.blur();
+    }
   }
 
   componentWillUnmount() {
     this.clearTimeout();
   }
 
+  handleClick = e => {
+    if (e.target.tagName !== 'TD') {
+      e.stopPropagation();
+    }
+  }
+
   render() {
-    const { editable, format, customEditor } = this.props;
+    const {
+      editable,
+      format,
+      customEditor,
+      isFocus,
+      customStyleWithNav,
+      row
+    } = this.props;
     const { shakeEditor } = this.state;
     const attr = {
       ref: 'inputRef',
       onKeyDown: this.handleKeyPress,
       onBlur: this.handleBlur
     };
+    let style = { position: 'relative' };
     let { fieldValue } = this.props;
+    let { className } = this.state;
     // put placeholder if exist
     editable.placeholder && (attr.placeholder = editable.placeholder);
 
@@ -115,7 +170,7 @@ class TableEditColumn extends Component {
     let cellEditor;
     if (customEditor) {
       const customEditorProps = {
-        row: this.props.row,
+        row,
         ...attr,
         defaultValue: fieldValue || '',
         ...customEditor.customEditorParameters
@@ -126,8 +181,24 @@ class TableEditColumn extends Component {
       cellEditor = editor(editable, attr, format, editorClass, fieldValue || '');
     }
 
+    if (isFocus) {
+      if (customStyleWithNav) {
+        const customStyle = typeof customStyleWithNav === 'function' ?
+          customStyleWithNav(fieldValue, row) : customStyleWithNav;
+        style = {
+          ...style,
+          ...customStyle
+        };
+      } else {
+        className = `${className} default-focus-cell`;
+      }
+    }
+
     return (
-      <td ref='td' style={ { position: 'relative' } }>
+      <td ref='td'
+        style={ style }
+        className={ className }
+        onClick={ this.handleClick }>
         { cellEditor }
         <Notifier ref='notifier'/>
       </td>
@@ -156,7 +227,11 @@ TableEditColumn.propTypes = {
     PropTypes.number,
     PropTypes.array,
     PropTypes.object
-  ])
+  ]),
+  className: PropTypes.any,
+  beforeShowError: PropTypes.func,
+  isFocus: PropTypes.bool,
+  customStyleWithNav: PropTypes.oneOfType([ PropTypes.func, PropTypes.object ])
 };
 
 

@@ -20,6 +20,18 @@ class Checkbox extends Component {
   }
 }
 
+function getSortOrder(sortList, field, enableSort) {
+  if (!enableSort) return undefined;
+  const result = sortList.filter(sortObj => {
+    return sortObj.sortField === field;
+  });
+  if (result.length > 0) {
+    return result[0].order;
+  } else {
+    return undefined;
+  }
+}
+
 class TableHeader extends Component {
 
   render() {
@@ -31,45 +43,88 @@ class TableHeader extends Component {
       'table-bordered': this.props.bordered,
       'table-condensed': this.props.condensed
     }, this.props.tableHeaderClass);
-    let selectRowHeaderCol = null;
-    if (!this.props.hideSelectColumn) selectRowHeaderCol = this.renderSelectRowHeader();
-    let i = 0;
+
+    const rowCount = Math.max(...React.Children.map(this.props.children, elm =>
+      elm.props.row ? Number(elm.props.row) : 0
+    ));
+
+    const rows = [];
+    let rowKey = 0;
+
+    rows[0] = [];
+    rows[0].push( [
+      this.props.expandColumnVisible &&
+        this.props.expandColumnBeforeSelectColumn &&
+          <th className='react-bs-table-expand-cell'> </th>
+    ], [
+      this.renderSelectRowHeader(rowCount + 1, rowKey++)
+    ], [
+      this.props.expandColumnVisible &&
+        !this.props.expandColumnBeforeSelectColumn &&
+          <th className='react-bs-table-expand-cell'> </th>
+    ]);
+    const { sortIndicator, sortList, onSort, reset } = this.props;
+
+    React.Children.forEach(this.props.children, (elm) => {
+      const { dataField, dataSort } = elm.props;
+      const sort = getSortOrder(sortList, dataField, dataSort);
+      const rowIndex = elm.props.row ? Number(elm.props.row) : 0;
+      const rowSpan = elm.props.rowSpan ? Number(elm.props.rowSpan) : 1;
+      if (rows[rowIndex] === undefined) {
+        rows[rowIndex] = [];
+      }
+      if ((rowSpan + rowIndex) === (rowCount + 1)) {
+        rows[rowIndex].push(React.cloneElement(
+          elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false }
+          ));
+      } else {
+        rows[rowIndex].push(React.cloneElement(
+          elm, { key: rowKey++, isOnlyHead: true }
+          ));
+      }
+    });
+
+    const trs = rows.map((row, indexRow)=>{
+      return (
+        <tr key={ indexRow }>
+          { row }
+        </tr>
+      );
+    });
+
     return (
       <div ref='container' className={ containerClasses } style={ this.props.style }>
         <table className={ tableClasses }>
-          <thead>
-            <tr ref='header'>
-              { selectRowHeaderCol }
-              {
-                React.Children.map(this.props.children, (elm) => {
-                  const { sortIndicator, sortName, sortOrder, onSort, onResize } = this.props;
-                  const { dataField, dataSort } = elm.props;
-                  const sort = (dataSort && dataField === sortName) ? sortOrder : undefined;
-                  return React.cloneElement(elm, { key: i++, onSort, sort, sortIndicator, onResize });
-                })
-              }
-            </tr>
+          { React.cloneElement(this.props.colGroups, { ref: 'headerGrp' }) }
+          <thead ref='header'>
+            { trs }
           </thead>
         </table>
       </div>
     );
   }
 
-  renderSelectRowHeader() {
-    if (this.props.customComponent) {
+  getHeaderColGrouop = () => {
+    return this.refs.headerGrp.childNodes;
+  }
+
+  renderSelectRowHeader(rowCount, rowKey) {
+    if (this.props.hideSelectColumn) {
+      return null;
+    } else if (this.props.customComponent) {
       const CustomComponent = this.props.customComponent;
       return (
-        <SelectRowHeaderColumn>
+        <SelectRowHeaderColumn key={ rowKey } rowCount={ rowCount }>
           <CustomComponent type='checkbox' checked={ this.props.isSelectAll }
             indeterminate={ this.props.isSelectAll === 'indeterminate' } disabled={ false }
             onChange={ this.props.onSelectAllRow } rowIndex='Header'/>
         </SelectRowHeaderColumn>
       );
     } else if (this.props.rowSelectType === Const.ROW_SELECT_SINGLE) {
-      return (<SelectRowHeaderColumn />);
+      return (<SelectRowHeaderColumn key={ rowKey } rowCount={ rowCount }/>);
     } else if (this.props.rowSelectType === Const.ROW_SELECT_MULTI) {
       return (
-        <SelectRowHeaderColumn>
+        <SelectRowHeaderColumn key={ rowKey } rowCount={ rowCount }>
           <Checkbox
             onChange={ this.props.onSelectAllRow }
             checked={ this.props.isSelectAll }/>
@@ -87,8 +142,7 @@ TableHeader.propTypes = {
   rowSelectType: PropTypes.string,
   onSort: PropTypes.func,
   onSelectAllRow: PropTypes.func,
-  sortName: PropTypes.string,
-  sortOrder: PropTypes.string,
+  sortList: PropTypes.array,
   hideSelectColumn: PropTypes.bool,
   bordered: PropTypes.bool,
   condensed: PropTypes.bool,
@@ -96,7 +150,12 @@ TableHeader.propTypes = {
   isSelectAll: PropTypes.oneOf([ true, 'indeterminate', false ]),
   sortIndicator: PropTypes.bool,
   customComponent: PropTypes.func,
-  onResize: PropTypes.func
+  onResize: PropTypes.func,
+  colGroups: PropTypes.element,
+  reset: PropTypes.bool,
+  expandColumnVisible: PropTypes.bool,
+  expandColumnComponent: PropTypes.func,
+  expandColumnBeforeSelectColumn: PropTypes.bool
 };
 
 export default TableHeader;
