@@ -1,5 +1,14 @@
 <a name="v3.1.0"></a>
-# [v3.1.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.0.0-beta.12...v3.1.0) (2017-02-06)
+# [v3.1.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.0...v3.1.1) (2017-03-10)
+## Bug fixes
+* Fix `selectRow.hideSelectColumn` not working in table header([fcc7c81](https://github.com/JohnUiterwyk/react-bootstrap-table/commit/fcc7c817e0b259f85f61d9d3a5cc1b09d187933f))
+* Fix an exception if table source data is immutable type([70de237](https://github.com/AllenFang/react-bootstrap-table/commit/70de237ca59a383d9a1ff9ffffc4671188ede31b))
+
+## Features
+* Able to hide/show toolbar when printing via `options.printToolBar`([fdb04f8](https://github.com/AllenFang/react-bootstrap-table/commit/fdb04f86032743cccc0b0b1552d910a156c045e8))
+
+<a name="v3.1.0"></a>
+# [v3.1.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.0.0...v3.1.0) (2017-02-06)
 ## Bug fixes
 * Fix componentWillMount of expand content not called with pagination([fafc080](https://github.com/AllenFang/react-bootstrap-table/commit/fafc080384440e785aa932fc495bd71c5688addb))
 * Fix Cell edit on key Tab press problems if enable expand row([7320dd4](https://github.com/AllenFang/react-bootstrap-table/commit/7320dd4ee94ebf233fbeb6a96d783b39ae215d84))
