@@ -450,15 +450,14 @@ class BootstrapTable extends Component {
   }
 
   handleSort = (order, sortField) => {
-    if (this.props.options.onSortChange) {
-      this.props.options.onSortChange(sortField, order, this.props);
-    }
     this.store.setSortInfo(order, sortField);
+    const result = this.store.sort().get();
+    if (this.props.options.onSortChange) {
+      this.props.options.onSortChange(sortField, order, this.props, result);
+    }
     if (this.allowRemote(Const.REMOTE_SORT)) {
       return;
     }
-
-    const result = this.store.sort().get();
     this.setState({
       data: result,
       reset: false
