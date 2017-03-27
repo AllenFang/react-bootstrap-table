@@ -112,7 +112,10 @@
 										<li><a class="example-anchor" href="example.html#celledit">Cell Edit</a></li>
 										<li><a class="example-anchor" href="example.html#style">Table Style</a></li>
 										<li><a class="example-anchor" href="example.html#remote">Remote</a></li>
+										<li><a class="example-anchor" href="example.html#expand">Row Expand</a></li>
+										<li><a class="example-anchor" href="example.html#header-group">Header Group</a></li>
 										<li><a class="example-anchor" href="example.html#custom">Custom</a></li>
+										<li><a class="example-anchor" href="example.html#keyboard-navigation">Keyboard Navigation</a></li>
 										<li><a class="example-anchor" href="example.html#advance">Advance</a></li>
 										<li><a class="example-anchor" href="example.html#others">Others</a></li>
 									</ul>
@@ -165,6 +168,10 @@
                 <li>Modal Header</li>
                 <li>Modal Body</li>
                 <li>Modal Footer</li>
+              </ul>
+              <li><a href="#pagination">Pagination</a></li>
+              <ul>
+                <li>Modal Header</li>
               </ul>
               <li>Filter</li>
               <li>Cell Editor</li>
@@ -734,9 +741,18 @@ const options = {
             </div>
 <h3 id="insertmodal">Insert Modal</h3>
             <span>
-              Insert modal customization include all the content in the modal, you cna control every thing in the modal and
-              <code>react-bootstrap-table</code> give you the event callback, props and JSX of each part(Header, Body, Footer), you can access these data like following:
+              You can custom all of hte insert modal or one part of the insert model, it depend on your requirement, but <code>react-bootstrap-table</code> all support it.
             </span></br></br>
+            <div class="feature-text">
+              <h3><span class="number">01.</span> Custom whole insert modal</h3>
+              <span>
+                You can customize everything in the insert modal via <code>options.insertModal</code> and
+                we give you the event callback, props and some informations:
+                <code>onModalClose</code>, <code>onSave</code>, <code>columns</code>, <code>validateState</code>, <code>ignoreEditable</code></br>
+                You can follow <a href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/custom/insert-modal/custom-insert-modal.js" target="_blank">this</a> example 
+                to learn how to custom the insert modal.
+              </span>
+            </div>
             
 				</div>
 			</div>
