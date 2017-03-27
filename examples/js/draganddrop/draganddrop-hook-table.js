@@ -11,7 +11,6 @@ function addProducts(quantity) {
   for (let i = 0; i < quantity; i++) {
     const id = startId + i;
     products.push({
-      id: id,
       name: 'Item name ' + id,
       price: 2100 + i
     });
@@ -33,8 +32,8 @@ export default class DragAndDropHookTable extends React.Component {
     super(props);
   }
 
-  alertDroppedRow(droppedRowId, afterRowId) {
-    alert(`Row ${droppedRowId} was dropped after row ${afterRowId}`);
+  alertDroppedRow(droppedRowIndex, afterRowIndex) {
+    alert(`Row ${droppedRowIndex} was dropped after row ${afterRowIndex}`);
   }
 
   render() {
@@ -45,8 +44,7 @@ export default class DragAndDropHookTable extends React.Component {
           draggable
           onDroppedRow={ this.alertDroppedRow }>
           <TableHeaderColumn dataField='dragHandle' dataFormat={ DragHandle } />
-          <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='name' isKey={ true }>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
         </BootstrapTable>
       </div>

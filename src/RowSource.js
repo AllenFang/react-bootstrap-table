@@ -1,15 +1,14 @@
 export default {
   beginDrag(props) {
     return {
-      rIndex: props.rIndex,
-      rowId: props.rowId
+      rIndex: props.rIndex
     };
   },
 
   endDrag(props, monitor) {
     if (props.onDroppedRow) {
-      const droppedRowId = monitor.getItem().rowId;
-      const afterRowId = monitor.getDropResult().afterRowId;
+      const droppedRowId = props.rIndex;
+      const afterRowId = monitor.getItem().rIndex;
       props.onDroppedRow(droppedRowId, afterRowId);
     }
   }

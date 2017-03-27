@@ -10,7 +10,6 @@ function addProducts(quantity) {
   for (let i = 0; i < quantity; i++) {
     const id = startId + i;
     products.push({
-      id: id,
       name: 'Item name ' + id,
       price: 2100 + i
     });
@@ -40,8 +39,7 @@ export default class DefaultDragAndDropTable extends React.Component {
           draggable
           pagination>
           <TableHeaderColumn dataField='dragHandle' dataFormat={ DragHandle } />
-          <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='name' isKey={ true }>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
         </BootstrapTable>
       </div>

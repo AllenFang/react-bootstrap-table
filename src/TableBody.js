@@ -119,7 +119,6 @@ class TableBody extends Component {
           return (
             <TableColumn key={ i }
               rIndex={ r }
-              rowId={ data.id }
               dragHandle={ (column.name === 'dragHandle') ? true : false }
               dataAlign={ column.align }
               className={ tdClassName }
@@ -162,7 +161,6 @@ class TableBody extends Component {
       const result = [ <TableRow isSelected={ selected } key={ key } className={ trClassName }
         index={ r }
         rIndex={ r }
-        rowId={ data.id }
         selectRow={ isSelectRowDefined ? this.props.selectRow : undefined }
         enableCellEdit={ cellEdit.mode !== Const.CELL_EDIT_NONE }
         onRowClick={ this.handleRowClick }
