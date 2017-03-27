@@ -17,7 +17,7 @@ function addProducts(quantity) {
   }
 }
 
-addProducts(10);
+addProducts(70);
 
 const DragHandle = () => {
   return (
@@ -37,7 +37,8 @@ export default class DefaultDragAndDropTable extends React.Component {
       <div>
         <BootstrapTable
           data={ products }
-          draggable>
+          draggable
+          pagination>
           <TableHeaderColumn dataField='dragHandle' dataFormat={ DragHandle } />
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
