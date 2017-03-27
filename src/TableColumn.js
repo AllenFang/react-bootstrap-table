@@ -186,7 +186,7 @@ TableColumn.propTypes = {
   keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
   customNavStyle: PropTypes.oneOfType([ PropTypes.func, PropTypes.object ]),
   row: PropTypes.any,  /* only used on custom styling for navigation */
-  onDraggedRow: PropTypes.func
+  onDroppedRow: PropTypes.func
 };
 
 TableColumn.defaultProps = {

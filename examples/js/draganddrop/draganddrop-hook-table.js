@@ -33,8 +33,8 @@ export default class DragAndDropHookTable extends React.Component {
     super(props);
   }
 
-  alertDraggedRow(draggedRowId, afterRowId) {
-    alert(`Row ${draggedRowId} was dragged after row ${afterRowId}`);
+  alertDroppedRow(droppedRowId, afterRowId) {
+    alert(`Row ${droppedRowId} was dropped after row ${afterRowId}`);
   }
 
   render() {
@@ -43,7 +43,7 @@ export default class DragAndDropHookTable extends React.Component {
         <BootstrapTable
           data={ products }
           draggable
-          onDraggedRow={ this.alertDraggedRow }>
+          onDroppedRow={ this.alertDroppedRow }>
           <TableHeaderColumn dataField='dragHandle' dataFormat={ DragHandle } />
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>

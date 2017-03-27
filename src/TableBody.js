@@ -136,7 +136,7 @@ class TableBody extends Component {
               keyBoardNav={ enableKeyBoardNav }
               onKeyDown={ this.handleCellKeyDown }
               customNavStyle={ customNavStyle }
-              onDraggedRow={ this.props.onDraggedRow }
+              onDroppedRow={ this.props.onDroppedRow }
               afterRow={ this.state.afterRow }
               row={ data }>
               { columnChild }
@@ -484,6 +484,6 @@ TableBody.propTypes = {
   y: PropTypes.number,
   onNavigateCell: PropTypes.func,
   draggableRow: PropTypes.bool,
-  onDraggedRow: PropTypes.func
+  onDroppedRow: PropTypes.func
 };
 export default TableBody;
