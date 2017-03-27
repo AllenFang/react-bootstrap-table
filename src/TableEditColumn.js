@@ -73,22 +73,12 @@ class TableEditColumn extends Component {
       const responseType = typeof checkVal;
       if (responseType !== 'object' && checkVal !== true) {
         valid = false;
-        const toastr = this.props.beforeShowError &&
-          this.props.beforeShowError('error', checkVal, Const.CANCEL_TOASTR);
-        if (toastr) {
-          ts.refs.notifier.notice('error', checkVal, Const.CANCEL_TOASTR);
-        }
+        this.notifyToastr('error', checkVal, Const.CANCEL_TOASTR);
       } else if (responseType === 'object' && checkVal.isValid !== true) {
         valid = false;
-        const toastr = this.props.beforeShowError &&
-          this.props.beforeShowError(checkVal.notification.type,
-                                     checkVal.notification.msg,
-                                     checkVal.notification.title);
-        if (toastr) {
-          ts.refs.notifier.notice(checkVal.notification.type,
-                                  checkVal.notification.msg,
-                                  checkVal.notification.title);
-        }
+        this.notifyToastr(checkVal.notification.type,
+                          checkVal.notification.msg,
+                          checkVal.notification.title);
       }
       if (!valid) {
         // animate input
@@ -108,6 +98,17 @@ class TableEditColumn extends Component {
     return valid;
   }
   // END
+
+  notifyToastr = (type, message, title) => {
+    let toastr = true;
+    const { beforeShowError } = this.props;
+    if (beforeShowError) {
+      toastr = beforeShowError(type, message, title);
+    }
+    if (toastr) {
+      this.refs.notifier.notice(type, message, title);
+    }
+  }
 
   clearTimeout() {
     if (this.timeouteClear !== 0) {
