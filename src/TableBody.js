@@ -58,6 +58,7 @@ class TableBody extends Component {
         const isFocusCell = r === y && i === x;
         if (column.name !== this.props.keyField && // Key field can't be edit
           column.editable && // column is editable? default is true, user can set it false
+          column.editable.readOnly !== true &&
           this.state.currEditCell !== null &&
           this.state.currEditCell.rid === r &&
           this.state.currEditCell.cid === i &&

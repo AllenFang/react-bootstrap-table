@@ -53,7 +53,7 @@ function jobStatusValidator(value, row) {
   return true;
 }
 
-export default class EditTypeTable extends React.Component {
+export default class EditTypeReadOnlyTable extends React.Component {
   render() {
     return (
       <BootstrapTable data={ jobs } cellEdit={ cellEditProp } insertRow={ true }>
