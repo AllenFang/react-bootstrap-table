@@ -379,7 +379,6 @@ class BootstrapTable extends Component {
             data={ this.state.data }
             draggableRow={ this.props.draggable }
             handleDragRow={ this.handleDragRow }
-            handleDroppedRow={ this.handleDroppedRow }
             onDroppedRow={ this.props.onDroppedRow }
             expandComponent={ this.props.expandComponent }
             expandableRow={ this.props.expandableRow }
