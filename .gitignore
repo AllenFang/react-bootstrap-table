@@ -5,6 +5,6 @@ node_modules
 *.sublime-workspace
 *.idea
 *.iml
-lib/
+#lib/
 npm-debug.log
 .vscode
