@@ -5,7 +5,8 @@ var umdConfig = require('./webpack.umd.config');
 umdConfig.output.filename = '[name].min.js';
 umdConfig.devtool = null;
 umdConfig.plugins = [
-  new webpack.optimize.OccurrenceOrderPlugin()
+  new webpack.optimize.OccurrenceOrderPlugin(),
+  new webpack.optimize.UglifyJsPlugin()
 ];
 
 module.exports = umdConfig;
