@@ -38,7 +38,7 @@ export default class DefaultDragAndDropTable extends React.Component {
           data={ products }
           draggable
           pagination>
-          <TableHeaderColumn dataField='dragHandle' dataFormat={ DragHandle } />
+          <TableHeaderColumn dataFormat={ DragHandle } dragHandle />
           <TableHeaderColumn dataField='name' isKey={ true }>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
         </BootstrapTable>

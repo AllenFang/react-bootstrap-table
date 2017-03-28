@@ -44,7 +44,7 @@ export default class DragAndDropHookTable extends React.Component {
           draggable
           onDroppedRow={ this.alertDroppedRow }
           pagination>
-          <TableHeaderColumn dataField='dragHandle' dataFormat={ DragHandle } />
+          <TableHeaderColumn dataFormat={ DragHandle } dragHandle />
           <TableHeaderColumn dataField='name' isKey={ true }>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
         </BootstrapTable>

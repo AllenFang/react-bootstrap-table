@@ -170,7 +170,8 @@ class BootstrapTable extends Component {
           expandable: column.props.expandable,
           index: i,
           attrs: column.props.tdAttr,
-          style: column.props.tdStyle
+          style: column.props.tdStyle,
+          dragHandle: column.props.dragHandle
         };
       }
     });

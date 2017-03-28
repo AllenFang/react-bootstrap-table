@@ -118,7 +118,7 @@ class TableBody extends Component {
           return (
             <TableColumn key={ i }
               rIndex={ r }
-              dragHandle={ (column.name === 'dragHandle') ? true : false }
+              dragHandle={ column.dragHandle }
               dataAlign={ column.align }
               className={ tdClassName }
               columnTitle={ columnTitle }
