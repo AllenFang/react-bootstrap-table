@@ -379,7 +379,7 @@ class BootstrapTable extends Component {
             data={ this.state.data }
             draggableRow={ this.props.draggable }
             handleDragRow={ this.handleDragRow }
-            onDroppedRow={ this.props.onDroppedRow }
+            onDroppedRow={ this.handleDroppedRow.bind(this) }
             expandComponent={ this.props.expandComponent }
             expandableRow={ this.props.expandableRow }
             expandRowBgColor={ this.props.options.expandRowBgColor }
@@ -509,6 +509,13 @@ class BootstrapTable extends Component {
     const result = this.store.drag(dragIndex, hoverIndex).get();
 
     this.setState({ data: result });
+  }
+
+  handleDroppedRow(dragIndex, dropIndex) {
+    if (this.props.onDroppedRow) {
+      const offset = this.store.pageObj.start;
+      this.props.onDroppedRow(dragIndex + offset, dropIndex + offset);
+    }
   }
 
   handleMouseLeave = () => {

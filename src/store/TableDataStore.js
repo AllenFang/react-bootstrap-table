@@ -168,12 +168,13 @@ export class TableDataStore {
   }
 
   drag(dragIndex, hoverIndex) {
-    const dragRow = this.data[dragIndex];
+    const offset = this.pageObj.start;
+    const dragRow = this.data[dragIndex + offset];
 
     this.setData(update(this.data, {
       $splice: [
-        [ dragIndex, 1 ],
-        [ hoverIndex, 0, dragRow ]
+        [ dragIndex + offset, 1 ],
+        [ hoverIndex + offset, 0, dragRow ]
       ]
     }));
 
