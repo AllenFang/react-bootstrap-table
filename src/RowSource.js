@@ -7,9 +7,9 @@ export default {
 
   endDrag(props, monitor) {
     if (props.onDroppedRow) {
-      const droppedRowId = props.rIndex;
-      const afterRowId = monitor.getItem().rIndex;
-      props.onDroppedRow(droppedRowId, afterRowId);
+      const dragIndex = props.rIndex;
+      const dropIndex = monitor.getItem().rIndex;
+      props.onDroppedRow(dragIndex, dropIndex);
     }
   }
 };

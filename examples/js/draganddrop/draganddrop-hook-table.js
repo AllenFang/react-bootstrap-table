@@ -32,8 +32,8 @@ export default class DragAndDropHookTable extends React.Component {
     super(props);
   }
 
-  alertDroppedRow(droppedRowIndex, afterRowIndex) {
-    alert(`Row ${droppedRowIndex} was dropped after row ${afterRowIndex}`);
+  alertDroppedRow(dragIndex, dropIndex) {
+    alert(`Row ${dragIndex} was dropped after row ${dropIndex}`);
   }
 
   render() {
