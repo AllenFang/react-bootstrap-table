@@ -278,8 +278,8 @@ class TableBody extends Component {
 
   handleSelectRow = (rowIndex, isSelected, e) => {
     let selectedRow;
-    const { onSelectRow } = this.props;
-    this.props.data.forEach((row, i) => {
+    const { data, onSelectRow } = this.props;
+    data.forEach((row, i) => {
       if (i === rowIndex - 1) {
         selectedRow = row;
         return false;
