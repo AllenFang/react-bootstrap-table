@@ -2723,13 +2723,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }, this);
 
 	      if (tableRows.length === 0 && !this.props.withoutNoDataText) {
+	        var colSpan = this.props.columns.filter(function (c) {
+	          return !c.hidden;
+	        }).length + (isSelectRowDefined ? 1 : 0);
 	        tableRows = [_react2.default.createElement(
 	          _TableRow2.default,
 	          { key: '##table-empty##' },
 	          _react2.default.createElement(
 	            'td',
 	            { 'data-toggle': 'collapse',
-	              colSpan: this.props.columns.length + (isSelectRowDefined ? 1 : 0),
+	              colSpan: colSpan,
 	              className: 'react-bs-table-no-data' },
 	            this.props.noDataText || _Const2.default.NO_DATA_TEXT
 	          )
@@ -3685,6 +3688,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.__handleCustomUpdate__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+	    _this.notifyToastr = function () {
+	      return _this.__notifyToastr__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
 	    _this.handleClick = function () {
 	      return _this.__handleClick__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
@@ -3762,16 +3769,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var responseType = typeof checkVal === 'undefined' ? 'undefined' : _typeof(checkVal);
 	        if (responseType !== 'object' && checkVal !== true) {
 	          valid = false;
-	          var toastr = this.props.beforeShowError && this.props.beforeShowError('error', checkVal, _Const2.default.CANCEL_TOASTR);
-	          if (toastr) {
-	            ts.refs.notifier.notice('error', checkVal, _Const2.default.CANCEL_TOASTR);
-	          }
+	          this.notifyToastr('error', checkVal, _Const2.default.CANCEL_TOASTR);
 	        } else if (responseType === 'object' && checkVal.isValid !== true) {
 	          valid = false;
-	          var _toastr = this.props.beforeShowError && this.props.beforeShowError(checkVal.notification.type, checkVal.notification.msg, checkVal.notification.title);
-	          if (_toastr) {
-	            ts.refs.notifier.notice(checkVal.notification.type, checkVal.notification.msg, checkVal.notification.title);
-	          }
+	          this.notifyToastr(checkVal.notification.type, checkVal.notification.msg, checkVal.notification.title);
 	        }
 	        if (!valid) {
 	          // animate input
@@ -3793,6 +3794,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    // END
 
+	  }, {
+	    key: '__notifyToastr__REACT_HOT_LOADER__',
+	    value: function __notifyToastr__REACT_HOT_LOADER__(type, message, title) {
+	      var toastr = true;
+	      var beforeShowError = this.props.beforeShowError;
+
+	      if (beforeShowError) {
+	        toastr = beforeShowError(type, message, title);
+	      }
+	      if (toastr) {
+	        this.refs.notifier.notice(type, message, title);
+	      }
+	    }
 	  }, {
 	    key: 'clearTimeout',
 	    value: function (_clearTimeout) {
