@@ -751,7 +751,20 @@ const options = {
                 <code>onModalClose</code>, <code>onSave</code>, <code>columns</code>, <code>validateState</code>, <code>ignoreEditable</code></br>
                 You can follow <a href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/custom/insert-modal/custom-insert-modal.js" target="_blank">this</a> example 
                 to learn how to custom the insert modal.
-              </span>
+              </span></br></br>
+            </div>
+            <div class="feature-text">
+              <h3><span class="number">02.</span> Custom the body of insert modal</h3>
+              <span>
+                You can customize the body of the insert modal via <code>options.insertModalBody</code> and
+                we give you following arguments:
+                <code>columns</code>, <code>onSave</code>, <code>validateState</code>, <code>ignoreEditable</code></br>
+                You can follow <a href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/custom/insert-modal/custom-insert-modal-body.js#L24" target="_blank">this</a> example 
+                to learn how to custom the body of insert modal.</br></br>
+
+                <strong>Note: You are supposed to be wrapper your custom DOM/JSX as a React Component, for customizing body, we don't have the exposed React Component.</strong></br>
+                <strong>Note: You are supposed to be implemented the <code>getFieldValue</code> method in your custom React Component and return the new row for insert row</strong>
+              </span></br></br>
             </div>
             
 				</div>
