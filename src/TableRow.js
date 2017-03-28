@@ -1,8 +1,7 @@
 import classSet from 'classnames';
 import React, { Component, PropTypes } from 'react';
-import { DragSource, DropTarget } from 'react-dnd';
+import { DropTarget } from 'react-dnd';
 import RowTypes from './RowTypes';
-import rowSource from './RowSource';
 
 const rowTarget = {
   drop() {
@@ -32,9 +31,6 @@ const rowTarget = {
 @DropTarget(RowTypes.ROW, rowTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isHovering: monitor.isOver({ shallow: true })
-}))
-@DragSource(RowTypes.ROW, rowSource, (connect) => ({
-  connectDragPreview: connect.dragPreview()
 }))
 class TableRow extends Component {
   static propTypes = {
@@ -111,7 +107,7 @@ class TableRow extends Component {
 
   render() {
     this.clickNum = 0;
-    const { connectDropTarget, connectDragPreview, isHovering } = this.props;
+    const { connectDropTarget, isHovering } = this.props;
 
     const trCss = {
       style: {
@@ -125,12 +121,12 @@ class TableRow extends Component {
     };
 
     return (
-      connectDragPreview(connectDropTarget(
+      connectDropTarget(
         <tr { ...trCss }
           onMouseOver={ this.rowMouseOver }
           onMouseOut={ this.rowMouseOut }
           onClick={ this.rowClick }
-          onDoubleClick={ this.rowDoubleClick }>{ this.props.children }</tr>))
+          onDoubleClick={ this.rowDoubleClick }>{ this.props.children }</tr>)
     );
   }
 }
