@@ -5,10 +5,8 @@ import RowTypes from './RowTypes';
 import rowSource from './RowSource';
 
 const rowTarget = {
-  drop(props) {
-    return {
-      afterRowId: props.afterRow.id
-    };
+  drop() {
+    return {};
   },
 
   hover(props, monitor) {

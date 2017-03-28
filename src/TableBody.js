@@ -8,7 +8,6 @@ import classSet from 'classnames';
 import ExpandComponent from './ExpandComponent';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import update from 'immutability-helper';
 
 const isFun = function(obj) {
   return obj && (typeof obj === 'function');
@@ -136,7 +135,6 @@ class TableBody extends Component {
               onKeyDown={ this.handleCellKeyDown }
               customNavStyle={ customNavStyle }
               onDroppedRow={ this.props.onDroppedRow }
-              afterRow={ this.state.afterRow }
               row={ data }>
               { columnChild }
             </TableColumn>
@@ -170,8 +168,7 @@ class TableBody extends Component {
         onSelectRow={ this.handleSelectRow }
         onExpandRow={ this.handleClickCell }
         unselectableRow={ disable }
-        dragRow={ this.handleDragRow }
-        afterRow={ this.state.afterRow } >
+        dragRow={ this.props.handleDragRow } >
         { this.props.expandColumnOptions.expandColumnVisible &&
             this.props.expandColumnOptions.expandColumnBeforeSelectColumn &&
             expandedRowColumn }
@@ -222,17 +219,6 @@ class TableBody extends Component {
         </table>
       </div>
     );
-  }
-
-  handleDragRow = (dragIndex, hoverIndex) => {
-    const { data } = this.props;
-    const afterRow = data[hoverIndex];
-
-    this.setState(update(this.state, {
-      afterRow: { $set: afterRow }
-    }));
-
-    this.props.handleDragRow(dragIndex, hoverIndex);
   }
 
   handleCellKeyDown = (e, lastEditCell) => {
