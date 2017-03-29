@@ -165,8 +165,8 @@
               </ul>
               <li><a href="#insertmodal">Insert Modal</a></li>
               <ul>
-                <li>Modal Header</li>
-                <li>Modal Body</li>
+                <li><a href="#insertmodalheader">Modal Header</a></li>
+                <li><a href="#insertmodalbody">Modal Body</a></li>
                 <li>Modal Footer</li>
               </ul>
               <li><a href="#pagination">Pagination</a></li>
@@ -753,8 +753,9 @@ const options = {
                 to learn how to custom the insert modal.
               </span></br></br>
             </div>
+<h3 id="insertmodalbody">Insert Modal Body</h3>
             <div class="feature-text">
-              <h3><span class="number">02.</span> Custom the body of insert modal</h3>
+              <h3><span class="number">01.</span> Custom the body of insert modal</h3>
               <span>
                 You can customize the body of the insert modal via <code>options.insertModalBody</code> and
                 we give you following arguments:
@@ -766,7 +767,83 @@ const options = {
                 <strong>Note: You are supposed to be implemented the <code>getFieldValue</code> method in your custom React Component and return the new row for insert row</strong>
               </span></br></br>
             </div>
-            
+<h3 id="insertmodalbody">Insert Modal Header</h3>
+            <div class="feature-text">
+              <span>
+                It's available to custom the header of insert modal by configuring <cpde>options.insertModalHeader</code>, it only accept a function and a JSX returned value is necessary. 
+                This function will take two argument: <code>closeModal</code> and <code>save</code>. This both are function, call the first one will trigger closing and the other will save your new data.
+                Following, we have two way to customize the insert button: 
+              </span></br></br>
+              <h3><span class="number">01.</span> Use <code>InsertModalHeader</code> by default</h3>
+              <span>
+                This is a simple and default way to custom header of insert modal, check following example to see how to use <code>InsertModalHeader</code> component:
+<pre>
+<code class="javascript">beforeClose(e) {
+  alert(`[Custom Event]: Before modal close event triggered!`);
+}
+
+handleModalClose(closeModal) {
+  // Custom your onCloseModal event here,
+  // it's not necessary to implement this function if you have no any process before modal close
+  console.log('This is my custom function for modal close event');
+  closeModal();
+}
+
+createCustomModalHeader = (closeModal, save) => {
+  return (
+    &lt;InsertModalHeader
+      className='my-custom-class'
+      title='This is my custom title'
+      beforeClose={ this.beforeClose }
+      onModalClose={ () => this.handleModalClose(closeModal) }/&gt;
+      // hideClose={ true } to hide the close button
+  );
+
+  // If you want have more power to custom the child of InsertModalHeader,
+  // you can do it like following
+  // return (
+  //   &lt;InsertModalHeader
+  //     beforeClose={ this.beforeClose }
+  //     onModalClose={ () => this.handleModalClose(closeModal) }&gt;
+  //     { ... }
+  //   &lt;/InsertModalHeader&gt;
+  // );
+}
+//...
+const options = {
+  insertModalHeader: this.createCustomModalHeader
+};
+&lt;BootstrapTable data={rows} options={options} insertRow&gt;
+</code>
+</pre>
+              </span></br></br>
+              <h3><span class="number">02.</span> Customize by yourself</h3>
+              <span>
+                You can customize all the content of header of insert modal instead of using <code>InsertModalHeader</code>:
+<pre>
+<code class="javascript">createCustomModalHeader(onClose, onSave) {
+    const headerStyle = {
+      fontWeight: 'bold',
+      fontSize: 'large',
+      textAlign: 'center',
+      backgroundColor: '#eeeeee'
+    };
+    return (
+      &lt;div className='modal-header' style={ headerStyle }&gt;
+        &lt;h3&gt;That is my custom header&lt;/h3&gt;
+        &lt;button className='btn btn-info' onClick={ onClose }>Close it!&lt;/button&gt;
+      &lt;/div&gt;
+    );
+  }
+//...
+const options = {
+  insertModalHeader: this.createCustomModalHeader
+};
+&lt;BootstrapTable data={rows} options={options} insertRow&gt;
+</code>
+</pre>
+              </span></br></br>
+            </div>
 				</div>
 			</div>
 		</div>
