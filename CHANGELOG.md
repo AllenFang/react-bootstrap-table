@@ -1,5 +1,11 @@
-<a name="v3.1.0"></a>
-# [v3.1.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.0...v3.1.1) (2017-03-10)
+<a name="v3.1.2"></a>
+# [v3.1.2](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.1...v3.1.2) (2017-03-28)
+## Bug fixes
+* Fix toastr error does not display when editing cell([8407634](https://github.com/AllenFang/react-bootstrap-table/commit/8407634322a0f5e5bd51a2609765a8783de418d4))
+* Fix `noDataText` set colSpan more than columns if some column hidden([52206d9](https://github.com/AllenFang/react-bootstrap-table/commit/52206d9172994c37dbabe02222e5447577b37a48))
+
+<a name="v3.1.1"></a>
+# [v3.1.1](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.0...v3.1.1) (2017-03-10)
 ## Bug fixes
 * Fix `selectRow.hideSelectColumn` not working in table header([fcc7c81](https://github.com/JohnUiterwyk/react-bootstrap-table/commit/fcc7c817e0b259f85f61d9d3a5cc1b09d187933f))
 * Fix an exception if table source data is immutable type([70de237](https://github.com/AllenFang/react-bootstrap-table/commit/70de237ca59a383d9a1ff9ffffc4671188ede31b))
