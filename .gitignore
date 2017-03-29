@@ -6,6 +6,5 @@ node_modules
 *.idea
 *.iml
 lib/
-dist/
 npm-debug.log
 .vscode
