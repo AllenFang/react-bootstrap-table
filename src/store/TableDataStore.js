@@ -165,6 +165,19 @@ export class TableDataStore {
     return this;
   }
 
+  drag(dragIndex, hoverIndex) {
+    const offset = this.pageObj.start;
+    const dragRow = this.data[dragIndex + offset];
+
+    const newData = this.data.slice(0);
+    newData.splice(dragIndex + offset, 1);
+    newData.splice(hoverIndex + offset, 0, dragRow);
+
+    this.data = newData;
+
+    return this;
+  }
+
   edit(newVal, rowIndex, fieldName) {
     const currentDisplayData = this.getCurrentDisplayData();
     let rowKeyCache;

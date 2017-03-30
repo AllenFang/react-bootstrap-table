@@ -14,6 +14,7 @@ import ColumnFormat from './column-format/demo';
 import ColumnFilter from './column-filter/demo';
 import Selection from './selection/demo';
 import Pagination from './pagination/demo';
+import DragAndDrop from './draganddrop/demo';
 import Manipulation from './manipulation/demo';
 import CellEdit from './cell-edit/demo';
 import Style from './style/demo';
@@ -42,6 +43,7 @@ const renderApp = () => {
             <Route path='column-header-span' component={ Span } />
             <Route path='selection' component={ Selection } />
             <Route path='pagination' component={ Pagination } />
+            <Route path='draganddrop' component={ DragAndDrop } />
             <Route path='manipulation' component={ Manipulation } />
             <Route path='cell-edit' component={ CellEdit } />
             <Route path='style' component={ Style } />

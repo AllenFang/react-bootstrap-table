@@ -170,7 +170,8 @@ class BootstrapTable extends Component {
           expandable: column.props.expandable,
           index: i,
           attrs: column.props.tdAttr,
-          style: column.props.tdStyle
+          style: column.props.tdStyle,
+          dragHandle: column.props.dragHandle
         };
       }
     });
@@ -254,7 +255,7 @@ class BootstrapTable extends Component {
   componentDidMount() {
     this._adjustTable();
     window.addEventListener('resize', this._adjustTable);
-    this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader);
+    this.refs.body.child.refs.container.addEventListener('scroll', this._scrollHeader);
     if (this.props.scrollTop) {
       this._scrollTop();
     }
@@ -262,7 +263,7 @@ class BootstrapTable extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this._adjustTable);
-    this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader);
+    this.refs.body.child.refs.container.removeEventListener('scroll', this._scrollHeader);
     if (this.filter) {
       this.filter.removeAllListeners('onFilterChange');
     }
@@ -377,6 +378,9 @@ class BootstrapTable extends Component {
             tableBodyClass={ this.props.tableBodyClass }
             style={ { ...style, ...this.props.bodyStyle } }
             data={ this.state.data }
+            draggableRow={ this.props.draggable }
+            handleDragRow={ this.handleDragRow }
+            onDroppedRow={ this.handleDroppedRow.bind(this) }
             expandComponent={ this.props.expandComponent }
             expandableRow={ this.props.expandableRow }
             expandRowBgColor={ this.props.options.expandRowBgColor }
@@ -502,6 +506,19 @@ class BootstrapTable extends Component {
     const result = this.store.page(normalizedPage, sizePerPage).get();
 
     this.setState({ data: result, reset: false });
+  }
+
+  handleDragRow = (dragIndex, hoverIndex) => {
+    const result = this.store.drag(dragIndex, hoverIndex).get();
+
+    this.setState({ data: result });
+  }
+
+  handleDroppedRow(dragIndex, dropIndex) {
+    if (this.props.onDroppedRow) {
+      const offset = this.store.pageObj.start;
+      this.props.onDroppedRow(dragIndex + offset, dropIndex + offset);
+    }
   }
 
   handleMouseLeave = () => {
@@ -1124,11 +1141,11 @@ class BootstrapTable extends Component {
   _scrollTop = () => {
     const { scrollTop } = this.props;
     if (scrollTop === Const.SCROLL_TOP) {
-      this.refs.body.refs.container.scrollTop = 0;
+      this.refs.body.child.refs.container.scrollTop = 0;
     } else if (scrollTop === Const.SCROLL_BOTTOM) {
-      this.refs.body.refs.container.scrollTop = this.refs.body.refs.container.scrollHeight;
+      this.refs.body.child.refs.container.scrollTop = this.refs.body.child.refs.container.scrollHeight;
     } else if (typeof scrollTop === 'number' && !isNaN(scrollTop)) {
-      this.refs.body.refs.container.scrollTop = scrollTop;
+      this.refs.body.child.refs.container.scrollTop = scrollTop;
     }
   }
   _scrollHeader = (e) => {
@@ -1144,8 +1161,8 @@ class BootstrapTable extends Component {
 
   _adjustHeaderWidth() {
     const header = this.refs.header.getHeaderColGrouop();
-    const tbody = this.refs.body.refs.tbody;
-    const bodyHeader = this.refs.body.getHeaderColGrouop();
+    const tbody = this.refs.body.child.refs.tbody;
+    const bodyHeader = this.refs.body.child.getHeaderColGrouop();
     const firstRow = tbody.childNodes[0];
     const isScroll = tbody.parentNode.getBoundingClientRect().height >
       tbody.parentNode.parentNode.getBoundingClientRect().height;
@@ -1196,7 +1213,7 @@ class BootstrapTable extends Component {
     const { height } = this.props;
     let { maxHeight } = this.props;
     if ((typeof height === 'number' && !isNaN(height)) || height.indexOf('%') === -1) {
-      this.refs.body.refs.container.style.height =
+      this.refs.body.child.refs.container.style.height =
         parseFloat(height, 10) - this.refs.header.refs.container.offsetHeight + 'px';
     }
     if (maxHeight) {
@@ -1204,7 +1221,7 @@ class BootstrapTable extends Component {
         maxHeight :
         parseInt(maxHeight.replace('px', ''), 10);
 
-      this.refs.body.refs.container.style.maxHeight =
+      this.refs.body.child.refs.container.style.maxHeight =
         maxHeight - this.refs.header.refs.container.offsetHeight + 'px';
     }
   }
@@ -1395,7 +1412,9 @@ BootstrapTable.propTypes = {
     expandColumnVisible: PropTypes.bool,
     expandColumnComponent: PropTypes.func,
     expandColumnBeforeSelectColumn: PropTypes.bool
-  })
+  }),
+  draggableRow: PropTypes.bool,
+  onDroppedRow: PropTypes.func
 };
 BootstrapTable.defaultProps = {
   scrollTop: undefined,

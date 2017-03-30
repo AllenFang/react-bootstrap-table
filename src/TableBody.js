@@ -6,11 +6,14 @@ import TableColumn from './TableColumn';
 import TableEditColumn from './TableEditColumn';
 import classSet from 'classnames';
 import ExpandComponent from './ExpandComponent';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 const isFun = function(obj) {
   return obj && (typeof obj === 'function');
 };
 
+@DragDropContext(HTML5Backend)
 class TableBody extends Component {
   constructor(props) {
     super(props);
@@ -115,6 +118,7 @@ class TableBody extends Component {
           return (
             <TableColumn key={ i }
               rIndex={ r }
+              dragHandle={ column.dragHandle }
               dataAlign={ column.align }
               className={ tdClassName }
               columnTitle={ columnTitle }
@@ -130,6 +134,7 @@ class TableBody extends Component {
               keyBoardNav={ enableKeyBoardNav }
               onKeyDown={ this.handleCellKeyDown }
               customNavStyle={ customNavStyle }
+              onDroppedRow={ this.props.onDroppedRow }
               row={ data }>
               { columnChild }
             </TableColumn>
@@ -153,6 +158,7 @@ class TableBody extends Component {
       }
       const result = [ <TableRow isSelected={ selected } key={ key } className={ trClassName }
         index={ r }
+        rIndex={ r }
         selectRow={ isSelectRowDefined ? this.props.selectRow : undefined }
         enableCellEdit={ cellEdit.mode !== Const.CELL_EDIT_NONE }
         onRowClick={ this.handleRowClick }
@@ -161,7 +167,8 @@ class TableBody extends Component {
         onRowMouseOut={ this.handleRowMouseOut }
         onSelectRow={ this.handleSelectRow }
         onExpandRow={ this.handleClickCell }
-        unselectableRow={ disable }>
+        unselectableRow={ disable }
+        dragRow={ this.props.handleDragRow } >
         { this.props.expandColumnOptions.expandColumnVisible &&
             this.props.expandColumnOptions.expandColumnBeforeSelectColumn &&
             expandedRowColumn }
@@ -461,6 +468,8 @@ TableBody.propTypes = {
   keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
   x: PropTypes.number,
   y: PropTypes.number,
-  onNavigateCell: PropTypes.func
+  onNavigateCell: PropTypes.func,
+  draggableRow: PropTypes.bool,
+  onDroppedRow: PropTypes.func
 };
 export default TableBody;

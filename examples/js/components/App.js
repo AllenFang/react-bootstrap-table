@@ -47,6 +47,9 @@ class App extends React.Component {
       text: 'Pagination',
       href: 'pagination'
     }, {
+      text: 'Drag and Drop',
+      href: 'draganddrop'
+    }, {
       text: 'Table Manipulation',
       href: 'manipulation'
     }, {

@@ -1,7 +1,43 @@
 import classSet from 'classnames';
 import React, { Component, PropTypes } from 'react';
+import { DropTarget } from 'react-dnd';
+import RowTypes from './RowTypes';
 
+const rowTarget = {
+  drop() {
+    return {};
+  },
+
+  hover(props, monitor) {
+    const dragIndex = monitor.getItem().rIndex;
+    const hoverIndex = props.rIndex;
+
+    // Don't replace items with themselves
+    if (dragIndex === hoverIndex) {
+      return;
+    }
+
+    // Time to actually perform the action
+    props.dragRow(dragIndex, hoverIndex);
+
+    // Note: we're mutating the monitor item here!
+    // Generally it's better to avoid mutations,
+    // but it's good here for the sake of performance
+    // to avoid expensive rIndex searches.
+    monitor.getItem().rIndex = hoverIndex;
+  }
+};
+
+@DropTarget(RowTypes.ROW, rowTarget, (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isHovering: monitor.isOver({ shallow: true })
+}))
 class TableRow extends Component {
+  static propTypes = {
+    connectDropTarget: PropTypes.func.isRequired,
+    dragRow: PropTypes.func.isRequired,
+    isHovering: PropTypes.bool.isRequired
+  }
 
   constructor(props) {
     super(props);
@@ -71,9 +107,12 @@ class TableRow extends Component {
 
   render() {
     this.clickNum = 0;
+    const { connectDropTarget, isHovering } = this.props;
+
     const trCss = {
       style: {
-        backgroundColor: this.props.isSelected ? this.props.selectRow.bgColor : null
+        backgroundColor: this.props.isSelected ? this.props.selectRow.bgColor : null,
+        borderBottom: isHovering ? '2px solid' : null
       },
       className: classSet(
         this.props.isSelected ? this.props.selectRow.className : null,
@@ -82,11 +121,12 @@ class TableRow extends Component {
     };
 
     return (
-      <tr { ...trCss }
+      connectDropTarget(
+        <tr { ...trCss }
           onMouseOver={ this.rowMouseOver }
           onMouseOut={ this.rowMouseOut }
           onClick={ this.rowClick }
-          onDoubleClick={ this.rowDoubleClick }>{ this.props.children }</tr>
+          onDoubleClick={ this.rowDoubleClick }>{ this.props.children }</tr>)
     );
   }
 }

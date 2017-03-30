@@ -11,7 +11,7 @@ const defaultModalClassName = 'react-bs-table-insert-modal';
 export default class InsertModal extends Component {
 
   handleSave = () => {
-    const bodyRefs = this.refs.body;
+    const bodyRefs = this.refs.body.child;
     if (bodyRefs.getFieldValue) {
       this.props.onSave(bodyRefs.getFieldValue());
     } else {
