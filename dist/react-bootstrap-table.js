@@ -815,17 +815,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	          onPageChange = _props$options.onPageChange,
 	          pageStartIndex = _props$options.pageStartIndex;
 
+	      var emptyTable = this.store.isEmpty();
 	      if (onPageChange) {
 	        onPageChange(page, sizePerPage);
 	      }
 
-	      this.setState({
-	        currPage: page,
+	      var state = {
 	        sizePerPage: sizePerPage,
 	        reset: false
-	      });
+	      };
+	      if (!emptyTable) state.currPage = page;
+	      this.setState(state);
 
-	      if (this.allowRemote(_Const2.default.REMOTE_PAGE)) {
+	      if (this.allowRemote(_Const2.default.REMOTE_PAGE) || emptyTable) {
 	        return;
 	      }
 
@@ -14711,18 +14713,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'filterDate',
 	    value: function filterDate(targetVal, filterVal, comparator) {
-	      // if (!targetVal) {
-	      //   return false;
-	      // }
-	      // return (targetVal.getDate() === filterVal.getDate() &&
-	      //     targetVal.getMonth() === filterVal.getMonth() &&
-	      //     targetVal.getFullYear() === filterVal.getFullYear());
+	      if (!targetVal) return false;
+
+	      var filterDate = filterVal.getDate();
+	      var filterMonth = filterVal.getMonth();
+	      var filterYear = filterVal.getFullYear();
+
+	      var targetDate = targetVal.getDate();
+	      var targetMonth = targetVal.getMonth();
+	      var targetYear = targetVal.getFullYear();
 
 	      var valid = true;
 	      switch (comparator) {
 	        case '=':
 	          {
-	            if (targetVal != filterVal) {
+	            if (filterDate !== targetDate || filterMonth !== targetMonth || filterYear !== targetYear) {
 	              valid = false;
 	            }
 	            break;
@@ -14736,7 +14741,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        case '>=':
 	          {
-	            if (targetVal < filterVal) {
+	            if (targetYear < filterYear) {
+	              valid = false;
+	            } else if (targetYear === filterYear && targetMonth < filterMonth) {
+	              valid = false;
+	            } else if (targetYear === filterYear && targetMonth === filterMonth && targetDate < filterDate) {
 	              valid = false;
 	            }
 	            break;
@@ -14750,14 +14759,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        case '<=':
 	          {
-	            if (targetVal > filterVal) {
+	            if (targetYear > filterYear) {
+	              valid = false;
+	            } else if (targetYear === filterYear && targetMonth > filterMonth) {
+	              valid = false;
+	            } else if (targetYear === filterYear && targetMonth === filterMonth && targetDate > filterDate) {
 	              valid = false;
 	            }
 	            break;
 	          }
 	        case '!=':
 	          {
-	            if (targetVal == filterVal) {
+	            if (filterDate === targetDate && filterMonth === targetMonth && filterYear === targetYear) {
 	              valid = false;
 	            }
 	            break;
@@ -15216,11 +15229,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;"use strict";
+	var __WEBPACK_AMD_DEFINE_RESULT__;"use strict";
 
 	/* FileSaver.js
 	 * A saveAs() FileSaver implementation.
-	 * 1.1.20151003
+	 * 1.3.2
+	 * 2016-06-16 18:25:19
 	 *
 	 * By Eli Grey, http://eligrey.com
 	 * License: MIT
@@ -15236,7 +15250,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		"use strict";
 		// IE <10 is explicitly unsupported
 
-		if (typeof navigator !== "undefined" && /MSIE [1-9]\./.test(navigator.userAgent)) {
+		if (typeof view === "undefined" || typeof navigator !== "undefined" && /MSIE [1-9]\./.test(navigator.userAgent)) {
 			return;
 		}
 		var doc = view.document
@@ -15251,21 +15265,17 @@ return /******/ (function(modules) { // webpackBootstrap
 			var event = new MouseEvent("click");
 			node.dispatchEvent(event);
 		},
-		    is_safari = /Version\/[\d\.]+.*Safari/.test(navigator.userAgent),
-		    webkit_req_fs = view.webkitRequestFileSystem,
-		    req_fs = view.requestFileSystem || webkit_req_fs || view.mozRequestFileSystem,
+		    is_safari = /constructor/i.test(view.HTMLElement) || view.safari,
+		    is_chrome_ios = /CriOS\/[\d]+/.test(navigator.userAgent),
 		    throw_outside = function throw_outside(ex) {
 			(view.setImmediate || view.setTimeout)(function () {
 				throw ex;
 			}, 0);
 		},
-		    force_saveable_type = "application/octet-stream",
-		    fs_min_size = 0
-		// See https://code.google.com/p/chromium/issues/detail?id=375297#c7 and
-		// https://github.com/eligrey/FileSaver.js/commit/485930a#commitcomment-8768047
-		// for the reasoning behind the timeout and revocation flow
+		    force_saveable_type = "application/octet-stream"
+		// the Blob API is fundamentally broken as there is no "downloadfinished" event to subscribe to
 		,
-		    arbitrary_revoke_timeout = 500 // in ms
+		    arbitrary_revoke_timeout = 1000 * 40 // in ms
 		,
 		    revoke = function revoke(file) {
 			var revoker = function revoker() {
@@ -15277,11 +15287,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					file.remove();
 				}
 			};
-			if (view.chrome) {
-				revoker();
-			} else {
-				setTimeout(revoker, arbitrary_revoke_timeout);
-			}
+			setTimeout(revoker, arbitrary_revoke_timeout);
 		},
 		    dispatch = function dispatch(filesaver, event_types, event) {
 			event_types = [].concat(event_types);
@@ -15299,8 +15305,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 		    auto_bom = function auto_bom(blob) {
 			// prepend BOM for UTF-8 XML and text/* types (including HTML)
+			// note: your browser will automatically convert UTF-16 U+FEFF to EF BB BF
 			if (/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(blob.type)) {
-				return new Blob(["\uFEFF", blob], { type: blob.type });
+				return new Blob([String.fromCharCode(0xFEFF), blob], { type: blob.type });
 			}
 			return blob;
 		},
@@ -15311,21 +15318,22 @@ return /******/ (function(modules) { // webpackBootstrap
 			// First try a.download, then web filesystem, then object URLs
 			var filesaver = this,
 			    type = blob.type,
-			    blob_changed = false,
+			    force = type === force_saveable_type,
 			    object_url,
-			    target_view,
 			    dispatch_all = function dispatch_all() {
 				dispatch(filesaver, "writestart progress write writeend".split(" "));
 			}
 			// on any filesys errors revert to saving with object URLs
 			,
 			    fs_error = function fs_error() {
-				if (target_view && is_safari && typeof FileReader !== "undefined") {
+				if ((is_chrome_ios || force && is_safari) && view.FileReader) {
 					// Safari doesn't allow downloading of blob urls
 					var reader = new FileReader();
 					reader.onloadend = function () {
-						var base64Data = reader.result;
-						target_view.location.href = "data:attachment/file" + base64Data.slice(base64Data.search(/[,;]/));
+						var url = is_chrome_ios ? reader.result : reader.result.replace(/^data:[^;]*;/, 'data:attachment/file;');
+						var popup = view.open(url, '_blank');
+						if (!popup) view.location.href = url;
+						url = undefined; // release reference before dispatching
 						filesaver.readyState = filesaver.DONE;
 						dispatch_all();
 					};
@@ -15334,40 +15342,29 @@ return /******/ (function(modules) { // webpackBootstrap
 					return;
 				}
 				// don't create more object URLs than needed
-				if (blob_changed || !object_url) {
+				if (!object_url) {
 					object_url = get_URL().createObjectURL(blob);
 				}
-				if (target_view) {
-					target_view.location.href = object_url;
+				if (force) {
+					view.location.href = object_url;
 				} else {
-					var new_tab = view.open(object_url, "_blank");
-					if (new_tab == undefined && is_safari) {
-						//Apple do not allow window.open, see http://bit.ly/1kZffRI
+					var opened = view.open(object_url, "_blank");
+					if (!opened) {
+						// Apple does not allow window.open, see https://developer.apple.com/library/safari/documentation/Tools/Conceptual/SafariExtensionGuide/WorkingwithWindowsandTabs/WorkingwithWindowsandTabs.html
 						view.location.href = object_url;
 					}
 				}
 				filesaver.readyState = filesaver.DONE;
 				dispatch_all();
 				revoke(object_url);
-			},
-			    abortable = function abortable(func) {
-				return function () {
-					if (filesaver.readyState !== filesaver.DONE) {
-						return func.apply(this, arguments);
-					}
-				};
-			},
-			    create_if_not_found = { create: true, exclusive: false },
-			    slice;
+			};
 			filesaver.readyState = filesaver.INIT;
-			if (!name) {
-				name = "download";
-			}
+
 			if (can_use_save_link) {
 				object_url = get_URL().createObjectURL(blob);
-				save_link.href = object_url;
-				save_link.download = name;
 				setTimeout(function () {
+					save_link.href = object_url;
+					save_link.download = name;
 					click(save_link);
 					dispatch_all();
 					revoke(object_url);
@@ -15375,92 +15372,26 @@ return /******/ (function(modules) { // webpackBootstrap
 				});
 				return;
 			}
-			// Object and web filesystem URLs have a problem saving in Google Chrome when
-			// viewed in a tab, so I force save with application/octet-stream
-			// http://code.google.com/p/chromium/issues/detail?id=91158
-			// Update: Google errantly closed 91158, I submitted it again:
-			// https://code.google.com/p/chromium/issues/detail?id=389642
-			if (view.chrome && type && type !== force_saveable_type) {
-				slice = blob.slice || blob.webkitSlice;
-				blob = slice.call(blob, 0, blob.size, force_saveable_type);
-				blob_changed = true;
-			}
-			// Since I can't be sure that the guessed media type will trigger a download
-			// in WebKit, I append .download to the filename.
-			// https://bugs.webkit.org/show_bug.cgi?id=65440
-			if (webkit_req_fs && name !== "download") {
-				name += ".download";
-			}
-			if (type === force_saveable_type || webkit_req_fs) {
-				target_view = view;
-			}
-			if (!req_fs) {
-				fs_error();
-				return;
-			}
-			fs_min_size += blob.size;
-			req_fs(view.TEMPORARY, fs_min_size, abortable(function (fs) {
-				fs.root.getDirectory("saved", create_if_not_found, abortable(function (dir) {
-					var save = function save() {
-						dir.getFile(name, create_if_not_found, abortable(function (file) {
-							file.createWriter(abortable(function (writer) {
-								writer.onwriteend = function (event) {
-									target_view.location.href = file.toURL();
-									filesaver.readyState = filesaver.DONE;
-									dispatch(filesaver, "writeend", event);
-									revoke(file);
-								};
-								writer.onerror = function () {
-									var error = writer.error;
-									if (error.code !== error.ABORT_ERR) {
-										fs_error();
-									}
-								};
-								"writestart progress write abort".split(" ").forEach(function (event) {
-									writer["on" + event] = filesaver["on" + event];
-								});
-								writer.write(blob);
-								filesaver.abort = function () {
-									writer.abort();
-									filesaver.readyState = filesaver.DONE;
-								};
-								filesaver.readyState = filesaver.WRITING;
-							}), fs_error);
-						}), fs_error);
-					};
-					dir.getFile(name, { create: false }, abortable(function (file) {
-						// delete file if it already exists
-						file.remove();
-						save();
-					}), abortable(function (ex) {
-						if (ex.code === ex.NOT_FOUND_ERR) {
-							save();
-						} else {
-							fs_error();
-						}
-					}));
-				}), fs_error);
-			}), fs_error);
+
+			fs_error();
 		},
 		    FS_proto = FileSaver.prototype,
 		    saveAs = function saveAs(blob, name, no_auto_bom) {
-			return new FileSaver(blob, name, no_auto_bom);
+			return new FileSaver(blob, name || blob.name || "download", no_auto_bom);
 		};
 		// IE 10+ (native saveAs)
 		if (typeof navigator !== "undefined" && navigator.msSaveOrOpenBlob) {
 			return function (blob, name, no_auto_bom) {
+				name = name || blob.name || "download";
+
 				if (!no_auto_bom) {
 					blob = auto_bom(blob);
 				}
-				return navigator.msSaveOrOpenBlob(blob, name || "download");
+				return navigator.msSaveOrOpenBlob(blob, name);
 			};
 		}
 
-		FS_proto.abort = function () {
-			var filesaver = this;
-			filesaver.readyState = filesaver.DONE;
-			dispatch(filesaver, "abort");
-		};
+		FS_proto.abort = function () {};
 		FS_proto.readyState = FS_proto.INIT = 0;
 		FS_proto.WRITING = 1;
 		FS_proto.DONE = 2;
@@ -15475,10 +15406,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	if (typeof module !== "undefined" && module.exports) {
 		module.exports.saveAs = saveAs;
-	} else if ("function" !== "undefined" && __webpack_require__(208) !== null && __webpack_require__(209) != null) {
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+	} else if ("function" !== "undefined" && __webpack_require__(208) !== null && __webpack_require__(209) !== null) {
+		!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
 			return saveAs;
-		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	}
 	;
 
