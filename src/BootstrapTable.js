@@ -473,17 +473,19 @@ class BootstrapTable extends Component {
 
   handlePaginationData = (page, sizePerPage) => {
     const { onPageChange, pageStartIndex } = this.props.options;
+    const emptyTable = this.store.isEmpty();
     if (onPageChange) {
       onPageChange(page, sizePerPage);
     }
 
-    this.setState({
-      currPage: page,
+    const state = {
       sizePerPage,
       reset: false
-    });
+    };
+    if (!emptyTable) state.currPage = page;
+    this.setState(state);
 
-    if (this.allowRemote(Const.REMOTE_PAGE)) {
+    if (this.allowRemote(Const.REMOTE_PAGE) || emptyTable) {
       return;
     }
 
