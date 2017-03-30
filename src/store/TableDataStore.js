@@ -303,17 +303,22 @@ export class TableDataStore {
   }
 
   filterDate(targetVal, filterVal, comparator) {
-    // if (!targetVal) {
-    //   return false;
-    // }
-    // return (targetVal.getDate() === filterVal.getDate() &&
-    //     targetVal.getMonth() === filterVal.getMonth() &&
-    //     targetVal.getFullYear() === filterVal.getFullYear());
+    if (!targetVal) return false;
+
+    const filterDate = filterVal.getDate();
+    const filterMonth = filterVal.getMonth();
+    const filterYear = filterVal.getFullYear();
+
+    const targetDate = targetVal.getDate();
+    const targetMonth = targetVal.getMonth();
+    const targetYear = targetVal.getFullYear();
 
     let valid = true;
     switch (comparator) {
     case '=': {
-      if (targetVal != filterVal) {
+      if (filterDate !== targetDate ||
+        filterMonth !== targetMonth ||
+        filterYear !== targetYear) {
         valid = false;
       }
       break;
@@ -325,7 +330,14 @@ export class TableDataStore {
       break;
     }
     case '>=': {
-      if (targetVal < filterVal) {
+      if (targetYear < filterYear) {
+        valid = false;
+      } else if (targetYear === filterYear &&
+        targetMonth < filterMonth) {
+        valid = false;
+      } else if (targetYear === filterYear &&
+        targetMonth === filterMonth &&
+        targetDate < filterDate) {
         valid = false;
       }
       break;
@@ -337,13 +349,22 @@ export class TableDataStore {
       break;
     }
     case '<=': {
-      if (targetVal > filterVal) {
+      if (targetYear > filterYear) {
+        valid = false;
+      } else if (targetYear === filterYear &&
+        targetMonth > filterMonth) {
+        valid = false;
+      } else if (targetYear === filterYear &&
+        targetMonth === filterMonth &&
+        targetDate > filterDate) {
         valid = false;
       }
       break;
     }
     case '!=': {
-      if (targetVal == filterVal) {
+      if (filterDate === targetDate &&
+        filterMonth === targetMonth &&
+        filterYear === targetYear) {
         valid = false;
       }
       break;
