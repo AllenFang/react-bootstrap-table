@@ -1,6 +1,6 @@
-# react-bootstrap-table
+# @powerhome/react-bootstrap-table
 
-[![Join the chat at https://gitter.im/AllenFang/react-bootstrap-table](https://badges.gitter.im/AllenFang/react-bootstrap-table.svg)](https://gitter.im/AllenFang/react-bootstrap-table?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+This is a fork of react-bootstrap-table from @AllenFang, which adds drag&drop support which was rejected at https://github.com/AllenFang/react-bootstrap-table/pull/1178.
 
 [![NPM version][npm-badge]][npm] [![Build Status][travis-ci-image]][travis-ci-url]
 
@@ -29,31 +29,17 @@ It's a [react.js](http://facebook.github.io/react/) table for bootstrap, named r
 - Customization
 
 ![Example](http://i.imgur.com/Ov1wMse.png)
-Explore more example on [examples](https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js) folder</br>
-See more about [react-bootstrap-table](http://allenfang.github.io/react-bootstrap-table/index.html).</br>
-Check [this](http://allenfang.github.io/react-bootstrap-table/advance.html) for more advance usage for ```react-bootstrap-table```. Feel free to ask more examples.</br>
-Check the <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/CHANGELOG.md'>CHANGELOG</a> for more detail release notes.
-
-## Notes
-***★★★I'm busy on my job so maybe will have a long delay to see your guys PR or issues, sorry. I'll back as soon as possible***
-***```v3.0.0``` released, check [examples](https://github.com/AllenFang/react-bootstrap-table/tree/v3.0.0-dev/examples/js/custom) to learn how to customize the component. following
-is the major things we completed in this release***
-- Remove the `bootstrap.js` and `jQuery` dependencies
-- More easy and have ability to customize the components(search, pagination, insert modal etc.)
-- Key board Navigation
-
-***```v2.10.0-beta.1``` is a revised version for fixing couples unalign column and incorrect height etc. If you have any unalign problems before `v2.9.2`, give this beta version a try and any feedback is welcome***
-
-***```v3.0.0``` is under planning, check [Milestone to v3.0.0](https://github.com/AllenFang/react-bootstrap-table/issues/497).<br/>***
-
-***After ```v2.4.4```, we move the css files to ```dist``` folder for allowing this repo can be hosted on [cdnjs](https://github.com/cdnjs/cdnjs)<br/>***
+Explore more example on [examples](https://github.com/powerhome/react-bootstrap-table/tree/master/examples/js) folder</br>
+See more about [react-bootstrap-table](http://powerhome.github.io/react-bootstrap-table/index.html).</br>
+Check [this](http://powerhome.github.io/react-bootstrap-table/advance.html) for more advance usage for ```react-bootstrap-table```. Feel free to ask more examples.</br>
+Check the <a href='https://github.com/powerhome/react-bootstrap-table/blob/master/CHANGELOG.md'>CHANGELOG</a> for more detail release notes.
 
 ## Development
 ```react-bootstrap-table``` dependencies on react.js and Bootstrap 3, also written by ES6 and use gulp and browserify for building and bundling.
 
 You can use the following commands to prepare development
 ```bash
-$ git clone https://github.com/AllenFang/react-bootstrap-table.git
+$ git clone https://github.com/powerhome/react-bootstrap-table.git
 $ cd react-bootstrap-table
 $ npm install
 ```
@@ -95,15 +81,6 @@ In the `dist` folder you have a UMD bundle with source maps (`react-bootstrap-ta
 <script/>
 ```
 
-The UMD build is also available on [npmcdn](https://npmcdn.com):
-
-```html
-// source maps: https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.js.map
-<script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.js"></script>
-// or use the min version
-<script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.min.js"></script>
-```
-
 ### c.Import CSS
 Finally, you need to import the css file to your app, there are two css file you can choose.</br>
 ```react-bootstrap-table-all.min.css``` include toastr.</br>```react-bootstrap-table.min.css``` doesn't include toastr.</br>
@@ -140,15 +117,15 @@ React.render(
 );
 ```
 ### More react-bootstrap-table examples
-The example source codes is in the [examples](https://github.com/AllenFang/react-bootstrap-table/tree/master/examples) folder. Run  the following commands for a live demo.</br>
+The example source codes is in the [examples](https://github.com/powerhome/react-bootstrap-table/tree/master/examples) folder. Run  the following commands for a live demo.</br>
 ```bash
-$ git clone https://github.com/AllenFang/react-bootstrap-table.git
+$ git clone https://github.com/powerhome/react-bootstrap-table.git
 $ cd react-bootstrap-table
 $ npm install
 $ npm start # after start, open browser and go to http://localhost:3004
 ```
 
-### [Documentation](http://allenfang.github.io/react-bootstrap-table/docs.html)
+### [Documentation](http://powerhome.github.io/react-bootstrap-table/docs.html)
 
 ### Thanks
 **[luqin](https://github.com/luqin)**  
