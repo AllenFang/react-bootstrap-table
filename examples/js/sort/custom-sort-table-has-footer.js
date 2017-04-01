@@ -6,25 +6,25 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 const products = [];
 
 function addProducts(quantity) {
+  let value;
   const startId = products.length;
+  let total = 0;
   for (let i = 0; i < quantity; i++) {
     const id = startId + i;
-    if (i === quantity - 1) {
-      products.push({
-        id: id,
-        name: 'Footer ',
-        price: 2100 + Math.floor(Math.random() * 100) + 1,
-        isFooter: true
-      });
-    } else {
-      products.push({
-        id: id,
-        name: 'Item name ' + id,
-        price: 2100 + Math.floor(Math.random() * 100) + 1,
-        isFooter: false
-      });
-    }
+    value = 2100 + Math.floor(Math.random() * 100) + 1;
+    products.push({
+      id: id,
+      name: 'Item name ' + id,
+      cost: value
+    });
+    total += value;
   }
+  /* add footer row with total calculations */
+  products.push({
+    id: products.length,
+    name: 'Total',
+    cost: total
+  });
 }
 
 addProducts(20);
@@ -32,9 +32,9 @@ addProducts(20);
 function revertSortFunc(a, b, order) {   // order is desc or asc
 
   if (order === 'desc') {
-    return a.price - b.price;
+    return a.cost - b.cost;
   } else {
-    return b.price - a.price;
+    return b.cost - a.cost;
   }
 }
 
@@ -55,7 +55,7 @@ export default class CustomSortTableHasFooter extends React.Component {
       <BootstrapTable data={ products } options={ options }>
           <TableHeaderColumn dataField='id' isKey={ true } dataSort={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name' dataSort={ true } sortFunc={ sortStrings }>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField='price' dataSort={ true } sortFunc={ revertSortFunc }>Product Price</TableHeaderColumn>
+          <TableHeaderColumn dataField='cost' dataSort={ true } sortFunc={ revertSortFunc }>Product Cost</TableHeaderColumn>
       </BootstrapTable>
     );
   }
