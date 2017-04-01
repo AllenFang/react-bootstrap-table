@@ -23,7 +23,7 @@ const cellEditProp = {
   mode: 'click'
 };
 
-export default class ClickToSelectTable extends React.Component {
+export default class ClickToEditTable extends React.Component {
   render() {
     return (
       <BootstrapTable data={ products } cellEdit={ cellEditProp }>
