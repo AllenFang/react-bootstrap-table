@@ -1270,7 +1270,7 @@ BootstrapTable.propTypes = {
       Const.ROW_SELECT_MULTI
     ]),
     customComponent: PropTypes.func,
-    bgColor: PropTypes.string,
+    bgColor: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
     selected: PropTypes.array,
     onSelect: PropTypes.func,
     onSelectAll: PropTypes.func,
