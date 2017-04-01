@@ -1556,32 +1556,34 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var scrollBarWidth = isScroll ? _util2.default.getScrollBarWidth() : 0;
 	      if (firstRow && this.store.getDataNum()) {
-	        var cells = firstRow.childNodes;
-	        for (var i = 0; i < cells.length; i++) {
-	          var cell = cells[i];
-	          var computedStyle = window.getComputedStyle(cell);
-	          var width = parseFloat(computedStyle.width.replace('px', ''));
-	          if (this.isIE) {
-	            var paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
-	            var paddingRightWidth = parseFloat(computedStyle.paddingRight.replace('px', ''));
-	            var borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace('px', ''));
-	            var borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace('px', ''));
-	            width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
-	          }
-	          var lastPadding = cells.length - 1 === i ? scrollBarWidth : 0;
-	          if (width <= 0) {
-	            width = 120;
-	            cell.width = width + lastPadding + 'px';
-	          }
-	          var result = width + lastPadding + 'px';
-	          header[i].style.width = result;
-	          header[i].style.minWidth = result;
-	          if (cells.length - 1 === i) {
-	            bodyHeader[i].style.width = width + 'px';
-	            bodyHeader[i].style.minWidth = width + 'px';
-	          } else {
-	            bodyHeader[i].style.width = result;
-	            bodyHeader[i].style.minWidth = result;
+	        if (isScroll) {
+	          var cells = firstRow.childNodes;
+	          for (var i = 0; i < cells.length; i++) {
+	            var cell = cells[i];
+	            var computedStyle = window.getComputedStyle(cell);
+	            var width = parseFloat(computedStyle.width.replace('px', ''));
+	            if (this.isIE) {
+	              var paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
+	              var paddingRightWidth = parseFloat(computedStyle.paddingRight.replace('px', ''));
+	              var borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace('px', ''));
+	              var borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace('px', ''));
+	              width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
+	            }
+	            var lastPadding = cells.length - 1 === i ? scrollBarWidth : 0;
+	            if (width <= 0) {
+	              width = 120;
+	              cell.width = width + lastPadding + 'px';
+	            }
+	            var result = width + lastPadding + 'px';
+	            header[i].style.width = result;
+	            header[i].style.minWidth = result;
+	            if (cells.length - 1 === i) {
+	              bodyHeader[i].style.width = width + 'px';
+	              bodyHeader[i].style.minWidth = width + 'px';
+	            } else {
+	              bodyHeader[i].style.width = result;
+	              bodyHeader[i].style.minWidth = result;
+	            }
 	          }
 	        }
 	      } else {
