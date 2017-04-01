@@ -37,7 +37,7 @@ function revertSortFunc(a, b, order) {   // order is desc or asc
     return b.cost - a.cost;
   }
 }
-
+/* custom function for string sorting */
 function sortStrings(a, b, order) {
   if (order === 'desc') {
     return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
