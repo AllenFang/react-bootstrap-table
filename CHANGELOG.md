@@ -1,3 +1,10 @@
+<a name="v3.1.3"></a>
+# [v3.1.3](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.2...v3.1.3) (2017-03-30)
+## Bug fixes
+* Fix bug about != and = are not work well for date filter([14bcfba](https://github.com/AllenFang/react-bootstrap-table/commit/14bcfba28df01d9591cc189f3a5c1f87c94fade5))
+* Fix an error happen if change sizePerPage then fill date([28561d5](https://github.com/AllenFang/react-bootstrap-table/commit/28561d5752788d7bcb0ad0d9d10a7f6fa63fc5bd))
+* Fix FileSaver.js causes requireJS errors in console([850cdea](https://github.com/AllenFang/react-bootstrap-table/commit/850cdeaddc75315f9a2b1e3cbc72e94e5add706c))
+
 <a name="v3.1.2"></a>
 # [v3.1.2](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.1...v3.1.2) (2017-03-28)
 ## Bug fixes
