@@ -23,7 +23,6 @@ class BootstrapTable extends Component {
       this.isIE = document.documentMode;
     }
     this.store = new TableDataStore(this.props.data ? this.props.data.slice() : []);
-    this.isVerticalScroll = false;
     this.initTable(this.props);
 
     if (this.props.selectRow && this.props.selectRow.selected) {
@@ -98,7 +97,8 @@ class BootstrapTable extends Component {
       colInfos: this.colInfos,
       multiColumnSearch: props.multiColumnSearch,
       multiColumnSort: props.multiColumnSort,
-      remote: this.props.remote
+      remote: this.props.remote,
+      hasFooter: this.props.options.hasFooter
     });
   }
 
@@ -225,6 +225,7 @@ class BootstrapTable extends Component {
       const sortList = this.store.getSortInfo();
       const sortField = options.sortName;
       const sortOrder = options.sortOrder;
+
       if (sortField && sortOrder) {
         this.store.setSortInfo(sortOrder, sortField);
         this.store.sort();
@@ -381,6 +382,7 @@ class BootstrapTable extends Component {
             expandableRow={ this.props.expandableRow }
             expandRowBgColor={ this.props.options.expandRowBgColor }
             expandBy={ this.props.options.expandBy || Const.EXPAND_BY_ROW }
+            hasFooter={ this.props.options.hasFooter }
             columns={ columns }
             trClassName={ this.props.trClassName }
             striped={ this.props.striped }
@@ -1152,7 +1154,7 @@ class BootstrapTable extends Component {
 
     const scrollBarWidth = isScroll ? Util.getScrollBarWidth() : 0;
     if (firstRow && this.store.getDataNum()) {
-      if (isScroll || this.isVerticalScroll !== isScroll) {
+      if (isScroll) {
         const cells = firstRow.childNodes;
         for (let i = 0; i < cells.length; i++) {
           const cell = cells[i];
@@ -1190,7 +1192,6 @@ class BootstrapTable extends Component {
         }
       });
     }
-    this.isVerticalScroll = isScroll;
   }
 
   _adjustHeight() {
@@ -1271,7 +1272,7 @@ BootstrapTable.propTypes = {
       Const.ROW_SELECT_MULTI
     ]),
     customComponent: PropTypes.func,
-    bgColor: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
+    bgColor: PropTypes.string,
     selected: PropTypes.array,
     onSelect: PropTypes.func,
     onSelectAll: PropTypes.func,
@@ -1292,6 +1293,7 @@ BootstrapTable.propTypes = {
   }),
   insertRow: PropTypes.bool,
   deleteRow: PropTypes.bool,
+  hasFooter: PropTypes.bool,
   search: PropTypes.bool,
   columnFilter: PropTypes.bool,
   trClassName: PropTypes.any,
@@ -1416,6 +1418,7 @@ BootstrapTable.defaultProps = {
   pagination: false,
   printable: false,
   keyBoardNav: false,
+  hasFooter: false,
   searchPlaceholder: undefined,
   selectRow: {
     mode: Const.ROW_SELECT_NONE,
