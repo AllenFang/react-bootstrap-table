@@ -1556,34 +1556,32 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var scrollBarWidth = isScroll ? _util2.default.getScrollBarWidth() : 0;
 	      if (firstRow && this.store.getDataNum()) {
-	        if (isScroll) {
-	          var cells = firstRow.childNodes;
-	          for (var i = 0; i < cells.length; i++) {
-	            var cell = cells[i];
-	            var computedStyle = window.getComputedStyle(cell);
-	            var width = parseFloat(computedStyle.width.replace('px', ''));
-	            if (this.isIE) {
-	              var paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
-	              var paddingRightWidth = parseFloat(computedStyle.paddingRight.replace('px', ''));
-	              var borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace('px', ''));
-	              var borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace('px', ''));
-	              width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
-	            }
-	            var lastPadding = cells.length - 1 === i ? scrollBarWidth : 0;
-	            if (width <= 0) {
-	              width = 120;
-	              cell.width = width + lastPadding + 'px';
-	            }
-	            var result = width + lastPadding + 'px';
-	            header[i].style.width = result;
-	            header[i].style.minWidth = result;
-	            if (cells.length - 1 === i) {
-	              bodyHeader[i].style.width = width + 'px';
-	              bodyHeader[i].style.minWidth = width + 'px';
-	            } else {
-	              bodyHeader[i].style.width = result;
-	              bodyHeader[i].style.minWidth = result;
-	            }
+	        var cells = firstRow.childNodes;
+	        for (var i = 0; i < cells.length; i++) {
+	          var cell = cells[i];
+	          var computedStyle = window.getComputedStyle(cell);
+	          var width = parseFloat(computedStyle.width.replace('px', ''));
+	          if (this.isIE) {
+	            var paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
+	            var paddingRightWidth = parseFloat(computedStyle.paddingRight.replace('px', ''));
+	            var borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace('px', ''));
+	            var borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace('px', ''));
+	            width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
+	          }
+	          var lastPadding = cells.length - 1 === i ? scrollBarWidth : 0;
+	          if (width <= 0) {
+	            width = 120;
+	            cell.width = width + lastPadding + 'px';
+	          }
+	          var result = width + lastPadding + 'px';
+	          header[i].style.width = result;
+	          header[i].style.minWidth = result;
+	          if (cells.length - 1 === i) {
+	            bodyHeader[i].style.width = width + 'px';
+	            bodyHeader[i].style.minWidth = width + 'px';
+	          } else {
+	            bodyHeader[i].style.width = result;
+	            bodyHeader[i].style.minWidth = result;
 	          }
 	        }
 	      } else {
@@ -1673,7 +1671,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  selectRow: _react.PropTypes.shape({
 	    mode: _react.PropTypes.oneOf([_Const2.default.ROW_SELECT_NONE, _Const2.default.ROW_SELECT_SINGLE, _Const2.default.ROW_SELECT_MULTI]),
 	    customComponent: _react.PropTypes.func,
-	    bgColor: _react.PropTypes.string,
+	    bgColor: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
 	    selected: _react.PropTypes.array,
 	    onSelect: _react.PropTypes.func,
 	    onSelectAll: _react.PropTypes.func,
@@ -2546,6 +2544,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.__handleEditCell__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+	    _this.nextEditableCell = function () {
+	      return _this.__nextEditableCell__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
 	    _this.handleCompleteEditCell = function () {
 	      return _this.__handleCompleteEditCell__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
@@ -2693,6 +2695,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _TableRow2.default,
 	          { isSelected: selected, key: key, className: trClassName,
 	            index: r,
+	            row: data,
 	            selectRow: isSelectRowDefined ? this.props.selectRow : undefined,
 	            enableCellEdit: cellEdit.mode !== _Const2.default.CELL_EDIT_NONE,
 	            onRowClick: this.handleRowClick,
@@ -2896,12 +2899,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (expandColumnVisible) columnIndex++;
 	        this.handleCompleteEditCell(e.target.value, rowIndex, columnIndex - 1);
 	        if (columnIndex >= this.props.columns.length) {
-	          rowIndex = rowIndex + 1;
-	          columnIndex = 1;
 	          this.handleCellKeyDown(e, true);
 	        } else {
 	          this.handleCellKeyDown(e);
 	        }
+
+	        var _nextEditableCell = this.nextEditableCell(rowIndex, columnIndex),
+	            nextRIndex = _nextEditableCell.nextRIndex,
+	            nextCIndex = _nextEditableCell.nextCIndex;
+
+	        rowIndex = nextRIndex;
+	        columnIndex = nextCIndex;
 	      }
 
 	      var stateObj = {
@@ -2916,6 +2924,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.handleSelectRow(rowIndex + 1, !selected, e);
 	      }
 	      this.setState(stateObj);
+	    }
+	  }, {
+	    key: '__nextEditableCell__REACT_HOT_LOADER__',
+	    value: function __nextEditableCell__REACT_HOT_LOADER__(rIndex, cIndex) {
+	      var keyField = this.props.keyField;
+
+	      var nextRIndex = rIndex;
+	      var nextCIndex = cIndex;
+	      var row = void 0;
+	      var column = void 0;
+	      do {
+	        if (nextCIndex >= this.props.columns.length) {
+	          nextRIndex++;
+	          nextCIndex = 0;
+	        }
+	        row = this.props.data[nextRIndex];
+	        column = this.props.columns[nextCIndex];
+	        if (!row) break;
+	        var editable = column.editable;
+	        if (isFun(column.editable)) {
+	          editable = column.editable(column, row, nextRIndex, nextCIndex);
+	        }
+	        if (editable && !column.hidden && keyField !== column.name) break;else {
+	          nextCIndex++;
+	        }
+	      } while (row);
+	      return { nextRIndex: nextRIndex, nextCIndex: nextCIndex };
 	    }
 	  }, {
 	    key: '__handleCompleteEditCell__REACT_HOT_LOADER__',
@@ -3207,7 +3242,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint no-nested-ternary: 0 */
+
 
 	var TableRow = function (_Component) {
 	  _inherits(TableRow, _Component);
@@ -3319,11 +3355,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'render',
 	    value: function render() {
 	      this.clickNum = 0;
+	      var _props2 = this.props,
+	          selectRow = _props2.selectRow,
+	          row = _props2.row,
+	          isSelected = _props2.isSelected;
+
+	      var backgroundColor = null;
+
+	      if (selectRow) {
+	        backgroundColor = typeof selectRow.bgColor === 'function' ? selectRow.bgColor(row, isSelected) : isSelected ? selectRow.bgColor : null;
+	      }
+
 	      var trCss = {
-	        style: {
-	          backgroundColor: this.props.isSelected ? this.props.selectRow.bgColor : null
-	        },
-	        className: (0, _classnames2.default)(this.props.isSelected ? this.props.selectRow.className : null, this.props.className)
+	        style: { backgroundColor: backgroundColor },
+	        className: (0, _classnames2.default)(isSelected ? selectRow.className : null, this.props.className)
 	      };
 
 	      return _react2.default.createElement(
@@ -3343,6 +3388,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	TableRow.propTypes = {
 	  index: _react.PropTypes.number,
+	  row: _react.PropTypes.any,
 	  isSelected: _react.PropTypes.bool,
 	  enableCellEdit: _react.PropTypes.bool,
 	  onRowClick: _react.PropTypes.func,
