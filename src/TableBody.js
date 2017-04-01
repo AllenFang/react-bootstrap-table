@@ -342,12 +342,13 @@ class TableBody extends Component {
       if (expandColumnVisible) columnIndex++;
       this.handleCompleteEditCell(e.target.value, rowIndex, columnIndex - 1);
       if (columnIndex >= this.props.columns.length) {
-        rowIndex = rowIndex + 1;
-        columnIndex = 1;
         this.handleCellKeyDown(e, true);
       } else {
         this.handleCellKeyDown(e);
       }
+      const { nextRIndex, nextCIndex } = this.nextEditableCell(rowIndex, columnIndex);
+      rowIndex = nextRIndex;
+      columnIndex = nextCIndex;
     }
 
     const stateObj = {
@@ -364,6 +365,32 @@ class TableBody extends Component {
       this.handleSelectRow(rowIndex + 1, !selected, e);
     }
     this.setState(stateObj);
+  }
+
+  nextEditableCell = (rIndex, cIndex) => {
+    const { keyField } = this.props;
+    let nextRIndex = rIndex;
+    let nextCIndex = cIndex;
+    let row;
+    let column;
+    do {
+      if (nextCIndex >= this.props.columns.length) {
+        nextRIndex++;
+        nextCIndex = 0;
+      }
+      row = this.props.data[nextRIndex];
+      column = this.props.columns[nextCIndex];
+      if (!row) break;
+      let editable = column.editable;
+      if (isFun(column.editable)) {
+        editable = column.editable(column, row, nextRIndex, nextCIndex);
+      }
+      if (editable && !column.hidden && keyField !== column.name) break;
+      else {
+        nextCIndex++;
+      }
+    } while (row);
+    return { nextRIndex, nextCIndex };
   }
 
   handleCompleteEditCell = (newVal, rowIndex, columnIndex) => {
