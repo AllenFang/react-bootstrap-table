@@ -1,3 +1,8 @@
+<a name="v3.1.5"></a>
+# [v3.1.5](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.4...v3.1.5) (2017-04-01)
+* Fix tab broke if encounter non editable or hidden cell([ca7a9dd](htthttps://github.com/AllenFang/react-bootstrap-table/commit/ca7a9dd7f7a0df2f85554aa927b43d4eecbe854a))
+* Avoid the horizontal scrollbar appear when resize the window
+
 <a name="v3.1.4"></a>
 # [v3.1.4](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.3...v3.1.4) (2017-04-01)
 ## Bug fixes
