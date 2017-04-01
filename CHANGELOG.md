@@ -1,3 +1,23 @@
+<a name="v3.1.4"></a>
+# [v3.1.4](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.3...v3.1.4) (2017-04-01)
+## Bug fixes
+* Fix tab broke if encounter non editable or hidden cell([2f9ed93](https://github.com/AllenFang/react-bootstrap-table/commit/2f9ed933a3b7a37278817f1f2932fbed89c0ad0b))
+* Fix unalign issue if table become scrollable then non scrollable([af8b3c3](https://github.com/AllenFang/react-bootstrap-table/commit/af8b3c3aaa594dd1ed7639556106629bfd36106f))
+
+## Enhancement
+* `selectRow.bgColor` now support a callback function for more flexible bgColor setting([136dec9](https://github.com/AllenFang/react-bootstrap-table/commit/136dec9313d92658748e38fd141ecd618da5d333))
+	```js
+	bgColor: function(row, isSelect) {
+     if (isSelect) {
+       const { id } = row;
+       if (id < 2) return 'blue';
+       else if (id < 4) return 'red';
+       else return 'yellow';
+     }
+     return null;
+  }
+	```
+
 <a name="v3.1.3"></a>
 # [v3.1.3](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.2...v3.1.3) (2017-03-30)
 ## Bug fixes
