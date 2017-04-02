@@ -326,11 +326,12 @@ class TableBody extends Component {
   }
 
   handleEditCell = (rowIndex, columnIndex, action, e) => {
+    const { selectRow } = this.props;
     const defineSelectRow = this._isSelectRowDefined();
     const expandColumnVisible = this._isExpandColumnVisible();
     if (defineSelectRow) {
       columnIndex--;
-      if (this.props.selectRow.hideSelectColumn) columnIndex++;
+      if (selectRow.hideSelectColumn) columnIndex++;
     }
     if (expandColumnVisible) {
       columnIndex--;
@@ -338,7 +339,7 @@ class TableBody extends Component {
     rowIndex--;
 
     if (action === 'tab') {
-      if (defineSelectRow) columnIndex++;
+      if (defineSelectRow && !selectRow.hideSelectColumn) columnIndex++;
       if (expandColumnVisible) columnIndex++;
       this.handleCompleteEditCell(e.target.value, rowIndex, columnIndex - 1);
       if (columnIndex >= this.props.columns.length) {
