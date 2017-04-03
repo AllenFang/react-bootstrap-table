@@ -58,6 +58,7 @@ class TableBody extends Component {
         const isFocusCell = r === y && i === x;
         if (column.name !== this.props.keyField && // Key field can't be edit
           column.editable && // column is editable? default is true, user can set it false
+          column.editable.readOnly !== true &&
           this.state.currEditCell !== null &&
           this.state.currEditCell.rid === r &&
           this.state.currEditCell.cid === i &&
@@ -386,8 +387,10 @@ class TableBody extends Component {
       if (isFun(column.editable)) {
         editable = column.editable(column, row, nextRIndex, nextCIndex);
       }
-      if (editable && !column.hidden && keyField !== column.name) break;
-      else {
+      if (editable && editable.readOnly !== true &&
+        !column.hidden && keyField !== column.name) {
+        break;
+      } else {
         nextCIndex++;
       }
     } while (row);
