@@ -387,8 +387,10 @@ class TableBody extends Component {
       if (isFun(column.editable)) {
         editable = column.editable(column, row, nextRIndex, nextCIndex);
       }
-      if (editable && !column.hidden && keyField !== column.name) break;
-      else {
+      if (editable && editable.readOnly !== true &&
+        !column.hidden && keyField !== column.name) {
+        break;
+      } else {
         nextCIndex++;
       }
     } while (row);
