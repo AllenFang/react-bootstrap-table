@@ -1,5 +1,15 @@
+<a name="v3.1.6"></a>
+# [v3.1.6](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.5...v3.1.6) (2017-04-03)
+## Bug fixes
+* Fixed wrong `z-index` for insert modal and mask([91b4dca](https://github.com/AllenFang/react-bootstrap-table/commit/91b4dca1e884d8295c2acdf53814bfa221014ccf))
+* Fixed keyboard navigation does not work if `selectRow.hideSelectColumn` is true([e8c25fd](https://github.com/AllenFang/react-bootstrap-table/commit/e8c25fd48de8f9e9081a790042995c1ebe17197e))
+
+## Enhancement
+* Support `editable.readOnly` for `TableHeaderColumn`, which is helpful if you want this field can be edited on insert but not on cell editing([8729faf](https://github.com/AllenFang/react-bootstrap-table/commit/8729faf4c976dbd91338910b6f3104afed05b063))
+
 <a name="v3.1.5"></a>
 # [v3.1.5](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.4...v3.1.5) (2017-04-01)
+## Bug fixes
 * Fix tab broke if encounter non editable or hidden cell([ca7a9dd](htthttps://github.com/AllenFang/react-bootstrap-table/commit/ca7a9dd7f7a0df2f85554aa927b43d4eecbe854a))
 * Avoid the horizontal scrollbar appear when resize the window
 
