@@ -6,6 +6,7 @@ import AutoRowKeyTable from './auto-rowkey-table';
 import ValidatorTable from './validator-table';
 import HideOnInsertTable from './hide-on-insert-table';
 import DisableToastrTable from './disable-toastr-table';
+import EditTypeReadOnlyTable from './validator-table-read-only';
 
 import renderLinks from '../utils';
 
@@ -39,6 +40,10 @@ class Demo extends React.Component {
         <Panel header={ 'Custom Display Validating Message' }>
           { renderLinks('advance/disable-toastr-table.js') }
           <DisableToastrTable/>
+        </Panel>
+        <Panel header={ 'Custom Display Validating Message(Job Name column is read only)' }>
+          { renderLinks('advance/validator-table-read-only.js') }
+          <EditTypeReadOnlyTable/>
         </Panel>
       </Col>
     );
