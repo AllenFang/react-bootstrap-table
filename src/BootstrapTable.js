@@ -97,6 +97,8 @@ class BootstrapTable extends Component {
       keyField: keyField,
       colInfos: this.colInfos,
       multiColumnSearch: props.multiColumnSearch,
+      strictSearch: typeof(props.strictSearch) === 'boolean' ?
+        props.strictSearch : !props.multiColumnSearch,
       multiColumnSort: props.multiColumnSort,
       remote: this.props.remote
     });
@@ -1293,6 +1295,8 @@ BootstrapTable.propTypes = {
   insertRow: PropTypes.bool,
   deleteRow: PropTypes.bool,
   search: PropTypes.bool,
+  multiColumnSearch: PropTypes.bool,
+  strictSearch: PropTypes.bool,
   columnFilter: PropTypes.bool,
   trClassName: PropTypes.any,
   tableStyle: PropTypes.object,
@@ -1442,6 +1446,7 @@ BootstrapTable.defaultProps = {
   deleteRow: false,
   search: false,
   multiColumnSearch: false,
+  strictSearch: undefined,
   multiColumnSort: 1,
   columnFilter: false,
   trClassName: '',

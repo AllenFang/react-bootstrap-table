@@ -18,6 +18,7 @@ export class TableDataStore {
     this.pageObj = {};
     this.selected = [];
     this.multiColumnSearch = false;
+    this.strictSearch = true;
     this.multiColumnSort = 1;
     this.showOnlySelected = false;
     this.remote = false; // remote data
@@ -29,6 +30,7 @@ export class TableDataStore {
     this.colInfos = props.colInfos;
     this.remote = props.remote;
     this.multiColumnSearch = props.multiColumnSearch;
+    this.strictSearch = props.strictSearch;
     this.multiColumnSort = props.multiColumnSort;
   }
 
@@ -516,27 +518,34 @@ export class TableDataStore {
     this.isOnFilter = true;
   }
 
+  /*
+   * Four different sort modes, all case insensitive:
+   * (1) strictSearch && !multiColumnSearch
+   *     search text must be contained as provided in a single column
+   * (2) strictSearch && multiColumnSearch
+   *     conjunction (AND combination) of whitespace separated terms over multiple columns
+   * (3) !strictSearch && !multiColumnSearch
+   *     conjunction (AND combination) of whitespace separated terms in a single column
+   * (4) !strictSearch && multiColumnSearch
+   *     any of the whitespace separated terms must be contained in any column
+   */
   _search(source) {
-    let searchTextArray = [];
-
-    if (this.multiColumnSearch) {
-      searchTextArray = this.searchText.split(' ');
+    let searchTextArray;
+    if (this.multiColumnSearch || !this.strictSearch) {
+      // ignore leading and trailing whitespaces
+      searchTextArray = this.searchText.trim().toLowerCase().split(/\s+/);
     } else {
-      searchTextArray.push(this.searchText);
+      searchTextArray = [ this.searchText.toLowerCase() ];
     }
+    const applyStrictSearch = this.strictSearch && searchTextArray.length > 1;
     this.filteredData = source.filter((row, r) => {
       const keys = Object.keys(row);
-      let valid = false;
-      // for loops are ugly, but performance matters here.
-      // And you cant break from a forEach.
-      // http://jsperf.com/for-vs-foreach/66
+      // only clone array if necessary
+      const searchTerms = applyStrictSearch ? searchTextArray.slice() : searchTextArray;
       for (let i = 0, keysLength = keys.length; i < keysLength; i++) {
         const key = keys[i];
-        // fixed data filter when misunderstand 0 is false
-        let filterSpecialNum = false;
-        if (!isNaN(row[key]) &&
-          parseInt(row[key], 10) === 0) { filterSpecialNum = true; }
-        if (this.colInfos[key] && (row[key] || filterSpecialNum)) {
+        const cellVal = row[key];
+        if (this.colInfos[key] && (cellVal || !isNaN(cellVal) && parseInt(cellVal, 10) === 0)) {
           const {
             format,
             filterFormatted,
@@ -544,24 +553,33 @@ export class TableDataStore {
             formatExtraData,
             searchable
           } = this.colInfos[key];
-          let targetVal = row[key];
           if (searchable) {
+            let targetVal;
             if (filterFormatted && format) {
-              targetVal = format(targetVal, row, formatExtraData, r);
+              targetVal = format(cellVal, row, formatExtraData, r);
             } else if (filterValue) {
-              targetVal = filterValue(targetVal, row);
+              targetVal = filterValue(cellVal, row);
+            } else {
+              targetVal = cellVal;
             }
-            for (let j = 0, textLength = searchTextArray.length; j < textLength; j++) {
-              const filterVal = searchTextArray[j].toLowerCase();
-              if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
-                valid = true;
+            targetVal = targetVal.toString().toLowerCase();
+            for (let j = searchTerms.length - 1; j > -1; j--) {
+              if (targetVal.indexOf(searchTerms[j]) !== -1) {
+                if (!applyStrictSearch || searchTerms.length === 1) {
+                  // match found: the last or only one
+                  return true;
+                }
+                // match found: but there are more search terms to check for
+                searchTerms.splice(j, 1);
+              } else if (!this.multiColumnSearch) {
+                // one of the search terms was not found in this column
                 break;
               }
             }
           }
         }
       }
-      return valid;
+      return false;
     });
     this.isOnFilter = true;
   }
