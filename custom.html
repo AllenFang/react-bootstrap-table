@@ -171,7 +171,7 @@
               </ul>
               <li><a href="#pagination">Pagination</a></li>
               <ul>
-                <li>Modal Header</li>
+                <li><a href="#sizePerPageDropdown">SizePerPage Dropdown</a></li>
               </ul>
               <li>Filter</li>
               <li>Cell Editor</li>
@@ -932,6 +932,57 @@ const options = {
   insertModalFooter: this.createCustomModalFooter
 };
 &lt;BootstrapTable data={rows} options={options} insertRow&gt;
+</code>
+</pre>
+              </span></br></br>
+            </div>
+<h3 id="pagination">Pagination Panel</h3>
+            <div class="feature-text">
+              <h3><span class="number">01.</span> Custom all of the pagination panel</h3>
+              <span>
+                You can custom all of components for pagination, include sizePerPage dropdown and pagination list via <code>options.paginationPanel</code> and 
+                we give a <code>props</code> as argument and this argument have following properties:
+<pre>
+<code>{
+  currPage,
+  sizePerPage,
+  sizePerPageList,
+  pageStartIndex,
+  changePage,   // call it when page change and pass the new value of page
+  toggleDropDown,  // call it for toggle sizePerPage dropdown
+  changeSizePerPage,  // call it when sizePerPage change and pass the new value of size per page
+  components: {   // Default pagination components, you can still use them
+    totalText,
+    sizePerPageDropdown,
+    pageList,
+  }
+}
+</code>
+</pre>
+                Following is a good example to getting started:
+<pre>
+<code class="javascript">renderPaginationPanel = (props) => {
+  return (
+    &lt;div&gt;
+      &lt;div&gt;{ props.components.pageList }&lt;/div&gt;
+      &lt;div&gt;
+        &lt;span&gt;Change size per page: &lt;/span&gt;
+        { props.components.sizePerPageDropdown }
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;button onClick={ () => props.changeSizePerPage(25) } className='btn btn-default'&gt;Click to force size per page as 25&lt;/button&gt;
+        &lt;button onClick={ () => props.toggleDropDown() } className='btn btn-default'&gt;Click to force toggle dropdown&lt;/button&gt;
+        &lt;button onClick={ () => props.changePage(3) } className='btn btn-default'&gt;Jump to page 3&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+//...
+const options = {
+  paginationPanel: this.renderPaginationPanel
+};
+//...
+&lt;BootstrapTable data={rows} options={options} pagination&gt;
 </code>
 </pre>
               </span></br></br>
