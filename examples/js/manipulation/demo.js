@@ -2,9 +2,11 @@
 import React from 'react';
 import InsertRowTable from './insert-row-table';
 import DeleteRowTable from './delete-row-table';
+import StrictSearchTable from './strict-search-table';
 import SearchTable from './search-table';
 import ColumnFilterTable from './filter-table';
 import MultiSearchTable from './multi-search-table';
+import StrictMultiSearchTable from './strict-multi-search-table';
 import ExportCSVTable from './export-csv-table';
 import ExportCSVColumnTable from './export-csv-column-table';
 import DeleteRowCustomComfirmTable from './del-row-custom-confirm';
@@ -40,10 +42,45 @@ class Demo extends React.Component {
           <div className='panel panel-default'>
             <div className='panel-heading'>Table Search Example(Include after search hook)</div>
             <div className='panel-body'>
+              <h5>Source in /examples/js/manipulation/strict-search-table.js</h5>
+              <h5>The table's <code>strictSearch</code> is by default <code>true</code>.</h5>
+              <h5>See your console to watch information of after searching.</h5>
+              <h5>The Product ID has <code>searchable</code> set to <code>false</code>.</h5>
+              <StrictSearchTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Table Search Example(Use space to delimited search text, ex:"1 2 3")</div>
+            <div className='panel-body'>
               <h5>Source in /examples/js/manipulation/search-table.js</h5>
+              <h5>The table's <code>strictSearch</code> is set to <code>false</code>.</h5>
               <h5>See your console to watch information of after searching.</h5>
               <h5>The Product ID has <code>searchable</code> set to <code>false</code>.</h5>
               <SearchTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Table Multi Search Example(Use space to delimited search text, ex:"3 4")</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/manipulation/multi-search-table.js</h5>
+              <h5>The table's <code>strictSearch</code> is by default <code>false</code>.</h5>
+              <h5>The Product ID has <code>searchable</code> set to <code>false</code>.</h5>
+              <MultiSearchTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Table Multi Search Example(Use space to delimited search text, ex:"3 orange")</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/manipulation/strict-multi-search-table.js</h5>
+              <h5>The table's <code>strictSearch</code> is set to <code>true</code>.</h5>
+              <h5>The Product ID has <code>searchable</code> set to <code>false</code>.</h5>
+              <StrictMultiSearchTable />
             </div>
           </div>
         </div>
@@ -54,16 +91,6 @@ class Demo extends React.Component {
               <h5>Source in /examples/js/manipulation/search-clear-table.js</h5>
               <h5>The Product Name has <code>searchable</code> set to <code>false</code>.</h5>
               <SearchClearTable />
-            </div>
-          </div>
-        </div>
-        <div className='col-md-offset-1 col-md-8'>
-          <div className='panel panel-default'>
-            <div className='panel-heading'>Table Multi Search Example(Use space to delimited search text, ex:3 4)</div>
-            <div className='panel-body'>
-              <h5>Source in /examples/js/manipulation/multi-search-table.js</h5>
-              <h5>The Product ID has <code>searchable</code> set to <code>false</code>.</h5>
-              <MultiSearchTable />
             </div>
           </div>
         </div>
