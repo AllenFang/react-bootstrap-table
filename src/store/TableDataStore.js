@@ -113,10 +113,21 @@ export class TableDataStore {
   }
 
   getRowByKey(keys) {
-    return keys.map(key => {
-      const result = this.data.filter(d => d[this.keyField] === key);
-      if (result.length !== 0) return result[0];
-    });
+    // Bad Performance #1164
+    // return keys.map(key => {
+    //   const result = this.data.filter(d => d[this.keyField] === key);
+    //   if (result.length !== 0) return result[0];
+    // });
+    const result = [];
+    for (let i = 0; i < this.data.length; i++) {
+      const d = this.data[i];
+      if (!keys || keys.length === 0) break;
+      if (keys.indexOf(d[this.keyField]) > -1) {
+        keys = keys.filter(k => k !== d[this.keyField]);
+        result.push(d);
+      }
+    }
+    return result;
   }
 
   getSelectedRowKeys() {
