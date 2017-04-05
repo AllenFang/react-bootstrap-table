@@ -127,9 +127,14 @@ class TableHeaderColumn extends Component {
       typeof className === 'function' ? className() : className,
       !isOnlyHead && dataSort ? 'sort-column' : '');
 
-    const title = {
-      title: ((headerTitle && typeof children === 'string') ? children : headerText)
-    };
+    const attr = {};
+    if (headerTitle) {
+      if (typeof children === 'string' && !headerText) {
+        attr.title = children;
+      } else {
+        attr.title = headerText;
+      }
+    }
     return (
       <th ref='header-col'
           className={ classes }
@@ -138,7 +143,7 @@ class TableHeaderColumn extends Component {
           rowSpan={ this.props.rowSpan }
           colSpan={ this.props.colSpan }
           data-is-only-head={ this.props.isOnlyHead }
-          { ...title }>
+          { ...attr }>
         { children }{ sortCaret }
         <div onClick={ e => e.stopPropagation() }>
           { this.props.filter && !isOnlyHead ? this.getFilters() : null }
