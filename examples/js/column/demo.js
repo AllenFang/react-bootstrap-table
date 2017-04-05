@@ -55,6 +55,9 @@ class Demo extends React.Component {
           <div className='panel panel-default'>
             <div className='panel-heading'>Column Title Example</div>
             <div className='panel-body'>
+              <span>Disable/Enable header title via <code>headerTitle</code> <br/></span>
+              <span>Disable/Enable cell title via <code>columnTitle</code> <br/></span>
+              <span>Custom the header title via <code>headerText</code> <br/></span>
               <h5>Source in /examples/js/column/column-title-table.js</h5>
               <ColumnTitleTable />
             </div>

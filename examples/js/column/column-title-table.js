@@ -25,7 +25,7 @@ export default class ColumnAlignTable extends React.Component {
       <BootstrapTable data={ products }>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name' headerTitle={ false } columnTitle={ true }>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField='price' columnTitle={ true }>Product Price</TableHeaderColumn>
+          <TableHeaderColumn dataField='price' columnTitle={ true } headerText='Custom Title'>Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
   }
