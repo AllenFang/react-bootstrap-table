@@ -97,8 +97,7 @@ class BootstrapTable extends Component {
       keyField: keyField,
       colInfos: this.colInfos,
       multiColumnSearch: props.multiColumnSearch,
-      strictSearch: typeof(props.strictSearch) === 'boolean' ?
-        props.strictSearch : !props.multiColumnSearch,
+      strictSearch: props.strictSearch,
       multiColumnSort: props.multiColumnSort,
       remote: this.props.remote
     });

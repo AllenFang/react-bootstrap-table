@@ -30,7 +30,9 @@ export class TableDataStore {
     this.colInfos = props.colInfos;
     this.remote = props.remote;
     this.multiColumnSearch = props.multiColumnSearch;
-    this.strictSearch = props.strictSearch;
+    // default behaviour if strictSearch prop is not provided: !multiColumnSearch
+    this.strictSearch = typeof(props.strictSearch) === 'undefined' ?
+        !props.multiColumnSearch : props.strictSearch;
     this.multiColumnSort = props.multiColumnSort;
   }
 
@@ -537,35 +539,41 @@ export class TableDataStore {
     } else {
       searchTextArray = [ this.searchText.toLowerCase() ];
     }
-    const applyStrictSearch = this.strictSearch && searchTextArray.length > 1;
+    const searchTermCount = searchTextArray.length;
+    const multipleTerms = searchTermCount > 1;
+    const nonStrictMultiCol = multipleTerms && !this.strictSearch && this.multiColumnSearch;
+    const nonStrictSingleCol = multipleTerms && !this.strictSearch && !this.multiColumnSearch;
     this.filteredData = source.filter((row, r) => {
       const keys = Object.keys(row);
       // only clone array if necessary
-      const searchTerms = applyStrictSearch ? searchTextArray.slice() : searchTextArray;
+      let searchTerms = multipleTerms ? searchTextArray.slice() : searchTextArray;
       for (let i = 0, keysLength = keys.length; i < keysLength; i++) {
         const key = keys[i];
-        const cellVal = row[key];
-        if (this.colInfos[key] && (cellVal || !isNaN(cellVal) && parseInt(cellVal, 10) === 0)) {
+        const colInfo = this.colInfos[key];
+        if (colInfo && colInfo.searchable) {
           const {
             format,
             filterFormatted,
             filterValue,
-            formatExtraData,
-            searchable
-          } = this.colInfos[key];
-          if (searchable) {
-            let targetVal;
-            if (filterFormatted && format) {
-              targetVal = format(cellVal, row, formatExtraData, r);
-            } else if (filterValue) {
-              targetVal = filterValue(cellVal, row);
-            } else {
-              targetVal = cellVal;
-            }
+            formatExtraData
+          } = colInfo;
+          let targetVal;
+          if (filterFormatted && format) {
+            targetVal = format(row[key], row, formatExtraData, r);
+          } else if (filterValue) {
+            targetVal = filterValue(row[key], row);
+          } else {
+            targetVal = row[key];
+          }
+          if (targetVal !== undefined && targetVal !== null) {
             targetVal = targetVal.toString().toLowerCase();
+            if (nonStrictSingleCol && searchTermCount > searchTerms.length) {
+              // reset search terms for single column search
+              searchTerms = searchTextArray.slice();
+            }
             for (let j = searchTerms.length - 1; j > -1; j--) {
               if (targetVal.indexOf(searchTerms[j]) !== -1) {
-                if (!applyStrictSearch || searchTerms.length === 1) {
+                if (nonStrictMultiCol || searchTerms.length === 1) {
                   // match found: the last or only one
                   return true;
                 }
