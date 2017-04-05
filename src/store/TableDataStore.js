@@ -31,7 +31,7 @@ export class TableDataStore {
     this.remote = props.remote;
     this.multiColumnSearch = props.multiColumnSearch;
     // default behaviour if strictSearch prop is not provided: !multiColumnSearch
-    this.strictSearch = typeof(props.strictSearch) === 'undefined' ?
+    this.strictSearch = props.strictSearch === undefined ?
         !props.multiColumnSearch : props.strictSearch;
     this.multiColumnSort = props.multiColumnSort;
   }
@@ -547,6 +547,9 @@ export class TableDataStore {
       const keys = Object.keys(row);
       // only clone array if necessary
       let searchTerms = multipleTerms ? searchTextArray.slice() : searchTextArray;
+      // for loops are ugly, but performance matters here.
+      // And you cant break from a forEach.
+      // http://jsperf.com/for-vs-foreach/66
       for (let i = 0, keysLength = keys.length; i < keysLength; i++) {
         const key = keys[i];
         const colInfo = this.colInfos[key];
