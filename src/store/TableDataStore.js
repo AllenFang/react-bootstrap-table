@@ -31,7 +31,7 @@ export class TableDataStore {
     this.remote = props.remote;
     this.multiColumnSearch = props.multiColumnSearch;
     // default behaviour if strictSearch prop is not provided: !multiColumnSearch
-    this.strictSearch = props.strictSearch === undefined ?
+    this.strictSearch = typeof props.strictSearch === 'undefined' ?
         !props.multiColumnSearch : props.strictSearch;
     this.multiColumnSort = props.multiColumnSort;
   }
@@ -568,7 +568,7 @@ export class TableDataStore {
           } else {
             targetVal = row[key];
           }
-          if (targetVal !== undefined && targetVal !== null) {
+          if (targetVal !== null && typeof targetVal !== 'undefined') {
             targetVal = targetVal.toString().toLowerCase();
             if (nonStrictSingleCol && searchTermCount > searchTerms.length) {
               // reset search terms for single column search
