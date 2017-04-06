@@ -3,6 +3,7 @@ import MouseEventTable from './mouse-event-table';
 import TableInTabs from './table-in-tabs';
 import GetPageNumByKeyTable from './expose-api-table';
 import PrintableTable from './printable-table';
+import TableWithStickyHeaders from './table-with-sticky-headers';
 import { Col, Panel } from 'react-bootstrap';
 
 class Demo extends React.Component {
@@ -27,6 +28,11 @@ class Demo extends React.Component {
         <Panel header={ 'Printable Table Example)' }>
           <h5>Source in /examples/js/others/printable-table.js</h5>
           <PrintableTable/>
+        </Panel>
+        <Panel header={ 'Sticky Headers Example' }>
+          <h5>Source in /examples/js/others/table-with-sticky-headers.js</h5>
+          <h5>Make your headers sticky</h5>
+          <TableWithStickyHeaders/>
         </Panel>
       </Col>
     );

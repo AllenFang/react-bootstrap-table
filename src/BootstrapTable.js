@@ -369,7 +369,10 @@ class BootstrapTable extends Component {
             reset={ this.state.reset }
             expandColumnVisible={ expandColumnOptions.expandColumnVisible }
             expandColumnComponent={ expandColumnOptions.expandColumnComponent }
-            expandColumnBeforeSelectColumn={ expandColumnOptions.expandColumnBeforeSelectColumn }>
+            expandColumnBeforeSelectColumn={ expandColumnOptions.expandColumnBeforeSelectColumn }
+            autoAffixContainer={ this }
+            stickyHeaders={ this.props.stickyHeaders }
+            affixStyle={ this.props.affixStyle }>
             { this.props.children }
           </TableHeader>
           <TableBody ref='body'
@@ -1396,7 +1399,9 @@ BootstrapTable.propTypes = {
     expandColumnVisible: PropTypes.bool,
     expandColumnComponent: PropTypes.func,
     expandColumnBeforeSelectColumn: PropTypes.bool
-  })
+  }),
+  stickyHeaders: PropTypes.bool,
+  affixStyle: PropTypes.object
 };
 BootstrapTable.defaultProps = {
   scrollTop: undefined,
@@ -1531,7 +1536,12 @@ BootstrapTable.defaultProps = {
   },
   exportCSV: false,
   csvFileName: 'spreadsheet.csv',
-  ignoreSinglePage: false
+  ignoreSinglePage: false,
+  stickyHeaders: false,
+  affixStyle: {
+    zIndex: 10,
+    backgroundColor: '#fff'
+  }
 };
 
 export default BootstrapTable;
