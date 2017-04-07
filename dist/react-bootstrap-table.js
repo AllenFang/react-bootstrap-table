@@ -1431,7 +1431,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          insertRow = _props3.insertRow,
 	          deleteRow = _props3.deleteRow,
 	          search = _props3.search,
-	          children = _props3.children;
+	          children = _props3.children,
+	          keyField = _props3.keyField;
 
 	      var enableShowOnlySelected = selectRow && selectRow.showOnlySelected;
 	      var print = typeof this.props.options.printToolBar === 'undefined' ? true : this.props.options.printToolBar;
@@ -1441,10 +1442,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	          columns = children.map(function (column, r) {
 	            var props = column.props;
 
+	            var isKey = props.isKey || keyField === props.dataField;
 	            return {
+	              isKey: isKey,
 	              name: props.headerText || props.children,
 	              field: props.dataField,
 	              hiddenOnInsert: props.hiddenOnInsert,
+	              keyValidator: props.keyValidator,
 	              // when you want same auto generate value and not allow edit, example ID field
 	              autoValue: props.autoValue || false,
 	              // for create editor, no params for column.editable() indicate that editor for new row
@@ -1459,7 +1463,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            name: children.props.headerText || children.props.children,
 	            field: children.props.dataField,
 	            editable: children.props.editable,
-	            hiddenOnInsert: children.props.hiddenOnInsert
+	            hiddenOnInsert: children.props.hiddenOnInsert,
+	            keyValidator: children.props.keyValidator
 	          }];
 	        }
 	        return _react2.default.createElement(
@@ -1502,7 +1507,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            searchPanel: this.props.options.searchPanel,
 	            btnGroup: this.props.options.btnGroup,
 	            toolBar: this.props.options.toolBar,
-	            reset: this.state.reset })
+	            reset: this.state.reset,
+	            isValidKey: this.store.isValidKey })
 	        );
 	      } else {
 	        return null;
@@ -11118,6 +11124,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var _this = _possibleConstructorReturn(this, (ToolBar.__proto__ || Object.getPrototypeOf(ToolBar)).call(this, props));
 
+	    _this.displayCommonMessage = function () {
+	      return _this.__displayCommonMessage__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
 	    _this.handleSaveBtnClick = function () {
 	      return _this.__handleSaveBtnClick__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
@@ -11237,6 +11247,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    })
 	  }, {
+	    key: '__displayCommonMessage__REACT_HOT_LOADER__',
+	    value: function __displayCommonMessage__REACT_HOT_LOADER__() {
+	      this.refs.notifier.notice('error', 'Form validate errors, please checking!', 'Pressed ESC can cancel');
+	    }
+	  }, {
 	    key: 'validateNewRow',
 	    value: function validateNewRow(newRow) {
 	      var _this3 = this;
@@ -11247,12 +11262,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var responseType = void 0;
 
 	      this.props.columns.forEach(function (column) {
-	        if (column.editable && column.editable.validator) {
+	        if (column.isKey && column.keyValidator) {
+	          // key validator for checking exist key
+	          tempMsg = _this3.props.isValidKey(newRow[column.field]);
+	          if (tempMsg) {
+	            _this3.displayCommonMessage();
+	            isValid = false;
+	            validateState[column.field] = tempMsg;
+	          }
+	        } else if (column.editable && column.editable.validator) {
 	          // process validate
 	          tempMsg = column.editable.validator(newRow[column.field]);
 	          responseType = typeof tempMsg === 'undefined' ? 'undefined' : _typeof(tempMsg);
 	          if (responseType !== 'object' && tempMsg !== true) {
-	            _this3.refs.notifier.notice('error', 'Form validate errors, please checking!', 'Pressed ESC can cancel');
+	            _this3.displayCommonMessage();
 	            isValid = false;
 	            validateState[column.field] = tempMsg;
 	          } else if (responseType === 'object' && tempMsg.isValid !== true) {
@@ -11624,7 +11647,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  btnGroup: _react.PropTypes.func,
 	  toolBar: _react.PropTypes.func,
 	  searchPosition: _react.PropTypes.string,
-	  reset: _react.PropTypes.bool
+	  reset: _react.PropTypes.bool,
+	  isValidKey: _react.PropTypes.func
 	};
 
 	ToolBar.defaultProps = {
@@ -14431,7 +14455,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var TableDataStore = function () {
 	  function TableDataStore(data) {
+	    var _this = this;
+
 	    _classCallCheck(this, TableDataStore);
+
+	    this.isValidKey = function () {
+	      return _this.__isValidKey__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
 
 	    this.data = data;
 	    this.colInfos = null;
@@ -14547,14 +14577,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'getRowByKey',
 	    value: function getRowByKey(keys) {
-	      var _this = this;
+	      var _this2 = this;
 
-	      return keys.map(function (key) {
-	        var result = _this.data.filter(function (d) {
-	          return d[_this.keyField] === key;
-	        });
-	        if (result.length !== 0) return result[0];
-	      });
+	      // Bad Performance #1164
+	      // return keys.map(key => {
+	      //   const result = this.data.filter(d => d[this.keyField] === key);
+	      //   if (result.length !== 0) return result[0];
+	      // });
+	      var result = [];
+
+	      var _loop = function _loop(i) {
+	        var d = _this2.data[i];
+	        if (!keys || keys.length === 0) return 'break';
+	        if (keys.indexOf(d[_this2.keyField]) > -1) {
+	          keys = keys.filter(function (k) {
+	            return k !== d[_this2.keyField];
+	          });
+	          result.push(d);
+	        }
+	      };
+
+	      for (var i = 0; i < this.data.length; i++) {
+	        var _ret = _loop(i);
+
+	        if (_ret === 'break') break;
+	      }
+	      return result;
 	    }
 	  }, {
 	    key: 'getSelectedRowKeys',
@@ -14580,14 +14628,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'ignoreNonSelected',
 	    value: function ignoreNonSelected() {
-	      var _this2 = this;
+	      var _this3 = this;
 
 	      this.showOnlySelected = !this.showOnlySelected;
 	      if (this.showOnlySelected) {
 	        this.isOnFilter = true;
 	        this.filteredData = this.data.filter(function (row) {
-	          var result = _this2.selected.find(function (x) {
-	            return row[_this2.keyField] === x;
+	          var result = _this3.selected.find(function (x) {
+	            return row[_this3.keyField] === x;
 	          });
 	          return typeof result !== 'undefined' ? true : false;
 	        });
@@ -14655,16 +14703,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'add',
 	    value: function add(newObj) {
-	      if (!newObj[this.keyField] || newObj[this.keyField].toString() === '') {
-	        throw new Error(this.keyField + ' can\'t be empty value.');
-	      }
-	      var currentDisplayData = this.getCurrentDisplayData();
-	      currentDisplayData.forEach(function (row) {
-	        if (row[this.keyField].toString() === newObj[this.keyField].toString()) {
-	          throw new Error(this.keyField + ' ' + newObj[this.keyField] + ' already exists');
-	        }
-	      }, this);
+	      var e = this.isValidKey(newObj[this.keyField]);
+	      if (e) throw new Error(e);
 
+	      var currentDisplayData = this.getCurrentDisplayData();
 	      currentDisplayData.push(newObj);
 	      if (this.isOnFilter) {
 	        this.data.push(newObj);
@@ -14672,18 +14714,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this._refresh(false);
 	    }
 	  }, {
+	    key: '__isValidKey__REACT_HOT_LOADER__',
+	    value: function __isValidKey__REACT_HOT_LOADER__(key) {
+	      var _this4 = this;
+
+	      if (!key || key.toString() === '') {
+	        return this.keyField + ' can\'t be empty value.';
+	      }
+	      var currentDisplayData = this.getCurrentDisplayData();
+	      var exist = currentDisplayData.find(function (row) {
+	        return row[_this4.keyField].toString() === key.toString();
+	      });
+	      if (exist) return this.keyField + ' ' + key + ' already exists';
+	    }
+	  }, {
 	    key: 'remove',
 	    value: function remove(rowKey) {
-	      var _this3 = this;
+	      var _this5 = this;
 
 	      var currentDisplayData = this.getCurrentDisplayData();
 	      var result = currentDisplayData.filter(function (row) {
-	        return rowKey.indexOf(row[_this3.keyField]) === -1;
+	        return rowKey.indexOf(row[_this5.keyField]) === -1;
 	      });
 
 	      if (this.isOnFilter) {
 	        this.data = this.data.filter(function (row) {
-	          return rowKey.indexOf(row[_this3.keyField]) === -1;
+	          return rowKey.indexOf(row[_this5.keyField]) === -1;
 	        });
 	        this.filteredData = result;
 	      } else {
@@ -14895,7 +14951,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_filter',
 	    value: function _filter(source) {
-	      var _this4 = this;
+	      var _this6 = this;
 
 	      var filterObj = this.filterObj;
 	      this.filteredData = source.filter(function (row, r) {
@@ -14942,11 +14998,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	              filterFormatted = void 0,
 	              formatExtraData = void 0,
 	              filterValue = void 0;
-	          if (_this4.colInfos[key]) {
-	            format = _this4.colInfos[key].format;
-	            filterFormatted = _this4.colInfos[key].filterFormatted;
-	            formatExtraData = _this4.colInfos[key].formatExtraData;
-	            filterValue = _this4.colInfos[key].filterValue;
+	          if (_this6.colInfos[key]) {
+	            format = _this6.colInfos[key].format;
+	            filterFormatted = _this6.colInfos[key].filterFormatted;
+	            formatExtraData = _this6.colInfos[key].formatExtraData;
+	            filterValue = _this6.colInfos[key].filterValue;
 	            if (filterFormatted && format) {
 	              targetVal = format(row[key], row, formatExtraData, r);
 	            } else if (filterValue) {
@@ -14957,23 +15013,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	          switch (filterObj[key].type) {
 	            case _Const2.default.FILTER_TYPE.NUMBER:
 	              {
-	                valid = _this4.filterNumber(targetVal, filterVal, filterObj[key].value.comparator);
+	                valid = _this6.filterNumber(targetVal, filterVal, filterObj[key].value.comparator);
 	                break;
 	              }
 	            case _Const2.default.FILTER_TYPE.DATE:
 	              {
-	                valid = _this4.filterDate(targetVal, filterVal, filterObj[key].value.comparator);
+	                valid = _this6.filterDate(targetVal, filterVal, filterObj[key].value.comparator);
 	                break;
 	              }
 	            case _Const2.default.FILTER_TYPE.REGEX:
 	              {
-	                valid = _this4.filterRegex(targetVal, filterVal);
+	                valid = _this6.filterRegex(targetVal, filterVal);
 	                break;
 	              }
 	            case _Const2.default.FILTER_TYPE.CUSTOM:
 	              {
 	                var cond = filterObj[key].props ? filterObj[key].props.cond : _Const2.default.FILTER_COND_LIKE;
-	                valid = _this4.filterCustom(targetVal, filterVal, filterObj[key].value, cond);
+	                valid = _this6.filterCustom(targetVal, filterVal, filterObj[key].value, cond);
 	                break;
 	              }
 	            default:
@@ -14982,7 +15038,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                  filterVal = format(filterVal, row, formatExtraData, r);
 	                }
 	                var _cond = filterObj[key].props ? filterObj[key].props.cond : _Const2.default.FILTER_COND_LIKE;
-	                valid = _this4.filterText(targetVal, filterVal, _cond);
+	                valid = _this6.filterText(targetVal, filterVal, _cond);
 	                break;
 	              }
 	          }
@@ -14997,7 +15053,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_search',
 	    value: function _search(source) {
-	      var _this5 = this;
+	      var _this7 = this;
 
 	      var searchTextArray = [];
 
@@ -15019,8 +15075,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          if (!isNaN(row[key]) && parseInt(row[key], 10) === 0) {
 	            filterSpecialNum = true;
 	          }
-	          if (_this5.colInfos[key] && (row[key] || filterSpecialNum)) {
-	            var _colInfos$key = _this5.colInfos[key],
+	          if (_this7.colInfos[key] && (row[key] || filterSpecialNum)) {
+	            var _colInfos$key = _this7.colInfos[key],
 	                format = _colInfos$key.format,
 	                filterFormatted = _colInfos$key.filterFormatted,
 	                filterValue = _colInfos$key.filterValue,
@@ -15051,7 +15107,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_sort',
 	    value: function _sort(arr) {
-	      var _this6 = this;
+	      var _this8 = this;
 
 	      if (this.sortList.length === 0 || typeof this.sortList[0] === 'undefined') {
 	        return arr;
@@ -15060,11 +15116,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      arr.sort(function (a, b) {
 	        var result = 0;
 
-	        for (var i = 0; i < _this6.sortList.length; i++) {
-	          var sortDetails = _this6.sortList[i];
+	        for (var i = 0; i < _this8.sortList.length; i++) {
+	          var sortDetails = _this8.sortList[i];
 	          var isDesc = sortDetails.order.toLowerCase() === _Const2.default.SORT_DESC;
 
-	          var _colInfos$sortDetails = _this6.colInfos[sortDetails.sortField],
+	          var _colInfos$sortDetails = _this8.colInfos[sortDetails.sortField],
 	              sortFunc = _colInfos$sortDetails.sortFunc,
 	              sortFuncExtraData = _colInfos$sortDetails.sortFuncExtraData;
 
@@ -15147,10 +15203,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'getAllRowkey',
 	    value: function getAllRowkey() {
-	      var _this7 = this;
+	      var _this9 = this;
 
 	      return this.data.map(function (row) {
-	        return row[_this7.keyField];
+	        return row[_this9.keyField];
 	      });
 	    }
 	  }]);
@@ -16081,9 +16137,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var classes = (0, _classnames2.default)(typeof className === 'function' ? className() : className, !isOnlyHead && dataSort ? 'sort-column' : '');
 
-	      var title = {
-	        title: headerTitle && typeof children === 'string' ? children : headerText
-	      };
+	      var attr = {};
+	      if (headerTitle) {
+	        if (typeof children === 'string' && !headerText) {
+	          attr.title = children;
+	        } else {
+	          attr.title = headerText;
+	        }
+	      }
 	      return _react2.default.createElement(
 	        'th',
 	        _extends({ ref: 'header-col',
@@ -16093,7 +16154,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          rowSpan: this.props.rowSpan,
 	          colSpan: this.props.colSpan,
 	          'data-is-only-head': this.props.isOnlyHead
-	        }, title),
+	        }, attr),
 	        children,
 	        sortCaret,
 	        _react2.default.createElement(
@@ -16235,7 +16296,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  expandable: _react.PropTypes.bool,
 	  tdAttr: _react.PropTypes.object,
 	  tdStyle: _react.PropTypes.object,
-	  thStyle: _react.PropTypes.object
+	  thStyle: _react.PropTypes.object,
+	  keyValidator: _react.PropTypes.bool
 	};
 
 	TableHeaderColumn.defaultProps = {
@@ -16269,7 +16331,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  expandable: true,
 	  tdAttr: undefined,
 	  tdStyle: undefined,
-	  thStyle: undefined
+	  thStyle: undefined,
+	  keyValidator: false
 	};
 
 	var _default = TableHeaderColumn;
