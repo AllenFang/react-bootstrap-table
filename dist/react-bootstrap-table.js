@@ -554,6 +554,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	      }
 
+	      // If setting the expanded rows is being handled externally
+	      // then overwrite the current expanded rows.
+	      if (this.props.options.expanding !== options.expanding) {
+	        this.setState({
+	          expanding: options.expanding || []
+	        });
+	      }
+
 	      if (selectRow && selectRow.selected) {
 	        // set default select rows to store.
 	        var copy = selectRow.selected.slice();
