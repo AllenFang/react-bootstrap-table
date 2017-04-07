@@ -216,21 +216,24 @@ export class TableDataStore {
   }
 
   add(newObj) {
-    if (!newObj[this.keyField] || newObj[this.keyField].toString() === '') {
-      throw new Error(`${this.keyField} can't be empty value.`);
-    }
-    const currentDisplayData = this.getCurrentDisplayData();
-    currentDisplayData.forEach(function(row) {
-      if (row[this.keyField].toString() === newObj[this.keyField].toString()) {
-        throw new Error(`${this.keyField} ${newObj[this.keyField]} already exists`);
-      }
-    }, this);
+    const e = this.isValidKey(newObj[this.keyField]);
+    if (e) throw new Error(e);
 
+    const currentDisplayData = this.getCurrentDisplayData();
     currentDisplayData.push(newObj);
     if (this.isOnFilter) {
       this.data.push(newObj);
     }
     this._refresh(false);
+  }
+
+  isValidKey = key => {
+    if (!key || key.toString() === '') {
+      return `${this.keyField} can't be empty value.`;
+    }
+    const currentDisplayData = this.getCurrentDisplayData();
+    const exist = currentDisplayData.find(row => row[this.keyField].toString() === key.toString());
+    if (exist) return `${this.keyField} ${key} already exists`;
   }
 
   remove(rowKey) {

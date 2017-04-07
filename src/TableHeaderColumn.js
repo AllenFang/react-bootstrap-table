@@ -269,7 +269,8 @@ TableHeaderColumn.propTypes = {
   expandable: PropTypes.bool,
   tdAttr: PropTypes.object,
   tdStyle: PropTypes.object,
-  thStyle: PropTypes.object
+  thStyle: PropTypes.object,
+  keyValidator: PropTypes.bool
 };
 
 TableHeaderColumn.defaultProps = {
@@ -303,7 +304,8 @@ TableHeaderColumn.defaultProps = {
   expandable: true,
   tdAttr: undefined,
   tdStyle: undefined,
-  thStyle: undefined
+  thStyle: undefined,
+  keyValidator: false
 };
 
 export default TableHeaderColumn;
