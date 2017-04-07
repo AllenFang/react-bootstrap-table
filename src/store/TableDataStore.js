@@ -9,7 +9,6 @@ export class TableDataStore {
 
   constructor(data) {
     this.data = data;
-    this.colInfos = null;
     this.filteredData = null;
     this.isOnFilter = false;
     this.filterObj = null;
@@ -17,11 +16,7 @@ export class TableDataStore {
     this.sortList = [];
     this.pageObj = {};
     this.selected = [];
-    this.multiColumnSearch = false;
-    this.strictSearch = true;
-    this.multiColumnSort = 1;
     this.showOnlySelected = false;
-    this.remote = false; // remote data
   }
 
   setProps(props) {
