@@ -1,3 +1,15 @@
+<a name="v3.1.7"></a>
+# [v3.1.7](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.6...v3.1.7) (2017-04-07)
+## Bug fixes
+* Fixed `headerText` is not display well([14fc9b7](https://github.com/AllenFang/react-bootstrap-table/commit/14fc9b7773282f7533ffc0eed64f4e48d77e09a8))
+* Fixed bug if update `options.expanding` is not work([6f0b5fb](https://github.com/AllenFang/react-bootstrap-table/commit/6f0b5fbe81935b2f4dcf8c709f2f32730a934241))
+
+## Enhancement
+* Improve the performance of select all functionality([3b67e19](https://github.com/AllenFang/react-bootstrap-table/commit/3b67e1900d7cb8adab507b493c47356b0d972fc1))
+* Support `keyValidator` on `TableHeader` to tell `react-bootstrap-table` to push the error message in `validateState` if rowkey not valid([892c504](https://github.com/AllenFang/react-bootstrap-table/commit/892c50408739dff0fa1f4b8b25f2663b099f9c10))
+	* It's only work for rowKey column
+	* Default is false, `react-bootstrap-table` only show a toastr to nofity user that rowkey is not valid.
+
 <a name="v3.1.6"></a>
 # [v3.1.6](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.5...v3.1.6) (2017-04-03)
 ## Bug fixes
