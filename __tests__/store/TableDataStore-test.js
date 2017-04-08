@@ -10,14 +10,14 @@ describe('TableDataStore', function() {
 
   describe('_search()', function() {
 
-    var colInfos = {
+    var colInfosForModeTest = {
       col1: { searchable: true },
       col2: { searchable: true },
       col3: { searchable: true },
       desc: { searchable: false }
     };
-    var searchText = ' B C ';
-    var source = [
+    var searchTextForModeTest = ' B C ';
+    var sourceForModeTest = [
         { col1: 'A B C D', col2: 'E', col3: 'F', desc: 'part of the content in col1' },
         { col1: 'A', col2: ' B C ', col3: 'D E F', desc: 'whole content in col2' },
         { col1: 'F E D', col2: ' C B ', col3: 'A', desc: 'whole content in wrong order in col2' },
@@ -29,75 +29,104 @@ describe('TableDataStore', function() {
     ];
 
     [
-      {},
-      { multiColumnSearch: false },
-      { strictSearch: true },
-      { multiColumnSearch: false, strictSearch: true }
+      { colInfos: colInfosForModeTest },
+      { colInfos: colInfosForModeTest, multiColumnSearch: false },
+      { colInfos: colInfosForModeTest, strictSearch: true },
+      { colInfos: colInfosForModeTest, multiColumnSearch: false, strictSearch: true }
     ].forEach(function(props) {
       it('default strict single column mode - multiColumnSearch: ' + props.multiColumnSearch
           + ', strictSearch: ' + props.strictSearch, function() {
-        store.setProps({
-          colInfos: colInfos,
-          multiColumnSearch: props.multiColumnSearch,
-          strictSearch: props.strictSearch
-        });
-        store.searchText = searchText;
+        store.setProps(props);
+        store.searchText = searchTextForModeTest;
 
-        store._search(source);
-        expect(store.filteredData).toEqual(source.slice(0, 2));
+        store._search(sourceForModeTest);
+        expect(store.filteredData).toEqual(sourceForModeTest.slice(0, 2));
       });
     });
 
     [
-      { strictSearch: false },
-      { multiColumnSearch: false, strictSearch: false }
+      { colInfos: colInfosForModeTest, strictSearch: false },
+      { colInfos: colInfosForModeTest, multiColumnSearch: false, strictSearch: false }
     ].forEach(function(props) {
       it('non-strict single column mode - multiColumnSearch: ' + props.multiColumnSearch
           + ', strictSearch: ' + props.strictSearch, function() {
-        store.setProps({
-          colInfos: colInfos,
-          multiColumnSearch: props.multiColumnSearch,
-          strictSearch: props.strictSearch
-        });
-        store.searchText = searchText;
+        store.setProps(props);
+        store.searchText = searchTextForModeTest;
 
-        store._search(source);
-        expect(store.filteredData).toEqual(source.slice(0, 5));
+        store._search(sourceForModeTest);
+        expect(store.filteredData).toEqual(sourceForModeTest.slice(0, 5));
       });
     });
 
     [
-      { multiColumnSearch: true, strictSearch: true }
+      { colInfos: colInfosForModeTest, multiColumnSearch: true, strictSearch: true }
     ].forEach(function(props) {
       it('strict multi column mode - multiColumnSearch: ' + props.multiColumnSearch
           + ', strictSearch: ' + props.strictSearch, function() {
-        store.setProps({
-          colInfos: colInfos,
-          multiColumnSearch: props.multiColumnSearch,
-          strictSearch: props.strictSearch
-        });
-        store.searchText = searchText;
+        store.setProps(props);
+        store.searchText = searchTextForModeTest;
 
-        store._search(source);
-        expect(store.filteredData).toEqual(source.slice(0, 6));
+        store._search(sourceForModeTest);
+        expect(store.filteredData).toEqual(sourceForModeTest.slice(0, 6));
       });
     });
 
     [
-      { multiColumnSearch: true },
-      { multiColumnSearch: true, strictSearch: false }
+      { colInfos: colInfosForModeTest, multiColumnSearch: true },
+      { colInfos: colInfosForModeTest, multiColumnSearch: true, strictSearch: false }
     ].forEach(function(props) {
       it('non-strict multi column mode - multiColumnSearch: ' + props.multiColumnSearch
           + ', strictSearch: ' + props.strictSearch, function() {
-        store.setProps({
-          colInfos: colInfos,
-          multiColumnSearch: props.multiColumnSearch,
-          strictSearch: props.strictSearch
-        });
-        store.searchText = searchText;
+        store.setProps(props);
+        store.searchText = searchTextForModeTest;
 
-        store._search(source);
-        expect(store.filteredData).toEqual(source.slice(0, 7));
+        store._search(sourceForModeTest);
+        expect(store.filteredData).toEqual(sourceForModeTest.slice(0, 7));
+      });
+    });
+
+    [
+      {
+        searchable: true,
+        filterValue: function() { return 'X'; }
+      },
+      {
+        searchable: true,
+        filterFormatted: true,
+        format: function() { return 'X'; }
+      },
+      {
+        searchable: true,
+        filterValue: function() { return '-'; },
+        filterFormatted: true,
+        format: function() { return 'X'; }
+      },
+      {
+        searchable: true,
+        filterValue: function() { return 'X'; },
+        filterFormatted: false,
+        format: function() { return '-'; }
+      },
+      {
+        searchable: true,
+        filterValue: function() { return 'X'; },
+        format: function() { return '-'; }
+      }
+    ].forEach(function(def) {
+      it('include non-values with filterValue: ' + (def.filterValue ? 'func' : def.filterValue)
+          + ', format: ' + (def.format ? 'func' : def.format)
+          + ', filterFormatted: ' + def.filterFormatted, function() {
+        store.setProps({ colInfos: { col: def } });
+        store.searchText = 'X';
+        var undefinedVar;
+
+        store._search([
+            { col: undefinedVar},
+            { col: null },
+            { col: 0 },
+            { col: 'A' }
+        ]);
+        expect(store.filteredData.length).toBe(4);
       });
     });
   });
