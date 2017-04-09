@@ -987,6 +987,81 @@ const options = {
 </pre>
               </span></br></br>
             </div>
+<h3 id="sizePerPageDropdown">SizePerPage DropDown</h3>
+            <span>
+              You can custom the sizePerPage dropdown via <code>options.sizePerPageDropdown</code> props.
+              <code>options.sizePerPageDropdown</code> only accept a function and a JSX returned value is necessary. Following, we have two way to customize the sizePerPage dropdown: 
+            </span></br></br>
+            <div class="feature-text">
+              <h3><span class="number">01.</span> Use <code>SizePerPageDropDown</code> by default</h3>
+              <span>
+                This is a simple and default way to custom this component. <code>SizePerPageDropDown</code> is a exported React component by
+                <code>react-bootstrap-table</code>, and it have following props you can configure:
+                <ul>
+                  <li>className</li>
+                  <li>btnContextual</li>
+                  <li>variation</li>
+                  <li>onClick</li>
+                </ul>These all props are not required, so you can only configure the props that you want.
+              </span>
+<pre>
+<code class="javascript">import { BootstrapTable, TableHeaderColumn, SizePerPageDropDown } from 'react-bootstrap-table';
+// ...
+onToggleDropDown = (toggleDropDown) => {
+  // do your stuff here
+  console.log('toggle dropdown');
+  toggleDropDown();
+}
+
+renderSizePerPageDropDown = (props) => {
+  return (
+    &lt;SizePerPageDropDown
+      className='my-size-per-page'
+      btnContextual='btn-warning'
+      variation='dropup'
+      onClick={ () => this.onToggleDropDown(props.toggleDropDown) }/&gt;
+  );
+}
+
+render() {
+  const options = {
+    sizePerPageDropDown: this.renderSizePerPageDropDown
+  };
+  //...
+  &lt;BootstrapTable data={rows} options={options} pagination&gt;
+</code>
+</pre>
+            </div>
+            <div class="feature-text">
+              <h3><span class="number">02.</span> Customize by yourself</h3>
+              <span>
+                If you think <code>SizePerPageDropDown</code> is not satisfied to your requirement, you can custom a new one as following
+              </span>
+<pre>
+<code class="javascript">renderSizePerPageDropDown = props => {
+  return (
+    &lt;div className='btn-group'&gt;
+      {
+        [ 10, 25, 30 ].map((n, idx) => {
+          const isActive = (n === props.currSizePerPage) ? 'active' : null;
+          return (
+            &lt;button key={ idx } type='button' className={ `btn btn-info ${isActive}` } onClick={ () => props.changeSizePerPage(n) }&gt;{ n }&lt;/button&gt;
+          );
+        })
+      }
+    &lt;/div&gt;
+  );
+}
+
+//...
+const options = {
+  sizePerPageDropDown: this.renderSizePerPageDropDown
+};
+//...
+&lt;BootstrapTable data={rows} options={options} pagination&gt;
+</code>
+</pre>
+            </div>
 				</div>
 			</div>
 		</div>
