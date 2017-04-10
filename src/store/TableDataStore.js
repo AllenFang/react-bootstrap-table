@@ -30,6 +30,7 @@ export class TableDataStore {
     this.remote = props.remote;
     this.multiColumnSearch = props.multiColumnSearch;
     this.multiColumnSort = props.multiColumnSort;
+    this.hasFooter = props.hasFooter;
   }
 
   clean() {
@@ -113,21 +114,10 @@ export class TableDataStore {
   }
 
   getRowByKey(keys) {
-    // Bad Performance #1164
-    // return keys.map(key => {
-    //   const result = this.data.filter(d => d[this.keyField] === key);
-    //   if (result.length !== 0) return result[0];
-    // });
-    const result = [];
-    for (let i = 0; i < this.data.length; i++) {
-      const d = this.data[i];
-      if (!keys || keys.length === 0) break;
-      if (keys.indexOf(d[this.keyField]) > -1) {
-        keys = keys.filter(k => k !== d[this.keyField]);
-        result.push(d);
-      }
-    }
-    return result;
+    return keys.map(key => {
+      const result = this.data.filter(d => d[this.keyField] === key);
+      if (result.length !== 0) return result[0];
+    });
   }
 
   getSelectedRowKeys() {
@@ -166,7 +156,7 @@ export class TableDataStore {
     let currentDisplayData = this.getCurrentDisplayData();
 
     currentDisplayData = this._sort(currentDisplayData);
-
+    this.data = currentDisplayData;
     return this;
   }
 
@@ -216,24 +206,21 @@ export class TableDataStore {
   }
 
   add(newObj) {
-    const e = this.isValidKey(newObj[this.keyField]);
-    if (e) throw new Error(e);
-
+    if (!newObj[this.keyField] || newObj[this.keyField].toString() === '') {
+      throw new Error(`${this.keyField} can't be empty value.`);
+    }
     const currentDisplayData = this.getCurrentDisplayData();
+    currentDisplayData.forEach(function(row) {
+      if (row[this.keyField].toString() === newObj[this.keyField].toString()) {
+        throw new Error(`${this.keyField} ${newObj[this.keyField]} already exists`);
+      }
+    }, this);
+
     currentDisplayData.push(newObj);
     if (this.isOnFilter) {
       this.data.push(newObj);
     }
     this._refresh(false);
-  }
-
-  isValidKey = key => {
-    if (!key || key.toString() === '') {
-      return `${this.keyField} can't be empty value.`;
-    }
-    const currentDisplayData = this.getCurrentDisplayData();
-    const exist = currentDisplayData.find(row => row[this.keyField].toString() === key.toString());
-    if (exist) return `${this.keyField} ${key} already exists`;
   }
 
   remove(rowKey) {
@@ -584,44 +571,84 @@ export class TableDataStore {
     if (this.sortList.length === 0 || typeof(this.sortList[0]) === 'undefined') {
       return arr;
     }
+    if (this.hasFooter) {
+      /* if it has hasFooter propery enabled*/
+      const lastElem = arr[ arr.length - 1];
+      /* sort all elements except the last one */
+      const subAr = arr.slice(0, arr.length - 1);
+      console.log('log:', lastElem, ' :', subAr);
+      console.log('sorting subar');
+      /* subAr.sort(this.compare);*/
+      subAr.sort((a, b) => {
+        let result = 0;
 
-    arr.sort((a, b) => {
-      let result = 0;
+        for (let i = 0; i < this.sortList.length; i++) {
+          const sortDetails = this.sortList[i];
+          const isDesc = sortDetails.order.toLowerCase() === Const.SORT_DESC;
 
-      for (let i = 0; i < this.sortList.length; i++) {
-        const sortDetails = this.sortList[i];
-        const isDesc = sortDetails.order.toLowerCase() === Const.SORT_DESC;
-
-        const { sortFunc, sortFuncExtraData } = this.colInfos[sortDetails.sortField];
-
-        if (sortFunc) {
-          result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
-        } else {
-          const valueA = a[sortDetails.sortField] === null ? '' : a[sortDetails.sortField];
-          const valueB = b[sortDetails.sortField] === null ? '' : b[sortDetails.sortField];
-          if (isDesc) {
-            if (typeof valueB === 'string') {
-              result = valueB.localeCompare(valueA);
-            } else {
-              result = valueA > valueB ? -1 : ((valueA < valueB) ? 1 : 0);
-            }
+          const { sortFunc, sortFuncExtraData } = this.colInfos[sortDetails.sortField];
+          if (sortFunc) {
+            result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
           } else {
-            if (typeof valueA === 'string') {
-              result = valueA.localeCompare(valueB);
+            const valueA = a[sortDetails.sortField] === null ? '' : a[sortDetails.sortField];
+            const valueB = b[sortDetails.sortField] === null ? '' : b[sortDetails.sortField];
+            if (isDesc) {
+              if (typeof valueB === 'string') {
+                result = valueB.localeCompare(valueA);
+              } else {
+                result = valueA > valueB ? -1 : ((valueA < valueB) ? 1 : 0);
+              }
             } else {
-              result = valueA < valueB ? -1 : ((valueA > valueB) ? 1 : 0);
+              if (typeof valueA === 'string') {
+                result = valueA.localeCompare(valueB);
+              } else {
+                result = valueA < valueB ? -1 : ((valueA > valueB) ? 1 : 0);
+              }
             }
+          }
+          if (result !== 0) {
+            return result;
           }
         }
 
-        if (result !== 0) {
-          return result;
+        return result;
+      });
+      subAr.push(lastElem);
+      arr = subAr;
+    } else {
+      arr.sort((a, b) => {
+        let result = 0;
+        for (let i = 0; i < this.sortList.length; i++) {
+          const sortDetails = this.sortList[i];
+          const isDesc = sortDetails.order.toLowerCase() === Const.SORT_DESC;
+
+          const { sortFunc, sortFuncExtraData } = this.colInfos[sortDetails.sortField];
+          if (sortFunc) {
+            result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
+          } else {
+            const valueA = a[sortDetails.sortField] === null ? '' : a[sortDetails.sortField];
+            const valueB = b[sortDetails.sortField] === null ? '' : b[sortDetails.sortField];
+            if (isDesc) {
+              if (typeof valueB === 'string') {
+                result = valueB.localeCompare(valueA);
+              } else {
+                result = valueA > valueB ? -1 : ((valueA < valueB) ? 1 : 0);
+              }
+            } else {
+              if (typeof valueA === 'string') {
+                result = valueA.localeCompare(valueB);
+              } else {
+                result = valueA < valueB ? -1 : ((valueA > valueB) ? 1 : 0);
+              }
+            }
+          }
+          if (result !== 0) {
+            return result;
+          }
         }
-      }
-
-      return result;
-    });
-
+        return result;
+      });
+    }
     return arr;
   }
 

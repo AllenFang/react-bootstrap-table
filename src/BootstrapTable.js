@@ -23,7 +23,6 @@ class BootstrapTable extends Component {
       this.isIE = document.documentMode;
     }
     this.store = new TableDataStore(this.props.data ? this.props.data.slice() : []);
-    this.isVerticalScroll = false;
     this.initTable(this.props);
 
     if (this.props.selectRow && this.props.selectRow.selected) {
@@ -98,7 +97,8 @@ class BootstrapTable extends Component {
       colInfos: this.colInfos,
       multiColumnSearch: props.multiColumnSearch,
       multiColumnSort: props.multiColumnSort,
-      remote: this.props.remote
+      remote: this.props.remote,
+      hasFooter: this.props.options.hasFooter
     });
   }
 
@@ -225,6 +225,7 @@ class BootstrapTable extends Component {
       const sortList = this.store.getSortInfo();
       const sortField = options.sortName;
       const sortOrder = options.sortOrder;
+
       if (sortField && sortOrder) {
         this.store.setSortInfo(sortOrder, sortField);
         this.store.sort();
@@ -237,14 +238,6 @@ class BootstrapTable extends Component {
         currPage: page,
         sizePerPage,
         reset: false
-      });
-    }
-
-    // If setting the expanded rows is being handled externally
-    // then overwrite the current expanded rows.
-    if (this.props.options.expanding !== options.expanding) {
-      this.setState({
-        expanding: options.expanding || []
       });
     }
 
@@ -389,6 +382,7 @@ class BootstrapTable extends Component {
             expandableRow={ this.props.expandableRow }
             expandRowBgColor={ this.props.options.expandRowBgColor }
             expandBy={ this.props.options.expandBy || Const.EXPAND_BY_ROW }
+            hasFooter={ this.props.options.hasFooter }
             columns={ columns }
             trClassName={ this.props.trClassName }
             striped={ this.props.striped }
@@ -1033,7 +1027,7 @@ class BootstrapTable extends Component {
   }
 
   renderToolBar() {
-    const { exportCSV, selectRow, insertRow, deleteRow, search, children, keyField } = this.props;
+    const { exportCSV, selectRow, insertRow, deleteRow, search, children } = this.props;
     const enableShowOnlySelected = selectRow && selectRow.showOnlySelected;
     const print = typeof this.props.options.printToolBar === 'undefined' ?
       true : this.props.options.printToolBar;
@@ -1049,13 +1043,10 @@ class BootstrapTable extends Component {
       if (Array.isArray(children)) {
         columns = children.map((column, r) => {
           const { props } = column;
-          const isKey = props.isKey || keyField === props.dataField;
           return {
-            isKey,
             name: props.headerText || props.children,
             field: props.dataField,
             hiddenOnInsert: props.hiddenOnInsert,
-            keyValidator: props.keyValidator,
             // when you want same auto generate value and not allow edit, example ID field
             autoValue: props.autoValue || false,
             // for create editor, no params for column.editable() indicate that editor for new row
@@ -1070,8 +1061,7 @@ class BootstrapTable extends Component {
           name: children.props.headerText || children.props.children,
           field: children.props.dataField,
           editable: children.props.editable,
-          hiddenOnInsert: children.props.hiddenOnInsert,
-          keyValidator: children.props.keyValidator
+          hiddenOnInsert: children.props.hiddenOnInsert
         } ];
       }
       return (
@@ -1113,8 +1103,7 @@ class BootstrapTable extends Component {
             searchPanel={ this.props.options.searchPanel }
             btnGroup={ this.props.options.btnGroup }
             toolBar={ this.props.options.toolBar }
-            reset={ this.state.reset }
-            isValidKey={ this.store.isValidKey } />
+            reset={ this.state.reset } />
         </div>
       );
     } else {
@@ -1165,7 +1154,7 @@ class BootstrapTable extends Component {
 
     const scrollBarWidth = isScroll ? Util.getScrollBarWidth() : 0;
     if (firstRow && this.store.getDataNum()) {
-      if (isScroll || this.isVerticalScroll !== isScroll) {
+      if (isScroll) {
         const cells = firstRow.childNodes;
         for (let i = 0; i < cells.length; i++) {
           const cell = cells[i];
@@ -1197,13 +1186,12 @@ class BootstrapTable extends Component {
       }
     } else {
       React.Children.forEach(this.props.children, (child, i) => {
-        if (child.props.width) {
+        if (child.props.width && typeof header[i] !== 'undefined') {
           header[i].style.width = `${child.props.width}px`;
           header[i].style.minWidth = `${child.props.width}px`;
         }
       });
     }
-    this.isVerticalScroll = isScroll;
   }
 
   _adjustHeight() {
@@ -1284,7 +1272,7 @@ BootstrapTable.propTypes = {
       Const.ROW_SELECT_MULTI
     ]),
     customComponent: PropTypes.func,
-    bgColor: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
+    bgColor: PropTypes.string,
     selected: PropTypes.array,
     onSelect: PropTypes.func,
     onSelectAll: PropTypes.func,
@@ -1305,6 +1293,7 @@ BootstrapTable.propTypes = {
   }),
   insertRow: PropTypes.bool,
   deleteRow: PropTypes.bool,
+  hasFooter: PropTypes.bool,
   search: PropTypes.bool,
   columnFilter: PropTypes.bool,
   trClassName: PropTypes.any,
@@ -1429,6 +1418,7 @@ BootstrapTable.defaultProps = {
   pagination: false,
   printable: false,
   keyBoardNav: false,
+  hasFooter: false,
   searchPlaceholder: undefined,
   selectRow: {
     mode: Const.ROW_SELECT_NONE,
