@@ -428,7 +428,7 @@ class TableBody extends Component {
     return this.props.expandColumnOptions.expandColumnVisible;
   }
 
-  getHeaderColGrouop = () => {
+  getHeaderColGroup = () => {
     return this.refs.header.childNodes;
   }
 }

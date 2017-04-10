@@ -1145,7 +1145,7 @@ class BootstrapTable extends Component {
     const header = this.refs.header.refs.header;
     const headerContainer = this.refs.header.refs.container;
     const headerRow = header.childNodes;
-    const bodyHeader = this.refs.body.getHeaderColGrouop();
+    const bodyHeader = this.refs.body.getHeaderColGroup();
     const bodyContainer = this.refs.body.refs.container;
 
     const isScroll = headerContainer.offsetWidth !== bodyContainer.offsetWidth;
@@ -1177,9 +1177,9 @@ class BootstrapTable extends Component {
   }
 
   _adjustHeaderWidth() {
-    const header = this.refs.header.getHeaderColGrouop();
+    const header = this.refs.header.getHeaderColGroup();
     const tbody = this.refs.body.refs.tbody;
-    const bodyHeader = this.refs.body.getHeaderColGrouop();
+    const bodyHeader = this.refs.body.getHeaderColGroup();
     const firstRow = tbody.childNodes[0];
     const isScroll = tbody.parentNode.getBoundingClientRect().height >
       tbody.parentNode.parentNode.getBoundingClientRect().height;

@@ -75,7 +75,7 @@ class TableHeader extends Component {
       }
       if ((rowSpan + rowIndex) === (rowCount + 1)) {
         rows[rowIndex].push(React.cloneElement(
-          elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false, onResize }
+          elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false, onResize, getHeaderColGroup: this.getHeaderColGroup }
           ));
       } else {
         rows[rowIndex].push(React.cloneElement(
@@ -104,7 +104,7 @@ class TableHeader extends Component {
     );
   }
 
-  getHeaderColGrouop = () => {
+  getHeaderColGroup = () => {
     return this.refs.headerGrp.childNodes;
   }
 

@@ -178,8 +178,20 @@ class TableHeaderColumn extends Component {
       return;
     }
 
+    const childIndex = Array.from(this.activeEl.parentNode.children).indexOf(this.activeEl);
+    const colGroup = this.props.getHeaderColGroup();
+
     this.activeEl.style.width = String(this.headerStartWidth + changeValue) + 'px';
+    if (colGroup[childIndex] !== undefined) {
+      colGroup[childIndex].style.width = String(this.headerStartWidth + changeValue) + 'px';
+      colGroup[childIndex].style.minWidth = String(this.headerStartWidth + changeValue) + 'px';
+    }
+
     this.activeEl.nextSibling.style.width = String(this.nextHeaderStartWidth - changeValue) + 'px';
+    if (colGroup[childIndex] !== undefined) {
+      colGroup[childIndex + 1].style.width = String(this.nextHeaderStartWidth - changeValue) + 'px';
+      colGroup[childIndex + 1].style.minWidth = String(this.nextHeaderStartWidth - changeValue) + 'px';
+    }
 
     this.props.onResize();
   }
@@ -331,7 +343,9 @@ TableHeaderColumn.propTypes = {
   expandable: PropTypes.bool,
   tdAttr: PropTypes.object,
   tdStyle: PropTypes.object,
-  thStyle: PropTypes.object
+  thStyle: PropTypes.object,
+  onResize: PropTypes.func,
+  getHeaderColGroup: PropTypes.func
 };
 
 TableHeaderColumn.defaultProps = {
