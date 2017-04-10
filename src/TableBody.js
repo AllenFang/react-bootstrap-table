@@ -58,6 +58,7 @@ class TableBody extends Component {
         const isFocusCell = r === y && i === x;
         if (column.name !== this.props.keyField && // Key field can't be edit
           column.editable && // column is editable? default is true, user can set it false
+          column.editable.readOnly !== true &&
           this.state.currEditCell !== null &&
           this.state.currEditCell.rid === r &&
           this.state.currEditCell.cid === i &&
@@ -153,6 +154,7 @@ class TableBody extends Component {
       }
       const result = [ <TableRow isSelected={ selected } key={ key } className={ trClassName }
         index={ r }
+        row={ data }
         selectRow={ isSelectRowDefined ? this.props.selectRow : undefined }
         enableCellEdit={ cellEdit.mode !== Const.CELL_EDIT_NONE }
         onRowClick={ this.handleRowClick }
@@ -189,10 +191,12 @@ class TableBody extends Component {
     }, this);
 
     if (tableRows.length === 0 && !this.props.withoutNoDataText) {
+      const colSpan = this.props.columns.filter(c => !c.hidden).length
+        + (isSelectRowDefined ? 1 : 0);
       tableRows = [
         <TableRow key='##table-empty##'>
           <td data-toggle='collapse'
-              colSpan={ this.props.columns.length + (isSelectRowDefined ? 1 : 0) }
+              colSpan={ colSpan }
               className='react-bs-table-no-data'>
               { this.props.noDataText || Const.NO_DATA_TEXT }
           </td>
@@ -323,11 +327,12 @@ class TableBody extends Component {
   }
 
   handleEditCell = (rowIndex, columnIndex, action, e) => {
+    const { selectRow } = this.props;
     const defineSelectRow = this._isSelectRowDefined();
     const expandColumnVisible = this._isExpandColumnVisible();
     if (defineSelectRow) {
       columnIndex--;
-      if (this.props.selectRow.hideSelectColumn) columnIndex++;
+      if (selectRow.hideSelectColumn) columnIndex++;
     }
     if (expandColumnVisible) {
       columnIndex--;
@@ -335,16 +340,17 @@ class TableBody extends Component {
     rowIndex--;
 
     if (action === 'tab') {
-      if (defineSelectRow) columnIndex++;
+      if (defineSelectRow && !selectRow.hideSelectColumn) columnIndex++;
       if (expandColumnVisible) columnIndex++;
       this.handleCompleteEditCell(e.target.value, rowIndex, columnIndex - 1);
       if (columnIndex >= this.props.columns.length) {
-        rowIndex = rowIndex + 1;
-        columnIndex = 1;
         this.handleCellKeyDown(e, true);
       } else {
         this.handleCellKeyDown(e);
       }
+      const { nextRIndex, nextCIndex } = this.nextEditableCell(rowIndex, columnIndex);
+      rowIndex = nextRIndex;
+      columnIndex = nextCIndex;
     }
 
     const stateObj = {
@@ -361,6 +367,34 @@ class TableBody extends Component {
       this.handleSelectRow(rowIndex + 1, !selected, e);
     }
     this.setState(stateObj);
+  }
+
+  nextEditableCell = (rIndex, cIndex) => {
+    const { keyField } = this.props;
+    let nextRIndex = rIndex;
+    let nextCIndex = cIndex;
+    let row;
+    let column;
+    do {
+      if (nextCIndex >= this.props.columns.length) {
+        nextRIndex++;
+        nextCIndex = 0;
+      }
+      row = this.props.data[nextRIndex];
+      column = this.props.columns[nextCIndex];
+      if (!row) break;
+      let editable = column.editable;
+      if (isFun(column.editable)) {
+        editable = column.editable(column, row, nextRIndex, nextCIndex);
+      }
+      if (editable && editable.readOnly !== true &&
+        !column.hidden && keyField !== column.name) {
+        break;
+      } else {
+        nextCIndex++;
+      }
+    } while (row);
+    return { nextRIndex, nextCIndex };
   }
 
   handleCompleteEditCell = (newVal, rowIndex, columnIndex) => {

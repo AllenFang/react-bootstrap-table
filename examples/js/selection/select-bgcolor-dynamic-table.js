@@ -19,14 +19,23 @@ function addProducts(quantity) {
 
 addProducts(5);
 
-const cellEditProp = {
-  mode: 'click'
+const selectRowProp = {
+  mode: 'checkbox',
+  bgColor: function(row, isSelect) {
+    if (isSelect) {
+      const { id } = row;
+      if (id < 2) return 'blue';
+      else if (id < 4) return 'red';
+      else return 'yellow';
+    }
+    return null;
+  }
 };
 
-export default class ClickToEditTable extends React.Component {
+export default class SelectBgColorDynamicTable extends React.Component {
   render() {
     return (
-      <BootstrapTable data={ products } cellEdit={ cellEditProp }>
+      <BootstrapTable data={ products } selectRow={ selectRowProp }>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>

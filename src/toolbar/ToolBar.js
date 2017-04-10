@@ -64,6 +64,13 @@ class ToolBar extends Component {
     }
   }
 
+  displayCommonMessage = () => {
+    this.refs.notifier.notice(
+      'error',
+      'Form validate errors, please checking!',
+      'Pressed ESC can cancel');
+  }
+
   validateNewRow(newRow) {
     const validateState = {};
     let isValid = true;
@@ -71,14 +78,18 @@ class ToolBar extends Component {
     let responseType;
 
     this.props.columns.forEach(column => {
-      if (column.editable && column.editable.validator) { // process validate
+      if (column.isKey && column.keyValidator) { // key validator for checking exist key
+        tempMsg = this.props.isValidKey(newRow[column.field]);
+        if (tempMsg) {
+          this.displayCommonMessage();
+          isValid = false;
+          validateState[column.field] = tempMsg;
+        }
+      } else if (column.editable && column.editable.validator) { // process validate
         tempMsg = column.editable.validator(newRow[column.field]);
         responseType = typeof tempMsg;
         if (responseType !== 'object' && tempMsg !== true) {
-          this.refs.notifier.notice(
-              'error',
-              'Form validate errors, please checking!',
-              'Pressed ESC can cancel');
+          this.displayCommonMessage();
           isValid = false;
           validateState[column.field] = tempMsg;
         } else if (responseType === 'object' && tempMsg.isValid !== true) {
@@ -469,7 +480,8 @@ ToolBar.propTypes = {
   btnGroup: PropTypes.func,
   toolBar: PropTypes.func,
   searchPosition: PropTypes.string,
-  reset: PropTypes.bool
+  reset: PropTypes.bool,
+  isValidKey: PropTypes.func
 };
 
 ToolBar.defaultProps = {

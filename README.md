@@ -35,7 +35,6 @@ Check [this](http://allenfang.github.io/react-bootstrap-table/advance.html) for 
 Check the <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/CHANGELOG.md'>CHANGELOG</a> for more detail release notes.
 
 ## Notes
-***★★★I'm busy on my job so maybe will have a long delay to see your guys PR or issues, sorry. I'll back as soon as possible***
 ***```v3.0.0``` released, check [examples](https://github.com/AllenFang/react-bootstrap-table/tree/v3.0.0-dev/examples/js/custom) to learn how to customize the component. following
 is the major things we completed in this release***
 - Remove the `bootstrap.js` and `jQuery` dependencies

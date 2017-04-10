@@ -1,3 +1,4 @@
+/* eslint no-nested-ternary: 0 */
 import classSet from 'classnames';
 import React, { Component, PropTypes } from 'react';
 
@@ -71,12 +72,18 @@ class TableRow extends Component {
 
   render() {
     this.clickNum = 0;
+    const { selectRow, row, isSelected } = this.props;
+    let backgroundColor = null;
+
+    if (selectRow) {
+      backgroundColor = typeof selectRow.bgColor === 'function' ?
+        selectRow.bgColor(row, isSelected) : ( isSelected ? selectRow.bgColor : null);
+    }
+
     const trCss = {
-      style: {
-        backgroundColor: this.props.isSelected ? this.props.selectRow.bgColor : null
-      },
+      style: { backgroundColor },
       className: classSet(
-        this.props.isSelected ? this.props.selectRow.className : null,
+        isSelected ? selectRow.className : null,
         this.props.className
       )
     };
@@ -92,6 +99,7 @@ class TableRow extends Component {
 }
 TableRow.propTypes = {
   index: PropTypes.number,
+  row: PropTypes.any,
   isSelected: PropTypes.bool,
   enableCellEdit: PropTypes.bool,
   onRowClick: PropTypes.func,

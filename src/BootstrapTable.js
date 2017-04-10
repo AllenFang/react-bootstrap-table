@@ -23,7 +23,7 @@ class BootstrapTable extends Component {
       this.isIE = document.documentMode;
     }
     this.store = new TableDataStore(this.props.data ? this.props.data.slice() : []);
-
+    this.isVerticalScroll = false;
     this.initTable(this.props);
 
     if (this.props.selectRow && this.props.selectRow.selected) {
@@ -237,6 +237,14 @@ class BootstrapTable extends Component {
         currPage: page,
         sizePerPage,
         reset: false
+      });
+    }
+
+    // If setting the expanded rows is being handled externally
+    // then overwrite the current expanded rows.
+    if (this.props.options.expanding !== options.expanding) {
+      this.setState({
+        expanding: options.expanding || []
       });
     }
 
@@ -474,17 +482,19 @@ class BootstrapTable extends Component {
 
   handlePaginationData = (page, sizePerPage) => {
     const { onPageChange, pageStartIndex } = this.props.options;
+    const emptyTable = this.store.isEmpty();
     if (onPageChange) {
       onPageChange(page, sizePerPage);
     }
 
-    this.setState({
-      currPage: page,
+    const state = {
       sizePerPage,
       reset: false
-    });
+    };
+    if (!emptyTable) state.currPage = page;
+    this.setState(state);
 
-    if (this.allowRemote(Const.REMOTE_PAGE)) {
+    if (this.allowRemote(Const.REMOTE_PAGE) || emptyTable) {
       return;
     }
 
@@ -1024,7 +1034,7 @@ class BootstrapTable extends Component {
   }
 
   renderToolBar() {
-    const { exportCSV, selectRow, insertRow, deleteRow, search, children } = this.props;
+    const { exportCSV, selectRow, insertRow, deleteRow, search, children, keyField } = this.props;
     const enableShowOnlySelected = selectRow && selectRow.showOnlySelected;
     const print = typeof this.props.options.printToolBar === 'undefined' ?
       true : this.props.options.printToolBar;
@@ -1040,10 +1050,13 @@ class BootstrapTable extends Component {
       if (Array.isArray(children)) {
         columns = children.map((column, r) => {
           const { props } = column;
+          const isKey = props.isKey || keyField === props.dataField;
           return {
+            isKey,
             name: props.headerText || props.children,
             field: props.dataField,
             hiddenOnInsert: props.hiddenOnInsert,
+            keyValidator: props.keyValidator,
             // when you want same auto generate value and not allow edit, example ID field
             autoValue: props.autoValue || false,
             // for create editor, no params for column.editable() indicate that editor for new row
@@ -1058,7 +1071,8 @@ class BootstrapTable extends Component {
           name: children.props.headerText || children.props.children,
           field: children.props.dataField,
           editable: children.props.editable,
-          hiddenOnInsert: children.props.hiddenOnInsert
+          hiddenOnInsert: children.props.hiddenOnInsert,
+          keyValidator: children.props.keyValidator
         } ];
       }
       return (
@@ -1100,7 +1114,8 @@ class BootstrapTable extends Component {
             searchPanel={ this.props.options.searchPanel }
             btnGroup={ this.props.options.btnGroup }
             toolBar={ this.props.options.toolBar }
-            reset={ this.state.reset } />
+            reset={ this.state.reset }
+            isValidKey={ this.store.isValidKey } />
         </div>
       );
     } else {
@@ -1186,7 +1201,7 @@ class BootstrapTable extends Component {
 
     const scrollBarWidth = isScroll ? Util.getScrollBarWidth() : 0;
     if (firstRow && this.store.getDataNum()) {
-      if (isScroll) {
+      if (isScroll || this.isVerticalScroll !== isScroll) {
         const cells = firstRow.childNodes;
         for (let i = 0; i < cells.length; i++) {
           const cell = cells[i];
@@ -1224,6 +1239,7 @@ class BootstrapTable extends Component {
         }
       });
     }
+    this.isVerticalScroll = isScroll;
   }
 
   _adjustHeight() {
@@ -1304,7 +1320,7 @@ BootstrapTable.propTypes = {
       Const.ROW_SELECT_MULTI
     ]),
     customComponent: PropTypes.func,
-    bgColor: PropTypes.string,
+    bgColor: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
     selected: PropTypes.array,
     onSelect: PropTypes.func,
     onSelectAll: PropTypes.func,

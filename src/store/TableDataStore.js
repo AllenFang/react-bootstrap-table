@@ -113,10 +113,21 @@ export class TableDataStore {
   }
 
   getRowByKey(keys) {
-    return keys.map(key => {
-      const result = this.data.filter(d => d[this.keyField] === key);
-      if (result.length !== 0) return result[0];
-    });
+    // Bad Performance #1164
+    // return keys.map(key => {
+    //   const result = this.data.filter(d => d[this.keyField] === key);
+    //   if (result.length !== 0) return result[0];
+    // });
+    const result = [];
+    for (let i = 0; i < this.data.length; i++) {
+      const d = this.data[i];
+      if (!keys || keys.length === 0) break;
+      if (keys.indexOf(d[this.keyField]) > -1) {
+        keys = keys.filter(k => k !== d[this.keyField]);
+        result.push(d);
+      }
+    }
+    return result;
   }
 
   getSelectedRowKeys() {
@@ -205,21 +216,24 @@ export class TableDataStore {
   }
 
   add(newObj) {
-    if (!newObj[this.keyField] || newObj[this.keyField].toString() === '') {
-      throw new Error(`${this.keyField} can't be empty value.`);
-    }
-    const currentDisplayData = this.getCurrentDisplayData();
-    currentDisplayData.forEach(function(row) {
-      if (row[this.keyField].toString() === newObj[this.keyField].toString()) {
-        throw new Error(`${this.keyField} ${newObj[this.keyField]} already exists`);
-      }
-    }, this);
+    const e = this.isValidKey(newObj[this.keyField]);
+    if (e) throw new Error(e);
 
+    const currentDisplayData = this.getCurrentDisplayData();
     currentDisplayData.push(newObj);
     if (this.isOnFilter) {
       this.data.push(newObj);
     }
     this._refresh(false);
+  }
+
+  isValidKey = key => {
+    if (!key || key.toString() === '') {
+      return `${this.keyField} can't be empty value.`;
+    }
+    const currentDisplayData = this.getCurrentDisplayData();
+    const exist = currentDisplayData.find(row => row[this.keyField].toString() === key.toString());
+    if (exist) return `${this.keyField} ${key} already exists`;
   }
 
   remove(rowKey) {
@@ -303,17 +317,22 @@ export class TableDataStore {
   }
 
   filterDate(targetVal, filterVal, comparator) {
-    // if (!targetVal) {
-    //   return false;
-    // }
-    // return (targetVal.getDate() === filterVal.getDate() &&
-    //     targetVal.getMonth() === filterVal.getMonth() &&
-    //     targetVal.getFullYear() === filterVal.getFullYear());
+    if (!targetVal) return false;
+
+    const filterDate = filterVal.getDate();
+    const filterMonth = filterVal.getMonth();
+    const filterYear = filterVal.getFullYear();
+
+    const targetDate = targetVal.getDate();
+    const targetMonth = targetVal.getMonth();
+    const targetYear = targetVal.getFullYear();
 
     let valid = true;
     switch (comparator) {
     case '=': {
-      if (targetVal != filterVal) {
+      if (filterDate !== targetDate ||
+        filterMonth !== targetMonth ||
+        filterYear !== targetYear) {
         valid = false;
       }
       break;
@@ -325,7 +344,14 @@ export class TableDataStore {
       break;
     }
     case '>=': {
-      if (targetVal < filterVal) {
+      if (targetYear < filterYear) {
+        valid = false;
+      } else if (targetYear === filterYear &&
+        targetMonth < filterMonth) {
+        valid = false;
+      } else if (targetYear === filterYear &&
+        targetMonth === filterMonth &&
+        targetDate < filterDate) {
         valid = false;
       }
       break;
@@ -337,13 +363,22 @@ export class TableDataStore {
       break;
     }
     case '<=': {
-      if (targetVal > filterVal) {
+      if (targetYear > filterYear) {
+        valid = false;
+      } else if (targetYear === filterYear &&
+        targetMonth > filterMonth) {
+        valid = false;
+      } else if (targetYear === filterYear &&
+        targetMonth === filterMonth &&
+        targetDate > filterDate) {
         valid = false;
       }
       break;
     }
     case '!=': {
-      if (targetVal == filterVal) {
+      if (filterDate === targetDate &&
+        filterMonth === targetMonth &&
+        filterYear === targetYear) {
         valid = false;
       }
       break;

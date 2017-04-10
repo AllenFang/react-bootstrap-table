@@ -142,9 +142,14 @@ class TableHeaderColumn extends Component {
       !isOnlyHead && dataSort ? 'sort-column' : '',
       'resizable');
 
-    const title = {
-      title: ((headerTitle && typeof children === 'string') ? children : headerText)
-    };
+    const attr = {};
+    if (headerTitle) {
+      if (typeof children === 'string' && !headerText) {
+        attr.title = children;
+      } else {
+        attr.title = headerText;
+      }
+    }
     return (
       <th ref='header-col'
           className={ classes }
@@ -153,7 +158,7 @@ class TableHeaderColumn extends Component {
           rowSpan={ this.props.rowSpan }
           colSpan={ this.props.colSpan }
           data-is-only-head={ this.props.isOnlyHead }
-          { ...title }>
+          { ...attr }>
         { children }{ sortCaret }
         <div onClick={ e => e.stopPropagation() }>
           { this.props.filter && !isOnlyHead ? this.getFilters() : null }
@@ -345,7 +350,8 @@ TableHeaderColumn.propTypes = {
   tdStyle: PropTypes.object,
   thStyle: PropTypes.object,
   onResize: PropTypes.func,
-  getHeaderColGroup: PropTypes.func
+  getHeaderColGroup: PropTypes.func,
+  keyValidator: PropTypes.bool
 };
 
 TableHeaderColumn.defaultProps = {
@@ -379,7 +385,8 @@ TableHeaderColumn.defaultProps = {
   expandable: true,
   tdAttr: undefined,
   tdStyle: undefined,
-  thStyle: undefined
+  thStyle: undefined,
+  keyValidator: false
 };
 
 export default TableHeaderColumn;
