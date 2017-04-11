@@ -12,6 +12,7 @@ import { TableDataStore } from './store/TableDataStore';
 import Util from './util';
 import exportCSVUtil from './csv_export_util';
 import { Filter } from './Filter';
+import Alert from 'react-s-alert';
 
 class BootstrapTable extends Component {
 
@@ -417,6 +418,7 @@ class BootstrapTable extends Component {
         </div>
         { tableFilter }
         { showPaginationOnBottom ? pagination : null }
+        <Alert stack={ { limit: 3 } } />
       </div>
     );
   }

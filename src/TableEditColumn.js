@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import editor from './Editor';
-import Notifier from './Notification.js';
+import { notice } from './Notification.js';
 import classSet from 'classnames';
-import Const from './Const';
 
 class TableEditColumn extends Component {
   constructor(props) {
@@ -73,7 +72,7 @@ class TableEditColumn extends Component {
       const responseType = typeof checkVal;
       if (responseType !== 'object' && checkVal !== true) {
         valid = false;
-        this.notifyToastr('error', checkVal, Const.CANCEL_TOASTR);
+        this.notifyToastr('error', checkVal, '');
       } else if (responseType === 'object' && checkVal.isValid !== true) {
         valid = false;
         this.notifyToastr(checkVal.notification.type,
@@ -106,7 +105,7 @@ class TableEditColumn extends Component {
       toastr = beforeShowError(type, message, title);
     }
     if (toastr) {
-      this.refs.notifier.notice(type, message, title);
+      notice(type, message, title);
     }
   }
 
@@ -201,7 +200,6 @@ class TableEditColumn extends Component {
         className={ className }
         onClick={ this.handleClick }>
         { cellEditor }
-        <Notifier ref='notifier'/>
       </td>
     );
   }

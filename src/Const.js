@@ -46,7 +46,6 @@ const CONST_VAR = {
   FILTER_COND_LIKE: 'like',
   EXPAND_BY_ROW: 'row',
   EXPAND_BY_COL: 'column',
-  CANCEL_TOASTR: 'Pressed ESC can cancel',
   REMOTE_SORT: 'sort',
   REMOTE_PAGE: 'pagination',
   REMOTE_CELL_EDIT: 'cellEdit',
