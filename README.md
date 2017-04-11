@@ -89,7 +89,7 @@ In the `dist` folder you have a UMD bundle with source maps (`react-bootstrap-ta
 <script>
   var ReactBsTable = window.BootstrapTable;
   //...
-<script/>
+</script>
 ```
 
 The UMD build is also available on [npmcdn](https://npmcdn.com):
