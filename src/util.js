@@ -46,6 +46,24 @@ export default {
     return typeof window !== 'undefined' && typeof window.document !== 'undefined';
   },
 
+  // We calculate an offset here in order to properly fetch the indexed data,
+  // despite the page start index not always being 1
+  getNormalizedPage(pageStartIndex, page) {
+    if (page === undefined) page = pageStartIndex;
+    let normalizedPage;
+    if (pageStartIndex !== undefined) {
+      const offset = Math.abs(Const.PAGE_START_INDEX - pageStartIndex);
+      normalizedPage = page + offset;
+    } else {
+      normalizedPage = page;
+    }
+    return normalizedPage;
+  },
+
+  getFirstPage(pageStartIndex) {
+    return pageStartIndex !== undefined ? pageStartIndex : Const.PAGE_START_INDEX;
+  },
+
   renderColGroup(columns, selectRow, expandColumnOptions = {}) {
     let selectRowHeader = null;
     let expandRowHeader = null;

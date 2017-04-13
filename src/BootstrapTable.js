@@ -177,10 +177,11 @@ class BootstrapTable extends Component {
   }
 
   reset() {
+    const { pageStartIndex } = this.props.options;
     this.store.clean();
     this.setState({
       data: this.getTableData(),
-      currPage: 1,
+      currPage: Util.getFirstPage(pageStartIndex),
       expanding: [],
       sizePerPage: Const.SIZE_PER_PAGE_LIST[0],
       selectedRowKeys: this.store.getSelectedRowKeys(),
@@ -497,18 +498,7 @@ class BootstrapTable extends Component {
       return;
     }
 
-    // We calculate an offset here in order to properly fetch the indexed data,
-    // despite the page start index not always being 1
-    let normalizedPage;
-    if (pageStartIndex !== undefined) {
-      const offset = Math.abs(Const.PAGE_START_INDEX - pageStartIndex);
-      normalizedPage = page + offset;
-    } else {
-      normalizedPage = page;
-    }
-
-    const result = this.store.page(normalizedPage, sizePerPage).get();
-
+    const result = this.store.page(Util.getNormalizedPage(pageStartIndex, page), sizePerPage).get();
     this.setState({ data: result, reset: false });
   }
 
@@ -541,8 +531,6 @@ class BootstrapTable extends Component {
     let { x, y, currPage } = this.state;
     x += offSetX;
     y += offSetY;
-    // currPage += 1;
-    // console.log(currPage);
 
     const columns = this.store.getColInfos();
     const visibleRowSize = this.state.data.length;
@@ -665,16 +653,17 @@ class BootstrapTable extends Component {
 
   handleShowOnlySelected = () => {
     this.store.ignoreNonSelected();
+    const { pageStartIndex } = this.props.options;
     let result;
     if (this.props.pagination) {
-      result = this.store.page(1, this.state.sizePerPage).get();
+      result = this.store.page(Util.getNormalizedPage(pageStartIndex), this.state.sizePerPage).get();
     } else {
       result = this.store.get();
     }
     this.setState({
       data: result,
       reset: false,
-      currPage: this.props.options.pageStartIndex || Const.PAGE_START_INDEX
+      currPage: Util.getFirstPage(pageStartIndex)
     });
   }
 
@@ -857,14 +846,14 @@ class BootstrapTable extends Component {
   }
 
   handleFilterData = filterObj => {
-    const { onFilterChange } = this.props.options;
+    const { onFilterChange, pageStartIndex } = this.props.options;
     if (onFilterChange) {
       const colInfos = this.store.getColInfos();
       onFilterChange(filterObj, colInfos);
     }
 
     this.setState({
-      currPage: this.props.options.pageStartIndex || Const.PAGE_START_INDEX,
+      currPage: Util.getFirstPage(pageStartIndex),
       reset: false
     });
 
@@ -887,7 +876,7 @@ class BootstrapTable extends Component {
 
     if (this.props.pagination) {
       const { sizePerPage } = this.state;
-      result = this.store.page(1, sizePerPage).get();
+      result = this.store.page(Util.getNormalizedPage(pageStartIndex), sizePerPage).get();
     } else {
       result = this.store.get();
     }
@@ -942,14 +931,14 @@ class BootstrapTable extends Component {
     if (this.refs.toolbar) {
       this.refs.toolbar.setSearchInput(searchText);
     }
-    const { onSearchChange } = this.props.options;
+    const { onSearchChange, pageStartIndex } = this.props.options;
     if (onSearchChange) {
       const colInfos = this.store.getColInfos();
       onSearchChange(searchText, colInfos, this.props.multiColumnSearch);
     }
 
     this.setState({
-      currPage: this.props.options.pageStartIndex || Const.PAGE_START_INDEX,
+      currPage: Util.getFirstPage(pageStartIndex),
       reset: false
     });
 
@@ -972,7 +961,7 @@ class BootstrapTable extends Component {
     let result;
     if (this.props.pagination) {
       const { sizePerPage } = this.state;
-      result = this.store.page(1, sizePerPage).get();
+      result = this.store.page(Util.getNormalizedPage(pageStartIndex), sizePerPage).get();
     } else {
       result = this.store.get();
     }
@@ -1232,11 +1221,11 @@ class BootstrapTable extends Component {
       const { sizePerPage } = this.state;
 
       if (atTheBeginning) {
-        const firstPage = this.props.options.pageStartIndex || Const.PAGE_START_INDEX;
-        result = this.store.page(firstPage, sizePerPage).get();
+        const { pageStartIndex } = this.props.options;
+        result = this.store.page(Util.getNormalizedPage(pageStartIndex), sizePerPage).get();
         this.setState({
           data: result,
-          currPage: firstPage,
+          currPage: Util.getFirstPage(pageStartIndex),
           reset: false
         });
       } else {

@@ -272,10 +272,10 @@ class PaginationList extends Component {
       if (i >= this.props.pageStartIndex) pages.push(i);
     }
 
-    if (endPage <= this.lastPage) {
+    if (endPage <= this.lastPage && pages.length > 1) {
       pages.push(this.props.nextPage);
     }
-    if (endPage !== this.totalPages && this.props.withFirstAndLast) {
+    if (endPage !== this.lastPage && this.props.withFirstAndLast) {
       pages.push(this.props.lastPage);
     }
 
