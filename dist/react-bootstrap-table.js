@@ -488,10 +488,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'reset',
 	    value: function reset() {
+	      var pageStartIndex = this.props.options.pageStartIndex;
+
 	      this.store.clean();
 	      this.setState({
 	        data: this.getTableData(),
-	        currPage: 1,
+	        currPage: _util2.default.getFirstPage(pageStartIndex),
 	        expanding: [],
 	        sizePerPage: _Const2.default.SIZE_PER_PAGE_LIST[0],
 	        selectedRowKeys: this.store.getSelectedRowKeys(),
@@ -839,18 +841,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return;
 	      }
 
-	      // We calculate an offset here in order to properly fetch the indexed data,
-	      // despite the page start index not always being 1
-	      var normalizedPage = void 0;
-	      if (pageStartIndex !== undefined) {
-	        var offset = Math.abs(_Const2.default.PAGE_START_INDEX - pageStartIndex);
-	        normalizedPage = page + offset;
-	      } else {
-	        normalizedPage = page;
-	      }
-
-	      var result = this.store.page(normalizedPage, sizePerPage).get();
-
+	      var result = this.store.page(_util2.default.getNormalizedPage(pageStartIndex, page), sizePerPage).get();
 	      this.setState({ data: result, reset: false });
 	    }
 	  }, {
@@ -895,8 +886,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      x += offSetX;
 	      y += offSetY;
-	      // currPage += 1;
-	      // console.log(currPage);
 
 	      var columns = this.store.getColInfos();
 	      var visibleRowSize = this.state.data.length;
@@ -1035,16 +1024,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: '__handleShowOnlySelected__REACT_HOT_LOADER__',
 	    value: function __handleShowOnlySelected__REACT_HOT_LOADER__() {
 	      this.store.ignoreNonSelected();
+	      var pageStartIndex = this.props.options.pageStartIndex;
+
 	      var result = void 0;
 	      if (this.props.pagination) {
-	        result = this.store.page(1, this.state.sizePerPage).get();
+	        result = this.store.page(_util2.default.getNormalizedPage(pageStartIndex), this.state.sizePerPage).get();
 	      } else {
 	        result = this.store.get();
 	      }
 	      this.setState({
 	        data: result,
 	        reset: false,
-	        currPage: this.props.options.pageStartIndex || _Const2.default.PAGE_START_INDEX
+	        currPage: _util2.default.getFirstPage(pageStartIndex)
 	      });
 	    }
 	  }, {
@@ -1253,7 +1244,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleFilterData__REACT_HOT_LOADER__',
 	    value: function __handleFilterData__REACT_HOT_LOADER__(filterObj) {
-	      var onFilterChange = this.props.options.onFilterChange;
+	      var _props$options2 = this.props.options,
+	          onFilterChange = _props$options2.onFilterChange,
+	          pageStartIndex = _props$options2.pageStartIndex;
 
 	      if (onFilterChange) {
 	        var colInfos = this.store.getColInfos();
@@ -1261,7 +1254,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      this.setState({
-	        currPage: this.props.options.pageStartIndex || _Const2.default.PAGE_START_INDEX,
+	        currPage: _util2.default.getFirstPage(pageStartIndex),
 	        reset: false
 	      });
 
@@ -1285,7 +1278,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (this.props.pagination) {
 	        var sizePerPage = this.state.sizePerPage;
 
-	        result = this.store.page(1, sizePerPage).get();
+	        result = this.store.page(_util2.default.getNormalizedPage(pageStartIndex), sizePerPage).get();
 	      } else {
 	        result = this.store.get();
 	      }
@@ -1340,7 +1333,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (this.refs.toolbar) {
 	        this.refs.toolbar.setSearchInput(searchText);
 	      }
-	      var onSearchChange = this.props.options.onSearchChange;
+	      var _props$options3 = this.props.options,
+	          onSearchChange = _props$options3.onSearchChange,
+	          pageStartIndex = _props$options3.pageStartIndex;
 
 	      if (onSearchChange) {
 	        var colInfos = this.store.getColInfos();
@@ -1348,7 +1343,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      this.setState({
-	        currPage: this.props.options.pageStartIndex || _Const2.default.PAGE_START_INDEX,
+	        currPage: _util2.default.getFirstPage(pageStartIndex),
 	        reset: false
 	      });
 
@@ -1371,7 +1366,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (this.props.pagination) {
 	        var sizePerPage = this.state.sizePerPage;
 
-	        result = this.store.page(1, sizePerPage).get();
+	        result = this.store.page(_util2.default.getNormalizedPage(pageStartIndex), sizePerPage).get();
 	      } else {
 	        result = this.store.get();
 	      }
@@ -1637,11 +1632,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	        if (atTheBeginning) {
-	          var firstPage = this.props.options.pageStartIndex || _Const2.default.PAGE_START_INDEX;
-	          result = this.store.page(firstPage, sizePerPage).get();
+	          var pageStartIndex = this.props.options.pageStartIndex;
+
+	          result = this.store.page(_util2.default.getNormalizedPage(pageStartIndex), sizePerPage).get();
 	          this.setState({
 	            data: result,
-	            currPage: firstPage,
+	            currPage: _util2.default.getFirstPage(pageStartIndex),
 	            reset: false
 	          });
 	        } else {
@@ -3174,6 +3170,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  canUseDOM: function canUseDOM() {
 	    return typeof window !== 'undefined' && typeof window.document !== 'undefined';
+	  },
+
+
+	  // We calculate an offset here in order to properly fetch the indexed data,
+	  // despite the page start index not always being 1
+	  getNormalizedPage: function getNormalizedPage(pageStartIndex, page) {
+	    if (page === undefined) page = pageStartIndex;
+	    var normalizedPage = void 0;
+	    if (pageStartIndex !== undefined) {
+	      var offset = Math.abs(_Const2.default.PAGE_START_INDEX - pageStartIndex);
+	      normalizedPage = page + offset;
+	    } else {
+	      normalizedPage = page;
+	    }
+	    return normalizedPage;
+	  },
+	  getFirstPage: function getFirstPage(pageStartIndex) {
+	    return pageStartIndex !== undefined ? pageStartIndex : _Const2.default.PAGE_START_INDEX;
 	  },
 	  renderColGroup: function renderColGroup(columns, selectRow) {
 	    var expandColumnOptions = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -10780,10 +10794,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (i >= this.props.pageStartIndex) pages.push(i);
 	      }
 
-	      if (endPage <= this.lastPage) {
+	      if (endPage <= this.lastPage && pages.length > 1) {
 	        pages.push(this.props.nextPage);
 	      }
-	      if (endPage !== this.totalPages && this.props.withFirstAndLast) {
+	      if (endPage !== this.lastPage && this.props.withFirstAndLast) {
 	        pages.push(this.props.lastPage);
 	      }
 
@@ -10960,6 +10974,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var sizePerPageDefaultClass = 'react-bs-table-sizePerPage-dropdown';
+
 	var SizePerPageDropDown = function (_Component) {
 	  _inherits(SizePerPageDropDown, _Component);
 
@@ -10988,7 +11004,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return _react2.default.createElement(
 	        'span',
-	        { className: variation + ' ' + openClass + ' ' + className, style: dropDownStyle },
+	        { style: dropDownStyle,
+	          className: variation + ' ' + openClass + ' ' + className + ' ' + sizePerPageDefaultClass },
 	        _react2.default.createElement(
 	          'button',
 	          { className: 'btn ' + btnContextual + ' dropdown-toggle',
@@ -11041,6 +11058,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
 	    return;
 	  }
+
+	  __REACT_HOT_LOADER__.register(sizePerPageDefaultClass, 'sizePerPageDefaultClass', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/pagination/SizePerPageDropDown.js');
 
 	  __REACT_HOT_LOADER__.register(SizePerPageDropDown, 'SizePerPageDropDown', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/pagination/SizePerPageDropDown.js');
 
