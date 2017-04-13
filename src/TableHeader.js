@@ -75,7 +75,8 @@ class TableHeader extends Component {
       }
       if ((rowSpan + rowIndex) === (rowCount + 1)) {
         rows[rowIndex].push(React.cloneElement(
-          elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false, onResize, getHeaderColGroup: this.getHeaderColGroup }
+          elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false, onResize,
+            getHeaderColGroup: this.getHeaderColGroup }
           ));
       } else {
         rows[rowIndex].push(React.cloneElement(

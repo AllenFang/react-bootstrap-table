@@ -1163,7 +1163,7 @@ class BootstrapTable extends Component {
     const bodyHeader = this.refs.body.getHeaderColGroup();
     const bodyContainer = this.refs.body.refs.container;
 
-    const isScroll = headerContainer.offsetWidth !== bodyContainer.offsetWidth;
+    const isScroll = Math.abs(headerContainer.offsetWidth - bodyContainer.childNodes[0].offsetWidth) > 5;
     const scrollBarWidth = isScroll ? Util.getScrollBarWidth() : 0;
     if (headerRow && headerRow[0]) {
       for (let i = 0; i < headerRow[0].childNodes.length; i++) {
@@ -1178,12 +1178,12 @@ class BootstrapTable extends Component {
           width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
         }
 
-        const lastPadding = (headerRow[0].childNodes.length - 1 === i ? scrollBarWidth : 0);
+        const lastPadding = ((headerRow[0].childNodes.length - 1 === i) ? scrollBarWidth : 0);
         if (width <= 0) {
           width = 120;
-          cell.width = width + lastPadding + 'px';
+          cell.width = width - lastPadding + 'px';
         }
-        const result = width + lastPadding + 'px';
+        const result = width - lastPadding + 'px';
 
         bodyHeader[i].style.width = result;
         bodyHeader[i].style.minWidth = result;
