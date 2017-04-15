@@ -1,3 +1,11 @@
+<a name="v3.1.8"></a>
+# [v3.1.8](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.7...v3.1.8) (2017-04-13)
+## Bug fixes
+* Fix wrong page jumping after search, filter etc.([b686d1a](https://github.com/AllenFang/react-bootstrap-table/commit/b686d1a44b95878cbd0bdc91a7a8b20ce7fb8671))
+
+## Enhancement
+* Add class name `react-bs-table-sizePerPage-dropdown` for sizePerPage dropdown([da82469](https://github.com/AllenFang/react-bootstrap-table/commit/da82469431fdec4efb466b8d08a106b1448d7b44))
+
 <a name="v3.1.7"></a>
 # [v3.1.7](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.6...v3.1.7) (2017-04-07)
 ## Bug fixes
