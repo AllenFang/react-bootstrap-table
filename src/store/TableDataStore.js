@@ -9,7 +9,6 @@ export class TableDataStore {
 
   constructor(data) {
     this.data = data;
-    this.colInfos = null;
     this.filteredData = null;
     this.isOnFilter = false;
     this.filterObj = null;
@@ -17,10 +16,7 @@ export class TableDataStore {
     this.sortList = [];
     this.pageObj = {};
     this.selected = [];
-    this.multiColumnSearch = false;
-    this.multiColumnSort = 1;
     this.showOnlySelected = false;
-    this.remote = false; // remote data
   }
 
   setProps(props) {
@@ -29,6 +25,9 @@ export class TableDataStore {
     this.colInfos = props.colInfos;
     this.remote = props.remote;
     this.multiColumnSearch = props.multiColumnSearch;
+    // default behaviour if strictSearch prop is not provided: !multiColumnSearch
+    this.strictSearch = typeof props.strictSearch === 'undefined' ?
+        !props.multiColumnSearch : props.strictSearch;
     this.multiColumnSort = props.multiColumnSort;
   }
 
@@ -530,52 +529,77 @@ export class TableDataStore {
     this.isOnFilter = true;
   }
 
+  /*
+   * Four different sort modes, all case insensitive:
+   * (1) strictSearch && !multiColumnSearch
+   *     search text must be contained as provided in a single column
+   * (2) strictSearch && multiColumnSearch
+   *     conjunction (AND combination) of whitespace separated terms over multiple columns
+   * (3) !strictSearch && !multiColumnSearch
+   *     conjunction (AND combination) of whitespace separated terms in a single column
+   * (4) !strictSearch && multiColumnSearch
+   *     any of the whitespace separated terms must be contained in any column
+   */
   _search(source) {
-    let searchTextArray = [];
-
-    if (this.multiColumnSearch) {
-      searchTextArray = this.searchText.split(' ');
+    let searchTextArray;
+    if (this.multiColumnSearch || !this.strictSearch) {
+      // ignore leading and trailing whitespaces
+      searchTextArray = this.searchText.trim().toLowerCase().split(/\s+/);
     } else {
-      searchTextArray.push(this.searchText);
+      searchTextArray = [ this.searchText.toLowerCase() ];
     }
+    const searchTermCount = searchTextArray.length;
+    const multipleTerms = searchTermCount > 1;
+    const nonStrictMultiCol = multipleTerms && !this.strictSearch && this.multiColumnSearch;
+    const nonStrictSingleCol = multipleTerms && !this.strictSearch && !this.multiColumnSearch;
     this.filteredData = source.filter((row, r) => {
       const keys = Object.keys(row);
-      let valid = false;
+      // only clone array if necessary
+      let searchTerms = multipleTerms ? searchTextArray.slice() : searchTextArray;
       // for loops are ugly, but performance matters here.
       // And you cant break from a forEach.
       // http://jsperf.com/for-vs-foreach/66
       for (let i = 0, keysLength = keys.length; i < keysLength; i++) {
         const key = keys[i];
-        // fixed data filter when misunderstand 0 is false
-        let filterSpecialNum = false;
-        if (!isNaN(row[key]) &&
-          parseInt(row[key], 10) === 0) { filterSpecialNum = true; }
-        if (this.colInfos[key] && (row[key] || filterSpecialNum)) {
+        const colInfo = this.colInfos[key];
+        if (colInfo && colInfo.searchable) {
           const {
             format,
             filterFormatted,
             filterValue,
-            formatExtraData,
-            searchable
-          } = this.colInfos[key];
-          let targetVal = row[key];
-          if (searchable) {
-            if (filterFormatted && format) {
-              targetVal = format(targetVal, row, formatExtraData, r);
-            } else if (filterValue) {
-              targetVal = filterValue(targetVal, row);
+            formatExtraData
+          } = colInfo;
+          let targetVal;
+          if (filterFormatted && format) {
+            targetVal = format(row[key], row, formatExtraData, r);
+          } else if (filterValue) {
+            targetVal = filterValue(row[key], row);
+          } else {
+            targetVal = row[key];
+          }
+          if (targetVal !== null && typeof targetVal !== 'undefined') {
+            targetVal = targetVal.toString().toLowerCase();
+            if (nonStrictSingleCol && searchTermCount > searchTerms.length) {
+              // reset search terms for single column search
+              searchTerms = searchTextArray.slice();
             }
-            for (let j = 0, textLength = searchTextArray.length; j < textLength; j++) {
-              const filterVal = searchTextArray[j].toLowerCase();
-              if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
-                valid = true;
+            for (let j = searchTerms.length - 1; j > -1; j--) {
+              if (targetVal.indexOf(searchTerms[j]) !== -1) {
+                if (nonStrictMultiCol || searchTerms.length === 1) {
+                  // match found: the last or only one
+                  return true;
+                }
+                // match found: but there are more search terms to check for
+                searchTerms.splice(j, 1);
+              } else if (!this.multiColumnSearch) {
+                // one of the search terms was not found in this column
                 break;
               }
             }
           }
         }
       }
-      return valid;
+      return false;
     });
     this.isOnFilter = true;
   }

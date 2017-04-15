@@ -7,7 +7,7 @@ jest.dontMock('../src/TableRow.js');
 jest.dontMock('../src/pagination/PaginationList.js');
 jest.dontMock('../src/pagination/PageButton.js');
 
-describe('TableHeaderColumn Test', function() {
+xdescribe('TableHeaderColumn Test', function() {
 
   var React;
   var TestUtils;
