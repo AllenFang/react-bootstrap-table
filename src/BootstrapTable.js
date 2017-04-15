@@ -411,6 +411,7 @@ class BootstrapTable extends Component {
             withoutNoDataText={ this.props.options.withoutNoDataText }
             expanding={ this.state.expanding }
             onExpand={ this.handleExpandRow }
+            onlyOneExpanding={ this.props.options.onlyOneExpanding }
             beforeShowError={ this.props.options.beforeShowError }
             keyBoardNav={ this.props.keyBoardNav }
             onNavigateCell={ this.handleNavigateCell }
@@ -1385,6 +1386,7 @@ BootstrapTable.propTypes = {
     expandRowBgColor: PropTypes.string,
     expandBy: PropTypes.string,
     expanding: PropTypes.array,
+    onlyOneExpanding: PropTypes.bool,
     beforeShowError: PropTypes.func,
     printToolBar: PropTypes.bool
   }),
@@ -1529,6 +1531,7 @@ BootstrapTable.defaultProps = {
     expandRowBgColor: undefined,
     expandBy: Const.EXPAND_BY_ROW,
     expanding: [],
+    onlyOneExpanding: false,
     beforeShowError: undefined,
     printToolBar: true
   },
