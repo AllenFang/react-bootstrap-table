@@ -52,7 +52,7 @@ class Demo extends React.Component {
         </div>
         <div className='col-md-offset-1 col-md-8'>
           <div className='panel panel-default'>
-            <div className='panel-heading'>{ 'Table Search Example(Use space to delimited search text, ex:"1 2 3")' }</div>
+            <div className='panel-heading'>{ 'Table Search Example(Use space to delimited search text, ex:"name banana")' }</div>
             <div className='panel-body'>
               <h5>{ 'Source in /examples/js/manipulation/search-table.js' }</h5>
               <h5>{ 'The table\'s ' }<code>{ 'strictSearch' }</code>{ ' is set to ' }<code>{ 'false' }</code>{ '.' }</h5>
