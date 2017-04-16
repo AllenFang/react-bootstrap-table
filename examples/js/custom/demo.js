@@ -7,6 +7,7 @@ import FullyCustomInsertModalHeaderTable from './insert-modal/fully-custom-inser
 import DefaultCustomInsertModalFooterTable from './insert-modal/default-custom-insert-modal-footer';
 import FullyCustomInsertModalFooterTable from './insert-modal/fully-custom-insert-modal-footer';
 import CustomInsertModalBodyTable from './insert-modal/custom-insert-modal-body';
+import CustomInsertModalFieldTable from './insert-modal/custom-insert-modal-field';
 import CustomInsertModalTable from './insert-modal/custom-insert-modal';
 import DefaultCustomInsertButtonTable from './insert-button/default-custom-insert-button';
 import FullyCustomInsertButtonTable from './insert-button/fully-custom-insert-button';
@@ -54,6 +55,10 @@ class Demo extends React.Component {
         <Panel header={ 'Custom for Insert Modal Body Demo' }>
           { renderLinks('custom/insert-modal/custom-insert-modal-body.js') }
           <CustomInsertModalBodyTable/>
+        </Panel>
+        <Panel header={ 'Custom for Insert Modal Field Demo' }>
+          { renderLinks('custom/insert-modal/custom-insert-modal-field.js') }
+          <CustomInsertModalFieldTable/>
         </Panel>
         <Panel header={ 'Custom for Insert Modal Demo' }>
           { renderLinks('custom/insert-modal/custom-insert-modal.js') }

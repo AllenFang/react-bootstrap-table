@@ -400,6 +400,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        keyField: keyField,
 	        colInfos: this.colInfos,
 	        multiColumnSearch: props.multiColumnSearch,
+	        strictSearch: props.strictSearch,
 	        multiColumnSort: props.multiColumnSort,
 	        remote: this.props.remote
 	      });
@@ -748,6 +749,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            withoutNoDataText: this.props.options.withoutNoDataText,
 	            expanding: this.state.expanding,
 	            onExpand: this.handleExpandRow,
+	            onlyOneExpanding: this.props.options.onlyOneExpanding,
 	            beforeShowError: this.props.options.beforeShowError,
 	            keyBoardNav: this.props.keyBoardNav,
 	            onNavigateCell: this.handleNavigateCell,
@@ -1452,6 +1454,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              field: props.dataField,
 	              hiddenOnInsert: props.hiddenOnInsert,
 	              keyValidator: props.keyValidator,
+	              customInsertEditor: props.customInsertEditor,
 	              // when you want same auto generate value and not allow edit, example ID field
 	              autoValue: props.autoValue || false,
 	              // for create editor, no params for column.editable() indicate that editor for new row
@@ -1466,6 +1469,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            name: children.props.headerText || children.props.children,
 	            field: children.props.dataField,
 	            editable: children.props.editable,
+	            customInsertEditor: children.props.customInsertEditor,
 	            hiddenOnInsert: children.props.hiddenOnInsert,
 	            keyValidator: children.props.keyValidator
 	          }];
@@ -1706,6 +1710,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  insertRow: _react.PropTypes.bool,
 	  deleteRow: _react.PropTypes.bool,
 	  search: _react.PropTypes.bool,
+	  multiColumnSearch: _react.PropTypes.bool,
+	  strictSearch: _react.PropTypes.bool,
 	  columnFilter: _react.PropTypes.bool,
 	  trClassName: _react.PropTypes.any,
 	  tableStyle: _react.PropTypes.object,
@@ -1789,6 +1795,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    expandRowBgColor: _react.PropTypes.string,
 	    expandBy: _react.PropTypes.string,
 	    expanding: _react.PropTypes.array,
+	    onlyOneExpanding: _react.PropTypes.bool,
 	    beforeShowError: _react.PropTypes.func,
 	    printToolBar: _react.PropTypes.bool
 	  }),
@@ -1851,6 +1858,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  deleteRow: false,
 	  search: false,
 	  multiColumnSearch: false,
+	  strictSearch: undefined,
 	  multiColumnSort: 1,
 	  columnFilter: false,
 	  trClassName: '',
@@ -1932,6 +1940,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    expandRowBgColor: undefined,
 	    expandBy: _Const2.default.EXPAND_BY_ROW,
 	    expanding: [],
+	    onlyOneExpanding: false,
 	    beforeShowError: undefined,
 	    printToolBar: true
 	  },
@@ -2870,7 +2879,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          keyField = _props4.keyField,
 	          expandBy = _props4.expandBy,
 	          expandableRow = _props4.expandableRow,
-	          clickToExpand = _props4.selectRow.clickToExpand;
+	          clickToExpand = _props4.selectRow.clickToExpand,
+	          onlyOneExpanding = _props4.onlyOneExpanding;
 
 	      var selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
 	      columnIndex = this._isSelectRowDefined() ? columnIndex - 1 : columnIndex;
@@ -2887,7 +2897,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              return k !== rowKey;
 	            });
 	          } else {
-	            expanding.push(rowKey);
+	            if (onlyOneExpanding) expanding = [rowKey];else expanding.push(rowKey);
 	          }
 	          _this2.props.onExpand(expanding);
 	        })();
@@ -3083,6 +3093,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  expandBy: _react.PropTypes.string,
 	  expanding: _react.PropTypes.array,
 	  onExpand: _react.PropTypes.func,
+	  onlyOneExpanding: _react.PropTypes.bool,
 	  beforeShowError: _react.PropTypes.func,
 	  keyBoardNav: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.object]),
 	  x: _react.PropTypes.number,
@@ -13571,6 +13582,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          if (column.editable && column.editable.type === 'checkbox') {
 	            var values = inputVal.split(':');
 	            inputVal = dom.checked ? values[0] : values[1];
+	          } else if (column.customInsertEditor) {
+	            inputVal = inputVal || dom.getFieldValue();
 	          }
 	        }
 	        newRow[column.field] = inputVal;
@@ -13594,12 +13607,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	              field = column.field,
 	              name = column.name,
 	              autoValue = column.autoValue,
-	              hiddenOnInsert = column.hiddenOnInsert;
+	              hiddenOnInsert = column.hiddenOnInsert,
+	              customInsertEditor = column.customInsertEditor;
 
 	          var attr = {
 	            ref: field + i,
 	            placeholder: editable.placeholder ? editable.placeholder : name
 	          };
+	          var fieldElement = void 0;
+
+	          if (customInsertEditor) {
+	            var getElement = customInsertEditor.getElement;
+
+	            fieldElement = getElement(column, attr, 'form-control', ignoreEditable);
+	          } else {
+	            fieldElement = (0, _Editor2.default)(editable, attr, format, '', undefined, ignoreEditable);
+	          }
 
 	          if (autoValue || hiddenOnInsert || !column.field) {
 	            // when you want same auto generate value
@@ -13619,7 +13642,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              null,
 	              name
 	            ),
-	            (0, _Editor2.default)(editable, attr, format, '', undefined, ignoreEditable),
+	            fieldElement,
 	            error
 	          );
 	        })
@@ -14491,7 +14514,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    this.data = data;
-	    this.colInfos = null;
 	    this.filteredData = null;
 	    this.isOnFilter = false;
 	    this.filterObj = null;
@@ -14499,10 +14521,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.sortList = [];
 	    this.pageObj = {};
 	    this.selected = [];
-	    this.multiColumnSearch = false;
-	    this.multiColumnSort = 1;
 	    this.showOnlySelected = false;
-	    this.remote = false; // remote data
 	  }
 
 	  _createClass(TableDataStore, [{
@@ -14513,6 +14532,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.colInfos = props.colInfos;
 	      this.remote = props.remote;
 	      this.multiColumnSearch = props.multiColumnSearch;
+	      // default behaviour if strictSearch prop is not provided: !multiColumnSearch
+	      this.strictSearch = typeof props.strictSearch === 'undefined' ? !props.multiColumnSearch : props.strictSearch;
 	      this.multiColumnSort = props.multiColumnSort;
 	    }
 	  }, {
@@ -15077,57 +15098,82 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	      this.isOnFilter = true;
 	    }
+
+	    /*
+	     * Four different sort modes, all case insensitive:
+	     * (1) strictSearch && !multiColumnSearch
+	     *     search text must be contained as provided in a single column
+	     * (2) strictSearch && multiColumnSearch
+	     *     conjunction (AND combination) of whitespace separated terms over multiple columns
+	     * (3) !strictSearch && !multiColumnSearch
+	     *     conjunction (AND combination) of whitespace separated terms in a single column
+	     * (4) !strictSearch && multiColumnSearch
+	     *     any of the whitespace separated terms must be contained in any column
+	     */
+
 	  }, {
 	    key: '_search',
 	    value: function _search(source) {
 	      var _this7 = this;
 
-	      var searchTextArray = [];
-
-	      if (this.multiColumnSearch) {
-	        searchTextArray = this.searchText.split(' ');
+	      var searchTextArray = void 0;
+	      if (this.multiColumnSearch || !this.strictSearch) {
+	        // ignore leading and trailing whitespaces
+	        searchTextArray = this.searchText.trim().toLowerCase().split(/\s+/);
 	      } else {
-	        searchTextArray.push(this.searchText);
+	        searchTextArray = [this.searchText.toLowerCase()];
 	      }
+	      var searchTermCount = searchTextArray.length;
+	      var multipleTerms = searchTermCount > 1;
+	      var nonStrictMultiCol = multipleTerms && !this.strictSearch && this.multiColumnSearch;
+	      var nonStrictSingleCol = multipleTerms && !this.strictSearch && !this.multiColumnSearch;
 	      this.filteredData = source.filter(function (row, r) {
 	        var keys = Object.keys(row);
-	        var valid = false;
+	        // only clone array if necessary
+	        var searchTerms = multipleTerms ? searchTextArray.slice() : searchTextArray;
 	        // for loops are ugly, but performance matters here.
 	        // And you cant break from a forEach.
 	        // http://jsperf.com/for-vs-foreach/66
 	        for (var i = 0, keysLength = keys.length; i < keysLength; i++) {
 	          var key = keys[i];
-	          // fixed data filter when misunderstand 0 is false
-	          var filterSpecialNum = false;
-	          if (!isNaN(row[key]) && parseInt(row[key], 10) === 0) {
-	            filterSpecialNum = true;
-	          }
-	          if (_this7.colInfos[key] && (row[key] || filterSpecialNum)) {
-	            var _colInfos$key = _this7.colInfos[key],
-	                format = _colInfos$key.format,
-	                filterFormatted = _colInfos$key.filterFormatted,
-	                filterValue = _colInfos$key.filterValue,
-	                formatExtraData = _colInfos$key.formatExtraData,
-	                searchable = _colInfos$key.searchable;
+	          var colInfo = _this7.colInfos[key];
+	          if (colInfo && colInfo.searchable) {
+	            var format = colInfo.format,
+	                filterFormatted = colInfo.filterFormatted,
+	                filterValue = colInfo.filterValue,
+	                formatExtraData = colInfo.formatExtraData;
 
-	            var targetVal = row[key];
-	            if (searchable) {
-	              if (filterFormatted && format) {
-	                targetVal = format(targetVal, row, formatExtraData, r);
-	              } else if (filterValue) {
-	                targetVal = filterValue(targetVal, row);
+	            var targetVal = void 0;
+	            if (filterFormatted && format) {
+	              targetVal = format(row[key], row, formatExtraData, r);
+	            } else if (filterValue) {
+	              targetVal = filterValue(row[key], row);
+	            } else {
+	              targetVal = row[key];
+	            }
+	            if (targetVal !== null && typeof targetVal !== 'undefined') {
+	              targetVal = targetVal.toString().toLowerCase();
+	              if (nonStrictSingleCol && searchTermCount > searchTerms.length) {
+	                // reset search terms for single column search
+	                searchTerms = searchTextArray.slice();
 	              }
-	              for (var j = 0, textLength = searchTextArray.length; j < textLength; j++) {
-	                var filterVal = searchTextArray[j].toLowerCase();
-	                if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
-	                  valid = true;
+	              for (var j = searchTerms.length - 1; j > -1; j--) {
+	                if (targetVal.indexOf(searchTerms[j]) !== -1) {
+	                  if (nonStrictMultiCol || searchTerms.length === 1) {
+	                    // match found: the last or only one
+	                    return true;
+	                  }
+	                  // match found: but there are more search terms to check for
+	                  searchTerms.splice(j, 1);
+	                } else if (!_this7.multiColumnSearch) {
+	                  // one of the search terms was not found in this column
 	                  break;
 	                }
 	              }
 	            }
 	          }
 	        }
-	        return valid;
+	        return false;
 	      });
 	      this.isOnFilter = true;
 	    }

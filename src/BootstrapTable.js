@@ -1047,6 +1047,7 @@ class BootstrapTable extends Component {
             field: props.dataField,
             hiddenOnInsert: props.hiddenOnInsert,
             keyValidator: props.keyValidator,
+            customInsertEditor: props.customInsertEditor,
             // when you want same auto generate value and not allow edit, example ID field
             autoValue: props.autoValue || false,
             // for create editor, no params for column.editable() indicate that editor for new row
@@ -1061,6 +1062,7 @@ class BootstrapTable extends Component {
           name: children.props.headerText || children.props.children,
           field: children.props.dataField,
           editable: children.props.editable,
+          customInsertEditor: children.props.customInsertEditor,
           hiddenOnInsert: children.props.hiddenOnInsert,
           keyValidator: children.props.keyValidator
         } ];
