@@ -167,6 +167,7 @@
               <ul>
                 <li><a href="#insertmodalheader">Modal Header</a></li>
                 <li><a href="#insertmodalbody">Modal Body</a></li>
+                <li><a href="#insertmodalfield">Modal Input Field</a></li>
                 <li><a href="#insertmodalfooter">Modal Footer</a></li>
               </ul>
               <li><a href="#pagination">Pagination</a></li>
@@ -765,6 +766,68 @@ const options = {
 
                 <strong>Note: You are supposed to be wrapper your custom DOM/JSX as a React Component, for customizing body, we don't have the exposed React Component.</strong></br>
                 <strong>Note: You are supposed to be implemented the <code>getFieldValue</code> method in your custom React Component and return the new row for insert row</strong>
+              </span></br></br>
+            </div>
+<h3 id="insertmodalfield">Insert Modal Field</h3>
+            <div class="feature-text">
+              <h3><span class="number">01.</span> Custom the feld in the insert modal</h3>
+              <span>
+                You can only custom one input field in the insert modal instead of whole <a href="#insertmodalbody">modal body</a>. Use <code>customInsertEditor</code> on <code>&lt;TableHeaderColumn&gt;</code>
+                and give an object which have a <code>getElement</code> property:
+<pre>
+<code class="javascript">customNameField = (column, attr, editorClass, ignoreEditable) => {
+  return (
+    &lt;select className={ `${editorClass}` } { ...attr }&gt;
+      {
+        fruits.map(name => (&lt;option key={ name } value={ name }&gt;{ name }&lt;/option&gt;))
+      }
+    &lt;/select&gt;
+  );
+}
+// ...
+&lt;TableHeaderColumn dataField='name' customInsertEditor={ { getElement: this.customNameField } }&gt;Product Name&lt;/TableHeaderColumn&gt;
+</code>
+</pre>
+              <code>attr</code> props have <code>ref</code> attribute and you are supposed to be add them on your input field(input, textarea, select etc.)
+              Because <code>react-bootstrap-table</code> use the <code>ref</code> to get the input value. However, if your custom element is not a standard field for HTML form-control
+              , you can still custom it like following：</br>
+<pre>
+<code class="javascript">class SalesRadioField extends React.Component {
+
+  getFieldValue = () => {
+    return this.refs.yes.checked ? 'Yes' : 'No';
+  }
+
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;label className='radio-inline'&gt;
+          &lt;input ref='yes' type='radio' name='optradio' value='Yes'/&gt;Yes
+        &lt;/label&gt;
+        &lt;label className='radio-inline'&gt;
+          &lt;input ref='no' type='radio' name='optradio' value='No'/&gt;No
+        &lt;/label&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+customSaleField = (column, attr, editorClass, ignoreEditable) => {
+  /*
+    In this case, you are suppose to be prodived a specific method name for
+    react-bootstrap-table to get the value for this field.
+
+    Notes:
+    1. You are suppose to be implement getFieldValue function and return the value that user input
+  */
+  return (
+    &lt;SalesRadioField ref={ attr.ref } editorClass={ editorClass } ignoreEditable={ ignoreEditable }/&gt;
+  );
+}
+// ...
+&lt;TableHeaderColumn dataField='sales' customInsertEditor={ { getElement: this.customSaleField } }&gt;On Sales?&lt;/TableHeaderColumn&gt;
+</code>
+</pre>
+
               </span></br></br>
             </div>
 <h3 id="insertmodalheader">Insert Modal Header</h3>
