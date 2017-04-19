@@ -175,7 +175,7 @@
                 <li><a href="#sizePerPageDropdown">SizePerPage Dropdown</a></li>
               </ul>
               <li>Filter</li>
-              <li>Cell Editor</li>
+              <li><a href="#celledit">Cell Editing</a></li>
               <li>Selection Column</li>
             </ul>
 					</div>
@@ -1124,6 +1124,34 @@ const options = {
 &lt;BootstrapTable data={rows} options={options} pagination&gt;
 </code>
 </pre>
+            </div>
+<h3 id="cellEdit">Cell Edit</h3>
+             <div class="feature-text">
+              <h3><span class="number">01.</span> Custom cell editor by default</h3>
+            <span>
+              For the cell edit functionality which configure by <code>cellEdit</code> prop on <code>BootstrapTable</code>, the default editor is basic input field. react-bootstrap-table support some default form input,
+              like: textarea, checkbox, select and checkbox. You can confgiure <code>editable</code> on <code>TableHeaderColumn</code> to specify what kind of editor you want:
+<pre>
+<code class="javascript">const jobTypes = [ 'A', 'B', 'C', 'D' ];
+render() {
+  return (
+    &lt;BootstrapTable data={ jobs } cellEdit={ cellEditProp }&gt;
+      &lt;TableHeaderColumn dataField='id' isKey={ true }}&gt;Job ID&lt;/TableHeaderColumn}&gt;
+      &lt;TableHeaderColumn dataField='name' editable={ { type: 'textarea' } }}&gt;Job Name&lt;/TableHeaderColumn}&gt;
+      &lt;TableHeaderColumn dataField='type' editable={ { type: 'select', options: { values: jobTypes } } }}&gt;Job Type&lt;/TableHeaderColumn}&gt;
+      &lt;TableHeaderColumn dataField='active' editable={ { type: 'checkbox', options: { values: 'Y:N' } } }}&gt;Active&lt;/TableHeaderColumn}&gt;
+      &lt;TableHeaderColumn dataField='datetime' editable={ { type: 'datetime' } }}&gt;Date Time&lt;/TableHeaderColumn}&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+            </span></br></br>
+            </div>
+            <div class="feature-text">
+              <h3><span class="number">02.</span> Custom cell editor by yourself</h3>
+              <span>
+              </span></br></br>
             </div>
 				</div>
 			</div>
