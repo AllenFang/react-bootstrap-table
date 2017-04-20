@@ -1505,7 +1505,7 @@ BootstrapTable.defaultProps = {
     nextPageTitle: Const.NEXT_PAGE_TITLE,
     firstPageTitle: Const.FIRST_PAGE_TITLE,
     lastPageTitle: Const.LAST_PAGE_TITLE,
-    pageStartIndex: undefined,
+    pageStartIndex: 1,
     searchDelayTime: undefined,
     exportCSVText: Const.EXPORT_CSV_TEXT,
     insertText: Const.INSERT_BTN_TEXT,
