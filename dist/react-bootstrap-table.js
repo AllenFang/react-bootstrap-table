@@ -1912,7 +1912,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    nextPageTitle: _Const2.default.NEXT_PAGE_TITLE,
 	    firstPageTitle: _Const2.default.FIRST_PAGE_TITLE,
 	    lastPageTitle: _Const2.default.LAST_PAGE_TITLE,
-	    pageStartIndex: undefined,
+	    pageStartIndex: 1,
 	    searchDelayTime: undefined,
 	    exportCSVText: _Const2.default.EXPORT_CSV_TEXT,
 	    insertText: _Const2.default.INSERT_BTN_TEXT,
@@ -3187,15 +3187,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // We calculate an offset here in order to properly fetch the indexed data,
 	  // despite the page start index not always being 1
 	  getNormalizedPage: function getNormalizedPage(pageStartIndex, page) {
+	    pageStartIndex = this.getFirstPage(pageStartIndex);
 	    if (page === undefined) page = pageStartIndex;
-	    var normalizedPage = void 0;
-	    if (pageStartIndex !== undefined) {
-	      var offset = Math.abs(_Const2.default.PAGE_START_INDEX - pageStartIndex);
-	      normalizedPage = page + offset;
-	    } else {
-	      normalizedPage = page;
-	    }
-	    return normalizedPage;
+	    var offset = Math.abs(_Const2.default.PAGE_START_INDEX - pageStartIndex);
+	    return page + offset;
 	  },
 	  getFirstPage: function getFirstPage(pageStartIndex) {
 	    return pageStartIndex !== undefined ? pageStartIndex : _Const2.default.PAGE_START_INDEX;
