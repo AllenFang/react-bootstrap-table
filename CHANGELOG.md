@@ -1,3 +1,9 @@
+<a name="v3.2.1"></a>
+# [v3.2.1](https://github.com/AllenFang/react-bootstrap-table/compare/v3.2.0...v3.2.1) (2017-04-20)
+## Bug fixes
+* Fixed search and pagination not working together([5a533cf](https://github.com/AllenFang/react-bootstrap-table/commit/5a533cfb6512c1200d66a962323b00d5316f2e12))
+	* It's a very critical bug since from `v3.1.8`
+
 <a name="v3.2.0"></a>
 # [v3.2.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.8...v3.2.0) (2017-04-16)
 ## Enhancement
