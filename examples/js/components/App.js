@@ -1,6 +1,6 @@
 /* eslint max-len: 0 */
 import React from 'react';
-import 'toastr/build/toastr.min.css';
+import 'react-s-alert/dist/s-alert-default.css';
 import '../../../css/react-bootstrap-table.css';
 import {
   Grid,
