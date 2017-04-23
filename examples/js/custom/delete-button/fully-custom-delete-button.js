@@ -2,7 +2,7 @@
 /* eslint no-unused-vars: 0 */
 /* eslint no-alert: 0 */
 import React from 'react';
-import { BootstrapTable, TableHeaderColumn, InsertButton } from 'react-bootstrap-table';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 
 const products = [];
@@ -21,7 +21,7 @@ function addProducts(quantity) {
 
 addProducts(5);
 
-export default class FullyCustomInsertButtonTable extends React.Component {
+export default class FullyCustomDeleteButtonTable extends React.Component {
 
   createCustomDeleteButton = (onBtnClick) => {
     return (

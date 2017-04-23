@@ -1,3 +1,29 @@
+<a name="v3.2.1"></a>
+# [v3.2.1](https://github.com/AllenFang/react-bootstrap-table/compare/v3.2.0...v3.2.1) (2017-04-20)
+## Bug fixes
+* Fixed search and pagination not working together([5a533cf](https://github.com/AllenFang/react-bootstrap-table/commit/5a533cfb6512c1200d66a962323b00d5316f2e12))
+	* It's a very critical bug since from `v3.1.8`
+
+<a name="v3.2.0"></a>
+# [v3.2.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.8...v3.2.0) (2017-04-16)
+## Enhancement
+* Now, we are able to custom the field in insert modal([8b66a74](https://github.com/AllenFang/react-bootstrap-table/commit/8b66a74178ebffdb8bad43bcbbf1381887ac7835))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/custom/insert-modal/custom-insert-modal-field.js)
+
+## Features
+* Support conjunction search([246a7fa](https://github.com/AllenFang/react-bootstrap-table/commit/246a7fa721e0dd3846d1c1dcb48db2c114d261cb))
+	* Please check [#1199](https://github.com/AllenFang/react-bootstrap-table/issues/1199)
+* Allow to expand only one row at a time([c4c1b7f](https://github.com/AllenFang/react-bootstrap-table/commit/c4c1b7f377bbe3956b867d0afadf98e0e8c46cb6))
+	* configure via `options.onlyOneExpanding` and assign `true`
+
+<a name="v3.1.8"></a>
+# [v3.1.8](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.7...v3.1.8) (2017-04-13)
+## Bug fixes
+* Fix wrong page jumping after search, filter etc.([b686d1a](https://github.com/AllenFang/react-bootstrap-table/commit/b686d1a44b95878cbd0bdc91a7a8b20ce7fb8671))
+
+## Enhancement
+* Add class name `react-bs-table-sizePerPage-dropdown` for sizePerPage dropdown([da82469](https://github.com/AllenFang/react-bootstrap-table/commit/da82469431fdec4efb466b8d08a106b1448d7b44))
+
 <a name="v3.1.7"></a>
 # [v3.1.7](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.6...v3.1.7) (2017-04-07)
 ## Bug fixes
