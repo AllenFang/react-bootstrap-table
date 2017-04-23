@@ -174,9 +174,9 @@
               <ul>
                 <li><a href="#sizePerPageDropdown">SizePerPage Dropdown</a></li>
               </ul>
-              <li>Filter</li>
+              <li><a href="#columnFilter">Column Filter</a></li>
               <li><a href="#celledit">Cell Editing</a></li>
-              <li>Selection Column</li>
+              <li><a href="#rowSelection">Row Selection Column</a></li>
             </ul>
 					</div>
 				</div>
@@ -1125,6 +1125,19 @@ const options = {
 </code>
 </pre>
             </div>
+<h3 id="columnFilter">Column Filter</h3>
+             <div class="feature-text">
+            <span>
+              For the column filter, we support `select`, `text`, `number` and `date` filter by default. But you can still custom the filter for specified reason.
+              In customization case, you need to assign `filter` in `TableHeaderColumn` but give an object which have following properties:
+              <ul>
+                <li><code>type</code>: Give <code>'CustomFilter'</code> to specify this filter are customization filter</li>
+                <li><code>getElement</code>: Give a function and a JSX returned value is necessary</li>
+                <li><code>customFilterParameters(optional)</code>: give any custom parameter if necessary</li>
+              </ul>
+              You can check <a href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column-filter/custom-filter.js" target="_blank">this</a> example to learn how to custom a column filter:
+            </span></br></br>
+            </div>
 <h3 id="cellEdit">Cell Edit</h3>
              <div class="feature-text">
               <h3><span class="number">01.</span> Custom cell editor by default</h3>
@@ -1151,22 +1164,52 @@ render() {
             <div class="feature-text">
               <h3><span class="number">02.</span> Custom cell editor by yourself</h3>
               <span>
+                If default cell edit type is not match your requirement, you still can custom the cell editor via <code>customEditor</code> on <code>TableHeaderColumn</code>.
+                There are two availabe properties can be configured on <code>customEditor</code>:
+                <ul>
+                  <li><code>getElement</code>: Give a function and a JSX returned value is necessary</li>
+                  <li><code>customEditorParameters(optional)</code>: give any custom parameter if necessary</li>
+                </ul>
+                You can check <a href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/cell-edit/custom-cell-edit-table.js" target="_blank">this</a> example to learn how to custom a cell editor.<br/>
+                <strong>Note: You need to implement <code>updateData()</code> on your customization component and return the cell data. This function will be called automatically before saving cell</strong></br>
+              </span></br></br>
+            </div>
+<h3 id="rowSelection">Row Selection Column</h3>
+             <div class="feature-text">
+              <h3><span class="number">01.</span> Basic styling customization</h3>
+            <span>
+              For <code>selectRow</code> on <code>BootstrapTable</code>, default will display a selection column on the first column. We only support <code>className</code> and <code>bgColor</code>
+              for adding custom class name or background color on selection row. 
+<pre>
+<code class="javascript">render() {
+  const selectRow = {
+    mode: 'checkbox',
+    bgColor: 'pink',
+    className: 'my-selection-custom'
+  };
+  return (
+    &lt;BootstrapTable data={ jobs } selectRow={ selectRow }&gt;
+      &lt;TableHeaderColumn dataField='id' isKey={ true }}&gt;Job ID&lt;/TableHeaderColumn}&gt;
+      &lt;TableHeaderColumn dataField='name'&gt;Job Name&lt;/TableHeaderColumn}&gt;
+      &lt;TableHeaderColumn dataField='type'&gt;Job Type&lt;/TableHeaderColumn}&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+            </span></br></br>
+            </div>
+            <div class="feature-text">
+              <h3><span class="number">02.</span> Custom seleciton column</h3>
+              <span>
+                For a highly customable reason, we still support you to custom the selection column via <code>selectRow.customComponent</code>. You can 
+                check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/selection/custom-multi-select-table.js">this</a> example to learn how to use it.
               </span></br></br>
             </div>
 				</div>
 			</div>
 		</div>
 		<!-- END fh5co-about -->
-		<div id="fh5co-content-section" class="fh5co-section-gray">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-						<h3>Get More Customization Examples</h3>
-						<p>Please check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/custom">this</a> on Github</p>
-					</div>
-				</div>
-			</div>
-		</div>
 		<!-- END What we do -->
 		<footer>
 			<div id="footer">
