@@ -165,6 +165,7 @@
                 <li><a href="#expandableRow" class="prop">expandableRow</a></li>
                 <li><a href="#expandComponent" class="prop">expandComponent</a></li>
                 <li><a href="#multiColumnSort" class="prop">multiColumnSort</a></li>
+                <li><a href="#keyBoardNav" class="prop">keyBoardNav</a></li>
                 <li><a href="#selectRow" class="prop">selectRow</a></li>
                 <li><a href="#select-mode" class="sub-prop prop">mode</a></li>
                 <li><a href="#clickToSelect" class="sub-prop prop">clickToSelect</a></li>
@@ -1004,7 +1005,7 @@ render() {
                   </div>
               </div>
           </div>
-           <div class="tab-pane active" id="multiColumnSort">
+          <div class="tab-pane active" id="multiColumnSort">
               <div class="container-fluid">
                   <div class="row">
                       <div class="col-lg-12">
@@ -1021,6 +1022,39 @@ render() {
 &lt;/BootstrapTable&gt;
 </code>
 </pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane active" id="keyBoardNav">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#keyBoardNav'>keyBoardNav : Bool | Object</a></h1>
+                        <span>
+                          This props will enable/disable the keyboard navigation cell by cell on table. This is new feature from <code>3.0.0</code>. Default is <code>false</code>
+                          You can have a basic and simple keyboard navigation feature on table via enable <code>keyBoardNav</code> on <code>BootstrapTable</code>. For the usage of keyboard navigation
+                          is you can click any cell to focus in or use ⬅ ⬆ ⬇ ➡ to natigate the cell.
+                        </br></br>
+                        </span>
+<pre>
+<code class="html">&lt;BootstrapTable data={ data } keyBoardNav&gt;
+    //...
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      <span>
+                          But if you want more advance features for keyboard navigation or integrate with cell editing, expand row or selection row, you may get interesting to see how them work well together:
+                          In the advance cases, you need to configure <code>keyBoardNav</code> as an object and this object may have different properties which depends on different usage:
+                          <br/><br/><ul>
+                            <li><code>customStyle</code>: Return a style object which will be applied on the navigating cell.</li>
+                            <li><code>clickToNav</code>: <code>false</code> to disable the click to navigating, usually user want to click to select row instead of navigation.</li>
+                            <li><code>customStyleOnEditCell</code>: Return a style object which will be applied on the both of navigating and editing cell.</li>
+                            <li><code>enterToEdit</code>: <code>true</code> to enable pressing ENTER to edit cell if enable <code>cellEdit</code>.</li>
+                          </ul>
+                        </br>
+                        <strong>Note: checking <a href="https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/keyboard-nav" target="_blank">more examples</a> for keyboard navigation</strong>
+                      </span>
                       </div>
                   </div>
               </div>
