@@ -169,6 +169,8 @@ import ExpandByColumn from './components/expandRow/expand-row-by-column';
 import ManageExpandExternal from './components/expandRow/manage-expanding';
 import ExpandWithSelection from './components/expandRow/expand-row-with-selection';
 import ExpandWithCellEdit from './components/expandRow/expand-row-with-cellEdit';
+import ExpandIndicator from './components/expandRow/expand-indicator';
+import CustomExpandIndicator from './components/expandRow/custom-expand-indicator';
 
 
 function appendGist(domId, gist) {
@@ -1064,6 +1066,16 @@ if (window.location.hash === '#expand') {
         title: 'Expand Row by Specified Column',
         gist: 'https://gist.github.com/AllenFang/53ee94b5d4fe25bbc685a547268aaa1e.js',
         component: (<ExpandByColumn />)
+    }, {
+        id: 'expandrowindicator_s',
+        title: 'Expand Row Indicator',
+        gist: 'https://gist.github.com/AllenFang/dc5f1bcc22f767de015fff50a37ad06f.js',
+        component: (<ExpandIndicator />)
+    }, {
+        id: 'customexpandrowindicator_s',
+        title: 'Custom Expand Row Indicator',
+        gist: 'https://gist.github.com/AllenFang/9189923be68865a4568a34cc66246da6.js',
+        component: (<CustomExpandIndicator />)
     }, {
         id: 'manageexpandingrow_s',
         title: 'Manage Expanding External',
