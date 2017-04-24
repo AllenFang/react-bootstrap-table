@@ -275,6 +275,7 @@
                 <li><a href="#filterValue" class="prop">filterValue</a></li>
                 <li><a href="#csvFormat" class="prop">csvFormat</a></li>
                 <li><a href="#csvHeader" class="prop">csvHeader</a></li>
+                <li><a href="#csvFormatExtraData" class="prop">csvFormatExtraData</a></li>
                 <li><a href="#hidden" class="prop">hidden</a></li>
                 <li><a href="#export" class="prop">export</a></li>
                 <li><a href="#expandable" class="prop">expandable</a></li>
@@ -4335,6 +4336,37 @@ render() {
   &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField='name' csvHeader='product-name'&gt;Product Name&lt;/TableHeaderColumn&gt;
   &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="csvFormatExtraData">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#csvFormatExtraData'>csvFormatExtraData : Any</a></h1>
+                        <span>
+                          it's ueuallu used with <a href='#csvFormat' class="internal-anchor">csvFormat</a>, and it's same with <a href='#formatExtraData' class="internal-anchor">formatExtraData</a>
+                          you can give any data you want to be passed to the <code>csvFormat</code> function.
+                          </br></br>
+                        </span>
+<pre>
+<code class="html">csvPriceFormatter(cell, row) {    
+   return `${row.id}: ${cell} USD`;
+}
+
+csvQualityFormatter(cell, row, extra) {
+  return extra[cell];
+}
+//...
+&lt;BootstrapTable data={ products } exportCSV&gt;
+  &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Product ID&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name' csvHeader='product-name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='quality' csvFormat={ this.csvQualityFormatter } csvFormatExtraData={ qualityType }&gt;Product Quality&lt;/TableHeaderColumn&gt;
 &lt;/BootstrapTable&gt;
 </code>
 </pre>
