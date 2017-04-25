@@ -17,7 +17,7 @@ class TableEditColumn extends Component {
   }
 
   handleKeyPress = e => {
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13 || e.keyCode === 9) {
       // Pressed ENTER
       const value = e.currentTarget.type === 'checkbox' ?
                       this._getCheckBoxValue(e) : e.currentTarget.value;
@@ -25,13 +25,15 @@ class TableEditColumn extends Component {
       if (!this.validator(value)) {
         return;
       }
-      this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
+      if (e.keyCode === 13) {
+        this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
+      } else {
+        this.props.onTab(this.props.rowIndex + 1, this.props.colIndex + 1, 'tab', e);
+        e.preventDefault();
+      }
     } else if (e.keyCode === 27) {
       this.props.completeEdit(
         null, this.props.rowIndex, this.props.colIndex);
-    } else if (e.keyCode === 9) {
-      this.props.onTab(this.props.rowIndex + 1, this.props.colIndex + 1, 'tab', e);
-      e.preventDefault();
     } else if (e.type === 'click' && !this.props.blurToSave) {  // textarea click save button
       const value = e.target.parentElement.firstChild.value;
       if (!this.validator(value)) {
@@ -48,7 +50,7 @@ class TableEditColumn extends Component {
       const value = e.currentTarget.type === 'checkbox' ?
                       this._getCheckBoxValue(e) : e.currentTarget.value;
       if (!this.validator(value)) {
-        return;
+        return false;
       }
       this.props.completeEdit(
           value, this.props.rowIndex, this.props.colIndex);
