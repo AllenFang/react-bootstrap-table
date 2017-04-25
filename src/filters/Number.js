@@ -85,13 +85,15 @@ class NumberFilter extends Component {
 
   getNumberOptions() {
     const optionTags = [];
-    const { options } = this.props;
+    const { options, withoutEmptyOption } = this.props;
 
-    optionTags.push(
-      <option key='-1' value=''>
-        { this.props.placeholder || `Select ${this.props.columnName}...` }
-      </option>
-    );
+    if (!withoutEmptyOption) {
+      optionTags.push(
+        <option key='-1' value=''>
+          { this.props.placeholder || `Select ${this.props.columnName}...` }
+        </option>
+      );
+    }
     for (let i = 0; i < options.length; i++) {
       optionTags.push(<option key={ i } value={ options[i] }>{ options[i] }</option>);
     }
