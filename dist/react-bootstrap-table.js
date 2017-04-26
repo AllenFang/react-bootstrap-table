@@ -3801,19 +3801,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(TableEditColumn, [{
 	    key: '__handleKeyPress__REACT_HOT_LOADER__',
 	    value: function __handleKeyPress__REACT_HOT_LOADER__(e) {
-	      if (e.keyCode === 13) {
+	      if (e.keyCode === 13 || e.keyCode === 9) {
 	        // Pressed ENTER
 	        var value = e.currentTarget.type === 'checkbox' ? this._getCheckBoxValue(e) : e.currentTarget.value;
 
 	        if (!this.validator(value)) {
 	          return;
 	        }
-	        this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
+	        if (e.keyCode === 13) {
+	          this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
+	        } else {
+	          this.props.onTab(this.props.rowIndex + 1, this.props.colIndex + 1, 'tab', e);
+	          e.preventDefault();
+	        }
 	      } else if (e.keyCode === 27) {
 	        this.props.completeEdit(null, this.props.rowIndex, this.props.colIndex);
-	      } else if (e.keyCode === 9) {
-	        this.props.onTab(this.props.rowIndex + 1, this.props.colIndex + 1, 'tab', e);
-	        e.preventDefault();
 	      } else if (e.type === 'click' && !this.props.blurToSave) {
 	        // textarea click save button
 	        var _value = e.target.parentElement.firstChild.value;
@@ -3830,7 +3832,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (this.props.blurToSave) {
 	        var value = e.currentTarget.type === 'checkbox' ? this._getCheckBoxValue(e) : e.currentTarget.value;
 	        if (!this.validator(value)) {
-	          return;
+	          return false;
 	        }
 	        this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
 	      }
@@ -16099,7 +16101,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: '__handleColumnClick__REACT_HOT_LOADER__',
 	    value: function __handleColumnClick__REACT_HOT_LOADER__() {
 	      if (this.props.isOnlyHead || !this.props.dataSort) return;
-	      var order = this.props.sort === _Const2.default.SORT_DESC ? _Const2.default.SORT_ASC : _Const2.default.SORT_DESC;
+	      var order = this.props.sort;
+
+	      if (!order && this.props.defaultASC) order = _Const2.default.SORT_ASC;else order = this.props.sort === _Const2.default.SORT_DESC ? _Const2.default.SORT_ASC : _Const2.default.SORT_DESC;
 	      this.props.onSort(order, this.props.dataField);
 	    }
 	  }, {
@@ -16365,7 +16369,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  tdAttr: _react.PropTypes.object,
 	  tdStyle: _react.PropTypes.object,
 	  thStyle: _react.PropTypes.object,
-	  keyValidator: _react.PropTypes.bool
+	  keyValidator: _react.PropTypes.bool,
+	  defaultASC: _react.PropTypes.bool
 	};
 
 	TableHeaderColumn.defaultProps = {
@@ -16400,7 +16405,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  tdAttr: undefined,
 	  tdStyle: undefined,
 	  thStyle: undefined,
-	  keyValidator: false
+	  keyValidator: false,
+	  defaultASC: false
 	};
 
 	var _default = TableHeaderColumn;
@@ -16983,14 +16989,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	          options = _props.options,
 	          placeholder = _props.placeholder,
 	          columnName = _props.columnName,
-	          selectText = _props.selectText;
+	          selectText = _props.selectText,
+	          withoutEmptyOption = _props.withoutEmptyOption;
 
 	      var selectTextValue = selectText !== undefined ? selectText : 'Select';
-	      optionTags.push(_react2.default.createElement(
-	        'option',
-	        { key: '-1', value: '' },
-	        placeholder || selectTextValue + ' ' + columnName + '...'
-	      ));
+	      if (!withoutEmptyOption) {
+	        optionTags.push(_react2.default.createElement(
+	          'option',
+	          { key: '-1', value: '' },
+	          placeholder || selectTextValue + ' ' + columnName + '...'
+	        ));
+	      }
 	      Object.keys(options).map(function (key) {
 	        optionTags.push(_react2.default.createElement(
 	          'option',
@@ -17167,7 +17176,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'getComparatorOptions',
 	    value: function getComparatorOptions() {
 	      var optionTags = [];
-	      optionTags.push(_react2.default.createElement('option', { key: '-1' }));
+	      var withoutEmptyComparatorOption = this.props.withoutEmptyComparatorOption;
+
+	      if (!withoutEmptyComparatorOption) {
+	        optionTags.push(_react2.default.createElement('option', { key: '-1' }));
+	      }
 	      for (var i = 0; i < this.numberComparators.length; i++) {
 	        optionTags.push(_react2.default.createElement(
 	          'option',
@@ -17181,14 +17194,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'getNumberOptions',
 	    value: function getNumberOptions() {
 	      var optionTags = [];
-	      var options = this.props.options;
+	      var _props = this.props,
+	          options = _props.options,
+	          withoutEmptyNumberOption = _props.withoutEmptyNumberOption;
 
-
-	      optionTags.push(_react2.default.createElement(
-	        'option',
-	        { key: '-1', value: '' },
-	        this.props.placeholder || 'Select ' + this.props.columnName + '...'
-	      ));
+	      if (!withoutEmptyNumberOption) {
+	        optionTags.push(_react2.default.createElement(
+	          'option',
+	          { key: '-1', value: '' },
+	          this.props.placeholder || 'Select ' + this.props.columnName + '...'
+	        ));
+	      }
 	      for (var i = 0; i < options.length; i++) {
 	        optionTags.push(_react2.default.createElement(
 	          'option',
@@ -17275,11 +17291,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 	  placeholder: _react.PropTypes.string,
-	  columnName: _react.PropTypes.string
+	  columnName: _react.PropTypes.string,
+	  withoutEmptyComparatorOption: _react.PropTypes.bool,
+	  withoutEmptyNumberOption: _react.PropTypes.bool
 	};
 
 	NumberFilter.defaultProps = {
-	  delay: _Const2.default.FILTER_DELAY
+	  delay: _Const2.default.FILTER_DELAY,
+	  withoutEmptyComparatorOption: false,
+	  withoutEmptyNumberOption: false
 	};
 
 	var _default = NumberFilter;
