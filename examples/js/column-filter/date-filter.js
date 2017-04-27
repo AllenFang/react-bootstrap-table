@@ -23,6 +23,10 @@ function addProducts(quantity) {
 addProducts(5);
 
 function dateFormatter(cell, row) {
+  if (typeof cell !== 'object') {
+    cell = new Date(cell);
+  }
+
   return `${('0' + cell.getDate()).slice(-2)}/${('0' + (cell.getMonth() + 1)).slice(-2)}/${cell.getFullYear()}`;
 }
 

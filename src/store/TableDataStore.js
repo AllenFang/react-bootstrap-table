@@ -322,6 +322,10 @@ export class TableDataStore {
     const filterMonth = filterVal.getMonth();
     const filterYear = filterVal.getFullYear();
 
+    if (typeof targetVal !== 'object') {
+      targetVal = new Date(targetVal);
+    }
+
     const targetDate = targetVal.getDate();
     const targetMonth = targetVal.getMonth();
     const targetYear = targetVal.getFullYear();
