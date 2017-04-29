@@ -240,6 +240,7 @@
                 <li><a href="#closeText" class="sub-prop prop">closeText</a></li>
                 <li><a href="#exportCSVText" class="sub-prop prop">exportCSVText</a></li>
                 <li><a href="#beforeShowError" class="sub-prop prop">beforeShowError</a></li>
+                <li><a href="#printToolBar" class="sub-prop prop">printToolBar</a></li>
                 <li class="sidebar-brand">
                   <a class="active" id="apiOnBootstrapTable" href="#apiOnBootstrapTable">
                       API on &lt;BootstrapTable&gt;
@@ -1868,6 +1869,7 @@ render() {
                             <li><a class="internal-anchor" href='#onRowMouseOut'>onRowMouseOut</a></li>
                             <li><a class="internal-anchor" href='#handleConfirmDeleteRow'>handleConfirmDeleteRow</a></li>
                             <li><a class="internal-anchor" href='#beforeShowError'>beforeShowError</a></li>
+                            <li><a class="internal-anchor" href='#printToolBar'>printToolBar</a></li>
                           </ul>
                         </br></br>
                         </span>
@@ -2897,6 +2899,35 @@ render() {
       options={ options }&gt;
         &lt;TableHeaderColumn dataField='id' isKey={ true }&gt;Job ID&lt;/TableHeaderColumn&gt;
         &lt;TableHeaderColumn dataField='status' editable={ { validator: this.jobStatusValidator } }&gt;Job Status&lt;/TableHeaderColumn&gt;
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="printToolBar">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#printToolBar'>printToolBar : Bool</a></h1>
+                        <span>
+                          Default is <code>true</code>, you can disable to print the toolbar via <code>false</code>
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    printToolBar: false
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products }
+      options={ options }&gt;
+        &lt;TableHeaderColumn dataField='id' isKey&gt;Job ID&lt;/TableHeaderColumn&gt;
+        &lt;TableHeaderColumn dataField='status'&gt;Job Status&lt;/TableHeaderColumn&gt;
     &lt;/BootstrapTable&gt;
   );
 }
