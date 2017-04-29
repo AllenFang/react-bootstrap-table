@@ -231,6 +231,7 @@
                 <li><a href="#pageStartIndex" class="sub-prop prop">pageStartIndex</a></li>
                 <li><a href="#onPageChange" class="sub-prop prop">onPageChange</a></li>
                 <li><a href="#onSizePerPageList" class="sub-prop prop">onSizePerPageList</a></li>
+                <li><a href="#hidePageListOnlyOnePage" class="sub-prop prop">hidePageListOnlyOnePage</a></li>
                 <li><a href="#expandRowBgColor" class="sub-prop prop">expandRowBgColor</a></li>
                 <li><a href="#expandBy" class="sub-prop prop">expandBy</a></li>
                 <li><a href="#insertText" class="sub-prop prop">insertText</a></li>
@@ -1834,6 +1835,7 @@ render() {
                             <li><a class="internal-anchor" href='#pageStartIndex'>pageStartIndex</a></li>
                             <li><a class="internal-anchor" href='#onPageChange'>onPageChange</a></li>
                             <li><a class="internal-anchor" href='#onSizePerPageList'>onSizePerPageList</a></li>
+                            <li><a class="internal-anchor" href='#hidePageListOnlyOnePage'>hidePageListOnlyOnePage</a></li>
                           </ul>
                           <strong><b>Following is all about configuring expanding row</b></strong>
                           <ul>
@@ -3355,6 +3357,35 @@ render() {
 render() {
   const options = {
     onSizePerPageList: this.onSizePerPageList
+  };
+  return (
+    &lt;BootstrapTable 
+      data={ products } 
+      options={ options }
+      pagination&gt;
+      // ...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane" id="hidePageListOnlyOnePage">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <h1><a href='#hidePageListOnlyOnePage'>hidePageListOnlyOnePage : Bool</a></h1>
+                        <span>
+                          Default is <code>false</code>, if <code>true</code> assign, the pagination list will be hide totalliy if only one page.
+                        </br></br>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const options = {
+    hidePageListOnlyOnePage: true
   };
   return (
     &lt;BootstrapTable 
