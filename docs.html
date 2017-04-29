@@ -1259,9 +1259,10 @@ render() {
               <div class="container-fluid">
                   <div class="row">
                       <div class="col-lg-12">
-                        <h1><a href='#bgColor'>selectRow: bgColor : Bool</a></h1>
+                        <h1><a href='#bgColor'>selectRow: bgColor : Bool | Function</a></h1>
                         <span>
-                          You can assign the background color of row which be selected.
+                          You can assign the background color of row which be selected. If your requirement is much complex, you can assign a function to <code>bgColor</code>,
+                          you will have more ability to custom rows background color when selecting.
                         </br></br>
                         </span>
 <pre>
@@ -1269,6 +1270,30 @@ render() {
   const selectRow = {
     mode: 'checkbox',  // multi select
     bgColor: '#fefefe'
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      selectRow={ selectRow }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+<pre>
+<code class="javascript">render() {
+  const selectRow = {
+    mode: 'checkbox',  // multi select
+    bgColor: function(row, isSelect) {
+      if (isSelect) {
+        const { id } = row;
+        if (id < 2) return 'blue';
+        else if (id < 4) return 'red';
+        else return 'yellow';
+      }
+      return null;
+    }
   };
   return(
     &lt;BootstrapTable

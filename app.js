@@ -61,6 +61,7 @@ import UnSelectableTable from './components/selection/unselectable-table';
 import ClickToSelectTable from './components/selection/click-to-select-table';
 import DefaultSelectTable from './components/selection/default-select-table';
 import SelectBgColorTable from './components/selection/select-bgcolor-table';
+import SelectBgColorDynamicTable from './components/selection/select-bgcolor-dynamic-table';
 import SelectHookTable from './components/selection/select-hook-table';
 import HideSelectionColumnTable from './components/selection/hide-selection-col-table';
 import SelectValidationTable from './components/selection/select-validation-table';
@@ -508,6 +509,11 @@ if (window.location.hash === '#selection') {
         title: 'Bg Color for Selection',
         gist: 'https://gist.github.com/AllenFang/e25d905bf8368aff64aadc424c2170a1.js',
         component: (<SelectBgColorTable />)
+    }, {
+        id: 'selectbgcolordynamic_s',
+        title: 'Dynamic Bg Color for Selection',
+        gist: 'https://gist.github.com/AllenFang/865a791dd874c57a1766f4bee97d11aa.js',
+        component: (<SelectBgColorDynamicTable />)
     }, {
         id: 'selecthook_s',
         title: 'Selection Hooks',
