@@ -4877,6 +4877,7 @@ render() {
                           supposed to be return a bool value to decide this cell editable or not and this callback accept four argument, <code>cell</code>, <code>row</code>, <code>rowIndex</code>, <code>columnIndex</code>.</br></br>
                           If <code>Object</code>, you can give more customization on editing cell. This object have following properties:</br>
                           <code>type</code>: what edit type on editing cell, available values are <code>textarea</code>, <code>select</code>, <code>checkbox</code>, and <code>datetime</code></br>
+                          <code>readOnly</code>: Default is <code>false</code>, <code>true</code> will make cell can't be edited but still can be insert.<br/>
                           <code>validator</code>: give a callback function for validation which takes "cellValue" and "row" as arguments. This function should return a boolean or object value.</br>
                           <code>options.values</code>: options.values means the data in select or checkbox. If checkbox, use a ':' (colon) to separate the values, e.g. Y:N.
                           </br></br>

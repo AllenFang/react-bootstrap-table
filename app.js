@@ -119,6 +119,7 @@ import EditTypeTable from './components/advance/edit-type-table';
 import DataInsertTypeTable from './components/advance/insert-type-table';
 import AutoRowKeyTable from './components/advance/auto-rowkey-table';
 import ValidatorTable from './components/advance/validator-table';
+import EditTypeReadOnlyTable from './components/advance/validator-table-read-only';
 import HideOnInsertTable from './components/advance/hide-on-insert-table';
 import DisableToastrTable from './components/advance/disable-toastr-table.js';
 
@@ -817,6 +818,11 @@ if (window.location.hash === '#advance') {
         title: 'Insert & Cell Edit Validator',
         gist: 'https://gist.github.com/AllenFang/41db6281d55b855239c532b752d9cc5b.js',
         component: (<ValidatorTable />)
+    }, {
+        id: 'readOnly_s',
+        title: 'Read Only Table',
+        gist: 'https://gist.github.com/AllenFang/a8805f699366d3e51f721607b2ce526f.js',
+        component: (<EditTypeReadOnlyTable />)
     }, {
         id: 'hideoninsert_s',
         title: 'Hide Field on Insert Row',
