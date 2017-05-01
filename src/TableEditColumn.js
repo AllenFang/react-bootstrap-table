@@ -16,6 +16,10 @@ class TableEditColumn extends Component {
     };
   }
 
+  valueShortCircuit(value) {
+    return value === null || typeof value === 'undefined' ? '' : value;
+  }
+
   handleKeyPress = e => {
     if (e.keyCode === 13 || e.keyCode === 9) {
       // Pressed ENTER
@@ -170,18 +174,18 @@ class TableEditColumn extends Component {
     editable.placeholder && (attr.placeholder = editable.placeholder);
 
     const editorClass = classSet({ 'animated': shakeEditor, 'shake': shakeEditor });
+    fieldValue = fieldValue === 0 ? '0' : fieldValue;
     let cellEditor;
     if (customEditor) {
       const customEditorProps = {
         row,
         ...attr,
-        defaultValue: fieldValue || '',
+        defaultValue: this.valueShortCircuit(fieldValue),
         ...customEditor.customEditorParameters
       };
       cellEditor = customEditor.getElement(this.handleCustomUpdate, customEditorProps);
     } else {
-      fieldValue = fieldValue === 0 ? '0' : fieldValue;
-      cellEditor = editor(editable, attr, format, editorClass, fieldValue || '');
+      cellEditor = editor(editable, attr, format, editorClass, this.valueShortCircuit(fieldValue));
     }
 
     if (isFocus) {
