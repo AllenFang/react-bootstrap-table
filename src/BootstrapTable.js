@@ -355,7 +355,7 @@ class BootstrapTable extends Component {
         { toolBar }
         { showPaginationOnTop ? pagination : null }
         <div ref='table'
-            className={ classSet('react-bs-table', this.props.tableContainerClass) }
+            className={ classSet('react-bs-table', { 'react-bs-table-bordered': this.props.bordered }, this.props.tableContainerClass) }
             style={ { ...style, ...this.props.tableStyle } }
             onMouseEnter={ this.handleMouseEnter }
             onMouseLeave={ this.handleMouseLeave }>
