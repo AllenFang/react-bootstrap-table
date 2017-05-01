@@ -112,11 +112,11 @@ class BootstrapTable extends Component {
 
     if (sortName && sortOrder) {
       this.store.setSortInfo(sortOrder, sortName);
-      if (this.props.remote().sort !== true) {
+      if (!this.allowRemote(Const.REMOTE_SORT)) {
         this.store.sort();
       }
     }
-    
+
     if (searchText) {
       this.store.search(searchText);
     }
