@@ -2,6 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import classSet from 'classnames';
 import Const from '../Const';
 
+function optionsEquals(options1, options2) {
+  const keys = Object.keys(options1);
+  for (const k in keys) {
+    if (options1[k] !== options2[k]) {
+      return false;
+    }
+  }
+  return Object.keys(options1).length === Object.keys(options2).length;
+}
+
 class SelectFilter extends Component {
   constructor(props) {
     super(props);
@@ -21,17 +31,6 @@ class SelectFilter extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    function optionsEquals(options1, options2) {
-      const keys = Object.keys(options1);
-      for(let k in keys) {
-        if(options1[k] !== options2[k]) {
-          return false;
-        }
-      }
-      
-      return Object.keys(options1).length === Object.keys(options2).length
-    }
-    
     let needFilter = false;
     if (this.props.defaultValue !== prevProps.defaultValue) {
       needFilter = true;
