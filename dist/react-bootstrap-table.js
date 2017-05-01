@@ -416,9 +416,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var sortName = options.defaultSortName || options.sortName;
 	      var sortOrder = options.defaultSortOrder || options.sortOrder;
 	      var searchText = options.defaultSearch;
+
 	      if (sortName && sortOrder) {
 	        this.store.setSortInfo(sortOrder, sortName);
-	        this.store.sort();
+	        if (!this.allowRemote(_Const2.default.REMOTE_SORT)) {
+	          this.store.sort();
+	        }
 	      }
 
 	      if (searchText) {
@@ -691,7 +694,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _react2.default.createElement(
 	          'div',
 	          { ref: 'table',
-	            className: (0, _classnames2.default)('react-bs-table', this.props.tableContainerClass),
+	            className: (0, _classnames2.default)('react-bs-table', { 'react-bs-table-bordered': this.props.bordered }, this.props.tableContainerClass),
 	            style: _extends({}, style, this.props.tableStyle),
 	            onMouseEnter: this.handleMouseEnter,
 	            onMouseLeave: this.handleMouseLeave },
@@ -3799,6 +3802,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  _createClass(TableEditColumn, [{
+	    key: 'valueShortCircuit',
+	    value: function valueShortCircuit(value) {
+	      return value === null || typeof value === 'undefined' ? '' : value;
+	    }
+	  }, {
 	    key: '__handleKeyPress__REACT_HOT_LOADER__',
 	    value: function __handleKeyPress__REACT_HOT_LOADER__(e) {
 	      if (e.keyCode === 13 || e.keyCode === 9) {
@@ -3974,17 +3982,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      editable.placeholder && (attr.placeholder = editable.placeholder);
 
 	      var editorClass = (0, _classnames2.default)({ 'animated': shakeEditor, 'shake': shakeEditor });
+	      fieldValue = fieldValue === 0 ? '0' : fieldValue;
 	      var cellEditor = void 0;
 	      if (customEditor) {
 	        var customEditorProps = _extends({
 	          row: row
 	        }, attr, {
-	          defaultValue: fieldValue || ''
+	          defaultValue: this.valueShortCircuit(fieldValue)
 	        }, customEditor.customEditorParameters);
 	        cellEditor = customEditor.getElement(this.handleCustomUpdate, customEditorProps);
 	      } else {
-	        fieldValue = fieldValue === 0 ? '0' : fieldValue;
-	        cellEditor = (0, _Editor2.default)(editable, attr, format, editorClass, fieldValue || '');
+	        cellEditor = (0, _Editor2.default)(editable, attr, format, editorClass, this.valueShortCircuit(fieldValue));
 	      }
 
 	      if (isFocus) {
@@ -16918,6 +16926,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	function optionsEquals(options1, options2) {
+	  var keys = Object.keys(options1);
+	  for (var k in keys) {
+	    if (options1[k] !== options2[k]) {
+	      return false;
+	    }
+	  }
+	  return Object.keys(options1).length === Object.keys(options2).length;
+	}
+
 	var SelectFilter = function (_Component) {
 	  _inherits(SelectFilter, _Component);
 
@@ -16947,7 +16965,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var needFilter = false;
 	      if (this.props.defaultValue !== prevProps.defaultValue) {
 	        needFilter = true;
-	      } else if (this.props.options !== prevProps.options) {
+	      } else if (!optionsEquals(this.props.options, prevProps.options)) {
 	        needFilter = true;
 	      }
 	      if (needFilter) {
@@ -17051,6 +17069,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
 	    return;
 	  }
+
+	  __REACT_HOT_LOADER__.register(optionsEquals, 'optionsEquals', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Select.js');
 
 	  __REACT_HOT_LOADER__.register(SelectFilter, 'SelectFilter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Select.js');
 
