@@ -1,3 +1,14 @@
+<a name="v3.3.0"></a>
+# [v3.3.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.2.2...v3.3.0) (2017-05-01)
+## Bug fixes
+* Fix default sort does not work for `remote` mode([a15c492](https://github.com/AllenFang/react-bootstrap-table/commit/a15c492dd1e4ceae05aabc1c2632f89b10258941))
+* Fix `false` is transfer to be empty string on cell editing([e840849](https://github.com/AllenFang/react-bootstrap-table/commit/e840849e04a5f0598dd18a9c1d9d2db7c981a698))
+
+## Enhancement
+* Avoid to rerender select filter everytime([5b14252](https://github.com/AllenFang/react-bootstrap-table/commit/5b1425234ebd79db8cf8df3c949b8d019e5c308e))
+* restrict border & border-radius to bordered tables([8e446f3](https://github.com/AllenFang/react-bootstrap-table/commit/8e446f36006678e37446d6028802aa45e45813cd))
+* Better `margin` for table, pagination, toolbar([a5be737](https://github.com/AllenFang/react-bootstrap-table/commit/a5be73792cd5b29ebae0f218f635bd2f697bda8f))
+
 <a name="v3.2.2"></a>
 # [v3.2.2](https://github.com/AllenFang/react-bootstrap-table/compare/v3.2.1...v3.2.2) (2017-04-27)
 ## Bug fixes
