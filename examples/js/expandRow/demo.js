@@ -1,6 +1,7 @@
 /* eslint max-len: 0 */
 import React from 'react';
 import ExpandRow from './expandRow';
+import SingleExpandRow from './single-expanding';
 import ExpandByColumn from './expand-row-by-column';
 import ManageExpandExternal from './manage-expanding';
 import ExpandWithSelection from './expand-row-with-selection';
@@ -19,6 +20,10 @@ class Demo extends React.Component {
           { renderLinks('expandRow/expandRow.js') }
           <p>You can insert your customize component as a expand component</p>
           <ExpandRow/>
+        </Panel>
+        <Panel header={ 'Single Expanding' }>
+          { renderLinks('expandRow/single-expanding.js') }
+          <SingleExpandRow/>
         </Panel>
         <Panel header={ 'Row Expand Indicator' }>
           { renderLinks('expandRow/expand-indicator.js') }

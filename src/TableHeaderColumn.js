@@ -31,7 +31,9 @@ class TableHeaderColumn extends Component {
 
   handleColumnClick = () => {
     if (this.props.isOnlyHead || !this.props.dataSort) return;
-    const order = this.props.sort === Const.SORT_DESC ? Const.SORT_ASC : Const.SORT_DESC;
+    let { sort: order } = this.props;
+    if (!order && this.props.defaultASC) order = Const.SORT_ASC;
+    else order = this.props.sort === Const.SORT_DESC ? Const.SORT_ASC : Const.SORT_DESC;
     this.props.onSort(order, this.props.dataField);
   }
 
@@ -351,7 +353,8 @@ TableHeaderColumn.propTypes = {
   thStyle: PropTypes.object,
   onResize: PropTypes.func,
   getHeaderColGroup: PropTypes.func,
-  keyValidator: PropTypes.bool
+  keyValidator: PropTypes.bool,
+  defaultASC: PropTypes.bool
 };
 
 TableHeaderColumn.defaultProps = {
@@ -386,7 +389,8 @@ TableHeaderColumn.defaultProps = {
   tdAttr: undefined,
   tdStyle: undefined,
   thStyle: undefined,
-  keyValidator: false
+  keyValidator: false,
+  defaultASC: false
 };
 
 export default TableHeaderColumn;

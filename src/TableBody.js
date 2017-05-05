@@ -303,7 +303,8 @@ class TableBody extends Component {
       expandableRow,
       selectRow: {
         clickToExpand
-      }
+      },
+      onlyOneExpanding
     } = this.props;
     const selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
     columnIndex = this._isSelectRowDefined() ? columnIndex - 1 : columnIndex;
@@ -320,7 +321,8 @@ class TableBody extends Component {
       if (expanding.indexOf(rowKey) > -1) {
         expanding = expanding.filter(k => k !== rowKey);
       } else {
-        expanding.push(rowKey);
+        if (onlyOneExpanding) expanding = [ rowKey ];
+        else expanding.push(rowKey);
       }
       this.props.onExpand(expanding);
     }
@@ -489,6 +491,7 @@ TableBody.propTypes = {
   expandBy: PropTypes.string,
   expanding: PropTypes.array,
   onExpand: PropTypes.func,
+  onlyOneExpanding: PropTypes.bool,
   beforeShowError: PropTypes.func,
   keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
   x: PropTypes.number,

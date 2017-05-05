@@ -24,6 +24,8 @@ class InsertModalBody extends Component {
         if (column.editable && column.editable.type === 'checkbox') {
           const values = inputVal.split(':');
           inputVal = dom.checked ? values[0] : values[1];
+        } else if (column.customInsertEditor) {
+          inputVal = inputVal || dom.getFieldValue();
         }
       }
       newRow[column.field] = inputVal;
@@ -43,12 +45,21 @@ class InsertModalBody extends Component {
               field,
               name,
               autoValue,
-              hiddenOnInsert
+              hiddenOnInsert,
+              customInsertEditor
             } = column;
             const attr = {
               ref: field + i,
               placeholder: editable.placeholder ? editable.placeholder : name
             };
+            let fieldElement;
+
+            if (customInsertEditor) {
+              const { getElement } = customInsertEditor;
+              fieldElement = getElement(column, attr, 'form-control', ignoreEditable);
+            } else {
+              fieldElement = editor(editable, attr, format, '', undefined, ignoreEditable);
+            }
 
             if (autoValue || hiddenOnInsert || !column.field) {
               // when you want same auto generate value
@@ -61,7 +72,7 @@ class InsertModalBody extends Component {
             return (
               <div className='form-group' key={ field }>
                 <label>{ name }</label>
-                { editor(editable, attr, format, '', undefined, ignoreEditable) }
+                { fieldElement }
                 { error }
               </div>
             );

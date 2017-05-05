@@ -1,3 +1,54 @@
+<a name="v3.3.0"></a>
+# [v3.3.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.2.2...v3.3.0) (2017-05-01)
+## Bug fixes
+* Fix default sort does not work for `remote` mode([a15c492](https://github.com/AllenFang/react-bootstrap-table/commit/a15c492dd1e4ceae05aabc1c2632f89b10258941))
+* Fix `false` is transfer to be empty string on cell editing([e840849](https://github.com/AllenFang/react-bootstrap-table/commit/e840849e04a5f0598dd18a9c1d9d2db7c981a698))
+
+## Enhancement
+* Avoid to rerender select filter everytime([5b14252](https://github.com/AllenFang/react-bootstrap-table/commit/5b1425234ebd79db8cf8df3c949b8d019e5c308e))
+* restrict border & border-radius to bordered tables([8e446f3](https://github.com/AllenFang/react-bootstrap-table/commit/8e446f36006678e37446d6028802aa45e45813cd))
+* Better `margin` for table, pagination, toolbar([a5be737](https://github.com/AllenFang/react-bootstrap-table/commit/a5be73792cd5b29ebae0f218f635bd2f697bda8f))
+
+<a name="v3.2.2"></a>
+# [v3.2.2](https://github.com/AllenFang/react-bootstrap-table/compare/v3.2.1...v3.2.2) (2017-04-27)
+## Bug fixes
+* Fix validation is ignored when tab out of a cell to the next cell([1a6ca0a](https://github.com/AllenFang/react-bootstrap-table/commit/1a6ca0af7559f4cbbbf5e54715c2e25ebce5b852))
+
+## Enhancement
+* Able to remove the empty option on select and number filter([61a2d8c](https://github.com/AllenFang/react-bootstrap-table/commit/61a2d8cc6811fe470a68313a80a5c31ec1fce05c))
+	* Use `filter.withoutEmptyOption` on `TableHeaderColumn` for select filter.
+	* Use `filter.withoutEmptyNumberOption` on `TableHeaderColumn` for number filter.
+	* Use `filter.withoutEmptyComparatorOption` on `TableHeaderColumn` for number filter.
+
+## Features
+* Support `defaultASC` on `TableHeaderColumn` for specifing ASC order when sorting on column first time([fec241d](https://github.com/AllenFang/react-bootstrap-table/commit/fec241d11e7a2351d7070a4cc6afaed1ba3d4ec2))
+
+<a name="v3.2.1"></a>
+# [v3.2.1](https://github.com/AllenFang/react-bootstrap-table/compare/v3.2.0...v3.2.1) (2017-04-20)
+## Bug fixes
+* Fixed search and pagination not working together([5a533cf](https://github.com/AllenFang/react-bootstrap-table/commit/5a533cfb6512c1200d66a962323b00d5316f2e12))
+	* It's a very critical bug since from `v3.1.8`
+
+<a name="v3.2.0"></a>
+# [v3.2.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.8...v3.2.0) (2017-04-16)
+## Enhancement
+* Now, we are able to custom the field in insert modal([8b66a74](https://github.com/AllenFang/react-bootstrap-table/commit/8b66a74178ebffdb8bad43bcbbf1381887ac7835))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/custom/insert-modal/custom-insert-modal-field.js)
+
+## Features
+* Support conjunction search([246a7fa](https://github.com/AllenFang/react-bootstrap-table/commit/246a7fa721e0dd3846d1c1dcb48db2c114d261cb))
+	* Please check [#1199](https://github.com/AllenFang/react-bootstrap-table/issues/1199)
+* Allow to expand only one row at a time([c4c1b7f](https://github.com/AllenFang/react-bootstrap-table/commit/c4c1b7f377bbe3956b867d0afadf98e0e8c46cb6))
+	* configure via `options.onlyOneExpanding` and assign `true`
+
+<a name="v3.1.8"></a>
+# [v3.1.8](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.7...v3.1.8) (2017-04-13)
+## Bug fixes
+* Fix wrong page jumping after search, filter etc.([b686d1a](https://github.com/AllenFang/react-bootstrap-table/commit/b686d1a44b95878cbd0bdc91a7a8b20ce7fb8671))
+
+## Enhancement
+* Add class name `react-bs-table-sizePerPage-dropdown` for sizePerPage dropdown([da82469](https://github.com/AllenFang/react-bootstrap-table/commit/da82469431fdec4efb466b8d08a106b1448d7b44))
+
 <a name="v3.1.7"></a>
 # [v3.1.7](https://github.com/AllenFang/react-bootstrap-table/compare/v3.1.6...v3.1.7) (2017-04-07)
 ## Bug fixes

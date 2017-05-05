@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
+const sizePerPageDefaultClass = 'react-bs-table-sizePerPage-dropdown';
+
 class SizePerPageDropDown extends Component {
   render() {
     const {
@@ -17,7 +19,8 @@ class SizePerPageDropDown extends Component {
     const dropDownStyle = { visibility: hidden ? 'hidden' : 'visible' };
 
     return (
-      <span className={ `${variation} ${openClass} ${className}` } style={ dropDownStyle }>
+      <span style={ dropDownStyle }
+        className={ `${variation} ${openClass} ${className} ${sizePerPageDefaultClass}` }>
         <button className={ `btn ${btnContextual} dropdown-toggle` }
           id='pageDropDown' data-toggle='dropdown'
           aria-expanded={ open }
