@@ -986,11 +986,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props$selectRow = this.props.selectRow,
 	          onSelectAll = _props$selectRow.onSelectAll,
 	          unselectable = _props$selectRow.unselectable,
-	          selected = _props$selectRow.selected;
+	          selected = _props$selectRow.selected,
+	          onlyUnselectVisible = _props$selectRow.onlyUnselectVisible;
 
-	      var selectedRowKeys = [];
+	      var selectedRowKeys = onlyUnselectVisible ? this.state.selectedRowKeys : [];
 	      var result = true;
-	      var rows = isSelected ? this.store.get() : this.store.getRowByKey(this.state.selectedRowKeys);
+	      var rows = this.store.get();
+
+	      // onlyUnselectVisible default is false, #1276
+	      if (!isSelected && !onlyUnselectVisible) {
+	        rows = this.store.getRowByKey(this.state.selectedRowKeys);
+	      }
 
 	      if (unselectable && unselectable.length > 0) {
 	        if (isSelected) {
@@ -1018,6 +1024,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	            selectedRowKeys = selected.filter(function (r) {
 	              return unselectable.indexOf(r) > -1;
 	            });
+	          } else if (onlyUnselectVisible) {
+	            (function () {
+	              var currentRowKeys = rows.map(function (r) {
+	                return r[keyField];
+	              });
+	              selectedRowKeys = selectedRowKeys.filter(function (k) {
+	                return currentRowKeys.indexOf(k) === -1;
+	              });
+	            })();
 	          }
 	        }
 
@@ -1078,25 +1093,48 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'handleEditCell',
 	    value: function handleEditCell(newVal, rowIndex, colIndex) {
-	      var onCellEdit = this.props.options.onCellEdit;
-	      var _props$cellEdit = this.props.cellEdit,
-	          beforeSaveCell = _props$cellEdit.beforeSaveCell,
-	          afterSaveCell = _props$cellEdit.afterSaveCell;
+	      var _this4 = this;
+
+	      var beforeSaveCell = this.props.cellEdit.beforeSaveCell;
 
 	      var columns = this.getColumnsDescription(this.props);
 	      var fieldName = columns[colIndex].name;
 
+	      var invalid = function invalid() {
+	        _this4.setState({
+	          data: _this4.store.get(),
+	          reset: false
+	        });
+	        return;
+	      };
+
 	      if (beforeSaveCell) {
-	        var isValid = beforeSaveCell(this.state.data[rowIndex], fieldName, newVal);
-	        if (!isValid && typeof isValid !== 'undefined') {
-	          this.setState({
-	            data: this.store.get(),
-	            reset: false
-	          });
-	          return;
+	        var beforeSaveCellCB = function beforeSaveCellCB(result) {
+	          _this4.refs.body.cancelEditCell();
+	          if (result || result === undefined) {
+	            _this4.editCell(newVal, rowIndex, colIndex);
+	          } else {
+	            invalid();
+	          }
+	        };
+	        var isValid = beforeSaveCell(this.state.data[rowIndex], fieldName, newVal, beforeSaveCellCB);
+	        if (isValid === false && typeof isValid !== 'undefined') {
+	          return invalid();
+	        } else if (isValid === _Const2.default.AWAIT_BEFORE_CELL_EDIT) {
+	          /* eslint consistent-return: 0 */
+	          return isValid;
 	        }
 	      }
+	      this.editCell(newVal, rowIndex, colIndex);
+	    }
+	  }, {
+	    key: 'editCell',
+	    value: function editCell(newVal, rowIndex, colIndex) {
+	      var onCellEdit = this.props.options.onCellEdit;
+	      var afterSaveCell = this.props.cellEdit.afterSaveCell;
 
+	      var columns = this.getColumnsDescription(this.props);
+	      var fieldName = columns[colIndex].name;
 	      if (onCellEdit) {
 	        newVal = onCellEdit(this.state.data[rowIndex], fieldName, newVal);
 	      }
@@ -1186,14 +1224,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleDropRow__REACT_HOT_LOADER__',
 	    value: function __handleDropRow__REACT_HOT_LOADER__(rowKeys) {
-	      var _this4 = this;
+	      var _this5 = this;
 
 	      var dropRowKeys = rowKeys ? rowKeys : this.store.getSelectedRowKeys();
 	      // add confirm before the delete action if that option is set.
 	      if (dropRowKeys && dropRowKeys.length > 0) {
 	        if (this.props.options.handleConfirmDeleteRow) {
 	          this.props.options.handleConfirmDeleteRow(function () {
-	            _this4.deleteRow(dropRowKeys);
+	            _this5.deleteRow(dropRowKeys);
 	          }, dropRowKeys);
 	        } else if (confirm('Are you sure you want to delete?')) {
 	          this.deleteRow(dropRowKeys);
@@ -1425,6 +1463,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            sizePerPageDropDown: options.sizePerPageDropDown,
 	            hidePageListOnlyOnePage: options.hidePageListOnlyOnePage,
 	            paginationPanel: options.paginationPanel,
+	            keepSizePerPageState: options.keepSizePerPageState,
 	            open: false })
 	        );
 	      }
@@ -1701,7 +1740,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    clickToExpand: _react.PropTypes.bool,
 	    showOnlySelected: _react.PropTypes.bool,
 	    unselectable: _react.PropTypes.array,
-	    columnWidth: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string])
+	    columnWidth: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
+	    onlyUnselectVisible: _react.PropTypes.bool
 	  }),
 	  cellEdit: _react.PropTypes.shape({
 	    mode: _react.PropTypes.string,
@@ -1752,6 +1792,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    hidePageListOnlyOnePage: _react.PropTypes.bool,
 	    alwaysShowAllBtns: _react.PropTypes.bool,
 	    withFirstAndLast: _react.PropTypes.bool,
+	    keepSizePerPageState: _react.PropTypes.bool,
 	    onSortChange: _react.PropTypes.func,
 	    onPageChange: _react.PropTypes.func,
 	    onSizePerPageList: _react.PropTypes.func,
@@ -1848,7 +1889,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    clickToExpand: false,
 	    showOnlySelected: false,
 	    unselectable: [],
-	    customComponent: undefined
+	    customComponent: undefined,
+	    onlyUnselectVisible: false
 	  },
 	  cellEdit: {
 	    mode: _Const2.default.CELL_EDIT_NONE,
@@ -1903,6 +1945,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    hidePageListOnlyOnePage: false,
 	    alwaysShowAllBtns: false,
 	    withFirstAndLast: true,
+	    keepSizePerPageState: false,
 	    onSizePerPageList: undefined,
 	    noDataText: undefined,
 	    withoutNoDataText: false,
@@ -2043,6 +2086,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var CONST_VAR = {
 	  SORT_DESC: 'desc',
 	  SORT_ASC: 'asc',
+	  AWAIT_BEFORE_CELL_EDIT: 1,
 	  SIZE_PER_PAGE: 10,
 	  NEXT_PAGE: '>',
 	  NEXT_PAGE_TITLE: 'next page',
@@ -2577,6 +2621,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.__handleCompleteEditCell__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+	    _this.cancelEditCell = function () {
+	      return _this.__cancelEditCell__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
 	    _this.handleClickonSelectColumn = function () {
 	      return _this.__handleClickonSelectColumn__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
@@ -2985,10 +3033,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleCompleteEditCell__REACT_HOT_LOADER__',
 	    value: function __handleCompleteEditCell__REACT_HOT_LOADER__(newVal, rowIndex, columnIndex) {
-	      this.setState({ currEditCell: null });
 	      if (newVal !== null) {
-	        this.props.cellEdit.__onCompleteEdit__(newVal, rowIndex, columnIndex);
+	        var result = this.props.cellEdit.__onCompleteEdit__(newVal, rowIndex, columnIndex);
+	        if (result !== _Const2.default.AWAIT_BEFORE_CELL_EDIT) {
+	          this.setState({ currEditCell: null });
+	        }
 	      }
+	    }
+	  }, {
+	    key: '__cancelEditCell__REACT_HOT_LOADER__',
+	    value: function __cancelEditCell__REACT_HOT_LOADER__() {
+	      this.setState({ currEditCell: null });
 	    }
 	  }, {
 	    key: '__handleClickonSelectColumn__REACT_HOT_LOADER__',
@@ -10529,7 +10584,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(PaginationList, [{
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps() {
-	      this.setState({ open: false });
+	      var keepSizePerPageState = this.props.keepSizePerPageState;
+
+	      if (!keepSizePerPageState) {
+	        this.setState({ open: false });
+	      }
 	    }
 	  }, {
 	    key: '__changePage__REACT_HOT_LOADER__',
@@ -10541,7 +10600,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          nextPage = _props.nextPage,
 	          lastPage = _props.lastPage,
 	          firstPage = _props.firstPage,
-	          sizePerPage = _props.sizePerPage;
+	          sizePerPage = _props.sizePerPage,
+	          keepSizePerPageState = _props.keepSizePerPageState;
 
 
 	      if (page === prePage) {
@@ -10554,6 +10614,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        page = pageStartIndex;
 	      } else {
 	        page = parseInt(page, 10);
+	      }
+
+	      if (keepSizePerPageState) {
+	        this.setState({ open: false });
 	      }
 
 	      if (page !== currPage) {
@@ -10574,9 +10638,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (this.props.onSizePerPageList) {
 	          this.props.onSizePerPageList(selectSize);
 	        }
-	      } else {
-	        this.setState({ open: false });
 	      }
+	      this.setState({ open: false });
 	    }
 	  }, {
 	    key: '__toggleDropDown__REACT_HOT_LOADER__',
@@ -10844,7 +10907,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  nextPageTitle: _react.PropTypes.string,
 	  firstPageTitle: _react.PropTypes.string,
 	  lastPageTitle: _react.PropTypes.string,
-	  hidePageListOnlyOnePage: _react.PropTypes.bool
+	  hidePageListOnlyOnePage: _react.PropTypes.bool,
+	  keepSizePerPageState: _react.PropTypes.bool
 	};
 
 	PaginationList.defaultProps = {
