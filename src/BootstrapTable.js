@@ -701,22 +701,43 @@ class BootstrapTable extends Component {
   }
 
   handleEditCell(newVal, rowIndex, colIndex) {
-    const { onCellEdit } = this.props.options;
-    const { beforeSaveCell, afterSaveCell } = this.props.cellEdit;
+    const { beforeSaveCell } = this.props.cellEdit;
     const columns = this.getColumnsDescription(this.props);
     const fieldName = columns[colIndex].name;
 
+    const invalid = () => {
+      this.setState({
+        data: this.store.get(),
+        reset: false
+      });
+      return;
+    };
+
     if (beforeSaveCell) {
-      const isValid = beforeSaveCell(this.state.data[rowIndex], fieldName, newVal);
-      if (!isValid && typeof isValid !== 'undefined') {
-        this.setState({
-          data: this.store.get(),
-          reset: false
-        });
-        return;
+      const beforeSaveCellCB = result => {
+        this.refs.body.cancelEditCell();
+        if (result || result === undefined) {
+          this.editCell(newVal, rowIndex, colIndex);
+        } else {
+          invalid();
+        }
+      };
+      const isValid = beforeSaveCell(this.state.data[rowIndex], fieldName, newVal, beforeSaveCellCB);
+      if (isValid === false && typeof isValid !== 'undefined') {
+        return invalid();
+      } else if (isValid === Const.AWAIT_BEFORE_CELL_EDIT) {
+        /* eslint consistent-return: 0 */
+        return isValid;
       }
     }
+    this.editCell(newVal, rowIndex, colIndex);
+  }
 
+  editCell(newVal, rowIndex, colIndex) {
+    const { onCellEdit } = this.props.options;
+    const { afterSaveCell } = this.props.cellEdit;
+    const columns = this.getColumnsDescription(this.props);
+    const fieldName = columns[colIndex].name;
     if (onCellEdit) {
       newVal = onCellEdit(this.state.data[rowIndex], fieldName, newVal);
     }

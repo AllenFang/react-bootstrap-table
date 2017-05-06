@@ -1,6 +1,7 @@
 const CONST_VAR = {
   SORT_DESC: 'desc',
   SORT_ASC: 'asc',
+  AWAIT_BEFORE_CELL_EDIT: 1,
   SIZE_PER_PAGE: 10,
   NEXT_PAGE: '>',
   NEXT_PAGE_TITLE: 'next page',

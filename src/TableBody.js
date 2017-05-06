@@ -400,10 +400,16 @@ class TableBody extends Component {
   }
 
   handleCompleteEditCell = (newVal, rowIndex, columnIndex) => {
-    this.setState({ currEditCell: null });
     if (newVal !== null) {
-      this.props.cellEdit.__onCompleteEdit__(newVal, rowIndex, columnIndex);
+      const result = this.props.cellEdit.__onCompleteEdit__(newVal, rowIndex, columnIndex);
+      if (result !== Const.AWAIT_BEFORE_CELL_EDIT) {
+        this.setState({ currEditCell: null });
+      }
     }
+  }
+
+  cancelEditCell = () => {
+    this.setState({ currEditCell: null });
   }
 
   handleClickonSelectColumn = (e, isSelect, rowIndex, row) => {
