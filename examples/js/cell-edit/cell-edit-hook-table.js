@@ -39,6 +39,20 @@ function onBeforeSaveCell(row, cellName, cellValue) {
   return true;
 }
 
+function onBeforeSaveCellAsync(row, cellName, cellValue, done) {
+  // if your validation is async, for example: you want to pop a confirm dialog for user to confim
+  // in this case, react-bootstrap-table pass a callback function to you
+  // you are supposed to call this callback function with a bool value to perfom if it is valid or not
+  // in addition, you should return 1 to tell react-bootstrap-table this is a async operation.
+
+  // I use setTimeout to perform an async operation.
+  // setTimeout(() => {
+  //   done(true);  // it's ok to save :)
+  //   done(false);   // it's not ok to save :(
+  // }, 3000);
+  // return 1;  // please return 1
+}
+
 const cellEditProp = {
   mode: 'click',
   blurToSave: true,
