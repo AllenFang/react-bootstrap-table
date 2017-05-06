@@ -618,12 +618,15 @@ class BootstrapTable extends Component {
   handleSelectAllRow = e => {
     const isSelected = e.currentTarget.checked;
     const keyField = this.store.getKeyField();
-    const { selectRow: { onSelectAll, unselectable, selected } } = this.props;
-    let selectedRowKeys = [];
+    const { selectRow: { onSelectAll, unselectable, selected, onlyUnselectVisible } } = this.props;
+    let selectedRowKeys = onlyUnselectVisible ? this.state.selectedRowKeys : [];
     let result = true;
-    let rows = isSelected ?
-      this.store.get() :
-      this.store.getRowByKey(this.state.selectedRowKeys);
+    let rows = this.store.get();
+
+    // onlyUnselectVisible default is false, #1276
+    if (!isSelected && !onlyUnselectVisible) {
+      rows = this.store.getRowByKey(this.state.selectedRowKeys);
+    }
 
     if (unselectable && unselectable.length > 0) {
       if (isSelected) {
@@ -647,7 +650,10 @@ class BootstrapTable extends Component {
           rows.map(r => r[keyField]);
       } else {
         if (unselectable && selected) {
-          selectedRowKeys = selected.filter(r => unselectable.indexOf(r) > -1 );
+          selectedRowKeys = selected.filter(r => unselectable.indexOf(r) > -1);
+        } else if (onlyUnselectVisible) {
+          const currentRowKeys = rows.map(r => r[keyField]);
+          selectedRowKeys = selectedRowKeys.filter(k => currentRowKeys.indexOf(k) === -1);
         }
       }
 
@@ -1311,7 +1317,8 @@ BootstrapTable.propTypes = {
     clickToExpand: PropTypes.bool,
     showOnlySelected: PropTypes.bool,
     unselectable: PropTypes.array,
-    columnWidth: PropTypes.oneOfType([ PropTypes.number, PropTypes.string ])
+    columnWidth: PropTypes.oneOfType([ PropTypes.number, PropTypes.string ]),
+    onlyUnselectVisible: PropTypes.bool
   }),
   cellEdit: PropTypes.shape({
     mode: PropTypes.string,
@@ -1462,7 +1469,8 @@ BootstrapTable.defaultProps = {
     clickToExpand: false,
     showOnlySelected: false,
     unselectable: [],
-    customComponent: undefined
+    customComponent: undefined,
+    onlyUnselectVisible: false
   },
   cellEdit: {
     mode: Const.CELL_EDIT_NONE,
