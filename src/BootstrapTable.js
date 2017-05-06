@@ -1046,6 +1046,7 @@ class BootstrapTable extends Component {
             sizePerPageDropDown={ options.sizePerPageDropDown }
             hidePageListOnlyOnePage={ options.hidePageListOnlyOnePage }
             paginationPanel={ options.paginationPanel }
+            keepSizePerPageState={ options.keepSizePerPageState }
             open={ false }/>
         </div>
       );
@@ -1373,6 +1374,7 @@ BootstrapTable.propTypes = {
     hidePageListOnlyOnePage: PropTypes.bool,
     alwaysShowAllBtns: PropTypes.bool,
     withFirstAndLast: PropTypes.bool,
+    keepSizePerPageState: PropTypes.bool,
     onSortChange: PropTypes.func,
     onPageChange: PropTypes.func,
     onSizePerPageList: PropTypes.func,
@@ -1525,6 +1527,7 @@ BootstrapTable.defaultProps = {
     hidePageListOnlyOnePage: false,
     alwaysShowAllBtns: false,
     withFirstAndLast: true,
+    keepSizePerPageState: false,
     onSizePerPageList: undefined,
     noDataText: undefined,
     withoutNoDataText: false,
