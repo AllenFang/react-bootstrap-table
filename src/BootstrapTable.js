@@ -429,9 +429,16 @@ class BootstrapTable extends Component {
 
   isSelectAll() {
     if (this.store.isEmpty()) return false;
-    const unselectable = this.props.selectRow.unselectable;
-    const defaultSelectRowKeys = this.store.getSelectedRowKeys();
-    const allRowKeys = this.store.getAllRowkey();
+    const { selectRow: { unselectable, onlyUnselectVisible } } = this.props;
+    const keyField = this.store.getKeyField();
+    const allRowKeys = onlyUnselectVisible ?
+      this.store.get().map(r => r[keyField]) :
+      this.store.getAllRowkey();
+    let defaultSelectRowKeys = this.store.getSelectedRowKeys();
+
+    if (onlyUnselectVisible) {
+      defaultSelectRowKeys = defaultSelectRowKeys.filter(x => x !== allRowKeys);
+    }
 
     if (defaultSelectRowKeys.length === 0) return false;
     let match = 0;
@@ -645,9 +652,17 @@ class BootstrapTable extends Component {
 
     if (typeof result == 'undefined' || result !== false) {
       if (isSelected) {
-        selectedRowKeys = Array.isArray(result) ?
-          result :
-          rows.map(r => r[keyField]);
+        if (Array.isArray(result)) {
+          selectedRowKeys = result;
+        } else {
+          const currentRowKeys = rows.map(r => r[keyField]);
+          // onlyUnselectVisible default is false, #1276
+          if (onlyUnselectVisible) {
+            selectedRowKeys = selectedRowKeys.concat(currentRowKeys);
+          } else {
+            selectedRowKeys = currentRowKeys;
+          }
+        }
       } else {
         if (unselectable && selected) {
           selectedRowKeys = selected.filter(r => unselectable.indexOf(r) > -1);
