@@ -1,3 +1,16 @@
+<a name="v3.3.1"></a>
+# [v3.3.1](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.0...v3.3.1) (2017-05-06)
+## Features
+* Allow to unselect all only for visible rows(filter, search)[b15475a](https://github.com/AllenFang/react-bootstrap-table/commit/b15475a97bb5bc6c717a026c64d8c67145aca6b5)
+	* [#1276](https://github.com/AllenFang/react-bootstrap-table/issues/1276)
+	* Enable `selectRow.onlyUnselectVisible` to have this feature
+
+## Enhancement
+* `cellEdit.beforeSaveCell` pass fourth argument `done`, call it and return a bool value for performing validation in async[f620b19](https://github.com/AllenFang/react-bootstrap-table/commit/f620b19e297ea4f5ec23c6fc41b98f2ed9173076)
+	* check [description](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/cell-edit/cell-edit-hook-table.js#L42)
+	* If your validation is async or there's a delay for user operation, use this feature.
+* Suppoer `options.keepSizePerPageState`, enable it will make size per page dropdown keep open if table rerender automatically without any user action[5234375](https://github.com/AllenFang/react-bootstrap-table/commit/52343759d2525e1d73257977e0402d5c04dff060)
+
 <a name="v3.3.0"></a>
 # [v3.3.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.2.2...v3.3.0) (2017-05-01)
 ## Bug fixes
