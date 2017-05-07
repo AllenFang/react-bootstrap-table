@@ -767,9 +767,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'isSelectAll',
 	    value: function isSelectAll() {
 	      if (this.store.isEmpty()) return false;
-	      var unselectable = this.props.selectRow.unselectable;
+	      var _props$selectRow = this.props.selectRow,
+	          unselectable = _props$selectRow.unselectable,
+	          onlyUnselectVisible = _props$selectRow.onlyUnselectVisible;
+
+	      var keyField = this.store.getKeyField();
+	      var allRowKeys = onlyUnselectVisible ? this.store.get().map(function (r) {
+	        return r[keyField];
+	      }) : this.store.getAllRowkey();
 	      var defaultSelectRowKeys = this.store.getSelectedRowKeys();
-	      var allRowKeys = this.store.getAllRowkey();
+
+	      if (onlyUnselectVisible) {
+	        defaultSelectRowKeys = defaultSelectRowKeys.filter(function (x) {
+	          return x !== allRowKeys;
+	        });
+	      }
 
 	      if (defaultSelectRowKeys.length === 0) return false;
 	      var match = 0;
@@ -983,11 +995,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function __handleSelectAllRow__REACT_HOT_LOADER__(e) {
 	      var isSelected = e.currentTarget.checked;
 	      var keyField = this.store.getKeyField();
-	      var _props$selectRow = this.props.selectRow,
-	          onSelectAll = _props$selectRow.onSelectAll,
-	          unselectable = _props$selectRow.unselectable,
-	          selected = _props$selectRow.selected,
-	          onlyUnselectVisible = _props$selectRow.onlyUnselectVisible;
+	      var _props$selectRow2 = this.props.selectRow,
+	          onSelectAll = _props$selectRow2.onSelectAll,
+	          unselectable = _props$selectRow2.unselectable,
+	          selected = _props$selectRow2.selected,
+	          onlyUnselectVisible = _props$selectRow2.onlyUnselectVisible;
 
 	      var selectedRowKeys = onlyUnselectVisible ? this.state.selectedRowKeys : [];
 	      var result = true;
@@ -1016,9 +1028,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if (typeof result == 'undefined' || result !== false) {
 	        if (isSelected) {
-	          selectedRowKeys = Array.isArray(result) ? result : rows.map(function (r) {
-	            return r[keyField];
-	          });
+	          if (Array.isArray(result)) {
+	            selectedRowKeys = result;
+	          } else {
+	            var currentRowKeys = rows.map(function (r) {
+	              return r[keyField];
+	            });
+	            // onlyUnselectVisible default is false, #1276
+	            if (onlyUnselectVisible) {
+	              selectedRowKeys = selectedRowKeys.concat(currentRowKeys);
+	            } else {
+	              selectedRowKeys = currentRowKeys;
+	            }
+	          }
 	        } else {
 	          if (unselectable && selected) {
 	            selectedRowKeys = selected.filter(function (r) {
@@ -1265,7 +1287,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var currPage = this.state.currPage;
 
 	        if (currPage > currLastPage) currPage = currLastPage;
-	        result = this.store.page(currPage, sizePerPage).get();
+	        result = this.store.page(_util2.default.getNormalizedPage(currPage), sizePerPage).get();
 	        this.setState({
 	          data: result,
 	          selectedRowKeys: this.store.getSelectedRowKeys(),
