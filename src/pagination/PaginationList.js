@@ -15,7 +15,10 @@ class PaginationList extends Component {
   }
 
   componentWillReceiveProps() {
-    this.setState({ open: false });
+    const { keepSizePerPageState } = this.props;
+    if (!keepSizePerPageState) {
+      this.setState({ open: false });
+    }
   }
 
   componentDidMount() {
@@ -43,7 +46,8 @@ class PaginationList extends Component {
       nextPage,
       lastPage,
       firstPage,
-      sizePerPage
+      sizePerPage,
+      keepSizePerPageState
     } = this.props;
 
     if (page === prePage) {
@@ -57,6 +61,8 @@ class PaginationList extends Component {
     } else {
       page = parseInt(page, 10);
     }
+
+    if (keepSizePerPageState) { this.setState({ open: false }); }
 
     if (page !== currPage) {
       this.props.changePage(page, sizePerPage);
@@ -74,9 +80,8 @@ class PaginationList extends Component {
       if (this.props.onSizePerPageList) {
         this.props.onSizePerPageList(selectSize);
       }
-    } else {
-      this.setState({ open: false });
     }
+    this.setState({ open: false });
   }
 
   toggleDropDown = () => {
@@ -321,7 +326,8 @@ PaginationList.propTypes = {
   nextPageTitle: PropTypes.string,
   firstPageTitle: PropTypes.string,
   lastPageTitle: PropTypes.string,
-  hidePageListOnlyOnePage: PropTypes.bool
+  hidePageListOnlyOnePage: PropTypes.bool,
+  keepSizePerPageState: PropTypes.bool
 };
 
 PaginationList.defaultProps = {

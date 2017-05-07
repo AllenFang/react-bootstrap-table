@@ -15,6 +15,7 @@ import OnlySelectedTable from './only-show-selected-table';
 import ExternallyManagedSelection from './externally-managed-selection';
 import CustomMultiSelectTable from './custom-multi-select-table';
 import SelectionColumnWidthTable from './selection-column-width-table';
+import SelectAllWithFilterTable from './select-filter-table';
 import SelectAll from './all-select';
 
 class Demo extends React.Component {
@@ -154,6 +155,17 @@ class Demo extends React.Component {
             <div className='panel-body'>
               <h5>Source in all-select.js</h5>
               <SelectAll />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Select All Behavior with Filter/Search</div>
+            <div className='panel-body'>
+              <h5>Source in select-filter-table.js</h5>
+              <span>Configure <code>selectRow.onlyUnselectVisible</code> and observer the behavior for unselect all.</span>
+              <span>Also check <a href='https://github.com/AllenFang/react-bootstrap-table/issues/1276' target='_blank'>#1276</a></span>
+              <SelectAllWithFilterTable />
             </div>
           </div>
         </div>

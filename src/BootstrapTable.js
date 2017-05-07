@@ -621,12 +621,15 @@ class BootstrapTable extends Component {
   handleSelectAllRow = e => {
     const isSelected = e.currentTarget.checked;
     const keyField = this.store.getKeyField();
-    const { selectRow: { onSelectAll, unselectable, selected } } = this.props;
-    let selectedRowKeys = [];
+    const { selectRow: { onSelectAll, unselectable, selected, onlyUnselectVisible } } = this.props;
+    let selectedRowKeys = onlyUnselectVisible ? this.state.selectedRowKeys : [];
     let result = true;
-    let rows = isSelected ?
-      this.store.get() :
-      this.store.getRowByKey(this.state.selectedRowKeys);
+    let rows = this.store.get();
+
+    // onlyUnselectVisible default is false, #1276
+    if (!isSelected && !onlyUnselectVisible) {
+      rows = this.store.getRowByKey(this.state.selectedRowKeys);
+    }
 
     if (unselectable && unselectable.length > 0) {
       if (isSelected) {
@@ -650,7 +653,10 @@ class BootstrapTable extends Component {
           rows.map(r => r[keyField]);
       } else {
         if (unselectable && selected) {
-          selectedRowKeys = selected.filter(r => unselectable.indexOf(r) > -1 );
+          selectedRowKeys = selected.filter(r => unselectable.indexOf(r) > -1);
+        } else if (onlyUnselectVisible) {
+          const currentRowKeys = rows.map(r => r[keyField]);
+          selectedRowKeys = selectedRowKeys.filter(k => currentRowKeys.indexOf(k) === -1);
         }
       }
 
@@ -704,22 +710,43 @@ class BootstrapTable extends Component {
   }
 
   handleEditCell(newVal, rowIndex, colIndex) {
-    const { onCellEdit } = this.props.options;
-    const { beforeSaveCell, afterSaveCell } = this.props.cellEdit;
+    const { beforeSaveCell } = this.props.cellEdit;
     const columns = this.getColumnsDescription(this.props);
     const fieldName = columns[colIndex].name;
 
+    const invalid = () => {
+      this.setState({
+        data: this.store.get(),
+        reset: false
+      });
+      return;
+    };
+
     if (beforeSaveCell) {
-      const isValid = beforeSaveCell(this.state.data[rowIndex], fieldName, newVal);
-      if (!isValid && typeof isValid !== 'undefined') {
-        this.setState({
-          data: this.store.get(),
-          reset: false
-        });
-        return;
+      const beforeSaveCellCB = result => {
+        this.refs.body.cancelEditCell();
+        if (result || result === undefined) {
+          this.editCell(newVal, rowIndex, colIndex);
+        } else {
+          invalid();
+        }
+      };
+      const isValid = beforeSaveCell(this.state.data[rowIndex], fieldName, newVal, beforeSaveCellCB);
+      if (isValid === false && typeof isValid !== 'undefined') {
+        return invalid();
+      } else if (isValid === Const.AWAIT_BEFORE_CELL_EDIT) {
+        /* eslint consistent-return: 0 */
+        return isValid;
       }
     }
+    this.editCell(newVal, rowIndex, colIndex);
+  }
 
+  editCell(newVal, rowIndex, colIndex) {
+    const { onCellEdit } = this.props.options;
+    const { afterSaveCell } = this.props.cellEdit;
+    const columns = this.getColumnsDescription(this.props);
+    const fieldName = columns[colIndex].name;
     if (onCellEdit) {
       newVal = onCellEdit(this.state.data[rowIndex], fieldName, newVal);
     }
@@ -1024,6 +1051,7 @@ class BootstrapTable extends Component {
             paginationPanel={ options.paginationPanel }
             handleDropdownOpen={ options.handleDropdownOpen }
             handleDropdownClose={ options.handleDropdownClose }
+            keepSizePerPageState={ options.keepSizePerPageState }
             open={ false }/>
         </div>
       );
@@ -1295,7 +1323,8 @@ BootstrapTable.propTypes = {
     clickToExpand: PropTypes.bool,
     showOnlySelected: PropTypes.bool,
     unselectable: PropTypes.array,
-    columnWidth: PropTypes.oneOfType([ PropTypes.number, PropTypes.string ])
+    columnWidth: PropTypes.oneOfType([ PropTypes.number, PropTypes.string ]),
+    onlyUnselectVisible: PropTypes.bool
   }),
   cellEdit: PropTypes.shape({
     mode: PropTypes.string,
@@ -1350,6 +1379,7 @@ BootstrapTable.propTypes = {
     hidePageListOnlyOnePage: PropTypes.bool,
     alwaysShowAllBtns: PropTypes.bool,
     withFirstAndLast: PropTypes.bool,
+    keepSizePerPageState: PropTypes.bool,
     onSortChange: PropTypes.func,
     onPageChange: PropTypes.func,
     onSizePerPageList: PropTypes.func,
@@ -1448,7 +1478,8 @@ BootstrapTable.defaultProps = {
     clickToExpand: false,
     showOnlySelected: false,
     unselectable: [],
-    customComponent: undefined
+    customComponent: undefined,
+    onlyUnselectVisible: false
   },
   cellEdit: {
     mode: Const.CELL_EDIT_NONE,
@@ -1503,6 +1534,7 @@ BootstrapTable.defaultProps = {
     hidePageListOnlyOnePage: false,
     alwaysShowAllBtns: false,
     withFirstAndLast: true,
+    keepSizePerPageState: false,
     onSizePerPageList: undefined,
     noDataText: undefined,
     withoutNoDataText: false,
