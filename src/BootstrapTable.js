@@ -12,6 +12,9 @@ import { TableDataStore } from './store/TableDataStore';
 import Util from './util';
 import exportCSVUtil from './csv_export_util';
 import { Filter } from './Filter';
+import $ from 'jquery';
+window.$ = $;
+import 'bootstrap/dist/js/bootstrap.min.js';
 
 class BootstrapTable extends Component {
 
