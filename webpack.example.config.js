@@ -56,6 +56,11 @@ module.exports = {
       process.stderr.clearLine();
       process.stderr.cursorTo(0);
       process.stderr.write(percent + '% ' + message);
+    }),
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery',
+      jquery: 'jquery'
     })
   ]
 };
