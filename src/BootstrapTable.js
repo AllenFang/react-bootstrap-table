@@ -872,7 +872,7 @@ class BootstrapTable extends Component {
       const currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
       let { currPage } = this.state;
       if (currPage > currLastPage) currPage = currLastPage;
-      result = this.store.page(currPage, sizePerPage).get();
+      result = this.store.page(Util.getNormalizedPage(currPage), sizePerPage).get();
       this.setState({
         data: result,
         selectedRowKeys: this.store.getSelectedRowKeys(),
