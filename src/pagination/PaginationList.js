@@ -3,6 +3,7 @@ import classSet from 'classnames';
 import PageButton from './PageButton.js';
 import SizePerPageDropDown from './SizePerPageDropDown';
 import Const from '../Const';
+import $ from 'jquery';
 
 class PaginationList extends Component {
 
@@ -15,6 +16,23 @@ class PaginationList extends Component {
 
   componentWillReceiveProps() {
     this.setState({ open: false });
+  }
+
+  componentDidMount() {
+    if (!this.dropdown || !this.dropdown.dropdownContainer) {
+      return;
+    }
+    $(this.dropdown.dropdownContainer)
+        .on('shown.bs.dropdown', () => {
+          if (this.props.handleDropdownOpen) {
+            this.props.handleDropdownOpen();
+          }
+        })
+        .on('hidden.bs.dropdown', () => {
+          if (this.props.handleDropdownClose) {
+            this.props.handleDropdownClose();
+          }
+        });
   }
 
   changePage = page => {
@@ -180,6 +198,7 @@ class PaginationList extends Component {
           currSizePerPage={ String(sizePerPageText) }
           options={ sizePerPageOptions }
           onClick={ this.toggleDropDown }
+          ref={ (c) => {this.dropdown = c;} }
           { ...dropdownProps }/>
       );
     }
