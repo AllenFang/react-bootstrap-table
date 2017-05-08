@@ -10,6 +10,7 @@ class TableEditColumn extends Component {
     super(props);
     this.timeouteClear = 0;
     const { fieldValue, row, className } = this.props;
+    this.focusInEditor = this.focusInEditor.bind(this);
     this.state = {
       shakeEditor: false,
       className: typeof className === 'function' ? className(fieldValue, row) : className
@@ -74,7 +75,6 @@ class TableEditColumn extends Component {
     const ts = this;
     let valid = true;
     if (ts.props.editable.validator) {
-      const input = ts.refs.inputRef;
       const checkVal = ts.props.editable.validator(value, this.props.row);
       const responseType = typeof checkVal;
       if (responseType !== 'object' && checkVal !== true) {
@@ -97,7 +97,7 @@ class TableEditColumn extends Component {
         ts.timeouteClear = setTimeout(() => {
           ts.setState({ shakeEditor: false });
         }, 300);
-        input.focus();
+        this.focusInEditor();
         return valid;
       }
     }
@@ -124,7 +124,7 @@ class TableEditColumn extends Component {
   }
 
   componentDidMount() {
-    this.refs.inputRef.focus();
+    this.focusInEditor();
     const dom = ReactDOM.findDOMNode(this);
     if (this.props.isFocus) {
       dom.focus();
@@ -144,6 +144,12 @@ class TableEditColumn extends Component {
 
   componentWillUnmount() {
     this.clearTimeout();
+  }
+
+  focusInEditor() {
+    if (typeof this.refs.inputRef.focus === 'function') {
+      this.refs.inputRef.focus();
+    }
   }
 
   handleClick = e => {
