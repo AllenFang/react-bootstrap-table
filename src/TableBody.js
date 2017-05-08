@@ -405,6 +405,8 @@ class TableBody extends Component {
       if (result !== Const.AWAIT_BEFORE_CELL_EDIT) {
         this.setState({ currEditCell: null });
       }
+    } else {
+      this.setState({ currEditCell: null });
     }
   }
 
