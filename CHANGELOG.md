@@ -1,3 +1,47 @@
+<a name="v3.3.2"></a>
+# [v3.3.2](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.1...v3.3.2) (2017-05-07)
+## Bug fixes
+* Fixed bug about `options.keepSizePerPageState`([e226764](https://github.com/AllenFang/react-bootstrap-table/commit/e22676426cff916a492177c507787298364841f3))
+* Fixed a delete row bug when `options.pageStartIndex` is 0([161eb0c](https://github.com/AllenFang/react-bootstrap-table/commit/161eb0c46ff93f6845884978ad21021cf69375f4))
+
+<a name="v3.3.1"></a>
+# [v3.3.1](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.0...v3.3.1) (2017-05-06)
+## Features
+* Allow to unselect all only for visible rows(filter, search)[b15475a](https://github.com/AllenFang/react-bootstrap-table/commit/b15475a97bb5bc6c717a026c64d8c67145aca6b5)
+	* [#1276](https://github.com/AllenFang/react-bootstrap-table/issues/1276)
+	* Enable `selectRow.onlyUnselectVisible` to have this feature
+
+## Enhancement
+* `cellEdit.beforeSaveCell` pass fourth argument `done`, call it and return a bool value for performing validation in async[f620b19](https://github.com/AllenFang/react-bootstrap-table/commit/f620b19e297ea4f5ec23c6fc41b98f2ed9173076)
+	* check [description](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/cell-edit/cell-edit-hook-table.js#L42)
+	* If your validation is async or there's a delay for user operation, use this feature.
+* Suppoer `options.keepSizePerPageState`, enable it will make size per page dropdown keep open if table rerender automatically without any user action[5234375](https://github.com/AllenFang/react-bootstrap-table/commit/52343759d2525e1d73257977e0402d5c04dff060)
+
+<a name="v3.3.0"></a>
+# [v3.3.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.2.2...v3.3.0) (2017-05-01)
+## Bug fixes
+* Fix default sort does not work for `remote` mode([a15c492](https://github.com/AllenFang/react-bootstrap-table/commit/a15c492dd1e4ceae05aabc1c2632f89b10258941))
+* Fix `false` is transfer to be empty string on cell editing([e840849](https://github.com/AllenFang/react-bootstrap-table/commit/e840849e04a5f0598dd18a9c1d9d2db7c981a698))
+
+## Enhancement
+* Avoid to rerender select filter everytime([5b14252](https://github.com/AllenFang/react-bootstrap-table/commit/5b1425234ebd79db8cf8df3c949b8d019e5c308e))
+* restrict border & border-radius to bordered tables([8e446f3](https://github.com/AllenFang/react-bootstrap-table/commit/8e446f36006678e37446d6028802aa45e45813cd))
+* Better `margin` for table, pagination, toolbar([a5be737](https://github.com/AllenFang/react-bootstrap-table/commit/a5be73792cd5b29ebae0f218f635bd2f697bda8f))
+
+<a name="v3.2.2"></a>
+# [v3.2.2](https://github.com/AllenFang/react-bootstrap-table/compare/v3.2.1...v3.2.2) (2017-04-27)
+## Bug fixes
+* Fix validation is ignored when tab out of a cell to the next cell([1a6ca0a](https://github.com/AllenFang/react-bootstrap-table/commit/1a6ca0af7559f4cbbbf5e54715c2e25ebce5b852))
+
+## Enhancement
+* Able to remove the empty option on select and number filter([61a2d8c](https://github.com/AllenFang/react-bootstrap-table/commit/61a2d8cc6811fe470a68313a80a5c31ec1fce05c))
+	* Use `filter.withoutEmptyOption` on `TableHeaderColumn` for select filter.
+	* Use `filter.withoutEmptyNumberOption` on `TableHeaderColumn` for number filter.
+	* Use `filter.withoutEmptyComparatorOption` on `TableHeaderColumn` for number filter.
+
+## Features
+* Support `defaultASC` on `TableHeaderColumn` for specifing ASC order when sorting on column first time([fec241d](https://github.com/AllenFang/react-bootstrap-table/commit/fec241d11e7a2351d7070a4cc6afaed1ba3d4ec2))
+
 <a name="v3.2.1"></a>
 # [v3.2.1](https://github.com/AllenFang/react-bootstrap-table/compare/v3.2.0...v3.2.1) (2017-04-20)
 ## Bug fixes

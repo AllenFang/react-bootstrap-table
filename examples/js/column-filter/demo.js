@@ -12,11 +12,13 @@ import SelectFilterWithCustomText from './select-filter-with-select-text';
 import SelectFilterWithDefaultValue from './select-filter-with-default-value';
 import ProgrammaticallySelectFilter from './select-filter-programmatically';
 import SelectFilterWithSort from './select-filter-with-sort';
+import SelectFilterWithoutEmptyOption from './select-filter-without-empty-option';
 import NumberFilter from './number-filter';
 import NumberFilterWithDefaultValue from './number-filter-with-default-value';
 import ProgrammaticallyNumberFilter from './number-filter-programmatically';
 import NumberOptionsFilter from './number-options-filter';
 import NumberOptionsFilterWithDefaultValue from './number-options-filter-with-default-value';
+import NumberFilterWithoutEmptyOption from './number-filter-without-empty-option';
 import DateFilter from './date-filter';
 import DateFilterWithDefaultValue from './date-filter-with-default-value';
 import ProgrammaticallyDateFilter from './date-filter-programmatically';
@@ -146,6 +148,15 @@ class Demo extends React.Component {
             </div>
             <div className='col-md-offset-1 col-md-8'>
                 <div className='panel panel-default'>
+                    <div className='panel-heading'>Select Filter Without Empty Option Example</div>
+                    <div className='panel-body'>
+                        <h5>Source in /examples/js/column-filter/select-filter-without-empty-option.js</h5>
+                        <SelectFilterWithoutEmptyOption />
+                    </div>
+                </div>
+            </div>
+            <div className='col-md-offset-1 col-md-8'>
+                <div className='panel panel-default'>
                     <div className='panel-heading'>Number Filter Example</div>
                     <div className='panel-body'>
                         <h5>Source in /examples/js/column-filter/number-filter.js</h5>
@@ -195,6 +206,15 @@ class Demo extends React.Component {
                     <div className='panel-body'>
                         <h5>Source in /examples/js/column-filter/number-options-filter-with-default-value.js</h5>
                         <NumberOptionsFilterWithDefaultValue />
+                    </div>
+                </div>
+            </div>
+            <div className='col-md-offset-1 col-md-8'>
+                <div className='panel panel-default'>
+                    <div className='panel-heading'>Number Filter Without Empty Option Example</div>
+                    <div className='panel-body'>
+                        <h5>Source in /examples/js/column-filter/number-filter-without-empty-option.js</h5>
+                        <NumberFilterWithoutEmptyOption />
                     </div>
                 </div>
             </div>

@@ -72,7 +72,10 @@ class NumberFilter extends Component {
 
   getComparatorOptions() {
     const optionTags = [];
-    optionTags.push(<option key='-1'></option>);
+    const { withoutEmptyComparatorOption } = this.props;
+    if (!withoutEmptyComparatorOption) {
+      optionTags.push(<option key='-1'></option>);
+    }
     for (let i = 0; i < this.numberComparators.length; i++) {
       optionTags.push(
         <option key={ i } value={ this.numberComparators[i] }>
@@ -85,13 +88,14 @@ class NumberFilter extends Component {
 
   getNumberOptions() {
     const optionTags = [];
-    const { options } = this.props;
-
-    optionTags.push(
-      <option key='-1' value=''>
-        { this.props.placeholder || `Select ${this.props.columnName}...` }
-      </option>
-    );
+    const { options, withoutEmptyNumberOption } = this.props;
+    if (!withoutEmptyNumberOption) {
+      optionTags.push(
+        <option key='-1' value=''>
+          { this.props.placeholder || `Select ${this.props.columnName}...` }
+        </option>
+      );
+    }
     for (let i = 0; i < options.length; i++) {
       optionTags.push(<option key={ i } value={ options[i] }>{ options[i] }</option>);
     }
@@ -177,11 +181,15 @@ NumberFilter.propTypes = {
     }
   },
   placeholder: PropTypes.string,
-  columnName: PropTypes.string
+  columnName: PropTypes.string,
+  withoutEmptyComparatorOption: PropTypes.bool,
+  withoutEmptyNumberOption: PropTypes.bool
 };
 
 NumberFilter.defaultProps = {
-  delay: Const.FILTER_DELAY
+  delay: Const.FILTER_DELAY,
+  withoutEmptyComparatorOption: false,
+  withoutEmptyNumberOption: false
 };
 
 export default NumberFilter;

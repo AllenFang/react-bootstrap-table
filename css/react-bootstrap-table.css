@@ -5,7 +5,7 @@
   margin-bottom: 0;
 }
 
-.react-bs-table {
+.react-bs-table-bordered {
   border: 1px solid #ddd;
   border-radius: 5px;
 }
@@ -22,16 +22,12 @@
   text-overflow: ellipsis;
 }
 
-.react-bs-table {
-  margin: 5px 10px 5px 10px;
-}
-
 .react-bs-table-pagination {
-  margin: 10px;
+  margin-top: 10px;
 }
 
 .react-bs-table-tool-bar {
-  margin: 10px 10px 0 10px;
+  margin-bottom: 5px;
 }
 
 .react-bs-container-header {
