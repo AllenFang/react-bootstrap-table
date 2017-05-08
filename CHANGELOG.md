@@ -1,3 +1,9 @@
+<a name="v3.3.2"></a>
+# [v3.3.2](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.1...v3.3.2) (2017-05-07)
+## Bug fixes
+* Fixed bug about `options.keepSizePerPageState`([e226764](https://github.com/AllenFang/react-bootstrap-table/commit/e22676426cff916a492177c507787298364841f3))
+* Fixed a delete row bug when `options.pageStartIndex` is 0([161eb0c](https://github.com/AllenFang/react-bootstrap-table/commit/161eb0c46ff93f6845884978ad21021cf69375f4))
+
 <a name="v3.3.1"></a>
 # [v3.3.1](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.0...v3.3.1) (2017-05-06)
 ## Features
