@@ -38,7 +38,7 @@ function onSelectAll(isSelected) {
 
 function onAfterSaveCell(row, cellName, cellValue) {
   console.log(`Save cell ${cellName} with value ${cellValue}`);
-  console.log('Thw whole row :');
+  console.log('The whole row :');
   console.log(row);
 }
 
