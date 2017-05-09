@@ -1,3 +1,9 @@
+<a name="v3.3.3"></a>
+# [v3.3.3](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.2...v3.3.3) (2017-05-08)
+## Bug fixes
+* Avoid to throw error when `onfocus` function is not implement on custom cell editor([7104c6b](https://github.com/AllenFang/react-bootstrap-table/commit/7104c6b4f6611b9040d8de18649b5daded89cac2))
+* Fixed press ESC to leave the cell editing broken since from `v3.3.1`([283508](https://github.com/AllenFang/react-bootstrap-table/commit/28350864ecf6dace5d00f55bd4dbfaff8ddaacbd))
+
 <a name="v3.3.2"></a>
 # [v3.3.2](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.1...v3.3.2) (2017-05-07)
 ## Bug fixes
