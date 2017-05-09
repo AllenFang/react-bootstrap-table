@@ -30,7 +30,7 @@ function onAfterSaveCell(row, cellName, cellValue) {
     rowStr += prop + ': ' + row[prop] + '\n';
   }
 
-  alert('Thw whole row :\n' + rowStr);
+  alert('The whole row :\n' + rowStr);
 }
 
 function onBeforeSaveCell(row, cellName, cellValue) {
