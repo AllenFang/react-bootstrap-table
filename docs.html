@@ -4570,10 +4570,11 @@ render() {
               <div class="container-fluid">
                   <div class="row">
                       <div class="col-lg-12">
-                        <h1><a href='#autoValue'>autoValue : Bool</a></h1>
+                        <h1><a href='#autoValue'>autoValue : Bool | Function</a></h1>
                         <span>
-                          It only work when you enable insertRow and be assign on rowKey column. 
-                          If true, the row key will be generated automatically after a row insertion.
+                          It only work for enabling insertRow and be assign on rowKey column. 
+                          If true, the value of rowkey will be generated automatically after a row insertion.
+                          If a function given, you can customize the value by yourself and remember to return the value in the function.
                           </br></br>
                         </span>
 <pre>
