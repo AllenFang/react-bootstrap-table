@@ -380,7 +380,7 @@ const data = [ ... ];
                           <h1><a href='#remote'>remote : String | Function</a></h1>
                           <span>
                             <code>react-bootstrap-table</code> default handle the data changing(like sorting, filtering insert or pagination etc) in a data store, call <code><a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/blob/master/src/store/TableDataStore.js">TableDataStore</a></code>.</br>
-                            So this prop is <code>false</code> by default, if you enable <code>remote</code>, which means you need to handle these all data manipulation on your code(flux implement or something like that).</br>
+                            So this prop is <code>false</code> by default, if you enable <code>remote</code>, which means you need to handle the all data manipulation on your application(<code>flux</code> implement or something like that).</br>
                             Therefore, <code>react-bootstrap-table</code> support following event hooks so that you can interact to your server or local store with the data changing</br>
                             <ul>
                               <li><code>onSortChange</code></li>
@@ -394,8 +394,35 @@ const data = [ ... ];
                               <li><code>onCellEdit</code></li>
                             </ul>
                             </br>
-                            If a function given, which means you can choose which functionality should be handled with remote or not. Check <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-alternative.js#L9' target='_blank'>this</a> example for more detail.<br/>
-                            These all are the useful <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/remote">examples</a> to learn how to programming with <code>remote</code> mode.
+                            If a function given, which means you can choose which functionality should be handled with remote or not.Currently, we have following functionality you can control:
+                            <ul>
+                              <li>sort</li>
+                              <li>pagination</li>
+                              <li>cellEdit</li>
+                              <li>insertRow</li>
+                              <li>dropRow</li>
+                              <li>filter</li>
+                              <li>search</li>
+                              <li>exportCSV</li>
+                            </ul>
+                            You can use above name as key to specifiy what functionality should be handle by remote mode:
+<pre>
+<code class="html">remote(remoteObj) {
+    // Only cell editing, insert and delete row will be handled by remote store
+    remoteObj.cellEdit = true;
+    remoteObj.insertRow = true;
+    remoteObj.dropRow = true;
+    return remoteObj;
+  }
+// ...
+&lt;BootstrapTable data={ data }&gt;
+  &lt;TableHeaderColumn isKey dataField='account'&gt;Account&lt;/TableHeaderColumn&gt;
+  &lt;TableHeaderColumn dataField='name'&gt;Name&lt;/TableHeaderColumn&gt;
+&lt;/BootstrapTable&gt;
+</code>
+</pre>
+                            You can check <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-alternative.js#L9' target='_blank'>this</a> example a whole example,
+                            and also these all are the useful <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/remote">examples</a> to learn how to programming with <code>remote</code> mode.
                           </span>
                       </div>
                   </div>
