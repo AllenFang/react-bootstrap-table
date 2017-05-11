@@ -65,10 +65,7 @@ class ToolBar extends Component {
   }
 
   displayCommonMessage = () => {
-    notice(
-      'error',
-      'Form validate errors, please checking!',
-      '');
+    notice('error', this.props.insertFailIndicator, '');
   }
 
   validateNewRow(newRow) {
@@ -480,7 +477,8 @@ ToolBar.propTypes = {
   toolBar: PropTypes.func,
   searchPosition: PropTypes.string,
   reset: PropTypes.bool,
-  isValidKey: PropTypes.func
+  isValidKey: PropTypes.func,
+  insertFailIndicator: PropTypes.string
 };
 
 ToolBar.defaultProps = {

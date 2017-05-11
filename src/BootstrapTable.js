@@ -1163,7 +1163,8 @@ class BootstrapTable extends Component {
             btnGroup={ this.props.options.btnGroup }
             toolBar={ this.props.options.toolBar }
             reset={ this.state.reset }
-            isValidKey={ this.store.isValidKey } />
+            isValidKey={ this.store.isValidKey }
+            insertFailIndicator={ this.props.options.insertFailIndicator || Const.INSERT_FAIL_INDICATOR } />
         </div>
       );
     } else {
@@ -1448,7 +1449,8 @@ BootstrapTable.propTypes = {
     expanding: PropTypes.array,
     onlyOneExpanding: PropTypes.bool,
     beforeShowError: PropTypes.func,
-    printToolBar: PropTypes.bool
+    printToolBar: PropTypes.bool,
+    insertFailIndicator: PropTypes.string
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1595,7 +1597,8 @@ BootstrapTable.defaultProps = {
     expanding: [],
     onlyOneExpanding: false,
     beforeShowError: undefined,
-    printToolBar: true
+    printToolBar: true,
+    insertFailIndicator: Const.INSERT_FAIL_INDICATOR
   },
   fetchInfo: {
     dataTotalSize: 0

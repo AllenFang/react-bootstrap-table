@@ -54,7 +54,8 @@ const CONST_VAR = {
   REMOTE_DROP_ROW: 'dropRow',
   REMOTE_FILTER: 'filter',
   REMOTE_SEARCH: 'search',
-  REMOTE_EXPORT_CSV: 'exportCSV'
+  REMOTE_EXPORT_CSV: 'exportCSV',
+  INSERT_FAIL_INDICATOR: 'Form validate errors, please checking!'
 };
 
 CONST_VAR.REMOTE = {};
