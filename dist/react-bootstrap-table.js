@@ -3064,6 +3064,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (result !== _Const2.default.AWAIT_BEFORE_CELL_EDIT) {
 	          this.setState({ currEditCell: null });
 	        }
+	      } else {
+	        this.setState({ currEditCell: null });
 	      }
 	    }
 	  }, {
@@ -3869,6 +3871,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        row = _this$props.row,
 	        className = _this$props.className;
 
+	    _this.focusInEditor = _this.focusInEditor.bind(_this);
 	    _this.state = {
 	      shakeEditor: false,
 	      className: typeof className === 'function' ? className(fieldValue, row) : className
@@ -3938,7 +3941,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var ts = this;
 	      var valid = true;
 	      if (ts.props.editable.validator) {
-	        var input = ts.refs.inputRef;
 	        var checkVal = ts.props.editable.validator(value, this.props.row);
 	        var responseType = typeof checkVal === 'undefined' ? 'undefined' : _typeof(checkVal);
 	        if (responseType !== 'object' && checkVal !== true) {
@@ -3960,7 +3962,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          ts.timeouteClear = setTimeout(function () {
 	            ts.setState({ shakeEditor: false });
 	          }, 300);
-	          input.focus();
+	          this.focusInEditor();
 	          return valid;
 	        }
 	      }
@@ -4002,7 +4004,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this.refs.inputRef.focus();
+	      this.focusInEditor();
 	      var dom = _reactDom2.default.findDOMNode(this);
 	      if (this.props.isFocus) {
 	        dom.focus();
@@ -4024,6 +4026,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      this.clearTimeout();
+	    }
+	  }, {
+	    key: 'focusInEditor',
+	    value: function focusInEditor() {
+	      if (typeof this.refs.inputRef.focus === 'function') {
+	        this.refs.inputRef.focus();
+	      }
 	    }
 	  }, {
 	    key: '__handleClick__REACT_HOT_LOADER__',

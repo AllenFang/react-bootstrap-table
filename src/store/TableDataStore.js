@@ -41,6 +41,14 @@ export class TableDataStore {
     this.selected = [];
   }
 
+  isSearching() {
+    return this.searchText !== null;
+  }
+
+  isFiltering() {
+    return this.filterObj !== null;
+  }
+
   setData(data) {
     this.data = data;
     if (this.remote) {

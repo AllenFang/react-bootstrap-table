@@ -244,6 +244,14 @@ class BootstrapTable extends Component {
         sizePerPage,
         reset: false
       });
+
+      if (this.store.isSearching && options.afterSearch) {
+        options.afterSearch(this.store.searchText, this.store.getDataIgnoringPagination());
+      }
+
+      if (this.store.isFiltering && options.afterColumnFilter) {
+        options.afterColumnFilter(this.store.filterObj, this.store.getDataIgnoringPagination());
+      }
     }
 
     // If setting the expanded rows is being handled externally
