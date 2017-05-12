@@ -22,32 +22,43 @@ addProducts(100);
 export default class ExternallyManagedSelection extends React.Component {
   constructor(props) {
     super(props);
+    this.onSelectAll = this.onSelectAll.bind(this);
+    this.onRowSelect = this.onRowSelect.bind(this);
     this.state = {
       selected: [],
       currPage: 1
     };
   }
 
+  onRowSelect({ id }, isSelected) {
+    if (isSelected && this.state.selected.length !== 2) {
+      this.setState({
+        selected: [ ...this.state.selected, id ].sort(),
+        currPage: this.refs.table.state.currPage
+      });
+    } else {
+      this.setState({ selected: this.state.selected.filter(it => it !== id) });
+    }
+    return false;
+  }
+
+  onSelectAll(isSelected) {
+    if (!isSelected) {
+      this.setState({ selected: [] });
+    }
+    return false;
+  }
+
   render() {
     const {
       currPage
     } = this.state;
-    const onRowSelect = ({ id }, isSelected) => {
-      if (isSelected && this.state.selected.length !== 2) {
-        this.setState({
-          selected: [ ...this.state.selected, id ].sort(),
-          currPage: this.refs.table.state.currPage
-        });
-      } else {
-        this.setState({ selected: this.state.selected.filter(it => it !== id) });
-      }
-      return false;
-    };
 
     const selectRowProp = {
       mode: 'checkbox',
       clickToSelect: true,
-      onSelect: onRowSelect,
+      onSelect: this.onRowSelect,
+      onSelectAll: this.onSelectAll,
       selected: this.state.selected
     };
 
