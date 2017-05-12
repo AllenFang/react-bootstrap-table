@@ -1,3 +1,17 @@
+<a name="v3.2.2"></a>
+# [v3.2.2](https://github.com/AllenFang/react-bootstrap-table/compare/v3.2.1...v3.2.2) (2017-04-27)
+## Bug fixes
+* Fix validation is ignored when tab out of a cell to the next cell([1a6ca0a](https://github.com/AllenFang/react-bootstrap-table/commit/1a6ca0af7559f4cbbbf5e54715c2e25ebce5b852))
+
+## Enhancement
+* Able to remove the empty option on select and number filter([61a2d8c](https://github.com/AllenFang/react-bootstrap-table/commit/61a2d8cc6811fe470a68313a80a5c31ec1fce05c))
+	* Use `filter.withoutEmptyOption` on `TableHeaderColumn` for select filter.
+	* Use `filter.withoutEmptyNumberOption` on `TableHeaderColumn` for number filter.
+	* Use `filter.withoutEmptyComparatorOption` on `TableHeaderColumn` for number filter.
+
+## Features
+* Support `defaultASC` on `TableHeaderColumn` for specifing ASC order when sorting on column first time([fec241d](https://github.com/AllenFang/react-bootstrap-table/commit/fec241d11e7a2351d7070a4cc6afaed1ba3d4ec2))
+
 <a name="v3.2.1"></a>
 # [v3.2.1](https://github.com/AllenFang/react-bootstrap-table/compare/v3.2.0...v3.2.1) (2017-04-20)
 ## Bug fixes
