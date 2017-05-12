@@ -6,7 +6,7 @@ import Modal from 'react-modal';
 // import classSet from 'classnames';
 import Const from '../Const';
 // import editor from '../Editor';
-import Notifier from '../Notification.js';
+import { notice } from '../Notification.js';
 import InsertModal from './InsertModal';
 import InsertButton from './InsertButton';
 import DeleteButton from './DeleteButton';
@@ -66,10 +66,10 @@ class ToolBar extends Component {
   }
 
   displayCommonMessage = () => {
-    this.refs.notifier.notice(
+    notice(
       'error',
       'Form validate errors, please checking!',
-      'Pressed ESC can cancel');
+      '');
   }
 
   validateNewRow(newRow) {
@@ -94,10 +94,10 @@ class ToolBar extends Component {
           isValid = false;
           validateState[column.field] = tempMsg;
         } else if (responseType === 'object' && tempMsg.isValid !== true) {
-          this.refs.notifier.notice(
-              tempMsg.notification.type,
-              tempMsg.notification.msg,
-              tempMsg.notification.title);
+          notice(
+            tempMsg.notification.type,
+            tempMsg.notification.msg,
+            tempMsg.notification.title);
           isValid = false;
           validateState[column.field] = tempMsg.notification.msg;
         }
@@ -123,7 +123,7 @@ class ToolBar extends Component {
     }
     const msg = this.props.onAddRow(newRow);
     if (msg) {
-      this.refs.notifier.notice('error', msg, 'Pressed ESC can cancel');
+      notice('error', msg, '');
       this.clearTimeout();
       // shake form and hack prevent modal hide
       this.setState({
@@ -322,7 +322,6 @@ class ToolBar extends Component {
     return (
       <div className='row'>
         { toolbar }
-        <Notifier ref='notifier' />
         { modal }
       </div>
     );

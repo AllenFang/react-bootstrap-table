@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import 'toastr/build/toastr.min.css';
+import 'react-s-alert/dist/s-alert-default.css';
 import '../../../css/react-bootstrap-table.css';
 import {
   Grid,
