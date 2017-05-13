@@ -5,13 +5,17 @@ const notice = (type, msg, title) => {
 
   const bodyHTML = `
     ${ titleHTML }
-    <span>${ msg }</span>
+    <div>
+      <span class='	glyphicon glyphicon-alert'></span>&nbsp;
+      <span>${ msg }</span>
+    </div>
   `;
 
   Alert.error(bodyHTML, {
     position: 'top-right',
-    timeout: 3500,
-    html: true
+    timeout: 3000,
+    html: true,
+    effect: 'scale'
   });
 };
 
