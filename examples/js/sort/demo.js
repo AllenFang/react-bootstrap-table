@@ -12,6 +12,7 @@ import DisableSortIndicatorTable from './disable-sort-indicator-table';
 import CustomCaretSortTable from './custom-caret-sort-table';
 import ExternalMultiSort from './manage-multi-sort-external-table';
 import DefaultASCSortTable from './default-asc-sort-table';
+import CleanSortedTable from './clean-sorted-table';
 
 class Demo extends React.Component {
   render() {
@@ -122,6 +123,15 @@ class Demo extends React.Component {
             <div className='panel-body'>
               <h5>Source in /examples/js/sort/default-asc-sort-table.js</h5>
               <DefaultASCSortTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Clean Sorted Table</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/sort/clean-sorted-table.js</h5>
+              <CleanSortedTable />
             </div>
           </div>
         </div>

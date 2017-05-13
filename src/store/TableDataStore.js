@@ -115,6 +115,10 @@ export class TableDataStore {
     }
   }
 
+  cleanSortInfo() {
+    this.sortList = [];
+  }
+
   setSelectedRowKey(selectedRowKeys) {
     this.selected = selectedRowKeys;
   }

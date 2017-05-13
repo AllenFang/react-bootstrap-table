@@ -37,11 +37,18 @@ const editor = function(editable, attr, format, editorClass, defaultValue, ignor
       let options = [];
       const values = editable.options.values;
       if (Array.isArray(values)) {// only can use arrray data for options
-        let rowValue;
-        options = values.map((d, i) => {
-          rowValue = format ? format(d) : d;
+        let text;
+        let value;
+        options = values.map((option, i) => {
+          if (typeof option === 'object') {
+            text = option.text;
+            value = option.value;
+          } else {
+            text = format ? format(option) : option;
+            value = option;
+          }
           return (
-            <option key={ 'option' + i } value={ d }>{ rowValue }</option>
+            <option key={ 'option' + i } value={ value }>{ text }</option>
           );
         });
       }

@@ -562,6 +562,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	          sizePerPage: sizePerPage,
 	          reset: false
 	        });
+
+	        if (this.store.isSearching && options.afterSearch) {
+	          options.afterSearch(this.store.searchText, this.store.getDataIgnoringPagination());
+	        }
+
+	        if (this.store.isFiltering && options.afterColumnFilter) {
+	          options.afterColumnFilter(this.store.filterObj, this.store.getDataIgnoringPagination());
+	        }
 	      }
 
 	      // If setting the expanded rows is being handled externally
@@ -811,6 +819,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.store.setSelectedRowKey([]);
 	      this.setState({
 	        selectedRowKeys: [],
+	        reset: false
+	      });
+	    }
+	  }, {
+	    key: 'cleanSort',
+	    value: function cleanSort() {
+	      this.store.cleanSortInfo();
+	      this.setState({
 	        reset: false
 	      });
 	    }
@@ -4190,13 +4206,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (Array.isArray(values)) {
 	        (function () {
 	          // only can use arrray data for options
-	          var rowValue = void 0;
-	          options = values.map(function (d, i) {
-	            rowValue = format ? format(d) : d;
+	          var text = void 0;
+	          var value = void 0;
+	          options = values.map(function (option, i) {
+	            if ((typeof option === 'undefined' ? 'undefined' : _typeof(option)) === 'object') {
+	              text = option.text;
+	              value = option.value;
+	            } else {
+	              text = format ? format(option) : option;
+	              value = option;
+	            }
 	            return _react2.default.createElement(
 	              'option',
-	              { key: 'option' + i, value: d },
-	              rowValue
+	              { key: 'option' + i, value: value },
+	              text
 	            );
 	          });
 	        })();
@@ -10472,6 +10495,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.selected = [];
 	    }
 	  }, {
+	    key: 'isSearching',
+	    value: function isSearching() {
+	      return this.searchText !== null;
+	    }
+	  }, {
+	    key: 'isFiltering',
+	    value: function isFiltering() {
+	      return this.filterObj !== null;
+	    }
+	  }, {
 	    key: 'setData',
 	    value: function setData(data) {
 	      this.data = data;
@@ -10540,6 +10573,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	          this.sortList = [sortObj];
 	        }
 	      }
+	    }
+	  }, {
+	    key: 'cleanSortInfo',
+	    value: function cleanSortInfo() {
+	      this.sortList = [];
 	    }
 	  }, {
 	    key: 'setSelectedRowKey',
