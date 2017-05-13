@@ -1,6 +1,7 @@
 /* eslint max-len: 0 */
 import React from 'react';
 import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/scale.css';
 import '../../../css/react-bootstrap-table.css';
 import {
   Grid,
