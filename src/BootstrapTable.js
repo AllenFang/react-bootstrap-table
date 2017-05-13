@@ -478,6 +478,13 @@ class BootstrapTable extends Component {
     });
   }
 
+  cleanSort() {
+    this.store.cleanSortInfo();
+    this.setState({
+      reset: false
+    });
+  }
+
   handleSort = (order, sortField) => {
     if (this.props.options.onSortChange) {
       this.props.options.onSortChange(sortField, order, this.props);
