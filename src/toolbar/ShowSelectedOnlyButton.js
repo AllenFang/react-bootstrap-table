@@ -16,7 +16,7 @@ class ShowSelectedOnlyButton extends Component {
       ...rest
     } = this.props;
     const content = children ||
-      (<span>{ toggle ? showOnlySelectText : showAllText }</span>);
+      (<span>{ toggle ? showAllText : showOnlySelectText }</span>);
     return (
       <button type='button'
         aria-pressed='false'
