@@ -1600,7 +1600,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            btnGroup: this.props.options.btnGroup,
 	            toolBar: this.props.options.toolBar,
 	            reset: this.state.reset,
-	            isValidKey: this.store.isValidKey })
+	            isValidKey: this.store.isValidKey,
+	            insertFailIndicator: this.props.options.insertFailIndicator || _Const2.default.INSERT_FAIL_INDICATOR })
 	        );
 	      } else {
 	        return null;
@@ -1884,7 +1885,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    expanding: _react.PropTypes.array,
 	    onlyOneExpanding: _react.PropTypes.bool,
 	    beforeShowError: _react.PropTypes.func,
-	    printToolBar: _react.PropTypes.bool
+	    printToolBar: _react.PropTypes.bool,
+	    insertFailIndicator: _react.PropTypes.string
 	  }),
 	  fetchInfo: _react.PropTypes.shape({
 	    dataTotalSize: _react.PropTypes.number
@@ -2031,7 +2033,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    expanding: [],
 	    onlyOneExpanding: false,
 	    beforeShowError: undefined,
-	    printToolBar: true
+	    printToolBar: true,
+	    insertFailIndicator: _Const2.default.INSERT_FAIL_INDICATOR
 	  },
 	  fetchInfo: {
 	    dataTotalSize: 0
@@ -2182,7 +2185,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  REMOTE_DROP_ROW: 'dropRow',
 	  REMOTE_FILTER: 'filter',
 	  REMOTE_SEARCH: 'search',
-	  REMOTE_EXPORT_CSV: 'exportCSV'
+	  REMOTE_EXPORT_CSV: 'exportCSV',
+	  INSERT_FAIL_INDICATOR: 'Validation errors, please check!'
 	};
 
 	CONST_VAR.REMOTE = {};
@@ -4324,12 +4328,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	var notice = function notice(type, msg, title) {
 	  var titleHTML = title ? '<h4><strong>' + title + '</strong></h4>' : '';
 
-	  var bodyHTML = '\n    ' + titleHTML + '\n    <span>' + msg + '</span>\n  ';
+	  var bodyHTML = '\n    ' + titleHTML + '\n    <div>\n      <span class=\'\tglyphicon glyphicon-alert\'></span>&nbsp;\n      <span>' + msg + '</span>\n    </div>\n  ';
 
 	  _reactSAlert2.default.error(bodyHTML, {
 	    position: 'top-right',
-	    timeout: 3500,
-	    html: true
+	    timeout: 3000,
+	    html: true,
+	    effect: 'scale'
 	  });
 	};
 
@@ -7235,7 +7240,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__displayCommonMessage__REACT_HOT_LOADER__',
 	    value: function __displayCommonMessage__REACT_HOT_LOADER__() {
-	      (0, _Notification.notice)('error', 'Form validate errors, please checking!', '');
+	      (0, _Notification.notice)('error', this.props.insertFailIndicator, '');
 	    }
 	  }, {
 	    key: 'validateNewRow',
@@ -7633,7 +7638,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  toolBar: _react.PropTypes.func,
 	  searchPosition: _react.PropTypes.string,
 	  reset: _react.PropTypes.bool,
-	  isValidKey: _react.PropTypes.func
+	  isValidKey: _react.PropTypes.func,
+	  insertFailIndicator: _react.PropTypes.string
 	};
 
 	ToolBar.defaultProps = {
@@ -10012,7 +10018,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var content = children || _react2.default.createElement(
 	        'span',
 	        null,
-	        toggle ? showOnlySelectText : showAllText
+	        toggle ? showAllText : showOnlySelectText
 	      );
 	      return _react2.default.createElement(
 	        'button',
