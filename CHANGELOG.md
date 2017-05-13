@@ -1,3 +1,17 @@
+<a name="v3.3.4"></a>
+# [v3.3.4](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.3...v3.3.4) (2017-05-13)
+## Bug fiexs
+* Fix `afterSearch` and `afterColumnFilter` doesn't be called when table rerender([24e5b66](https://github.com/AllenFang/react-bootstrap-table/commit/24e5b666c39286faf0b42a64498177f30e6e7b90))
+
+## Enhancement
+* Able to clean sorted table([261c6ea](https://github.com/AllenFang/react-bootstrap-table/commit/261c6ea04c5cc0c06eb3d6182ea17a9ce08c0e6b))
+	* Please check [this](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/sort/clean-sorted-table.js#L24-L26) example
+
+* Able to configure the text and value of select option in cell editing or insert modal([face547](https://github.com/AllenFang/react-bootstrap-table/commit/face5476351e77db416f1cb27178988367151167))
+	* Please check [this](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/advance/edit-type-table.js#L7-L24) example
+	* It's only for the case of `editable.type` is `select`
+	* Releated issues: [#1031](https://github.com/AllenFang/react-bootstrap-table/issues/1301) and [#243](https://github.com/AllenFang/react-bootstrap-table/pull/243)
+
 <a name="v3.3.3"></a>
 # [v3.3.3](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.2...v3.3.3) (2017-05-08)
 ## Bug fixes
