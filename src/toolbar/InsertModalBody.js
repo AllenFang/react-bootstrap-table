@@ -53,12 +53,12 @@ class InsertModalBody extends Component {
               placeholder: editable.placeholder ? editable.placeholder : name
             };
             let fieldElement;
-
+            const defaultValue = editable.defaultValue || undefined;
             if (customInsertEditor) {
               const { getElement } = customInsertEditor;
               fieldElement = getElement(column, attr, 'form-control', ignoreEditable);
             } else {
-              fieldElement = editor(editable, attr, format, '', undefined, ignoreEditable);
+              fieldElement = editor(editable, attr, format, '', defaultValue, ignoreEditable);
             }
 
             if (autoValue || hiddenOnInsert || !column.field) {
