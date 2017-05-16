@@ -1,4 +1,5 @@
 /* eslint max-len: 0 */
+/* eslint no-console: 0 */
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
@@ -47,6 +48,7 @@ class BSTable extends React.Component {
 export default class ExpandRow extends React.Component {
   constructor(props) {
     super(props);
+    this.handleExpand = this.handleExpand.bind(this);
     this.state = {
       // Default expanding row
       expanding: [ 2 ]
@@ -55,6 +57,14 @@ export default class ExpandRow extends React.Component {
 
   isExpandableRow() {
     return true;
+  }
+
+  handleExpand(rowKey, isExpand) {
+    if (isExpand) {
+      console.log(`row: ${rowKey} is ready to expand`);
+    } else {
+      console.log(`row: ${rowKey} is ready to collapse`);
+    }
   }
 
   expandComponent(row) {
@@ -66,7 +76,8 @@ export default class ExpandRow extends React.Component {
   render() {
     const options = {
       expandRowBgColor: 'rgb(66, 134, 244)',
-      expanding: this.state.expanding
+      expanding: this.state.expanding,
+      onExpand: this.handleExpand
     };
     return (
       <BootstrapTable data={ products }

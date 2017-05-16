@@ -40,6 +40,7 @@ class Demo extends React.Component {
           <ExpandByColumn/>
         </Panel>
         <Panel header={ 'Manage the Expanding Row External' }>
+          <span>Use <code>options.onExpand</code> to know if a row is ready to expand or not</span>
           { renderLinks('expandRow/expand-row-by-column.js') }
           <ManageExpandExternal/>
         </Panel>
