@@ -72,20 +72,21 @@ class TableRow extends Component {
 
   render() {
     this.clickNum = 0;
-    const { selectRow, row, isSelected } = this.props;
+    const { selectRow, row, isSelected, className } = this.props;
     let backgroundColor = null;
+    let selectRowClass = null;
 
     if (selectRow) {
       backgroundColor = typeof selectRow.bgColor === 'function' ?
         selectRow.bgColor(row, isSelected) : ( isSelected ? selectRow.bgColor : null);
+
+      selectRowClass = typeof selectRow.className === 'function' ?
+        selectRow.className(row, isSelected) : ( isSelected ? selectRow.className : null);
     }
 
     const trCss = {
       style: { backgroundColor },
-      className: classSet(
-        isSelected ? selectRow.className : null,
-        this.props.className
-      )
+      className: classSet(selectRowClass, className)
     };
 
     return (
