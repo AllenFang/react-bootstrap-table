@@ -105,7 +105,7 @@ const editor = function(editable, attr, format, editorClass, defaultValue, ignor
       );
     } else {// process other input type. as password,url,email...
       return (
-        <input { ...attr } type='text' defaultValue={ defaultValue }/>
+        <input { ...attr } type={ editable.type } defaultValue={ defaultValue }/>
       );
     }
   }
