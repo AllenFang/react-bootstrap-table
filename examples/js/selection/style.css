@@ -1,0 +1,9 @@
+.bigger-than-three-select-row{
+  font-style: italic;
+  font-weight: 800;
+  color: aqua;
+}
+
+.less-than-three-select-row {
+  background-color: orangered;
+}

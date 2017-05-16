@@ -1,4 +1,5 @@
 /* eslint max-len: 0 */
+require('./style.css');
 import React from 'react';
 import SingleSelectTable from './single-select-table';
 import MultiSelectTable from './multi-select-table';
@@ -7,6 +8,7 @@ import ClickToSelectTable from './click-to-select-table';
 import DefaultSelectTable from './default-select-table';
 import SelectBgColorTable from './select-bgcolor-table';
 import SelectBgColorDynamicTable from './select-bgcolor-dynamic-table';
+import SelectRowClassTable from './select-row-class-table';
 import SelectHookTable from './select-hook-table';
 import HideSelectionColumnTable from './hide-selection-col-table';
 import SelectValidationTable from './select-validation-table';
@@ -91,6 +93,15 @@ class Demo extends React.Component {
             <div className='panel-body'>
               <h5>Source in /examples/js/selection/select-bgcolor-dynamic-table.js</h5>
               <SelectBgColorDynamicTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Add Class on Selecting Row Example</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/selection/select-row-class-table.js</h5>
+              <SelectRowClassTable />
             </div>
           </div>
         </div>
