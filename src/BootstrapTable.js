@@ -501,7 +501,11 @@ class BootstrapTable extends Component {
     });
   }
 
-  handleExpandRow = expanding => {
+  handleExpandRow = (expanding, rowKey, isRowExpanding) => {
+    const { onExpand } = this.props.options;
+    if (onExpand) {
+      onExpand(rowKey, !isRowExpanding);
+    }
     this.setState({ expanding, reset: false }, () => {
       this._adjustHeaderWidth();
     });
@@ -1451,6 +1455,7 @@ BootstrapTable.propTypes = {
     expandRowBgColor: PropTypes.string,
     expandBy: PropTypes.string,
     expanding: PropTypes.array,
+    onExpand: PropTypes.func,
     onlyOneExpanding: PropTypes.bool,
     beforeShowError: PropTypes.func,
     printToolBar: PropTypes.bool
@@ -1598,6 +1603,7 @@ BootstrapTable.defaultProps = {
     expandRowBgColor: undefined,
     expandBy: Const.EXPAND_BY_ROW,
     expanding: [],
+    onExpand: undefined,
     onlyOneExpanding: false,
     beforeShowError: undefined,
     printToolBar: true

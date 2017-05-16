@@ -316,15 +316,17 @@ class TableBody extends Component {
       if configure as expanding by column */
       (expandBy === Const.EXPAND_BY_COL && columnIndex < 0) ||
       (expandBy === Const.EXPAND_BY_COL && columns[columnIndex].expandable))) {
-      const rowKey = this.props.data[rowIndex - 1][keyField];
       let expanding = this.props.expanding;
-      if (expanding.indexOf(rowKey) > -1) {
+      const rowKey = this.props.data[rowIndex - 1][keyField];
+      const isRowExpanding = expanding.indexOf(rowKey) > -1;
+
+      if (isRowExpanding) {  // collapse
         expanding = expanding.filter(k => k !== rowKey);
-      } else {
+      } else {  // expand
         if (onlyOneExpanding) expanding = [ rowKey ];
         else expanding.push(rowKey);
       }
-      this.props.onExpand(expanding);
+      this.props.onExpand(expanding, rowKey, isRowExpanding);
     }
   }
 
