@@ -844,9 +844,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: '__handleExpandRow__REACT_HOT_LOADER__',
-	    value: function __handleExpandRow__REACT_HOT_LOADER__(expanding) {
+	    value: function __handleExpandRow__REACT_HOT_LOADER__(expanding, rowKey, isRowExpanding) {
 	      var _this3 = this;
 
+	      var onExpand = this.props.options.onExpand;
+
+	      if (onExpand) {
+	        onExpand(rowKey, !isRowExpanding);
+	      }
 	      this.setState({ expanding: expanding, reset: false }, function () {
 	        _this3._adjustHeaderWidth();
 	      });
@@ -1877,6 +1882,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    expandRowBgColor: _react.PropTypes.string,
 	    expandBy: _react.PropTypes.string,
 	    expanding: _react.PropTypes.array,
+	    onExpand: _react.PropTypes.func,
 	    onlyOneExpanding: _react.PropTypes.bool,
 	    beforeShowError: _react.PropTypes.func,
 	    printToolBar: _react.PropTypes.bool
@@ -2024,6 +2030,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    expandRowBgColor: undefined,
 	    expandBy: _Const2.default.EXPAND_BY_ROW,
 	    expanding: [],
+	    onExpand: undefined,
 	    onlyOneExpanding: false,
 	    beforeShowError: undefined,
 	    printToolBar: true
@@ -2827,6 +2834,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _ExpandComponent2.default,
 	            {
 	              key: key + '-expand',
+	              row: data,
 	              className: trClassName,
 	              bgColor: this.props.expandRowBgColor || this.props.selectRow.bgColor || undefined,
 	              hidden: !(this.props.expanding.indexOf(key) > -1),
@@ -2979,16 +2987,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if configure as expanding by column */
 	      expandBy === _Const2.default.EXPAND_BY_COL && columnIndex < 0 || expandBy === _Const2.default.EXPAND_BY_COL && columns[columnIndex].expandable)) {
 	        (function () {
-	          var rowKey = _this2.props.data[rowIndex - 1][keyField];
 	          var expanding = _this2.props.expanding;
-	          if (expanding.indexOf(rowKey) > -1) {
+	          var rowKey = _this2.props.data[rowIndex - 1][keyField];
+	          var isRowExpanding = expanding.indexOf(rowKey) > -1;
+
+	          if (isRowExpanding) {
+	            // collapse
 	            expanding = expanding.filter(function (k) {
 	              return k !== rowKey;
 	            });
 	          } else {
+	            // expand
 	            if (onlyOneExpanding) expanding = [rowKey];else expanding.push(rowKey);
 	          }
-	          _this2.props.onExpand(expanding);
+	          _this2.props.onExpand(expanding, rowKey, isRowExpanding);
 	        })();
 	      }
 	    }
@@ -3497,17 +3509,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props2 = this.props,
 	          selectRow = _props2.selectRow,
 	          row = _props2.row,
-	          isSelected = _props2.isSelected;
+	          isSelected = _props2.isSelected,
+	          className = _props2.className;
 
 	      var backgroundColor = null;
+	      var selectRowClass = null;
 
 	      if (selectRow) {
 	        backgroundColor = typeof selectRow.bgColor === 'function' ? selectRow.bgColor(row, isSelected) : isSelected ? selectRow.bgColor : null;
+
+	        selectRowClass = typeof selectRow.className === 'function' ? selectRow.className(row, isSelected) : isSelected ? selectRow.className : null;
 	      }
 
 	      var trCss = {
 	        style: { backgroundColor: backgroundColor },
-	        className: (0, _classnames2.default)(isSelected ? selectRow.className : null, this.props.className)
+	        className: (0, _classnames2.default)(selectRowClass, className)
 	      };
 
 	      return _react2.default.createElement(
@@ -4283,7 +4299,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _react2.default.createElement('input', _extends({}, attr, { type: 'datetime-local', defaultValue: defaultValue }));
 	    } else {
 	      // process other input type. as password,url,email...
-	      return _react2.default.createElement('input', _extends({}, attr, { type: 'text', defaultValue: defaultValue }));
+	      return _react2.default.createElement('input', _extends({}, attr, { type: editable.type, defaultValue: defaultValue }));
 	    }
 	  }
 	  // default return for other case of editable
@@ -10516,6 +10532,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint max-len: 0 */
+	/* eslint no-nested-ternary: 0 */
 
 
 	var ExpandComponent = function (_Component) {
@@ -10530,11 +10547,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(ExpandComponent, [{
 	    key: 'render',
 	    value: function render() {
+	      var _props = this.props,
+	          selectRow = _props.selectRow,
+	          isSelected = _props.isSelected,
+	          className = _props.className,
+	          row = _props.row;
+
+	      var selectRowClass = typeof selectRow.className === 'function' ? selectRow.className(row, isSelected) : isSelected ? selectRow.className : null;
 	      var trCss = {
 	        style: {
 	          backgroundColor: this.props.bgColor
 	        },
-	        className: (0, _classnames2.default)(this.props.isSelected ? this.props.selectRow.className : null, this.props.className)
+	        className: (0, _classnames2.default)(selectRowClass, className)
 	      };
 	      return _react2.default.createElement(
 	        'tr',
@@ -13738,13 +13762,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            placeholder: editable.placeholder ? editable.placeholder : name
 	          };
 	          var fieldElement = void 0;
-
+	          var defaultValue = editable.defaultValue || undefined;
 	          if (customInsertEditor) {
 	            var getElement = customInsertEditor.getElement;
 
-	            fieldElement = getElement(column, attr, 'form-control', ignoreEditable);
+	            fieldElement = getElement(column, attr, 'form-control', ignoreEditable, defaultValue);
 	          } else {
-	            fieldElement = (0, _Editor2.default)(editable, attr, format, '', undefined, ignoreEditable);
+	            fieldElement = (0, _Editor2.default)(editable, attr, format, '', defaultValue, ignoreEditable);
 	          }
 
 	          if (autoValue || hiddenOnInsert || !column.field) {
@@ -16699,7 +16723,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var defaultValue = this.props.defaultValue;
+	      var _props = this.props,
+	          defaultValue = _props.defaultValue,
+	          _props$style = _props.style,
+	          date = _props$style.date,
+	          comparator = _props$style.comparator;
 
 	      return _react2.default.createElement(
 	        'div',
@@ -16707,6 +16735,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _react2.default.createElement(
 	          'select',
 	          { ref: 'dateFilterComparator',
+	            style: comparator,
 	            className: 'date-filter-comparator form-control',
 	            onChange: this.onChangeComparator,
 	            defaultValue: defaultValue ? defaultValue.comparator : '' },
@@ -16714,6 +16743,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        ),
 	        _react2.default.createElement('input', { ref: 'inputDate',
 	          className: 'filter date-filter-input form-control',
+	          style: date,
 	          type: 'date',
 	          onChange: this.filter,
 	          defaultValue: this.setDefaultDate() })
@@ -16729,6 +16759,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  defaultValue: _react.PropTypes.shape({
 	    date: _react.PropTypes.object,
 	    comparator: _react.PropTypes.oneOf(legalComparators)
+	  }),
+	  style: _react.PropTypes.shape({
+	    date: _react.PropTypes.oneOfType([_react.PropTypes.object]),
+	    comparator: _react.PropTypes.oneOfType([_react.PropTypes.object])
 	  }),
 	  /* eslint consistent-return: 0 */
 	  dateComparators: function dateComparators(props, propName) {
@@ -16749,6 +16783,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 	  columnName: _react.PropTypes.string
+	};
+
+	DateFilter.defaultProps = {
+	  style: {
+	    date: null,
+	    comparator: null
+	  }
 	};
 
 	var _default = DateFilter;
@@ -16857,11 +16898,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props = this.props,
 	          placeholder = _props.placeholder,
 	          columnName = _props.columnName,
-	          defaultValue = _props.defaultValue;
+	          defaultValue = _props.defaultValue,
+	          style = _props.style;
 
 	      return _react2.default.createElement('input', { ref: 'inputText',
 	        className: 'filter text-filter form-control',
 	        type: 'text',
+	        style: style,
 	        onChange: this.filter,
 	        placeholder: placeholder || 'Enter ' + columnName + '...',
 	        defaultValue: defaultValue ? defaultValue : '' });
@@ -16876,7 +16919,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  defaultValue: _react.PropTypes.string,
 	  delay: _react.PropTypes.number,
 	  placeholder: _react.PropTypes.string,
-	  columnName: _react.PropTypes.string
+	  columnName: _react.PropTypes.string,
+	  style: _react.PropTypes.oneOfType([_react.PropTypes.object])
 	};
 
 	TextFilter.defaultProps = {
@@ -16985,11 +17029,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props = this.props,
 	          defaultValue = _props.defaultValue,
 	          placeholder = _props.placeholder,
-	          columnName = _props.columnName;
+	          columnName = _props.columnName,
+	          style = _props.style;
 
 	      return _react2.default.createElement('input', { ref: 'inputText',
 	        className: 'filter text-filter form-control',
 	        type: 'text',
+	        style: style,
 	        onChange: this.filter,
 	        placeholder: placeholder || 'Enter Regex for ' + columnName + '...',
 	        defaultValue: defaultValue ? defaultValue : '' });
@@ -17004,7 +17050,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  defaultValue: _react.PropTypes.string,
 	  delay: _react.PropTypes.number,
 	  placeholder: _react.PropTypes.string,
-	  columnName: _react.PropTypes.string
+	  columnName: _react.PropTypes.string,
+	  style: _react.PropTypes.oneOfType([_react.PropTypes.object])
 	};
 
 	RegexFilter.defaultProps = {
@@ -17176,6 +17223,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _react2.default.createElement(
 	        'select',
 	        { ref: 'selectInput',
+	          style: this.props.style,
 	          className: selectClass,
 	          onChange: this.filter,
 	          defaultValue: this.props.defaultValue !== undefined ? this.props.defaultValue : '' },
@@ -17191,7 +17239,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  filterHandler: _react.PropTypes.func.isRequired,
 	  options: _react.PropTypes.object.isRequired,
 	  placeholder: _react.PropTypes.string,
-	  columnName: _react.PropTypes.string
+	  columnName: _react.PropTypes.string,
+	  style: _react.PropTypes.oneOfType([_react.PropTypes.object])
 	};
 
 	var _default = SelectFilter;
@@ -17392,6 +17441,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _react2.default.createElement(
 	          'select',
 	          { ref: 'numberFilterComparator',
+	            style: this.props.style.comparator,
 	            className: 'number-filter-comparator form-control',
 	            onChange: this.onChangeComparator,
 	            defaultValue: this.props.defaultValue ? this.props.defaultValue.comparator : '' },
@@ -17406,6 +17456,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          this.getNumberOptions()
 	        ) : _react2.default.createElement('input', { ref: 'numberFilter',
 	          type: 'number',
+	          style: this.props.style.number,
 	          className: 'number-filter-input form-control',
 	          placeholder: this.props.placeholder || 'Enter ' + this.props.columnName + '...',
 	          onChange: this.onChangeNumber,
@@ -17423,6 +17474,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  defaultValue: _react.PropTypes.shape({
 	    number: _react.PropTypes.number,
 	    comparator: _react.PropTypes.oneOf(legalComparators)
+	  }),
+	  style: _react.PropTypes.shape({
+	    number: _react.PropTypes.oneOfType([_react.PropTypes.object]),
+	    comparator: _react.PropTypes.oneOfType([_react.PropTypes.object])
 	  }),
 	  delay: _react.PropTypes.number,
 	  /* eslint consistent-return: 0 */
@@ -17452,7 +17507,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	NumberFilter.defaultProps = {
 	  delay: _Const2.default.FILTER_DELAY,
 	  withoutEmptyComparatorOption: false,
-	  withoutEmptyNumberOption: false
+	  withoutEmptyNumberOption: false,
+	  style: {
+	    number: null,
+	    comparator: null
+	  }
 	};
 
 	var _default = NumberFilter;
