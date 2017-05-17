@@ -4,6 +4,7 @@ import TextFilter from './text-filter';
 import TextFilterWithDefaultValue from './text-filter-with-default-value';
 import TextFilterWithCondition from './text-filter-with-eq-condition';
 import ProgrammaticallyTextFilter from './text-filter-programmatically';
+import FilterStyle from './filter-style';
 import RegexFilter from './regex-filter';
 import ProgrammaticallyRegexFilter from './regex-filter-programmatically';
 import SelectFilter from './select-filter';
@@ -262,6 +263,15 @@ class Demo extends React.Component {
                         <h5>This example also show you how to clean filter programmatic :</h5>
                         <h5>You can call <code>cleanFiltered</code> which exposed by <code>TableHeaderColumn</code></h5>
                         <AllFilter />
+                    </div>
+                </div>
+            </div>
+            <div className='col-md-offset-1 col-md-8'>
+                <div className='panel panel-default'>
+                    <div className='panel-heading'>Filter Style</div>
+                    <div className='panel-body'>
+                        <h5>Source in /examples/js/column-filter/filter-style.js</h5>
+                        <FilterStyle />
                     </div>
                 </div>
             </div>
