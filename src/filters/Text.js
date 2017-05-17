@@ -41,11 +41,12 @@ class TextFilter extends Component {
   }
 
   render() {
-    const { placeholder, columnName, defaultValue } = this.props;
+    const { placeholder, columnName, defaultValue, style } = this.props;
     return (
       <input ref='inputText'
         className='filter text-filter form-control'
         type='text'
+        style={ style }
         onChange={ this.filter }
         placeholder={ placeholder || `Enter ${columnName}...` }
         defaultValue={ defaultValue ? defaultValue : '' } />
@@ -58,7 +59,8 @@ TextFilter.propTypes = {
   defaultValue: PropTypes.string,
   delay: PropTypes.number,
   placeholder: PropTypes.string,
-  columnName: PropTypes.string
+  columnName: PropTypes.string,
+  style: PropTypes.oneOfType([ PropTypes.object ])
 };
 
 TextFilter.defaultProps = {

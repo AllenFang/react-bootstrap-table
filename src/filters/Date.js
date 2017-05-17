@@ -86,10 +86,11 @@ class DateFilter extends Component {
   }
 
   render() {
-    const { defaultValue } = this.props;
+    const { defaultValue, style: { date, comparator } } = this.props;
     return (
       <div className='filter date-filter'>
         <select ref='dateFilterComparator'
+                style={ comparator }
                 className='date-filter-comparator form-control'
                 onChange={ this.onChangeComparator }
                 defaultValue={ (defaultValue) ? defaultValue.comparator : '' }>
@@ -97,6 +98,7 @@ class DateFilter extends Component {
         </select>
         <input ref='inputDate'
            className='filter date-filter-input form-control'
+           style={ date }
            type='date'
            onChange={ this.filter }
            defaultValue={ this.setDefaultDate() } />
@@ -110,6 +112,10 @@ DateFilter.propTypes = {
   defaultValue: PropTypes.shape({
     date: PropTypes.object,
     comparator: PropTypes.oneOf(legalComparators)
+  }),
+  style: PropTypes.shape({
+    date: PropTypes.oneOfType([ PropTypes.object ]),
+    comparator: PropTypes.oneOfType([ PropTypes.object ])
   }),
   /* eslint consistent-return: 0 */
   dateComparators: function(props, propName) {
@@ -132,5 +138,13 @@ DateFilter.propTypes = {
   },
   columnName: PropTypes.string
 };
+
+DateFilter.defaultProps = {
+  style: {
+    date: null,
+    comparator: null
+  }
+};
+
 
 export default DateFilter;

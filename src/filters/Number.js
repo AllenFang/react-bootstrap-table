@@ -122,6 +122,7 @@ class NumberFilter extends Component {
     return (
       <div className='filter number-filter'>
         <select ref='numberFilterComparator'
+                style={ this.props.style.comparator }
                 className='number-filter-comparator form-control'
                 onChange={ this.onChangeComparator }
                 defaultValue={
@@ -141,6 +142,7 @@ class NumberFilter extends Component {
             </select> :
             <input ref='numberFilter'
                    type='number'
+                   style={ this.props.style.number }
                    className='number-filter-input form-control'
                    placeholder={ this.props.placeholder || `Enter ${this.props.columnName}...` }
                    onChange={ this.onChangeNumber }
@@ -159,6 +161,10 @@ NumberFilter.propTypes = {
   defaultValue: PropTypes.shape({
     number: PropTypes.number,
     comparator: PropTypes.oneOf(legalComparators)
+  }),
+  style: PropTypes.shape({
+    number: PropTypes.oneOfType([ PropTypes.object ]),
+    comparator: PropTypes.oneOfType([ PropTypes.object ])
   }),
   delay: PropTypes.number,
   /* eslint consistent-return: 0 */
@@ -189,7 +195,11 @@ NumberFilter.propTypes = {
 NumberFilter.defaultProps = {
   delay: Const.FILTER_DELAY,
   withoutEmptyComparatorOption: false,
-  withoutEmptyNumberOption: false
+  withoutEmptyNumberOption: false,
+  style: {
+    number: null,
+    comparator: null
+  }
 };
 
 export default NumberFilter;
