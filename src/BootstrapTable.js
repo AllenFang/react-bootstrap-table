@@ -283,7 +283,9 @@ class BootstrapTable extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this._adjustTable);
-    this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader);
+    if (this.refs && this.refs.body && this.refs.body.refs) {
+      this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader);
+    }
     if (this.filter) {
       this.filter.removeAllListeners('onFilterChange');
     }
