@@ -1,3 +1,18 @@
+<a name="v3.3.5"></a>
+# [v3.3.5](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.4...v3.3.5) (2017-05-17)
+## Bug fixes
+* Fix `editable.type` will be ignore if is not `textarea`, `select`, `checkbox`, and `datetime`([e3f87e0](https://github.com/AllenFang/react-bootstrap-table/commit/e3f87e0160ae73e95fa54f4586ab99cfe2cfb720))
+
+## Enhancement
+* Able to set the default value for field in insert model easily([5bd62b4](https://github.com/AllenFang/react-bootstrap-table/commit/5bd62b4acec324f20188104d792285a0d9147204))
+	* Use `editable.defaultValue`
+* Support `options.onExpand` and accept a function which will be called when expand/collapse happen([f54ebc3](https://github.com/AllenFang/react-bootstrap-table/commit/f54ebc38e1f8d93ecb161934e364e72ce7b35c50))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/expandRow/manage-expanding.js#L62).
+* Allow `selectRow.className` to accept a function for a easy customization reason([440d376](https://github.com/AllenFang/react-bootstrap-table/commit/440d376158a091dee7b6c6b312ed0827ee897c09))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/selection/select-row-class-table.js#L47)
+* Able to apply custom style on filter([1e8f1f9](https://github.com/AllenFang/react-bootstrap-table/commit/1e8f1f9fbe6d744bd36256e8d5b01dc6c189dc5a))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column-filter/filter-style.js#L75)
+
 <a name="v3.3.4"></a>
 # [v3.3.4](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.3...v3.3.4) (2017-05-13)
 ## Bug fiexs
