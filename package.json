@@ -70,6 +70,7 @@
   },
   "dependencies": {
     "classnames": "^2.1.2",
+    "prop-types": "^15.5.10",
     "react-modal": "^1.4.0",
     "@allenfang/react-toastr": "2.8.2"
   },
