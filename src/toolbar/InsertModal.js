@@ -1,6 +1,7 @@
 /* eslint no-console: 0 */
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import InsertModalHeader from './InsertModalHeader';
 import InsertModalFooter from './InsertModalFooter';

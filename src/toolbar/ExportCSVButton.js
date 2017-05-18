@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Const from '../Const';
 
 const exportCsvBtnDefaultClass = 'react-bs-table-csv-btn';
