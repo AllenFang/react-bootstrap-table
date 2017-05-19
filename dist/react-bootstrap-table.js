@@ -600,7 +600,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      window.removeEventListener('resize', this._adjustTable);
-	      this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader);
+	      if (this.refs && this.refs.body && this.refs.body.refs) {
+	        this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader);
+	      }
 	      if (this.filter) {
 	        this.filter.removeAllListeners('onFilterChange');
 	      }
@@ -10547,18 +10549,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(ExpandComponent, [{
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props,
-	          selectRow = _props.selectRow,
-	          isSelected = _props.isSelected,
-	          className = _props.className,
-	          row = _props.row;
+	      var className = this.props.className;
 
-	      var selectRowClass = typeof selectRow.className === 'function' ? selectRow.className(row, isSelected) : isSelected ? selectRow.className : null;
 	      var trCss = {
 	        style: {
 	          backgroundColor: this.props.bgColor
 	        },
-	        className: (0, _classnames2.default)(selectRowClass, className)
+	        className: (0, _classnames2.default)(className)
 	      };
 	      return _react2.default.createElement(
 	        'tr',
