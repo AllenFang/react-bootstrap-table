@@ -6,14 +6,12 @@ import classSet from 'classnames';
 class ExpandComponent extends Component {
 
   render() {
-    const { selectRow, isSelected, className, row } = this.props;
-    const selectRowClass = typeof selectRow.className === 'function' ?
-        selectRow.className(row, isSelected) : ( isSelected ? selectRow.className : null);
+    const { className } = this.props;
     const trCss = {
       style: {
         backgroundColor: this.props.bgColor
       },
-      className: classSet(selectRowClass, className)
+      className: classSet(className)
     };
     return (
       <tr hidden={ this.props.hidden } width={ this.props.width } { ...trCss }>
