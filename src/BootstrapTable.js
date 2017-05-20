@@ -984,7 +984,7 @@ class BootstrapTable extends Component {
     }
 
     const keys = [];
-    this.props.children.map(function(column) {
+    this.props.children.filter(_ => _ != null).map(function(column) {
       if (column.props.export === true ||
         (typeof column.props.export === 'undefined' &&
         column.props.hidden === false)) {
@@ -1119,7 +1119,8 @@ class BootstrapTable extends Component {
       || this.props.options.toolBar) {
       let columns;
       if (Array.isArray(children)) {
-        columns = children.map((column, r) => {
+        columns = children.filter(_ => _ != null).map((column, r) => {
+          if (!column) return;
           const { props } = column;
           const isKey = props.isKey || keyField === props.dataField;
           return {
