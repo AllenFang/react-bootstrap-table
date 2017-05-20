@@ -43,7 +43,7 @@ class TableBody extends Component {
       keyBoardNav.customStyle :
       null;
     const ExpandColumnCustomComponent = this.props.expandColumnOptions.expandColumnComponent;
-    let expandColSpan = this.props.columns.filter(col => !col.hidden).length;
+    let expandColSpan = this.props.columns.filter(col => col && !col.hidden).length;
     if (isSelectRowDefined && !this.props.selectRow.hideSelectColumn) {
       expandColSpan += 1;
     }
@@ -53,7 +53,7 @@ class TableBody extends Component {
     }
 
     let tableRows = this.props.data.map(function(data, r) {
-      const tableColumns = this.props.columns.map(function(column, i) {
+      const tableColumns = this.props.columns.filter(_ => _ != null).map(function(column, i) {
         const fieldValue = data[column.name];
         const isFocusCell = r === y && i === x;
         if (column.name !== this.props.keyField && // Key field can't be edit
