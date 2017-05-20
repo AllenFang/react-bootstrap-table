@@ -58,6 +58,10 @@ class BootstrapTable extends Component {
 
     const isKeyFieldDefined = typeof keyField === 'string' && keyField.length;
     React.Children.forEach(props.children, column => {
+      if (column === null || column === undefined) {
+        // Skip null and undefined value
+        return;
+      }
       if (column.props.isKey) {
         if (keyField) {
           throw new Error('Error. Multiple key column be detected in TableHeaderColumn.');
@@ -141,11 +145,21 @@ class BootstrapTable extends Component {
   getColumnsDescription({ children }) {
     let rowCount = 0;
     React.Children.forEach(children, (column) => {
+      if (column === null || column === undefined) {
+        // Skip null and undefined value
+        return;
+      }
+
       if (Number(column.props.row) > rowCount) {
         rowCount = Number(column.props.row);
       }
     });
     return React.Children.map(children, (column, i) => {
+      if (column === null || column === undefined) {
+        // Return null for empty objects
+        return null;
+      }
+
       const rowIndex = column.props.row ? Number(column.props.row) : 0;
       const rowSpan = column.props.rowSpan ? Number(column.props.rowSpan) : 1;
       if ((rowSpan + rowIndex) === (rowCount + 1)) {
@@ -970,7 +984,7 @@ class BootstrapTable extends Component {
     }
 
     const keys = [];
-    this.props.children.map(function(column) {
+    this.props.children.filter(_ => _ != null).map(function(column) {
       if (column.props.export === true ||
         (typeof column.props.export === 'undefined' &&
         column.props.hidden === false)) {
@@ -1105,7 +1119,8 @@ class BootstrapTable extends Component {
       || this.props.options.toolBar) {
       let columns;
       if (Array.isArray(children)) {
-        columns = children.map((column, r) => {
+        columns = children.filter(_ => _ != null).map((column, r) => {
+          if (!column) return;
           const { props } = column;
           const isKey = props.isKey || keyField === props.dataField;
           return {
@@ -1256,7 +1271,7 @@ class BootstrapTable extends Component {
         }
       }
     } else {
-      React.Children.forEach(this.props.children, (child, i) => {
+      React.Children.forEach(this.props.children.filter(_ => !!_), (child, i) => {
         if (child.props.width) {
           header[i].style.width = `${child.props.width}px`;
           header[i].style.minWidth = `${child.props.width}px`;
