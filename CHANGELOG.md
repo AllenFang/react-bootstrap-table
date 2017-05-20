@@ -1,3 +1,8 @@
+<a name="v3.3.6"></a>
+# [v3.3.6](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.5...v3.3.6) (2017-05-19)
+## Bug fixes
+* Fixed ExpandComponent.js:47 Uncaught TypeError: Cannot read property 'className' of undefined([5618342](https://github.com/AllenFang/react-bootstrap-table/commit/5618342f9f46c2ee577fe03e44c38bd0bd1e9666))
+
 <a name="v3.3.5"></a>
 # [v3.3.5](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.4...v3.3.5) (2017-05-17)
 ## Bug fixes
