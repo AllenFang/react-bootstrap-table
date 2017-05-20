@@ -35,14 +35,14 @@ const editor = function(editable, attr, format, editorClass, defaultValue, ignor
 
     if (editable.type === 'select') {// process select input
       let options = [];
-      const values = editable.options.values;
+      const { values, textKey, valueKey } = editable.options;
       if (Array.isArray(values)) {// only can use arrray data for options
         let text;
         let value;
         options = values.map((option, i) => {
           if (typeof option === 'object') {
-            text = option.text;
-            value = option.value;
+            text = textKey ? option[textKey] : option.text;
+            value = valueKey ? option[valueKey] : option.value;
           } else {
             text = format ? format(option) : option;
             value = option;
