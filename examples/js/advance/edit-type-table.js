@@ -22,6 +22,8 @@ const jobTypes = [ {
   value: 'D',
   text: 'TYPE_D'
 } ];
+// For above example, you can also use textKey and valueKey to change the hard code key for 'text' and 'value'
+// for example, editable={ { type: 'select', options: { values: jobTypes, textKey: 'customTextKey , valueKey: 'customValueKey'} } }
 
 function addJobs(quantity) {
   const startId = jobs.length;
