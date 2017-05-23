@@ -1,3 +1,10 @@
+<a name="v3.3.7"></a>
+# [v3.3.7](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.6...v3.3.7) (2017-05-22)
+## Enhancement
+* Allow conditionally specify columns([9b748df](https://github.com/AllenFang/react-bootstrap-table/commit/9b748df5eb11dad1fe9c5c28044007dbae119b02))
+* [#1319](https://github.com/AllenFang/react-bootstrap-table/issues/1319)([338424f](https://github.com/AllenFang/react-bootstrap-table/commit/338424f367b0d233f37c0514daffa4ca043f6f74))
+* Allow date filter to filter string value, `react-bootstrap-table` will convert string to Date([63a022a](https://github.com/AllenFang/react-bootstrap-table/commit/63a022a91c7bd90e1f99013d23e3601f1d5de30e))
+
 <a name="v3.3.6"></a>
 # [v3.3.6](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.5...v3.3.6) (2017-05-19)
 ## Bug fixes
