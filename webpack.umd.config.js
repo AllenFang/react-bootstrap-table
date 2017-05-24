@@ -1,7 +1,7 @@
-// this is just to build a umd build for https://npmcdn.com/
+// this is just to build a umd build for https://unpkg.com/
 // and for users that don't use webpack or browserify
 
-// For npm package authors, npmcdn relieves the burden of publishing
+// For npm package authors, unpkg relieves the burden of publishing
 // your code to a CDN in addition to the npm registry.
 // All you need to do is include your UMD build in your npm package
 // (not your repo, that's different!).
@@ -11,7 +11,7 @@
 // - Add the umd (or dist in this case) directory to your .gitignore file
 // - Add the dist directory to your files array in package.json
 // - Use a build script to generate your UMD build in the dist directory just before you publish
-// - That's it! Now when you npm publish you'll have a version available on npmcdn as well
+// - That's it! Now when you npm publish you'll have a version available on unpkg as well
 
 var path = require('path');
 var webpack = require('webpack');

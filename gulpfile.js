@@ -52,7 +52,7 @@ gulp.task('prod', ['umdBuild'], function() {
     .pipe(gulp.dest('./dist'));
 });
 
-// build umd bundles for https://npmcdn.com/ and for browser <script> tag
+// build umd bundles for https://unpkg.com/ and for browser <script> tag
 gulp.task('umdBuild', ['clean'], shell.task([
   'webpack --config webpack.umd.config.js',
   'webpack --config webpack.umd.min.config.js'
