@@ -45,7 +45,7 @@ class TableHeader extends Component {
     }, this.props.tableHeaderClass);
 
     const rowCount = Math.max(...React.Children.map(this.props.children, elm =>
-      elm.props.row ? Number(elm.props.row) : 0
+      (elm && elm.props.row) ? Number(elm.props.row) : 0
     ));
 
     const rows = [];
@@ -66,6 +66,10 @@ class TableHeader extends Component {
     const { sortIndicator, sortList, onSort, reset } = this.props;
 
     React.Children.forEach(this.props.children, (elm) => {
+      if (elm === null || elm === undefined) {
+        // Skip null or undefined elements.
+        return;
+      }
       const { dataField, dataSort } = elm.props;
       const sort = getSortOrder(sortList, dataField, dataSort);
       const rowIndex = elm.props.row ? Number(elm.props.row) : 0;

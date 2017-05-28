@@ -93,6 +93,7 @@ class SelectFilter extends Component {
 
     return (
       <select ref='selectInput'
+          style={ this.props.style }
           className={ selectClass }
           onChange={ this.filter }
           defaultValue={ (this.props.defaultValue !== undefined) ? this.props.defaultValue : '' } >
@@ -106,7 +107,8 @@ SelectFilter.propTypes = {
   filterHandler: PropTypes.func.isRequired,
   options: PropTypes.object.isRequired,
   placeholder: PropTypes.string,
-  columnName: PropTypes.string
+  columnName: PropTypes.string,
+  style: PropTypes.oneOfType([ PropTypes.object ])
 };
 
 export default SelectFilter;

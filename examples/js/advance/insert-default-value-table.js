@@ -4,11 +4,6 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 
 const jobs = [];
-// editable, select type also accept a string array
-// it's most simple case for using select, but the text and value will all be the value in array
-// const jobTypes = [ 'A', 'B', 'C', 'D' ];
-//
-// Following case will be more easy to control the text and value in select.
 const jobTypes = [ {
   value: 'A',
   text: 'TYPE_A'
@@ -22,8 +17,6 @@ const jobTypes = [ {
   value: 'D',
   text: 'TYPE_D'
 } ];
-// For above example, you can also use textKey and valueKey to change the hard code key for 'text' and 'value'
-// for example, editable={ { type: 'select', options: { values: jobTypes, textKey: 'customTextKey , valueKey: 'customValueKey'} } }
 
 function addJobs(quantity) {
   const startId = jobs.length;
@@ -46,7 +39,7 @@ const cellEditProp = {
   blurToSave: true
 };
 
-export default class EditTypeTable extends React.Component {
+export default class InsertDefaultValueTable extends React.Component {
   constructor(props) {
     super(props);
     this.formatType = this.formatType.bind(this);
@@ -58,11 +51,11 @@ export default class EditTypeTable extends React.Component {
 
   render() {
     return (
-      <BootstrapTable data={ jobs } cellEdit={ cellEditProp }>
+      <BootstrapTable data={ jobs } cellEdit={ cellEditProp } insertRow>
         <TableHeaderColumn dataField='id' isKey={ true }>Job ID</TableHeaderColumn>
-        <TableHeaderColumn dataField='name' editable={ { type: 'textarea' } }>Job Name</TableHeaderColumn>
-        <TableHeaderColumn dataField='type' dataFormat={ this.formatType } editable={ { type: 'select', options: { values: jobTypes } } }>Job Type</TableHeaderColumn>
-        <TableHeaderColumn dataField='active' editable={ { type: 'checkbox', options: { values: 'Y:N' } } }>Active</TableHeaderColumn>
+        <TableHeaderColumn dataField='name' editable={ { type: 'textarea', defaultValue: 'Default Job Name' } }>Job Name</TableHeaderColumn>
+        <TableHeaderColumn dataField='type' dataFormat={ this.formatType } editable={ { type: 'select', options: { values: jobTypes }, defaultValue: 'C' } }>Job Type</TableHeaderColumn>
+        <TableHeaderColumn dataField='active' editable={ { type: 'checkbox', options: { values: 'Y:N' }, defaultValue: 'N' } }>Active</TableHeaderColumn>
         <TableHeaderColumn dataField='datetime' editable={ { type: 'datetime' } }>Date Time</TableHeaderColumn>
       </BootstrapTable>
     );

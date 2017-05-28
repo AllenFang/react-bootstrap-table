@@ -366,6 +366,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var isKeyFieldDefined = typeof keyField === 'string' && keyField.length;
 	      _react2.default.Children.forEach(props.children, function (column) {
+	        if (column === null || column === undefined) {
+	          // Skip null and undefined value
+	          return;
+	        }
 	        if (column.props.isKey) {
 	          if (keyField) {
 	            throw new Error('Error. Multiple key column be detected in TableHeaderColumn.');
@@ -455,11 +459,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var rowCount = 0;
 	      _react2.default.Children.forEach(children, function (column) {
+	        if (column === null || column === undefined) {
+	          // Skip null and undefined value
+	          return;
+	        }
+
 	        if (Number(column.props.row) > rowCount) {
 	          rowCount = Number(column.props.row);
 	        }
 	      });
 	      return _react2.default.Children.map(children, function (column, i) {
+	        if (column === null || column === undefined) {
+	          // Return null for empty objects
+	          return null;
+	        }
+
 	        var rowIndex = column.props.row ? Number(column.props.row) : 0;
 	        var rowSpan = column.props.rowSpan ? Number(column.props.rowSpan) : 1;
 	        if (rowSpan + rowIndex === rowCount + 1) {
@@ -604,7 +618,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      window.removeEventListener('resize', this._adjustTable);
-	      this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader);
+	      if (this.refs && this.refs.body && this.refs.body.refs) {
+	        this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader);
+	      }
 	      if (this.filter) {
 	        this.filter.removeAllListeners('onFilterChange');
 	      }
@@ -849,9 +865,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: '__handleExpandRow__REACT_HOT_LOADER__',
-	    value: function __handleExpandRow__REACT_HOT_LOADER__(expanding) {
+	    value: function __handleExpandRow__REACT_HOT_LOADER__(expanding, rowKey, isRowExpanding) {
 	      var _this3 = this;
 
+	      var onExpand = this.props.options.onExpand;
+
+	      if (onExpand) {
+	        onExpand(rowKey, !isRowExpanding);
+	      }
 	      this.setState({ expanding: expanding, reset: false }, function () {
 	        _this3._adjustHeaderWidth();
 	      });
@@ -1391,7 +1412,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      var keys = [];
-	      this.props.children.map(function (column) {
+	      this.props.children.filter(function (_) {
+	        return _ != null;
+	      }).map(function (column) {
 	        if (column.props.export === true || typeof column.props.export === 'undefined' && column.props.hidden === false) {
 	          keys.push({
 	            field: column.props.dataField,
@@ -1529,7 +1552,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (enableShowOnlySelected || insertRow || deleteRow || search || exportCSV || this.props.options.searchPanel || this.props.options.btnGroup || this.props.options.toolBar) {
 	        var columns = void 0;
 	        if (Array.isArray(children)) {
-	          columns = children.map(function (column, r) {
+	          columns = children.filter(function (_) {
+	            return _ != null;
+	          }).map(function (column, r) {
+	            if (!column) return;
 	            var props = column.props;
 
 	            var isKey = props.isKey || keyField === props.dataField;
@@ -1686,7 +1712,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        }
 	      } else {
-	        _react2.default.Children.forEach(this.props.children, function (child, i) {
+	        _react2.default.Children.forEach(this.props.children.filter(function (_) {
+	          return !!_;
+	        }), function (child, i) {
 	          if (child.props.width) {
 	            header[i].style.width = child.props.width + 'px';
 	            header[i].style.minWidth = child.props.width + 'px';
@@ -1883,6 +1911,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    expandRowBgColor: _react.PropTypes.string,
 	    expandBy: _react.PropTypes.string,
 	    expanding: _react.PropTypes.array,
+	    onExpand: _react.PropTypes.func,
 	    onlyOneExpanding: _react.PropTypes.bool,
 	    beforeShowError: _react.PropTypes.func,
 	    printToolBar: _react.PropTypes.bool,
@@ -2031,6 +2060,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    expandRowBgColor: undefined,
 	    expandBy: _Const2.default.EXPAND_BY_ROW,
 	    expanding: [],
+	    onExpand: undefined,
 	    onlyOneExpanding: false,
 	    beforeShowError: undefined,
 	    printToolBar: true,
@@ -2337,7 +2367,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }, this.props.tableHeaderClass);
 
 	      var rowCount = Math.max.apply(Math, _toConsumableArray(_react2.default.Children.map(this.props.children, function (elm) {
-	        return elm.props.row ? Number(elm.props.row) : 0;
+	        return elm && elm.props.row ? Number(elm.props.row) : 0;
 	      })));
 
 	      var rows = [];
@@ -2361,6 +2391,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	      _react2.default.Children.forEach(this.props.children, function (elm) {
+	        if (elm === null || elm === undefined) {
+	          // Skip null or undefined elements.
+	          return;
+	        }
 	        var _elm$props = elm.props,
 	            dataField = _elm$props.dataField,
 	            dataSort = _elm$props.dataSort;
@@ -2713,7 +2747,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var customNavStyle = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.customStyle : null;
 	      var ExpandColumnCustomComponent = this.props.expandColumnOptions.expandColumnComponent;
 	      var expandColSpan = this.props.columns.filter(function (col) {
-	        return !col.hidden;
+	        return col && !col.hidden;
 	      }).length;
 	      if (isSelectRowDefined && !this.props.selectRow.hideSelectColumn) {
 	        expandColSpan += 1;
@@ -2724,7 +2758,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      var tableRows = this.props.data.map(function (data, r) {
-	        var tableColumns = this.props.columns.map(function (column, i) {
+	        var tableColumns = this.props.columns.filter(function (_) {
+	          return _ != null;
+	        }).map(function (column, i) {
 	          var fieldValue = data[column.name];
 	          var isFocusCell = r === y && i === x;
 	          if (column.name !== this.props.keyField && // Key field can't be edit
@@ -2835,6 +2871,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _ExpandComponent2.default,
 	            {
 	              key: key + '-expand',
+	              row: data,
 	              className: trClassName,
 	              bgColor: this.props.expandRowBgColor || this.props.selectRow.bgColor || undefined,
 	              hidden: !(this.props.expanding.indexOf(key) > -1),
@@ -2987,16 +3024,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if configure as expanding by column */
 	      expandBy === _Const2.default.EXPAND_BY_COL && columnIndex < 0 || expandBy === _Const2.default.EXPAND_BY_COL && columns[columnIndex].expandable)) {
 	        (function () {
-	          var rowKey = _this2.props.data[rowIndex - 1][keyField];
 	          var expanding = _this2.props.expanding;
-	          if (expanding.indexOf(rowKey) > -1) {
+	          var rowKey = _this2.props.data[rowIndex - 1][keyField];
+	          var isRowExpanding = expanding.indexOf(rowKey) > -1;
+
+	          if (isRowExpanding) {
+	            // collapse
 	            expanding = expanding.filter(function (k) {
 	              return k !== rowKey;
 	            });
 	          } else {
+	            // expand
 	            if (onlyOneExpanding) expanding = [rowKey];else expanding.push(rowKey);
 	          }
-	          _this2.props.onExpand(expanding);
+	          _this2.props.onExpand(expanding, rowKey, isRowExpanding);
 	        })();
 	      }
 	    }
@@ -3505,17 +3546,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props2 = this.props,
 	          selectRow = _props2.selectRow,
 	          row = _props2.row,
-	          isSelected = _props2.isSelected;
+	          isSelected = _props2.isSelected,
+	          className = _props2.className;
 
 	      var backgroundColor = null;
+	      var selectRowClass = null;
 
 	      if (selectRow) {
 	        backgroundColor = typeof selectRow.bgColor === 'function' ? selectRow.bgColor(row, isSelected) : isSelected ? selectRow.bgColor : null;
+
+	        selectRowClass = typeof selectRow.className === 'function' ? selectRow.className(row, isSelected) : isSelected ? selectRow.className : null;
 	      }
 
 	      var trCss = {
 	        style: { backgroundColor: backgroundColor },
-	        className: (0, _classnames2.default)(isSelected ? selectRow.className : null, this.props.className)
+	        className: (0, _classnames2.default)(selectRowClass, className)
 	      };
 
 	      return _react2.default.createElement(
@@ -4204,37 +4249,47 @@ return /******/ (function(modules) { // webpackBootstrap
 	    attr.className = (editorClass || '') + ' form-control editor edit-' + editable.type + (editable.className ? ' ' + editable.className : '');
 
 	    if (editable.type === 'select') {
-	      // process select input
-	      var options = [];
-	      var values = editable.options.values;
-	      if (Array.isArray(values)) {
-	        (function () {
-	          // only can use arrray data for options
-	          var text = void 0;
-	          var value = void 0;
-	          options = values.map(function (option, i) {
-	            if ((typeof option === 'undefined' ? 'undefined' : _typeof(option)) === 'object') {
-	              text = option.text;
-	              value = option.value;
-	            } else {
-	              text = format ? format(option) : option;
-	              value = option;
-	            }
-	            return _react2.default.createElement(
-	              'option',
-	              { key: 'option' + i, value: value },
-	              text
-	            );
-	          });
-	        })();
-	      }
-	      return _react2.default.createElement(
-	        'select',
-	        _extends({}, attr, { defaultValue: defaultValue }),
-	        options
-	      );
+	      var _ret = function () {
+	        // process select input
+	        var options = [];
+	        var _editable$options = editable.options,
+	            values = _editable$options.values,
+	            textKey = _editable$options.textKey,
+	            valueKey = _editable$options.valueKey;
+
+	        if (Array.isArray(values)) {
+	          (function () {
+	            // only can use arrray data for options
+	            var text = void 0;
+	            var value = void 0;
+	            options = values.map(function (option, i) {
+	              if ((typeof option === 'undefined' ? 'undefined' : _typeof(option)) === 'object') {
+	                text = textKey ? option[textKey] : option.text;
+	                value = valueKey ? option[valueKey] : option.value;
+	              } else {
+	                text = format ? format(option) : option;
+	                value = option;
+	              }
+	              return _react2.default.createElement(
+	                'option',
+	                { key: 'option' + i, value: value },
+	                text
+	              );
+	            });
+	          })();
+	        }
+	        return {
+	          v: _react2.default.createElement(
+	            'select',
+	            _extends({}, attr, { defaultValue: defaultValue }),
+	            options
+	          )
+	        };
+	      }();
+
+	      if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 	    } else if (editable.type === 'textarea') {
-	      var _ret2 = function () {
+	      var _ret3 = function () {
 	        // process textarea input
 	        // put other if exist
 	        editable.cols && (attr.cols = editable.cols);
@@ -4266,7 +4321,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        };
 	      }();
 
-	      if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
+	      if ((typeof _ret3 === 'undefined' ? 'undefined' : _typeof(_ret3)) === "object") return _ret3.v;
 	    } else if (editable.type === 'checkbox') {
 	      var _values = 'true:false';
 	      if (editable.options && editable.options.values) {
@@ -4284,7 +4339,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _react2.default.createElement('input', _extends({}, attr, { type: 'datetime-local', defaultValue: defaultValue }));
 	    } else {
 	      // process other input type. as password,url,email...
-	      return _react2.default.createElement('input', _extends({}, attr, { type: 'text', defaultValue: defaultValue }));
+	      return _react2.default.createElement('input', _extends({}, attr, { type: editable.type, defaultValue: defaultValue }));
 	    }
 	  }
 	  // default return for other case of editable
@@ -6348,6 +6403,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint max-len: 0 */
+	/* eslint no-nested-ternary: 0 */
 
 
 	var ExpandComponent = function (_Component) {
@@ -6362,11 +6418,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(ExpandComponent, [{
 	    key: 'render',
 	    value: function render() {
+	      var className = this.props.className;
+
 	      var trCss = {
 	        style: {
 	          backgroundColor: this.props.bgColor
 	        },
-	        className: (0, _classnames2.default)(this.props.isSelected ? this.props.selectRow.className : null, this.props.className)
+	        className: (0, _classnames2.default)(className)
 	      };
 	      return _react2.default.createElement(
 	        'tr',
@@ -9568,13 +9626,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            placeholder: editable.placeholder ? editable.placeholder : name
 	          };
 	          var fieldElement = void 0;
-
+	          var defaultValue = editable.defaultValue || undefined;
 	          if (customInsertEditor) {
 	            var getElement = customInsertEditor.getElement;
 
-	            fieldElement = getElement(column, attr, 'form-control', ignoreEditable);
+	            fieldElement = getElement(column, attr, 'form-control', ignoreEditable, defaultValue);
 	          } else {
-	            fieldElement = (0, _Editor2.default)(editable, attr, format, '', undefined, ignoreEditable);
+	            fieldElement = (0, _Editor2.default)(editable, attr, format, '', defaultValue, ignoreEditable);
 	          }
 
 	          if (autoValue || hiddenOnInsert || !column.field) {
@@ -10843,6 +10901,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var filterDate = filterVal.getDate();
 	      var filterMonth = filterVal.getMonth();
 	      var filterYear = filterVal.getFullYear();
+
+	      if ((typeof targetVal === 'undefined' ? 'undefined' : _typeof(targetVal)) !== 'object') {
+	        targetVal = new Date(targetVal);
+	      }
 
 	      var targetDate = targetVal.getDate();
 	      var targetMonth = targetVal.getMonth();
@@ -12529,7 +12591,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var defaultValue = this.props.defaultValue;
+	      var _props = this.props,
+	          defaultValue = _props.defaultValue,
+	          _props$style = _props.style,
+	          date = _props$style.date,
+	          comparator = _props$style.comparator;
 
 	      return _react2.default.createElement(
 	        'div',
@@ -12537,6 +12603,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _react2.default.createElement(
 	          'select',
 	          { ref: 'dateFilterComparator',
+	            style: comparator,
 	            className: 'date-filter-comparator form-control',
 	            onChange: this.onChangeComparator,
 	            defaultValue: defaultValue ? defaultValue.comparator : '' },
@@ -12544,6 +12611,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        ),
 	        _react2.default.createElement('input', { ref: 'inputDate',
 	          className: 'filter date-filter-input form-control',
+	          style: date,
 	          type: 'date',
 	          onChange: this.filter,
 	          defaultValue: this.setDefaultDate() })
@@ -12559,6 +12627,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  defaultValue: _react.PropTypes.shape({
 	    date: _react.PropTypes.object,
 	    comparator: _react.PropTypes.oneOf(legalComparators)
+	  }),
+	  style: _react.PropTypes.shape({
+	    date: _react.PropTypes.oneOfType([_react.PropTypes.object]),
+	    comparator: _react.PropTypes.oneOfType([_react.PropTypes.object])
 	  }),
 	  /* eslint consistent-return: 0 */
 	  dateComparators: function dateComparators(props, propName) {
@@ -12579,6 +12651,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 	  columnName: _react.PropTypes.string
+	};
+
+	DateFilter.defaultProps = {
+	  style: {
+	    date: null,
+	    comparator: null
+	  }
 	};
 
 	var _default = DateFilter;
@@ -12687,11 +12766,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props = this.props,
 	          placeholder = _props.placeholder,
 	          columnName = _props.columnName,
-	          defaultValue = _props.defaultValue;
+	          defaultValue = _props.defaultValue,
+	          style = _props.style;
 
 	      return _react2.default.createElement('input', { ref: 'inputText',
 	        className: 'filter text-filter form-control',
 	        type: 'text',
+	        style: style,
 	        onChange: this.filter,
 	        placeholder: placeholder || 'Enter ' + columnName + '...',
 	        defaultValue: defaultValue ? defaultValue : '' });
@@ -12706,7 +12787,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  defaultValue: _react.PropTypes.string,
 	  delay: _react.PropTypes.number,
 	  placeholder: _react.PropTypes.string,
-	  columnName: _react.PropTypes.string
+	  columnName: _react.PropTypes.string,
+	  style: _react.PropTypes.oneOfType([_react.PropTypes.object])
 	};
 
 	TextFilter.defaultProps = {
@@ -12815,11 +12897,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props = this.props,
 	          defaultValue = _props.defaultValue,
 	          placeholder = _props.placeholder,
-	          columnName = _props.columnName;
+	          columnName = _props.columnName,
+	          style = _props.style;
 
 	      return _react2.default.createElement('input', { ref: 'inputText',
 	        className: 'filter text-filter form-control',
 	        type: 'text',
+	        style: style,
 	        onChange: this.filter,
 	        placeholder: placeholder || 'Enter Regex for ' + columnName + '...',
 	        defaultValue: defaultValue ? defaultValue : '' });
@@ -12834,7 +12918,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  defaultValue: _react.PropTypes.string,
 	  delay: _react.PropTypes.number,
 	  placeholder: _react.PropTypes.string,
-	  columnName: _react.PropTypes.string
+	  columnName: _react.PropTypes.string,
+	  style: _react.PropTypes.oneOfType([_react.PropTypes.object])
 	};
 
 	RegexFilter.defaultProps = {
@@ -13006,6 +13091,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _react2.default.createElement(
 	        'select',
 	        { ref: 'selectInput',
+	          style: this.props.style,
 	          className: selectClass,
 	          onChange: this.filter,
 	          defaultValue: this.props.defaultValue !== undefined ? this.props.defaultValue : '' },
@@ -13021,7 +13107,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  filterHandler: _react.PropTypes.func.isRequired,
 	  options: _react.PropTypes.object.isRequired,
 	  placeholder: _react.PropTypes.string,
-	  columnName: _react.PropTypes.string
+	  columnName: _react.PropTypes.string,
+	  style: _react.PropTypes.oneOfType([_react.PropTypes.object])
 	};
 
 	var _default = SelectFilter;
@@ -13222,6 +13309,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _react2.default.createElement(
 	          'select',
 	          { ref: 'numberFilterComparator',
+	            style: this.props.style.comparator,
 	            className: 'number-filter-comparator form-control',
 	            onChange: this.onChangeComparator,
 	            defaultValue: this.props.defaultValue ? this.props.defaultValue.comparator : '' },
@@ -13236,6 +13324,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          this.getNumberOptions()
 	        ) : _react2.default.createElement('input', { ref: 'numberFilter',
 	          type: 'number',
+	          style: this.props.style.number,
 	          className: 'number-filter-input form-control',
 	          placeholder: this.props.placeholder || 'Enter ' + this.props.columnName + '...',
 	          onChange: this.onChangeNumber,
@@ -13253,6 +13342,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  defaultValue: _react.PropTypes.shape({
 	    number: _react.PropTypes.number,
 	    comparator: _react.PropTypes.oneOf(legalComparators)
+	  }),
+	  style: _react.PropTypes.shape({
+	    number: _react.PropTypes.oneOfType([_react.PropTypes.object]),
+	    comparator: _react.PropTypes.oneOfType([_react.PropTypes.object])
 	  }),
 	  delay: _react.PropTypes.number,
 	  /* eslint consistent-return: 0 */
@@ -13282,7 +13375,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	NumberFilter.defaultProps = {
 	  delay: _Const2.default.FILTER_DELAY,
 	  withoutEmptyComparatorOption: false,
-	  withoutEmptyNumberOption: false
+	  withoutEmptyNumberOption: false,
+	  style: {
+	    number: null,
+	    comparator: null
+	  }
 	};
 
 	var _default = NumberFilter;

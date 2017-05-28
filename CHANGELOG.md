@@ -1,3 +1,44 @@
+<a name="v3.3.7"></a>
+# [v3.3.7](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.6...v3.3.7) (2017-05-22)
+## Enhancement
+* Allow conditionally specify columns([9b748df](https://github.com/AllenFang/react-bootstrap-table/commit/9b748df5eb11dad1fe9c5c28044007dbae119b02))
+* [#1319](https://github.com/AllenFang/react-bootstrap-table/issues/1319)([338424f](https://github.com/AllenFang/react-bootstrap-table/commit/338424f367b0d233f37c0514daffa4ca043f6f74))
+* Allow date filter to filter string value, `react-bootstrap-table` will convert string to Date([63a022a](https://github.com/AllenFang/react-bootstrap-table/commit/63a022a91c7bd90e1f99013d23e3601f1d5de30e))
+
+<a name="v3.3.6"></a>
+# [v3.3.6](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.5...v3.3.6) (2017-05-19)
+## Bug fixes
+* Fixed ExpandComponent.js:47 Uncaught TypeError: Cannot read property 'className' of undefined([5618342](https://github.com/AllenFang/react-bootstrap-table/commit/5618342f9f46c2ee577fe03e44c38bd0bd1e9666))
+
+<a name="v3.3.5"></a>
+# [v3.3.5](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.4...v3.3.5) (2017-05-17)
+## Bug fixes
+* Fix `editable.type` will be ignore if is not `textarea`, `select`, `checkbox`, and `datetime`([e3f87e0](https://github.com/AllenFang/react-bootstrap-table/commit/e3f87e0160ae73e95fa54f4586ab99cfe2cfb720))
+
+## Enhancement
+* Able to set the default value for field in insert model easily([5bd62b4](https://github.com/AllenFang/react-bootstrap-table/commit/5bd62b4acec324f20188104d792285a0d9147204))
+	* Use `editable.defaultValue`
+* Support `options.onExpand` and accept a function which will be called when expand/collapse happen([f54ebc3](https://github.com/AllenFang/react-bootstrap-table/commit/f54ebc38e1f8d93ecb161934e364e72ce7b35c50))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/expandRow/manage-expanding.js#L62).
+* Allow `selectRow.className` to accept a function for a easy customization reason([440d376](https://github.com/AllenFang/react-bootstrap-table/commit/440d376158a091dee7b6c6b312ed0827ee897c09))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/selection/select-row-class-table.js#L47)
+* Able to apply custom style on filter([1e8f1f9](https://github.com/AllenFang/react-bootstrap-table/commit/1e8f1f9fbe6d744bd36256e8d5b01dc6c189dc5a))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column-filter/filter-style.js#L75)
+
+<a name="v3.3.4"></a>
+# [v3.3.4](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.3...v3.3.4) (2017-05-13)
+## Bug fiexs
+* Fix `afterSearch` and `afterColumnFilter` doesn't be called when table rerender([24e5b66](https://github.com/AllenFang/react-bootstrap-table/commit/24e5b666c39286faf0b42a64498177f30e6e7b90))
+
+## Enhancement
+* Able to clean sorted table([261c6ea](https://github.com/AllenFang/react-bootstrap-table/commit/261c6ea04c5cc0c06eb3d6182ea17a9ce08c0e6b))
+	* Please check [this](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/sort/clean-sorted-table.js#L24-L26) example
+
+* Able to configure the text and value of select option in cell editing or insert modal([face547](https://github.com/AllenFang/react-bootstrap-table/commit/face5476351e77db416f1cb27178988367151167))
+	* Please check [this](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/advance/edit-type-table.js#L7-L24) example
+	* It's only for the case of `editable.type` is `select`
+	* Releated issues: [#1031](https://github.com/AllenFang/react-bootstrap-table/issues/1301) and [#243](https://github.com/AllenFang/react-bootstrap-table/pull/243)
+
 <a name="v3.3.3"></a>
 # [v3.3.3](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.2...v3.3.3) (2017-05-08)
 ## Bug fixes

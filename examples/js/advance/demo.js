@@ -1,6 +1,7 @@
 /* eslint max-len: 0 */
 import React from 'react';
 import EditTypeTable from './edit-type-table';
+import InsertDefaultValueTable from './insert-default-value-table';
 import DataInsertTypeTable from './insert-type-table';
 import AutoRowKeyTable from './auto-rowkey-table';
 import ValidatorTable from './validator-table';
@@ -24,7 +25,11 @@ class Demo extends React.Component {
           { renderLinks('advance/insert-type-table.js') }
           <DataInsertTypeTable/>
         </Panel>
-        <Panel header={ 'Hide column on Insert Modal)' }>
+        <Panel header={ 'Default Value on Insert Modal' }>
+          { renderLinks('advance/insert-default-value-table.js') }
+          <InsertDefaultValueTable/>
+        </Panel>
+        <Panel header={ 'Hide column on Insert Modal' }>
           { renderLinks('advance/hide-on-insert-table.js') }
           <h5>This example hide the Job Name field in insert modal</h5>
           <HideOnInsertTable/>

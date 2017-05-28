@@ -52,7 +52,7 @@ export default class CustomInsertModalFieldTable extends React.Component {
     );
   }
 
-  customNameField = (column, attr, editorClass, ignoreEditable) => {
+  customNameField = (column, attr, editorClass, ignoreEditable, defaultValue) => {
     return (
       <select className={ `${editorClass}` } { ...attr }>
         {
@@ -62,7 +62,7 @@ export default class CustomInsertModalFieldTable extends React.Component {
     );
   }
 
-  customSaleField = (column, attr, editorClass, ignoreEditable) => {
+  customSaleField = (column, attr, editorClass, ignoreEditable, defaultValue) => {
     /*
       Sometime, your field is not only a HTML element, like radio, checkbox etc.
       In this case, you are suppose to be prodived a specific method name for

@@ -1,1 +1,5 @@
-**I'm busy on my work so maybe will have a long delay to see your guys PR or issues, sorry. I'll back as soon as possible**
+**Currently, I'm busy on my job, so maybe have some delay on you guys's issue.**
+
+* Please make sure your issue wasn't open before
+* Please provide your example code and keep it simple and minimal if necessary
+* Please give a clean steps to show everyone how to reproduce your issus

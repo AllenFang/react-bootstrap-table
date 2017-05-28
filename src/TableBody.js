@@ -43,7 +43,7 @@ class TableBody extends Component {
       keyBoardNav.customStyle :
       null;
     const ExpandColumnCustomComponent = this.props.expandColumnOptions.expandColumnComponent;
-    let expandColSpan = this.props.columns.filter(col => !col.hidden).length;
+    let expandColSpan = this.props.columns.filter(col => col && !col.hidden).length;
     if (isSelectRowDefined && !this.props.selectRow.hideSelectColumn) {
       expandColSpan += 1;
     }
@@ -53,7 +53,7 @@ class TableBody extends Component {
     }
 
     let tableRows = this.props.data.map(function(data, r) {
-      const tableColumns = this.props.columns.map(function(column, i) {
+      const tableColumns = this.props.columns.filter(_ => _ != null).map(function(column, i) {
         const fieldValue = data[column.name];
         const isFocusCell = r === y && i === x;
         if (column.name !== this.props.keyField && // Key field can't be edit
@@ -178,6 +178,7 @@ class TableBody extends Component {
         result.push(
           <ExpandComponent
             key={ key + '-expand' }
+            row={ data }
             className={ trClassName }
             bgColor={ this.props.expandRowBgColor || this.props.selectRow.bgColor || undefined }
             hidden={ !(this.props.expanding.indexOf(key) > -1) }
@@ -316,15 +317,17 @@ class TableBody extends Component {
       if configure as expanding by column */
       (expandBy === Const.EXPAND_BY_COL && columnIndex < 0) ||
       (expandBy === Const.EXPAND_BY_COL && columns[columnIndex].expandable))) {
-      const rowKey = this.props.data[rowIndex - 1][keyField];
       let expanding = this.props.expanding;
-      if (expanding.indexOf(rowKey) > -1) {
+      const rowKey = this.props.data[rowIndex - 1][keyField];
+      const isRowExpanding = expanding.indexOf(rowKey) > -1;
+
+      if (isRowExpanding) {  // collapse
         expanding = expanding.filter(k => k !== rowKey);
-      } else {
+      } else {  // expand
         if (onlyOneExpanding) expanding = [ rowKey ];
         else expanding.push(rowKey);
       }
-      this.props.onExpand(expanding);
+      this.props.onExpand(expanding, rowKey, isRowExpanding);
     }
   }
 
