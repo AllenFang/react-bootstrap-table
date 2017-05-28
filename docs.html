@@ -1870,93 +1870,114 @@ render() {
                         <h1><a href='#options'>options : Object</a></h1>
                         <span>
                           <code>react-bootstrap-table</code> support a lotf of feature, you can configure some options for table.
-                          <code>options</code> accept an object which have the following props:
-                          <strong><b>Following is all about configuring table sort</b></strong>
-                          <ul>
-                            <li><a class="internal-anchor" href='#sortName'>sortName</a></li>
-                            <li><a class="internal-anchor" href='#sortOrder'>sortOrder</a></li>
-                            <li><a class="internal-anchor" href='#defaultSortName'>defaultSortName</a></li>
-                            <li><a class="internal-anchor" href='#defaultSortOrder'>defaultSortOrder</a></li>
-                            <li><a class="internal-anchor" href='#sortIndicator'>sortIndicator</a></li>
-                            <li><a class="internal-anchor" href='#onSortChange'>onSortChange</a></li>
-                          </ul>
-                          <strong><b>Following is all about configuring table search</b></strong>
-                          <ul>
-                            <li><a class="internal-anchor" href='#defaultSearch'>defaultSearch</a></li>
-                            <li><a class="internal-anchor" href='#searchDelayTime'>searchDelayTime</a></li>
-                            <li><a class="internal-anchor" href='#clearSearch'>clearSearch</a></li>
-                            <li><a class="internal-anchor" href='#onSearchChange'>onSearchChange</a></li>
-                            <li><a class="internal-anchor" href='#afterSearch'>afterSearch</a></li>
-                          </ul>
-                          <strong><b>Following is all about configuring table pagination</b></strong>
-                          <ul>
-                            <li><a class="internal-anchor" href='#prePage'>prePage</a></li>
-                            <li><a class="internal-anchor" href='#nextPage'>nextPage</a></li>
-                            <li><a class="internal-anchor" href='#firstPage'>firstPage</a></li>
-                            <li><a class="internal-anchor" href='#lastPage'>lastPage</a></li>
-                            <li><a class="internal-anchor" href='#page'>page</a></li>
-                            <li><a class="internal-anchor" href='#sizePerPageList'>sizePerPageList</a></li>
-                            <li><a class="internal-anchor" href='#sizePerPage'>sizePerPage</a></li>
-                            <li><a class="internal-anchor" href='#paginationSize'>paginationSize</a></li>
-                            <li><a class="internal-anchor" href='#hideSizePerPage'>hideSizePerPage</a></li>
-                            <li><a class="internal-anchor" href='#paginationShowsTotal'>paginationShowsTotal</a></li>
-                            <li><a class="internal-anchor" href='#pageStartIndex'>pageStartIndex</a></li>
-                            <li><a class="internal-anchor" href='#onPageChange'>onPageChange</a></li>
-                            <li><a class="internal-anchor" href='#onSizePerPageList'>onSizePerPageList</a></li>
-                            <li><a class="internal-anchor" href='#hidePageListOnlyOnePage'>hidePageListOnlyOnePage</a></li>
-                          </ul>
-                          <strong><b>Following is all about configuring expanding row</b></strong>
-                          <ul>
-                            <li><a class="internal-anchor" href='#expandRowBgColor'>expandRowBgColor</a></li>
-                            <li><a class="internal-anchor" href='#expandBy'>expandBy</a></li>
-                          </ul>
-                          <strong><b>Following is all about configuring expanding row</b></strong>
-                            <ul>
-                              <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#toolbar" target="_blank">toolBar</a></li>
-                              <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#btnGroup" target="_blank">btnGroup</a></li>
-                              <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#insertBtn" target="_blank">insertBtn</a></li>
-                              <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#dropBtn" target="_blank">deleteBtn</a></li>
-                              <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#csvBtn" target="_blank">exportCSVBtn</a></li>
-                              <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#selectOnly" target="_blank">showSelectedOnlyBtn</a></li>
-                              <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#searchpanel" target="_blank">searchPanel</a></li>
-                              <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#searchfield" target="_blank">searchField</a></li>
-                              <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#clearsearchbtn" target="_blank">clearSearchBtn</a></li>
-                              <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#insertmodal" target="_blank">insertModal</a></li>
-                              <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#insertmodalbody" target="_blank">insertModalBody</a></li>
-                              <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#insertmodalheader" target="_blank">insertModalHeader</a></li>
-                              <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#insertmodalfooter" target="_blank">insertModalFooter</a></li>
-                              <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#pagination" target="_blank">paginationPanel</a></li>
-                              <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#sizePerPageDropdown" target="_blank">sizePerPageDropDown</a></li>
-                            </ul>
-                          <strong><b>Following is another options</b></strong>
-                          <ul>
-                            <li><a class="internal-anchor" href='#noDataText'>noDataText</a></li>
-                            <li><a class="internal-anchor" href='#withoutNoDataText'>withoutNoDataText</a></li>
-                            <li><a class="internal-anchor" href='#insertText'>insertText</a></li>
-                            <li><a class="internal-anchor" href='#deleteText'>deleteText</a></li>
-                            <li><a class="internal-anchor" href='#saveText'>saveText</a></li>
-                            <li><a class="internal-anchor" href='#closeText'>closeText</a></li>
-                            <li><a class="internal-anchor" href='#exportCSVText'>exportCSVText</a></li>
-                            <li><a class="internal-anchor" href='#ignoreEditable'>ignoreEditable</a></li>
-                            <li><a class="internal-anchor" href='#afterTableComplete'>afterTableComplete</a></li>
-                            <li><a class="internal-anchor" href='#afterDeleteRow'>afterDeleteRow</a></li>
-                            <li><a class="internal-anchor" href='#afterInsertRow'>afterInsertRow</a></li>
-                            <li><a class="internal-anchor" href='#afterColumnFilter'>afterColumnFilter</a></li>
-                            <li><a class="internal-anchor" href='#onAddRow'>onAddRow</a></li>
-                            <li><a class="internal-anchor" href='#onFilterChange'>onFilterChange</a></li>
-                            <li><a class="internal-anchor" href='#onExportToCSV'>onExportToCSV</a></li>
-                            <li><a class="internal-anchor" href='#onDeleteRow'>onDeleteRow</a></li>
-                            <li><a class="internal-anchor" href='#onRowClick'>onRowClick</a></li>
-                            <li><a class="internal-anchor" href='#onRowDoubleClick'>onRowDoubleClick</a></li>
-                            <li><a class="internal-anchor" href='#onMouseEnter'>onMouseEnter</a></li>
-                            <li><a class="internal-anchor" href='#onMouseLeave'>onMouseLeave</a></li>
-                            <li><a class="internal-anchor" href='#onRowMouseOver'>onRowMouseOver</a></li>
-                            <li><a class="internal-anchor" href='#onRowMouseOut'>onRowMouseOut</a></li>
-                            <li><a class="internal-anchor" href='#handleConfirmDeleteRow'>handleConfirmDeleteRow</a></li>
-                            <li><a class="internal-anchor" href='#beforeShowError'>beforeShowError</a></li>
-                            <li><a class="internal-anchor" href='#printToolBar'>printToolBar</a></li>
-                          </ul>
-                        </br></br>
+                          <code>options</code> accept an object which have the following props:<br/>
+                          <table class='table-bordered'>
+                            <thead>
+                              <tr>
+                                <th style="text-align: center">Sort</th>
+                                <th style="text-align: center">Search</th>
+                                <th style="text-align: center">Pagination</th>
+                                <th style="text-align: center">Expanding Row</th>
+                                <th style="text-align: center">Customization</th>
+                                <th style="text-align: center">Others</th>
+                              <tr>
+                            </thead>
+                            <tbody>
+                            </tr>
+                              <td>
+                                <ul>
+                                  <li><a class="internal-anchor" href='#sortName'>sortName</a></li>
+                                  <li><a class="internal-anchor" href='#sortOrder'>sortOrder</a></li>
+                                  <li><a class="internal-anchor" href='#defaultSortName'>defaultSortName</a></li>
+                                  <li><a class="internal-anchor" href='#defaultSortOrder'>defaultSortOrder</a></li>
+                                  <li><a class="internal-anchor" href='#sortIndicator'>sortIndicator</a></li>
+                                  <li><a class="internal-anchor" href='#onSortChange'>onSortChange</a></li>
+                                </ul>
+                              </td>
+                              <td>
+                                <ul>
+                                  <li><a class="internal-anchor" href='#defaultSearch'>defaultSearch</a></li>
+                                  <li><a class="internal-anchor" href='#searchDelayTime'>searchDelayTime</a></li>
+                                  <li><a class="internal-anchor" href='#clearSearch'>clearSearch</a></li>
+                                  <li><a class="internal-anchor" href='#onSearchChange'>onSearchChange</a></li>
+                                  <li><a class="internal-anchor" href='#afterSearch'>afterSearch</a></li>
+                                </ul>
+                              </td>
+                              <td>
+                                <ul>
+                                  <li><a class="internal-anchor" href='#prePage'>prePage</a></li>
+                                  <li><a class="internal-anchor" href='#nextPage'>nextPage</a></li>
+                                  <li><a class="internal-anchor" href='#firstPage'>firstPage</a></li>
+                                  <li><a class="internal-anchor" href='#lastPage'>lastPage</a></li>
+                                  <li><a class="internal-anchor" href='#page'>page</a></li>
+                                  <li><a class="internal-anchor" href='#sizePerPageList'>sizePerPageList</a></li>
+                                  <li><a class="internal-anchor" href='#sizePerPage'>sizePerPage</a></li>
+                                  <li><a class="internal-anchor" href='#paginationSize'>paginationSize</a></li>
+                                  <li><a class="internal-anchor" href='#hideSizePerPage'>hideSizePerPage</a></li>
+                                  <li><a class="internal-anchor" href='#paginationShowsTotal'>paginationShowsTotal</a></li>
+                                  <li><a class="internal-anchor" href='#pageStartIndex'>pageStartIndex</a></li>
+                                  <li><a class="internal-anchor" href='#onPageChange'>onPageChange</a></li>
+                                  <li><a class="internal-anchor" href='#onSizePerPageList'>onSizePerPageList</a></li>
+                                  <li><a class="internal-anchor" href='#hidePageListOnlyOnePage'>hidePageListOnlyOnePage</a></li>
+                                </ul>
+                              </td>
+                              <td>
+                                <ul>
+                                  <li><a class="internal-anchor" href='#expandRowBgColor'>expandRowBgColor</a></li>
+                                  <li><a class="internal-anchor" href='#expandBy'>expandBy</a></li>
+                                </ul>
+                              </td>
+                              <td>
+                                <ul>
+                                  <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#toolbar" target="_blank">toolBar</a></li>
+                                  <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#btnGroup" target="_blank">btnGroup</a></li>
+                                  <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#insertBtn" target="_blank">insertBtn</a></li>
+                                  <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#dropBtn" target="_blank">deleteBtn</a></li>
+                                  <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#csvBtn" target="_blank">exportCSVBtn</a></li>
+                                  <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#selectOnly" target="_blank">showSelectedOnlyBtn</a></li>
+                                  <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#searchpanel" target="_blank">searchPanel</a></li>
+                                  <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#searchfield" target="_blank">searchField</a></li>
+                                  <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#clearsearchbtn" target="_blank">clearSearchBtn</a></li>
+                                  <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#insertmodal" target="_blank">insertModal</a></li>
+                                  <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#insertmodalbody" target="_blank">insertModalBody</a></li>
+                                  <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#insertmodalheader" target="_blank">insertModalHeader</a></li>
+                                  <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#insertmodalfooter" target="_blank">insertModalFooter</a></li>
+                                  <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#pagination" target="_blank">paginationPanel</a></li>
+                                  <li><a href="http://allenfang.github.io/react-bootstrap-table/custom.html#sizePerPageDropdown" target="_blank">sizePerPageDropDown</a></li>
+                                </ul>
+                              </td>
+                              <td>
+                                <ul>
+                                  <li><a class="internal-anchor" href='#noDataText'>noDataText</a></li>
+                                  <li><a class="internal-anchor" href='#withoutNoDataText'>withoutNoDataText</a></li>
+                                  <li><a class="internal-anchor" href='#insertText'>insertText</a></li>
+                                  <li><a class="internal-anchor" href='#deleteText'>deleteText</a></li>
+                                  <li><a class="internal-anchor" href='#saveText'>saveText</a></li>
+                                  <li><a class="internal-anchor" href='#closeText'>closeText</a></li>
+                                  <li><a class="internal-anchor" href='#exportCSVText'>exportCSVText</a></li>
+                                  <li><a class="internal-anchor" href='#ignoreEditable'>ignoreEditable</a></li>
+                                  <li><a class="internal-anchor" href='#afterTableComplete'>afterTableComplete</a></li>
+                                  <li><a class="internal-anchor" href='#afterDeleteRow'>afterDeleteRow</a></li>
+                                  <li><a class="internal-anchor" href='#afterInsertRow'>afterInsertRow</a></li>
+                                  <li><a class="internal-anchor" href='#afterColumnFilter'>afterColumnFilter</a></li>
+                                  <li><a class="internal-anchor" href='#onAddRow'>onAddRow</a></li>
+                                  <li><a class="internal-anchor" href='#onFilterChange'>onFilterChange</a></li>
+                                  <li><a class="internal-anchor" href='#onExportToCSV'>onExportToCSV</a></li>
+                                  <li><a class="internal-anchor" href='#onDeleteRow'>onDeleteRow</a></li>
+                                  <li><a class="internal-anchor" href='#onRowClick'>onRowClick</a></li>
+                                  <li><a class="internal-anchor" href='#onRowDoubleClick'>onRowDoubleClick</a></li>
+                                  <li><a class="internal-anchor" href='#onMouseEnter'>onMouseEnter</a></li>
+                                  <li><a class="internal-anchor" href='#onMouseLeave'>onMouseLeave</a></li>
+                                  <li><a class="internal-anchor" href='#onRowMouseOver'>onRowMouseOver</a></li>
+                                  <li><a class="internal-anchor" href='#onRowMouseOut'>onRowMouseOut</a></li>
+                                  <li><a class="internal-anchor" href='#handleConfirmDeleteRow'>handleConfirmDeleteRow</a></li>
+                                  <li><a class="internal-anchor" href='#beforeShowError'>beforeShowError</a></li>
+                                  <li><a class="internal-anchor" href='#printToolBar'>printToolBar</a></li>
+                                </ul>
+                              </td>
+                            </tr>
+                            </tbody>
+                          </table>
                         </span>
                       </div>
                   </div>
