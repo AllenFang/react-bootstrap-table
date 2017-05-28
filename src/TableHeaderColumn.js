@@ -1,6 +1,7 @@
 /* eslint default-case: 0 */
 /* eslint guard-for-in: 0 */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classSet from 'classnames';
 import Const from './Const';
 import Util from './util';
