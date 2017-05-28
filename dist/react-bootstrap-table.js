@@ -7,7 +7,7 @@
 		exports["ReactBootstrapTable"] = factory(require("react"), require("react-dom"));
 	else
 		root["ReactBootstrapTable"] = factory(root["React"], root["ReactDOM"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_6__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_14__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -173,19 +173,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(3);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _classnames = __webpack_require__(11);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _Const = __webpack_require__(4);
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
-	var _TableHeader = __webpack_require__(5);
+	var _TableHeader = __webpack_require__(13);
 
 	var _TableHeader2 = _interopRequireDefault(_TableHeader);
 
-	var _TableBody = __webpack_require__(8);
+	var _TableBody = __webpack_require__(16);
 
 	var _TableBody2 = _interopRequireDefault(_TableBody);
 
@@ -203,7 +207,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _TableDataStore = __webpack_require__(56);
 
-	var _util = __webpack_require__(9);
+	var _util = __webpack_require__(17);
 
 	var _util2 = _interopRequireDefault(_util);
 
@@ -213,7 +217,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Filter = __webpack_require__(61);
 
-	var _reactSAlert = __webpack_require__(15);
+	var _reactSAlert = __webpack_require__(23);
 
 	var _reactSAlert2 = _interopRequireDefault(_reactSAlert);
 
@@ -1785,151 +1789,151 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	BootstrapTable.propTypes = {
-	  keyField: _react.PropTypes.string,
-	  height: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
-	  maxHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
-	  data: _react.PropTypes.oneOfType([_react.PropTypes.array, _react.PropTypes.object]),
-	  remote: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.func]), // remote data, default is false
-	  scrollTop: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
-	  striped: _react.PropTypes.bool,
-	  bordered: _react.PropTypes.bool,
-	  hover: _react.PropTypes.bool,
-	  condensed: _react.PropTypes.bool,
-	  pagination: _react.PropTypes.bool,
-	  printable: _react.PropTypes.bool,
-	  keyBoardNav: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.object]),
-	  searchPlaceholder: _react.PropTypes.string,
-	  selectRow: _react.PropTypes.shape({
-	    mode: _react.PropTypes.oneOf([_Const2.default.ROW_SELECT_NONE, _Const2.default.ROW_SELECT_SINGLE, _Const2.default.ROW_SELECT_MULTI]),
-	    customComponent: _react.PropTypes.func,
-	    bgColor: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
-	    selected: _react.PropTypes.array,
-	    onSelect: _react.PropTypes.func,
-	    onSelectAll: _react.PropTypes.func,
-	    clickToSelect: _react.PropTypes.bool,
-	    hideSelectColumn: _react.PropTypes.bool,
-	    clickToSelectAndEditCell: _react.PropTypes.bool,
-	    clickToExpand: _react.PropTypes.bool,
-	    showOnlySelected: _react.PropTypes.bool,
-	    unselectable: _react.PropTypes.array,
-	    columnWidth: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
-	    onlyUnselectVisible: _react.PropTypes.bool
+	  keyField: _propTypes2.default.string,
+	  height: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
+	  maxHeight: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
+	  data: _propTypes2.default.oneOfType([_propTypes2.default.array, _propTypes2.default.object]),
+	  remote: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.func]), // remote data, default is false
+	  scrollTop: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
+	  striped: _propTypes2.default.bool,
+	  bordered: _propTypes2.default.bool,
+	  hover: _propTypes2.default.bool,
+	  condensed: _propTypes2.default.bool,
+	  pagination: _propTypes2.default.bool,
+	  printable: _propTypes2.default.bool,
+	  keyBoardNav: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.object]),
+	  searchPlaceholder: _propTypes2.default.string,
+	  selectRow: _propTypes2.default.shape({
+	    mode: _propTypes2.default.oneOf([_Const2.default.ROW_SELECT_NONE, _Const2.default.ROW_SELECT_SINGLE, _Const2.default.ROW_SELECT_MULTI]),
+	    customComponent: _propTypes2.default.func,
+	    bgColor: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.func]),
+	    selected: _propTypes2.default.array,
+	    onSelect: _propTypes2.default.func,
+	    onSelectAll: _propTypes2.default.func,
+	    clickToSelect: _propTypes2.default.bool,
+	    hideSelectColumn: _propTypes2.default.bool,
+	    clickToSelectAndEditCell: _propTypes2.default.bool,
+	    clickToExpand: _propTypes2.default.bool,
+	    showOnlySelected: _propTypes2.default.bool,
+	    unselectable: _propTypes2.default.array,
+	    columnWidth: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
+	    onlyUnselectVisible: _propTypes2.default.bool
 	  }),
-	  cellEdit: _react.PropTypes.shape({
-	    mode: _react.PropTypes.string,
-	    blurToSave: _react.PropTypes.bool,
-	    beforeSaveCell: _react.PropTypes.func,
-	    afterSaveCell: _react.PropTypes.func,
-	    nonEditableRows: _react.PropTypes.func
+	  cellEdit: _propTypes2.default.shape({
+	    mode: _propTypes2.default.string,
+	    blurToSave: _propTypes2.default.bool,
+	    beforeSaveCell: _propTypes2.default.func,
+	    afterSaveCell: _propTypes2.default.func,
+	    nonEditableRows: _propTypes2.default.func
 	  }),
-	  insertRow: _react.PropTypes.bool,
-	  deleteRow: _react.PropTypes.bool,
-	  search: _react.PropTypes.bool,
-	  multiColumnSearch: _react.PropTypes.bool,
-	  strictSearch: _react.PropTypes.bool,
-	  columnFilter: _react.PropTypes.bool,
-	  trClassName: _react.PropTypes.any,
-	  tableStyle: _react.PropTypes.object,
-	  containerStyle: _react.PropTypes.object,
-	  headerStyle: _react.PropTypes.object,
-	  bodyStyle: _react.PropTypes.object,
-	  containerClass: _react.PropTypes.string,
-	  tableContainerClass: _react.PropTypes.string,
-	  headerContainerClass: _react.PropTypes.string,
-	  bodyContainerClass: _react.PropTypes.string,
-	  tableHeaderClass: _react.PropTypes.string,
-	  tableBodyClass: _react.PropTypes.string,
-	  options: _react.PropTypes.shape({
-	    clearSearch: _react.PropTypes.bool,
-	    sortName: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.array]),
-	    sortOrder: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.array]),
-	    defaultSortName: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.array]),
-	    defaultSortOrder: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.array]),
-	    sortIndicator: _react.PropTypes.bool,
-	    afterTableComplete: _react.PropTypes.func,
-	    afterDeleteRow: _react.PropTypes.func,
-	    afterInsertRow: _react.PropTypes.func,
-	    afterSearch: _react.PropTypes.func,
-	    afterColumnFilter: _react.PropTypes.func,
-	    onRowClick: _react.PropTypes.func,
-	    onRowDoubleClick: _react.PropTypes.func,
-	    page: _react.PropTypes.number,
-	    pageStartIndex: _react.PropTypes.number,
-	    paginationShowsTotal: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.func]),
-	    sizePerPageList: _react.PropTypes.array,
-	    sizePerPage: _react.PropTypes.number,
-	    paginationSize: _react.PropTypes.number,
-	    paginationPosition: _react.PropTypes.oneOf([_Const2.default.PAGINATION_POS_TOP, _Const2.default.PAGINATION_POS_BOTTOM, _Const2.default.PAGINATION_POS_BOTH]),
-	    hideSizePerPage: _react.PropTypes.bool,
-	    hidePageListOnlyOnePage: _react.PropTypes.bool,
-	    alwaysShowAllBtns: _react.PropTypes.bool,
-	    withFirstAndLast: _react.PropTypes.bool,
-	    keepSizePerPageState: _react.PropTypes.bool,
-	    onSortChange: _react.PropTypes.func,
-	    onPageChange: _react.PropTypes.func,
-	    onSizePerPageList: _react.PropTypes.func,
-	    onFilterChange: _react2.default.PropTypes.func,
-	    onSearchChange: _react2.default.PropTypes.func,
-	    onAddRow: _react2.default.PropTypes.func,
-	    onExportToCSV: _react2.default.PropTypes.func,
-	    onCellEdit: _react2.default.PropTypes.func,
-	    noDataText: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object]),
-	    withoutNoDataText: _react2.default.PropTypes.bool,
-	    handleConfirmDeleteRow: _react.PropTypes.func,
-	    prePage: _react.PropTypes.string,
-	    nextPage: _react.PropTypes.string,
-	    firstPage: _react.PropTypes.string,
-	    lastPage: _react.PropTypes.string,
-	    prePageTitle: _react.PropTypes.string,
-	    nextPageTitle: _react.PropTypes.string,
-	    firstPageTitle: _react.PropTypes.string,
-	    lastPageTitle: _react.PropTypes.string,
-	    searchDelayTime: _react.PropTypes.number,
-	    exportCSVText: _react.PropTypes.string,
-	    insertText: _react.PropTypes.string,
-	    deleteText: _react.PropTypes.string,
-	    saveText: _react.PropTypes.string,
-	    closeText: _react.PropTypes.string,
-	    ignoreEditable: _react.PropTypes.bool,
-	    defaultSearch: _react.PropTypes.string,
-	    insertModalHeader: _react.PropTypes.func,
-	    insertModalBody: _react.PropTypes.func,
-	    insertModalFooter: _react.PropTypes.func,
-	    insertModal: _react.PropTypes.func,
-	    insertBtn: _react.PropTypes.func,
-	    deleteBtn: _react.PropTypes.func,
-	    showSelectedOnlyBtn: _react.PropTypes.func,
-	    exportCSVBtn: _react.PropTypes.func,
-	    clearSearchBtn: _react.PropTypes.func,
-	    searchField: _react.PropTypes.func,
-	    searchPanel: _react.PropTypes.func,
-	    btnGroup: _react.PropTypes.func,
-	    toolBar: _react.PropTypes.func,
-	    sizePerPageDropDown: _react.PropTypes.func,
-	    paginationPanel: _react.PropTypes.func,
-	    searchPosition: _react.PropTypes.string,
-	    expandRowBgColor: _react.PropTypes.string,
-	    expandBy: _react.PropTypes.string,
-	    expanding: _react.PropTypes.array,
-	    onExpand: _react.PropTypes.func,
-	    onlyOneExpanding: _react.PropTypes.bool,
-	    beforeShowError: _react.PropTypes.func,
-	    printToolBar: _react.PropTypes.bool,
-	    insertFailIndicator: _react.PropTypes.string
+	  insertRow: _propTypes2.default.bool,
+	  deleteRow: _propTypes2.default.bool,
+	  search: _propTypes2.default.bool,
+	  multiColumnSearch: _propTypes2.default.bool,
+	  strictSearch: _propTypes2.default.bool,
+	  columnFilter: _propTypes2.default.bool,
+	  trClassName: _propTypes2.default.any,
+	  tableStyle: _propTypes2.default.object,
+	  containerStyle: _propTypes2.default.object,
+	  headerStyle: _propTypes2.default.object,
+	  bodyStyle: _propTypes2.default.object,
+	  containerClass: _propTypes2.default.string,
+	  tableContainerClass: _propTypes2.default.string,
+	  headerContainerClass: _propTypes2.default.string,
+	  bodyContainerClass: _propTypes2.default.string,
+	  tableHeaderClass: _propTypes2.default.string,
+	  tableBodyClass: _propTypes2.default.string,
+	  options: _propTypes2.default.shape({
+	    clearSearch: _propTypes2.default.bool,
+	    sortName: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.array]),
+	    sortOrder: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.array]),
+	    defaultSortName: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.array]),
+	    defaultSortOrder: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.array]),
+	    sortIndicator: _propTypes2.default.bool,
+	    afterTableComplete: _propTypes2.default.func,
+	    afterDeleteRow: _propTypes2.default.func,
+	    afterInsertRow: _propTypes2.default.func,
+	    afterSearch: _propTypes2.default.func,
+	    afterColumnFilter: _propTypes2.default.func,
+	    onRowClick: _propTypes2.default.func,
+	    onRowDoubleClick: _propTypes2.default.func,
+	    page: _propTypes2.default.number,
+	    pageStartIndex: _propTypes2.default.number,
+	    paginationShowsTotal: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.func]),
+	    sizePerPageList: _propTypes2.default.array,
+	    sizePerPage: _propTypes2.default.number,
+	    paginationSize: _propTypes2.default.number,
+	    paginationPosition: _propTypes2.default.oneOf([_Const2.default.PAGINATION_POS_TOP, _Const2.default.PAGINATION_POS_BOTTOM, _Const2.default.PAGINATION_POS_BOTH]),
+	    hideSizePerPage: _propTypes2.default.bool,
+	    hidePageListOnlyOnePage: _propTypes2.default.bool,
+	    alwaysShowAllBtns: _propTypes2.default.bool,
+	    withFirstAndLast: _propTypes2.default.bool,
+	    keepSizePerPageState: _propTypes2.default.bool,
+	    onSortChange: _propTypes2.default.func,
+	    onPageChange: _propTypes2.default.func,
+	    onSizePerPageList: _propTypes2.default.func,
+	    onFilterChange: _propTypes2.default.func,
+	    onSearchChange: _propTypes2.default.func,
+	    onAddRow: _propTypes2.default.func,
+	    onExportToCSV: _propTypes2.default.func,
+	    onCellEdit: _propTypes2.default.func,
+	    noDataText: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.object]),
+	    withoutNoDataText: _propTypes2.default.bool,
+	    handleConfirmDeleteRow: _propTypes2.default.func,
+	    prePage: _propTypes2.default.string,
+	    nextPage: _propTypes2.default.string,
+	    firstPage: _propTypes2.default.string,
+	    lastPage: _propTypes2.default.string,
+	    prePageTitle: _propTypes2.default.string,
+	    nextPageTitle: _propTypes2.default.string,
+	    firstPageTitle: _propTypes2.default.string,
+	    lastPageTitle: _propTypes2.default.string,
+	    searchDelayTime: _propTypes2.default.number,
+	    exportCSVText: _propTypes2.default.string,
+	    insertText: _propTypes2.default.string,
+	    deleteText: _propTypes2.default.string,
+	    saveText: _propTypes2.default.string,
+	    closeText: _propTypes2.default.string,
+	    ignoreEditable: _propTypes2.default.bool,
+	    defaultSearch: _propTypes2.default.string,
+	    insertModalHeader: _propTypes2.default.func,
+	    insertModalBody: _propTypes2.default.func,
+	    insertModalFooter: _propTypes2.default.func,
+	    insertModal: _propTypes2.default.func,
+	    insertBtn: _propTypes2.default.func,
+	    deleteBtn: _propTypes2.default.func,
+	    showSelectedOnlyBtn: _propTypes2.default.func,
+	    exportCSVBtn: _propTypes2.default.func,
+	    clearSearchBtn: _propTypes2.default.func,
+	    searchField: _propTypes2.default.func,
+	    searchPanel: _propTypes2.default.func,
+	    btnGroup: _propTypes2.default.func,
+	    toolBar: _propTypes2.default.func,
+	    sizePerPageDropDown: _propTypes2.default.func,
+	    paginationPanel: _propTypes2.default.func,
+	    searchPosition: _propTypes2.default.string,
+	    expandRowBgColor: _propTypes2.default.string,
+	    expandBy: _propTypes2.default.string,
+	    expanding: _propTypes2.default.array,
+	    onExpand: _propTypes2.default.func,
+	    onlyOneExpanding: _propTypes2.default.bool,
+	    beforeShowError: _propTypes2.default.func,
+	    printToolBar: _propTypes2.default.bool,
+	    insertFailIndicator: _propTypes2.default.string
 	  }),
-	  fetchInfo: _react.PropTypes.shape({
-	    dataTotalSize: _react.PropTypes.number
+	  fetchInfo: _propTypes2.default.shape({
+	    dataTotalSize: _propTypes2.default.number
 	  }),
-	  exportCSV: _react.PropTypes.bool,
-	  csvFileName: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
-	  ignoreSinglePage: _react.PropTypes.bool,
-	  expandableRow: _react.PropTypes.func,
-	  expandComponent: _react.PropTypes.func,
-	  expandColumnOptions: _react.PropTypes.shape({
-	    columnWidth: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
-	    expandColumnVisible: _react.PropTypes.bool,
-	    expandColumnComponent: _react.PropTypes.func,
-	    expandColumnBeforeSelectColumn: _react.PropTypes.bool
+	  exportCSV: _propTypes2.default.bool,
+	  csvFileName: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.func]),
+	  ignoreSinglePage: _propTypes2.default.bool,
+	  expandableRow: _propTypes2.default.func,
+	  expandComponent: _propTypes2.default.func,
+	  expandColumnOptions: _propTypes2.default.shape({
+	    columnWidth: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
+	    expandColumnVisible: _propTypes2.default.bool,
+	    expandColumnComponent: _propTypes2.default.func,
+	    expandColumnBeforeSelectColumn: _propTypes2.default.bool
 	  })
 	};
 	BootstrapTable.defaultProps = {
@@ -2100,6 +2104,976 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+
+	var factory = __webpack_require__(4);
+
+	var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+	  Symbol.for &&
+	  Symbol.for('react.element')) ||
+	  0xeac7;
+
+	function isValidElement(object) {
+	  return typeof object === 'object' &&
+	    object !== null &&
+	    object.$$typeof === REACT_ELEMENT_TYPE;
+	}
+
+	module.exports = factory(isValidElement);
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+
+	'use strict';
+
+	var emptyFunction = __webpack_require__(6);
+	var invariant = __webpack_require__(7);
+	var warning = __webpack_require__(8);
+
+	var ReactPropTypesSecret = __webpack_require__(9);
+	var checkPropTypes = __webpack_require__(10);
+
+	module.exports = function (isValidElement) {
+	  /* global Symbol */
+	  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
+	  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
+
+	  /**
+	   * Returns the iterator method function contained on the iterable object.
+	   *
+	   * Be sure to invoke the function with the iterable as context:
+	   *
+	   *     var iteratorFn = getIteratorFn(myIterable);
+	   *     if (iteratorFn) {
+	   *       var iterator = iteratorFn.call(myIterable);
+	   *       ...
+	   *     }
+	   *
+	   * @param {?object} maybeIterable
+	   * @return {?function}
+	   */
+	  function getIteratorFn(maybeIterable) {
+	    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
+	    if (typeof iteratorFn === 'function') {
+	      return iteratorFn;
+	    }
+	  }
+
+	  /**
+	   * Collection of methods that allow declaration and validation of props that are
+	   * supplied to React components. Example usage:
+	   *
+	   *   var Props = require('ReactPropTypes');
+	   *   var MyArticle = React.createClass({
+	   *     propTypes: {
+	   *       // An optional string prop named "description".
+	   *       description: Props.string,
+	   *
+	   *       // A required enum prop named "category".
+	   *       category: Props.oneOf(['News','Photos']).isRequired,
+	   *
+	   *       // A prop named "dialog" that requires an instance of Dialog.
+	   *       dialog: Props.instanceOf(Dialog).isRequired
+	   *     },
+	   *     render: function() { ... }
+	   *   });
+	   *
+	   * A more formal specification of how these methods are used:
+	   *
+	   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
+	   *   decl := ReactPropTypes.{type}(.isRequired)?
+	   *
+	   * Each and every declaration produces a function with the same signature. This
+	   * allows the creation of custom validation functions. For example:
+	   *
+	   *  var MyLink = React.createClass({
+	   *    propTypes: {
+	   *      // An optional string or URI prop named "href".
+	   *      href: function(props, propName, componentName) {
+	   *        var propValue = props[propName];
+	   *        if (propValue != null && typeof propValue !== 'string' &&
+	   *            !(propValue instanceof URI)) {
+	   *          return new Error(
+	   *            'Expected a string or an URI for ' + propName + ' in ' +
+	   *            componentName
+	   *          );
+	   *        }
+	   *      }
+	   *    },
+	   *    render: function() {...}
+	   *  });
+	   *
+	   * @internal
+	   */
+
+	  var ANONYMOUS = '<<anonymous>>';
+
+	  var ReactPropTypes;
+
+	  if (process.env.NODE_ENV !== 'production') {
+	    // Keep in sync with production version below
+	    ReactPropTypes = {
+	      array: createPrimitiveTypeChecker('array'),
+	      bool: createPrimitiveTypeChecker('boolean'),
+	      func: createPrimitiveTypeChecker('function'),
+	      number: createPrimitiveTypeChecker('number'),
+	      object: createPrimitiveTypeChecker('object'),
+	      string: createPrimitiveTypeChecker('string'),
+	      symbol: createPrimitiveTypeChecker('symbol'),
+
+	      any: createAnyTypeChecker(),
+	      arrayOf: createArrayOfTypeChecker,
+	      element: createElementTypeChecker(),
+	      instanceOf: createInstanceTypeChecker,
+	      node: createNodeChecker(),
+	      objectOf: createObjectOfTypeChecker,
+	      oneOf: createEnumTypeChecker,
+	      oneOfType: createUnionTypeChecker,
+	      shape: createShapeTypeChecker
+	    };
+	  } else {
+	    var productionTypeChecker = function () {
+	      invariant(false, 'React.PropTypes type checking code is stripped in production.');
+	    };
+	    productionTypeChecker.isRequired = productionTypeChecker;
+	    var getProductionTypeChecker = function () {
+	      return productionTypeChecker;
+	    };
+	    // Keep in sync with development version above
+	    ReactPropTypes = {
+	      array: productionTypeChecker,
+	      bool: productionTypeChecker,
+	      func: productionTypeChecker,
+	      number: productionTypeChecker,
+	      object: productionTypeChecker,
+	      string: productionTypeChecker,
+	      symbol: productionTypeChecker,
+
+	      any: productionTypeChecker,
+	      arrayOf: getProductionTypeChecker,
+	      element: productionTypeChecker,
+	      instanceOf: getProductionTypeChecker,
+	      node: productionTypeChecker,
+	      objectOf: getProductionTypeChecker,
+	      oneOf: getProductionTypeChecker,
+	      oneOfType: getProductionTypeChecker,
+	      shape: getProductionTypeChecker
+	    };
+	  }
+
+	  /**
+	   * inlined Object.is polyfill to avoid requiring consumers ship their own
+	   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+	   */
+	  /*eslint-disable no-self-compare*/
+	  function is(x, y) {
+	    // SameValue algorithm
+	    if (x === y) {
+	      // Steps 1-5, 7-10
+	      // Steps 6.b-6.e: +0 != -0
+	      return x !== 0 || 1 / x === 1 / y;
+	    } else {
+	      // Step 6.a: NaN == NaN
+	      return x !== x && y !== y;
+	    }
+	  }
+	  /*eslint-enable no-self-compare*/
+
+	  /**
+	   * We use an Error-like object for backward compatibility as people may call
+	   * PropTypes directly and inspect their output. However, we don't use real
+	   * Errors anymore. We don't inspect their stack anyway, and creating them
+	   * is prohibitively expensive if they are created too often, such as what
+	   * happens in oneOfType() for any type before the one that matched.
+	   */
+	  function PropTypeError(message) {
+	    this.message = message;
+	    this.stack = '';
+	  }
+	  // Make `instanceof Error` still work for returned errors.
+	  PropTypeError.prototype = Error.prototype;
+
+	  function createChainableTypeChecker(validate) {
+	    if (process.env.NODE_ENV !== 'production') {
+	      var manualPropTypeCallCache = {};
+	    }
+	    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
+	      componentName = componentName || ANONYMOUS;
+	      propFullName = propFullName || propName;
+	      if (process.env.NODE_ENV !== 'production') {
+	        if (secret !== ReactPropTypesSecret && typeof console !== 'undefined') {
+	          var cacheKey = componentName + ':' + propName;
+	          if (!manualPropTypeCallCache[cacheKey]) {
+	            process.env.NODE_ENV !== 'production' ? warning(false, 'You are manually calling a React.PropTypes validation ' + 'function for the `%s` prop on `%s`. This is deprecated ' + 'and will not work in production with the next major version. ' + 'You may be seeing this warning due to a third-party PropTypes ' + 'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.', propFullName, componentName) : void 0;
+	            manualPropTypeCallCache[cacheKey] = true;
+	          }
+	        }
+	      }
+	      if (props[propName] == null) {
+	        if (isRequired) {
+	          if (props[propName] === null) {
+	            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
+	          }
+	          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
+	        }
+	        return null;
+	      } else {
+	        return validate(props, propName, componentName, location, propFullName);
+	      }
+	    }
+
+	    var chainedCheckType = checkType.bind(null, false);
+	    chainedCheckType.isRequired = checkType.bind(null, true);
+
+	    return chainedCheckType;
+	  }
+
+	  function createPrimitiveTypeChecker(expectedType) {
+	    function validate(props, propName, componentName, location, propFullName, secret) {
+	      var propValue = props[propName];
+	      var propType = getPropType(propValue);
+	      if (propType !== expectedType) {
+	        // `propValue` being instance of, say, date/regexp, pass the 'object'
+	        // check, but we can offer a more precise error message here rather than
+	        // 'of type `object`'.
+	        var preciseType = getPreciseType(propValue);
+
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
+	      }
+	      return null;
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+
+	  function createAnyTypeChecker() {
+	    return createChainableTypeChecker(emptyFunction.thatReturnsNull);
+	  }
+
+	  function createArrayOfTypeChecker(typeChecker) {
+	    function validate(props, propName, componentName, location, propFullName) {
+	      if (typeof typeChecker !== 'function') {
+	        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
+	      }
+	      var propValue = props[propName];
+	      if (!Array.isArray(propValue)) {
+	        var propType = getPropType(propValue);
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
+	      }
+	      for (var i = 0; i < propValue.length; i++) {
+	        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret);
+	        if (error instanceof Error) {
+	          return error;
+	        }
+	      }
+	      return null;
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+
+	  function createElementTypeChecker() {
+	    function validate(props, propName, componentName, location, propFullName) {
+	      var propValue = props[propName];
+	      if (!isValidElement(propValue)) {
+	        var propType = getPropType(propValue);
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
+	      }
+	      return null;
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+
+	  function createInstanceTypeChecker(expectedClass) {
+	    function validate(props, propName, componentName, location, propFullName) {
+	      if (!(props[propName] instanceof expectedClass)) {
+	        var expectedClassName = expectedClass.name || ANONYMOUS;
+	        var actualClassName = getClassName(props[propName]);
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
+	      }
+	      return null;
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+
+	  function createEnumTypeChecker(expectedValues) {
+	    if (!Array.isArray(expectedValues)) {
+	      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOf, expected an instance of array.') : void 0;
+	      return emptyFunction.thatReturnsNull;
+	    }
+
+	    function validate(props, propName, componentName, location, propFullName) {
+	      var propValue = props[propName];
+	      for (var i = 0; i < expectedValues.length; i++) {
+	        if (is(propValue, expectedValues[i])) {
+	          return null;
+	        }
+	      }
+
+	      var valuesString = JSON.stringify(expectedValues);
+	      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + propValue + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+
+	  function createObjectOfTypeChecker(typeChecker) {
+	    function validate(props, propName, componentName, location, propFullName) {
+	      if (typeof typeChecker !== 'function') {
+	        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
+	      }
+	      var propValue = props[propName];
+	      var propType = getPropType(propValue);
+	      if (propType !== 'object') {
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
+	      }
+	      for (var key in propValue) {
+	        if (propValue.hasOwnProperty(key)) {
+	          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+	          if (error instanceof Error) {
+	            return error;
+	          }
+	        }
+	      }
+	      return null;
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+
+	  function createUnionTypeChecker(arrayOfTypeCheckers) {
+	    if (!Array.isArray(arrayOfTypeCheckers)) {
+	      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
+	      return emptyFunction.thatReturnsNull;
+	    }
+
+	    function validate(props, propName, componentName, location, propFullName) {
+	      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+	        var checker = arrayOfTypeCheckers[i];
+	        if (checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret) == null) {
+	          return null;
+	        }
+	      }
+
+	      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+
+	  function createNodeChecker() {
+	    function validate(props, propName, componentName, location, propFullName) {
+	      if (!isNode(props[propName])) {
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
+	      }
+	      return null;
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+
+	  function createShapeTypeChecker(shapeTypes) {
+	    function validate(props, propName, componentName, location, propFullName) {
+	      var propValue = props[propName];
+	      var propType = getPropType(propValue);
+	      if (propType !== 'object') {
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+	      }
+	      for (var key in shapeTypes) {
+	        var checker = shapeTypes[key];
+	        if (!checker) {
+	          continue;
+	        }
+	        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+	        if (error) {
+	          return error;
+	        }
+	      }
+	      return null;
+	    }
+	    return createChainableTypeChecker(validate);
+	  }
+
+	  function isNode(propValue) {
+	    switch (typeof propValue) {
+	      case 'number':
+	      case 'string':
+	      case 'undefined':
+	        return true;
+	      case 'boolean':
+	        return !propValue;
+	      case 'object':
+	        if (Array.isArray(propValue)) {
+	          return propValue.every(isNode);
+	        }
+	        if (propValue === null || isValidElement(propValue)) {
+	          return true;
+	        }
+
+	        var iteratorFn = getIteratorFn(propValue);
+	        if (iteratorFn) {
+	          var iterator = iteratorFn.call(propValue);
+	          var step;
+	          if (iteratorFn !== propValue.entries) {
+	            while (!(step = iterator.next()).done) {
+	              if (!isNode(step.value)) {
+	                return false;
+	              }
+	            }
+	          } else {
+	            // Iterator will provide entry [k,v] tuples rather than values.
+	            while (!(step = iterator.next()).done) {
+	              var entry = step.value;
+	              if (entry) {
+	                if (!isNode(entry[1])) {
+	                  return false;
+	                }
+	              }
+	            }
+	          }
+	        } else {
+	          return false;
+	        }
+
+	        return true;
+	      default:
+	        return false;
+	    }
+	  }
+
+	  function isSymbol(propType, propValue) {
+	    // Native Symbol.
+	    if (propType === 'symbol') {
+	      return true;
+	    }
+
+	    // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
+	    if (propValue['@@toStringTag'] === 'Symbol') {
+	      return true;
+	    }
+
+	    // Fallback for non-spec compliant Symbols which are polyfilled.
+	    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
+	      return true;
+	    }
+
+	    return false;
+	  }
+
+	  // Equivalent of `typeof` but with special handling for array and regexp.
+	  function getPropType(propValue) {
+	    var propType = typeof propValue;
+	    if (Array.isArray(propValue)) {
+	      return 'array';
+	    }
+	    if (propValue instanceof RegExp) {
+	      // Old webkits (at least until Android 4.0) return 'function' rather than
+	      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
+	      // passes PropTypes.object.
+	      return 'object';
+	    }
+	    if (isSymbol(propType, propValue)) {
+	      return 'symbol';
+	    }
+	    return propType;
+	  }
+
+	  // This handles more types than `getPropType`. Only used for error messages.
+	  // See `createPrimitiveTypeChecker`.
+	  function getPreciseType(propValue) {
+	    var propType = getPropType(propValue);
+	    if (propType === 'object') {
+	      if (propValue instanceof Date) {
+	        return 'date';
+	      } else if (propValue instanceof RegExp) {
+	        return 'regexp';
+	      }
+	    }
+	    return propType;
+	  }
+
+	  // Returns class name of the object, if any.
+	  function getClassName(propValue) {
+	    if (!propValue.constructor || !propValue.constructor.name) {
+	      return ANONYMOUS;
+	    }
+	    return propValue.constructor.name;
+	  }
+
+	  ReactPropTypes.checkPropTypes = checkPropTypes;
+	  ReactPropTypes.PropTypes = ReactPropTypes;
+
+	  return ReactPropTypes;
+	};
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	// shim for using process in browser
+	var process = module.exports = {};
+
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+
+	function defaultSetTimout() {
+	    throw new Error('setTimeout has not been defined');
+	}
+	function defaultClearTimeout () {
+	    throw new Error('clearTimeout has not been defined');
+	}
+	(function () {
+	    try {
+	        if (typeof setTimeout === 'function') {
+	            cachedSetTimeout = setTimeout;
+	        } else {
+	            cachedSetTimeout = defaultSetTimout;
+	        }
+	    } catch (e) {
+	        cachedSetTimeout = defaultSetTimout;
+	    }
+	    try {
+	        if (typeof clearTimeout === 'function') {
+	            cachedClearTimeout = clearTimeout;
+	        } else {
+	            cachedClearTimeout = defaultClearTimeout;
+	        }
+	    } catch (e) {
+	        cachedClearTimeout = defaultClearTimeout;
+	    }
+	} ())
+	function runTimeout(fun) {
+	    if (cachedSetTimeout === setTimeout) {
+	        //normal enviroments in sane situations
+	        return setTimeout(fun, 0);
+	    }
+	    // if setTimeout wasn't available but was latter defined
+	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+	        cachedSetTimeout = setTimeout;
+	        return setTimeout(fun, 0);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedSetTimeout(fun, 0);
+	    } catch(e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+	            return cachedSetTimeout.call(null, fun, 0);
+	        } catch(e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+	            return cachedSetTimeout.call(this, fun, 0);
+	        }
+	    }
+
+
+	}
+	function runClearTimeout(marker) {
+	    if (cachedClearTimeout === clearTimeout) {
+	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
+	    }
+	    // if clearTimeout wasn't available but was latter defined
+	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+	        cachedClearTimeout = clearTimeout;
+	        return clearTimeout(marker);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedClearTimeout(marker);
+	    } catch (e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+	            return cachedClearTimeout.call(null, marker);
+	        } catch (e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+	            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+	            return cachedClearTimeout.call(this, marker);
+	        }
+	    }
+
+
+
+	}
+	var queue = [];
+	var draining = false;
+	var currentQueue;
+	var queueIndex = -1;
+
+	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
+	    draining = false;
+	    if (currentQueue.length) {
+	        queue = currentQueue.concat(queue);
+	    } else {
+	        queueIndex = -1;
+	    }
+	    if (queue.length) {
+	        drainQueue();
+	    }
+	}
+
+	function drainQueue() {
+	    if (draining) {
+	        return;
+	    }
+	    var timeout = runTimeout(cleanUpNextTick);
+	    draining = true;
+
+	    var len = queue.length;
+	    while(len) {
+	        currentQueue = queue;
+	        queue = [];
+	        while (++queueIndex < len) {
+	            if (currentQueue) {
+	                currentQueue[queueIndex].run();
+	            }
+	        }
+	        queueIndex = -1;
+	        len = queue.length;
+	    }
+	    currentQueue = null;
+	    draining = false;
+	    runClearTimeout(timeout);
+	}
+
+	process.nextTick = function (fun) {
+	    var args = new Array(arguments.length - 1);
+	    if (arguments.length > 1) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            args[i - 1] = arguments[i];
+	        }
+	    }
+	    queue.push(new Item(fun, args));
+	    if (queue.length === 1 && !draining) {
+	        runTimeout(drainQueue);
+	    }
+	};
+
+	// v8 likes predictible objects
+	function Item(fun, array) {
+	    this.fun = fun;
+	    this.array = array;
+	}
+	Item.prototype.run = function () {
+	    this.fun.apply(null, this.array);
+	};
+	process.title = 'browser';
+	process.browser = true;
+	process.env = {};
+	process.argv = [];
+	process.version = ''; // empty string to avoid regexp issues
+	process.versions = {};
+
+	function noop() {}
+
+	process.on = noop;
+	process.addListener = noop;
+	process.once = noop;
+	process.off = noop;
+	process.removeListener = noop;
+	process.removeAllListeners = noop;
+	process.emit = noop;
+
+	process.binding = function (name) {
+	    throw new Error('process.binding is not supported');
+	};
+
+	process.cwd = function () { return '/' };
+	process.chdir = function (dir) {
+	    throw new Error('process.chdir is not supported');
+	};
+	process.umask = function() { return 0; };
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * 
+	 */
+
+	function makeEmptyFunction(arg) {
+	  return function () {
+	    return arg;
+	  };
+	}
+
+	/**
+	 * This function accepts and discards inputs; it has no side effects. This is
+	 * primarily useful idiomatically for overridable function endpoints which
+	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+	 */
+	var emptyFunction = function emptyFunction() {};
+
+	emptyFunction.thatReturns = makeEmptyFunction;
+	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+	emptyFunction.thatReturnsThis = function () {
+	  return this;
+	};
+	emptyFunction.thatReturnsArgument = function (arg) {
+	  return arg;
+	};
+
+	module.exports = emptyFunction;
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+
+	'use strict';
+
+	/**
+	 * Use invariant() to assert state which your program assumes to be true.
+	 *
+	 * Provide sprintf-style format (only %s is supported) and arguments
+	 * to provide information about what broke and what you were
+	 * expecting.
+	 *
+	 * The invariant message will be stripped in production, but the invariant
+	 * will remain to ensure logic does not differ in production.
+	 */
+
+	var validateFormat = function validateFormat(format) {};
+
+	if (process.env.NODE_ENV !== 'production') {
+	  validateFormat = function validateFormat(format) {
+	    if (format === undefined) {
+	      throw new Error('invariant requires an error message argument');
+	    }
+	  };
+	}
+
+	function invariant(condition, format, a, b, c, d, e, f) {
+	  validateFormat(format);
+
+	  if (!condition) {
+	    var error;
+	    if (format === undefined) {
+	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
+	    } else {
+	      var args = [a, b, c, d, e, f];
+	      var argIndex = 0;
+	      error = new Error(format.replace(/%s/g, function () {
+	        return args[argIndex++];
+	      }));
+	      error.name = 'Invariant Violation';
+	    }
+
+	    error.framesToPop = 1; // we don't care about invariant's own frame
+	    throw error;
+	  }
+	}
+
+	module.exports = invariant;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2014-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+
+	'use strict';
+
+	var emptyFunction = __webpack_require__(6);
+
+	/**
+	 * Similar to invariant but only logs a warning if the condition is not met.
+	 * This can be used to log issues in development environments in critical
+	 * paths. Removing the logging code for production environments will keep the
+	 * same logic and follow the same code paths.
+	 */
+
+	var warning = emptyFunction;
+
+	if (process.env.NODE_ENV !== 'production') {
+	  (function () {
+	    var printWarning = function printWarning(format) {
+	      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	        args[_key - 1] = arguments[_key];
+	      }
+
+	      var argIndex = 0;
+	      var message = 'Warning: ' + format.replace(/%s/g, function () {
+	        return args[argIndex++];
+	      });
+	      if (typeof console !== 'undefined') {
+	        console.error(message);
+	      }
+	      try {
+	        // --- Welcome to debugging React ---
+	        // This error was thrown as a convenience so that you can use this stack
+	        // to find the callsite that caused this warning to fire.
+	        throw new Error(message);
+	      } catch (x) {}
+	    };
+
+	    warning = function warning(condition, format) {
+	      if (format === undefined) {
+	        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+	      }
+
+	      if (format.indexOf('Failed Composite propType: ') === 0) {
+	        return; // Ignore CompositeComponent proptype check.
+	      }
+
+	      if (!condition) {
+	        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+	          args[_key2 - 2] = arguments[_key2];
+	        }
+
+	        printWarning.apply(undefined, [format].concat(args));
+	      }
+	    };
+	  })();
+	}
+
+	module.exports = warning;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+
+	'use strict';
+
+	var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+	module.exports = ReactPropTypesSecret;
+
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+
+	'use strict';
+
+	var invariant = __webpack_require__(7);
+	var warning = __webpack_require__(8);
+
+	var ReactPropTypesSecret = __webpack_require__(9);
+
+	var loggedTypeFailures = {};
+
+	/**
+	 * Assert that the values match with the type specs.
+	 * Error messages are memorized and will only be shown once.
+	 *
+	 * @param {object} typeSpecs Map of name to a ReactPropType
+	 * @param {object} values Runtime values that need to be type-checked
+	 * @param {string} location e.g. "prop", "context", "child context"
+	 * @param {string} componentName Name of the component for error messages.
+	 * @param {?Function} getStack Returns the component stack.
+	 * @private
+	 */
+	function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+	  if (process.env.NODE_ENV !== 'production') {
+	    for (var typeSpecName in typeSpecs) {
+	      if (typeSpecs.hasOwnProperty(typeSpecName)) {
+	        var error;
+	        // Prop type validation may throw. In case they do, we don't want to
+	        // fail the render phase where it didn't fail before. So we log it.
+	        // After these have been cleaned up, we'll let them throw.
+	        try {
+	          // This is intentionally an invariant that gets caught. It's the same
+	          // behavior as without this statement except with a better message.
+	          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', componentName || 'React class', location, typeSpecName);
+	          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+	        } catch (ex) {
+	          error = ex;
+	        }
+	        process.env.NODE_ENV !== 'production' ? warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error) : void 0;
+	        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+	          // Only monitor this failure once because there tends to be a lot of the
+	          // same error.
+	          loggedTypeFailures[error.message] = true;
+
+	          var stack = getStack ? getStack() : '';
+
+	          process.env.NODE_ENV !== 'production' ? warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '') : void 0;
+	        }
+	      }
+	    }
+	  }
+	}
+
+	module.exports = checkPropTypes;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	  Copyright (c) 2016 Jed Watson.
 	  Licensed under the MIT License (MIT), see
@@ -2151,7 +3125,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 4 */
+/* 12 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2246,7 +3220,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	;
 
 /***/ },
-/* 5 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2261,19 +3235,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(6);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _reactDom = __webpack_require__(14);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _Const = __webpack_require__(4);
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
-	var _classnames = __webpack_require__(3);
+	var _classnames = __webpack_require__(11);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _SelectRowHeaderColumn = __webpack_require__(7);
+	var _SelectRowHeaderColumn = __webpack_require__(15);
 
 	var _SelectRowHeaderColumn2 = _interopRequireDefault(_SelectRowHeaderColumn);
 
@@ -2474,25 +3452,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	TableHeader.propTypes = {
-	  headerContainerClass: _react.PropTypes.string,
-	  tableHeaderClass: _react.PropTypes.string,
-	  style: _react.PropTypes.object,
-	  rowSelectType: _react.PropTypes.string,
-	  onSort: _react.PropTypes.func,
-	  onSelectAllRow: _react.PropTypes.func,
-	  sortList: _react.PropTypes.array,
-	  hideSelectColumn: _react.PropTypes.bool,
-	  bordered: _react.PropTypes.bool,
-	  condensed: _react.PropTypes.bool,
-	  isFiltered: _react.PropTypes.bool,
-	  isSelectAll: _react.PropTypes.oneOf([true, 'indeterminate', false]),
-	  sortIndicator: _react.PropTypes.bool,
-	  customComponent: _react.PropTypes.func,
-	  colGroups: _react.PropTypes.element,
-	  reset: _react.PropTypes.bool,
-	  expandColumnVisible: _react.PropTypes.bool,
-	  expandColumnComponent: _react.PropTypes.func,
-	  expandColumnBeforeSelectColumn: _react.PropTypes.bool
+	  headerContainerClass: _propTypes2.default.string,
+	  tableHeaderClass: _propTypes2.default.string,
+	  style: _propTypes2.default.object,
+	  rowSelectType: _propTypes2.default.string,
+	  onSort: _propTypes2.default.func,
+	  onSelectAllRow: _propTypes2.default.func,
+	  sortList: _propTypes2.default.array,
+	  hideSelectColumn: _propTypes2.default.bool,
+	  bordered: _propTypes2.default.bool,
+	  condensed: _propTypes2.default.bool,
+	  isFiltered: _propTypes2.default.bool,
+	  isSelectAll: _propTypes2.default.oneOf([true, 'indeterminate', false]),
+	  sortIndicator: _propTypes2.default.bool,
+	  customComponent: _propTypes2.default.func,
+	  colGroups: _propTypes2.default.element,
+	  reset: _propTypes2.default.bool,
+	  expandColumnVisible: _propTypes2.default.bool,
+	  expandColumnComponent: _propTypes2.default.func,
+	  expandColumnBeforeSelectColumn: _propTypes2.default.bool
 	};
 
 	var _default = TableHeader;
@@ -2516,13 +3494,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	;
 
 /***/ },
-/* 6 */
+/* 14 */
 /***/ function(module, exports) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
+	module.exports = __WEBPACK_EXTERNAL_MODULE_14__;
 
 /***/ },
-/* 7 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2536,6 +3514,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2570,8 +3552,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	SelectRowHeaderColumn.propTypes = {
-	  children: _react.PropTypes.node,
-	  rowCount: _react.PropTypes.number
+	  children: _propTypes2.default.node,
+	  rowCount: _propTypes2.default.number
 	};
 	var _default = SelectRowHeaderColumn;
 	exports.default = _default;
@@ -2590,7 +3572,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	;
 
 /***/ },
-/* 8 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2609,27 +3591,31 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _util = __webpack_require__(9);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _util = __webpack_require__(17);
 
 	var _util2 = _interopRequireDefault(_util);
 
-	var _Const = __webpack_require__(4);
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
-	var _TableRow = __webpack_require__(10);
+	var _TableRow = __webpack_require__(18);
 
 	var _TableRow2 = _interopRequireDefault(_TableRow);
 
-	var _TableColumn = __webpack_require__(11);
+	var _TableColumn = __webpack_require__(19);
 
 	var _TableColumn2 = _interopRequireDefault(_TableColumn);
 
-	var _TableEditColumn = __webpack_require__(12);
+	var _TableEditColumn = __webpack_require__(20);
 
 	var _TableEditColumn2 = _interopRequireDefault(_TableEditColumn);
 
-	var _classnames = __webpack_require__(3);
+	var _classnames = __webpack_require__(11);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -3218,34 +4204,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	TableBody.propTypes = {
-	  data: _react.PropTypes.array,
-	  columns: _react.PropTypes.array,
-	  striped: _react.PropTypes.bool,
-	  bordered: _react.PropTypes.bool,
-	  hover: _react.PropTypes.bool,
-	  condensed: _react.PropTypes.bool,
-	  keyField: _react.PropTypes.string,
-	  selectedRowKeys: _react.PropTypes.array,
-	  onRowClick: _react.PropTypes.func,
-	  onRowDoubleClick: _react.PropTypes.func,
-	  onSelectRow: _react.PropTypes.func,
-	  noDataText: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object]),
-	  withoutNoDataText: _react.PropTypes.bool,
-	  style: _react.PropTypes.object,
-	  tableBodyClass: _react.PropTypes.string,
-	  bodyContainerClass: _react.PropTypes.string,
-	  expandableRow: _react.PropTypes.func,
-	  expandComponent: _react.PropTypes.func,
-	  expandRowBgColor: _react.PropTypes.string,
-	  expandBy: _react.PropTypes.string,
-	  expanding: _react.PropTypes.array,
-	  onExpand: _react.PropTypes.func,
-	  onlyOneExpanding: _react.PropTypes.bool,
-	  beforeShowError: _react.PropTypes.func,
-	  keyBoardNav: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.object]),
-	  x: _react.PropTypes.number,
-	  y: _react.PropTypes.number,
-	  onNavigateCell: _react.PropTypes.func
+	  data: _propTypes2.default.array,
+	  columns: _propTypes2.default.array,
+	  striped: _propTypes2.default.bool,
+	  bordered: _propTypes2.default.bool,
+	  hover: _propTypes2.default.bool,
+	  condensed: _propTypes2.default.bool,
+	  keyField: _propTypes2.default.string,
+	  selectedRowKeys: _propTypes2.default.array,
+	  onRowClick: _propTypes2.default.func,
+	  onRowDoubleClick: _propTypes2.default.func,
+	  onSelectRow: _propTypes2.default.func,
+	  noDataText: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.object]),
+	  withoutNoDataText: _propTypes2.default.bool,
+	  style: _propTypes2.default.object,
+	  tableBodyClass: _propTypes2.default.string,
+	  bodyContainerClass: _propTypes2.default.string,
+	  expandableRow: _propTypes2.default.func,
+	  expandComponent: _propTypes2.default.func,
+	  expandRowBgColor: _propTypes2.default.string,
+	  expandBy: _propTypes2.default.string,
+	  expanding: _propTypes2.default.array,
+	  onExpand: _propTypes2.default.func,
+	  onlyOneExpanding: _propTypes2.default.bool,
+	  beforeShowError: _propTypes2.default.func,
+	  keyBoardNav: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.object]),
+	  x: _propTypes2.default.number,
+	  y: _propTypes2.default.number,
+	  onNavigateCell: _propTypes2.default.func
 	};
 	var _default = TableBody;
 	exports.default = _default;
@@ -3266,7 +4252,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	;
 
 /***/ },
-/* 9 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3279,11 +4265,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(4);
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
-	var _classnames = __webpack_require__(3);
+	var _classnames = __webpack_require__(11);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -3403,7 +4389,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	;
 
 /***/ },
-/* 10 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3416,13 +4402,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _classnames = __webpack_require__(3);
+	var _classnames = __webpack_require__(11);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3579,17 +4569,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	TableRow.propTypes = {
-	  index: _react.PropTypes.number,
-	  row: _react.PropTypes.any,
-	  isSelected: _react.PropTypes.bool,
-	  enableCellEdit: _react.PropTypes.bool,
-	  onRowClick: _react.PropTypes.func,
-	  onRowDoubleClick: _react.PropTypes.func,
-	  onSelectRow: _react.PropTypes.func,
-	  onExpandRow: _react.PropTypes.func,
-	  onRowMouseOut: _react.PropTypes.func,
-	  onRowMouseOver: _react.PropTypes.func,
-	  unselectableRow: _react.PropTypes.bool
+	  index: _propTypes2.default.number,
+	  row: _propTypes2.default.any,
+	  isSelected: _propTypes2.default.bool,
+	  enableCellEdit: _propTypes2.default.bool,
+	  onRowClick: _propTypes2.default.func,
+	  onRowDoubleClick: _propTypes2.default.func,
+	  onSelectRow: _propTypes2.default.func,
+	  onExpandRow: _propTypes2.default.func,
+	  onRowMouseOut: _propTypes2.default.func,
+	  onRowMouseOver: _propTypes2.default.func,
+	  unselectableRow: _propTypes2.default.bool
 	};
 	TableRow.defaultProps = {
 	  onRowClick: undefined,
@@ -3612,7 +4602,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	;
 
 /***/ },
-/* 11 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3631,11 +4621,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(6);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _reactDom = __webpack_require__(14);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _Const = __webpack_require__(4);
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -3820,21 +4814,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	TableColumn.propTypes = {
-	  rIndex: _react.PropTypes.number,
-	  dataAlign: _react.PropTypes.string,
-	  hidden: _react.PropTypes.bool,
-	  className: _react.PropTypes.string,
-	  columnTitle: _react.PropTypes.string,
-	  children: _react.PropTypes.node,
-	  onClick: _react.PropTypes.func,
-	  attrs: _react.PropTypes.object,
-	  style: _react.PropTypes.object,
-	  isFocus: _react.PropTypes.bool,
-	  onKeyDown: _react.PropTypes.func,
-	  tabIndex: _react.PropTypes.string,
-	  keyBoardNav: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.object]),
-	  customNavStyle: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.object]),
-	  row: _react.PropTypes.any /* only used on custom styling for navigation */
+	  rIndex: _propTypes2.default.number,
+	  dataAlign: _propTypes2.default.string,
+	  hidden: _propTypes2.default.bool,
+	  className: _propTypes2.default.string,
+	  columnTitle: _propTypes2.default.string,
+	  children: _propTypes2.default.node,
+	  onClick: _propTypes2.default.func,
+	  attrs: _propTypes2.default.object,
+	  style: _propTypes2.default.object,
+	  isFocus: _propTypes2.default.bool,
+	  onKeyDown: _propTypes2.default.func,
+	  tabIndex: _propTypes2.default.string,
+	  keyBoardNav: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.object]),
+	  customNavStyle: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.object]),
+	  row: _propTypes2.default.any /* only used on custom styling for navigation */
 	};
 
 	TableColumn.defaultProps = {
@@ -3861,7 +4855,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	;
 
 /***/ },
-/* 12 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3880,17 +4874,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(6);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _reactDom = __webpack_require__(14);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _Editor = __webpack_require__(13);
+	var _Editor = __webpack_require__(21);
 
 	var _Editor2 = _interopRequireDefault(_Editor);
 
-	var _Notification = __webpack_require__(14);
+	var _Notification = __webpack_require__(22);
 
-	var _classnames = __webpack_require__(3);
+	var _classnames = __webpack_require__(11);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -4176,18 +5174,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	TableEditColumn.propTypes = {
-	  completeEdit: _react.PropTypes.func,
-	  rowIndex: _react.PropTypes.number,
-	  colIndex: _react.PropTypes.number,
-	  blurToSave: _react.PropTypes.bool,
-	  editable: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.object]),
-	  format: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.func]),
-	  row: _react.PropTypes.any,
-	  fieldValue: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.bool, _react.PropTypes.number, _react.PropTypes.array, _react.PropTypes.object]),
-	  className: _react.PropTypes.any,
-	  beforeShowError: _react.PropTypes.func,
-	  isFocus: _react.PropTypes.bool,
-	  customStyleWithNav: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.object])
+	  completeEdit: _propTypes2.default.func,
+	  rowIndex: _propTypes2.default.number,
+	  colIndex: _propTypes2.default.number,
+	  blurToSave: _propTypes2.default.bool,
+	  editable: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.object]),
+	  format: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.func]),
+	  row: _propTypes2.default.any,
+	  fieldValue: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.bool, _propTypes2.default.number, _propTypes2.default.array, _propTypes2.default.object]),
+	  className: _propTypes2.default.any,
+	  beforeShowError: _propTypes2.default.func,
+	  isFocus: _propTypes2.default.bool,
+	  customStyleWithNav: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.object])
 	};
 
 	var _default = TableEditColumn;
@@ -4207,7 +5205,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	;
 
 /***/ },
-/* 13 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4364,7 +5362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	;
 
 /***/ },
-/* 14 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4374,7 +5372,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.notice = undefined;
 
-	var _reactSAlert = __webpack_require__(15);
+	var _reactSAlert = __webpack_require__(23);
 
 	var _reactSAlert2 = _interopRequireDefault(_reactSAlert);
 
@@ -4407,18 +5405,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	;
 
 /***/ },
-/* 15 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(16);
+	module.exports = __webpack_require__(24);
 
 /***/ },
-/* 16 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(17), __webpack_require__(18), __webpack_require__(27), __webpack_require__(26), __webpack_require__(29)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(25), __webpack_require__(3), __webpack_require__(27), __webpack_require__(26), __webpack_require__(29)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	    } else if (typeof exports !== "undefined") {
 	        factory(exports, require('react'), require('./SAlertContent'), require('prop-types'), require('./s-alert-parts/s-alert-store'), require('./s-alert-parts/s-alert-tools'), require('./s-alert-parts/s-alert-data-prep'));
 	    } else {
@@ -4718,12 +5716,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 17 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(6), __webpack_require__(18), __webpack_require__(26), __webpack_require__(27), __webpack_require__(28)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(14), __webpack_require__(3), __webpack_require__(26), __webpack_require__(27), __webpack_require__(28)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	    } else if (typeof exports !== "undefined") {
 	        factory(exports, require('react'), require('react-dom'), require('prop-types'), require('./s-alert-parts/s-alert-tools'), require('./s-alert-parts/s-alert-store'), require('./SAlertContentTmpl'));
 	    } else {
@@ -4940,976 +5938,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 */
-
-	var factory = __webpack_require__(19);
-
-	var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
-	  Symbol.for &&
-	  Symbol.for('react.element')) ||
-	  0xeac7;
-
-	function isValidElement(object) {
-	  return typeof object === 'object' &&
-	    object !== null &&
-	    object.$$typeof === REACT_ELEMENT_TYPE;
-	}
-
-	module.exports = factory(isValidElement);
-
-
-/***/ },
-/* 19 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 */
-
-	'use strict';
-
-	var emptyFunction = __webpack_require__(21);
-	var invariant = __webpack_require__(22);
-	var warning = __webpack_require__(23);
-
-	var ReactPropTypesSecret = __webpack_require__(24);
-	var checkPropTypes = __webpack_require__(25);
-
-	module.exports = function (isValidElement) {
-	  /* global Symbol */
-	  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
-	  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
-
-	  /**
-	   * Returns the iterator method function contained on the iterable object.
-	   *
-	   * Be sure to invoke the function with the iterable as context:
-	   *
-	   *     var iteratorFn = getIteratorFn(myIterable);
-	   *     if (iteratorFn) {
-	   *       var iterator = iteratorFn.call(myIterable);
-	   *       ...
-	   *     }
-	   *
-	   * @param {?object} maybeIterable
-	   * @return {?function}
-	   */
-	  function getIteratorFn(maybeIterable) {
-	    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
-	    if (typeof iteratorFn === 'function') {
-	      return iteratorFn;
-	    }
-	  }
-
-	  /**
-	   * Collection of methods that allow declaration and validation of props that are
-	   * supplied to React components. Example usage:
-	   *
-	   *   var Props = require('ReactPropTypes');
-	   *   var MyArticle = React.createClass({
-	   *     propTypes: {
-	   *       // An optional string prop named "description".
-	   *       description: Props.string,
-	   *
-	   *       // A required enum prop named "category".
-	   *       category: Props.oneOf(['News','Photos']).isRequired,
-	   *
-	   *       // A prop named "dialog" that requires an instance of Dialog.
-	   *       dialog: Props.instanceOf(Dialog).isRequired
-	   *     },
-	   *     render: function() { ... }
-	   *   });
-	   *
-	   * A more formal specification of how these methods are used:
-	   *
-	   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
-	   *   decl := ReactPropTypes.{type}(.isRequired)?
-	   *
-	   * Each and every declaration produces a function with the same signature. This
-	   * allows the creation of custom validation functions. For example:
-	   *
-	   *  var MyLink = React.createClass({
-	   *    propTypes: {
-	   *      // An optional string or URI prop named "href".
-	   *      href: function(props, propName, componentName) {
-	   *        var propValue = props[propName];
-	   *        if (propValue != null && typeof propValue !== 'string' &&
-	   *            !(propValue instanceof URI)) {
-	   *          return new Error(
-	   *            'Expected a string or an URI for ' + propName + ' in ' +
-	   *            componentName
-	   *          );
-	   *        }
-	   *      }
-	   *    },
-	   *    render: function() {...}
-	   *  });
-	   *
-	   * @internal
-	   */
-
-	  var ANONYMOUS = '<<anonymous>>';
-
-	  var ReactPropTypes;
-
-	  if (process.env.NODE_ENV !== 'production') {
-	    // Keep in sync with production version below
-	    ReactPropTypes = {
-	      array: createPrimitiveTypeChecker('array'),
-	      bool: createPrimitiveTypeChecker('boolean'),
-	      func: createPrimitiveTypeChecker('function'),
-	      number: createPrimitiveTypeChecker('number'),
-	      object: createPrimitiveTypeChecker('object'),
-	      string: createPrimitiveTypeChecker('string'),
-	      symbol: createPrimitiveTypeChecker('symbol'),
-
-	      any: createAnyTypeChecker(),
-	      arrayOf: createArrayOfTypeChecker,
-	      element: createElementTypeChecker(),
-	      instanceOf: createInstanceTypeChecker,
-	      node: createNodeChecker(),
-	      objectOf: createObjectOfTypeChecker,
-	      oneOf: createEnumTypeChecker,
-	      oneOfType: createUnionTypeChecker,
-	      shape: createShapeTypeChecker
-	    };
-	  } else {
-	    var productionTypeChecker = function () {
-	      invariant(false, 'React.PropTypes type checking code is stripped in production.');
-	    };
-	    productionTypeChecker.isRequired = productionTypeChecker;
-	    var getProductionTypeChecker = function () {
-	      return productionTypeChecker;
-	    };
-	    // Keep in sync with development version above
-	    ReactPropTypes = {
-	      array: productionTypeChecker,
-	      bool: productionTypeChecker,
-	      func: productionTypeChecker,
-	      number: productionTypeChecker,
-	      object: productionTypeChecker,
-	      string: productionTypeChecker,
-	      symbol: productionTypeChecker,
-
-	      any: productionTypeChecker,
-	      arrayOf: getProductionTypeChecker,
-	      element: productionTypeChecker,
-	      instanceOf: getProductionTypeChecker,
-	      node: productionTypeChecker,
-	      objectOf: getProductionTypeChecker,
-	      oneOf: getProductionTypeChecker,
-	      oneOfType: getProductionTypeChecker,
-	      shape: getProductionTypeChecker
-	    };
-	  }
-
-	  /**
-	   * inlined Object.is polyfill to avoid requiring consumers ship their own
-	   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
-	   */
-	  /*eslint-disable no-self-compare*/
-	  function is(x, y) {
-	    // SameValue algorithm
-	    if (x === y) {
-	      // Steps 1-5, 7-10
-	      // Steps 6.b-6.e: +0 != -0
-	      return x !== 0 || 1 / x === 1 / y;
-	    } else {
-	      // Step 6.a: NaN == NaN
-	      return x !== x && y !== y;
-	    }
-	  }
-	  /*eslint-enable no-self-compare*/
-
-	  /**
-	   * We use an Error-like object for backward compatibility as people may call
-	   * PropTypes directly and inspect their output. However, we don't use real
-	   * Errors anymore. We don't inspect their stack anyway, and creating them
-	   * is prohibitively expensive if they are created too often, such as what
-	   * happens in oneOfType() for any type before the one that matched.
-	   */
-	  function PropTypeError(message) {
-	    this.message = message;
-	    this.stack = '';
-	  }
-	  // Make `instanceof Error` still work for returned errors.
-	  PropTypeError.prototype = Error.prototype;
-
-	  function createChainableTypeChecker(validate) {
-	    if (process.env.NODE_ENV !== 'production') {
-	      var manualPropTypeCallCache = {};
-	    }
-	    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
-	      componentName = componentName || ANONYMOUS;
-	      propFullName = propFullName || propName;
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (secret !== ReactPropTypesSecret && typeof console !== 'undefined') {
-	          var cacheKey = componentName + ':' + propName;
-	          if (!manualPropTypeCallCache[cacheKey]) {
-	            process.env.NODE_ENV !== 'production' ? warning(false, 'You are manually calling a React.PropTypes validation ' + 'function for the `%s` prop on `%s`. This is deprecated ' + 'and will not work in production with the next major version. ' + 'You may be seeing this warning due to a third-party PropTypes ' + 'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.', propFullName, componentName) : void 0;
-	            manualPropTypeCallCache[cacheKey] = true;
-	          }
-	        }
-	      }
-	      if (props[propName] == null) {
-	        if (isRequired) {
-	          if (props[propName] === null) {
-	            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
-	          }
-	          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
-	        }
-	        return null;
-	      } else {
-	        return validate(props, propName, componentName, location, propFullName);
-	      }
-	    }
-
-	    var chainedCheckType = checkType.bind(null, false);
-	    chainedCheckType.isRequired = checkType.bind(null, true);
-
-	    return chainedCheckType;
-	  }
-
-	  function createPrimitiveTypeChecker(expectedType) {
-	    function validate(props, propName, componentName, location, propFullName, secret) {
-	      var propValue = props[propName];
-	      var propType = getPropType(propValue);
-	      if (propType !== expectedType) {
-	        // `propValue` being instance of, say, date/regexp, pass the 'object'
-	        // check, but we can offer a more precise error message here rather than
-	        // 'of type `object`'.
-	        var preciseType = getPreciseType(propValue);
-
-	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
-	      }
-	      return null;
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-
-	  function createAnyTypeChecker() {
-	    return createChainableTypeChecker(emptyFunction.thatReturnsNull);
-	  }
-
-	  function createArrayOfTypeChecker(typeChecker) {
-	    function validate(props, propName, componentName, location, propFullName) {
-	      if (typeof typeChecker !== 'function') {
-	        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
-	      }
-	      var propValue = props[propName];
-	      if (!Array.isArray(propValue)) {
-	        var propType = getPropType(propValue);
-	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
-	      }
-	      for (var i = 0; i < propValue.length; i++) {
-	        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret);
-	        if (error instanceof Error) {
-	          return error;
-	        }
-	      }
-	      return null;
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-
-	  function createElementTypeChecker() {
-	    function validate(props, propName, componentName, location, propFullName) {
-	      var propValue = props[propName];
-	      if (!isValidElement(propValue)) {
-	        var propType = getPropType(propValue);
-	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
-	      }
-	      return null;
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-
-	  function createInstanceTypeChecker(expectedClass) {
-	    function validate(props, propName, componentName, location, propFullName) {
-	      if (!(props[propName] instanceof expectedClass)) {
-	        var expectedClassName = expectedClass.name || ANONYMOUS;
-	        var actualClassName = getClassName(props[propName]);
-	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
-	      }
-	      return null;
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-
-	  function createEnumTypeChecker(expectedValues) {
-	    if (!Array.isArray(expectedValues)) {
-	      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOf, expected an instance of array.') : void 0;
-	      return emptyFunction.thatReturnsNull;
-	    }
-
-	    function validate(props, propName, componentName, location, propFullName) {
-	      var propValue = props[propName];
-	      for (var i = 0; i < expectedValues.length; i++) {
-	        if (is(propValue, expectedValues[i])) {
-	          return null;
-	        }
-	      }
-
-	      var valuesString = JSON.stringify(expectedValues);
-	      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + propValue + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-
-	  function createObjectOfTypeChecker(typeChecker) {
-	    function validate(props, propName, componentName, location, propFullName) {
-	      if (typeof typeChecker !== 'function') {
-	        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
-	      }
-	      var propValue = props[propName];
-	      var propType = getPropType(propValue);
-	      if (propType !== 'object') {
-	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
-	      }
-	      for (var key in propValue) {
-	        if (propValue.hasOwnProperty(key)) {
-	          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-	          if (error instanceof Error) {
-	            return error;
-	          }
-	        }
-	      }
-	      return null;
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-
-	  function createUnionTypeChecker(arrayOfTypeCheckers) {
-	    if (!Array.isArray(arrayOfTypeCheckers)) {
-	      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
-	      return emptyFunction.thatReturnsNull;
-	    }
-
-	    function validate(props, propName, componentName, location, propFullName) {
-	      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
-	        var checker = arrayOfTypeCheckers[i];
-	        if (checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret) == null) {
-	          return null;
-	        }
-	      }
-
-	      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-
-	  function createNodeChecker() {
-	    function validate(props, propName, componentName, location, propFullName) {
-	      if (!isNode(props[propName])) {
-	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
-	      }
-	      return null;
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-
-	  function createShapeTypeChecker(shapeTypes) {
-	    function validate(props, propName, componentName, location, propFullName) {
-	      var propValue = props[propName];
-	      var propType = getPropType(propValue);
-	      if (propType !== 'object') {
-	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
-	      }
-	      for (var key in shapeTypes) {
-	        var checker = shapeTypes[key];
-	        if (!checker) {
-	          continue;
-	        }
-	        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-	        if (error) {
-	          return error;
-	        }
-	      }
-	      return null;
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-
-	  function isNode(propValue) {
-	    switch (typeof propValue) {
-	      case 'number':
-	      case 'string':
-	      case 'undefined':
-	        return true;
-	      case 'boolean':
-	        return !propValue;
-	      case 'object':
-	        if (Array.isArray(propValue)) {
-	          return propValue.every(isNode);
-	        }
-	        if (propValue === null || isValidElement(propValue)) {
-	          return true;
-	        }
-
-	        var iteratorFn = getIteratorFn(propValue);
-	        if (iteratorFn) {
-	          var iterator = iteratorFn.call(propValue);
-	          var step;
-	          if (iteratorFn !== propValue.entries) {
-	            while (!(step = iterator.next()).done) {
-	              if (!isNode(step.value)) {
-	                return false;
-	              }
-	            }
-	          } else {
-	            // Iterator will provide entry [k,v] tuples rather than values.
-	            while (!(step = iterator.next()).done) {
-	              var entry = step.value;
-	              if (entry) {
-	                if (!isNode(entry[1])) {
-	                  return false;
-	                }
-	              }
-	            }
-	          }
-	        } else {
-	          return false;
-	        }
-
-	        return true;
-	      default:
-	        return false;
-	    }
-	  }
-
-	  function isSymbol(propType, propValue) {
-	    // Native Symbol.
-	    if (propType === 'symbol') {
-	      return true;
-	    }
-
-	    // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
-	    if (propValue['@@toStringTag'] === 'Symbol') {
-	      return true;
-	    }
-
-	    // Fallback for non-spec compliant Symbols which are polyfilled.
-	    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
-	      return true;
-	    }
-
-	    return false;
-	  }
-
-	  // Equivalent of `typeof` but with special handling for array and regexp.
-	  function getPropType(propValue) {
-	    var propType = typeof propValue;
-	    if (Array.isArray(propValue)) {
-	      return 'array';
-	    }
-	    if (propValue instanceof RegExp) {
-	      // Old webkits (at least until Android 4.0) return 'function' rather than
-	      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
-	      // passes PropTypes.object.
-	      return 'object';
-	    }
-	    if (isSymbol(propType, propValue)) {
-	      return 'symbol';
-	    }
-	    return propType;
-	  }
-
-	  // This handles more types than `getPropType`. Only used for error messages.
-	  // See `createPrimitiveTypeChecker`.
-	  function getPreciseType(propValue) {
-	    var propType = getPropType(propValue);
-	    if (propType === 'object') {
-	      if (propValue instanceof Date) {
-	        return 'date';
-	      } else if (propValue instanceof RegExp) {
-	        return 'regexp';
-	      }
-	    }
-	    return propType;
-	  }
-
-	  // Returns class name of the object, if any.
-	  function getClassName(propValue) {
-	    if (!propValue.constructor || !propValue.constructor.name) {
-	      return ANONYMOUS;
-	    }
-	    return propValue.constructor.name;
-	  }
-
-	  ReactPropTypes.checkPropTypes = checkPropTypes;
-	  ReactPropTypes.PropTypes = ReactPropTypes;
-
-	  return ReactPropTypes;
-	};
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
-
-/***/ },
-/* 20 */
-/***/ function(module, exports) {
-
-	// shim for using process in browser
-	var process = module.exports = {};
-
-	// cached from whatever global is present so that test runners that stub it
-	// don't break things.  But we need to wrap it in a try catch in case it is
-	// wrapped in strict mode code which doesn't define any globals.  It's inside a
-	// function because try/catches deoptimize in certain engines.
-
-	var cachedSetTimeout;
-	var cachedClearTimeout;
-
-	function defaultSetTimout() {
-	    throw new Error('setTimeout has not been defined');
-	}
-	function defaultClearTimeout () {
-	    throw new Error('clearTimeout has not been defined');
-	}
-	(function () {
-	    try {
-	        if (typeof setTimeout === 'function') {
-	            cachedSetTimeout = setTimeout;
-	        } else {
-	            cachedSetTimeout = defaultSetTimout;
-	        }
-	    } catch (e) {
-	        cachedSetTimeout = defaultSetTimout;
-	    }
-	    try {
-	        if (typeof clearTimeout === 'function') {
-	            cachedClearTimeout = clearTimeout;
-	        } else {
-	            cachedClearTimeout = defaultClearTimeout;
-	        }
-	    } catch (e) {
-	        cachedClearTimeout = defaultClearTimeout;
-	    }
-	} ())
-	function runTimeout(fun) {
-	    if (cachedSetTimeout === setTimeout) {
-	        //normal enviroments in sane situations
-	        return setTimeout(fun, 0);
-	    }
-	    // if setTimeout wasn't available but was latter defined
-	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-	        cachedSetTimeout = setTimeout;
-	        return setTimeout(fun, 0);
-	    }
-	    try {
-	        // when when somebody has screwed with setTimeout but no I.E. maddness
-	        return cachedSetTimeout(fun, 0);
-	    } catch(e){
-	        try {
-	            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-	            return cachedSetTimeout.call(null, fun, 0);
-	        } catch(e){
-	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-	            return cachedSetTimeout.call(this, fun, 0);
-	        }
-	    }
-
-
-	}
-	function runClearTimeout(marker) {
-	    if (cachedClearTimeout === clearTimeout) {
-	        //normal enviroments in sane situations
-	        return clearTimeout(marker);
-	    }
-	    // if clearTimeout wasn't available but was latter defined
-	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-	        cachedClearTimeout = clearTimeout;
-	        return clearTimeout(marker);
-	    }
-	    try {
-	        // when when somebody has screwed with setTimeout but no I.E. maddness
-	        return cachedClearTimeout(marker);
-	    } catch (e){
-	        try {
-	            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-	            return cachedClearTimeout.call(null, marker);
-	        } catch (e){
-	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-	            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-	            return cachedClearTimeout.call(this, marker);
-	        }
-	    }
-
-
-
-	}
-	var queue = [];
-	var draining = false;
-	var currentQueue;
-	var queueIndex = -1;
-
-	function cleanUpNextTick() {
-	    if (!draining || !currentQueue) {
-	        return;
-	    }
-	    draining = false;
-	    if (currentQueue.length) {
-	        queue = currentQueue.concat(queue);
-	    } else {
-	        queueIndex = -1;
-	    }
-	    if (queue.length) {
-	        drainQueue();
-	    }
-	}
-
-	function drainQueue() {
-	    if (draining) {
-	        return;
-	    }
-	    var timeout = runTimeout(cleanUpNextTick);
-	    draining = true;
-
-	    var len = queue.length;
-	    while(len) {
-	        currentQueue = queue;
-	        queue = [];
-	        while (++queueIndex < len) {
-	            if (currentQueue) {
-	                currentQueue[queueIndex].run();
-	            }
-	        }
-	        queueIndex = -1;
-	        len = queue.length;
-	    }
-	    currentQueue = null;
-	    draining = false;
-	    runClearTimeout(timeout);
-	}
-
-	process.nextTick = function (fun) {
-	    var args = new Array(arguments.length - 1);
-	    if (arguments.length > 1) {
-	        for (var i = 1; i < arguments.length; i++) {
-	            args[i - 1] = arguments[i];
-	        }
-	    }
-	    queue.push(new Item(fun, args));
-	    if (queue.length === 1 && !draining) {
-	        runTimeout(drainQueue);
-	    }
-	};
-
-	// v8 likes predictible objects
-	function Item(fun, array) {
-	    this.fun = fun;
-	    this.array = array;
-	}
-	Item.prototype.run = function () {
-	    this.fun.apply(null, this.array);
-	};
-	process.title = 'browser';
-	process.browser = true;
-	process.env = {};
-	process.argv = [];
-	process.version = ''; // empty string to avoid regexp issues
-	process.versions = {};
-
-	function noop() {}
-
-	process.on = noop;
-	process.addListener = noop;
-	process.once = noop;
-	process.off = noop;
-	process.removeListener = noop;
-	process.removeAllListeners = noop;
-	process.emit = noop;
-
-	process.binding = function (name) {
-	    throw new Error('process.binding is not supported');
-	};
-
-	process.cwd = function () { return '/' };
-	process.chdir = function (dir) {
-	    throw new Error('process.chdir is not supported');
-	};
-	process.umask = function() { return 0; };
-
-
-/***/ },
-/* 21 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * 
-	 */
-
-	function makeEmptyFunction(arg) {
-	  return function () {
-	    return arg;
-	  };
-	}
-
-	/**
-	 * This function accepts and discards inputs; it has no side effects. This is
-	 * primarily useful idiomatically for overridable function endpoints which
-	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
-	 */
-	var emptyFunction = function emptyFunction() {};
-
-	emptyFunction.thatReturns = makeEmptyFunction;
-	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-	emptyFunction.thatReturnsThis = function () {
-	  return this;
-	};
-	emptyFunction.thatReturnsArgument = function (arg) {
-	  return arg;
-	};
-
-	module.exports = emptyFunction;
-
-/***/ },
-/* 22 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-
-	'use strict';
-
-	/**
-	 * Use invariant() to assert state which your program assumes to be true.
-	 *
-	 * Provide sprintf-style format (only %s is supported) and arguments
-	 * to provide information about what broke and what you were
-	 * expecting.
-	 *
-	 * The invariant message will be stripped in production, but the invariant
-	 * will remain to ensure logic does not differ in production.
-	 */
-
-	var validateFormat = function validateFormat(format) {};
-
-	if (process.env.NODE_ENV !== 'production') {
-	  validateFormat = function validateFormat(format) {
-	    if (format === undefined) {
-	      throw new Error('invariant requires an error message argument');
-	    }
-	  };
-	}
-
-	function invariant(condition, format, a, b, c, d, e, f) {
-	  validateFormat(format);
-
-	  if (!condition) {
-	    var error;
-	    if (format === undefined) {
-	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-	    } else {
-	      var args = [a, b, c, d, e, f];
-	      var argIndex = 0;
-	      error = new Error(format.replace(/%s/g, function () {
-	        return args[argIndex++];
-	      }));
-	      error.name = 'Invariant Violation';
-	    }
-
-	    error.framesToPop = 1; // we don't care about invariant's own frame
-	    throw error;
-	  }
-	}
-
-	module.exports = invariant;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
-
-/***/ },
-/* 23 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2014-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-
-	'use strict';
-
-	var emptyFunction = __webpack_require__(21);
-
-	/**
-	 * Similar to invariant but only logs a warning if the condition is not met.
-	 * This can be used to log issues in development environments in critical
-	 * paths. Removing the logging code for production environments will keep the
-	 * same logic and follow the same code paths.
-	 */
-
-	var warning = emptyFunction;
-
-	if (process.env.NODE_ENV !== 'production') {
-	  (function () {
-	    var printWarning = function printWarning(format) {
-	      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	        args[_key - 1] = arguments[_key];
-	      }
-
-	      var argIndex = 0;
-	      var message = 'Warning: ' + format.replace(/%s/g, function () {
-	        return args[argIndex++];
-	      });
-	      if (typeof console !== 'undefined') {
-	        console.error(message);
-	      }
-	      try {
-	        // --- Welcome to debugging React ---
-	        // This error was thrown as a convenience so that you can use this stack
-	        // to find the callsite that caused this warning to fire.
-	        throw new Error(message);
-	      } catch (x) {}
-	    };
-
-	    warning = function warning(condition, format) {
-	      if (format === undefined) {
-	        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-	      }
-
-	      if (format.indexOf('Failed Composite propType: ') === 0) {
-	        return; // Ignore CompositeComponent proptype check.
-	      }
-
-	      if (!condition) {
-	        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-	          args[_key2 - 2] = arguments[_key2];
-	        }
-
-	        printWarning.apply(undefined, [format].concat(args));
-	      }
-	    };
-	  })();
-	}
-
-	module.exports = warning;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
-
-/***/ },
-/* 24 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 */
-
-	'use strict';
-
-	var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-
-	module.exports = ReactPropTypesSecret;
-
-
-/***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 */
-
-	'use strict';
-
-	var invariant = __webpack_require__(22);
-	var warning = __webpack_require__(23);
-
-	var ReactPropTypesSecret = __webpack_require__(24);
-
-	var loggedTypeFailures = {};
-
-	/**
-	 * Assert that the values match with the type specs.
-	 * Error messages are memorized and will only be shown once.
-	 *
-	 * @param {object} typeSpecs Map of name to a ReactPropType
-	 * @param {object} values Runtime values that need to be type-checked
-	 * @param {string} location e.g. "prop", "context", "child context"
-	 * @param {string} componentName Name of the component for error messages.
-	 * @param {?Function} getStack Returns the component stack.
-	 * @private
-	 */
-	function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
-	  if (process.env.NODE_ENV !== 'production') {
-	    for (var typeSpecName in typeSpecs) {
-	      if (typeSpecs.hasOwnProperty(typeSpecName)) {
-	        var error;
-	        // Prop type validation may throw. In case they do, we don't want to
-	        // fail the render phase where it didn't fail before. So we log it.
-	        // After these have been cleaned up, we'll let them throw.
-	        try {
-	          // This is intentionally an invariant that gets caught. It's the same
-	          // behavior as without this statement except with a better message.
-	          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', componentName || 'React class', location, typeSpecName);
-	          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
-	        } catch (ex) {
-	          error = ex;
-	        }
-	        process.env.NODE_ENV !== 'production' ? warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error) : void 0;
-	        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
-	          // Only monitor this failure once because there tends to be a lot of the
-	          // same error.
-	          loggedTypeFailures[error.message] = true;
-
-	          var stack = getStack ? getStack() : '';
-
-	          process.env.NODE_ENV !== 'production' ? warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '') : void 0;
-	        }
-	      }
-	    }
-	  }
-	}
-
-	module.exports = checkPropTypes;
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
-
-/***/ },
 /* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -6090,7 +6118,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(18)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(3)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	    } else if (typeof exports !== "undefined") {
 	        factory(exports, require('react'), require('prop-types'));
 	    } else {
@@ -6211,7 +6239,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(6), __webpack_require__(17), __webpack_require__(27), __webpack_require__(26)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(14), __webpack_require__(25), __webpack_require__(27), __webpack_require__(26)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	    } else if (typeof exports !== "undefined") {
 	        factory(exports, require('react'), require('react-dom'), require('../SAlertContent'), require('./s-alert-store'), require('./s-alert-tools'));
 	    } else {
@@ -6392,7 +6420,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(3);
+	var _classnames = __webpack_require__(11);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -6475,7 +6503,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(3);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _classnames = __webpack_require__(11);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -6487,7 +6519,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _SizePerPageDropDown2 = _interopRequireDefault(_SizePerPageDropDown);
 
-	var _Const = __webpack_require__(4);
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -6832,27 +6864,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	PaginationList.propTypes = {
-	  currPage: _react.PropTypes.number,
-	  sizePerPage: _react.PropTypes.number,
-	  dataSize: _react.PropTypes.number,
-	  changePage: _react.PropTypes.func,
-	  sizePerPageList: _react.PropTypes.array,
-	  paginationShowsTotal: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.func]),
-	  paginationSize: _react.PropTypes.number,
-	  onSizePerPageList: _react.PropTypes.func,
-	  prePage: _react.PropTypes.string,
-	  pageStartIndex: _react.PropTypes.number,
-	  hideSizePerPage: _react.PropTypes.bool,
-	  alwaysShowAllBtns: _react.PropTypes.bool,
-	  withFirstAndLast: _react.PropTypes.bool,
-	  sizePerPageDropDown: _react.PropTypes.func,
-	  paginationPanel: _react.PropTypes.func,
-	  prePageTitle: _react.PropTypes.string,
-	  nextPageTitle: _react.PropTypes.string,
-	  firstPageTitle: _react.PropTypes.string,
-	  lastPageTitle: _react.PropTypes.string,
-	  hidePageListOnlyOnePage: _react.PropTypes.bool,
-	  keepSizePerPageState: _react.PropTypes.bool
+	  currPage: _propTypes2.default.number,
+	  sizePerPage: _propTypes2.default.number,
+	  dataSize: _propTypes2.default.number,
+	  changePage: _propTypes2.default.func,
+	  sizePerPageList: _propTypes2.default.array,
+	  paginationShowsTotal: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.func]),
+	  paginationSize: _propTypes2.default.number,
+	  onSizePerPageList: _propTypes2.default.func,
+	  prePage: _propTypes2.default.string,
+	  pageStartIndex: _propTypes2.default.number,
+	  hideSizePerPage: _propTypes2.default.bool,
+	  alwaysShowAllBtns: _propTypes2.default.bool,
+	  withFirstAndLast: _propTypes2.default.bool,
+	  sizePerPageDropDown: _propTypes2.default.func,
+	  paginationPanel: _propTypes2.default.func,
+	  prePageTitle: _propTypes2.default.string,
+	  nextPageTitle: _propTypes2.default.string,
+	  firstPageTitle: _propTypes2.default.string,
+	  lastPageTitle: _propTypes2.default.string,
+	  hidePageListOnlyOnePage: _propTypes2.default.bool,
+	  keepSizePerPageState: _propTypes2.default.bool
 	};
 
 	PaginationList.defaultProps = {
@@ -6892,7 +6924,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(3);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _classnames = __webpack_require__(11);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -6950,12 +6986,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	PageButton.propTypes = {
-	  title: _react.PropTypes.string,
-	  changePage: _react.PropTypes.func,
-	  active: _react.PropTypes.bool,
-	  disable: _react.PropTypes.bool,
-	  hidden: _react.PropTypes.bool,
-	  children: _react.PropTypes.node
+	  title: _propTypes2.default.string,
+	  changePage: _propTypes2.default.func,
+	  active: _propTypes2.default.bool,
+	  disable: _propTypes2.default.bool,
+	  hidden: _propTypes2.default.bool,
+	  children: _propTypes2.default.node
 	};
 
 	var _default = PageButton;
@@ -6989,6 +7025,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7057,14 +7097,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	SizePerPageDropDown.propTypes = {
-	  open: _react.PropTypes.bool,
-	  hidden: _react.PropTypes.bool,
-	  btnContextual: _react.PropTypes.string,
-	  currSizePerPage: _react.PropTypes.string,
-	  options: _react.PropTypes.array,
-	  variation: _react.PropTypes.oneOf(['dropdown', 'dropup']),
-	  className: _react.PropTypes.string,
-	  onClick: _react.PropTypes.func
+	  open: _propTypes2.default.bool,
+	  hidden: _propTypes2.default.bool,
+	  btnContextual: _propTypes2.default.string,
+	  currSizePerPage: _propTypes2.default.string,
+	  options: _propTypes2.default.array,
+	  variation: _propTypes2.default.oneOf(['dropdown', 'dropup']),
+	  className: _propTypes2.default.string,
+	  onClick: _propTypes2.default.func
 	};
 	SizePerPageDropDown.defaultProps = {
 	  open: false,
@@ -7112,15 +7152,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
 	var _reactModal = __webpack_require__(35);
 
 	var _reactModal2 = _interopRequireDefault(_reactModal);
 
-	var _Const = __webpack_require__(4);
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
-	var _Notification = __webpack_require__(14);
+	var _Notification = __webpack_require__(22);
 
 	var _InsertModal = __webpack_require__(45);
 
@@ -7664,40 +7708,40 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	ToolBar.propTypes = {
-	  onAddRow: _react.PropTypes.func,
-	  onDropRow: _react.PropTypes.func,
-	  onShowOnlySelected: _react.PropTypes.func,
-	  enableInsert: _react.PropTypes.bool,
-	  enableDelete: _react.PropTypes.bool,
-	  enableSearch: _react.PropTypes.bool,
-	  enableShowOnlySelected: _react.PropTypes.bool,
-	  columns: _react.PropTypes.array,
-	  searchPlaceholder: _react.PropTypes.string,
-	  exportCSVText: _react.PropTypes.string,
-	  insertText: _react.PropTypes.string,
-	  deleteText: _react.PropTypes.string,
-	  saveText: _react.PropTypes.string,
-	  closeText: _react.PropTypes.string,
-	  clearSearch: _react.PropTypes.bool,
-	  ignoreEditable: _react.PropTypes.bool,
-	  defaultSearch: _react.PropTypes.string,
-	  insertModalHeader: _react.PropTypes.func,
-	  insertModalBody: _react.PropTypes.func,
-	  insertModalFooter: _react.PropTypes.func,
-	  insertModal: _react.PropTypes.func,
-	  insertBtn: _react.PropTypes.func,
-	  deleteBtn: _react.PropTypes.func,
-	  showSelectedOnlyBtn: _react.PropTypes.func,
-	  exportCSVBtn: _react.PropTypes.func,
-	  clearSearchBtn: _react.PropTypes.func,
-	  searchField: _react.PropTypes.func,
-	  searchPanel: _react.PropTypes.func,
-	  btnGroup: _react.PropTypes.func,
-	  toolBar: _react.PropTypes.func,
-	  searchPosition: _react.PropTypes.string,
-	  reset: _react.PropTypes.bool,
-	  isValidKey: _react.PropTypes.func,
-	  insertFailIndicator: _react.PropTypes.string
+	  onAddRow: _propTypes2.default.func,
+	  onDropRow: _propTypes2.default.func,
+	  onShowOnlySelected: _propTypes2.default.func,
+	  enableInsert: _propTypes2.default.bool,
+	  enableDelete: _propTypes2.default.bool,
+	  enableSearch: _propTypes2.default.bool,
+	  enableShowOnlySelected: _propTypes2.default.bool,
+	  columns: _propTypes2.default.array,
+	  searchPlaceholder: _propTypes2.default.string,
+	  exportCSVText: _propTypes2.default.string,
+	  insertText: _propTypes2.default.string,
+	  deleteText: _propTypes2.default.string,
+	  saveText: _propTypes2.default.string,
+	  closeText: _propTypes2.default.string,
+	  clearSearch: _propTypes2.default.bool,
+	  ignoreEditable: _propTypes2.default.bool,
+	  defaultSearch: _propTypes2.default.string,
+	  insertModalHeader: _propTypes2.default.func,
+	  insertModalBody: _propTypes2.default.func,
+	  insertModalFooter: _propTypes2.default.func,
+	  insertModal: _propTypes2.default.func,
+	  insertBtn: _propTypes2.default.func,
+	  deleteBtn: _propTypes2.default.func,
+	  showSelectedOnlyBtn: _propTypes2.default.func,
+	  exportCSVBtn: _propTypes2.default.func,
+	  clearSearchBtn: _propTypes2.default.func,
+	  searchField: _propTypes2.default.func,
+	  searchPanel: _propTypes2.default.func,
+	  btnGroup: _propTypes2.default.func,
+	  toolBar: _propTypes2.default.func,
+	  searchPosition: _propTypes2.default.string,
+	  reset: _propTypes2.default.bool,
+	  isValidKey: _propTypes2.default.func,
+	  insertFailIndicator: _propTypes2.default.string
 	};
 
 	ToolBar.defaultProps = {
@@ -7744,12 +7788,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {var React = __webpack_require__(2);
-	var ReactDOM = __webpack_require__(6);
+	var ReactDOM = __webpack_require__(14);
 	var ExecutionEnvironment = __webpack_require__(37);
 	var ModalPortal = React.createFactory(__webpack_require__(38));
 	var ariaAppHider = __webpack_require__(43);
 	var elementClass = __webpack_require__(44);
-	var renderSubtreeIntoContainer = __webpack_require__(6).unstable_renderSubtreeIntoContainer;
+	var renderSubtreeIntoContainer = __webpack_require__(14).unstable_renderSubtreeIntoContainer;
 	var Assign = __webpack_require__(42);
 
 	var SafeHTMLElement = ExecutionEnvironment.canUseDOM ? window.HTMLElement : {};
@@ -7880,7 +7924,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = Modal
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 /* 37 */
@@ -9075,6 +9119,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
 	var _InsertModalHeader = __webpack_require__(46);
 
 	var _InsertModalHeader2 = _interopRequireDefault(_InsertModalHeader);
@@ -9213,14 +9261,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = _default;
 
 	InsertModal.propTypes = {
-	  columns: _react.PropTypes.array.isRequired,
-	  validateState: _react.PropTypes.object.isRequired,
-	  ignoreEditable: _react.PropTypes.bool,
-	  headerComponent: _react.PropTypes.func,
-	  bodyComponent: _react.PropTypes.func,
-	  footerComponent: _react.PropTypes.func,
-	  onModalClose: _react.PropTypes.func,
-	  onSave: _react.PropTypes.func
+	  columns: _propTypes2.default.array.isRequired,
+	  validateState: _propTypes2.default.object.isRequired,
+	  ignoreEditable: _propTypes2.default.bool,
+	  headerComponent: _propTypes2.default.func,
+	  bodyComponent: _propTypes2.default.func,
+	  footerComponent: _propTypes2.default.func,
+	  onModalClose: _propTypes2.default.func,
+	  onSave: _propTypes2.default.func
 	};
 
 	InsertModal.defaultProps = {};
@@ -9255,6 +9303,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9344,11 +9396,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	InsertModalHeader.propTypes = {
-	  className: _react.PropTypes.string,
-	  title: _react.PropTypes.string,
-	  onModalClose: _react.PropTypes.func,
-	  hideClose: _react.PropTypes.bool,
-	  beforeClose: _react.PropTypes.func
+	  className: _propTypes2.default.string,
+	  title: _propTypes2.default.string,
+	  onModalClose: _propTypes2.default.func,
+	  hideClose: _propTypes2.default.bool,
+	  beforeClose: _propTypes2.default.func
 	};
 	InsertModalHeader.defaultProps = {
 	  className: '',
@@ -9390,7 +9442,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(4);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -9494,17 +9550,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	InsertModalFooter.propTypes = {
-	  className: _react.PropTypes.string,
-	  saveBtnText: _react.PropTypes.string,
-	  closeBtnText: _react.PropTypes.string,
-	  closeBtnContextual: _react.PropTypes.string,
-	  saveBtnContextual: _react.PropTypes.string,
-	  closeBtnClass: _react.PropTypes.string,
-	  saveBtnClass: _react.PropTypes.string,
-	  beforeClose: _react.PropTypes.func,
-	  beforeSave: _react.PropTypes.func,
-	  onSave: _react.PropTypes.func,
-	  onModalClose: _react.PropTypes.func
+	  className: _propTypes2.default.string,
+	  saveBtnText: _propTypes2.default.string,
+	  closeBtnText: _propTypes2.default.string,
+	  closeBtnContextual: _propTypes2.default.string,
+	  saveBtnContextual: _propTypes2.default.string,
+	  closeBtnClass: _propTypes2.default.string,
+	  saveBtnClass: _propTypes2.default.string,
+	  beforeClose: _propTypes2.default.func,
+	  beforeSave: _propTypes2.default.func,
+	  onSave: _propTypes2.default.func,
+	  onModalClose: _propTypes2.default.func
 	};
 	InsertModalFooter.defaultProps = {
 	  className: '',
@@ -9550,7 +9606,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Editor = __webpack_require__(13);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _Editor = __webpack_require__(21);
 
 	var _Editor2 = _interopRequireDefault(_Editor);
 
@@ -9665,9 +9725,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	InsertModalBody.propTypes = {
-	  columns: _react.PropTypes.array,
-	  validateState: _react.PropTypes.object,
-	  ignoreEditable: _react.PropTypes.bool
+	  columns: _propTypes2.default.array,
+	  validateState: _propTypes2.default.object,
+	  ignoreEditable: _propTypes2.default.bool
 	};
 
 	InsertModalBody.defaultProps = {
@@ -9709,7 +9769,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(4);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -9767,11 +9831,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	InsertButton.propTypes = {
-	  btnText: _react.PropTypes.string,
-	  btnContextual: _react.PropTypes.string,
-	  className: _react.PropTypes.string,
-	  onClick: _react.PropTypes.func,
-	  btnGlyphicon: _react.PropTypes.string
+	  btnText: _propTypes2.default.string,
+	  btnContextual: _propTypes2.default.string,
+	  className: _propTypes2.default.string,
+	  onClick: _propTypes2.default.func,
+	  btnGlyphicon: _propTypes2.default.string
 	};
 	InsertButton.defaultProps = {
 	  btnText: _Const2.default.INSERT_BTN_TEXT,
@@ -9817,7 +9881,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(4);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -9876,11 +9944,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	DeleteButton.propTypes = {
-	  btnText: _react.PropTypes.string,
-	  btnContextual: _react.PropTypes.string,
-	  className: _react.PropTypes.string,
-	  onClick: _react.PropTypes.func,
-	  btnGlyphicon: _react.PropTypes.string
+	  btnText: _propTypes2.default.string,
+	  btnContextual: _propTypes2.default.string,
+	  className: _propTypes2.default.string,
+	  onClick: _propTypes2.default.func,
+	  btnGlyphicon: _propTypes2.default.string
 	};
 	DeleteButton.defaultProps = {
 	  btnText: _Const2.default.DELETE_BTN_TEXT,
@@ -9926,7 +9994,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(4);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -9985,11 +10057,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	ExportCSVButton.propTypes = {
-	  btnText: _react.PropTypes.string,
-	  btnContextual: _react.PropTypes.string,
-	  className: _react.PropTypes.string,
-	  onClick: _react.PropTypes.func,
-	  btnGlyphicon: _react.PropTypes.string
+	  btnText: _propTypes2.default.string,
+	  btnContextual: _propTypes2.default.string,
+	  className: _propTypes2.default.string,
+	  onClick: _propTypes2.default.func,
+	  btnGlyphicon: _propTypes2.default.string
 	};
 	ExportCSVButton.defaultProps = {
 	  btnText: _Const2.default.EXPORT_CSV_TEXT,
@@ -10035,7 +10107,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(4);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -10095,12 +10171,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	ShowSelectedOnlyButton.propTypes = {
-	  showAllText: _react.PropTypes.string,
-	  showOnlySelectText: _react.PropTypes.string,
-	  toggle: _react.PropTypes.bool,
-	  btnContextual: _react.PropTypes.string,
-	  className: _react.PropTypes.string,
-	  onClick: _react.PropTypes.func
+	  showAllText: _propTypes2.default.string,
+	  showOnlySelectText: _propTypes2.default.string,
+	  toggle: _propTypes2.default.bool,
+	  btnContextual: _propTypes2.default.string,
+	  className: _propTypes2.default.string,
+	  onClick: _propTypes2.default.func
 	};
 	ShowSelectedOnlyButton.defaultProps = {
 	  showAllText: _Const2.default.SHOW_ALL,
@@ -10147,7 +10223,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(6);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _reactDom = __webpack_require__(14);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -10205,10 +10285,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	SearchField.propTypes = {
-	  className: _react.PropTypes.string,
-	  defaultValue: _react.PropTypes.string,
-	  placeholder: _react.PropTypes.string,
-	  onKeyUp: _react.PropTypes.func
+	  className: _propTypes2.default.string,
+	  defaultValue: _propTypes2.default.string,
+	  placeholder: _propTypes2.default.string,
+	  onKeyUp: _propTypes2.default.func
 	};
 	SearchField.defaultProps = {
 	  className: '',
@@ -10250,6 +10330,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10304,10 +10388,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	ClearSearchButton.propTypes = {
-	  btnContextual: _react.PropTypes.string,
-	  className: _react.PropTypes.string,
-	  btnText: _react.PropTypes.string,
-	  onClick: _react.PropTypes.func
+	  btnContextual: _propTypes2.default.string,
+	  className: _propTypes2.default.string,
+	  btnText: _propTypes2.default.string,
+	  onClick: _propTypes2.default.func
 	};
 	ClearSearchButton.defaultProps = {
 	  btnContextual: 'btn-default',
@@ -10350,11 +10434,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(4);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
-	var _classnames = __webpack_require__(3);
+	var _classnames = __webpack_require__(11);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -10466,9 +10554,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	TableFilter.propTypes = {
-	  columns: _react.PropTypes.array,
-	  rowSelectType: _react.PropTypes.string,
-	  onFilter: _react.PropTypes.func
+	  columns: _propTypes2.default.array,
+	  rowSelectType: _propTypes2.default.string,
+	  onFilter: _propTypes2.default.func
 	};
 	var _default = TableFilter;
 	exports.default = _default;
@@ -10506,7 +10594,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* eslint one-var: 0 */
 
 
-	var _Const = __webpack_require__(4);
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -11340,7 +11428,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	var _util = __webpack_require__(9);
+	var _util = __webpack_require__(17);
 
 	var _util2 = _interopRequireDefault(_util);
 
@@ -11665,7 +11753,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _Const = __webpack_require__(4);
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -12065,15 +12153,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(3);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _classnames = __webpack_require__(11);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _Const = __webpack_require__(4);
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
-	var _util = __webpack_require__(9);
+	var _util = __webpack_require__(17);
 
 	var _util2 = _interopRequireDefault(_util);
 
@@ -12354,56 +12446,56 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	TableHeaderColumn.propTypes = {
-	  dataField: _react.PropTypes.string,
-	  dataAlign: _react.PropTypes.string,
-	  headerAlign: _react.PropTypes.string,
-	  headerTitle: _react.PropTypes.bool,
-	  headerText: _react.PropTypes.string,
-	  dataSort: _react.PropTypes.bool,
-	  onSort: _react.PropTypes.func,
-	  dataFormat: _react.PropTypes.func,
-	  csvFormat: _react.PropTypes.func,
-	  csvHeader: _react.PropTypes.string,
-	  isKey: _react.PropTypes.bool,
-	  editable: _react.PropTypes.any,
-	  hidden: _react.PropTypes.bool,
-	  hiddenOnInsert: _react.PropTypes.bool,
-	  searchable: _react.PropTypes.bool,
-	  className: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
-	  width: _react.PropTypes.string,
-	  sortFunc: _react.PropTypes.func,
-	  sortFuncExtraData: _react.PropTypes.any,
-	  columnClassName: _react.PropTypes.any,
-	  editColumnClassName: _react.PropTypes.any,
-	  invalidEditColumnClassName: _react.PropTypes.any,
-	  columnTitle: _react.PropTypes.bool,
-	  filterFormatted: _react.PropTypes.bool,
-	  filterValue: _react.PropTypes.func,
-	  sort: _react.PropTypes.string,
-	  caretRender: _react.PropTypes.func,
-	  formatExtraData: _react.PropTypes.any,
-	  csvFormatExtraData: _react.PropTypes.any,
-	  filter: _react.PropTypes.shape({
-	    type: _react.PropTypes.oneOf(filterTypeArray),
-	    delay: _react.PropTypes.number,
-	    options: _react.PropTypes.oneOfType([_react.PropTypes.object, // for SelectFilter
-	    _react.PropTypes.arrayOf(_react.PropTypes.number) // for NumberFilter
+	  dataField: _propTypes2.default.string,
+	  dataAlign: _propTypes2.default.string,
+	  headerAlign: _propTypes2.default.string,
+	  headerTitle: _propTypes2.default.bool,
+	  headerText: _propTypes2.default.string,
+	  dataSort: _propTypes2.default.bool,
+	  onSort: _propTypes2.default.func,
+	  dataFormat: _propTypes2.default.func,
+	  csvFormat: _propTypes2.default.func,
+	  csvHeader: _propTypes2.default.string,
+	  isKey: _propTypes2.default.bool,
+	  editable: _propTypes2.default.any,
+	  hidden: _propTypes2.default.bool,
+	  hiddenOnInsert: _propTypes2.default.bool,
+	  searchable: _propTypes2.default.bool,
+	  className: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.func]),
+	  width: _propTypes2.default.string,
+	  sortFunc: _propTypes2.default.func,
+	  sortFuncExtraData: _propTypes2.default.any,
+	  columnClassName: _propTypes2.default.any,
+	  editColumnClassName: _propTypes2.default.any,
+	  invalidEditColumnClassName: _propTypes2.default.any,
+	  columnTitle: _propTypes2.default.bool,
+	  filterFormatted: _propTypes2.default.bool,
+	  filterValue: _propTypes2.default.func,
+	  sort: _propTypes2.default.string,
+	  caretRender: _propTypes2.default.func,
+	  formatExtraData: _propTypes2.default.any,
+	  csvFormatExtraData: _propTypes2.default.any,
+	  filter: _propTypes2.default.shape({
+	    type: _propTypes2.default.oneOf(filterTypeArray),
+	    delay: _propTypes2.default.number,
+	    options: _propTypes2.default.oneOfType([_propTypes2.default.object, // for SelectFilter
+	    _propTypes2.default.arrayOf(_propTypes2.default.number) // for NumberFilter
 	    ]),
-	    numberComparators: _react.PropTypes.arrayOf(_react.PropTypes.string),
-	    emitter: _react.PropTypes.object,
-	    placeholder: _react.PropTypes.string,
-	    getElement: _react.PropTypes.func,
-	    customFilterParameters: _react.PropTypes.object,
-	    condition: _react.PropTypes.oneOf([_Const2.default.FILTER_COND_EQ, _Const2.default.FILTER_COND_LIKE])
+	    numberComparators: _propTypes2.default.arrayOf(_propTypes2.default.string),
+	    emitter: _propTypes2.default.object,
+	    placeholder: _propTypes2.default.string,
+	    getElement: _propTypes2.default.func,
+	    customFilterParameters: _propTypes2.default.object,
+	    condition: _propTypes2.default.oneOf([_Const2.default.FILTER_COND_EQ, _Const2.default.FILTER_COND_LIKE])
 	  }),
-	  sortIndicator: _react.PropTypes.bool,
-	  export: _react.PropTypes.bool,
-	  expandable: _react.PropTypes.bool,
-	  tdAttr: _react.PropTypes.object,
-	  tdStyle: _react.PropTypes.object,
-	  thStyle: _react.PropTypes.object,
-	  keyValidator: _react.PropTypes.bool,
-	  defaultASC: _react.PropTypes.bool
+	  sortIndicator: _propTypes2.default.bool,
+	  export: _propTypes2.default.bool,
+	  expandable: _propTypes2.default.bool,
+	  tdAttr: _propTypes2.default.object,
+	  tdStyle: _propTypes2.default.object,
+	  thStyle: _propTypes2.default.object,
+	  keyValidator: _propTypes2.default.bool,
+	  defaultASC: _propTypes2.default.bool
 	};
 
 	TableHeaderColumn.defaultProps = {
@@ -12476,7 +12568,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(4);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -12623,14 +12719,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	DateFilter.propTypes = {
-	  filterHandler: _react.PropTypes.func.isRequired,
-	  defaultValue: _react.PropTypes.shape({
-	    date: _react.PropTypes.object,
-	    comparator: _react.PropTypes.oneOf(legalComparators)
+	  filterHandler: _propTypes2.default.func.isRequired,
+	  defaultValue: _propTypes2.default.shape({
+	    date: _propTypes2.default.object,
+	    comparator: _propTypes2.default.oneOf(legalComparators)
 	  }),
-	  style: _react.PropTypes.shape({
-	    date: _react.PropTypes.oneOfType([_react.PropTypes.object]),
-	    comparator: _react.PropTypes.oneOfType([_react.PropTypes.object])
+	  style: _propTypes2.default.shape({
+	    date: _propTypes2.default.oneOfType([_propTypes2.default.object]),
+	    comparator: _propTypes2.default.oneOfType([_propTypes2.default.object])
 	  }),
 	  /* eslint consistent-return: 0 */
 	  dateComparators: function dateComparators(props, propName) {
@@ -12650,7 +12746,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  },
-	  columnName: _react.PropTypes.string
+	  columnName: _propTypes2.default.string
 	};
 
 	DateFilter.defaultProps = {
@@ -12696,7 +12792,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(4);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -12783,12 +12883,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	TextFilter.propTypes = {
-	  filterHandler: _react.PropTypes.func.isRequired,
-	  defaultValue: _react.PropTypes.string,
-	  delay: _react.PropTypes.number,
-	  placeholder: _react.PropTypes.string,
-	  columnName: _react.PropTypes.string,
-	  style: _react.PropTypes.oneOfType([_react.PropTypes.object])
+	  filterHandler: _propTypes2.default.func.isRequired,
+	  defaultValue: _propTypes2.default.string,
+	  delay: _propTypes2.default.number,
+	  placeholder: _propTypes2.default.string,
+	  columnName: _propTypes2.default.string,
+	  style: _propTypes2.default.oneOfType([_propTypes2.default.object])
 	};
 
 	TextFilter.defaultProps = {
@@ -12827,7 +12927,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Const = __webpack_require__(4);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -12914,12 +13018,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	RegexFilter.propTypes = {
-	  filterHandler: _react.PropTypes.func.isRequired,
-	  defaultValue: _react.PropTypes.string,
-	  delay: _react.PropTypes.number,
-	  placeholder: _react.PropTypes.string,
-	  columnName: _react.PropTypes.string,
-	  style: _react.PropTypes.oneOfType([_react.PropTypes.object])
+	  filterHandler: _propTypes2.default.func.isRequired,
+	  defaultValue: _propTypes2.default.string,
+	  delay: _propTypes2.default.number,
+	  placeholder: _propTypes2.default.string,
+	  columnName: _propTypes2.default.string,
+	  style: _propTypes2.default.oneOfType([_propTypes2.default.object])
 	};
 
 	RegexFilter.defaultProps = {
@@ -12958,11 +13062,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(3);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _classnames = __webpack_require__(11);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _Const = __webpack_require__(4);
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -13104,11 +13212,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	SelectFilter.propTypes = {
-	  filterHandler: _react.PropTypes.func.isRequired,
-	  options: _react.PropTypes.object.isRequired,
-	  placeholder: _react.PropTypes.string,
-	  columnName: _react.PropTypes.string,
-	  style: _react.PropTypes.oneOfType([_react.PropTypes.object])
+	  filterHandler: _propTypes2.default.func.isRequired,
+	  options: _propTypes2.default.object.isRequired,
+	  placeholder: _propTypes2.default.string,
+	  columnName: _propTypes2.default.string,
+	  style: _propTypes2.default.oneOfType([_propTypes2.default.object])
 	};
 
 	var _default = SelectFilter;
@@ -13145,11 +13253,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(3);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _classnames = __webpack_require__(11);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _Const = __webpack_require__(4);
+	var _Const = __webpack_require__(12);
 
 	var _Const2 = _interopRequireDefault(_Const);
 
@@ -13337,17 +13449,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	NumberFilter.propTypes = {
-	  filterHandler: _react.PropTypes.func.isRequired,
-	  options: _react.PropTypes.arrayOf(_react.PropTypes.number),
-	  defaultValue: _react.PropTypes.shape({
-	    number: _react.PropTypes.number,
-	    comparator: _react.PropTypes.oneOf(legalComparators)
+	  filterHandler: _propTypes2.default.func.isRequired,
+	  options: _propTypes2.default.arrayOf(_propTypes2.default.number),
+	  defaultValue: _propTypes2.default.shape({
+	    number: _propTypes2.default.number,
+	    comparator: _propTypes2.default.oneOf(legalComparators)
 	  }),
-	  style: _react.PropTypes.shape({
-	    number: _react.PropTypes.oneOfType([_react.PropTypes.object]),
-	    comparator: _react.PropTypes.oneOfType([_react.PropTypes.object])
+	  style: _propTypes2.default.shape({
+	    number: _propTypes2.default.oneOfType([_propTypes2.default.object]),
+	    comparator: _propTypes2.default.oneOfType([_propTypes2.default.object])
 	  }),
-	  delay: _react.PropTypes.number,
+	  delay: _propTypes2.default.number,
 	  /* eslint consistent-return: 0 */
 	  numberComparators: function numberComparators(props, propName) {
 	    if (!props[propName]) {
@@ -13366,10 +13478,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  },
-	  placeholder: _react.PropTypes.string,
-	  columnName: _react.PropTypes.string,
-	  withoutEmptyComparatorOption: _react.PropTypes.bool,
-	  withoutEmptyNumberOption: _react.PropTypes.bool
+	  placeholder: _propTypes2.default.string,
+	  columnName: _propTypes2.default.string,
+	  withoutEmptyComparatorOption: _propTypes2.default.bool,
+	  withoutEmptyNumberOption: _propTypes2.default.bool
 	};
 
 	NumberFilter.defaultProps = {
@@ -13418,6 +13530,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -13458,8 +13574,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	ButtonGroup.propTypes = {
-	  sizeClass: _react.PropTypes.string,
-	  className: _react.PropTypes.string
+	  sizeClass: _propTypes2.default.string,
+	  className: _propTypes2.default.string
 	};
 	ButtonGroup.defaultProps = {
 	  sizeClass: 'btn-group-sm',
