@@ -1271,12 +1271,17 @@ class BootstrapTable extends Component {
         }
       }
     } else {
-      React.Children.forEach(this.props.children.filter(_ => !!_), (child, i) => {
-        if (child.props.width) {
-          header[i].style.width = `${child.props.width}px`;
-          header[i].style.minWidth = `${child.props.width}px`;
+      for (const i in bodyHeader) {
+        if (bodyHeader.hasOwnProperty(i)) {
+          const child = bodyHeader[i];
+          if (child.style.width) {
+            header[i].style.width = child.style.width;
+          }
+          if (child.style.minWidth) {
+            header[i].style.minWidth = child.style.minWidth;
+          }
         }
-      });
+      }
     }
     this.isVerticalScroll = isScroll;
   }
