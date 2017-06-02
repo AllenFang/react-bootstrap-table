@@ -1870,10 +1870,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    noDataText: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object]),
 	    withoutNoDataText: _react2.default.PropTypes.bool,
 	    handleConfirmDeleteRow: _react.PropTypes.func,
-	    prePage: _react.PropTypes.string,
-	    nextPage: _react.PropTypes.string,
-	    firstPage: _react.PropTypes.string,
-	    lastPage: _react.PropTypes.string,
+	    prePage: _react.PropTypes.any,
+	    nextPage: _react.PropTypes.any,
+	    firstPage: _react.PropTypes.any,
+	    lastPage: _react.PropTypes.any,
 	    prePageTitle: _react.PropTypes.string,
 	    nextPageTitle: _react.PropTypes.string,
 	    firstPageTitle: _react.PropTypes.string,
@@ -10853,7 +10853,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dropdown = sizePerPageDropDown({
 	          open: this.state.open,
 	          hideSizePerPage: hideSizePerPage,
-	          currSizePerPage: sizePerPage,
+	          currSizePerPage: String(sizePerPage),
 	          sizePerPageList: sizePerPageList,
 	          toggleDropDown: this.toggleDropDown,
 	          changeSizePerPage: this.changeSizePerPage
