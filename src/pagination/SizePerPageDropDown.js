@@ -20,7 +20,8 @@ class SizePerPageDropDown extends Component {
 
     return (
       <span style={ dropDownStyle }
-        className={ `${variation} ${openClass} ${className} ${sizePerPageDefaultClass}` }>
+        className={ `${variation} ${openClass} ${className} ${sizePerPageDefaultClass}` }
+        ref={ (c) => {this.dropdownContainer = c;} }>
         <button className={ `btn ${btnContextual} dropdown-toggle` }
           id='pageDropDown' data-toggle='dropdown'
           aria-expanded={ open }

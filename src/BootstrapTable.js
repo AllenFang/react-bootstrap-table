@@ -12,6 +12,9 @@ import { TableDataStore } from './store/TableDataStore';
 import Util from './util';
 import exportCSVUtil from './csv_export_util';
 import { Filter } from './Filter';
+import $ from 'jquery';
+window.$ = $;
+import 'bootstrap/dist/js/bootstrap.min.js';
 
 class BootstrapTable extends Component {
 
@@ -1096,6 +1099,8 @@ class BootstrapTable extends Component {
             sizePerPageDropDown={ options.sizePerPageDropDown }
             hidePageListOnlyOnePage={ options.hidePageListOnlyOnePage }
             paginationPanel={ options.paginationPanel }
+            handleDropdownOpen={ options.handleDropdownOpen }
+            handleDropdownClose={ options.handleDropdownClose }
             keepSizePerPageState={ options.keepSizePerPageState }
             open={ false }/>
         </div>
@@ -1469,6 +1474,8 @@ BootstrapTable.propTypes = {
     toolBar: PropTypes.func,
     sizePerPageDropDown: PropTypes.func,
     paginationPanel: PropTypes.func,
+    handleDropdownOpen: PropTypes.func,
+    handleDropdownClose: PropTypes.func,
     searchPosition: PropTypes.string,
     expandRowBgColor: PropTypes.string,
     expandBy: PropTypes.string,
@@ -1617,6 +1624,8 @@ BootstrapTable.defaultProps = {
     toolBar: undefined,
     sizePerPageDropDown: undefined,
     paginationPanel: undefined,
+    handleDropdownOpen: undefined,
+    handleDropdownClose: undefined,
     searchPosition: 'right',
     expandRowBgColor: undefined,
     expandBy: Const.EXPAND_BY_ROW,
