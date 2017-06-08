@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Const from '../Const';
 
 const showSelectedOnlyBtnDefaultClass = 'react-bs-table-show-sel-only-btn';

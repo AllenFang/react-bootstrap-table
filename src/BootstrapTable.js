@@ -1,6 +1,7 @@
 /* eslint no-alert: 0 */
 /* eslint max-len: 0 */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classSet from 'classnames';
 import Const from './Const';
 import TableHeader from './TableHeader';
