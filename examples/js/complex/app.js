@@ -117,16 +117,18 @@ export default class App extends React.Component {
         deleteRow
         search
         columnFilter
+        columnFilterClass='exampleClass'
         hover
         pagination>
-        <TableHeaderColumn dataField='id' dataAlign='center' dataSort isKey autoValue>Job ID</TableHeaderColumn>
+        <TableHeaderColumn dataField='id' filterPlaceholder='Search: Job Id' dataAlign='center' dataSort isKey autoValue>Job ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name' className='good' dataSort
           editable={ { type: 'textarea', validator: nameValidator } }>Job Name</TableHeaderColumn>
         <TableHeaderColumn dataField='priority' dataSort dataFormat={ priorityFormatter }
           editable={ {
             type: 'select',
             options: { values: [ 'A', 'B', 'C', 'D' ] },
-            validator: priorityValidator } }>Job Priority</TableHeaderColumn>
+            validator: priorityValidator } }
+            filterPlaceholder='Search: Priority'>Job Priority</TableHeaderColumn>
         <TableHeaderColumn dataField='active'
           editable={ { type: 'checkbox', options: { values: ' Y:N' } } }>Active</TableHeaderColumn>
       </BootstrapTable>
