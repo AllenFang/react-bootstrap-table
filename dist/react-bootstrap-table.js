@@ -1706,10 +1706,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        }
 	      } else {
-	        _react2.default.Children.forEach(this.props.children.filter(function (_) {
-	          return !!_;
-	        }), function (child, i) {
-	          if (child.props.width) {
+	        // debugger;
+	        _react2.default.Children.forEach(this.props.children, function (child, i) {
+	          if (child && child.props.width) {
 	            header[i].style.width = child.props.width + 'px';
 	            header[i].style.minWidth = child.props.width + 'px';
 	          }
