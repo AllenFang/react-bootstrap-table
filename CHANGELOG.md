@@ -1,3 +1,8 @@
+<a name="v3.3.9"></a>
+# [v3.3.9](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.8...v3.3.9) (2017-06-08)
+## Bug fixes
+* Fixed TypeError: this.props.children.filter is not a function([80fb5a6](https://github.com/AllenFang/react-bootstrap-table/commit/80fb5a69cee6ce4357bbb11128f2fbc19c4300e1))
+
 <a name="v3.3.8"></a>
 # [v3.3.8](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.7...v3.3.8) (2017-06-02)
 ## Bug fixes
