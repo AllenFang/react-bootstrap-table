@@ -29,6 +29,7 @@ export class TableDataStore {
     this.strictSearch = typeof props.strictSearch === 'undefined' ?
         !props.multiColumnSearch : props.strictSearch;
     this.multiColumnSort = props.multiColumnSort;
+    this.hasFooter = props.hasFooter;
   }
 
   clean() {
@@ -177,7 +178,7 @@ export class TableDataStore {
     let currentDisplayData = this.getCurrentDisplayData();
 
     currentDisplayData = this._sort(currentDisplayData);
-
+    this.data = currentDisplayData;
     return this;
   }
 
@@ -624,44 +625,84 @@ export class TableDataStore {
     if (this.sortList.length === 0 || typeof(this.sortList[0]) === 'undefined') {
       return arr;
     }
+    if (this.hasFooter) {
+      /* if it has hasFooter propery enabled*/
+      const lastElem = arr[ arr.length - 1];
+      /* sort all elements except the last one */
+      const subAr = arr.slice(0, arr.length - 1);
+      console.log('log:', lastElem, ' :', subAr);
+      console.log('sorting subar');
+      /* subAr.sort(this.compare);*/
+      subAr.sort((a, b) => {
+        let result = 0;
 
-    arr.sort((a, b) => {
-      let result = 0;
+        for (let i = 0; i < this.sortList.length; i++) {
+          const sortDetails = this.sortList[i];
+          const isDesc = sortDetails.order.toLowerCase() === Const.SORT_DESC;
 
-      for (let i = 0; i < this.sortList.length; i++) {
-        const sortDetails = this.sortList[i];
-        const isDesc = sortDetails.order.toLowerCase() === Const.SORT_DESC;
-
-        const { sortFunc, sortFuncExtraData } = this.colInfos[sortDetails.sortField];
-
-        if (sortFunc) {
-          result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
-        } else {
-          const valueA = a[sortDetails.sortField] === null ? '' : a[sortDetails.sortField];
-          const valueB = b[sortDetails.sortField] === null ? '' : b[sortDetails.sortField];
-          if (isDesc) {
-            if (typeof valueB === 'string') {
-              result = valueB.localeCompare(valueA);
-            } else {
-              result = valueA > valueB ? -1 : ((valueA < valueB) ? 1 : 0);
-            }
+          const { sortFunc, sortFuncExtraData } = this.colInfos[sortDetails.sortField];
+          if (sortFunc) {
+            result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
           } else {
-            if (typeof valueA === 'string') {
-              result = valueA.localeCompare(valueB);
+            const valueA = a[sortDetails.sortField] === null ? '' : a[sortDetails.sortField];
+            const valueB = b[sortDetails.sortField] === null ? '' : b[sortDetails.sortField];
+            if (isDesc) {
+              if (typeof valueB === 'string') {
+                result = valueB.localeCompare(valueA);
+              } else {
+                result = valueA > valueB ? -1 : ((valueA < valueB) ? 1 : 0);
+              }
             } else {
-              result = valueA < valueB ? -1 : ((valueA > valueB) ? 1 : 0);
+              if (typeof valueA === 'string') {
+                result = valueA.localeCompare(valueB);
+              } else {
+                result = valueA < valueB ? -1 : ((valueA > valueB) ? 1 : 0);
+              }
             }
+          }
+          if (result !== 0) {
+            return result;
           }
         }
 
-        if (result !== 0) {
-          return result;
+        return result;
+      });
+      subAr.push(lastElem);
+      arr = subAr;
+    } else {
+      arr.sort((a, b) => {
+        let result = 0;
+        for (let i = 0; i < this.sortList.length; i++) {
+          const sortDetails = this.sortList[i];
+          const isDesc = sortDetails.order.toLowerCase() === Const.SORT_DESC;
+
+          const { sortFunc, sortFuncExtraData } = this.colInfos[sortDetails.sortField];
+          if (sortFunc) {
+            result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
+          } else {
+            const valueA = a[sortDetails.sortField] === null ? '' : a[sortDetails.sortField];
+            const valueB = b[sortDetails.sortField] === null ? '' : b[sortDetails.sortField];
+            if (isDesc) {
+              if (typeof valueB === 'string') {
+                result = valueB.localeCompare(valueA);
+              } else {
+                result = valueA > valueB ? -1 : ((valueA < valueB) ? 1 : 0);
+              }
+            } else {
+              if (typeof valueA === 'string') {
+                result = valueA.localeCompare(valueB);
+              } else {
+                result = valueA < valueB ? -1 : ((valueA > valueB) ? 1 : 0);
+              }
+            }
+          }
+          if (result !== 0) {
+            return result;
+          }
         }
-      }
-
-      return result;
-    });
-
+        return result;
+      });
+    }
     return arr;
   }
 
