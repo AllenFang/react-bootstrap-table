@@ -657,7 +657,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _ref2 = props || this.props,
 	          remote = _ref2.remote;
 
-	      return remote === true || typeof remote === 'function';
+	      return remote === true || _util2.default.isFunction(remote);
 	    }
 
 	    /**
@@ -756,6 +756,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            expandableRow: this.props.expandableRow,
 	            expandRowBgColor: this.props.options.expandRowBgColor,
 	            expandBy: this.props.options.expandBy || _Const2.default.EXPAND_BY_ROW,
+	            expandBodyClass: this.props.options.expandBodyClass,
+	            expandParentClass: this.props.options.expandParentClass,
 	            columns: columns,
 	            trClassName: this.props.trClassName,
 	            striped: this.props.striped,
@@ -1423,7 +1425,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      });
 
-	      if (typeof csvFileName === 'function') {
+	      if (_util2.default.isFunction(csvFileName)) {
 	        csvFileName = csvFileName();
 	      }
 
@@ -1564,7 +1566,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              // when you want same auto generate value and not allow edit, example ID field
 	              autoValue: props.autoValue || false,
 	              // for create editor, no params for column.editable() indicate that editor for new row
-	              editable: props.editable && typeof props.editable === 'function' ? props.editable() : props.editable,
+	              editable: props.editable && _util2.default.isFunction(props.editable === 'function') ? props.editable() : props.editable,
 	              format: props.dataFormat ? function (value) {
 	                return props.dataFormat(value, null, props.formatExtraData, r).replace(/<.*?>/g, '');
 	              } : false
@@ -1706,13 +1708,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        }
 	      } else {
-	        // debugger;
-	        _react2.default.Children.forEach(this.props.children, function (child, i) {
-	          if (child && child.props.width) {
-	            header[i].style.width = child.props.width + 'px';
-	            header[i].style.minWidth = child.props.width + 'px';
+	        for (var _i in bodyHeader) {
+	          if (bodyHeader.hasOwnProperty(_i)) {
+	            var child = bodyHeader[_i];
+	            if (child.style.width) {
+	              header[_i].style.width = child.style.width;
+	            }
+	            if (child.style.minWidth) {
+	              header[_i].style.minWidth = child.style.minWidth;
+	            }
 	          }
-	        });
+	        }
 	      }
 	      this.isVerticalScroll = isScroll;
 	    }
@@ -1906,6 +1912,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    expanding: _react.PropTypes.array,
 	    onExpand: _react.PropTypes.func,
 	    onlyOneExpanding: _react.PropTypes.bool,
+	    expandBodyClass: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
+	    expandParentClass: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
 	    beforeShowError: _react.PropTypes.func,
 	    printToolBar: _react.PropTypes.bool
 	  }),
@@ -2054,6 +2062,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    expanding: [],
 	    onExpand: undefined,
 	    onlyOneExpanding: false,
+	    expandBodyClass: null,
+	    expandParentClass: null,
 	    beforeShowError: undefined,
 	    printToolBar: true
 	  },
@@ -2636,10 +2646,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var isFun = function isFun(obj) {
-	  return obj && typeof obj === 'function';
-	};
-
 	var TableBody = function (_Component) {
 	  _inherits(TableBody, _Component);
 
@@ -2761,7 +2767,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var format = column.format ? function (value) {
 	              return column.format(value, data, column.formatExtraData, r).replace(/<.*?>/g, '');
 	            } : false;
-	            if (isFun(column.editable)) {
+	            if (_util2.default.isFunction(column.editable)) {
 	              editable = column.editable(fieldValue, data, r, i);
 	            }
 
@@ -2788,7 +2794,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var columnChild = fieldValue && fieldValue.toString();
 	            var columnTitle = null;
 	            var tdClassName = column.className;
-	            if (isFun(column.className)) {
+	            if (_util2.default.isFunction(column.className)) {
 	              tdClassName = column.className(fieldValue, data, r, i);
 	            }
 
@@ -2832,10 +2838,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var selected = this.props.selectedRowKeys.indexOf(key) !== -1;
 	        var selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ? this.renderSelectRowColumn(selected, inputType, disable, CustomComponent, r, data) : null;
 	        var expandedRowColumn = this.renderExpandRowColumn(this.props.expandableRow && this.props.expandableRow(data), this.props.expanding.indexOf(key) > -1, ExpandColumnCustomComponent, r, data);
+	        var haveExpandContent = this.props.expandableRow && this.props.expandableRow(data);
+	        var isExpanding = haveExpandContent && this.props.expanding.indexOf(key) > -1;
+
 	        // add by bluespring for className customize
 	        var trClassName = this.props.trClassName;
-	        if (isFun(this.props.trClassName)) {
+	        if (_util2.default.isFunction(this.props.trClassName)) {
 	          trClassName = this.props.trClassName(data, r);
+	        }
+	        if (isExpanding && this.props.expandParentClass) {
+	          trClassName += _util2.default.isFunction(this.props.expandParentClass) ? this.props.expandParentClass(data, r) : this.props.expandParentClass;
 	        }
 	        var result = [_react2.default.createElement(
 	          _TableRow2.default,
@@ -2857,15 +2869,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	          tableColumns
 	        )];
 
-	        if (this.props.expandableRow && this.props.expandableRow(data)) {
+	        if (haveExpandContent) {
+	          var expandBodyClass = _util2.default.isFunction(this.props.expandBodyClass) ? this.props.expandBodyClass(data, r) : this.props.expandBodyClass;
 	          result.push(_react2.default.createElement(
 	            _ExpandComponent2.default,
 	            {
 	              key: key + '-expand',
 	              row: data,
-	              className: trClassName,
+	              className: expandBodyClass,
 	              bgColor: this.props.expandRowBgColor || this.props.selectRow.bgColor || undefined,
-	              hidden: !(this.props.expanding.indexOf(key) > -1),
+	              hidden: !isExpanding,
 	              colSpan: expandColSpan,
 	              width: "100%" },
 	            this.props.expandComponent(data)
@@ -2933,8 +2946,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        offset = { x: 0, y: 1 };
 	      } else if (e.keyCode === 13) {
 	        var enterToEdit = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.enterToEdit : false;
+	        var enterToExpand = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.enterToExpand : false;
+
 	        if (cellEdit && enterToEdit) {
 	          this.handleEditCell(e.target.parentElement.rowIndex + 1, e.currentTarget.cellIndex, '', e);
+	        }
+
+	        if (enterToExpand) {
+	          this.handleClickCell(this.props.y + 1, this.props.x);
 	        }
 	      }
 	      if (offset && keyBoardNav) {
@@ -3004,11 +3023,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	          keyField = _props4.keyField,
 	          expandBy = _props4.expandBy,
 	          expandableRow = _props4.expandableRow,
-	          clickToExpand = _props4.selectRow.clickToExpand,
+	          _props4$selectRow = _props4.selectRow,
+	          clickToExpand = _props4$selectRow.clickToExpand,
+	          hideSelectColumn = _props4$selectRow.hideSelectColumn,
 	          onlyOneExpanding = _props4.onlyOneExpanding;
 
 	      var selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
-	      columnIndex = this._isSelectRowDefined() ? columnIndex - 1 : columnIndex;
+	      columnIndex = this._isSelectRowDefined() && !hideSelectColumn ? columnIndex - 1 : columnIndex;
 	      columnIndex = this._isExpandColumnVisible() ? columnIndex - 1 : columnIndex;
 	      if (expandableRow && selectRowAndExpand && (expandBy === _Const2.default.EXPAND_BY_ROW ||
 	      /* Below will allow expanding trigger by clicking on selection column
@@ -3097,7 +3118,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        column = this.props.columns[nextCIndex];
 	        if (!row) break;
 	        var editable = column.editable;
-	        if (isFun(column.editable)) {
+	        if (_util2.default.isFunction(column.editable)) {
 	          editable = column.editable(column, row, nextRIndex, nextCIndex);
 	        }
 	        if (editable && editable.readOnly !== true && !column.hidden && keyField !== column.name) {
@@ -3231,6 +3252,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  expandBy: _react.PropTypes.string,
 	  expanding: _react.PropTypes.array,
 	  onExpand: _react.PropTypes.func,
+	  expandBodyClass: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
+	  expandParentClass: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
 	  onlyOneExpanding: _react.PropTypes.bool,
 	  beforeShowError: _react.PropTypes.func,
 	  keyBoardNav: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.object]),
@@ -3246,8 +3269,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
 	    return;
 	  }
-
-	  __REACT_HOT_LOADER__.register(isFun, 'isFun', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableBody.js');
 
 	  __REACT_HOT_LOADER__.register(TableBody, 'TableBody', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableBody.js');
 
@@ -3290,6 +3311,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      { className: orderClass },
 	      _react2.default.createElement('span', { className: 'caret', style: { margin: '10px 5px' } })
 	    );
+	  },
+	  isFunction: function isFunction(obj) {
+	    return obj && typeof obj === 'function';
 	  },
 	  getScrollBarWidth: function getScrollBarWidth() {
 	    var inner = document.createElement('p');
@@ -3410,6 +3434,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _classnames = __webpack_require__(3);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _util = __webpack_require__(9);
+
+	var _util2 = _interopRequireDefault(_util);
 
 	var _react = __webpack_require__(2);
 
@@ -3544,9 +3572,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var selectRowClass = null;
 
 	      if (selectRow) {
-	        backgroundColor = typeof selectRow.bgColor === 'function' ? selectRow.bgColor(row, isSelected) : isSelected ? selectRow.bgColor : null;
+	        backgroundColor = _util2.default.isFunction(selectRow.bgColor) ? selectRow.bgColor(row, isSelected) : isSelected ? selectRow.bgColor : null;
 
-	        selectRowClass = typeof selectRow.className === 'function' ? selectRow.className(row, isSelected) : isSelected ? selectRow.className : null;
+	        selectRowClass = _util2.default.isFunction(selectRow.className) ? selectRow.className(row, isSelected) : isSelected ? selectRow.className : null;
 	      }
 
 	      var trCss = {
@@ -3629,6 +3657,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
+
+	var _util = __webpack_require__(9);
+
+	var _util2 = _interopRequireDefault(_util);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3790,7 +3822,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if (isFocus) {
 	        if (customNavStyle) {
-	          var cusmtStyle = typeof customNavStyle === 'function' ? customNavStyle(children, row) : customNavStyle;
+	          var cusmtStyle = _util2.default.isFunction(customNavStyle) ? customNavStyle(children, row) : customNavStyle;
 	          tdStyle = _extends({}, tdStyle, cusmtStyle);
 	        } else {
 	          className = className + ' default-focus-cell';
@@ -3891,6 +3923,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Const2 = _interopRequireDefault(_Const);
 
+	var _util = __webpack_require__(9);
+
+	var _util2 = _interopRequireDefault(_util);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3936,7 +3972,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _this.focusInEditor = _this.focusInEditor.bind(_this);
 	    _this.state = {
 	      shakeEditor: false,
-	      className: typeof className === 'function' ? className(fieldValue, row) : className
+	      className: _util2.default.isFunction(className) ? className(fieldValue, row) : className
 	    };
 	    return _this;
 	  }
@@ -4019,7 +4055,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              invalidColumnClassName = _props.invalidColumnClassName,
 	              row = _props.row;
 
-	          var className = typeof invalidColumnClassName === 'function' ? invalidColumnClassName(value, row) : invalidColumnClassName;
+	          var className = _util2.default.isFunction(invalidColumnClassName) ? invalidColumnClassName(value, row) : invalidColumnClassName;
 	          ts.setState({ shakeEditor: true, className: className });
 	          ts.timeouteClear = setTimeout(function () {
 	            ts.setState({ shakeEditor: false });
@@ -4092,7 +4128,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'focusInEditor',
 	    value: function focusInEditor() {
-	      if (typeof this.refs.inputRef.focus === 'function') {
+	      if (_util2.default.isFunction(this.refs.inputRef.focus)) {
 	        this.refs.inputRef.focus();
 	      }
 	    }
@@ -4143,7 +4179,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if (isFocus) {
 	        if (customStyleWithNav) {
-	          var customStyle = typeof customStyleWithNav === 'function' ? customStyleWithNav(fieldValue, row) : customStyleWithNav;
+	          var customStyle = _util2.default.isFunction(customStyleWithNav) ? customStyleWithNav(fieldValue, row) : customStyleWithNav;
 	          style = _extends({}, style, customStyle);
 	        } else {
 	          className = className + ' default-focus-cell';
@@ -10591,7 +10627,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        style: {
 	          backgroundColor: this.props.bgColor
 	        },
-	        className: (0, _classnames2.default)(className)
+	        className: this.props.hidden ? null : (0, _classnames2.default)(className)
 	      };
 	      return _react2.default.createElement(
 	        'tr',
@@ -10657,6 +10693,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _Const = __webpack_require__(4);
 
 	var _Const2 = _interopRequireDefault(_Const);
+
+	var _util = __webpack_require__(9);
+
+	var _util2 = _interopRequireDefault(_util);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10774,7 +10814,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.totalPages = Math.ceil(dataSize / sizePerPage);
 	      this.lastPage = this.props.pageStartIndex + this.totalPages - 1;
-	      var pageBtns = this.makePage(typeof paginationPanel === 'function');
+	      var pageBtns = this.makePage(_util2.default.isFunction(paginationPanel));
 	      var dropdown = this.makeDropDown();
 
 	      var offset = Math.abs(_Const2.default.PAGE_START_INDEX - pageStartIndex);
@@ -10793,7 +10833,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dataSize
 	      ) : null;
 
-	      if (typeof paginationShowsTotal === 'function') {
+	      if (_util2.default.isFunction(paginationShowsTotal)) {
 	        total = paginationShowsTotal(start, to + 1, dataSize);
 	      }
 
@@ -16409,7 +16449,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      }
 
-	      var classes = (0, _classnames2.default)(typeof className === 'function' ? className() : className, !isOnlyHead && dataSort ? 'sort-column' : '');
+	      var classes = (0, _classnames2.default)(_util2.default.isFunction(className) ? className() : className, !isOnlyHead && dataSort ? 'sort-column' : '');
 
 	      var attr = {};
 	      if (headerTitle) {
