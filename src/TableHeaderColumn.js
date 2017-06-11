@@ -126,7 +126,7 @@ class TableHeaderColumn extends Component {
     }
 
     const classes = classSet(
-      typeof className === 'function' ? className() : className,
+      Util.isFunction(className) ? className() : className,
       !isOnlyHead && dataSort ? 'sort-column' : '');
 
     const attr = {};

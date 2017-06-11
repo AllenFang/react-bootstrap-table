@@ -332,7 +332,7 @@ class BootstrapTable extends Component {
    */
   isRemoteDataSource(props) {
     const { remote } = (props || this.props);
-    return remote === true || typeof remote === 'function';
+    return remote === true || Util.isFunction(remote);
   }
 
   /**
@@ -1002,7 +1002,7 @@ class BootstrapTable extends Component {
       }
     });
 
-    if (typeof csvFileName === 'function') {
+    if (Util.isFunction(csvFileName)) {
       csvFileName = csvFileName();
     }
 
@@ -1135,7 +1135,7 @@ class BootstrapTable extends Component {
             // when you want same auto generate value and not allow edit, example ID field
             autoValue: props.autoValue || false,
             // for create editor, no params for column.editable() indicate that editor for new row
-            editable: props.editable && (typeof props.editable === 'function') ? props.editable() : props.editable,
+            editable: props.editable && (Util.isFunction(props.editable === 'function')) ? props.editable() : props.editable,
             format: props.dataFormat ? function(value) {
               return props.dataFormat(value, null, props.formatExtraData, r).replace(/<.*?>/g, '');
             } : false

@@ -7,10 +7,6 @@ import TableEditColumn from './TableEditColumn';
 import classSet from 'classnames';
 import ExpandComponent from './ExpandComponent';
 
-const isFun = function(obj) {
-  return obj && (typeof obj === 'function');
-};
-
 class TableBody extends Component {
   constructor(props) {
     super(props);
@@ -67,7 +63,7 @@ class TableBody extends Component {
           const format = column.format ? function(value) {
             return column.format(value, data, column.formatExtraData, r).replace(/<.*?>/g, '');
           } : false;
-          if (isFun(column.editable)) {
+          if (Utils.isFunction(column.editable)) {
             editable = column.editable(fieldValue, data, r, i);
           }
 
@@ -96,7 +92,7 @@ class TableBody extends Component {
           let columnChild = fieldValue && fieldValue.toString();
           let columnTitle = null;
           let tdClassName = column.className;
-          if (isFun(column.className)) {
+          if (Utils.isFunction(column.className)) {
             tdClassName = column.className(fieldValue, data, r, i);
           }
 
@@ -152,11 +148,11 @@ class TableBody extends Component {
 
       // add by bluespring for className customize
       let trClassName = this.props.trClassName;
-      if (isFun(this.props.trClassName)) {
+      if (Utils.isFunction(this.props.trClassName)) {
         trClassName = this.props.trClassName(data, r);
       }
       if (isExpanding && this.props.expandParentClass) {
-        trClassName += isFun(this.props.expandParentClass) ?
+        trClassName += Utils.isFunction(this.props.expandParentClass) ?
           this.props.expandParentClass(data, r) :
           this.props.expandParentClass;
       }
@@ -183,7 +179,7 @@ class TableBody extends Component {
       </TableRow> ];
 
       if (haveExpandContent) {
-        const expandBodyClass = isFun(this.props.expandBodyClass) ?
+        const expandBodyClass = Utils.isFunction(this.props.expandBodyClass) ?
           this.props.expandBodyClass(data, r) :
           this.props.expandBodyClass;
         result.push(
@@ -409,7 +405,7 @@ class TableBody extends Component {
       column = this.props.columns[nextCIndex];
       if (!row) break;
       let editable = column.editable;
-      if (isFun(column.editable)) {
+      if (Utils.isFunction(column.editable)) {
         editable = column.editable(column, row, nextRIndex, nextCIndex);
       }
       if (editable && editable.readOnly !== true &&

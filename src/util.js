@@ -15,6 +15,10 @@ export default {
     );
   },
 
+  isFunction(obj) {
+    return obj && (typeof obj === 'function');
+  },
+
   getScrollBarWidth() {
     const inner = document.createElement('p');
     inner.style.width = '100%';

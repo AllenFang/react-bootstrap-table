@@ -1,5 +1,6 @@
 /* eslint no-nested-ternary: 0 */
 import classSet from 'classnames';
+import Utils from './util';
 import React, { Component, PropTypes } from 'react';
 
 class TableRow extends Component {
@@ -77,10 +78,10 @@ class TableRow extends Component {
     let selectRowClass = null;
 
     if (selectRow) {
-      backgroundColor = typeof selectRow.bgColor === 'function' ?
+      backgroundColor = Utils.isFunction(selectRow.bgColor) ?
         selectRow.bgColor(row, isSelected) : ( isSelected ? selectRow.bgColor : null);
 
-      selectRowClass = typeof selectRow.className === 'function' ?
+      selectRowClass = Utils.isFunction(selectRow.className) ?
         selectRow.className(row, isSelected) : ( isSelected ? selectRow.className : null);
     }
 

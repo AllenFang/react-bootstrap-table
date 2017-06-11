@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Const from './Const';
+import Util from './util';
 
 class TableColumn extends Component {
 
@@ -136,7 +137,7 @@ class TableColumn extends Component {
 
     if (isFocus) {
       if (customNavStyle) {
-        const cusmtStyle = typeof customNavStyle === 'function' ?
+        const cusmtStyle = Util.isFunction(customNavStyle) ?
           customNavStyle(children, row) : customNavStyle;
         tdStyle = {
           ...tdStyle,
