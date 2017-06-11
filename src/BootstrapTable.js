@@ -418,6 +418,8 @@ class BootstrapTable extends Component {
             expandableRow={ this.props.expandableRow }
             expandRowBgColor={ this.props.options.expandRowBgColor }
             expandBy={ this.props.options.expandBy || Const.EXPAND_BY_ROW }
+            expandBodyClass={ this.props.options.expandBodyClass }
+            expandParentClass={ this.props.options.expandParentClass }
             columns={ columns }
             trClassName={ this.props.trClassName }
             striped={ this.props.striped }
@@ -1479,6 +1481,8 @@ BootstrapTable.propTypes = {
     expanding: PropTypes.array,
     onExpand: PropTypes.func,
     onlyOneExpanding: PropTypes.bool,
+    expandBodyClass: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
+    expandParentClass: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
     beforeShowError: PropTypes.func,
     printToolBar: PropTypes.bool
   }),
@@ -1627,6 +1631,8 @@ BootstrapTable.defaultProps = {
     expanding: [],
     onExpand: undefined,
     onlyOneExpanding: false,
+    expandBodyClass: null,
+    expandParentClass: null,
     beforeShowError: undefined,
     printToolBar: true
   },

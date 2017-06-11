@@ -11,7 +11,7 @@ class ExpandComponent extends Component {
       style: {
         backgroundColor: this.props.bgColor
       },
-      className: classSet(className)
+      className: this.props.hidden ? null : classSet(className)
     };
     return (
       <tr hidden={ this.props.hidden } width={ this.props.width } { ...trCss }>
