@@ -9,6 +9,7 @@ import NavWithCellEditTable from './nav-with-cell-edit-table';
 import CustomStyleNavWithCellEditTable from './custom-style-nav-with-cell-edit-table';
 import EnterToEditWithNavTable from './enter-to-edit-with-nav-table';
 import NavWithExpandingTable from './nav-with-expand-table';
+import EnterToExpandWithNavTable from './enter-to-expand-row-with-nav-table';
 
 import renderLinks from '../utils';
 
@@ -73,6 +74,14 @@ class Demo extends React.Component {
         <Panel header={ 'Expand with Keyboard Navigation Example' }>
           { renderLinks('keyboard-nav/nav-with-expand-table.js') }
           <NavWithExpandingTable/>
+        </Panel>
+        <Panel header={ 'Enter to Expand Row with Keyboard Navigation Example' }>
+          { renderLinks('keyboard-nav/enter-to-expand-row-with-nav-table.js') }
+          <span>
+            <code>keyBoardNav</code> accept a bool or object value<br/>
+            Use <code>keyBoardNav.enterToExpand</code> to trigger expand/collapse row<br/>
+          </span>
+          <EnterToExpandWithNavTable/>
         </Panel>
       </Col>
     );
