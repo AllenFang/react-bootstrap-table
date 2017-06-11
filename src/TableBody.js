@@ -252,9 +252,17 @@ class TableBody extends Component {
       const enterToEdit = typeof keyBoardNav === 'object' ?
         keyBoardNav.enterToEdit :
         false;
+      const enterToExpand = typeof keyBoardNav === 'object' ?
+        keyBoardNav.enterToExpand :
+        false;
+
       if (cellEdit && enterToEdit) {
         this.handleEditCell(e.target.parentElement.rowIndex + 1,
           e.currentTarget.cellIndex, '', e);
+      }
+
+      if (enterToExpand) {
+        this.handleClickCell(this.props.y + 1, this.props.x);
       }
     }
     if (offset && keyBoardNav) {
