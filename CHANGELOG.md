@@ -1,3 +1,16 @@
+<a name="v3.3.9"></a>
+# [v3.3.9](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.8...v3.3.9) (2017-06-08)
+## Bug fixes
+* Fixed TypeError: this.props.children.filter is not a function([80fb5a6](https://github.com/AllenFang/react-bootstrap-table/commit/80fb5a69cee6ce4357bbb11128f2fbc19c4300e1))
+
+<a name="v3.3.8"></a>
+# [v3.3.8](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.7...v3.3.8) (2017-06-02)
+## Bug fixes
+* `currSizePerPage` should be string([6c6185d](https://github.com/AllenFang/react-bootstrap-table/commit/6c6185d6d5f06e66ce03c304a6f5d1bb85563935))
+
+## Enhancement
+* allow `options.prePage`, `options.nextPage`, `options.firstPage` and `options.lastPage` to accept any type([a2ab8fb](https://github.com/AllenFang/react-bootstrap-table/commit/a2ab8fbaba2a072403fcc467b5f7d7cf8e0de0e7))
+
 <a name="v3.3.7"></a>
 # [v3.3.7](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.6...v3.3.7) (2017-05-22)
 ## Enhancement

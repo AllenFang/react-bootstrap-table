@@ -1275,8 +1275,9 @@ class BootstrapTable extends Component {
         }
       }
     } else {
-      React.Children.forEach(this.props.children.filter(_ => !!_), (child, i) => {
-        if (child.props.width) {
+      // debugger;
+      React.Children.forEach(this.props.children, (child, i) => {
+        if (child && child.props.width) {
           header[i].style.width = `${child.props.width}px`;
           header[i].style.minWidth = `${child.props.width}px`;
         }
@@ -1441,10 +1442,10 @@ BootstrapTable.propTypes = {
     noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
     withoutNoDataText: PropTypes.bool,
     handleConfirmDeleteRow: PropTypes.func,
-    prePage: PropTypes.string,
-    nextPage: PropTypes.string,
-    firstPage: PropTypes.string,
-    lastPage: PropTypes.string,
+    prePage: PropTypes.any,
+    nextPage: PropTypes.any,
+    firstPage: PropTypes.any,
+    lastPage: PropTypes.any,
     prePageTitle: PropTypes.string,
     nextPageTitle: PropTypes.string,
     firstPageTitle: PropTypes.string,
