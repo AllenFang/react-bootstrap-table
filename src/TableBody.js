@@ -314,12 +314,13 @@ class TableBody extends Component {
       expandBy,
       expandableRow,
       selectRow: {
-        clickToExpand
+        clickToExpand,
+        hideSelectColumn
       },
       onlyOneExpanding
     } = this.props;
     const selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
-    columnIndex = this._isSelectRowDefined() ? columnIndex - 1 : columnIndex;
+    columnIndex = this._isSelectRowDefined() && !hideSelectColumn ? columnIndex - 1 : columnIndex;
     columnIndex = this._isExpandColumnVisible() ? columnIndex - 1 : columnIndex;
     if (expandableRow &&
       selectRowAndExpand &&
