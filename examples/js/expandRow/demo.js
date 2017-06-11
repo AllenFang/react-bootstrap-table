@@ -1,4 +1,5 @@
 /* eslint max-len: 0 */
+require('./style.css');
 import React from 'react';
 import ExpandRow from './expandRow';
 import SingleExpandRow from './single-expanding';
@@ -7,6 +8,7 @@ import ManageExpandExternal from './manage-expanding';
 import ExpandWithSelection from './expand-row-with-selection';
 import ExpandWithCellEdit from './expand-row-with-cellEdit';
 import ExpandIndicator from './expand-indicator';
+import CustomExpandClassName from './custom-expand-class';
 import CustomExpandIndicator from './custom-expand-indicator';
 import renderLinks from '../utils';
 
@@ -28,6 +30,10 @@ class Demo extends React.Component {
         <Panel header={ 'Row Expand Indicator' }>
           { renderLinks('expandRow/expand-indicator.js') }
           <ExpandIndicator/>
+        </Panel>
+        <Panel header={ 'Custom Expand Row ClassName' }>
+          { renderLinks('expandRow/custom-expand-class.js') }
+          <CustomExpandClassName/>
         </Panel>
         <Panel header={ 'Custom Row Expand Indicator' }>
           { renderLinks('expandRow/custom-expand-indicator.js') }
