@@ -420,6 +420,8 @@ class BootstrapTable extends Component {
             expandableRow={ this.props.expandableRow }
             expandRowBgColor={ this.props.options.expandRowBgColor }
             expandBy={ this.props.options.expandBy || Const.EXPAND_BY_ROW }
+            expandBodyClass={ this.props.options.expandBodyClass }
+            expandParentClass={ this.props.options.expandParentClass }
             columns={ columns }
             trClassName={ this.props.trClassName }
             striped={ this.props.striped }
@@ -1275,13 +1277,17 @@ class BootstrapTable extends Component {
         }
       }
     } else {
-      // debugger;
-      React.Children.forEach(this.props.children, (child, i) => {
-        if (child && child.props.width) {
-          header[i].style.width = `${child.props.width}px`;
-          header[i].style.minWidth = `${child.props.width}px`;
+      for (const i in bodyHeader) {
+        if (bodyHeader.hasOwnProperty(i)) {
+          const child = bodyHeader[i];
+          if (child.style.width) {
+            header[i].style.width = child.style.width;
+          }
+          if (child.style.minWidth) {
+            header[i].style.minWidth = child.style.minWidth;
+          }
         }
-      });
+      }
     }
     this.isVerticalScroll = isScroll;
   }
@@ -1479,6 +1485,8 @@ BootstrapTable.propTypes = {
     expanding: PropTypes.array,
     onExpand: PropTypes.func,
     onlyOneExpanding: PropTypes.bool,
+    expandBodyClass: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
+    expandParentClass: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
     beforeShowError: PropTypes.func,
     printToolBar: PropTypes.bool,
     insertFailIndicator: PropTypes.string
@@ -1628,6 +1636,8 @@ BootstrapTable.defaultProps = {
     expanding: [],
     onExpand: undefined,
     onlyOneExpanding: false,
+    expandBodyClass: null,
+    expandParentClass: null,
     beforeShowError: undefined,
     printToolBar: true,
     insertFailIndicator: Const.INSERT_FAIL_INDICATOR

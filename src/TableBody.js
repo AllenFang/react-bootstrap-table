@@ -148,10 +148,18 @@ class TableBody extends Component {
           this.props.expanding.indexOf(key) > -1,
           ExpandColumnCustomComponent, r, data
       );
+      const haveExpandContent = this.props.expandableRow && this.props.expandableRow(data);
+      const isExpanding = haveExpandContent && this.props.expanding.indexOf(key) > -1;
+
       // add by bluespring for className customize
       let trClassName = this.props.trClassName;
       if (isFun(this.props.trClassName)) {
         trClassName = this.props.trClassName(data, r);
+      }
+      if (isExpanding && this.props.expandParentClass) {
+        trClassName += isFun(this.props.expandParentClass) ?
+          this.props.expandParentClass(data, r) :
+          this.props.expandParentClass;
       }
       const result = [ <TableRow isSelected={ selected } key={ key } className={ trClassName }
         index={ r }
@@ -175,14 +183,17 @@ class TableBody extends Component {
         { tableColumns }
       </TableRow> ];
 
-      if (this.props.expandableRow && this.props.expandableRow(data)) {
+      if (haveExpandContent) {
+        const expandBodyClass = isFun(this.props.expandBodyClass) ?
+          this.props.expandBodyClass(data, r) :
+          this.props.expandBodyClass;
         result.push(
           <ExpandComponent
             key={ key + '-expand' }
             row={ data }
-            className={ trClassName }
+            className={ expandBodyClass }
             bgColor={ this.props.expandRowBgColor || this.props.selectRow.bgColor || undefined }
-            hidden={ !(this.props.expanding.indexOf(key) > -1) }
+            hidden={ !isExpanding }
             colSpan={ expandColSpan }
             width={ "100%" }>
             { this.props.expandComponent(data) }
@@ -304,12 +315,13 @@ class TableBody extends Component {
       expandBy,
       expandableRow,
       selectRow: {
-        clickToExpand
+        clickToExpand,
+        hideSelectColumn
       },
       onlyOneExpanding
     } = this.props;
     const selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
-    columnIndex = this._isSelectRowDefined() ? columnIndex - 1 : columnIndex;
+    columnIndex = this._isSelectRowDefined() && !hideSelectColumn ? columnIndex - 1 : columnIndex;
     columnIndex = this._isExpandColumnVisible() ? columnIndex - 1 : columnIndex;
     if (expandableRow &&
       selectRowAndExpand &&
@@ -503,6 +515,8 @@ TableBody.propTypes = {
   expandBy: PropTypes.string,
   expanding: PropTypes.array,
   onExpand: PropTypes.func,
+  expandBodyClass: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
+  expandParentClass: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
   onlyOneExpanding: PropTypes.bool,
   beforeShowError: PropTypes.func,
   keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),

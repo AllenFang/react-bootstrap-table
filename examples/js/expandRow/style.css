@@ -1,0 +1,16 @@
+.custom-expand-parent {
+  background-color: salmon;
+}
+
+.custom-expand-body-1 {
+  font-size: 8px;
+  color: lawngreen;
+  background-color: darkkhaki;
+}
+
+.custom-expand-body-0 {
+  font-size: 16px;
+  font-weight: bold;
+  background-color: springgreen;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
