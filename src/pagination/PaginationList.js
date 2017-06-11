@@ -10,14 +10,18 @@ class PaginationList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: this.props.open
+      open: this.props.open,
+      show: this.props.show
     };
   }
 
   componentWillReceiveProps() {
     const { keepSizePerPageState } = this.props;
     if (!keepSizePerPageState) {
-      this.setState({ open: false });
+      this.setState({
+        open: false,
+        show: false
+      });
     }
   }
 
@@ -45,7 +49,12 @@ class PaginationList extends Component {
       page = parseInt(page, 10);
     }
 
-    if (keepSizePerPageState) { this.setState({ open: false }); }
+    if (keepSizePerPageState) {
+      this.setState({
+        open: false,
+        show: false
+      });
+    }
 
     if (page !== currPage) {
       this.props.changePage(page, sizePerPage);
@@ -64,12 +73,16 @@ class PaginationList extends Component {
         this.props.onSizePerPageList(selectSize);
       }
     }
-    this.setState({ open: false });
+    this.setState({
+      open: false,
+      show: false
+    });
   }
 
   toggleDropDown = () => {
     this.setState({
-      open: !this.state.open
+      open: !this.state.open,
+      show: !this.state.show
     });
   }
 
@@ -149,6 +162,7 @@ class PaginationList extends Component {
     if (sizePerPageDropDown) {
       dropdown = sizePerPageDropDown({
         open: this.state.open,
+        show: this.state.show,
         hideSizePerPage,
         currSizePerPage: String(sizePerPage),
         sizePerPageList,
@@ -182,6 +196,7 @@ class PaginationList extends Component {
       dropdown = (
         <SizePerPageDropDown
           open={ this.state.open }
+          show={ this.state.show }
           hidden={ hideSizePerPage }
           currSizePerPage={ String(sizePerPageText) }
           options={ sizePerPageOptions }
