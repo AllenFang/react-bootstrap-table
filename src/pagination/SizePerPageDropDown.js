@@ -7,7 +7,6 @@ class SizePerPageDropDown extends Component {
   render() {
     const {
       open,
-      show,
       hidden,
       onClick,
       options,
@@ -17,13 +16,12 @@ class SizePerPageDropDown extends Component {
       currSizePerPage
     } = this.props;
 
-    const openClass = open ? 'open' : '';
-    const showClass = show ? 'show' : '';
+    const openClass = open ? 'open show' : '';
     const dropDownStyle = { visibility: hidden ? 'hidden' : 'visible' };
 
     return (
       <span style={ dropDownStyle }
-        className={ `${variation} ${openClass} ${showClass} ${className} ${sizePerPageDefaultClass}` }>
+        className={ `${variation} ${openClass} ${className} ${sizePerPageDefaultClass}` }>
         <button className={ `btn ${btnContextual} dropdown-toggle` }
           id='pageDropDown' data-toggle='dropdown'
           aria-expanded={ open }
@@ -54,7 +52,6 @@ SizePerPageDropDown.propTypes = {
 };
 SizePerPageDropDown.defaultProps = {
   open: false,
-  show: false,
   hidden: false,
   btnContextual: 'btn-default',
   variation: 'dropdown',
