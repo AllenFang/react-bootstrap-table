@@ -1825,7 +1825,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    afterSaveCell: _propTypes2.default.func,
 	    nonEditableRows: _propTypes2.default.func
 	  }),
-<<<<<<< HEAD
 	  insertRow: _propTypes2.default.bool,
 	  deleteRow: _propTypes2.default.bool,
 	  search: _propTypes2.default.bool,
@@ -1880,10 +1879,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    noDataText: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.object]),
 	    withoutNoDataText: _propTypes2.default.bool,
 	    handleConfirmDeleteRow: _propTypes2.default.func,
-	    prePage: _propTypes2.default.string,
-	    nextPage: _propTypes2.default.string,
-	    firstPage: _propTypes2.default.string,
-	    lastPage: _propTypes2.default.string,
+	    prePage: _propTypes2.default.any,
+	    nextPage: _propTypes2.default.any,
+	    firstPage: _propTypes2.default.any,
+	    lastPage: _propTypes2.default.any,
 	    prePageTitle: _propTypes2.default.string,
 	    nextPageTitle: _propTypes2.default.string,
 	    firstPageTitle: _propTypes2.default.string,
@@ -1920,101 +1919,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    beforeShowError: _propTypes2.default.func,
 	    printToolBar: _propTypes2.default.bool,
 	    insertFailIndicator: _propTypes2.default.string
-=======
-	  insertRow: _react.PropTypes.bool,
-	  deleteRow: _react.PropTypes.bool,
-	  search: _react.PropTypes.bool,
-	  multiColumnSearch: _react.PropTypes.bool,
-	  strictSearch: _react.PropTypes.bool,
-	  columnFilter: _react.PropTypes.bool,
-	  trClassName: _react.PropTypes.any,
-	  tableStyle: _react.PropTypes.object,
-	  containerStyle: _react.PropTypes.object,
-	  headerStyle: _react.PropTypes.object,
-	  bodyStyle: _react.PropTypes.object,
-	  containerClass: _react.PropTypes.string,
-	  tableContainerClass: _react.PropTypes.string,
-	  headerContainerClass: _react.PropTypes.string,
-	  bodyContainerClass: _react.PropTypes.string,
-	  tableHeaderClass: _react.PropTypes.string,
-	  tableBodyClass: _react.PropTypes.string,
-	  options: _react.PropTypes.shape({
-	    clearSearch: _react.PropTypes.bool,
-	    sortName: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.array]),
-	    sortOrder: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.array]),
-	    defaultSortName: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.array]),
-	    defaultSortOrder: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.array]),
-	    sortIndicator: _react.PropTypes.bool,
-	    afterTableComplete: _react.PropTypes.func,
-	    afterDeleteRow: _react.PropTypes.func,
-	    afterInsertRow: _react.PropTypes.func,
-	    afterSearch: _react.PropTypes.func,
-	    afterColumnFilter: _react.PropTypes.func,
-	    onRowClick: _react.PropTypes.func,
-	    onRowDoubleClick: _react.PropTypes.func,
-	    page: _react.PropTypes.number,
-	    pageStartIndex: _react.PropTypes.number,
-	    paginationShowsTotal: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.func]),
-	    sizePerPageList: _react.PropTypes.array,
-	    sizePerPage: _react.PropTypes.number,
-	    paginationSize: _react.PropTypes.number,
-	    paginationPosition: _react.PropTypes.oneOf([_Const2.default.PAGINATION_POS_TOP, _Const2.default.PAGINATION_POS_BOTTOM, _Const2.default.PAGINATION_POS_BOTH]),
-	    hideSizePerPage: _react.PropTypes.bool,
-	    hidePageListOnlyOnePage: _react.PropTypes.bool,
-	    alwaysShowAllBtns: _react.PropTypes.bool,
-	    withFirstAndLast: _react.PropTypes.bool,
-	    keepSizePerPageState: _react.PropTypes.bool,
-	    onSortChange: _react.PropTypes.func,
-	    onPageChange: _react.PropTypes.func,
-	    onSizePerPageList: _react.PropTypes.func,
-	    onFilterChange: _react2.default.PropTypes.func,
-	    onSearchChange: _react2.default.PropTypes.func,
-	    onAddRow: _react2.default.PropTypes.func,
-	    onExportToCSV: _react2.default.PropTypes.func,
-	    onCellEdit: _react2.default.PropTypes.func,
-	    noDataText: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object]),
-	    withoutNoDataText: _react2.default.PropTypes.bool,
-	    handleConfirmDeleteRow: _react.PropTypes.func,
-	    prePage: _react.PropTypes.any,
-	    nextPage: _react.PropTypes.any,
-	    firstPage: _react.PropTypes.any,
-	    lastPage: _react.PropTypes.any,
-	    prePageTitle: _react.PropTypes.string,
-	    nextPageTitle: _react.PropTypes.string,
-	    firstPageTitle: _react.PropTypes.string,
-	    lastPageTitle: _react.PropTypes.string,
-	    searchDelayTime: _react.PropTypes.number,
-	    exportCSVText: _react.PropTypes.string,
-	    insertText: _react.PropTypes.string,
-	    deleteText: _react.PropTypes.string,
-	    saveText: _react.PropTypes.string,
-	    closeText: _react.PropTypes.string,
-	    ignoreEditable: _react.PropTypes.bool,
-	    defaultSearch: _react.PropTypes.string,
-	    insertModalHeader: _react.PropTypes.func,
-	    insertModalBody: _react.PropTypes.func,
-	    insertModalFooter: _react.PropTypes.func,
-	    insertModal: _react.PropTypes.func,
-	    insertBtn: _react.PropTypes.func,
-	    deleteBtn: _react.PropTypes.func,
-	    showSelectedOnlyBtn: _react.PropTypes.func,
-	    exportCSVBtn: _react.PropTypes.func,
-	    clearSearchBtn: _react.PropTypes.func,
-	    searchField: _react.PropTypes.func,
-	    searchPanel: _react.PropTypes.func,
-	    btnGroup: _react.PropTypes.func,
-	    toolBar: _react.PropTypes.func,
-	    sizePerPageDropDown: _react.PropTypes.func,
-	    paginationPanel: _react.PropTypes.func,
-	    searchPosition: _react.PropTypes.string,
-	    expandRowBgColor: _react.PropTypes.string,
-	    expandBy: _react.PropTypes.string,
-	    expanding: _react.PropTypes.array,
-	    onExpand: _react.PropTypes.func,
-	    onlyOneExpanding: _react.PropTypes.bool,
-	    beforeShowError: _react.PropTypes.func,
-	    printToolBar: _react.PropTypes.bool
->>>>>>> master
 	  }),
 	  fetchInfo: _propTypes2.default.shape({
 	    dataTotalSize: _propTypes2.default.number
@@ -6658,7 +6562,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var keepSizePerPageState = this.props.keepSizePerPageState;
 
 	      if (!keepSizePerPageState) {
-	        this.setState({ open: false });
+	        this.setState({
+	          open: false
+	        });
 	      }
 	    }
 	  }, {
@@ -6688,7 +6594,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      if (keepSizePerPageState) {
-	        this.setState({ open: false });
+	        this.setState({
+	          open: false
+	        });
 	      }
 
 	      if (page !== currPage) {
@@ -6710,7 +6618,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          this.props.onSizePerPageList(selectSize);
 	        }
 	      }
-	      this.setState({ open: false });
+	      this.setState({
+	        open: false
+	      });
 	    }
 	  }, {
 	    key: '__toggleDropDown__REACT_HOT_LOADER__',
@@ -7158,7 +7068,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          currSizePerPage = _props.currSizePerPage;
 
 
-	      var openClass = open ? 'open' : '';
+	      var openClass = open ? 'open show' : '';
 	      var dropDownStyle = { visibility: hidden ? 'hidden' : 'visible' };
 
 	      return _react2.default.createElement(
