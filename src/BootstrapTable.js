@@ -984,7 +984,7 @@ class BootstrapTable extends Component {
     } else {
       result = this.store.getDataIgnoringPagination();
     }
-
+    const separator = this.props.options.exportCSVSeparator || ',';
     const keys = [];
     this.props.children.filter(_ => _ != null).map(function(column) {
       if (column.props.export === true ||
@@ -1006,7 +1006,7 @@ class BootstrapTable extends Component {
       csvFileName = csvFileName();
     }
 
-    exportCSVUtil(result, keys, csvFileName);
+    exportCSVUtil(result, keys, csvFileName, separator);
   }
 
   handleSearch = searchText => {
@@ -1454,6 +1454,7 @@ BootstrapTable.propTypes = {
     lastPageTitle: PropTypes.string,
     searchDelayTime: PropTypes.number,
     exportCSVText: PropTypes.string,
+    exportCSVSeparator: PropTypes.string,
     insertText: PropTypes.string,
     deleteText: PropTypes.string,
     saveText: PropTypes.string,
