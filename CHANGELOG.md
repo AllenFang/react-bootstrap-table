@@ -1,3 +1,18 @@
+<a name="v3.4.0"></a>
+# [v3.4.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.9...v3.4.0) (2017-06-11)
+## Bug fixes
+* Fixed column width does not work when header grouping([4b1e11e](https://github.com/AllenFang/react-bootstrap-table/commit/4b1e11e0254e87fae3c6ea66902e3b73e85beb77))
+* Fixed wrong column to expand when `selectRow.hideSelectColumn` as ture and `expand={false}` on `TableHeaderColumn`([74e37d3](https://github.com/AllenFang/react-bootstrap-table/commit/74e37d31f0b768cad040af30af2785bbdcb5b3f3))
+
+## Enhancement
+* Support to configure the class for expand row and body([2115389](https://github.com/AllenFang/react-bootstrap-table/commit/211538956489074b21e1047c4e60dfaab3c01b72))
+	* Check [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/expandRow/custom-expand-class.js)
+
+## Feature
+* Support to press ENTER to expand/collapse row when keyboard navigation is enable([115495d](https://github.com/AllenFang/react-bootstrap-table/commit/115495d7e82031bdd9a736c37175d1bf43be15ca))
+	* Enable `keyBoardNav.enterToExpand`
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/keyboard-nav/enter-to-expand-row-with-nav-table.js)
+
 <a name="v3.3.9"></a>
 # [v3.3.9](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.8...v3.3.9) (2017-06-08)
 ## Bug fixes
