@@ -63,7 +63,7 @@ class DateFilter extends Component {
   cleanFiltered() {
     const value = this.setDefaultDate();
     const comparator = (this.props.defaultValue) ? this.props.defaultValue.comparator : '';
-    this.setState({ isPlaceholderSelected: (value === '') });
+    this.setState(() => { return { isPlaceholderSelected: (value === '') }; });
     this.refs.dateFilterComparator.value = comparator;
     this.refs.inputDate.value = value;
     this.props.filterHandler({ date: new Date(value), comparator }, Const.FILTER_TYPE.DATE);
@@ -71,7 +71,7 @@ class DateFilter extends Component {
 
   applyFilter(filterDateObj) {
     const { date, comparator } = filterDateObj;
-    this.setState({ isPlaceholderSelected: (date === '') });
+    this.setState(() => { return { isPlaceholderSelected: (date === '') }; });
     this.refs.dateFilterComparator.value = comparator;
     this.refs.inputDate.value = dateParser(date);
     this.props.filterHandler({ date, comparator }, Const.FILTER_TYPE.DATE);

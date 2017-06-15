@@ -197,13 +197,15 @@ class BootstrapTable extends Component {
   reset() {
     const { pageStartIndex } = this.props.options;
     this.store.clean();
-    this.setState({
-      data: this.getTableData(),
-      currPage: Util.getFirstPage(pageStartIndex),
-      expanding: [],
-      sizePerPage: Const.SIZE_PER_PAGE_LIST[0],
-      selectedRowKeys: this.store.getSelectedRowKeys(),
-      reset: true
+    this.setState(() => {
+      return {
+        data: this.getTableData(),
+        currPage: Util.getFirstPage(pageStartIndex),
+        expanding: [],
+        sizePerPage: Const.SIZE_PER_PAGE_LIST[0],
+        selectedRowKeys: this.store.getSelectedRowKeys(),
+        reset: true
+      };
     });
   }
 
@@ -229,11 +231,13 @@ class BootstrapTable extends Component {
       if (nextProps.pagination && !this.allowRemote(Const.REMOTE_PAGE)) {
         data = this.store.page(page, sizePerPage).get();
       }
-      this.setState({
-        data,
-        currPage: page,
-        sizePerPage,
-        reset: false
+      this.setState(() => {
+        return {
+          data,
+          currPage: page,
+          sizePerPage,
+          reset: false
+        };
       });
     } else {
       // #125
@@ -251,11 +255,13 @@ class BootstrapTable extends Component {
         this.store.sort();
       }
       const data = this.store.page(page, sizePerPage).get();
-      this.setState({
-        data,
-        currPage: page,
-        sizePerPage,
-        reset: false
+      this.setState(() => {
+        return {
+          data,
+          currPage: page,
+          sizePerPage,
+          reset: false
+        };
       });
 
       if (this.store.isSearching && options.afterSearch) {
@@ -270,8 +276,10 @@ class BootstrapTable extends Component {
     // If setting the expanded rows is being handled externally
     // then overwrite the current expanded rows.
     if (this.props.options.expanding !== options.expanding) {
-      this.setState({
-        expanding: options.expanding || []
+      this.setState(() => {
+        return {
+          expanding: options.expanding || []
+        };
       });
     }
 
@@ -279,9 +287,11 @@ class BootstrapTable extends Component {
       // set default select rows to store.
       const copy = selectRow.selected.slice();
       this.store.setSelectedRowKey(copy);
-      this.setState({
-        selectedRowKeys: copy,
-        reset: false
+      this.setState(() => {
+        return {
+          selectedRowKeys: copy,
+          reset: false
+        };
       });
     }
   }
@@ -490,16 +500,20 @@ class BootstrapTable extends Component {
 
   cleanSelected() {
     this.store.setSelectedRowKey([]);
-    this.setState({
-      selectedRowKeys: [],
-      reset: false
+    this.setState(() => {
+      return {
+        selectedRowKeys: [],
+        reset: false
+      };
     });
   }
 
   cleanSort() {
     this.store.cleanSortInfo();
-    this.setState({
-      reset: false
+    this.setState(() => {
+      return {
+        reset: false
+      };
     });
   }
 
@@ -513,9 +527,11 @@ class BootstrapTable extends Component {
     }
 
     const result = this.store.sort().get();
-    this.setState({
-      data: result,
-      reset: false
+    this.setState(() => {
+      return {
+        data: result,
+        reset: false
+      };
     });
   }
 
@@ -524,7 +540,7 @@ class BootstrapTable extends Component {
     if (onExpand) {
       onExpand(rowKey, !isRowExpanding);
     }
-    this.setState({ expanding, reset: false }, () => {
+    this.setState(() => { return { expanding, reset: false }; }, () => {
       this._adjustHeaderWidth();
     });
   }
@@ -541,14 +557,14 @@ class BootstrapTable extends Component {
       reset: false
     };
     if (!emptyTable) state.currPage = page;
-    this.setState(state);
+    this.setState(() => state);
 
     if (this.allowRemote(Const.REMOTE_PAGE) || emptyTable) {
       return;
     }
 
     const result = this.store.page(Util.getNormalizedPage(pageStartIndex, page), sizePerPage).get();
-    this.setState({ data: result, reset: false });
+    this.setState(() => { return { data: result, reset: false }; });
   }
 
   handleMouseLeave = () => {
@@ -630,8 +646,10 @@ class BootstrapTable extends Component {
         y--;
       }
     }
-    this.setState({
-      x, y, currPage, reset: false
+    this.setState(() => {
+      return {
+        x, y, currPage, reset: false
+      };
     });
   }
 
@@ -644,10 +662,12 @@ class BootstrapTable extends Component {
       let { clickToNav } = typeof keyBoardNav === 'object' ? keyBoardNav : {};
       clickToNav = clickToNav === false ? clickToNav : true;
       if (clickToNav) {
-        this.setState({
-          x: cellIndex,
-          y: rowIndex,
-          reset: false
+        this.setState(() => {
+          return {
+            x: cellIndex,
+            y: rowIndex,
+            reset: false
+          };
         });
       }
     }
@@ -710,7 +730,7 @@ class BootstrapTable extends Component {
       }
 
       this.store.setSelectedRowKey(selectedRowKeys);
-      this.setState({ selectedRowKeys, reset: false });
+      this.setState(() => { return { selectedRowKeys, reset: false }; });
     }
   }
 
@@ -723,10 +743,12 @@ class BootstrapTable extends Component {
     } else {
       result = this.store.get();
     }
-    this.setState({
-      data: result,
-      reset: false,
-      currPage: Util.getFirstPage(pageStartIndex)
+    this.setState(() => {
+      return {
+        data: result,
+        reset: false,
+        currPage: Util.getFirstPage(pageStartIndex)
+      };
     });
   }
 
@@ -751,9 +773,11 @@ class BootstrapTable extends Component {
       }
 
       this.store.setSelectedRowKey(currSelected);
-      this.setState({
-        selectedRowKeys: currSelected,
-        reset: false
+      this.setState(() => {
+        return {
+          selectedRowKeys: currSelected,
+          reset: false
+        };
       });
     }
   }
@@ -764,9 +788,11 @@ class BootstrapTable extends Component {
     const fieldName = columns[colIndex].name;
 
     const invalid = () => {
-      this.setState({
-        data: this.store.get(),
-        reset: false
+      this.setState(() => {
+        return {
+          data: this.store.get(),
+          reset: false
+        };
       });
       return;
     };
@@ -808,9 +834,11 @@ class BootstrapTable extends Component {
     }
 
     const result = this.store.edit(newVal, rowIndex, fieldName).get();
-    this.setState({
-      data: result,
-      reset: false
+    this.setState(() => {
+      return {
+        data: result,
+        reset: false
+      };
     });
 
     if (afterSaveCell) {
@@ -910,18 +938,22 @@ class BootstrapTable extends Component {
       let { currPage } = this.state;
       if (currPage > currLastPage) currPage = currLastPage;
       result = this.store.page(Util.getNormalizedPage(currPage), sizePerPage).get();
-      this.setState({
-        data: result,
-        selectedRowKeys: this.store.getSelectedRowKeys(),
-        currPage,
-        reset: false
+      this.setState(() => {
+        return {
+          data: result,
+          selectedRowKeys: this.store.getSelectedRowKeys(),
+          currPage,
+          reset: false
+        };
       });
     } else {
       result = this.store.get();
-      this.setState({
-        data: result,
-        reset: false,
-        selectedRowKeys: this.store.getSelectedRowKeys()
+      this.setState(() => {
+        return {
+          data: result,
+          reset: false,
+          selectedRowKeys: this.store.getSelectedRowKeys()
+        };
       });
     }
     if (this.props.options.afterDeleteRow) {
@@ -936,9 +968,11 @@ class BootstrapTable extends Component {
       onFilterChange(filterObj, colInfos);
     }
 
-    this.setState({
-      currPage: Util.getFirstPage(pageStartIndex),
-      reset: false
+    this.setState(() => {
+      return {
+        currPage: Util.getFirstPage(pageStartIndex),
+        reset: false
+      };
     });
 
     if (this.allowRemote(Const.REMOTE_FILTER)) {
@@ -968,9 +1002,11 @@ class BootstrapTable extends Component {
       this.props.options.afterColumnFilter(filterObj,
         this.store.getDataIgnoringPagination());
     }
-    this.setState({
-      data: result,
-      reset: false
+    this.setState(() => {
+      return {
+        data: result,
+        reset: false
+      };
     });
   }
 
@@ -1021,9 +1057,11 @@ class BootstrapTable extends Component {
       onSearchChange(searchText, colInfos, this.props.multiColumnSearch);
     }
 
-    this.setState({
-      currPage: Util.getFirstPage(pageStartIndex),
-      reset: false
+    this.setState(() => {
+      return {
+        currPage: Util.getFirstPage(pageStartIndex),
+        reset: false
+      };
     });
 
     if (this.allowRemote(Const.REMOTE_SEARCH)) {
@@ -1053,9 +1091,11 @@ class BootstrapTable extends Component {
       this.props.options.afterSearch(searchText,
         this.store.getDataIgnoringPagination());
     }
-    this.setState({
-      data: result,
-      reset: false
+    this.setState(() => {
+      return {
+        data: result,
+        reset: false
+      };
     });
   }
 
@@ -1316,25 +1356,31 @@ class BootstrapTable extends Component {
       if (atTheBeginning) {
         const { pageStartIndex } = this.props.options;
         result = this.store.page(Util.getNormalizedPage(pageStartIndex), sizePerPage).get();
-        this.setState({
-          data: result,
-          currPage: Util.getFirstPage(pageStartIndex),
-          reset: false
+        this.setState(() => {
+          return {
+            data: result,
+            currPage: Util.getFirstPage(pageStartIndex),
+            reset: false
+          };
         });
       } else {
         const currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
         result = this.store.page(currLastPage, sizePerPage).get();
-        this.setState({
-          data: result,
-          currPage: currLastPage,
-          reset: false
+        this.setState(() => {
+          return {
+            data: result,
+            currPage: currLastPage,
+            reset: false
+          };
         });
       }
     } else {
       result = this.store.get();
-      this.setState({
-        data: result,
-        reset: false
+      this.setState(() => {
+        return {
+          data: result,
+          reset: false
+        };
       });
     }
 
