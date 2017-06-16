@@ -635,17 +635,17 @@ class BootstrapTable extends Component {
     });
   }
 
-  handleRowClick = (row, rowIndex, cellIndex) => {
+  handleRowClick = (row, rowIndex, columnIndex) => {
     const { options, keyBoardNav } = this.props;
     if (options.onRowClick) {
-      options.onRowClick(row);
+      options.onRowClick(row, columnIndex);
     }
     if (keyBoardNav) {
       let { clickToNav } = typeof keyBoardNav === 'object' ? keyBoardNav : {};
       clickToNav = clickToNav === false ? clickToNav : true;
       if (clickToNav) {
         this.setState({
-          x: cellIndex,
+          x: columnIndex,
           y: rowIndex,
           reset: false
         });
