@@ -141,9 +141,10 @@ class Demo extends React.Component {
             <div className='panel-heading'>{ 'Export CSV Example' }</div>
             <div className='panel-body'>
               <h5>{ 'Source in /examples/js/manipulation/export-csv-table.js' }</h5>
-              <h5><b>{ 'Use ' }<code>{ 'csvFormat' }</code>{ ' to format cell when exporting.' }</b></h5>
-              <h5><b>{ 'Use ' }<code>{ 'csvHeader' }</code>{ ' to change the header text in csv.' }</b></h5>
-              <h5><b>{ 'Use ' }<code>{ 'csvFormatExtraData' }</code>{ ' to assign your extra data for formatting csv cell data.' }</b></h5>
+              <h5><b>{ 'Use ' }<code>{ 'options.csvFormat' }</code> on <code>{ 'TableHeaderColumn' }</code> { ' to format cell when exporting.' }</b></h5>
+              <h5><b>{ 'Use ' }<code>{ 'options.csvHeader' }</code> on <code>{ 'TableHeaderColumn' }</code> { ' to change the header text in csv.' }</b></h5>
+              <h5><b>{ 'Use ' }<code>{ 'csvFormatExtraData' }</code> on <code>{ 'TableHeaderColumn' }</code> { ' to assign your extra data for formatting csv cell data.' }</b></h5>
+              <h5><b>{ 'Use ' }<code>{ 'options.exportCSVSeparator' }</code>{ ' to speficy the separator of CSV file' }</b></h5>
               <ExportCSVTable />
             </div>
           </div>
