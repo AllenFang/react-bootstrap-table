@@ -9,7 +9,7 @@ if (Util.canUseDOM()) {
   var saveAs = filesaver.saveAs;
 }
 
-function toString(data, keys) {
+function toString(data, keys, separator) {
   let dataString = '';
   if (data.length === 0) return dataString;
 
@@ -35,7 +35,7 @@ function toString(data, keys) {
       }
     }).filter(key => {
       return typeof key !== 'undefined';
-    }).join(',') + '\n';
+    }).join(separator) + '\n';
   }
 
   keys = keys.filter(key => {
@@ -48,7 +48,7 @@ function toString(data, keys) {
       const value = typeof format !== 'undefined' ? format(row[field], row, extraData) : row[field];
       const cell = typeof value !== 'undefined' ? ('"' + value + '"') : '';
       dataString += cell;
-      if (i + 1 < keys.length) dataString += ',';
+      if (i + 1 < keys.length) dataString += separator;
     });
 
     dataString += '\n';
@@ -57,8 +57,8 @@ function toString(data, keys) {
   return dataString;
 }
 
-const exportCSV = function(data, keys, filename) {
-  const dataString = toString(data, keys);
+const exportCSV = function(data, keys, filename, separator) {
+  const dataString = toString(data, keys, separator);
   if (typeof window !== 'undefined') {
     saveAs(new Blob([ dataString ],
         { type: 'text/plain;charset=utf-8' }),
