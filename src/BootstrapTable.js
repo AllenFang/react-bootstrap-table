@@ -978,13 +978,13 @@ class BootstrapTable extends Component {
     let result = {};
 
     let { csvFileName } = this.props;
-    const { onExportToCSV } = this.props.options;
+    const { onExportToCSV, exportCSVSeparator } = this.props.options;
     if (onExportToCSV) {
       result = onExportToCSV();
     } else {
       result = this.store.getDataIgnoringPagination();
     }
-    const separator = this.props.options.exportCSVSeparator || ',';
+    const separator = exportCSVSeparator || Const.DEFAULT_CSV_SEPARATOR;
     const keys = [];
     this.props.children.filter(_ => _ != null).map(function(column) {
       if (column.props.export === true ||
@@ -1605,6 +1605,7 @@ BootstrapTable.defaultProps = {
     pageStartIndex: 1,
     searchDelayTime: undefined,
     exportCSVText: Const.EXPORT_CSV_TEXT,
+    exportCSVSeparator: Const.DEFAULT_CSV_SEPARATOR,
     insertText: Const.INSERT_BTN_TEXT,
     deleteText: Const.DELETE_BTN_TEXT,
     saveText: Const.SAVE_BTN_TEXT,
