@@ -3,6 +3,7 @@ import React from 'react';
 import EditTypeTable from './edit-type-table';
 import InsertDefaultValueTable from './insert-default-value-table';
 import DataInsertTypeTable from './insert-type-table';
+import InsertErrorHandleTable from './insert-error-handle-table';
 import AutoRowKeyTable from './auto-rowkey-table';
 import ValidatorTable from './validator-table';
 import HideOnInsertTable from './hide-on-insert-table';
@@ -49,6 +50,10 @@ class Demo extends React.Component {
         <Panel header={ 'Custom Display Validating Message(Job Name column is read only)' }>
           { renderLinks('advance/validator-table-read-only.js') }
           <EditTypeReadOnlyTable/>
+        </Panel>
+        <Panel header={ 'Error handling for Insert Row' }>
+          { renderLinks('advance/insert-error-handle-table.js') }
+          <InsertErrorHandleTable/>
         </Panel>
       </Col>
     );
