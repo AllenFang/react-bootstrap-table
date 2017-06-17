@@ -387,7 +387,7 @@ class TableBody extends Component {
         this.props.data[rowIndex][this.props.keyField]) !== -1;
       this.handleSelectRow(rowIndex + 1, !selected, e);
     }
-    this.setState(stateObj);
+    this.setState(() => stateObj);
   }
 
   nextEditableCell = (rIndex, cIndex) => {
@@ -422,15 +422,15 @@ class TableBody extends Component {
     if (newVal !== null) {
       const result = this.props.cellEdit.__onCompleteEdit__(newVal, rowIndex, columnIndex);
       if (result !== Const.AWAIT_BEFORE_CELL_EDIT) {
-        this.setState({ currEditCell: null });
+        this.setState(() => { return { currEditCell: null }; });
       }
     } else {
-      this.setState({ currEditCell: null });
+      this.setState(() => { return { currEditCell: null }; });
     }
   }
 
   cancelEditCell = () => {
-    this.setState({ currEditCell: null });
+    this.setState(() => { return { currEditCell: null }; });
   }
 
   handleClickonSelectColumn = (e, isSelect, rowIndex, row) => {

@@ -108,9 +108,9 @@ class ToolBar extends Component {
     } else {
       this.clearTimeout();
       // show error in form and shake it
-      this.setState({ validateState, shakeEditor: true });
+      this.setState(() => { return { validateState, shakeEditor: true }; });
       this.timeouteClear = setTimeout(() => {
-        this.setState({ shakeEditor: false });
+        this.setState(() => { return { shakeEditor: false }; });
       }, 300);
       return null;
     }
@@ -131,35 +131,41 @@ class ToolBar extends Component {
       this.refs.notifier.notice('error', msg, 'Pressed ESC can cancel');
       this.clearTimeout();
       // shake form and hack prevent modal hide
-      this.setState({
-        shakeEditor: true,
-        validateState: 'this is hack for prevent bootstrap modal hide'
+      this.setState(() => {
+        return {
+          shakeEditor: true,
+          validateState: 'this is hack for prevent bootstrap modal hide'
+        };
       });
       // clear animate class
       this.timeouteClear = setTimeout(() => {
-        this.setState({ shakeEditor: false });
+        this.setState(() => { return { shakeEditor: false }; });
       }, 300);
     } else {
       // reset state and hide modal hide
-      this.setState({
-        validateState: null,
-        shakeEditor: false,
-        isInsertModalOpen: false
+      this.setState(() => {
+        return {
+          validateState: null,
+          shakeEditor: false,
+          isInsertModalOpen: false
+        };
       });
     }
   }
 
   handleModalClose = () => {
-    this.setState({ isInsertModalOpen: false });
+    this.setState(() => { return { isInsertModalOpen: false }; });
   }
 
   handleModalOpen = () => {
-    this.setState({ isInsertModalOpen: true });
+    this.setState(() => { return { isInsertModalOpen: true }; });
   }
 
   handleShowOnlyToggle = () => {
-    this.setState({
-      showSelected: !this.state.showSelected
+    this.setState(() => {
+      return {
+        showSelected: !this.state.showSelected
+      };
     });
     this.props.onShowOnlySelected();
   }
