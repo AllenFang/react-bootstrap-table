@@ -37,7 +37,7 @@ class NumberFilter extends Component {
   onChangeNumberSet(event) {
     const comparator = this.refs.numberFilterComparator.value;
     const { value } = event.target;
-    this.setState({ isPlaceholderSelected: (value === '') });
+    this.setState(() => { return { isPlaceholderSelected: (value === '') }; });
     if (comparator === '') {
       return;
     }
@@ -56,7 +56,7 @@ class NumberFilter extends Component {
   cleanFiltered() {
     const value = (this.props.defaultValue) ? this.props.defaultValue.number : '';
     const comparator = (this.props.defaultValue) ? this.props.defaultValue.comparator : '';
-    this.setState({ isPlaceholderSelected: (value === '') });
+    this.setState(() => { return { isPlaceholderSelected: (value === '') }; });
     this.refs.numberFilterComparator.value = comparator;
     this.refs.numberFilter.value = value;
     this.props.filterHandler({ number: value, comparator }, Const.FILTER_TYPE.NUMBER);
@@ -64,7 +64,7 @@ class NumberFilter extends Component {
 
   applyFilter(filterObj) {
     const { number, comparator } = filterObj;
-    this.setState({ isPlaceholderSelected: (number === '') });
+    this.setState(() => { return { isPlaceholderSelected: (number === '') }; });
     this.refs.numberFilterComparator.value = comparator;
     this.refs.numberFilter.value = number;
     this.props.filterHandler({ number, comparator }, Const.FILTER_TYPE.NUMBER);

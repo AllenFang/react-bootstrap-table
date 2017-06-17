@@ -25,8 +25,10 @@ class SelectFilter extends Component {
   componentWillReceiveProps(nextProps) {
     const isPlaceholderSelected = (nextProps.defaultValue === undefined ||
       !nextProps.options.hasOwnProperty(nextProps.defaultValue));
-    this.setState({
-      isPlaceholderSelected
+    this.setState(() => {
+      return {
+        isPlaceholderSelected
+      };
     });
   }
 
@@ -47,20 +49,20 @@ class SelectFilter extends Component {
 
   filter(event) {
     const { value } = event.target;
-    this.setState({ isPlaceholderSelected: (value === '') });
+    this.setState(() => { return { isPlaceholderSelected: (value === '') }; });
     this.props.filterHandler(value, Const.FILTER_TYPE.SELECT);
   }
 
   cleanFiltered() {
     const value = (this.props.defaultValue !== undefined) ? this.props.defaultValue : '';
-    this.setState({ isPlaceholderSelected: (value === '') });
+    this.setState(() => { return { isPlaceholderSelected: (value === '') }; });
     this.refs.selectInput.value = value;
     this.props.filterHandler(value, Const.FILTER_TYPE.SELECT);
   }
 
   applyFilter(filterOption) {
     filterOption = filterOption + '';
-    this.setState({ isPlaceholderSelected: (filterOption === '') });
+    this.setState(() => { return { isPlaceholderSelected: (filterOption === '') }; });
     this.refs.selectInput.value = filterOption;
     this.props.filterHandler(filterOption, Const.FILTER_TYPE.SELECT);
   }
