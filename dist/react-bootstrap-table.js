@@ -506,21 +506,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'reset',
 	    value: function reset() {
+	      var _this3 = this;
+
 	      var pageStartIndex = this.props.options.pageStartIndex;
 
 	      this.store.clean();
-	      this.setState({
-	        data: this.getTableData(),
-	        currPage: _util2.default.getFirstPage(pageStartIndex),
-	        expanding: [],
-	        sizePerPage: _Const2.default.SIZE_PER_PAGE_LIST[0],
-	        selectedRowKeys: this.store.getSelectedRowKeys(),
-	        reset: true
+	      this.setState(function () {
+	        return {
+	          data: _this3.getTableData(),
+	          currPage: _util2.default.getFirstPage(pageStartIndex),
+	          expanding: [],
+	          sizePerPage: _Const2.default.SIZE_PER_PAGE_LIST[0],
+	          selectedRowKeys: _this3.store.getSelectedRowKeys(),
+	          reset: true
+	        };
 	      });
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
+	      var _this4 = this;
+
 	      this.initTable(nextProps);
 	      var options = nextProps.options,
 	          selectRow = nextProps.selectRow;
@@ -540,64 +546,78 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      if (this.isRemoteDataSource()) {
-	        var data = nextProps.data.slice();
-	        if (nextProps.pagination && !this.allowRemote(_Const2.default.REMOTE_PAGE)) {
-	          data = this.store.page(page, sizePerPage).get();
-	        }
-	        this.setState({
-	          data: data,
-	          currPage: page,
-	          sizePerPage: sizePerPage,
-	          reset: false
-	        });
+	        (function () {
+	          var data = nextProps.data.slice();
+	          if (nextProps.pagination && !_this4.allowRemote(_Const2.default.REMOTE_PAGE)) {
+	            data = _this4.store.page(page, sizePerPage).get();
+	          }
+	          _this4.setState(function () {
+	            return {
+	              data: data,
+	              currPage: page,
+	              sizePerPage: sizePerPage,
+	              reset: false
+	            };
+	          });
+	        })();
 	      } else {
-	        // #125
-	        // remove !options.page for #709
-	        if (page > Math.ceil(nextProps.data.length / sizePerPage)) {
-	          page = 1;
-	        }
-	        var sortList = this.store.getSortInfo();
-	        var sortField = options.sortName;
-	        var sortOrder = options.sortOrder;
-	        if (sortField && sortOrder) {
-	          this.store.setSortInfo(sortOrder, sortField);
-	          this.store.sort();
-	        } else if (sortList.length > 0) {
-	          this.store.sort();
-	        }
-	        var _data = this.store.page(page, sizePerPage).get();
-	        this.setState({
-	          data: _data,
-	          currPage: page,
-	          sizePerPage: sizePerPage,
-	          reset: false
-	        });
+	        (function () {
+	          // #125
+	          // remove !options.page for #709
+	          if (page > Math.ceil(nextProps.data.length / sizePerPage)) {
+	            page = 1;
+	          }
+	          var sortList = _this4.store.getSortInfo();
+	          var sortField = options.sortName;
+	          var sortOrder = options.sortOrder;
+	          if (sortField && sortOrder) {
+	            _this4.store.setSortInfo(sortOrder, sortField);
+	            _this4.store.sort();
+	          } else if (sortList.length > 0) {
+	            _this4.store.sort();
+	          }
+	          var data = _this4.store.page(page, sizePerPage).get();
+	          _this4.setState(function () {
+	            return {
+	              data: data,
+	              currPage: page,
+	              sizePerPage: sizePerPage,
+	              reset: false
+	            };
+	          });
 
-	        if (this.store.isSearching && options.afterSearch) {
-	          options.afterSearch(this.store.searchText, this.store.getDataIgnoringPagination());
-	        }
+	          if (_this4.store.isSearching && options.afterSearch) {
+	            options.afterSearch(_this4.store.searchText, _this4.store.getDataIgnoringPagination());
+	          }
 
-	        if (this.store.isFiltering && options.afterColumnFilter) {
-	          options.afterColumnFilter(this.store.filterObj, this.store.getDataIgnoringPagination());
-	        }
+	          if (_this4.store.isFiltering && options.afterColumnFilter) {
+	            options.afterColumnFilter(_this4.store.filterObj, _this4.store.getDataIgnoringPagination());
+	          }
+	        })();
 	      }
 
 	      // If setting the expanded rows is being handled externally
 	      // then overwrite the current expanded rows.
 	      if (this.props.options.expanding !== options.expanding) {
-	        this.setState({
-	          expanding: options.expanding || []
+	        this.setState(function () {
+	          return {
+	            expanding: options.expanding || []
+	          };
 	        });
 	      }
 
 	      if (selectRow && selectRow.selected) {
-	        // set default select rows to store.
-	        var copy = selectRow.selected.slice();
-	        this.store.setSelectedRowKey(copy);
-	        this.setState({
-	          selectedRowKeys: copy,
-	          reset: false
-	        });
+	        (function () {
+	          // set default select rows to store.
+	          var copy = selectRow.selected.slice();
+	          _this4.store.setSelectedRowKey(copy);
+	          _this4.setState(function () {
+	            return {
+	              selectedRowKeys: copy,
+	              reset: false
+	            };
+	          });
+	        })();
 	      }
 	    }
 	  }, {
@@ -830,17 +850,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'cleanSelected',
 	    value: function cleanSelected() {
 	      this.store.setSelectedRowKey([]);
-	      this.setState({
-	        selectedRowKeys: [],
-	        reset: false
+	      this.setState(function () {
+	        return {
+	          selectedRowKeys: [],
+	          reset: false
+	        };
 	      });
 	    }
 	  }, {
 	    key: 'cleanSort',
 	    value: function cleanSort() {
 	      this.store.cleanSortInfo();
-	      this.setState({
-	        reset: false
+	      this.setState(function () {
+	        return {
+	          reset: false
+	        };
 	      });
 	    }
 	  }, {
@@ -855,23 +879,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      var result = this.store.sort().get();
-	      this.setState({
-	        data: result,
-	        reset: false
+	      this.setState(function () {
+	        return {
+	          data: result,
+	          reset: false
+	        };
 	      });
 	    }
 	  }, {
 	    key: '__handleExpandRow__REACT_HOT_LOADER__',
 	    value: function __handleExpandRow__REACT_HOT_LOADER__(expanding, rowKey, isRowExpanding) {
-	      var _this3 = this;
+	      var _this5 = this;
 
 	      var onExpand = this.props.options.onExpand;
 
 	      if (onExpand) {
 	        onExpand(rowKey, !isRowExpanding);
 	      }
-	      this.setState({ expanding: expanding, reset: false }, function () {
-	        _this3._adjustHeaderWidth();
+	      this.setState(function () {
+	        return { expanding: expanding, reset: false };
+	      }, function () {
+	        _this5._adjustHeaderWidth();
 	      });
 	    }
 	  }, {
@@ -891,14 +919,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        reset: false
 	      };
 	      if (!emptyTable) state.currPage = page;
-	      this.setState(state);
+	      this.setState(function () {
+	        return state;
+	      });
 
 	      if (this.allowRemote(_Const2.default.REMOTE_PAGE) || emptyTable) {
 	        return;
 	      }
 
 	      var result = this.store.page(_util2.default.getNormalizedPage(pageStartIndex, page), sizePerPage).get();
-	      this.setState({ data: result, reset: false });
+	      this.setState(function () {
+	        return { data: result, reset: false };
+	      });
 	    }
 	  }, {
 	    key: '__handleMouseLeave__REACT_HOT_LOADER__',
@@ -994,19 +1026,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	          y--;
 	        }
 	      }
-	      this.setState({
-	        x: x, y: y, currPage: currPage, reset: false
+	      this.setState(function () {
+	        return {
+	          x: x, y: y, currPage: currPage, reset: false
+	        };
 	      });
 	    }
 	  }, {
 	    key: '__handleRowClick__REACT_HOT_LOADER__',
-	    value: function __handleRowClick__REACT_HOT_LOADER__(row, rowIndex, cellIndex) {
+	    value: function __handleRowClick__REACT_HOT_LOADER__(row, rowIndex, columnIndex) {
 	      var _props2 = this.props,
 	          options = _props2.options,
 	          keyBoardNav = _props2.keyBoardNav;
 
 	      if (options.onRowClick) {
-	        options.onRowClick(row);
+	        options.onRowClick(row, columnIndex);
 	      }
 	      if (keyBoardNav) {
 	        var _ref5 = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav : {},
@@ -1014,10 +1048,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        clickToNav = clickToNav === false ? clickToNav : true;
 	        if (clickToNav) {
-	          this.setState({
-	            x: cellIndex,
-	            y: rowIndex,
-	            reset: false
+	          this.setState(function () {
+	            return {
+	              x: columnIndex,
+	              y: rowIndex,
+	              reset: false
+	            };
 	          });
 	        }
 	      }
@@ -1098,7 +1134,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        this.store.setSelectedRowKey(selectedRowKeys);
-	        this.setState({ selectedRowKeys: selectedRowKeys, reset: false });
+	        this.setState(function () {
+	          return { selectedRowKeys: selectedRowKeys, reset: false };
+	        });
 	      }
 	    }
 	  }, {
@@ -1113,10 +1151,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } else {
 	        result = this.store.get();
 	      }
-	      this.setState({
-	        data: result,
-	        reset: false,
-	        currPage: _util2.default.getFirstPage(pageStartIndex)
+	      this.setState(function () {
+	        return {
+	          data: result,
+	          reset: false,
+	          currPage: _util2.default.getFirstPage(pageStartIndex)
+	        };
 	      });
 	    }
 	  }, {
@@ -1145,16 +1185,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        this.store.setSelectedRowKey(currSelected);
-	        this.setState({
-	          selectedRowKeys: currSelected,
-	          reset: false
+	        this.setState(function () {
+	          return {
+	            selectedRowKeys: currSelected,
+	            reset: false
+	          };
 	        });
 	      }
 	    }
 	  }, {
 	    key: 'handleEditCell',
 	    value: function handleEditCell(newVal, rowIndex, colIndex) {
-	      var _this4 = this;
+	      var _this6 = this;
 
 	      var beforeSaveCell = this.props.cellEdit.beforeSaveCell;
 
@@ -1162,18 +1204,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var fieldName = columns[colIndex].name;
 
 	      var invalid = function invalid() {
-	        _this4.setState({
-	          data: _this4.store.get(),
-	          reset: false
+	        _this6.setState(function () {
+	          return {
+	            data: _this6.store.get(),
+	            reset: false
+	          };
 	        });
 	        return;
 	      };
 
 	      if (beforeSaveCell) {
 	        var beforeSaveCellCB = function beforeSaveCellCB(result) {
-	          _this4.refs.body.cancelEditCell();
+	          _this6.refs.body.cancelEditCell();
 	          if (result || result === undefined) {
-	            _this4.editCell(newVal, rowIndex, colIndex);
+	            _this6.editCell(newVal, rowIndex, colIndex);
 	          } else {
 	            invalid();
 	          }
@@ -1208,9 +1252,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      var result = this.store.edit(newVal, rowIndex, fieldName).get();
-	      this.setState({
-	        data: result,
-	        reset: false
+	      this.setState(function () {
+	        return {
+	          data: result,
+	          reset: false
+	        };
 	      });
 
 	      if (afterSaveCell) {
@@ -1230,26 +1276,53 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleAddRow__REACT_HOT_LOADER__',
 	    value: function __handleAddRow__REACT_HOT_LOADER__(newObj) {
+	      var _this7 = this;
+
+	      var isAsync = false;
 	      var onAddRow = this.props.options.onAddRow;
+
+
+	      var afterHandleAddRow = function afterHandleAddRow(errMsg) {
+	        if (isAsync) {
+	          _this7.refs.toolbar.afterHandleSaveBtnClick(errMsg);
+	        } else {
+	          return errMsg;
+	        }
+	      };
+
+	      var afterAddRowCB = function afterAddRowCB(errMsg) {
+	        if (typeof errMsg !== 'undefined' && errMsg !== '') return afterHandleAddRow(errMsg);
+	        if (_this7.allowRemote(_Const2.default.REMOTE_INSERT_ROW)) {
+	          if (_this7.props.options.afterInsertRow) {
+	            _this7.props.options.afterInsertRow(newObj);
+	          }
+	          return afterHandleAddRow();
+	        }
+
+	        try {
+	          _this7.store.add(newObj);
+	        } catch (e) {
+	          return afterHandleAddRow(e.message);
+	        }
+	        _this7._handleAfterAddingRow(newObj, false);
+	        return afterHandleAddRow();
+	      };
 
 	      if (onAddRow) {
 	        var colInfos = this.store.getColInfos();
-	        onAddRow(newObj, colInfos);
-	      }
+	        var errMsg = onAddRow(newObj, colInfos, afterAddRowCB);
 
-	      if (this.allowRemote(_Const2.default.REMOTE_INSERT_ROW)) {
-	        if (this.props.options.afterInsertRow) {
-	          this.props.options.afterInsertRow(newObj);
+	        if (errMsg !== '' && errMsg !== false) {
+	          return errMsg;
+	        } else if (typeof errMsg === 'undefined') {
+	          return afterAddRowCB();
+	        } else {
+	          isAsync = true;
+	          return !isAsync;
 	        }
-	        return null;
+	      } else {
+	        return afterAddRowCB();
 	      }
-
-	      try {
-	        this.store.add(newObj);
-	      } catch (e) {
-	        return e.message;
-	      }
-	      this._handleAfterAddingRow(newObj, false);
 	    }
 	  }, {
 	    key: 'getSizePerPage',
@@ -1285,14 +1358,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleDropRow__REACT_HOT_LOADER__',
 	    value: function __handleDropRow__REACT_HOT_LOADER__(rowKeys) {
-	      var _this5 = this;
+	      var _this8 = this;
 
 	      var dropRowKeys = rowKeys ? rowKeys : this.store.getSelectedRowKeys();
 	      // add confirm before the delete action if that option is set.
 	      if (dropRowKeys && dropRowKeys.length > 0) {
 	        if (this.props.options.handleConfirmDeleteRow) {
 	          this.props.options.handleConfirmDeleteRow(function () {
-	            _this5.deleteRow(dropRowKeys);
+	            _this8.deleteRow(dropRowKeys);
 	          }, dropRowKeys);
 	        } else if (confirm('Are you sure you want to delete?')) {
 	          this.deleteRow(dropRowKeys);
@@ -1302,6 +1375,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'deleteRow',
 	    value: function deleteRow(dropRowKeys) {
+	      var _this9 = this;
+
 	      var onDeleteRow = this.props.options.onDeleteRow;
 
 	      if (onDeleteRow) {
@@ -1320,25 +1395,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.store.remove(dropRowKeys); // remove selected Row
 	      var result = void 0;
 	      if (this.props.pagination) {
-	        var sizePerPage = this.state.sizePerPage;
+	        (function () {
+	          var sizePerPage = _this9.state.sizePerPage;
 
-	        var currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
-	        var currPage = this.state.currPage;
+	          var currLastPage = Math.ceil(_this9.store.getDataNum() / sizePerPage);
+	          var currPage = _this9.state.currPage;
 
-	        if (currPage > currLastPage) currPage = currLastPage;
-	        result = this.store.page(_util2.default.getNormalizedPage(currPage), sizePerPage).get();
-	        this.setState({
-	          data: result,
-	          selectedRowKeys: this.store.getSelectedRowKeys(),
-	          currPage: currPage,
-	          reset: false
-	        });
+	          if (currPage > currLastPage) currPage = currLastPage;
+	          result = _this9.store.page(_util2.default.getNormalizedPage(currPage), sizePerPage).get();
+	          _this9.setState(function () {
+	            return {
+	              data: result,
+	              selectedRowKeys: _this9.store.getSelectedRowKeys(),
+	              currPage: currPage,
+	              reset: false
+	            };
+	          });
+	        })();
 	      } else {
 	        result = this.store.get();
-	        this.setState({
-	          data: result,
-	          reset: false,
-	          selectedRowKeys: this.store.getSelectedRowKeys()
+	        this.setState(function () {
+	          return {
+	            data: result,
+	            reset: false,
+	            selectedRowKeys: _this9.store.getSelectedRowKeys()
+	          };
 	        });
 	      }
 	      if (this.props.options.afterDeleteRow) {
@@ -1357,9 +1438,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        onFilterChange(filterObj, colInfos);
 	      }
 
-	      this.setState({
-	        currPage: _util2.default.getFirstPage(pageStartIndex),
-	        reset: false
+	      this.setState(function () {
+	        return {
+	          currPage: _util2.default.getFirstPage(pageStartIndex),
+	          reset: false
+	        };
 	      });
 
 	      if (this.allowRemote(_Const2.default.REMOTE_FILTER)) {
@@ -1389,9 +1472,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (this.props.options.afterColumnFilter) {
 	        this.props.options.afterColumnFilter(filterObj, this.store.getDataIgnoringPagination());
 	      }
-	      this.setState({
-	        data: result,
-	        reset: false
+	      this.setState(function () {
+	        return {
+	          data: result,
+	          reset: false
+	        };
 	      });
 	    }
 	  }, {
@@ -1400,14 +1485,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var result = {};
 
 	      var csvFileName = this.props.csvFileName;
-	      var onExportToCSV = this.props.options.onExportToCSV;
+	      var _props$options3 = this.props.options,
+	          onExportToCSV = _props$options3.onExportToCSV,
+	          exportCSVSeparator = _props$options3.exportCSVSeparator;
 
 	      if (onExportToCSV) {
 	        result = onExportToCSV();
 	      } else {
 	        result = this.store.getDataIgnoringPagination();
 	      }
-
+	      var separator = exportCSVSeparator || _Const2.default.DEFAULT_CSV_SEPARATOR;
 	      var keys = [];
 	      this.props.children.filter(function (_) {
 	        return _ != null;
@@ -1429,7 +1516,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        csvFileName = csvFileName();
 	      }
 
-	      (0, _csv_export_util2.default)(result, keys, csvFileName);
+	      (0, _csv_export_util2.default)(result, keys, csvFileName, separator);
 	    }
 	  }, {
 	    key: '__handleSearch__REACT_HOT_LOADER__',
@@ -1439,18 +1526,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (this.refs.toolbar) {
 	        this.refs.toolbar.setSearchInput(searchText);
 	      }
-	      var _props$options3 = this.props.options,
-	          onSearchChange = _props$options3.onSearchChange,
-	          pageStartIndex = _props$options3.pageStartIndex;
+	      var _props$options4 = this.props.options,
+	          onSearchChange = _props$options4.onSearchChange,
+	          pageStartIndex = _props$options4.pageStartIndex;
 
 	      if (onSearchChange) {
 	        var colInfos = this.store.getColInfos();
 	        onSearchChange(searchText, colInfos, this.props.multiColumnSearch);
 	      }
 
-	      this.setState({
-	        currPage: _util2.default.getFirstPage(pageStartIndex),
-	        reset: false
+	      this.setState(function () {
+	        return {
+	          currPage: _util2.default.getFirstPage(pageStartIndex),
+	          reset: false
+	        };
 	      });
 
 	      if (this.allowRemote(_Const2.default.REMOTE_SEARCH)) {
@@ -1479,9 +1568,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (this.props.options.afterSearch) {
 	        this.props.options.afterSearch(searchText, this.store.getDataIgnoringPagination());
 	      }
-	      this.setState({
-	        data: result,
-	        reset: false
+	      this.setState(function () {
+	        return {
+	          data: result,
+	          reset: false
+	        };
 	      });
 	    }
 	  }, {
@@ -1740,6 +1831,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_handleAfterAddingRow',
 	    value: function _handleAfterAddingRow(newObj, atTheBeginning) {
+	      var _this10 = this;
+
 	      var result = void 0;
 	      if (this.props.pagination) {
 	        // if pagination is enabled and inserting row at the end,
@@ -1749,28 +1842,38 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	        if (atTheBeginning) {
-	          var pageStartIndex = this.props.options.pageStartIndex;
+	          (function () {
+	            var pageStartIndex = _this10.props.options.pageStartIndex;
 
-	          result = this.store.page(_util2.default.getNormalizedPage(pageStartIndex), sizePerPage).get();
-	          this.setState({
-	            data: result,
-	            currPage: _util2.default.getFirstPage(pageStartIndex),
-	            reset: false
-	          });
+	            result = _this10.store.page(_util2.default.getNormalizedPage(pageStartIndex), sizePerPage).get();
+	            _this10.setState(function () {
+	              return {
+	                data: result,
+	                currPage: _util2.default.getFirstPage(pageStartIndex),
+	                reset: false
+	              };
+	            });
+	          })();
 	        } else {
-	          var currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
-	          result = this.store.page(currLastPage, sizePerPage).get();
-	          this.setState({
-	            data: result,
-	            currPage: currLastPage,
-	            reset: false
-	          });
+	          (function () {
+	            var currLastPage = Math.ceil(_this10.store.getDataNum() / sizePerPage);
+	            result = _this10.store.page(currLastPage, sizePerPage).get();
+	            _this10.setState(function () {
+	              return {
+	                data: result,
+	                currPage: currLastPage,
+	                reset: false
+	              };
+	            });
+	          })();
 	        }
 	      } else {
 	        result = this.store.get();
-	        this.setState({
-	          data: result,
-	          reset: false
+	        this.setState(function () {
+	          return {
+	            data: result,
+	            reset: false
+	          };
 	        });
 	      }
 
@@ -1885,6 +1988,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    lastPageTitle: _react.PropTypes.string,
 	    searchDelayTime: _react.PropTypes.number,
 	    exportCSVText: _react.PropTypes.string,
+	    exportCSVSeparator: _react.PropTypes.string,
 	    insertText: _react.PropTypes.string,
 	    deleteText: _react.PropTypes.string,
 	    saveText: _react.PropTypes.string,
@@ -2035,6 +2139,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    pageStartIndex: 1,
 	    searchDelayTime: undefined,
 	    exportCSVText: _Const2.default.EXPORT_CSV_TEXT,
+	    exportCSVSeparator: _Const2.default.DEFAULT_CSV_SEPARATOR,
 	    insertText: _Const2.default.INSERT_BTN_TEXT,
 	    deleteText: _Const2.default.DELETE_BTN_TEXT,
 	    saveText: _Const2.default.SAVE_BTN_TEXT,
@@ -2217,7 +2322,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  REMOTE_DROP_ROW: 'dropRow',
 	  REMOTE_FILTER: 'filter',
 	  REMOTE_SEARCH: 'search',
-	  REMOTE_EXPORT_CSV: 'exportCSV'
+	  REMOTE_EXPORT_CSV: 'exportCSV',
+	  DEFAULT_CSV_SEPARATOR: ','
 	};
 
 	CONST_VAR.REMOTE = {};
@@ -3098,7 +3204,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var selected = this.props.selectedRowKeys.indexOf(this.props.data[rowIndex][this.props.keyField]) !== -1;
 	        this.handleSelectRow(rowIndex + 1, !selected, e);
 	      }
-	      this.setState(stateObj);
+	      this.setState(function () {
+	        return stateObj;
+	      });
 	    }
 	  }, {
 	    key: '__nextEditableCell__REACT_HOT_LOADER__',
@@ -3135,16 +3243,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (newVal !== null) {
 	        var result = this.props.cellEdit.__onCompleteEdit__(newVal, rowIndex, columnIndex);
 	        if (result !== _Const2.default.AWAIT_BEFORE_CELL_EDIT) {
-	          this.setState({ currEditCell: null });
+	          this.setState(function () {
+	            return { currEditCell: null };
+	          });
 	        }
 	      } else {
-	        this.setState({ currEditCell: null });
+	        this.setState(function () {
+	          return { currEditCell: null };
+	        });
 	      }
 	    }
 	  }, {
 	    key: '__cancelEditCell__REACT_HOT_LOADER__',
 	    value: function __cancelEditCell__REACT_HOT_LOADER__() {
-	      this.setState({ currEditCell: null });
+	      this.setState(function () {
+	        return { currEditCell: null };
+	      });
 	    }
 	  }, {
 	    key: '__handleClickonSelectColumn__REACT_HOT_LOADER__',
@@ -10738,7 +10852,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var keepSizePerPageState = this.props.keepSizePerPageState;
 
 	      if (!keepSizePerPageState) {
-	        this.setState({ open: false });
+	        this.setState(function () {
+	          return { open: false };
+	        });
 	      }
 	    }
 	  }, {
@@ -10768,7 +10884,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      if (keepSizePerPageState) {
-	        this.setState({ open: false });
+	        this.setState(function () {
+	          return { open: false };
+	        });
 	      }
 
 	      if (page !== currPage) {
@@ -10790,13 +10908,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	          this.props.onSizePerPageList(selectSize);
 	        }
 	      }
-	      this.setState({ open: false });
+	      this.setState(function () {
+	        return { open: false };
+	      });
 	    }
 	  }, {
 	    key: '__toggleDropDown__REACT_HOT_LOADER__',
 	    value: function __toggleDropDown__REACT_HOT_LOADER__() {
-	      this.setState({
-	        open: !this.state.open
+	      var _this2 = this;
+
+	      this.setState(function () {
+	        return {
+	          open: !_this2.state.open
+	        };
 	      });
 	    }
 	  }, {
@@ -10877,7 +11001,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'makeDropDown',
 	    value: function makeDropDown() {
-	      var _this2 = this;
+	      var _this3 = this;
 
 	      var dropdown = void 0;
 	      var dropdownProps = void 0;
@@ -10919,7 +11043,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                'data-page': pageNum,
 	                onClick: function onClick(e) {
 	                  e.preventDefault();
-	                  _this2.changeSizePerPage(pageNum);
+	                  _this3.changeSizePerPage(pageNum);
 	                } },
 	              pageText
 	            )
@@ -10938,7 +11062,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'makePage',
 	    value: function makePage() {
-	      var _this3 = this;
+	      var _this4 = this;
 
 	      var isCustomPagingPanel = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
@@ -10954,7 +11078,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var currPage = _ref2.currPage,
 	            nextPage = _ref2.nextPage,
 	            lastPage = _ref2.lastPage;
-	        return currPage === _this3.lastPage && (page === nextPage || page === lastPage);
+	        return currPage === _this4.lastPage && (page === nextPage || page === lastPage);
 	      };
 	      var pageBtns = pages.filter(function (page) {
 	        if (this.props.alwaysShowAllBtns) {
@@ -11390,6 +11514,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.__handleSaveBtnClick__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+	    _this.afterHandleSaveBtnClick = function () {
+	      return _this.__afterHandleSaveBtnClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
 	    _this.handleModalClose = function () {
 	      return _this.__handleModalClose__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
@@ -11549,9 +11677,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } else {
 	        this.clearTimeout();
 	        // show error in form and shake it
-	        this.setState({ validateState: validateState, shakeEditor: true });
+	        this.setState(function () {
+	          return { validateState: validateState, shakeEditor: true };
+	        });
 	        this.timeouteClear = setTimeout(function () {
-	          _this3.setState({ shakeEditor: false });
+	          _this3.setState(function () {
+	            return { shakeEditor: false };
+	          });
 	        }, 300);
 	        return null;
 	      }
@@ -11559,49 +11691,70 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleSaveBtnClick__REACT_HOT_LOADER__',
 	    value: function __handleSaveBtnClick__REACT_HOT_LOADER__(newRow) {
-	      var _this4 = this;
-
 	      if (!this.validateNewRow(newRow)) {
 	        // validation fail
 	        return;
 	      }
 	      var msg = this.props.onAddRow(newRow);
+	      if (msg !== false) {
+	        this.afterHandleSaveBtnClick(msg);
+	      }
+	    }
+	  }, {
+	    key: '__afterHandleSaveBtnClick__REACT_HOT_LOADER__',
+	    value: function __afterHandleSaveBtnClick__REACT_HOT_LOADER__(msg) {
+	      var _this4 = this;
+
 	      if (msg) {
 	        this.refs.notifier.notice('error', msg, 'Pressed ESC can cancel');
 	        this.clearTimeout();
 	        // shake form and hack prevent modal hide
-	        this.setState({
-	          shakeEditor: true,
-	          validateState: 'this is hack for prevent bootstrap modal hide'
+	        this.setState(function () {
+	          return {
+	            shakeEditor: true,
+	            validateState: 'this is hack for prevent bootstrap modal hide'
+	          };
 	        });
 	        // clear animate class
 	        this.timeouteClear = setTimeout(function () {
-	          _this4.setState({ shakeEditor: false });
+	          _this4.setState(function () {
+	            return { shakeEditor: false };
+	          });
 	        }, 300);
 	      } else {
 	        // reset state and hide modal hide
-	        this.setState({
-	          validateState: null,
-	          shakeEditor: false,
-	          isInsertModalOpen: false
+	        this.setState(function () {
+	          return {
+	            validateState: null,
+	            shakeEditor: false,
+	            isInsertModalOpen: false
+	          };
 	        });
 	      }
 	    }
 	  }, {
 	    key: '__handleModalClose__REACT_HOT_LOADER__',
 	    value: function __handleModalClose__REACT_HOT_LOADER__() {
-	      this.setState({ isInsertModalOpen: false });
+	      this.setState(function () {
+	        return { isInsertModalOpen: false };
+	      });
 	    }
 	  }, {
 	    key: '__handleModalOpen__REACT_HOT_LOADER__',
 	    value: function __handleModalOpen__REACT_HOT_LOADER__() {
-	      this.setState({ isInsertModalOpen: true });
+	      this.setState(function () {
+	        return { isInsertModalOpen: true };
+	      });
 	    }
 	  }, {
 	    key: '__handleShowOnlyToggle__REACT_HOT_LOADER__',
 	    value: function __handleShowOnlyToggle__REACT_HOT_LOADER__() {
-	      this.setState({
-	        showSelected: !this.state.showSelected
+	      var _this5 = this;
+
+	      this.setState(function () {
+	        return {
+	          showSelected: !_this5.state.showSelected
+	        };
 	      });
 	      this.props.onShowOnlySelected();
 	    }
@@ -15001,7 +15154,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function __isValidKey__REACT_HOT_LOADER__(key) {
 	      var _this4 = this;
 
-	      if (!key || key.toString() === '') {
+	      if (key === null || key === undefined || key.toString() === '') {
 	        return this.keyField + ' can\'t be empty value.';
 	      }
 	      var currentDisplayData = this.getCurrentDisplayData();
@@ -15564,7 +15717,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* eslint no-unused-vars: 0 */
 
 
-	function toString(data, keys) {
+	function toString(data, keys, separator) {
 	  var dataString = '';
 	  if (data.length === 0) return dataString;
 
@@ -15590,7 +15743,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }).filter(function (key) {
 	      return typeof key !== 'undefined';
-	    }).join(',') + '\n';
+	    }).join(separator) + '\n';
 	  };
 
 	  for (var i = 0; i <= rowCount; i++) {
@@ -15610,7 +15763,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var value = typeof format !== 'undefined' ? format(row[field], row, extraData) : row[field];
 	      var cell = typeof value !== 'undefined' ? '"' + value + '"' : '';
 	      dataString += cell;
-	      if (i + 1 < keys.length) dataString += ',';
+	      if (i + 1 < keys.length) dataString += separator;
 	    });
 
 	    dataString += '\n';
@@ -15619,8 +15772,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return dataString;
 	}
 
-	var exportCSV = function exportCSV(data, keys, filename) {
-	  var dataString = toString(data, keys);
+	var exportCSV = function exportCSV(data, keys, filename, separator) {
+	  var dataString = toString(data, keys, separator);
 	  if (typeof window !== 'undefined') {
 	    saveAs(new Blob([dataString], { type: 'text/plain;charset=utf-8' }), filename, true);
 	  }
@@ -16772,7 +16925,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function cleanFiltered() {
 	      var value = this.setDefaultDate();
 	      var comparator = this.props.defaultValue ? this.props.defaultValue.comparator : '';
-	      this.setState({ isPlaceholderSelected: value === '' });
+	      this.setState(function () {
+	        return { isPlaceholderSelected: value === '' };
+	      });
 	      this.refs.dateFilterComparator.value = comparator;
 	      this.refs.inputDate.value = value;
 	      this.props.filterHandler({ date: new Date(value), comparator: comparator }, _Const2.default.FILTER_TYPE.DATE);
@@ -16783,7 +16938,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var date = filterDateObj.date,
 	          comparator = filterDateObj.comparator;
 
-	      this.setState({ isPlaceholderSelected: date === '' });
+	      this.setState(function () {
+	        return { isPlaceholderSelected: date === '' };
+	      });
 	      this.refs.dateFilterComparator.value = comparator;
 	      this.refs.inputDate.value = dateParser(date);
 	      this.props.filterHandler({ date: date, comparator: comparator }, _Const2.default.FILTER_TYPE.DATE);
@@ -17212,8 +17369,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
 	      var isPlaceholderSelected = nextProps.defaultValue === undefined || !nextProps.options.hasOwnProperty(nextProps.defaultValue);
-	      this.setState({
-	        isPlaceholderSelected: isPlaceholderSelected
+	      this.setState(function () {
+	        return {
+	          isPlaceholderSelected: isPlaceholderSelected
+	        };
 	      });
 	    }
 	  }, {
@@ -17237,14 +17396,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function filter(event) {
 	      var value = event.target.value;
 
-	      this.setState({ isPlaceholderSelected: value === '' });
+	      this.setState(function () {
+	        return { isPlaceholderSelected: value === '' };
+	      });
 	      this.props.filterHandler(value, _Const2.default.FILTER_TYPE.SELECT);
 	    }
 	  }, {
 	    key: 'cleanFiltered',
 	    value: function cleanFiltered() {
 	      var value = this.props.defaultValue !== undefined ? this.props.defaultValue : '';
-	      this.setState({ isPlaceholderSelected: value === '' });
+	      this.setState(function () {
+	        return { isPlaceholderSelected: value === '' };
+	      });
 	      this.refs.selectInput.value = value;
 	      this.props.filterHandler(value, _Const2.default.FILTER_TYPE.SELECT);
 	    }
@@ -17252,7 +17415,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'applyFilter',
 	    value: function applyFilter(filterOption) {
 	      filterOption = filterOption + '';
-	      this.setState({ isPlaceholderSelected: filterOption === '' });
+	      this.setState(function () {
+	        return { isPlaceholderSelected: filterOption === '' };
+	      });
 	      this.refs.selectInput.value = filterOption;
 	      this.props.filterHandler(filterOption, _Const2.default.FILTER_TYPE.SELECT);
 	    }
@@ -17414,7 +17579,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var comparator = this.refs.numberFilterComparator.value;
 	      var value = event.target.value;
 
-	      this.setState({ isPlaceholderSelected: value === '' });
+	      this.setState(function () {
+	        return { isPlaceholderSelected: value === '' };
+	      });
 	      if (comparator === '') {
 	        return;
 	      }
@@ -17435,7 +17602,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function cleanFiltered() {
 	      var value = this.props.defaultValue ? this.props.defaultValue.number : '';
 	      var comparator = this.props.defaultValue ? this.props.defaultValue.comparator : '';
-	      this.setState({ isPlaceholderSelected: value === '' });
+	      this.setState(function () {
+	        return { isPlaceholderSelected: value === '' };
+	      });
 	      this.refs.numberFilterComparator.value = comparator;
 	      this.refs.numberFilter.value = value;
 	      this.props.filterHandler({ number: value, comparator: comparator }, _Const2.default.FILTER_TYPE.NUMBER);
@@ -17446,7 +17615,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var number = filterObj.number,
 	          comparator = filterObj.comparator;
 
-	      this.setState({ isPlaceholderSelected: number === '' });
+	      this.setState(function () {
+	        return { isPlaceholderSelected: number === '' };
+	      });
 	      this.refs.numberFilterComparator.value = comparator;
 	      this.refs.numberFilter.value = number;
 	      this.props.filterHandler({ number: number, comparator: comparator }, _Const2.default.FILTER_TYPE.NUMBER);
