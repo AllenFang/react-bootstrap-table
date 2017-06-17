@@ -239,7 +239,7 @@ export class TableDataStore {
   }
 
   isValidKey = key => {
-    if (!key || key.toString() === '') {
+    if (key === null || key === undefined || key.toString() === '') {
       return `${this.keyField} can't be empty value.`;
     }
     const currentDisplayData = this.getCurrentDisplayData();
