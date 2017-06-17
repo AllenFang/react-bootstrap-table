@@ -121,6 +121,12 @@ class ToolBar extends Component {
       return;
     }
     const msg = this.props.onAddRow(newRow);
+    if (msg !== false) {
+      this.afterHandleSaveBtnClick(msg);
+    }
+  }
+
+  afterHandleSaveBtnClick = (msg) => {
     if (msg) {
       this.refs.notifier.notice('error', msg, 'Pressed ESC can cancel');
       this.clearTimeout();

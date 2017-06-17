@@ -828,25 +828,50 @@ class BootstrapTable extends Component {
   }
 
   handleAddRow = newObj => {
+    let isAsync = false;
     const { onAddRow } = this.props.options;
+
+    const afterHandleAddRow = errMsg => {
+      if (isAsync) {
+        this.refs.toolbar.afterHandleSaveBtnClick(errMsg);
+      } else {
+        return errMsg;
+      }
+    };
+
+    const afterAddRowCB = errMsg => {
+      if (typeof errMsg !== 'undefined' && errMsg !== '') return afterHandleAddRow(errMsg);
+      if (this.allowRemote(Const.REMOTE_INSERT_ROW)) {
+        if (this.props.options.afterInsertRow) {
+          this.props.options.afterInsertRow(newObj);
+        }
+        return afterHandleAddRow();
+      }
+
+      try {
+        this.store.add(newObj);
+      } catch (e) {
+        return afterHandleAddRow(e.message);
+      }
+      this._handleAfterAddingRow(newObj, false);
+      return afterHandleAddRow();
+    };
+
     if (onAddRow) {
       const colInfos = this.store.getColInfos();
-      onAddRow(newObj, colInfos);
-    }
+      const errMsg = onAddRow(newObj, colInfos, afterAddRowCB);
 
-    if (this.allowRemote(Const.REMOTE_INSERT_ROW)) {
-      if (this.props.options.afterInsertRow) {
-        this.props.options.afterInsertRow(newObj);
+      if (errMsg !== '' && errMsg !== false) {
+        return errMsg;
+      } else if (typeof errMsg === 'undefined') {
+        return afterAddRowCB();
+      } else {
+        isAsync = true;
+        return !isAsync;
       }
-      return null;
+    } else {
+      return afterAddRowCB();
     }
-
-    try {
-      this.store.add(newObj);
-    } catch (e) {
-      return e.message;
-    }
-    this._handleAfterAddingRow(newObj, false);
   }
 
   getSizePerPage() {
