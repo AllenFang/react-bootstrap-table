@@ -1,3 +1,18 @@
+<a name="v3.4.1"></a>
+# [v3.4.1](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.0...v3.4.1) (2017-06-17)
+## Bug fixes
+* If a key is 0, it's regarded as invalid in `TableStore.js`([e00a515](https://github.com/AllenFang/react-bootstrap-table/commit/e00a515d89123926a189873db45ea3dd98370702))
+
+## Enhancement
+* `options.onRowClick` have the second arguments: `columnIndex`([cf6571f](https://github.com/AllenFang/react-bootstrap-table/commit/cf6571f8a11dd708867451a378c3886fd2bede46))
+* `options.onAddRow` now support to sync/async way to tell `react-bootstrap-table` if a error in `options.onAddRow`([a2a5555](https://github.com/AllenFang/react-bootstrap-table/commit/a2a55557767e176d4ec42aac4beb3e8ca69f15a7))
+	* Please check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/advance/insert-error-handle-table.js)
+* Use `setState` as functional instead of object([b9b5b26](https://github.com/AllenFang/react-bootstrap-table/commit/b9b5b26affe6578d2182b90201da83b3b5f46c6e))
+
+## Feature
+* Able to custom the separate for exporting CSV file([1c9e2c5](https://github.com/AllenFang/react-bootstrap-table/commit/1c9e2c50d2a9b9e86302bb9b01c2ce082e570992))
+	* Using `options.exportCSVSeparator`
+
 <a name="v3.4.0"></a>
 # [v3.4.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.9...v3.4.0) (2017-06-11)
 ## Bug fixes
