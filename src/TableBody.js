@@ -180,7 +180,7 @@ class TableBody extends Component {
 
       if (haveExpandContent) {
         const expandBodyClass = Utils.isFunction(this.props.expandBodyClass) ?
-          this.props.expandBodyClass(data, r) :
+          this.props.expandBodyClass(data, r, isExpanding) :
           this.props.expandBodyClass;
         result.push(
           <ExpandComponent
