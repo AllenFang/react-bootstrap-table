@@ -941,17 +941,17 @@ class BootstrapTable extends Component {
   }
 
   deleteRow(dropRowKeys) {
-    const { onDeleteRow } = this.props.options;
+    const dropRow = this.store.getRowByKey(dropRowKeys);
+    const { onDeleteRow, afterDeleteRow } = this.props.options;
+
     if (onDeleteRow) {
-      onDeleteRow(dropRowKeys);
+      onDeleteRow(dropRowKeys, dropRow);
     }
 
     this.store.setSelectedRowKey([]);  // clear selected row key
 
-    if (this.allowRemote(Const.REMOTE_DROP_ROW)) {
-      if (this.props.options.afterDeleteRow) {
-        this.props.options.afterDeleteRow(dropRowKeys);
-      }
+    if (this.allowRemote(Const.REMOTE_DROP_ROW) && afterDeleteRow) {
+      afterDeleteRow(dropRowKeys, dropRow);
       return;
     }
 
@@ -981,8 +981,8 @@ class BootstrapTable extends Component {
         };
       });
     }
-    if (this.props.options.afterDeleteRow) {
-      this.props.options.afterDeleteRow(dropRowKeys);
+    if (afterDeleteRow) {
+      afterDeleteRow(dropRowKeys, dropRow);
     }
   }
 

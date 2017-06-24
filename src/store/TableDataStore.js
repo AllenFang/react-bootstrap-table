@@ -130,9 +130,11 @@ export class TableDataStore {
     //   if (result.length !== 0) return result[0];
     // });
     const result = [];
+    if (!keys || keys.length === 0) {
+      return result;
+    }
     for (let i = 0; i < this.data.length; i++) {
       const d = this.data[i];
-      if (!keys || keys.length === 0) break;
       if (keys.indexOf(d[this.keyField]) > -1) {
         keys = keys.filter(k => k !== d[this.keyField]);
         result.push(d);
