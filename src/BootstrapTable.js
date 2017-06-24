@@ -212,87 +212,93 @@ class BootstrapTable extends Component {
   componentWillReceiveProps(nextProps) {
     this.initTable(nextProps);
     const { options, selectRow } = nextProps;
+    let { replace } = nextProps;
+    replace = replace || this.props.replace;
 
     this.store.setData(nextProps.data.slice());
 
-    // from #481
-    let page = this.state.currPage;
-    if (this.props.options.page !== options.page) {
-      page = options.page;
-    }
-    // from #481
-    let sizePerPage = this.state.sizePerPage;
-    if (this.props.options.sizePerPage !== options.sizePerPage) {
-      sizePerPage = options.sizePerPage;
-    }
-
-    if (this.isRemoteDataSource()) {
-      let data = nextProps.data.slice();
-      if (nextProps.pagination && !this.allowRemote(Const.REMOTE_PAGE)) {
-        data = this.store.page(page, sizePerPage).get();
+    if (!replace) {
+      // from #481
+      let page = this.state.currPage;
+      if (this.props.options.page !== options.page) {
+        page = options.page;
       }
-      this.setState(() => {
-        return {
-          data,
-          currPage: page,
-          sizePerPage,
-          reset: false
-        };
-      });
+      // from #481
+      let sizePerPage = this.state.sizePerPage;
+      if (this.props.options.sizePerPage !== options.sizePerPage) {
+        sizePerPage = options.sizePerPage;
+      }
+
+      if (this.isRemoteDataSource()) {
+        let data = nextProps.data.slice();
+        if (nextProps.pagination && !this.allowRemote(Const.REMOTE_PAGE)) {
+          data = this.store.page(page, sizePerPage).get();
+        }
+        this.setState(() => {
+          return {
+            data,
+            currPage: page,
+            sizePerPage,
+            reset: false
+          };
+        });
+      } else {
+        // #125
+        // remove !options.page for #709
+        if (page > Math.ceil(nextProps.data.length / sizePerPage)) {
+          page = 1;
+        }
+        const sortList = this.store.getSortInfo();
+        const sortField = options.sortName;
+        const sortOrder = options.sortOrder;
+        if (sortField && sortOrder) {
+          this.store.setSortInfo(sortOrder, sortField);
+          this.store.sort();
+        } else if (sortList.length > 0) {
+          this.store.sort();
+        }
+        const data = this.store.page(page, sizePerPage).get();
+        this.setState(() => {
+          return {
+            data,
+            currPage: page,
+            sizePerPage,
+            reset: false
+          };
+        });
+
+        if (this.store.isSearching && options.afterSearch) {
+          options.afterSearch(this.store.searchText, this.store.getDataIgnoringPagination());
+        }
+
+        if (this.store.isFiltering && options.afterColumnFilter) {
+          options.afterColumnFilter(this.store.filterObj, this.store.getDataIgnoringPagination());
+        }
+      }
+
+      // If setting the expanded rows is being handled externally
+      // then overwrite the current expanded rows.
+      if (this.props.options.expanding !== options.expanding) {
+        this.setState(() => {
+          return {
+            expanding: options.expanding || []
+          };
+        });
+      }
+
+      if (selectRow && selectRow.selected) {
+        // set default select rows to store.
+        const copy = selectRow.selected.slice();
+        this.store.setSelectedRowKey(copy);
+        this.setState(() => {
+          return {
+            selectedRowKeys: copy,
+            reset: false
+          };
+        });
+      }
     } else {
-      // #125
-      // remove !options.page for #709
-      if (page > Math.ceil(nextProps.data.length / sizePerPage)) {
-        page = 1;
-      }
-      const sortList = this.store.getSortInfo();
-      const sortField = options.sortName;
-      const sortOrder = options.sortOrder;
-      if (sortField && sortOrder) {
-        this.store.setSortInfo(sortOrder, sortField);
-        this.store.sort();
-      } else if (sortList.length > 0) {
-        this.store.sort();
-      }
-      const data = this.store.page(page, sizePerPage).get();
-      this.setState(() => {
-        return {
-          data,
-          currPage: page,
-          sizePerPage,
-          reset: false
-        };
-      });
-
-      if (this.store.isSearching && options.afterSearch) {
-        options.afterSearch(this.store.searchText, this.store.getDataIgnoringPagination());
-      }
-
-      if (this.store.isFiltering && options.afterColumnFilter) {
-        options.afterColumnFilter(this.store.filterObj, this.store.getDataIgnoringPagination());
-      }
-    }
-
-    // If setting the expanded rows is being handled externally
-    // then overwrite the current expanded rows.
-    if (this.props.options.expanding !== options.expanding) {
-      this.setState(() => {
-        return {
-          expanding: options.expanding || []
-        };
-      });
-    }
-
-    if (selectRow && selectRow.selected) {
-      // set default select rows to store.
-      const copy = selectRow.selected.slice();
-      this.store.setSelectedRowKey(copy);
-      this.setState(() => {
-        return {
-          selectedRowKeys: copy,
-          reset: false
-        };
-      });
+      this.reset();
     }
   }
 
@@ -1421,6 +1427,7 @@ BootstrapTable.propTypes = {
   maxHeight: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   data: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
   remote: PropTypes.oneOfType([ PropTypes.bool, PropTypes.func ]), // remote data, default is false
+  replace: PropTypes.oneOfType([ PropTypes.bool, PropTypes.func ]),
   scrollTop: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   striped: PropTypes.bool,
   bordered: PropTypes.bool,
@@ -1574,6 +1581,7 @@ BootstrapTable.propTypes = {
   })
 };
 BootstrapTable.defaultProps = {
+  replace: false,
   scrollTop: undefined,
   expandComponent: undefined,
   expandableRow: undefined,
