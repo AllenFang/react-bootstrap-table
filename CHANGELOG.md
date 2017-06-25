@@ -1,3 +1,16 @@
+<a name="v3.4.2"></a>
+# [v3.4.2](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.1...v3.4.2) (2017-06-24)
+## Bug fixes
+* Cannot read property 'sortFunc' of undefined when conditionally rendering different tables([1418](https://github.com/AllenFang/react-bootstrap-table/commit/b6da50eb2ed4a3ffb133557f6c0a2788ec7aa9f8))
+	* From this version, we support `replace` props on `BootstrapTable`, you can configure as `true` if your need to rerender a totally different table so that
+`react-bootstrap-table` will not update table state according to previous and next props.
+* Header Group broken when Row Expand Indicator is enabled([2cf11ec](https://github.com/AllenFang/react-bootstrap-table/commit/2cf11ec951089ff6452c0a97ee0613fc113103c5))
+
+## Enhancement
+* `options.onDeleteRow` and `options.afterDeleteRow` allow to accept second argument which is the all delete rows instances([29064ff](https://github.com/AllenFang/react-bootstrap-table/commit/29064ff237bc90080763964d250636927d3fc457))
+* `options.expandBodyClass` allow to accept third argument which is a flag for is expanding or not([85eeeb5](https://github.com/AllenFang/react-bootstrap-table/commit/85eeeb5dcee33a1507e12d6b57eeb44ae527597d))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/commit/0720e6019cd404b23431aec29d31e66759c4e8cd)
+
 <a name="v3.4.1"></a>
 # [v3.4.1](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.0...v3.4.1) (2017-06-17)
 ## Bug fixes
