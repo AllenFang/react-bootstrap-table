@@ -200,7 +200,8 @@ class TableBody extends Component {
 
     if (tableRows.length === 0 && !this.props.withoutNoDataText) {
       const colSpan = this.props.columns.filter(c => !c.hidden).length
-        + (isSelectRowDefined ? 1 : 0);
+        + (isSelectRowDefined ? 1 : 0)
+        + (this.props.expandColumnOptions.expandColumnVisible ? 1 : 0);
       tableRows = [
         <TableRow key='##table-empty##'>
           <td data-toggle='collapse'
