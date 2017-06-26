@@ -1045,7 +1045,7 @@ class BootstrapTable extends Component {
     let result = {};
 
     let { csvFileName } = this.props;
-    const { onExportToCSV, exportCSVSeparator } = this.props.options;
+    const { onExportToCSV, exportCSVSeparator, noAutoBOM } = this.props.options;
     if (onExportToCSV) {
       result = onExportToCSV();
     } else {
@@ -1073,7 +1073,7 @@ class BootstrapTable extends Component {
       csvFileName = csvFileName();
     }
 
-    exportCSVUtil(result, keys, csvFileName, separator);
+    exportCSVUtil(result, keys, csvFileName, separator, noAutoBOM || true);
   }
 
   handleSearch = searchText => {
@@ -1563,7 +1563,8 @@ BootstrapTable.propTypes = {
     expandBodyClass: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
     expandParentClass: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
     beforeShowError: PropTypes.func,
-    printToolBar: PropTypes.bool
+    printToolBar: PropTypes.bool,
+    noAutoBOM: PropTypes.bool
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1715,7 +1716,8 @@ BootstrapTable.defaultProps = {
     expandBodyClass: null,
     expandParentClass: null,
     beforeShowError: undefined,
-    printToolBar: true
+    printToolBar: true,
+    noAutoBOM: true
   },
   fetchInfo: {
     dataTotalSize: 0

@@ -57,12 +57,12 @@ function toString(data, keys, separator) {
   return dataString;
 }
 
-const exportCSV = function(data, keys, filename, separator) {
+const exportCSV = function(data, keys, filename, separator, noAutoBOM) {
   const dataString = toString(data, keys, separator);
   if (typeof window !== 'undefined') {
     saveAs(new Blob([ dataString ],
         { type: 'text/plain;charset=utf-8' }),
-        filename, true);
+        filename, noAutoBOM);
   }
 };
 
