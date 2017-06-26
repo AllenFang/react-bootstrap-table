@@ -145,6 +145,7 @@ class Demo extends React.Component {
               <h5><b>{ 'Use ' }<code>{ 'options.csvHeader' }</code> on <code>{ 'TableHeaderColumn' }</code> { ' to change the header text in csv.' }</b></h5>
               <h5><b>{ 'Use ' }<code>{ 'csvFormatExtraData' }</code> on <code>{ 'TableHeaderColumn' }</code> { ' to assign your extra data for formatting csv cell data.' }</b></h5>
               <h5><b>{ 'Use ' }<code>{ 'options.exportCSVSeparator' }</code>{ ' to speficy the separator of CSV file' }</b></h5>
+              <h5><b>{ 'Use ' }<code>{ 'options.noAutoBOM' }</code>{ ' to speficy no_auto_bom' }</b></h5>
               <ExportCSVTable />
             </div>
           </div>
