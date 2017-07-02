@@ -1045,7 +1045,7 @@ class BootstrapTable extends Component {
     let result = {};
 
     let { csvFileName } = this.props;
-    const { onExportToCSV, exportCSVSeparator } = this.props.options;
+    const { onExportToCSV, exportCSVSeparator, excludeCSVHeader } = this.props.options;
     if (onExportToCSV) {
       result = onExportToCSV();
     } else {
@@ -1073,7 +1073,7 @@ class BootstrapTable extends Component {
       csvFileName = csvFileName();
     }
 
-    exportCSVUtil(result, keys, csvFileName, separator);
+    exportCSVUtil(result, keys, csvFileName, separator, excludeCSVHeader);
   }
 
   handleSearch = searchText => {
@@ -1531,6 +1531,7 @@ BootstrapTable.propTypes = {
     firstPageTitle: PropTypes.string,
     lastPageTitle: PropTypes.string,
     searchDelayTime: PropTypes.number,
+    excludeCSVHeader: PropTypes.bool,
     exportCSVText: PropTypes.string,
     exportCSVSeparator: PropTypes.string,
     insertText: PropTypes.string,
@@ -1683,6 +1684,7 @@ BootstrapTable.defaultProps = {
     lastPageTitle: Const.LAST_PAGE_TITLE,
     pageStartIndex: 1,
     searchDelayTime: undefined,
+    excludeCSVHeader: false,
     exportCSVText: Const.EXPORT_CSV_TEXT,
     exportCSVSeparator: Const.DEFAULT_CSV_SEPARATOR,
     insertText: Const.INSERT_BTN_TEXT,
