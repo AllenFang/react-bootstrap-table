@@ -1497,7 +1497,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var csvFileName = this.props.csvFileName;
 	      var _props$options4 = this.props.options,
 	          onExportToCSV = _props$options4.onExportToCSV,
-	          exportCSVSeparator = _props$options4.exportCSVSeparator;
+	          exportCSVSeparator = _props$options4.exportCSVSeparator,
+	          noAutoBOM = _props$options4.noAutoBOM,
+	          excludeCSVHeader = _props$options4.excludeCSVHeader;
 
 	      if (onExportToCSV) {
 	        result = onExportToCSV();
@@ -1526,7 +1528,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        csvFileName = csvFileName();
 	      }
 
-	      (0, _csv_export_util2.default)(result, keys, csvFileName, separator);
+	      (0, _csv_export_util2.default)(result, keys, csvFileName, separator, noAutoBOM || true, excludeCSVHeader);
 	    }
 	  }, {
 	    key: '__handleSearch__REACT_HOT_LOADER__',
@@ -1812,11 +1814,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        for (var _i in bodyHeader) {
 	          if (bodyHeader.hasOwnProperty(_i)) {
 	            var child = bodyHeader[_i];
-	            if (child.style.width) {
-	              header[_i].style.width = child.style.width;
-	            }
-	            if (child.style.minWidth) {
-	              header[_i].style.minWidth = child.style.minWidth;
+	            if (child.style) {
+	              if (child.style.width) {
+	                header[_i].style.width = child.style.width;
+	              }
+	              if (child.style.minWidth) {
+	                header[_i].style.minWidth = child.style.minWidth;
+	              }
 	            }
 	          }
 	        }
@@ -1998,6 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    firstPageTitle: _react.PropTypes.string,
 	    lastPageTitle: _react.PropTypes.string,
 	    searchDelayTime: _react.PropTypes.number,
+	    excludeCSVHeader: _react.PropTypes.bool,
 	    exportCSVText: _react.PropTypes.string,
 	    exportCSVSeparator: _react.PropTypes.string,
 	    insertText: _react.PropTypes.string,
@@ -2030,7 +2035,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    expandBodyClass: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
 	    expandParentClass: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
 	    beforeShowError: _react.PropTypes.func,
-	    printToolBar: _react.PropTypes.bool
+	    printToolBar: _react.PropTypes.bool,
+	    noAutoBOM: _react.PropTypes.bool
 	  }),
 	  fetchInfo: _react.PropTypes.shape({
 	    dataTotalSize: _react.PropTypes.number
@@ -2150,6 +2156,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    lastPageTitle: _Const2.default.LAST_PAGE_TITLE,
 	    pageStartIndex: 1,
 	    searchDelayTime: undefined,
+	    excludeCSVHeader: false,
 	    exportCSVText: _Const2.default.EXPORT_CSV_TEXT,
 	    exportCSVSeparator: _Const2.default.DEFAULT_CSV_SEPARATOR,
 	    insertText: _Const2.default.INSERT_BTN_TEXT,
@@ -2182,7 +2189,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    expandBodyClass: null,
 	    expandParentClass: null,
 	    beforeShowError: undefined,
-	    printToolBar: true
+	    printToolBar: true,
+	    noAutoBOM: true
 	  },
 	  fetchInfo: {
 	    dataTotalSize: 0
@@ -3073,7 +3081,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (tableRows.length === 0 && !this.props.withoutNoDataText) {
 	        var colSpan = this.props.columns.filter(function (c) {
 	          return !c.hidden;
-	        }).length + (isSelectRowDefined ? 1 : 0);
+	        }).length + (isSelectRowDefined ? 1 : 0) + (this.props.expandColumnOptions.expandColumnVisible ? 1 : 0);
 	        tableRows = [_react2.default.createElement(
 	          _TableRow2.default,
 	          { key: '##table-empty##' },
@@ -15794,7 +15802,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* eslint no-unused-vars: 0 */
 
 
-	function toString(data, keys, separator) {
+	function toString(data, keys, separator, excludeCSVHeader) {
 	  var dataString = '';
 	  if (data.length === 0) return dataString;
 
@@ -15810,6 +15818,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  });
 
+	  var firstRow = excludeCSVHeader ? 1 : 0;
+
 	  var _loop = function _loop(i) {
 	    dataString += headCells.map(function (x) {
 	      if (x.row + (x.rowSpan - 1) === i) {
@@ -15823,7 +15833,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }).join(separator) + '\n';
 	  };
 
-	  for (var i = 0; i <= rowCount; i++) {
+	  for (var i = firstRow; i <= rowCount; i++) {
 	    _loop(i);
 	  }
 
@@ -15849,10 +15859,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return dataString;
 	}
 
-	var exportCSV = function exportCSV(data, keys, filename, separator) {
-	  var dataString = toString(data, keys, separator);
+	var exportCSV = function exportCSV(data, keys, filename, separator, noAutoBOM, excludeCSVHeader) {
+	  var dataString = toString(data, keys, separator, excludeCSVHeader);
 	  if (typeof window !== 'undefined') {
-	    saveAs(new Blob([dataString], { type: 'text/plain;charset=utf-8' }), filename, true);
+	    saveAs(new Blob([dataString], { type: 'text/plain;charset=utf-8' }), filename, noAutoBOM);
 	  }
 	};
 
