@@ -1347,11 +1347,13 @@ class BootstrapTable extends Component {
       for (const i in bodyHeader) {
         if (bodyHeader.hasOwnProperty(i)) {
           const child = bodyHeader[i];
-          if (child.style.width) {
-            header[i].style.width = child.style.width;
-          }
-          if (child.style.minWidth) {
-            header[i].style.minWidth = child.style.minWidth;
+          if (child.style) {
+            if (child.style.width) {
+              header[i].style.width = child.style.width;
+            }
+            if (child.style.minWidth) {
+              header[i].style.minWidth = child.style.minWidth;
+            }
           }
         }
       }
