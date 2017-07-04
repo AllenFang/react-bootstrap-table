@@ -23,9 +23,9 @@ export default class BasicTable extends React.Component {
   render() {
     return (
       <BootstrapTable data={ products } height='500px'>
-          <TableHeaderColumn dataField='id' isKey={ true } width='100px'>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField='name' width='200px'>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField='price' width='250px'>Product Price</TableHeaderColumn>
+          <TableHeaderColumn dataField='id' isKey={ true } width='10%'>Product ID</TableHeaderColumn>
+          <TableHeaderColumn dataField='name' width='65%'>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='price' width='25%'>Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
   }
