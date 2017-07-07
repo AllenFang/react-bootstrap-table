@@ -1,6 +1,6 @@
 import React from 'react';
 
-const editor = function(editable, attr, format, editorClass, defaultValue, ignoreEditable) {
+const editor = function(editable, attr, format, editorClass, defaultValue, ignoreEditable, row) {
   if (editable === true ||
     (editable === false && ignoreEditable) ||
     typeof editable === 'string') { // simple declare
@@ -50,7 +50,10 @@ const editor = function(editable, attr, format, editorClass, defaultValue, ignor
           return (
             <option key={ 'option' + i } value={ value }>{ text }</option>
           );
-        });
+        }
+        );
+      } else if (values && typeof values === 'function') {
+        options = values(row);
       }
       return (
         <select { ...attr } defaultValue={ defaultValue }>
