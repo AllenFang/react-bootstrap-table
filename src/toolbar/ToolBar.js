@@ -86,7 +86,7 @@ class ToolBar extends Component {
           validateState[column.field] = tempMsg;
         }
       } else if (column.editable && column.editable.validator) { // process validate
-        tempMsg = column.editable.validator(newRow[column.field]);
+        tempMsg = column.editable.validator(newRow[column.field], newRow);
         responseType = typeof tempMsg;
         if (responseType !== 'object' && tempMsg !== true) {
           this.displayCommonMessage();
