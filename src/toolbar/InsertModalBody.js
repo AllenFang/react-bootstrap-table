@@ -57,7 +57,11 @@ class InsertModalBody extends Component {
             if (customInsertEditor) {
               const { getElement } = customInsertEditor;
               fieldElement = getElement(column, attr, 'form-control', ignoreEditable, defaultValue);
-            } else {
+            }
+
+            // fieldElement = false, means to use default editor when enable custom editor
+            // Becasuse some users want to have default editor based on some condition.
+            if (!customInsertEditor || fieldElement === false) {
               fieldElement = editor(editable, attr, format, '', defaultValue, ignoreEditable);
             }
 
