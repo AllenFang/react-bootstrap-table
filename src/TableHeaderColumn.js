@@ -155,9 +155,7 @@ class TableHeaderColumn extends Component {
   }
 
   cleanFiltered() {
-    if (this.props.filter === undefined) {
-      return;
-    }
+    if (!this.props.filter) return;
 
     switch (this.props.filter.type) {
     case Const.FILTER_TYPE.TEXT: {
@@ -188,7 +186,7 @@ class TableHeaderColumn extends Component {
   }
 
   applyFilter(val) {
-    if (this.props.filter === undefined) return;
+    if (!this.props.filter) return;
     switch (this.props.filter.type) {
     case Const.FILTER_TYPE.TEXT: {
       this.refs.textFilter.applyFilter(val);
