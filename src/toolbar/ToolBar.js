@@ -84,7 +84,7 @@ class ToolBar extends Component {
           validateState[column.field] = tempMsg;
         }
       } else if (column.editable && column.editable.validator) { // process validate
-        tempMsg = column.editable.validator(newRow[column.field]);
+        tempMsg = column.editable.validator(newRow[column.field], newRow);
         responseType = typeof tempMsg;
         if (responseType !== 'object' && tempMsg !== true) {
           this.displayCommonMessage();
@@ -106,9 +106,9 @@ class ToolBar extends Component {
     } else {
       this.clearTimeout();
       // show error in form and shake it
-      this.setState({ validateState, shakeEditor: true });
+      this.setState(() => { return { validateState, shakeEditor: true }; });
       this.timeouteClear = setTimeout(() => {
-        this.setState({ shakeEditor: false });
+        this.setState(() => { return { shakeEditor: false }; });
       }, 300);
       return null;
     }
@@ -119,39 +119,51 @@ class ToolBar extends Component {
       return;
     }
     const msg = this.props.onAddRow(newRow);
+    if (msg !== false) {
+      this.afterHandleSaveBtnClick(msg);
+    }
+  }
+
+  afterHandleSaveBtnClick = (msg) => {
     if (msg) {
       notice('error', msg, '');
       this.clearTimeout();
       // shake form and hack prevent modal hide
-      this.setState({
-        shakeEditor: true,
-        validateState: 'this is hack for prevent bootstrap modal hide'
+      this.setState(() => {
+        return {
+          shakeEditor: true,
+          validateState: 'this is hack for prevent bootstrap modal hide'
+        };
       });
       // clear animate class
       this.timeouteClear = setTimeout(() => {
-        this.setState({ shakeEditor: false });
+        this.setState(() => { return { shakeEditor: false }; });
       }, 300);
     } else {
       // reset state and hide modal hide
-      this.setState({
-        validateState: null,
-        shakeEditor: false,
-        isInsertModalOpen: false
+      this.setState(() => {
+        return {
+          validateState: null,
+          shakeEditor: false,
+          isInsertModalOpen: false
+        };
       });
     }
   }
 
   handleModalClose = () => {
-    this.setState({ isInsertModalOpen: false });
+    this.setState(() => { return { isInsertModalOpen: false }; });
   }
 
   handleModalOpen = () => {
-    this.setState({ isInsertModalOpen: true });
+    this.setState(() => { return { isInsertModalOpen: true }; });
   }
 
   handleShowOnlyToggle = () => {
-    this.setState({
-      showSelected: !this.state.showSelected
+    this.setState(() => {
+      return {
+        showSelected: !this.state.showSelected
+      };
     });
     this.props.onShowOnlySelected();
   }

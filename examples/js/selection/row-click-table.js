@@ -21,8 +21,8 @@ function addProducts(quantity) {
 addProducts(5);
 
 const options = {
-  onRowClick: function(row) {
-    alert(`You click row id: ${row.id}`);
+  onRowClick: function(row, columnIndex) {
+    alert(`You click row id: ${row.id}, column index: ${columnIndex}`);
   },
   onRowDoubleClick: function(row) {
     alert(`You double click row id: ${row.id}`);

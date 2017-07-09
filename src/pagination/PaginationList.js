@@ -4,6 +4,7 @@ import classSet from 'classnames';
 import PageButton from './PageButton.js';
 import SizePerPageDropDown from './SizePerPageDropDown';
 import Const from '../Const';
+import Util from '../util';
 
 class PaginationList extends Component {
 
@@ -17,9 +18,7 @@ class PaginationList extends Component {
   componentWillReceiveProps() {
     const { keepSizePerPageState } = this.props;
     if (!keepSizePerPageState) {
-      this.setState({
-        open: false
-      });
+      this.setState(() => { return { open: false }; });
     }
   }
 
@@ -47,11 +46,7 @@ class PaginationList extends Component {
       page = parseInt(page, 10);
     }
 
-    if (keepSizePerPageState) {
-      this.setState({
-        open: false
-      });
-    }
+    if (keepSizePerPageState) { this.setState(() => { return { open: false }; }); }
 
     if (page !== currPage) {
       this.props.changePage(page, sizePerPage);
@@ -70,14 +65,15 @@ class PaginationList extends Component {
         this.props.onSizePerPageList(selectSize);
       }
     }
-    this.setState({
-      open: false
-    });
+
+    this.setState(() => { return { open: false }; });
   }
 
   toggleDropDown = () => {
-    this.setState({
-      open: !this.state.open
+    this.setState(() => {
+      return {
+        open: !this.state.open
+      };
     });
   }
 
@@ -94,7 +90,7 @@ class PaginationList extends Component {
     } = this.props;
     this.totalPages = Math.ceil(dataSize / sizePerPage);
     this.lastPage = this.props.pageStartIndex + this.totalPages - 1;
-    const pageBtns = this.makePage(typeof paginationPanel === 'function');
+    const pageBtns = this.makePage(Util.isFunction(paginationPanel));
     const dropdown = this.makeDropDown();
 
     const offset = Math.abs(Const.PAGE_START_INDEX - pageStartIndex);
@@ -106,7 +102,7 @@ class PaginationList extends Component {
       Showing rows { start } to&nbsp;{ to + 1 } of&nbsp;{ dataSize }
     </span> : null;
 
-    if (typeof paginationShowsTotal === 'function') {
+    if (Util.isFunction(paginationShowsTotal)) {
       total = paginationShowsTotal(start, to + 1, dataSize);
     }
 

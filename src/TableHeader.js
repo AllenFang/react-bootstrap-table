@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import Const from './Const';
 import classSet from 'classnames';
 import SelectRowHeaderColumn from './SelectRowHeaderColumn';
+import ExpandRowHeaderColumn from './ExpandRowHeaderColumn';
 
 class Checkbox extends Component {
   componentDidMount() { this.update(this.props.checked); }
@@ -56,13 +57,13 @@ class TableHeader extends Component {
     rows[0].push( [
       this.props.expandColumnVisible &&
         this.props.expandColumnBeforeSelectColumn &&
-          <th className='react-bs-table-expand-cell'> </th>
+          <ExpandRowHeaderColumn rowCount={ rowCount + 1 }/>
     ], [
       this.renderSelectRowHeader(rowCount + 1, rowKey++)
     ], [
       this.props.expandColumnVisible &&
         !this.props.expandColumnBeforeSelectColumn &&
-          <th className='react-bs-table-expand-cell'> </th>
+          <ExpandRowHeaderColumn rowCount={ rowCount + 1 }/>
     ]);
     const { sortIndicator, sortList, onSort, reset } = this.props;
 

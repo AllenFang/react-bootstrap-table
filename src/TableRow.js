@@ -2,6 +2,7 @@
 import classSet from 'classnames';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Utils from './util';
 
 class TableRow extends Component {
 
@@ -78,10 +79,10 @@ class TableRow extends Component {
     let selectRowClass = null;
 
     if (selectRow) {
-      backgroundColor = typeof selectRow.bgColor === 'function' ?
+      backgroundColor = Utils.isFunction(selectRow.bgColor) ?
         selectRow.bgColor(row, isSelected) : ( isSelected ? selectRow.bgColor : null);
 
-      selectRowClass = typeof selectRow.className === 'function' ?
+      selectRowClass = Utils.isFunction(selectRow.className) ?
         selectRow.className(row, isSelected) : ( isSelected ? selectRow.className : null);
     }
 

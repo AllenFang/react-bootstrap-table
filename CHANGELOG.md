@@ -1,3 +1,56 @@
+<a name="v3.4.3"></a>
+# [v3.4.3](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.2...v3.4.3) (2017-07-05)
+## Bug fixes
+* Fixed wrong colspan when table was empty and enable `expandColumnOptions.expandColumnVisible`([624764c](https://github.com/AllenFang/react-bootstrap-table/commit/624764c8ee03b10054f81b67b54da7280005e4c4))
+* Fix 'undefined is not an object' when running in a headless browser([a06cd6a](https://github.com/AllenFang/react-bootstrap-table/commit/a06cd6adb43c3bcf0cbea3cc8179c4d772453faa))
+
+## Enhancement
+* Able to disable BOM header for CSV via `options.noAutoBOM`([340dc8d](https://github.com/AllenFang/react-bootstrap-table/commit/340dc8d54f4ce06e9881a266b629072097d760e2))
+* Able to exclude header for CSV via `options.excludeCSVHeader`([16ba815](https://github.com/AllenFang/react-bootstrap-table/commit/16ba815f599080a078e9d30069206734f8dabf38))
+
+<a name="v3.4.2"></a>
+# [v3.4.2](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.1...v3.4.2) (2017-06-24)
+## Bug fixes
+* Cannot read property 'sortFunc' of undefined when conditionally rendering different tables([1418](https://github.com/AllenFang/react-bootstrap-table/commit/b6da50eb2ed4a3ffb133557f6c0a2788ec7aa9f8))
+	* From this version, we support `replace` props on `BootstrapTable`, you can configure as `true` if your need to rerender a totally different table so that
+`react-bootstrap-table` will not update table state according to previous and next props.
+* Header Group broken when Row Expand Indicator is enabled([2cf11ec](https://github.com/AllenFang/react-bootstrap-table/commit/2cf11ec951089ff6452c0a97ee0613fc113103c5))
+
+## Enhancement
+* `options.onDeleteRow` and `options.afterDeleteRow` allow to accept second argument which is the all delete rows instances([29064ff](https://github.com/AllenFang/react-bootstrap-table/commit/29064ff237bc90080763964d250636927d3fc457))
+* `options.expandBodyClass` allow to accept third argument which is a flag for is expanding or not([85eeeb5](https://github.com/AllenFang/react-bootstrap-table/commit/85eeeb5dcee33a1507e12d6b57eeb44ae527597d))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/commit/0720e6019cd404b23431aec29d31e66759c4e8cd)
+
+<a name="v3.4.1"></a>
+# [v3.4.1](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.0...v3.4.1) (2017-06-17)
+## Bug fixes
+* If a key is 0, it's regarded as invalid in `TableStore.js`([e00a515](https://github.com/AllenFang/react-bootstrap-table/commit/e00a515d89123926a189873db45ea3dd98370702))
+
+## Enhancement
+* `options.onRowClick` have the second arguments: `columnIndex`([cf6571f](https://github.com/AllenFang/react-bootstrap-table/commit/cf6571f8a11dd708867451a378c3886fd2bede46))
+* `options.onAddRow` now support to sync/async way to tell `react-bootstrap-table` if a error in `options.onAddRow`([a2a5555](https://github.com/AllenFang/react-bootstrap-table/commit/a2a55557767e176d4ec42aac4beb3e8ca69f15a7))
+	* Please check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/advance/insert-error-handle-table.js)
+* Use `setState` as functional instead of object([b9b5b26](https://github.com/AllenFang/react-bootstrap-table/commit/b9b5b26affe6578d2182b90201da83b3b5f46c6e))
+
+## Feature
+* Able to custom the separate for exporting CSV file([1c9e2c5](https://github.com/AllenFang/react-bootstrap-table/commit/1c9e2c50d2a9b9e86302bb9b01c2ce082e570992))
+	* Using `options.exportCSVSeparator`
+
+<a name="v3.4.0"></a>
+# [v3.4.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.9...v3.4.0) (2017-06-11)
+## Bug fixes
+* Fixed column width does not work when header grouping([4b1e11e](https://github.com/AllenFang/react-bootstrap-table/commit/4b1e11e0254e87fae3c6ea66902e3b73e85beb77))
+* Fixed wrong column to expand when `selectRow.hideSelectColumn` as ture and `expand={false}` on `TableHeaderColumn`([74e37d3](https://github.com/AllenFang/react-bootstrap-table/commit/74e37d31f0b768cad040af30af2785bbdcb5b3f3))
+
+## Enhancement
+* Support to configure the class for expand row and body([2115389](https://github.com/AllenFang/react-bootstrap-table/commit/211538956489074b21e1047c4e60dfaab3c01b72))
+	* Check [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/expandRow/custom-expand-class.js)
+
+## Feature
+* Support to press ENTER to expand/collapse row when keyboard navigation is enable([115495d](https://github.com/AllenFang/react-bootstrap-table/commit/115495d7e82031bdd9a736c37175d1bf43be15ca))
+	* Enable `keyBoardNav.enterToExpand`
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/keyboard-nav/enter-to-expand-row-with-nav-table.js)
+
 <a name="v3.3.9"></a>
 # [v3.3.9](https://github.com/AllenFang/react-bootstrap-table/compare/v3.3.8...v3.3.9) (2017-06-08)
 ## Bug fixes

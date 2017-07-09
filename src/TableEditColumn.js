@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import editor from './Editor';
 import { notice } from './Notification.js';
 import classSet from 'classnames';
+import Util from './util';
 
 class TableEditColumn extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class TableEditColumn extends Component {
     this.focusInEditor = this.focusInEditor.bind(this);
     this.state = {
       shakeEditor: false,
-      className: typeof className === 'function' ? className(fieldValue, row) : className
+      className: Util.isFunction(className) ? className(fieldValue, row) : className
     };
   }
 
@@ -90,7 +91,7 @@ class TableEditColumn extends Component {
         // animate input
         ts.clearTimeout();
         const { invalidColumnClassName, row } = this.props;
-        const className = typeof invalidColumnClassName === 'function' ?
+        const className = Util.isFunction(invalidColumnClassName) ?
           invalidColumnClassName(value, row) :
           invalidColumnClassName;
         ts.setState({ shakeEditor: true, className });
@@ -147,7 +148,7 @@ class TableEditColumn extends Component {
   }
 
   focusInEditor() {
-    if (typeof this.refs.inputRef.focus === 'function') {
+    if (Util.isFunction(this.refs.inputRef.focus)) {
       this.refs.inputRef.focus();
     }
   }
@@ -196,7 +197,7 @@ class TableEditColumn extends Component {
 
     if (isFocus) {
       if (customStyleWithNav) {
-        const customStyle = typeof customStyleWithNav === 'function' ?
+        const customStyle = Util.isFunction(customStyleWithNav) ?
           customStyleWithNav(fieldValue, row) : customStyleWithNav;
         style = {
           ...style,

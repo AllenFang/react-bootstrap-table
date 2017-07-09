@@ -1,7 +1,4 @@
 /* eslint max-len: 0 */
-/* eslint no-console: 0 */
-/* eslint no-alert: 0 */
-/* eslint no-unused-vars: 0 */
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
@@ -22,23 +19,31 @@ function addProducts(quantity) {
 
 addProducts(5);
 
-function onAfterDeleteRow(rowKeys, rows) {
-  alert('The rowkey you drop: ' + rowKeys);
-}
+export default class EnterToExpandWithNavTable extends React.Component {
 
-const options = {
-  afterDeleteRow: onAfterDeleteRow  // A hook for after droping rows.
-};
+  isExpandableRow(row) {
+    if (row.id < 3) return true;
+    else return false;
+  }
 
-// If you want to enable deleteRow, you must enable row selection also.
-const selectRowProp = {
-  mode: 'checkbox'
-};
-
-export default class DeleteRowTable extends React.Component {
-  render() {
+  expandComponent(row) {
     return (
-      <BootstrapTable data={ products } deleteRow={ true } selectRow={ selectRowProp } options={ options }>
+      <div>
+        <p>I'm expand panel for row: { row.id }</p>
+        <p>This is a demo for expanding table with keyboard navigation</p>
+      </div>
+    );
+  }
+
+  render() {
+    const keyBoardNav = {
+      enterToExpand: true
+    };
+    return (
+      <BootstrapTable
+        expandableRow={ this.isExpandableRow }
+        expandComponent={ this.expandComponent }
+        data={ products } keyBoardNav={ keyBoardNav }>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
