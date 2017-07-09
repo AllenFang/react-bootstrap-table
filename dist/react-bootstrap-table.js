@@ -3081,7 +3081,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (tableRows.length === 0 && !this.props.withoutNoDataText) {
 	        var colSpan = this.props.columns.filter(function (c) {
 	          return !c.hidden;
-	        }).length + (isSelectRowDefined ? 1 : 0) + (this.props.expandColumnOptions.expandColumnVisible ? 1 : 0);
+	        }).length + (isSelectRowDefined && !this.props.selectRow.hideSelectColumn ? 1 : 0) + (this.props.expandColumnOptions.expandColumnVisible ? 1 : 0);
 	        tableRows = [_react2.default.createElement(
 	          _TableRow2.default,
 	          { key: '##table-empty##' },
@@ -11743,7 +11743,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        } else if (column.editable && column.editable.validator) {
 	          // process validate
-	          tempMsg = column.editable.validator(newRow[column.field]);
+	          tempMsg = column.editable.validator(newRow[column.field], newRow);
 	          responseType = typeof tempMsg === 'undefined' ? 'undefined' : _typeof(tempMsg);
 	          if (responseType !== 'object' && tempMsg !== true) {
 	            _this3.displayCommonMessage();
@@ -14078,7 +14078,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var getElement = customInsertEditor.getElement;
 
 	            fieldElement = getElement(column, attr, 'form-control', ignoreEditable, defaultValue);
-	          } else {
+	          }
+
+	          // fieldElement = false, means to use default editor when enable custom editor
+	          // Becasuse some users want to have default editor based on some condition.
+	          if (!customInsertEditor || fieldElement === false) {
 	            fieldElement = (0, _Editor2.default)(editable, attr, format, '', defaultValue, ignoreEditable);
 	          }
 
@@ -16723,9 +16727,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'cleanFiltered',
 	    value: function cleanFiltered() {
-	      if (this.props.filter === undefined) {
-	        return;
-	      }
+	      if (!this.props.filter) return;
 
 	      switch (this.props.filter.type) {
 	        case _Const2.default.FILTER_TYPE.TEXT:
@@ -16763,7 +16765,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'applyFilter',
 	    value: function applyFilter(val) {
-	      if (this.props.filter === undefined) return;
+	      if (!this.props.filter) return;
 	      switch (this.props.filter.type) {
 	        case _Const2.default.FILTER_TYPE.TEXT:
 	          {
@@ -17171,6 +17173,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _this.filter = _this.filter.bind(_this);
 	    _this.timeout = null;
+	    _this.state = {
+	      value: _this.props.defaultValue || ''
+	    };
 	    return _this;
 	  }
 
@@ -17183,6 +17188,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        clearTimeout(this.timeout);
 	      }
 	      var filterValue = event.target.value;
+	      this.setState(function () {
+	        return { value: filterValue };
+	      });
 	      this.timeout = setTimeout(function () {
 	        _this2.props.filterHandler(filterValue, _Const2.default.FILTER_TYPE.TEXT);
 	      }, this.props.delay);
@@ -17191,13 +17199,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'cleanFiltered',
 	    value: function cleanFiltered() {
 	      var value = this.props.defaultValue ? this.props.defaultValue : '';
-	      this.refs.inputText.value = value;
+	      this.setState(function () {
+	        return { value: value };
+	      });
 	      this.props.filterHandler(value, _Const2.default.FILTER_TYPE.TEXT);
 	    }
 	  }, {
 	    key: 'applyFilter',
 	    value: function applyFilter(filterText) {
-	      this.refs.inputText.value = filterText;
+	      this.setState(function () {
+	        return { value: filterText };
+	      });
 	      this.props.filterHandler(filterText, _Const2.default.FILTER_TYPE.TEXT);
 	    }
 	  }, {
@@ -17206,6 +17218,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var defaultValue = this.refs.inputText.value;
 	      if (defaultValue) {
 	        this.props.filterHandler(defaultValue, _Const2.default.FILTER_TYPE.TEXT);
+	      }
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      if (nextProps.defaultValue !== this.props.defaultValue) {
+	        this.applyFilter(nextProps.defaultValue || '');
 	      }
 	    }
 	  }, {
@@ -17219,7 +17238,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props = this.props,
 	          placeholder = _props.placeholder,
 	          columnName = _props.columnName,
-	          defaultValue = _props.defaultValue,
 	          style = _props.style;
 
 	      return _react2.default.createElement('input', { ref: 'inputText',
@@ -17228,7 +17246,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        style: style,
 	        onChange: this.filter,
 	        placeholder: placeholder || 'Enter ' + columnName + '...',
-	        defaultValue: defaultValue ? defaultValue : '' });
+	        value: this.state.value });
 	    }
 	  }]);
 
