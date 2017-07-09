@@ -169,7 +169,7 @@ class TableEditColumn extends Component {
       row
     } = this.props;
     const { shakeEditor } = this.state;
-    const attr = {
+    let attr = {
       ref: 'inputRef',
       onKeyDown: this.handleKeyPress,
       onBlur: this.handleBlur
@@ -179,6 +179,7 @@ class TableEditColumn extends Component {
     let { className } = this.state;
     // put placeholder if exist
     editable.placeholder && (attr.placeholder = editable.placeholder);
+    editable.attrs && (attr = {...editable.attrs, ...attr});
 
     const editorClass = classSet({ 'animated': shakeEditor, 'shake': shakeEditor });
     fieldValue = fieldValue === 0 ? '0' : fieldValue;
