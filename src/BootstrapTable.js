@@ -1073,7 +1073,7 @@ class BootstrapTable extends Component {
       csvFileName = csvFileName();
     }
 
-    exportCSVUtil(result, keys, csvFileName, separator, noAutoBOM || true, excludeCSVHeader);
+    exportCSVUtil(result, keys, csvFileName, separator, noAutoBOM, excludeCSVHeader);
   }
 
   handleSearch = searchText => {
