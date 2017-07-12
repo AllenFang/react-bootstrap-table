@@ -215,8 +215,8 @@ class BootstrapTable extends Component {
     let { replace } = nextProps;
     replace = replace || this.props.replace;
 
-    if (nextProps.data === undefined) {
-      return;
+    if (!nextProps.data) {
+       return;
     }
     this.store.setData(nextProps.data.slice());
 
