@@ -108,6 +108,7 @@ class TableColumn extends Component {
       keyBoardNav,
       tabIndex,
       customNavStyle,
+      withoutTabIndex,
       row
     } = this.props;
 
@@ -147,8 +148,11 @@ class TableColumn extends Component {
         className = `${className} default-focus-cell`;
       }
     }
+
+    const attr = {};
+    if (!withoutTabIndex) attr.tabIndex = tabIndex;
     return (
-      <td tabIndex={ tabIndex } style={ tdStyle }
+      <td { ...attr } style={ tdStyle }
           title={ columnTitle }
           className={ className }
           { ...opts } { ...attrs }>
@@ -170,6 +174,7 @@ TableColumn.propTypes = {
   isFocus: PropTypes.bool,
   onKeyDown: PropTypes.func,
   tabIndex: PropTypes.string,
+  withoutTabIndex: PropTypes.bool,
   keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
   customNavStyle: PropTypes.oneOfType([ PropTypes.func, PropTypes.object ]),
   row: PropTypes.any  /* only used on custom styling for navigation */
@@ -177,6 +182,7 @@ TableColumn.propTypes = {
 
 TableColumn.defaultProps = {
   dataAlign: 'left',
+  withoutTabIndex: false,
   hidden: false,
   className: '',
   isFocus: false,

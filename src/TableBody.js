@@ -127,7 +127,8 @@ class TableBody extends Component {
               keyBoardNav={ enableKeyBoardNav }
               onKeyDown={ this.handleCellKeyDown }
               customNavStyle={ customNavStyle }
-              row={ data }>
+              row={ data }
+              withoutTabIndex={ this.props.withoutTabIndex }>
               { columnChild }
             </TableColumn>
           );
@@ -526,6 +527,7 @@ TableBody.propTypes = {
   keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
   x: PropTypes.number,
   y: PropTypes.number,
-  onNavigateCell: PropTypes.func
+  onNavigateCell: PropTypes.func,
+  withoutTabIndex: PropTypes.bool
 };
 export default TableBody;

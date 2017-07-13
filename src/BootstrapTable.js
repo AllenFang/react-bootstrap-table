@@ -216,7 +216,7 @@ class BootstrapTable extends Component {
     replace = replace || this.props.replace;
 
     if (!nextProps.data) {
-       return;
+      return;
     }
     this.store.setData(nextProps.data.slice());
 
@@ -464,7 +464,8 @@ class BootstrapTable extends Component {
             keyBoardNav={ this.props.keyBoardNav }
             onNavigateCell={ this.handleNavigateCell }
             x={ this.state.x }
-            y={ this.state.y } />
+            y={ this.state.y }
+            withoutTabIndex={ this.props.withoutTabIndex } />
         </div>
         { tableFilter }
         { showPaginationOnBottom ? pagination : null }
@@ -1440,6 +1441,7 @@ BootstrapTable.propTypes = {
   condensed: PropTypes.bool,
   pagination: PropTypes.bool,
   printable: PropTypes.bool,
+  withoutTabIndex: PropTypes.bool,
   keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
   searchPlaceholder: PropTypes.string,
   selectRow: PropTypes.shape({
@@ -1605,6 +1607,7 @@ BootstrapTable.defaultProps = {
   condensed: false,
   pagination: false,
   printable: false,
+  withoutTabIndex: false,
   keyBoardNav: false,
   searchPlaceholder: undefined,
   selectRow: {
