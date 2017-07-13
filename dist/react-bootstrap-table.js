@@ -534,6 +534,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      replace = replace || this.props.replace;
 
+	      if (!nextProps.data) {
+	        return;
+	      }
 	      this.store.setData(nextProps.data.slice());
 
 	      if (!replace) {
@@ -811,7 +814,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            keyBoardNav: this.props.keyBoardNav,
 	            onNavigateCell: this.handleNavigateCell,
 	            x: this.state.x,
-	            y: this.state.y })
+	            y: this.state.y,
+	            withoutTabIndex: this.props.withoutTabIndex })
 	        ),
 	        tableFilter,
 	        showPaginationOnBottom ? pagination : null
@@ -1048,7 +1052,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          keyBoardNav = _props2.keyBoardNav;
 
 	      if (options.onRowClick) {
-	        options.onRowClick(row, columnIndex);
+	        options.onRowClick(row, columnIndex, rowIndex);
 	      }
 	      if (keyBoardNav) {
 	        var _ref5 = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav : {},
@@ -1528,7 +1532,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        csvFileName = csvFileName();
 	      }
 
-	      (0, _csv_export_util2.default)(result, keys, csvFileName, separator, noAutoBOM || true, excludeCSVHeader);
+	      (0, _csv_export_util2.default)(result, keys, csvFileName, separator, noAutoBOM, excludeCSVHeader);
 	    }
 	  }, {
 	    key: '__handleSearch__REACT_HOT_LOADER__',
@@ -1914,6 +1918,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  condensed: _react.PropTypes.bool,
 	  pagination: _react.PropTypes.bool,
 	  printable: _react.PropTypes.bool,
+	  withoutTabIndex: _react.PropTypes.bool,
 	  keyBoardNav: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.object]),
 	  searchPlaceholder: _react.PropTypes.string,
 	  selectRow: _react.PropTypes.shape({
@@ -2071,6 +2076,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  condensed: false,
 	  pagination: false,
 	  printable: false,
+	  withoutTabIndex: false,
 	  keyBoardNav: false,
 	  searchPlaceholder: undefined,
 	  selectRow: {
@@ -3019,7 +3025,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                keyBoardNav: enableKeyBoardNav,
 	                onKeyDown: this.handleCellKeyDown,
 	                customNavStyle: customNavStyle,
-	                row: data },
+	                row: data,
+	                withoutTabIndex: this.props.withoutTabIndex },
 	              columnChild
 	            );
 	          }
@@ -3458,7 +3465,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  keyBoardNav: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.object]),
 	  x: _react.PropTypes.number,
 	  y: _react.PropTypes.number,
-	  onNavigateCell: _react.PropTypes.func
+	  onNavigateCell: _react.PropTypes.func,
+	  withoutTabIndex: _react.PropTypes.bool
 	};
 	var _default = TableBody;
 	exports.default = _default;
@@ -3994,6 +4002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          keyBoardNav = _props2.keyBoardNav,
 	          tabIndex = _props2.tabIndex,
 	          customNavStyle = _props2.customNavStyle,
+	          withoutTabIndex = _props2.withoutTabIndex,
 	          row = _props2.row;
 	      var className = this.props.className;
 
@@ -4027,9 +4036,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	          className = className + ' default-focus-cell';
 	        }
 	      }
+
+	      var attr = {};
+	      if (!withoutTabIndex) attr.tabIndex = tabIndex;
 	      return _react2.default.createElement(
 	        'td',
-	        _extends({ tabIndex: tabIndex, style: tdStyle,
+	        _extends({}, attr, { style: tdStyle,
 	          title: columnTitle,
 	          className: className
 	        }, opts, attrs),
@@ -4054,6 +4066,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  isFocus: _react.PropTypes.bool,
 	  onKeyDown: _react.PropTypes.func,
 	  tabIndex: _react.PropTypes.string,
+	  withoutTabIndex: _react.PropTypes.bool,
 	  keyBoardNav: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.object]),
 	  customNavStyle: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.object]),
 	  row: _react.PropTypes.any /* only used on custom styling for navigation */
@@ -4061,6 +4074,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	TableColumn.defaultProps = {
 	  dataAlign: 'left',
+	  withoutTabIndex: false,
 	  hidden: false,
 	  className: '',
 	  isFocus: false,
@@ -15866,6 +15880,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var exportCSV = function exportCSV(data, keys, filename, separator, noAutoBOM, excludeCSVHeader) {
 	  var dataString = toString(data, keys, separator, excludeCSVHeader);
 	  if (typeof window !== 'undefined') {
+	    noAutoBOM = noAutoBOM === undefined ? true : noAutoBOM;
 	    saveAs(new Blob([dataString], { type: 'text/plain;charset=utf-8' }), filename, noAutoBOM);
 	  }
 	};
