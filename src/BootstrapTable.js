@@ -666,7 +666,7 @@ class BootstrapTable extends Component {
   handleRowClick = (row, rowIndex, columnIndex) => {
     const { options, keyBoardNav } = this.props;
     if (options.onRowClick) {
-      options.onRowClick(row, columnIndex);
+      options.onRowClick(row, columnIndex, rowIndex);
     }
     if (keyBoardNav) {
       let { clickToNav } = typeof keyBoardNav === 'object' ? keyBoardNav : {};
