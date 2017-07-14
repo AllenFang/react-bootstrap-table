@@ -1,3 +1,24 @@
+<a name="v3.4.5"></a>
+# [v3.4.5](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.4...v3.4.5) (2017-07-13)
+## Bug fixes
+* Fix [#1410](https://github.com/AllenFang/react-bootstrap-table/issues/1410) again([3f60275](https://github.com/AllenFang/react-bootstrap-table/commit/3f602755721529471ba5d5fa36ed2930d19dfbf5))
+
+## Enhancement
+* Pass `rowIndex` as third argument for `options.onRowClick`([4b5ba03](https://github.com/AllenFang/react-bootstrap-table/commit/4b5ba037437977b54a577084e0779f53e9b02785))
+
+## Features
+* Able to disable the `tabIndex` via `withoutTabIndex` on `BootstrapTable`([ce6f744](https://github.com/AllenFang/react-bootstrap-table/commit/ce6f744d3d7f101c800459a7d0608daed5dff74e))
+
+<a name="v3.4.4"></a>
+# [v3.4.4](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.3...v3.4.4) (2017-07-09)
+## Bug fixes
+* Pass row object as second argument for `editable.validator` when calling by insert row([5ede872](https://github.com/AllenFang/react-bootstrap-table/commit/5ede87270677c9d8fe37bdef2cccbf4a05f5748a))
+* Fix text filter is not updated when rerender([298e971](https://github.com/AllenFang/react-bootstrap-table/commit/298e971b5c5658d0baeb67163d279298751085ed))
+* Fix wrong colspan on a empty table when hide seleciton column([62ceb31](https://github.com/AllenFang/react-bootstrap-table/commit/62ceb313f6d523e02f5b49275b69b3b4e3326e7a))
+
+## Enhancement
+* return `false` will render default editor in insert model for the hook function of [customInsertEditor.getElement](http://allenfang.github.io/react-bootstrap-table/custom.html#insertmodalfield)([f2382b3](https://github.com/AllenFang/react-bootstrap-table/commit/f2382b36cc924e286ec271f92134673278458c3c))
+
 <a name="v3.4.3"></a>
 # [v3.4.3](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.2...v3.4.3) (2017-07-05)
 ## Bug fixes
