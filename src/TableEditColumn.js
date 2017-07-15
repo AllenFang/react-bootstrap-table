@@ -29,7 +29,7 @@ class TableEditColumn extends Component {
                       this._getCheckBoxValue(e) : e.currentTarget.value;
 
       // TAB triggers blur so no need to notify
-      const notify = e.keyCode !== 9;
+      const notify = e.keyCode !== 9 || !this.props.blurToSave;
       if (!this.validator(value, notify)) {
         return;
       }
