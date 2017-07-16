@@ -16,7 +16,7 @@ class TableBody extends Component {
   }
 
   render() {
-    const { cellEdit, beforeShowError, x, y, keyBoardNav } = this.props;
+    const { cellEdit, beforeShowError, x, y, keyBoardNav, trStyle } = this.props;
     const tableClasses = classSet('table', {
       'table-striped': this.props.striped,
       'table-bordered': this.props.bordered,
@@ -168,7 +168,8 @@ class TableBody extends Component {
         onRowMouseOut={ this.handleRowMouseOut }
         onSelectRow={ this.handleSelectRow }
         onExpandRow={ this.handleClickCell }
-        unselectableRow={ disable }>
+        unselectableRow={ disable }
+        style={ trStyle }>
         { this.props.expandColumnOptions.expandColumnVisible &&
             this.props.expandColumnOptions.expandColumnBeforeSelectColumn &&
             expandedRowColumn }
@@ -204,7 +205,7 @@ class TableBody extends Component {
         + ((isSelectRowDefined && !this.props.selectRow.hideSelectColumn) ? 1 : 0)
         + (this.props.expandColumnOptions.expandColumnVisible ? 1 : 0);
       tableRows = [
-        <TableRow key='##table-empty##'>
+        <TableRow key='##table-empty##' style={ trStyle }>
           <td data-toggle='collapse'
               colSpan={ colSpan }
               className='react-bs-table-no-data'>

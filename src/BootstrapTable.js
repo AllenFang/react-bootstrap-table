@@ -441,6 +441,7 @@ class BootstrapTable extends Component {
             expandParentClass={ this.props.options.expandParentClass }
             columns={ columns }
             trClassName={ this.props.trClassName }
+            trStyle={ this.props.trStyle }
             striped={ this.props.striped }
             bordered={ this.props.bordered }
             hover={ this.props.hover }
@@ -1478,6 +1479,7 @@ BootstrapTable.propTypes = {
   strictSearch: PropTypes.bool,
   columnFilter: PropTypes.bool,
   trClassName: PropTypes.any,
+  trStyle: PropTypes.any,
   tableStyle: PropTypes.object,
   containerStyle: PropTypes.object,
   headerStyle: PropTypes.object,
@@ -1640,6 +1642,7 @@ BootstrapTable.defaultProps = {
   multiColumnSort: 1,
   columnFilter: false,
   trClassName: '',
+  trStyle: undefined,
   tableStyle: undefined,
   containerStyle: undefined,
   headerStyle: undefined,
