@@ -1,4 +1,5 @@
 /* eslint max-len: 0 */
+/* eslint no-console: 0 */
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
@@ -66,10 +67,17 @@ export default class EditTypeTable extends React.Component {
   }
 
   render() {
+    // custom attributes on editor
+    const attrs = {
+      rows: 10,
+      onKeyDown: function() {
+        console.log('keydown event trigger');
+      }
+    };
     return (
       <BootstrapTable data={ jobs } cellEdit={ cellEditProp }>
         <TableHeaderColumn dataField='id' isKey={ true }>Job ID</TableHeaderColumn>
-        <TableHeaderColumn dataField='name' editable={ { type: 'textarea' } }>Job Name</TableHeaderColumn>
+        <TableHeaderColumn dataField='name' editable={ { type: 'textarea', attrs: attrs } }>Job Name</TableHeaderColumn>
         <TableHeaderColumn dataField='type1' dataFormat={ this.formatType } editable={ { type: 'select', options: { values: jobTypes } } }>Job Type1</TableHeaderColumn>
         <TableHeaderColumn dataField='type2' editable={ { type: 'select', options: { values: this.jobTypes } } }>Job Type2</TableHeaderColumn>
         <TableHeaderColumn dataField='active' editable={ { type: 'checkbox', options: { values: 'Y:N' } } }>Active</TableHeaderColumn>
