@@ -1,3 +1,4 @@
+import Utils from './util';
 import React from 'react';
 
 const editor = function(editable, attr, format, editorClass, defaultValue, ignoreEditable, row) {
@@ -35,7 +36,11 @@ const editor = function(editable, attr, format, editorClass, defaultValue, ignor
 
     if (editable.type === 'select') {// process select input
       let options = [];
-      const { values, textKey, valueKey } = editable.options;
+      let { values } = editable.options;
+      const { textKey, valueKey } = editable.options;
+      if (Utils.isFunction(values)) {
+        values = values(row);
+      }
       if (Array.isArray(values)) {// only can use arrray data for options
         let text;
         let value;
@@ -52,8 +57,6 @@ const editor = function(editable, attr, format, editorClass, defaultValue, ignor
           );
         }
         );
-      } else if (values && typeof values === 'function') {
-        options = values(row);
       }
       return (
         <select { ...attr } defaultValue={ defaultValue }>
