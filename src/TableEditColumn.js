@@ -161,25 +161,24 @@ class TableEditColumn extends Component {
 
   getInputRef = userRef => ref => {
     this.inputRef = ref;
-    if (typeof userRef === 'string') {
-      throw new Error('Ref must be a function');
-    }
     if (Util.isFunction(userRef)) {
       userRef(ref);
+    } else if (typeof userRef === 'string') {
+      throw new Error('Ref must be a function');
     }
   }
 
-  getHandleKeyPress = userHandler => e => {
+  getHandleKeyPress = customHandler => e => {
     this.handleKeyPress(e);
-    if (Util.isFunction(userHandler)) {
-      userHandler(e);
+    if (Util.isFunction(customHandler)) {
+      customHandler(e);
     }
   }
 
-  getHandleBlur = userHandler => e => {
+  getHandleBlur = customHandler => e => {
     this.handleBlur(e);
-    if (Util.isFunction(userHandler)) {
-      userHandler(e);
+    if (Util.isFunction(customHandler)) {
+      customHandler(e);
     }
   }
 
@@ -202,7 +201,7 @@ class TableEditColumn extends Component {
     let style = { position: 'relative' };
     let { fieldValue } = this.props;
     let { className } = this.state;
-    // put placeholder if exist
+
     if (editable.placeholder) {
       attr.placeholder = editable.placeholder;
       /* eslint-disable no-console */
