@@ -148,14 +148,37 @@ class TableEditColumn extends Component {
   }
 
   focusInEditor() {
-    if (Util.isFunction(this.refs.inputRef.focus)) {
-      this.refs.inputRef.focus();
+    if (this.inputRef && Util.isFunction(this.inputRef.focus)) {
+      this.inputRef.focus();
     }
   }
 
   handleClick = e => {
     if (e.target.tagName !== 'TD') {
       e.stopPropagation();
+    }
+  }
+
+  getInputRef = userRef => ref => {
+    this.inputRef = ref;
+    if (Util.isFunction(userRef)) {
+      userRef(ref);
+    } else if (typeof userRef === 'string') {
+      throw new Error('Ref must be a function');
+    }
+  }
+
+  getHandleKeyPress = customHandler => e => {
+    this.handleKeyPress(e);
+    if (Util.isFunction(customHandler)) {
+      customHandler(e);
+    }
+  }
+
+  getHandleBlur = customHandler => e => {
+    this.handleBlur(e);
+    if (Util.isFunction(customHandler)) {
+      customHandler(e);
     }
   }
 
@@ -170,15 +193,22 @@ class TableEditColumn extends Component {
     } = this.props;
     const { shakeEditor } = this.state;
     const attr = {
-      ref: 'inputRef',
-      onKeyDown: this.handleKeyPress,
-      onBlur: this.handleBlur
+      ...editable.attrs,
+      ref: this.getInputRef(editable.attrs && editable.attrs.ref),
+      onKeyDown: this.getHandleKeyPress(editable.attrs && editable.attrs.onKeyDown),
+      onBlur: this.getHandleBlur(editable.attrs && editable.attrs.onBlur)
     };
     let style = { position: 'relative' };
     let { fieldValue } = this.props;
     let { className } = this.state;
-    // put placeholder if exist
-    editable.placeholder && (attr.placeholder = editable.placeholder);
+
+    if (editable.placeholder) {
+      attr.placeholder = editable.placeholder;
+      /* eslint-disable no-console */
+      console.warn(
+        'Setting editable.placeholder is deprecated. Use editable.attrs to set input attributes');
+      /* eslint-enable no-console */
+    }
 
     const editorClass = classSet({ 'animated': shakeEditor, 'shake': shakeEditor });
     fieldValue = fieldValue === 0 ? '0' : fieldValue;
