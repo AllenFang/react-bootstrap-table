@@ -283,6 +283,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.__handleSelectRow__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+	    _this.handleEditCell = function () {
+	      return _this.__handleEditCell__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
 	    _this.handleAddRow = function () {
 	      return _this.__handleAddRow__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
@@ -316,7 +320,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    _this.isIE = false;
-	    _this._attachCellEditFunc();
 	    if (_util2.default.canUseDOM()) {
 	      _this.isIE = document.documentMode;
 	    }
@@ -656,21 +659,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate() {
 	      this._adjustTable();
-	      this._attachCellEditFunc();
 	      if (this.props.options.afterTableComplete) {
 	        this.props.options.afterTableComplete();
-	      }
-	    }
-	  }, {
-	    key: '_attachCellEditFunc',
-	    value: function _attachCellEditFunc() {
-	      var cellEdit = this.props.cellEdit;
-
-	      if (cellEdit) {
-	        this.props.cellEdit.__onCompleteEdit__ = this.handleEditCell.bind(this);
-	        if (cellEdit.mode !== _Const2.default.CELL_EDIT_NONE) {
-	          this.props.selectRow.clickToSelect = false;
-	        }
 	      }
 	    }
 
@@ -739,6 +729,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var showPaginationOnTop = paginationPosition !== _Const2.default.PAGINATION_POS_BOTTOM;
 	      var showPaginationOnBottom = paginationPosition !== _Const2.default.PAGINATION_POS_TOP;
+	      var selectRow = _extends({}, this.props.selectRow);
+	      if (this.props.cellEdit && this.props.cellEdit.mode !== _Const2.default.CELL_EDIT_NONE) {
+	        selectRow.clickToSelect = false;
+	      }
 
 	      return _react2.default.createElement(
 	        'div',
@@ -791,12 +785,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            expandParentClass: this.props.options.expandParentClass,
 	            columns: columns,
 	            trClassName: this.props.trClassName,
+	            trStyle: this.props.trStyle,
 	            striped: this.props.striped,
 	            bordered: this.props.bordered,
 	            hover: this.props.hover,
 	            keyField: this.store.getKeyField(),
 	            condensed: this.props.condensed,
-	            selectRow: this.props.selectRow,
+	            selectRow: selectRow,
 	            expandColumnOptions: this.props.expandColumnOptions,
 	            cellEdit: this.props.cellEdit,
 	            selectedRowKeys: this.state.selectedRowKeys,
@@ -815,7 +810,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onNavigateCell: this.handleNavigateCell,
 	            x: this.state.x,
 	            y: this.state.y,
-	            withoutTabIndex: this.props.withoutTabIndex })
+	            withoutTabIndex: this.props.withoutTabIndex,
+	            onEditCell: this.handleEditCell })
 	        ),
 	        tableFilter,
 	        showPaginationOnBottom ? pagination : null
@@ -1206,8 +1202,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  }, {
-	    key: 'handleEditCell',
-	    value: function handleEditCell(newVal, rowIndex, colIndex) {
+	    key: '__handleEditCell__REACT_HOT_LOADER__',
+	    value: function __handleEditCell__REACT_HOT_LOADER__(newVal, rowIndex, colIndex) {
 	      var _this6 = this;
 
 	      var beforeSaveCell = this.props.cellEdit.beforeSaveCell;
@@ -1951,6 +1947,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  strictSearch: _react.PropTypes.bool,
 	  columnFilter: _react.PropTypes.bool,
 	  trClassName: _react.PropTypes.any,
+	  trStyle: _react.PropTypes.any,
 	  tableStyle: _react.PropTypes.object,
 	  containerStyle: _react.PropTypes.object,
 	  headerStyle: _react.PropTypes.object,
@@ -2109,6 +2106,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  multiColumnSort: 1,
 	  columnFilter: false,
 	  trClassName: '',
+	  trStyle: undefined,
 	  tableStyle: undefined,
 	  containerStyle: undefined,
 	  headerStyle: undefined,
@@ -2921,7 +2919,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          beforeShowError = _props.beforeShowError,
 	          x = _props.x,
 	          y = _props.y,
-	          keyBoardNav = _props.keyBoardNav;
+	          keyBoardNav = _props.keyBoardNav,
+	          trStyle = _props.trStyle;
 
 	      var tableClasses = (0, _classnames2.default)('table', {
 	        'table-striped': this.props.striped,
@@ -3060,7 +3059,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onRowMouseOut: this.handleRowMouseOut,
 	            onSelectRow: this.handleSelectRow,
 	            onExpandRow: this.handleClickCell,
-	            unselectableRow: disable },
+	            unselectableRow: disable,
+	            style: trStyle },
 	          this.props.expandColumnOptions.expandColumnVisible && this.props.expandColumnOptions.expandColumnBeforeSelectColumn && expandedRowColumn,
 	          selectRowColumn,
 	          this.props.expandColumnOptions.expandColumnVisible && !this.props.expandColumnOptions.expandColumnBeforeSelectColumn && expandedRowColumn,
@@ -3091,7 +3091,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }).length + (isSelectRowDefined && !this.props.selectRow.hideSelectColumn ? 1 : 0) + (this.props.expandColumnOptions.expandColumnVisible ? 1 : 0);
 	        tableRows = [_react2.default.createElement(
 	          _TableRow2.default,
-	          { key: '##table-empty##' },
+	          { key: '##table-empty##', style: trStyle },
 	          _react2.default.createElement(
 	            'td',
 	            { 'data-toggle': 'collapse',
@@ -3333,7 +3333,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: '__handleCompleteEditCell__REACT_HOT_LOADER__',
 	    value: function __handleCompleteEditCell__REACT_HOT_LOADER__(newVal, rowIndex, columnIndex) {
 	      if (newVal !== null) {
-	        var result = this.props.cellEdit.__onCompleteEdit__(newVal, rowIndex, columnIndex);
+	        var result = this.props.onEditCell(newVal, rowIndex, columnIndex);
 	        if (result !== _Const2.default.AWAIT_BEFORE_CELL_EDIT) {
 	          this.setState(function () {
 	            return { currEditCell: null };
@@ -3773,7 +3773,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          selectRow = _props2.selectRow,
 	          row = _props2.row,
 	          isSelected = _props2.isSelected,
-	          className = _props2.className;
+	          className = _props2.className,
+	          index = _props2.index;
+	      var style = this.props.style;
 
 	      var backgroundColor = null;
 	      var selectRowClass = null;
@@ -3784,8 +3786,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        selectRowClass = _util2.default.isFunction(selectRow.className) ? selectRow.className(row, isSelected) : isSelected ? selectRow.className : null;
 	      }
 
+	      if (_util2.default.isFunction(style)) {
+	        style = style(row, index);
+	      } else {
+	        style = _extends({}, style) || {};
+	      }
+	      // the bgcolor of row selection always overwrite the bgcolor defined by global.
+	      if (style && backgroundColor && isSelected) {
+	        style.backgroundColor = backgroundColor;
+	      }
 	      var trCss = {
-	        style: { backgroundColor: backgroundColor },
+	        style: _extends({}, style),
 	        className: (0, _classnames2.default)(selectRowClass, className)
 	      };
 
@@ -3807,6 +3818,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	TableRow.propTypes = {
 	  index: _react.PropTypes.number,
 	  row: _react.PropTypes.any,
+	  style: _react.PropTypes.any,
 	  isSelected: _react.PropTypes.bool,
 	  enableCellEdit: _react.PropTypes.bool,
 	  onRowClick: _react.PropTypes.func,
