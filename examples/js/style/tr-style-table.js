@@ -1,5 +1,5 @@
 /* eslint max-len: 0 */
-/* eslint no-alert: 0 */
+/* eslint no-unused-vars: 0 */
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
@@ -18,21 +18,19 @@ function addProducts(quantity) {
   }
 }
 
-addProducts(50);
 
-const options = {
-  onRowClick: function(row, columnIndex, rowIndex) {
-    alert(`You click row id: ${row.id}, column index: ${columnIndex}, row index: ${rowIndex}`);
-  },
-  onRowDoubleClick: function(row) {
-    alert(`You double click row id: ${row.id}`);
+addProducts(5);
+
+export default class TrClassStringTable extends React.Component {
+
+  trStyle = (row, rowIndex) => {
+    return { backgroundColor: '#FFFAFA' };
   }
-};
 
-export default class SingleSelectTable extends React.Component {
   render() {
+    const selectRow = { mode: 'checkbox', bgColor: 'red' };
     return (
-      <BootstrapTable data={ products } options={ options } pagination>
+      <BootstrapTable data={ products } trStyle={ this.trStyle } selectRow={ selectRow }>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>

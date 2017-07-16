@@ -17,7 +17,7 @@ class TableBody extends Component {
   }
 
   render() {
-    const { cellEdit, beforeShowError, x, y, keyBoardNav } = this.props;
+    const { cellEdit, beforeShowError, x, y, keyBoardNav, trStyle } = this.props;
     const tableClasses = classSet('table', {
       'table-striped': this.props.striped,
       'table-bordered': this.props.bordered,
@@ -128,7 +128,8 @@ class TableBody extends Component {
               keyBoardNav={ enableKeyBoardNav }
               onKeyDown={ this.handleCellKeyDown }
               customNavStyle={ customNavStyle }
-              row={ data }>
+              row={ data }
+              withoutTabIndex={ this.props.withoutTabIndex }>
               { columnChild }
             </TableColumn>
           );
@@ -168,7 +169,8 @@ class TableBody extends Component {
         onRowMouseOut={ this.handleRowMouseOut }
         onSelectRow={ this.handleSelectRow }
         onExpandRow={ this.handleClickCell }
-        unselectableRow={ disable }>
+        unselectableRow={ disable }
+        style={ trStyle }>
         { this.props.expandColumnOptions.expandColumnVisible &&
             this.props.expandColumnOptions.expandColumnBeforeSelectColumn &&
             expandedRowColumn }
@@ -204,7 +206,7 @@ class TableBody extends Component {
         + ((isSelectRowDefined && !this.props.selectRow.hideSelectColumn) ? 1 : 0)
         + (this.props.expandColumnOptions.expandColumnVisible ? 1 : 0);
       tableRows = [
-        <TableRow key='##table-empty##'>
+        <TableRow key='##table-empty##' style={ trStyle }>
           <td data-toggle='collapse'
               colSpan={ colSpan }
               className='react-bs-table-no-data'>
@@ -422,7 +424,7 @@ class TableBody extends Component {
 
   handleCompleteEditCell = (newVal, rowIndex, columnIndex) => {
     if (newVal !== null) {
-      const result = this.props.cellEdit.__onCompleteEdit__(newVal, rowIndex, columnIndex);
+      const result = this.props.onEditCell(newVal, rowIndex, columnIndex);
       if (result !== Const.AWAIT_BEFORE_CELL_EDIT) {
         this.setState(() => { return { currEditCell: null }; });
       }
@@ -527,6 +529,7 @@ TableBody.propTypes = {
   keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
   x: PropTypes.number,
   y: PropTypes.number,
-  onNavigateCell: PropTypes.func
+  onNavigateCell: PropTypes.func,
+  withoutTabIndex: PropTypes.bool
 };
 export default TableBody;
