@@ -192,7 +192,8 @@ class TableEditColumn extends Component {
       };
       cellEditor = customEditor.getElement(this.handleCustomUpdate, customEditorProps);
     } else {
-      cellEditor = editor(editable, attr, format, editorClass, this.valueShortCircuit(fieldValue));
+      cellEditor = editor(editable, attr, format, editorClass, this.valueShortCircuit(fieldValue),
+          null, row);
     }
 
     if (isFocus) {
