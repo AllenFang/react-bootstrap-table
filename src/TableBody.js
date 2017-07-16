@@ -423,7 +423,7 @@ class TableBody extends Component {
 
   handleCompleteEditCell = (newVal, rowIndex, columnIndex) => {
     if (newVal !== null) {
-      const result = this.props.cellEdit.__onCompleteEdit__(newVal, rowIndex, columnIndex);
+      const result = this.props.onEditCell(newVal, rowIndex, columnIndex);
       if (result !== Const.AWAIT_BEFORE_CELL_EDIT) {
         this.setState(() => { return { currEditCell: null }; });
       }
