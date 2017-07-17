@@ -109,6 +109,7 @@ class TableBody extends Component {
           } else {
             columnTitle = column.columnTitle && fieldValue ? fieldValue.toString() : null;
           }
+          if (!columnChild) { columnChild = this.props.defaultValue; }
           return (
             <TableColumn key={ i }
               rIndex={ r }
@@ -500,6 +501,7 @@ class TableBody extends Component {
 }
 TableBody.propTypes = {
   data: PropTypes.array,
+  defaultValue: PropTypes.string,
   columns: PropTypes.array,
   striped: PropTypes.bool,
   bordered: PropTypes.bool,
