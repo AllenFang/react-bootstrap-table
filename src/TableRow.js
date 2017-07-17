@@ -73,7 +73,8 @@ class TableRow extends Component {
 
   render() {
     this.clickNum = 0;
-    const { selectRow, row, isSelected, className } = this.props;
+    const { selectRow, row, isSelected, className, index } = this.props;
+    let { style } = this.props;
     let backgroundColor = null;
     let selectRowClass = null;
 
@@ -85,8 +86,17 @@ class TableRow extends Component {
         selectRow.className(row, isSelected) : ( isSelected ? selectRow.className : null);
     }
 
+    if (Utils.isFunction(style)) {
+      style = style(row, index);
+    } else {
+      style = { ...style } || {};
+    }
+    // the bgcolor of row selection always overwrite the bgcolor defined by global.
+    if (style && backgroundColor && isSelected) {
+      style.backgroundColor = backgroundColor;
+    }
     const trCss = {
-      style: { backgroundColor },
+      style: { ...style },
       className: classSet(selectRowClass, className)
     };
 
@@ -102,6 +112,7 @@ class TableRow extends Component {
 TableRow.propTypes = {
   index: PropTypes.number,
   row: PropTypes.any,
+  style: PropTypes.any,
   isSelected: PropTypes.bool,
   enableCellEdit: PropTypes.bool,
   onRowClick: PropTypes.func,

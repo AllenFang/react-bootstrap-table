@@ -18,7 +18,6 @@ class BootstrapTable extends Component {
   constructor(props) {
     super(props);
     this.isIE = false;
-    this._attachCellEditFunc();
     if (Util.canUseDOM()) {
       this.isIE = document.documentMode;
     }
@@ -326,19 +325,8 @@ class BootstrapTable extends Component {
 
   componentDidUpdate() {
     this._adjustTable();
-    this._attachCellEditFunc();
     if (this.props.options.afterTableComplete) {
       this.props.options.afterTableComplete();
-    }
-  }
-
-  _attachCellEditFunc() {
-    const { cellEdit } = this.props;
-    if (cellEdit) {
-      this.props.cellEdit.__onCompleteEdit__ = this.handleEditCell.bind(this);
-      if (cellEdit.mode !== Const.CELL_EDIT_NONE) {
-        this.props.selectRow.clickToSelect = false;
-      }
     }
   }
 
@@ -394,6 +382,10 @@ class BootstrapTable extends Component {
     const { paginationPosition = Const.PAGINATION_POS_BOTTOM } = this.props.options;
     const showPaginationOnTop = paginationPosition !== Const.PAGINATION_POS_BOTTOM;
     const showPaginationOnBottom = paginationPosition !== Const.PAGINATION_POS_TOP;
+    const selectRow = { ...this.props.selectRow };
+    if (this.props.cellEdit && this.props.cellEdit.mode !== Const.CELL_EDIT_NONE) {
+      selectRow.clickToSelect = false;
+    }
 
     return (
       <div className={ classSet('react-bs-table-container', this.props.className, this.props.containerClass) }
@@ -441,12 +433,13 @@ class BootstrapTable extends Component {
             expandParentClass={ this.props.options.expandParentClass }
             columns={ columns }
             trClassName={ this.props.trClassName }
+            trStyle={ this.props.trStyle }
             striped={ this.props.striped }
             bordered={ this.props.bordered }
             hover={ this.props.hover }
             keyField={ this.store.getKeyField() }
             condensed={ this.props.condensed }
-            selectRow={ this.props.selectRow }
+            selectRow={ selectRow }
             expandColumnOptions={ this.props.expandColumnOptions }
             cellEdit={ this.props.cellEdit }
             selectedRowKeys={ this.state.selectedRowKeys }
@@ -465,7 +458,8 @@ class BootstrapTable extends Component {
             onNavigateCell={ this.handleNavigateCell }
             x={ this.state.x }
             y={ this.state.y }
-            withoutTabIndex={ this.props.withoutTabIndex } />
+            withoutTabIndex={ this.props.withoutTabIndex }
+            onEditCell={ this.handleEditCell } />
         </div>
         { tableFilter }
         { showPaginationOnBottom ? pagination : null }
@@ -792,7 +786,7 @@ class BootstrapTable extends Component {
     }
   }
 
-  handleEditCell(newVal, rowIndex, colIndex) {
+  handleEditCell = (newVal, rowIndex, colIndex) => {
     const { beforeSaveCell } = this.props.cellEdit;
     const columns = this.getColumnsDescription(this.props);
     const fieldName = columns[colIndex].name;
@@ -1478,6 +1472,7 @@ BootstrapTable.propTypes = {
   strictSearch: PropTypes.bool,
   columnFilter: PropTypes.bool,
   trClassName: PropTypes.any,
+  trStyle: PropTypes.any,
   tableStyle: PropTypes.object,
   containerStyle: PropTypes.object,
   headerStyle: PropTypes.object,
@@ -1640,6 +1635,7 @@ BootstrapTable.defaultProps = {
   multiColumnSort: 1,
   columnFilter: false,
   trClassName: '',
+  trStyle: undefined,
   tableStyle: undefined,
   containerStyle: undefined,
   headerStyle: undefined,
