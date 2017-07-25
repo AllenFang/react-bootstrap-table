@@ -12,6 +12,7 @@ import { TableDataStore } from './store/TableDataStore';
 import Util from './util';
 import exportCSVUtil from './csv_export_util';
 import { Filter } from './Filter';
+import TableHeaderColumn from './TableHeaderColumn';
 
 class BootstrapTable extends Component {
 
@@ -162,35 +163,51 @@ class BootstrapTable extends Component {
       const rowIndex = column.props.row ? Number(column.props.row) : 0;
       const rowSpan = column.props.rowSpan ? Number(column.props.rowSpan) : 1;
       if ((rowSpan + rowIndex) === (rowCount + 1)) {
-        return {
-          name: column.props.dataField,
-          align: column.props.dataAlign,
-          sort: column.props.dataSort,
-          format: column.props.dataFormat,
-          formatExtraData: column.props.formatExtraData,
-          filterFormatted: column.props.filterFormatted,
-          filterValue: column.props.filterValue,
-          editable: column.props.editable,
-          customEditor: column.props.customEditor,
-          hidden: column.props.hidden,
-          hiddenOnInsert: column.props.hiddenOnInsert,
-          searchable: column.props.searchable,
-          className: column.props.columnClassName,
-          editClassName: column.props.editColumnClassName,
-          invalidEditColumnClassName: column.props.invalidEditColumnClassName,
-          columnTitle: column.props.columnTitle,
-          width: column.props.width,
-          text: column.props.headerText || column.props.children,
-          sortFunc: column.props.sortFunc,
-          sortFuncExtraData: column.props.sortFuncExtraData,
-          export: column.props.export,
-          expandable: column.props.expandable,
-          index: i,
-          attrs: column.props.tdAttr,
-          style: column.props.tdStyle
-        };
+        const columnDescription = this.getColumnDescription(column);
+
+        columnDescription.index = i;
+
+        return columnDescription;
       }
     });
+  }
+
+  getColumnDescription(column) {
+    let columnDescription = {
+      name: column.props.dataField,
+      align: column.props.dataAlign,
+      sort: column.props.dataSort,
+      format: column.props.dataFormat,
+      formatExtraData: column.props.formatExtraData,
+      filterFormatted: column.props.filterFormatted,
+      filterValue: column.props.filterValue,
+      editable: column.props.editable,
+      customEditor: column.props.customEditor,
+      hidden: column.props.hidden,
+      hiddenOnInsert: column.props.hiddenOnInsert,
+      searchable: column.props.searchable,
+      className: column.props.columnClassName,
+      editClassName: column.props.editColumnClassName,
+      invalidEditColumnClassName: column.props.invalidEditColumnClassName,
+      columnTitle: column.props.columnTitle,
+      width: column.props.width,
+      text: column.props.headerText || column.props.children,
+      sortFunc: column.props.sortFunc,
+      sortFuncExtraData: column.props.sortFuncExtraData,
+      export: column.props.export,
+      expandable: column.props.expandable,
+      attrs: column.props.tdAttr,
+      style: column.props.tdStyle
+    };
+
+    if (column.type !== TableHeaderColumn && React.isValidElement(column.props.children)) {
+      columnDescription = {
+        ...columnDescription,
+        ...this.getColumnDescription(React.Children.only(column.props.children))
+      };
+    }
+
+    return columnDescription;
   }
 
   reset() {
