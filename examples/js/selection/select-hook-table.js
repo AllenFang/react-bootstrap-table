@@ -22,13 +22,13 @@ function addProducts(quantity) {
 
 addProducts(5);
 
-function onRowSelect(row, isSelected, e) {
+function onRowSelect(row, isSelected, e, rowIndex) {
   let rowStr = '';
   for (const prop in row) {
     rowStr += prop + ': "' + row[prop] + '"';
   }
   console.log(e);
-  alert(`is selected: ${isSelected}, ${rowStr}`);
+  alert(`Selected: ${isSelected}, rowIndex: ${rowIndex}, row: ${rowStr}`);
 }
 
 function onSelectAll(isSelected, rows) {

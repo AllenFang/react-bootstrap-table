@@ -1,3 +1,20 @@
+<a name="v3.5.0"></a>
+# [v3.5.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.6...v3.5.0) (2017-07-29)
+## Bug fixes
+* Fix [#1510](https://github.com/AllenFang/react-bootstrap-table/issues/1510)([a2eb599](https://github.com/AllenFang/react-bootstrap-table/commit/a2eb599da37620122752e608f37fe4d99f7494f2))
+
+## Enhancement
+* Pass `rowIndex` as fourth argument for `selectRow.onSelect`([e4a8d0b](https://github.com/AllenFang/react-bootstrap-table/commit/e4a8d0bd8bda223cc51911d0fe7b39a034924c4c))
+* [PR#1504](https://github.com/AllenFang/react-bootstrap-table/pull/1504)([60dab6f](https://github.com/AllenFang/react-bootstrap-table/commit/60dab6f7705a176a7e852b83bf2c67b5751ba6f9))
+
+<a name="v3.4.6"></a>
+# [v3.4.6](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.5...v3.4.6) (2017-07-16)
+## Bug fixes
+* Fix wrong cell edit if have multiple table but share same `cellEdit` props[8954de6](https://github.com/AllenFang/react-bootstrap-table/commit/8954de63c89bc9527f76d1023a5b931c3f14f175)
+
+## Enhancement
+* Allow to configure `td` style via `trStyle` on `BootstrapTable`([5999c48](https://github.com/AllenFang/react-bootstrap-table/commit/5999c48902de5348c7525a49bc370a42da4fce36))
+
 <a name="v3.4.5"></a>
 # [v3.4.5](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.4...v3.4.5) (2017-07-13)
 ## Bug fixes
