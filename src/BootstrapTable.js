@@ -200,6 +200,7 @@ class BootstrapTable extends Component {
       export: column.props.export,
       expandable: column.props.expandable,
       attrs: column.props.tdAttr,
+      editAttrs: column.props.editTdAttr,
       style: column.props.tdStyle
     };
 

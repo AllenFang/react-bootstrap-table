@@ -73,6 +73,7 @@ class TableBody extends Component {
                 completeEdit={ this.handleCompleteEditCell }
                 // add by bluespring for column editor customize
                 editable={ editable }
+                attrs={ column.editAttrs }
                 customEditor={ column.customEditor }
                 format={ column.format ? format : false }
                 key={ i }

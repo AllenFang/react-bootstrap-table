@@ -189,7 +189,8 @@ class TableEditColumn extends Component {
       customEditor,
       isFocus,
       customStyleWithNav,
-      row
+      row,
+      attrs
     } = this.props;
     const { shakeEditor } = this.state;
     const attr = {
@@ -241,6 +242,7 @@ class TableEditColumn extends Component {
 
     return (
       <td ref='td'
+        { ...attrs }
         style={ style }
         className={ className }
         onClick={ this.handleClick }>
@@ -275,6 +277,7 @@ TableEditColumn.propTypes = {
   className: PropTypes.any,
   beforeShowError: PropTypes.func,
   isFocus: PropTypes.bool,
+  attrs: PropTypes.object,
   customStyleWithNav: PropTypes.oneOfType([ PropTypes.func, PropTypes.object ])
 };
 
