@@ -125,11 +125,11 @@ class PaginationList extends Component {
         {
           content ||
             [ (
-              <div className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
+              <div key='paging-left' className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
                 { total }{ sizePerPageList.length > 1 ? dropdown : null }
               </div>
               ), (
-              <div style={ { display: hidePageList } }
+              <div key='paging-right' style={ { display: hidePageList } }
                 className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
                 { pageBtns }
               </div>
