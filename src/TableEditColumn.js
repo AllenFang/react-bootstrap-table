@@ -28,9 +28,8 @@ class TableEditColumn extends Component {
       const value = e.currentTarget.type === 'checkbox' ?
                       this._getCheckBoxValue(e) : e.currentTarget.value;
 
-      // TAB triggers blur so no need to notify
-      const notify = e.keyCode !== 9 || !this.props.blurToSave;
-      if (!this.validator(value, notify)) {
+      if ((e.keyCode === 9 && this.props.blurToSave) ||
+        (!this.validator(value))) {
         return;
       }
 
@@ -75,7 +74,7 @@ class TableEditColumn extends Component {
 
   // modified by iuculanop
   // BEGIN
-  validator(value, notify = true) {
+  validator(value) {
     const ts = this;
     let valid = true;
     if (ts.props.editable.validator) {
@@ -83,10 +82,10 @@ class TableEditColumn extends Component {
       const responseType = typeof checkVal;
       if (responseType !== 'object' && checkVal !== true) {
         valid = false;
-        notify && this.notifyToastr('error', checkVal, '');
+        this.notifyToastr('error', checkVal, '');
       } else if (responseType === 'object' && checkVal.isValid !== true) {
         valid = false;
-        notify && this.notifyToastr(checkVal.notification.type,
+        this.notifyToastr(checkVal.notification.type,
                           checkVal.notification.msg,
                           checkVal.notification.title);
       }
