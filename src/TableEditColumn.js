@@ -24,13 +24,15 @@ class TableEditColumn extends Component {
 
   handleKeyPress = e => {
     if (e.keyCode === 13 || e.keyCode === 9) {
-      // Pressed ENTER
+      // Pressed ENTER or TAB
       const value = e.currentTarget.type === 'checkbox' ?
                       this._getCheckBoxValue(e) : e.currentTarget.value;
 
-      if (!this.validator(value)) {
+      if ((e.keyCode === 9 && this.props.blurToSave) ||
+        (!this.validator(value))) {
         return;
       }
+
       if (e.keyCode === 13) {
         this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
       } else {
