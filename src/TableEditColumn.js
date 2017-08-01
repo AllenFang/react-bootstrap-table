@@ -24,13 +24,16 @@ class TableEditColumn extends Component {
 
   handleKeyPress = e => {
     if (e.keyCode === 13 || e.keyCode === 9) {
-      // Pressed ENTER
+      // Pressed ENTER or TAB
       const value = e.currentTarget.type === 'checkbox' ?
                       this._getCheckBoxValue(e) : e.currentTarget.value;
 
-      if (!this.validator(value)) {
+      // TAB triggers blur so no need to notify
+      const notify = e.keyCode !== 9 || !this.props.blurToSave;
+      if (!this.validator(value, notify)) {
         return;
       }
+
       if (e.keyCode === 13) {
         this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
       } else {
@@ -72,7 +75,7 @@ class TableEditColumn extends Component {
 
   // modified by iuculanop
   // BEGIN
-  validator(value) {
+  validator(value, notify = true) {
     const ts = this;
     let valid = true;
     if (ts.props.editable.validator) {
@@ -80,10 +83,10 @@ class TableEditColumn extends Component {
       const responseType = typeof checkVal;
       if (responseType !== 'object' && checkVal !== true) {
         valid = false;
-        this.notifyToastr('error', checkVal, '');
+        notify && this.notifyToastr('error', checkVal, '');
       } else if (responseType === 'object' && checkVal.isValid !== true) {
         valid = false;
-        this.notifyToastr(checkVal.notification.type,
+        notify && this.notifyToastr(checkVal.notification.type,
                           checkVal.notification.msg,
                           checkVal.notification.title);
       }
