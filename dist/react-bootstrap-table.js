@@ -11185,12 +11185,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        { className: 'row', style: { marginTop: 15 } },
 	        content || [_react2.default.createElement(
 	          'div',
-	          { className: 'col-md-6 col-xs-6 col-sm-6 col-lg-6' },
+	          { key: 'paging-left', className: 'col-md-6 col-xs-6 col-sm-6 col-lg-6' },
 	          total,
 	          sizePerPageList.length > 1 ? dropdown : null
 	        ), _react2.default.createElement(
 	          'div',
-	          { style: { display: hidePageList },
+	          { key: 'paging-right', style: { display: hidePageList },
 	            className: 'col-md-6 col-xs-6 col-sm-6 col-lg-6' },
 	          pageBtns
 	        )]
