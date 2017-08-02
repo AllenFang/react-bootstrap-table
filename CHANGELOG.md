@@ -1,3 +1,8 @@
+<a name="v3.5.1"></a>
+# [v3.5.1](https://github.com/AllenFang/react-bootstrap-table/compare/v3.5.0...v3.5.1) (2017-08-02)
+## Bug fixes
+* Fix [#1518](https://github.com/AllenFang/react-bootstrap-table/issues/1518)([20284d2](https://github.com/AllenFang/react-bootstrap-table/commit/20284d2365f85c0180eb6c73d9253c6483a7597c))
+
 <a name="v3.5.0"></a>
 # [v3.5.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.6...v3.5.0) (2017-07-29)
 ## Bug fixes
