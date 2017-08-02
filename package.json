@@ -71,7 +71,8 @@
   "dependencies": {
     "classnames": "^2.1.2",
     "react-modal": "^1.4.0",
-    "@allenfang/react-toastr": "2.8.2"
+    "@allenfang/react-toastr": "2.8.2",
+    "react-overlays": "^0.6.12"
   },
   "peerDependencies": {
     "react": "^0.14.3 || ^15.0.0"

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
+import AutoAffix from 'react-overlays/lib/AutoAffix';
 import Const from './Const';
 import classSet from 'classnames';
 import SelectRowHeaderColumn from './SelectRowHeaderColumn';
@@ -97,14 +98,30 @@ class TableHeader extends Component {
       );
     });
 
+    const tableHeaders = (
+      <table className={ tableClasses }>
+          { React.cloneElement(this.props.colGroups, { ref: 'headerGrp' }) }
+        <thead ref='header'>
+          { trs }
+        </thead>
+      </table>
+    );
+
+    if (this.props.stickyHeaders) {
+      return (
+        <AutoAffix affixStyle={ this.props.affixStyle } container={ () => {
+          return this.props.autoAffixContainer;
+        } }>
+          <div ref='container' className={ containerClasses } style={ this.props.style }>
+            { tableHeaders }
+          </div>
+        </AutoAffix>
+      );
+    }
+
     return (
       <div ref='container' className={ containerClasses } style={ this.props.style }>
-        <table className={ tableClasses }>
-          { React.cloneElement(this.props.colGroups, { ref: 'headerGrp' }) }
-          <thead ref='header'>
-            { trs }
-          </thead>
-        </table>
+        { tableHeaders }
       </div>
     );
   }
@@ -159,7 +176,10 @@ TableHeader.propTypes = {
   reset: PropTypes.bool,
   expandColumnVisible: PropTypes.bool,
   expandColumnComponent: PropTypes.func,
-  expandColumnBeforeSelectColumn: PropTypes.bool
+  expandColumnBeforeSelectColumn: PropTypes.bool,
+  autoAffixContainer: PropTypes.object,
+  stickyHeaders: PropTypes.bool,
+  affixStyle: PropTypes.object
 };
 
 export default TableHeader;
