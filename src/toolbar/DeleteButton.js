@@ -16,7 +16,7 @@ class DeleteButton extends Component {
       ...rest
     } = this.props;
     const content = children ||
-      (<span><i className={ `glyphicon ${btnGlyphicon}` }></i> { btnText }</span>);
+      (<span><i className={ `fa glyphicon ${btnGlyphicon}` }></i> { btnText }</span>);
     return (
       <button type='button'
         className={ `btn ${btnContextual} ${deleteBtnDefaultClass} ${className}` }
@@ -40,7 +40,7 @@ DeleteButton.defaultProps = {
   btnContextual: 'btn-warning',
   className: '',
   onClick: undefined,
-  btnGlyphicon: 'glyphicon-trash'
+  btnGlyphicon: 'glyphicon-trash fa-trash'
 };
 
 export default DeleteButton;

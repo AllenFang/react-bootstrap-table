@@ -472,8 +472,8 @@ class TableBody extends Component {
     if (CustomComponent) {
       content = (<CustomComponent isExpandableRow={ isExpandableRow } isExpanded={ isExpanded } />);
     } else if (isExpandableRow) {
-      content = (isExpanded ? (<span className='glyphicon glyphicon-minus'></span>) :
-        (<span className='glyphicon glyphicon-plus'></span>) );
+      content = (isExpanded ? (<span className='fa fa-minus glyphicon glyphicon-minus'></span>) :
+        (<span className='fa fa-plus glyphicon glyphicon-plus'></span>) );
     } else {
       content = ' ';
     }

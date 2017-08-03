@@ -16,7 +16,7 @@ class ExportCSVButton extends Component {
       ...rest
     } = this.props;
     const content = children ||
-      (<span><i className={ `glyphicon ${btnGlyphicon}` }></i> { btnText }</span>);
+      (<span><i className={ `fa glyphicon ${btnGlyphicon}` }></i> { btnText }</span>);
     return (
       <button type='button'
         className={ `btn ${btnContextual} ${exportCsvBtnDefaultClass} ${className} hidden-print` }
@@ -40,7 +40,7 @@ ExportCSVButton.defaultProps = {
   btnContextual: 'btn-success',
   className: '',
   onClick: undefined,
-  btnGlyphicon: 'glyphicon-export'
+  btnGlyphicon: 'glyphicon-export fa-download'
 };
 
 export default ExportCSVButton;

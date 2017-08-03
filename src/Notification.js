@@ -6,7 +6,7 @@ const notice = (type, msg, title) => {
   const bodyHTML = `
     ${ titleHTML }
     <div>
-      <span class='	glyphicon glyphicon-alert'></span>&nbsp;
+      <span class='fa fa-exclamation-triangle glyphicon glyphicon-alert'></span>&nbsp;
       <span>${ msg }</span>
     </div>
   `;
