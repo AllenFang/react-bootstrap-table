@@ -316,16 +316,15 @@ class ToolBar extends Component {
         }
       });
     } else {
-      toolbar = (
-        <div>
-          <div className='col-xs-6 col-sm-6 col-md-6 col-lg-8'>
-            { this.props.searchPosition === 'left' ? searchPanel : btnGroup }
-          </div>
-          <div className='col-xs-6 col-sm-6 col-md-6 col-lg-4'>
-            { this.props.searchPosition === 'left' ? btnGroup : searchPanel }
-          </div>
+      toolbar = [ (
+        <div key='toolbar-left' className='col-xs-6 col-sm-6 col-md-6 col-lg-8'>
+          { this.props.searchPosition === 'left' ? searchPanel : btnGroup }
         </div>
-      );
+      ), (
+        <div key='toolbar-right' className='col-xs-6 col-sm-6 col-md-6 col-lg-4'>
+          { this.props.searchPosition === 'left' ? btnGroup : searchPanel }
+        </div>
+      ) ];
     }
 
     return (
