@@ -4,15 +4,26 @@ import Const from './Const';
 import classSet from 'classnames';
 
 export default {
-  renderReactSortCaret(order) {
-    const orderClass = classSet('order', {
-      'dropup': order === Const.SORT_ASC
-    });
-    return (
-      <span className={ orderClass }>
-        <span className='caret' style={ { margin: '10px 5px' } }></span>
-      </span>
-    );
+  renderReactSortCaret(order, isBootstrap4) {
+    let orderClass;
+    if (isBootstrap4) {
+      orderClass = classSet('fa', {
+        'fa-sort-asc': order === Const.SORT_ASC,
+        'fa-sort-desc': order === Const.SORT_DESC
+      });
+      return (
+        <span className={ orderClass } style={ { margin: '10px 5px' } }></span>
+      );
+    } else {
+      orderClass = classSet('order', {
+        'dropup': order === Const.SORT_ASC
+      });
+      return (
+        <span className={ orderClass }>
+          <span className='caret' style={ { margin: '10px 5px' } }></span>
+        </span>
+      );
+    }
   },
 
   isFunction(obj) {
@@ -61,6 +72,10 @@ export default {
 
   getFirstPage(pageStartIndex) {
     return pageStartIndex !== undefined ? pageStartIndex : Const.PAGE_START_INDEX;
+  },
+
+  isBootstrap4(version) {
+    return version === '4';
   },
 
   renderColGroup(columns, selectRow, expandColumnOptions = {}) {
