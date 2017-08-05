@@ -173,7 +173,7 @@ class PaginationList extends Component {
         const pageNum = _sizePerPage.value || _sizePerPage;
         if (sizePerPage === pageNum) sizePerPageText = pageText;
         return (
-          <li key={ pageText } role='presentation'>
+          <li key={ pageText } role='presentation' className='dropdown-item'>
             <a role='menuitem'
               tabIndex='-1' href='#'
               data-page={ pageNum }
