@@ -78,15 +78,18 @@ export default {
     return version === '4';
   },
 
-  renderColGroup(columns, selectRow, expandColumnOptions = {}) {
+  renderColGroup(columns, selectRow, expandColumnOptions = {}, version) {
     let selectRowHeader = null;
     let expandRowHeader = null;
+    const bootstrap4WithExpandCol = this.isBootstrap4(version) &&
+      expandColumnOptions.expandColumnVisible;
     const isSelectRowDefined = selectRow.mode === Const.ROW_SELECT_SINGLE ||
       selectRow.mode === Const.ROW_SELECT_MULTI;
+    const columnWidth = bootstrap4WithExpandCol ? '38px' : '30px';
     if (isSelectRowDefined) {
       const style = {
-        width: selectRow.columnWidth || '30px',
-        minWidth: selectRow.columnWidth || '30px'
+        width: selectRow.columnWidth || columnWidth,
+        minWidth: selectRow.columnWidth || columnWidth
       };
       if (!selectRow.hideSelectColumn) {
         selectRowHeader = (<col key='select-col' style={ style }></col>);
@@ -94,8 +97,8 @@ export default {
     }
     if (expandColumnOptions.expandColumnVisible) {
       const style = {
-        width: expandColumnOptions.columnWidth || 30,
-        minWidth: expandColumnOptions.columnWidth || 30
+        width: expandColumnOptions.columnWidth || columnWidth,
+        minWidth: expandColumnOptions.columnWidth || columnWidth
       };
       expandRowHeader = (<col key='expand-col' style={ style }></col>);
     }
