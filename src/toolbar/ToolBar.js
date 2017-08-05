@@ -404,6 +404,7 @@ class ToolBar extends Component {
   renderInsertRowModal() {
     const validateState = this.state.validateState || {};
     const {
+      version,
       columns,
       ignoreEditable,
       insertModalHeader,
@@ -424,6 +425,7 @@ class ToolBar extends Component {
     if (!modal) {
       modal = (
         <InsertModal
+          version={ version }
           columns={ columns }
           validateState={ validateState }
           ignoreEditable={ ignoreEditable }
@@ -457,6 +459,7 @@ class ToolBar extends Component {
 }
 
 ToolBar.propTypes = {
+  version: PropTypes.string,
   onAddRow: PropTypes.func,
   onDropRow: PropTypes.func,
   onShowOnlySelected: PropTypes.func,

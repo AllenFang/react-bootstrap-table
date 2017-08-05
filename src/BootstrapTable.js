@@ -1248,6 +1248,7 @@ class BootstrapTable extends Component {
         <div className={ `react-bs-table-tool-bar ${ print ? '' : 'hidden-print' }` }>
           <ToolBar
             ref='toolbar'
+            version={ this.props.version }
             defaultSearch={ this.props.options.defaultSearch }
             clearSearch={ this.props.options.clearSearch }
             searchPosition={ this.props.options.searchPosition }

@@ -74,6 +74,7 @@ export default class InsertModal extends Component {
         {
           headerComponent ||
           (<InsertModalHeader
+            version={ this.props.version }
             className='react-bs-table-inser-modal-header'
             onModalClose={ onModalClose }/>)
         }
@@ -93,6 +94,7 @@ export default class InsertModal extends Component {
   }
 }
 InsertModal.propTypes = {
+  version: PropTypes.string.isRequired,
   columns: PropTypes.array.isRequired,
   validateState: PropTypes.object.isRequired,
   ignoreEditable: PropTypes.bool,
