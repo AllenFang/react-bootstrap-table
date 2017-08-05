@@ -493,7 +493,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          var columnDescription = _this3.getColumnDescription(column);
 
 	          columnDescription.index = i;
-
 	          return columnDescription;
 	        }
 	      });
@@ -529,7 +528,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        style: column.props.tdStyle
 	      };
 
-	      if (column.type !== _TableHeaderColumn2.default && _react2.default.isValidElement(column.props.children)) {
+	      if (column.type.name !== _TableHeaderColumn2.default.name && _react2.default.isValidElement(column.props.children)) {
 	        columnDescription = _extends({}, columnDescription, this.getColumnDescription(_react2.default.Children.only(column.props.children)));
 	      }
 
@@ -1708,6 +1707,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          { className: 'react-bs-table-tool-bar ' + (print ? '' : 'hidden-print') },
 	          _react2.default.createElement(_ToolBar2.default, {
 	            ref: 'toolbar',
+	            version: this.props.version,
 	            defaultSearch: this.props.options.defaultSearch,
 	            clearSearch: this.props.options.clearSearch,
 	            searchPosition: this.props.options.searchPosition,
@@ -8612,7 +8612,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          if (sizePerPage === pageNum) sizePerPageText = pageText;
 	          return _react2.default.createElement(
 	            'li',
-	            { key: pageText, role: 'presentation' },
+	            { key: pageText, role: 'presentation', className: 'dropdown-item' },
 	            _react2.default.createElement(
 	              'a',
 	              { role: 'menuitem',
@@ -8985,7 +8985,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	SizePerPageDropDown.defaultProps = {
 	  open: false,
 	  hidden: false,
-	  btnContextual: 'btn-default',
+	  btnContextual: 'btn-default btn-secondary',
 	  variation: 'dropdown',
 	  className: ''
 	};
@@ -9556,6 +9556,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function renderInsertRowModal() {
 	      var validateState = this.state.validateState || {};
 	      var _props = this.props,
+	          version = _props.version,
 	          columns = _props.columns,
 	          ignoreEditable = _props.ignoreEditable,
 	          insertModalHeader = _props.insertModalHeader,
@@ -9569,6 +9570,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if (!modal) {
 	        modal = _react2.default.createElement(_InsertModal2.default, {
+	          version: version,
 	          columns: columns,
 	          validateState: validateState,
 	          ignoreEditable: ignoreEditable,
@@ -9608,6 +9610,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	ToolBar.propTypes = {
+	  version: _propTypes2.default.string,
 	  onAddRow: _propTypes2.default.func,
 	  onDropRow: _propTypes2.default.func,
 	  onShowOnlySelected: _propTypes2.default.func,
@@ -12431,6 +12434,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'div',
 	        { className: 'modal-content ' + defaultModalClassName },
 	        headerComponent || _react2.default.createElement(_InsertModalHeader2.default, {
+	          version: this.props.version,
 	          className: 'react-bs-table-inser-modal-header',
 	          onModalClose: onModalClose }),
 	        bodyComponent || _react2.default.createElement(_InsertModalBody2.default, _extends({ ref: 'body' }, bodyAttr)),
@@ -12449,6 +12453,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = _default;
 
 	InsertModal.propTypes = {
+	  version: _propTypes2.default.string.isRequired,
 	  columns: _propTypes2.default.array.isRequired,
 	  validateState: _propTypes2.default.object.isRequired,
 	  ignoreEditable: _propTypes2.default.bool,
@@ -12496,6 +12501,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
+	var _util = __webpack_require__(23);
+
+	var _util2 = _interopRequireDefault(_util);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12536,13 +12545,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	      onModalClose();
 	    }
 	  }, {
+	    key: 'renderContent',
+	    value: function renderContent(closeBtn) {
+	      var _props2 = this.props,
+	          version = _props2.version,
+	          titleText = _props2.title;
+
+	      var title = _react2.default.createElement(
+	        'h4',
+	        { key: 'title', className: 'modal-title' },
+	        titleText
+	      );
+	      if (_util2.default.isBootstrap4(version)) {
+	        return [title, closeBtn];
+	      } else {
+	        return _react2.default.createElement(
+	          'span',
+	          null,
+	          closeBtn,
+	          title
+	        );
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props2 = this.props,
-	          title = _props2.title,
-	          hideClose = _props2.hideClose,
-	          className = _props2.className,
-	          children = _props2.children;
+	      var _props3 = this.props,
+	          hideClose = _props3.hideClose,
+	          className = _props3.className,
+	          children = _props3.children;
 
 
 	      var closeBtn = hideClose ? null : _react2.default.createElement(
@@ -12561,16 +12592,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        )
 	      );
 
-	      var content = children || _react2.default.createElement(
-	        'span',
-	        null,
-	        closeBtn,
-	        _react2.default.createElement(
-	          'h4',
-	          { className: 'modal-title' },
-	          title
-	        )
-	      );
+	      var content = children || this.renderContent(closeBtn);
 
 	      return _react2.default.createElement(
 	        'div',
@@ -12584,6 +12606,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	InsertModalHeader.propTypes = {
+	  version: _propTypes2.default.string,
 	  className: _propTypes2.default.string,
 	  title: _propTypes2.default.string,
 	  onModalClose: _propTypes2.default.func,
@@ -12591,6 +12614,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  beforeClose: _propTypes2.default.func
 	};
 	InsertModalHeader.defaultProps = {
+	  version: '3',
 	  className: '',
 	  title: 'Add Row',
 	  onModalClose: undefined,
@@ -12705,26 +12729,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	          children = _props3.children;
 
 
-	      var content = children || _react2.default.createElement(
-	        'span',
-	        null,
-	        _react2.default.createElement(
-	          'button',
-	          {
-	            type: 'button',
-	            className: 'btn ' + closeBtnContextual + ' ' + closeBtnClass,
-	            onClick: this.handleCloseBtnClick },
-	          closeBtnText
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          {
-	            type: 'button',
-	            className: 'btn ' + saveBtnContextual + ' ' + saveBtnClass,
-	            onClick: this.handleSaveBtnClick },
-	          saveBtnText
-	        )
-	      );
+	      var content = children || [_react2.default.createElement(
+	        'button',
+	        {
+	          key: 'closeBtn',
+	          type: 'button',
+	          className: 'btn ' + closeBtnContextual + ' ' + closeBtnClass,
+	          onClick: this.handleCloseBtnClick },
+	        closeBtnText
+	      ), _react2.default.createElement(
+	        'button',
+	        {
+	          key: 'saveBtn',
+	          type: 'button',
+	          className: 'btn ' + saveBtnContextual + ' ' + saveBtnClass,
+	          onClick: this.handleSaveBtnClick },
+	        saveBtnText
+	      )];
 
 	      return _react2.default.createElement(
 	        'div',
@@ -12754,7 +12775,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  className: '',
 	  saveBtnText: _Const2.default.SAVE_BTN_TEXT,
 	  closeBtnText: _Const2.default.CLOSE_BTN_TEXT,
-	  closeBtnContextual: 'btn-default',
+	  closeBtnContextual: 'btn-default btn-secondary',
 	  saveBtnContextual: 'btn-primary',
 	  closeBtnClass: '',
 	  saveBtnClass: '',
@@ -13587,7 +13608,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onClick: _propTypes2.default.func
 	};
 	ClearSearchButton.defaultProps = {
-	  btnContextual: 'btn-default',
+	  btnContextual: 'btn-default btn-secondary',
 	  className: '',
 	  btnText: 'Clear',
 	  onClick: undefined
