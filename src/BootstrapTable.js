@@ -169,7 +169,6 @@ class BootstrapTable extends Component {
         const columnDescription = this.getColumnDescription(column);
 
         columnDescription.index = i;
-
         return columnDescription;
       }
     });
@@ -204,7 +203,7 @@ class BootstrapTable extends Component {
       style: column.props.tdStyle
     };
 
-    if (column.type !== TableHeaderColumn && React.isValidElement(column.props.children)) {
+    if (column.type.name !== TableHeaderColumn.name && React.isValidElement(column.props.children)) {
       columnDescription = {
         ...columnDescription,
         ...this.getColumnDescription(React.Children.only(column.props.children))
