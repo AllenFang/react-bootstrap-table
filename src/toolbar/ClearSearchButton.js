@@ -35,7 +35,7 @@ ClearSearchButton.propTypes = {
   onClick: PropTypes.func
 };
 ClearSearchButton.defaultProps = {
-  btnContextual: 'btn-default',
+  btnContextual: 'btn-default btn-secondary',
   className: '',
   btnText: 'Clear',
   onClick: undefined

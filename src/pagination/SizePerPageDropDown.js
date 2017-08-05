@@ -53,7 +53,7 @@ SizePerPageDropDown.propTypes = {
 SizePerPageDropDown.defaultProps = {
   open: false,
   hidden: false,
-  btnContextual: 'btn-default',
+  btnContextual: 'btn-default btn-secondary',
   variation: 'dropdown',
   className: ''
 };
