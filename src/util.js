@@ -81,11 +81,10 @@ export default {
   renderColGroup(columns, selectRow, expandColumnOptions = {}, version) {
     let selectRowHeader = null;
     let expandRowHeader = null;
-    const bootstrap4WithExpandCol = this.isBootstrap4(version) &&
-      expandColumnOptions.expandColumnVisible;
+    const isBootstrap4 = this.isBootstrap4(version);
     const isSelectRowDefined = selectRow.mode === Const.ROW_SELECT_SINGLE ||
       selectRow.mode === Const.ROW_SELECT_MULTI;
-    const columnWidth = bootstrap4WithExpandCol ? '38px' : '30px';
+    const columnWidth = isBootstrap4 ? '38px' : '30px';
     if (isSelectRowDefined) {
       const style = {
         width: selectRow.columnWidth || columnWidth,
