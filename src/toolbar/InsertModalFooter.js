@@ -28,18 +28,18 @@ class InsertModalFooter extends Component {
       children
     } = this.props;
 
-    const content = children || (
-        <span>
-          <button
+    const content = children || [
+          (<button
+            key='closeBtn'
             type='button'
             className={ `btn ${closeBtnContextual} ${closeBtnClass}` }
-            onClick={ this.handleCloseBtnClick }>{ closeBtnText }</button>
-          <button
+            onClick={ this.handleCloseBtnClick }>{ closeBtnText }</button>),
+          (<button
+            key='saveBtn'
             type='button'
             className={ `btn ${saveBtnContextual} ${saveBtnClass}` }
-            onClick={ this.handleSaveBtnClick }>{ saveBtnText }</button>
-        </span>
-      );
+            onClick={ this.handleSaveBtnClick }>{ saveBtnText }</button>)
+    ];
 
     return (
       <div className={ `modal-footer ${className}` }>
@@ -65,7 +65,7 @@ InsertModalFooter.defaultProps = {
   className: '',
   saveBtnText: Const.SAVE_BTN_TEXT,
   closeBtnText: Const.CLOSE_BTN_TEXT,
-  closeBtnContextual: 'btn-default',
+  closeBtnContextual: 'btn-default btn-secondary',
   saveBtnContextual: 'btn-primary',
   closeBtnClass: '',
   saveBtnClass: '',
