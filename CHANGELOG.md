@@ -1,3 +1,20 @@
+<a name="v4.0.0"></a>
+# [v4.0.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.5.1...v4.0.0) (2017-08-06)
+## Bug fixes
+* Fix validation called twice when press tab to leave the cell editor([5532b98](https://github.com/AllenFang/react-bootstrap-table/commit/5532b9887fc94e23ae3e8d68a7b683db956a2e25))
+
+## Enhancement
+* Fixed hard coded warning when insert fails([28b3ea3](https://github.com/AllenFang/react-bootstrap-table/commit/28b3ea32ee44a3b94d04cb3512e996a576932ca4))
+	* Use `options.insertFailIndicator` to custom the error indicator.
+* Fixed 'Show All/Show selected only' is display in contrast([db1f8e7](https://github.com/AllenFang/react-bootstrap-table/commit/db1f8e71662633ddf21ac5be984131c20e84fcac))
+* Use `prop-types`
+* Use `editTdAttr` on `TableHeaderColumn` to custom the attributes on the column(`TD`) of cell editor([42e84b7](https://github.com/AllenFang/react-bootstrap-table/commit/42e84b7839e38cb5492a66c92da8beebdba67c6a))
+* Support dynamic options list for dropdown in cell editor([62b928a](https://github.com/AllenFang/react-bootstrap-table/commit/62b928a91cbe6e938147361f750e3ef4991c5006))
+	* `editable.options.values` on `TableHeaderColumn` can accept an array or function now.
+
+## Features
+* Support `bootstrap@4` and `bootstrap@3`, if you use 4, please add `version='4'` on `<BootstrapTable>`.
+
 <a name="v3.5.1"></a>
 # [v3.5.1](https://github.com/AllenFang/react-bootstrap-table/compare/v3.5.0...v3.5.1) (2017-08-02)
 ## Bug fixes
