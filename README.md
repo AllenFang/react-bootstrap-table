@@ -33,7 +33,7 @@ Check the <a href='https://github.com/AllenFang/react-bootstrap-table/blob/maste
 ***`v4.0.0` released, this release mainly replace `react-toastr` with `react-s-alert`***
 1. Replace `react-toastr` by `react-s-alert`
 2. Use `prop-types`
-3. Support `bootstrap@4` and `bootstrap@3` both
+3. Support `bootstrap@4` and `bootstrap@3` both. If you use 4, please add `version='4'` on `<BootstrapTable>`
 4. No important features were implemented, most of bug fixes and improvement
 
 ***After ```v2.4.4```, we move the css files to ```dist``` folder for allowing this repo can be hosted on [cdnjs](https://github.com/cdnjs/cdnjs)<br/>***
