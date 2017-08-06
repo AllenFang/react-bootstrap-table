@@ -1,5 +1,6 @@
 /* eslint react/display-name: 0 */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import editor from '../Editor';
 

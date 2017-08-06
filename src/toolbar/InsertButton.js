@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Const from '../Const';
 
 const insertBtnDefaultClass = 'react-bs-table-add-btn';
@@ -15,7 +16,7 @@ class InsertButton extends Component {
       ...rest
     } = this.props;
     const content = children ||
-      (<span><i className={ `glyphicon ${btnGlyphicon}` }></i>{ btnText }</span>);
+      (<span><i className={ `fa glyphicon ${btnGlyphicon}` }></i> { btnText }</span>);
     return (
       <button type='button'
         className={ `btn ${btnContextual} ${insertBtnDefaultClass} ${className}` }
@@ -39,7 +40,7 @@ InsertButton.defaultProps = {
   btnContextual: 'btn-info',
   className: '',
   onClick: undefined,
-  btnGlyphicon: 'glyphicon-plus'
+  btnGlyphicon: 'glyphicon-plus fa-plus'
 };
 
 export default InsertButton;

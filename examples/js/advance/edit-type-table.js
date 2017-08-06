@@ -1,4 +1,5 @@
 /* eslint max-len: 0 */
+/* eslint no-console: 0 */
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
@@ -32,7 +33,8 @@ function addJobs(quantity) {
     jobs.push({
       id: id,
       name: 'Item name ' + id,
-      type: 'B',
+      type1: 'A',
+      type2: 'B',
       active: i % 2 === 0 ? 'Y' : 'N',
       datetime: '200' + i + '-12-28T14:57:00'
     });
@@ -56,12 +58,28 @@ export default class EditTypeTable extends React.Component {
     return `TYPE_${cell}`;
   }
 
+  jobTypes(row) {
+    if (row.id > 2) {
+      return [ 'A', 'B' ];
+    } else {
+      return [ 'B', 'C', 'D', 'E' ];
+    }
+  }
+
   render() {
+    // custom attributes on editor
+    const attrs = {
+      rows: 10,
+      onKeyDown: function() {
+        console.log('keydown event trigger');
+      }
+    };
     return (
       <BootstrapTable data={ jobs } cellEdit={ cellEditProp }>
         <TableHeaderColumn dataField='id' isKey={ true }>Job ID</TableHeaderColumn>
-        <TableHeaderColumn dataField='name' editable={ { type: 'textarea' } }>Job Name</TableHeaderColumn>
-        <TableHeaderColumn dataField='type' dataFormat={ this.formatType } editable={ { type: 'select', options: { values: jobTypes } } }>Job Type</TableHeaderColumn>
+        <TableHeaderColumn dataField='name' editable={ { type: 'textarea', attrs: attrs } }>Job Name</TableHeaderColumn>
+        <TableHeaderColumn dataField='type1' dataFormat={ this.formatType } editable={ { type: 'select', options: { values: jobTypes } } }>Job Type1</TableHeaderColumn>
+        <TableHeaderColumn dataField='type2' editable={ { type: 'select', options: { values: this.jobTypes } } }>Job Type2</TableHeaderColumn>
         <TableHeaderColumn dataField='active' editable={ { type: 'checkbox', options: { values: 'Y:N' } } }>Active</TableHeaderColumn>
         <TableHeaderColumn dataField='datetime' editable={ { type: 'datetime' } }>Date Time</TableHeaderColumn>
       </BootstrapTable>

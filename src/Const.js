@@ -47,7 +47,6 @@ const CONST_VAR = {
   FILTER_COND_LIKE: 'like',
   EXPAND_BY_ROW: 'row',
   EXPAND_BY_COL: 'column',
-  CANCEL_TOASTR: 'Pressed ESC can cancel',
   REMOTE_SORT: 'sort',
   REMOTE_PAGE: 'pagination',
   REMOTE_CELL_EDIT: 'cellEdit',
@@ -56,6 +55,7 @@ const CONST_VAR = {
   REMOTE_FILTER: 'filter',
   REMOTE_SEARCH: 'search',
   REMOTE_EXPORT_CSV: 'exportCSV',
+  INSERT_FAIL_INDICATOR: 'Validation errors, please check!',
   DEFAULT_CSV_SEPARATOR: ','
 };
 

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Const from '../Const';
 
 const showSelectedOnlyBtnDefaultClass = 'react-bs-table-show-sel-only-btn';
@@ -16,7 +17,7 @@ class ShowSelectedOnlyButton extends Component {
       ...rest
     } = this.props;
     const content = children ||
-      (<span>{ toggle ? showOnlySelectText : showAllText }</span>);
+      (<span>{ toggle ? showAllText : showOnlySelectText }</span>);
     return (
       <button type='button'
         aria-pressed='false'

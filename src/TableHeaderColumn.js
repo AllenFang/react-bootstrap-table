@@ -1,6 +1,7 @@
 /* eslint default-case: 0 */
 /* eslint guard-for-in: 0 */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classSet from 'classnames';
 import Const from './Const';
 import Util from './util';
@@ -82,6 +83,27 @@ class TableHeaderColumn extends Component {
     this.refs['header-col'].setAttribute('data-field', this.props.dataField);
   }
 
+  renderDefaultCaret(dataSort, isBootstrap4) {
+    if (!dataSort) return null;
+    if (isBootstrap4) {
+      return (
+        <span className='order fa fa-sort'
+          style={ { margin: '10px 0 10px 5px', color: '#ccc' } }></span>
+      );
+    } else {
+      return (
+        <span className='order'>
+          <span className='dropdown'>
+            <span className='caret' style={ { margin: '10px 0 10px 5px', color: '#ccc' } }></span>
+          </span>
+          <span className='dropup'>
+            <span className='caret' style={ { margin: '10px 0', color: '#ccc' } }></span>
+          </span>
+        </span>
+      );
+    }
+  }
+
   render() {
     let defaultCaret;
     let sortCaret;
@@ -99,6 +121,7 @@ class TableHeaderColumn extends Component {
       caretRender,
       className,
       isOnlyHead,
+      version,
       thStyle: style
     } = this.props;
     const thStyle = {
@@ -106,20 +129,12 @@ class TableHeaderColumn extends Component {
       display: hidden ? 'none' : null,
       ...style
     };
+    const isBootstrap4 = Util.isBootstrap4(version);
     if (!isOnlyHead) {
       if (sortIndicator) {
-        defaultCaret = (!dataSort) ? null : (
-          <span className='order'>
-            <span className='dropdown'>
-              <span className='caret' style={ { margin: '10px 0 10px 5px', color: '#ccc' } }></span>
-            </span>
-            <span className='dropup'>
-              <span className='caret' style={ { margin: '10px 0', color: '#ccc' } }></span>
-            </span>
-          </span>
-        );
+        defaultCaret = this.renderDefaultCaret(dataSort, isBootstrap4);
       }
-      sortCaret = sort ? Util.renderReactSortCaret(sort) : defaultCaret;
+      sortCaret = sort ? Util.renderReactSortCaret(sort, isBootstrap4) : defaultCaret;
       if (caretRender) {
         sortCaret = caretRender(sort, dataField);
       }
@@ -268,6 +283,7 @@ TableHeaderColumn.propTypes = {
   export: PropTypes.bool,
   expandable: PropTypes.bool,
   tdAttr: PropTypes.object,
+  editTdAttr: PropTypes.object,
   tdStyle: PropTypes.object,
   thStyle: PropTypes.object,
   keyValidator: PropTypes.bool,
@@ -304,6 +320,7 @@ TableHeaderColumn.defaultProps = {
   sortIndicator: true,
   expandable: true,
   tdAttr: undefined,
+  editTdAttr: undefined,
   tdStyle: undefined,
   thStyle: undefined,
   keyValidator: false,

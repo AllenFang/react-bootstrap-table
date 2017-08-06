@@ -1,6 +1,7 @@
 /* eslint no-console: 0 */
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import InsertModalHeader from './InsertModalHeader';
 import InsertModalFooter from './InsertModalFooter';
@@ -73,6 +74,7 @@ export default class InsertModal extends Component {
         {
           headerComponent ||
           (<InsertModalHeader
+            version={ this.props.version }
             className='react-bs-table-inser-modal-header'
             onModalClose={ onModalClose }/>)
         }
@@ -92,6 +94,7 @@ export default class InsertModal extends Component {
   }
 }
 InsertModal.propTypes = {
+  version: PropTypes.string.isRequired,
   columns: PropTypes.array.isRequired,
   validateState: PropTypes.object.isRequired,
   ignoreEditable: PropTypes.bool,

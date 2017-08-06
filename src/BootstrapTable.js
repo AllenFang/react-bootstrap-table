@@ -1,8 +1,11 @@
 /* eslint no-alert: 0 */
 /* eslint max-len: 0 */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classSet from 'classnames';
+import Alert from 'react-s-alert';
 import Const from './Const';
+import TableHeaderColumn from './TableHeaderColumn';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
 import PaginationList from './pagination/PaginationList';
@@ -12,7 +15,7 @@ import { TableDataStore } from './store/TableDataStore';
 import Util from './util';
 import exportCSVUtil from './csv_export_util';
 import { Filter } from './Filter';
-import TableHeaderColumn from './TableHeaderColumn';
+
 
 class BootstrapTable extends Component {
 
@@ -166,7 +169,6 @@ class BootstrapTable extends Component {
         const columnDescription = this.getColumnDescription(column);
 
         columnDescription.index = i;
-
         return columnDescription;
       }
     });
@@ -197,10 +199,11 @@ class BootstrapTable extends Component {
       export: column.props.export,
       expandable: column.props.expandable,
       attrs: column.props.tdAttr,
+      editAttrs: column.props.editTdAttr,
       style: column.props.tdStyle
     };
 
-    if (column.type !== TableHeaderColumn && React.isValidElement(column.props.children)) {
+    if (column.type.name !== TableHeaderColumn.name && React.isValidElement(column.props.children)) {
       columnDescription = {
         ...columnDescription,
         ...this.getColumnDescription(React.Children.only(column.props.children))
@@ -393,7 +396,7 @@ class BootstrapTable extends Component {
     if (typeof expandColumnOptions.expandColumnBeforeSelectColumn === 'undefined') {
       expandColumnOptions.expandColumnBeforeSelectColumn = true;
     }
-    const colGroups = Util.renderColGroup(columns, this.props.selectRow, expandColumnOptions);
+    const colGroups = Util.renderColGroup(columns, this.props.selectRow, expandColumnOptions, this.props.version);
     let sortIndicator = this.props.options.sortIndicator;
     if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
     const { paginationPosition = Const.PAGINATION_POS_BOTTOM } = this.props.options;
@@ -416,6 +419,7 @@ class BootstrapTable extends Component {
             onMouseLeave={ this.handleMouseLeave }>
           <TableHeader
             ref='header'
+            version={ this.props.version }
             colGroups={ colGroups }
             headerContainerClass={ this.props.headerContainerClass }
             tableHeaderClass={ this.props.tableHeaderClass }
@@ -442,6 +446,7 @@ class BootstrapTable extends Component {
             tableBodyClass={ this.props.tableBodyClass }
             style={ { ...style, ...this.props.bodyStyle } }
             data={ this.state.data }
+            version={ this.props.version }
             expandComponent={ this.props.expandComponent }
             expandableRow={ this.props.expandableRow }
             expandRowBgColor={ this.props.options.expandRowBgColor }
@@ -480,6 +485,7 @@ class BootstrapTable extends Component {
         </div>
         { tableFilter }
         { showPaginationOnBottom ? pagination : null }
+        <Alert stack={ { limit: 3 } } />
       </div>
     );
   }
@@ -1241,6 +1247,7 @@ class BootstrapTable extends Component {
         <div className={ `react-bs-table-tool-bar ${ print ? '' : 'hidden-print' }` }>
           <ToolBar
             ref='toolbar'
+            version={ this.props.version }
             defaultSearch={ this.props.options.defaultSearch }
             clearSearch={ this.props.options.clearSearch }
             searchPosition={ this.props.options.searchPosition }
@@ -1277,7 +1284,8 @@ class BootstrapTable extends Component {
             btnGroup={ this.props.options.btnGroup }
             toolBar={ this.props.options.toolBar }
             reset={ this.state.reset }
-            isValidKey={ this.store.isValidKey } />
+            isValidKey={ this.store.isValidKey }
+            insertFailIndicator={ this.props.options.insertFailIndicator || Const.INSERT_FAIL_INDICATOR } />
         </div>
       );
     } else {
@@ -1443,6 +1451,7 @@ BootstrapTable.propTypes = {
   height: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   maxHeight: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   data: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
+  version: PropTypes.string,  // bootstrap version
   remote: PropTypes.oneOfType([ PropTypes.bool, PropTypes.func ]), // remote data, default is false
   replace: PropTypes.oneOfType([ PropTypes.bool, PropTypes.func ]),
   scrollTop: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
@@ -1533,13 +1542,13 @@ BootstrapTable.propTypes = {
     onSortChange: PropTypes.func,
     onPageChange: PropTypes.func,
     onSizePerPageList: PropTypes.func,
-    onFilterChange: React.PropTypes.func,
-    onSearchChange: React.PropTypes.func,
-    onAddRow: React.PropTypes.func,
-    onExportToCSV: React.PropTypes.func,
-    onCellEdit: React.PropTypes.func,
+    onFilterChange: PropTypes.func,
+    onSearchChange: PropTypes.func,
+    onAddRow: PropTypes.func,
+    onExportToCSV: PropTypes.func,
+    onCellEdit: PropTypes.func,
     noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
-    withoutNoDataText: React.PropTypes.bool,
+    withoutNoDataText: PropTypes.bool,
     handleConfirmDeleteRow: PropTypes.func,
     prePage: PropTypes.any,
     nextPage: PropTypes.any,
@@ -1584,6 +1593,7 @@ BootstrapTable.propTypes = {
     expandParentClass: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
     beforeShowError: PropTypes.func,
     printToolBar: PropTypes.bool,
+    insertFailIndicator: PropTypes.string,
     noAutoBOM: PropTypes.bool
   }),
   fetchInfo: PropTypes.shape({
@@ -1602,6 +1612,7 @@ BootstrapTable.propTypes = {
   })
 };
 BootstrapTable.defaultProps = {
+  version: '3',
   replace: false,
   scrollTop: undefined,
   expandComponent: undefined,
@@ -1740,6 +1751,7 @@ BootstrapTable.defaultProps = {
     expandParentClass: null,
     beforeShowError: undefined,
     printToolBar: true,
+    insertFailIndicator: Const.INSERT_FAIL_INDICATOR,
     noAutoBOM: true
   },
   fetchInfo: {
