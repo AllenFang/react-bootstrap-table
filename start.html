@@ -153,7 +153,7 @@
 <code class="javascript">// with es6
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 // with es5
-var ReactBsTable = require("react-bootstrap-table");
+var ReactBsTable = require('react-bootstrap-table');
 var BootstrapTable = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 </code>
@@ -175,21 +175,18 @@ var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 </pre>
             </div></br>
             <h3>Add CSS</h3>
-						<p>You need to import the css file to your app, there are two css files you can choose:</p>
-            <span>
-              <strong>react-bootstrap-table-all.min.css</strong> include toastr.</br>
-              <strong>react-bootstrap-table.min.css doesn't</strong> include toastr.</br>
-              <b style='color: red'>Notes: react-bootstrap-table use
-                <a target='_blank' href='https://github.com/tomchentw/react-toastr'>react-toastr</a>
-              to alarm some message to user.</b></br>
-              <b style='color: red'>Notes: The css files is under the
-              <a target='_blank' href='https://github.com/AllenFang/react-bootstrap-table/tree/master/dist'>dist</a> folder.</b></br></br>
-            </span>
-            <p>As mentioned, you can also get the prebuilt version</p>
+						<p>You need to import the css file to your app, the css is under the <code>dist</code> folder</p>
+<pre>
+<code class="js">
+// with es5
+require('node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css');
+// with es6
+import 'node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';</code>
+</pre></br>
+            <p>Like JS, you can also get the prebuilt version</p>
 <pre>
 <code class="html">&lt;link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"&gt;
-&lt;/link&gt;
-</code>
+&lt;/link&gt;</code>
 </pre></br>
           <h3>Create a react-bootstrap-table in your app</h3>
 <pre>
