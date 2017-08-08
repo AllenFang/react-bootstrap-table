@@ -135,7 +135,7 @@
 		<div id="fh5co-about">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+					<div class="col-md-12 text-center heading-section animate-box">
 						<h3>How we started</h3>
 						<pre><code class="bash">npm install react-bootstrap-table --save</code></pre>
 					</div>
@@ -143,7 +143,7 @@
 			</div>
 			<div class="container">
 				<div class="row">
-					<div class="col-md-10 col-md-offset-2 animate-box">
+					<div class="col-md-12  animate-box">
 						<h3>Import Module</h3>
 						<p>There are two way you can import <code>react-bootstrap-table</code> to your project:</p>
             <!-- <h4>Import react-bootstrap-table in module(CommonJS/AMD)</h4> -->
@@ -222,10 +222,39 @@ ReactDOM.render(
 			</div>
 		</div>
 		<!-- END fh5co-about -->
+		<div class="container">
+				<div class="row">
+					<div style='margin-bottom: 30px' class="col-md-12 text-center heading-section animate-box">
+						<h3>Integrate with Bootstrap4</h3>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 animate-box">
+						<span>
+							After <code>v4.0.0</code>, <code>react-bootstrap-table</code> start to support Bootstrap 4 and also compaitable with bootstrap 3.
+							If your application use Bootstrap 4, please remember to add <code>version='4'</code> on <code>BootstrapTable</code>.
+							This props will make some components to compaitable with bootstrap 4 style.
+						</span>
+<pre>
+<code class="javascript">ReactDOM.render(
+  &lt;BootstrapTable data={products} version='4'&gt;
+      &lt;TableHeaderColumn isKey dataField='id'&gt;Product ID&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='name'&gt;Product Name&lt;/TableHeaderColumn&gt;
+      &lt;TableHeaderColumn dataField='price'&gt;Product Price&lt;/TableHeaderColumn&gt;
+  &lt;/BootstrapTable&gt;,
+  document.getElementById('basic')
+);
+</code>
+</pre>
+					</div>
+				</div>
+			</div>
 		<div id="fh5co-content-section" class="fh5co-section-gray">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+					<div class="col-md-12 text-center heading-section animate-box">
 						<h3>Get More Examples</h3>
 						<p>Please check <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js">examples</a> folder on Github</p>
 					</div>
