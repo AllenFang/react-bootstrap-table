@@ -969,7 +969,7 @@ class BootstrapTable extends Component {
 
   deleteRow(dropRowKeys) {
     const dropRow = this.store.getRowByKey(dropRowKeys);
-    const { onDeleteRow, afterDeleteRow } = this.props.options;
+    const { onDeleteRow, afterDeleteRow, pageStartIndex } = this.props.options;
 
     if (onDeleteRow) {
       onDeleteRow(dropRowKeys, dropRow);
@@ -985,11 +985,13 @@ class BootstrapTable extends Component {
     this.store.remove(dropRowKeys);  // remove selected Row
     let result;
     if (this.props.pagination) {
+      // debugger;
       const { sizePerPage } = this.state;
       const currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
       let { currPage } = this.state;
       if (currPage > currLastPage) currPage = currLastPage;
-      result = this.store.page(Util.getNormalizedPage(currPage), sizePerPage).get();
+      // console.log(Util.getNormalizedPage(currPage));
+      result = this.store.page(Util.getNormalizedPage(pageStartIndex, currPage), sizePerPage).get();
       this.setState(() => {
         return {
           data: result,
