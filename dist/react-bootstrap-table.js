@@ -1407,7 +1407,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var dropRow = this.store.getRowByKey(dropRowKeys);
 	      var _props$options2 = this.props.options,
 	          onDeleteRow = _props$options2.onDeleteRow,
-	          afterDeleteRow = _props$options2.afterDeleteRow;
+	          afterDeleteRow = _props$options2.afterDeleteRow,
+	          pageStartIndex = _props$options2.pageStartIndex;
 
 
 	      if (onDeleteRow) {
@@ -1424,13 +1425,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.store.remove(dropRowKeys); // remove selected Row
 	      var result = void 0;
 	      if (this.props.pagination) {
+	        // debugger;
 	        var sizePerPage = this.state.sizePerPage;
 
 	        var currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
 	        var currPage = this.state.currPage;
 
 	        if (currPage > currLastPage) currPage = currLastPage;
-	        result = this.store.page(_util2.default.getNormalizedPage(currPage), sizePerPage).get();
+	        // console.log(Util.getNormalizedPage(currPage));
+	        result = this.store.page(_util2.default.getNormalizedPage(pageStartIndex, currPage), sizePerPage).get();
 	        this.setState(function () {
 	          return {
 	            data: result,
