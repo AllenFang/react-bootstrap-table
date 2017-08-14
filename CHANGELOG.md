@@ -1,3 +1,8 @@
+<a name="v4.0.1"></a>
+# [v4.0.1](https://github.com/AllenFang/react-bootstrap-table/compare/v4.0.0...v4.0.1) (2017-08-13)
+## Bug fixes
+* Fix wrong data population when drop rows in a table which enable pagination([87484cc](https://github.com/AllenFang/react-bootstrap-table/commit/87484cc7c3c7808b2de0bc5a12ce322abbb3ffad))
+
 <a name="v4.0.0"></a>
 # [v4.0.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.5.1...v4.0.0) (2017-08-06)
 ## Bug fixes
