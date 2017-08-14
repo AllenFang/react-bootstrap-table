@@ -1,5 +1,8 @@
 # react-bootstrap-table
 
+## react-bootstrap-table will stop develop new feature and move to [react-bootstrap-table2](https://github.com/react-bootstrap-table/react-bootstrap-table2), but keep to fix critical bugs.
+## Feel free to let me know your idea on [here](https://github.com/react-bootstrap-table/react-bootstrap-table2/issues)
+
 [![Join the chat at https://gitter.im/AllenFang/react-bootstrap-table](https://badges.gitter.im/AllenFang/react-bootstrap-table.svg)](https://gitter.im/AllenFang/react-bootstrap-table?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![NPM version][npm-badge]][npm] [![Build Status][travis-ci-image]][travis-ci-url]
@@ -30,6 +33,8 @@ See more about [react-bootstrap-table](http://allenfang.github.io/react-bootstra
 Check the <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/CHANGELOG.md'>CHANGELOG</a> for more detail release notes.
 
 ## Notes
+
+
 ***`v4.0.0` released, this release mainly replace `react-toastr` with `react-s-alert`***
 1. Replace `react-toastr` by `react-s-alert`
 2. Use `prop-types`
