@@ -1,8 +1,11 @@
 /* eslint no-alert: 0 */
 /* eslint max-len: 0 */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classSet from 'classnames';
+import Alert from 'react-s-alert';
 import Const from './Const';
+import TableHeaderColumn from './TableHeaderColumn';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
 import PaginationList from './pagination/PaginationList';
@@ -13,12 +16,12 @@ import Util from './util';
 import exportCSVUtil from './csv_export_util';
 import { Filter } from './Filter';
 
+
 class BootstrapTable extends Component {
 
   constructor(props) {
     super(props);
     this.isIE = false;
-    this._attachCellEditFunc();
     if (Util.canUseDOM()) {
       this.isIE = document.documentMode;
     }
@@ -163,35 +166,51 @@ class BootstrapTable extends Component {
       const rowIndex = column.props.row ? Number(column.props.row) : 0;
       const rowSpan = column.props.rowSpan ? Number(column.props.rowSpan) : 1;
       if ((rowSpan + rowIndex) === (rowCount + 1)) {
-        return {
-          name: column.props.dataField,
-          align: column.props.dataAlign,
-          sort: column.props.dataSort,
-          format: column.props.dataFormat,
-          formatExtraData: column.props.formatExtraData,
-          filterFormatted: column.props.filterFormatted,
-          filterValue: column.props.filterValue,
-          editable: column.props.editable,
-          customEditor: column.props.customEditor,
-          hidden: column.props.hidden,
-          hiddenOnInsert: column.props.hiddenOnInsert,
-          searchable: column.props.searchable,
-          className: column.props.columnClassName,
-          editClassName: column.props.editColumnClassName,
-          invalidEditColumnClassName: column.props.invalidEditColumnClassName,
-          columnTitle: column.props.columnTitle,
-          width: column.props.width,
-          text: column.props.headerText || column.props.children,
-          sortFunc: column.props.sortFunc,
-          sortFuncExtraData: column.props.sortFuncExtraData,
-          export: column.props.export,
-          expandable: column.props.expandable,
-          index: i,
-          attrs: column.props.tdAttr,
-          style: column.props.tdStyle
-        };
+        const columnDescription = this.getColumnDescription(column);
+
+        columnDescription.index = i;
+        return columnDescription;
       }
     });
+  }
+
+  getColumnDescription(column) {
+    let columnDescription = {
+      name: column.props.dataField,
+      align: column.props.dataAlign,
+      sort: column.props.dataSort,
+      format: column.props.dataFormat,
+      formatExtraData: column.props.formatExtraData,
+      filterFormatted: column.props.filterFormatted,
+      filterValue: column.props.filterValue,
+      editable: column.props.editable,
+      customEditor: column.props.customEditor,
+      hidden: column.props.hidden,
+      hiddenOnInsert: column.props.hiddenOnInsert,
+      searchable: column.props.searchable,
+      className: column.props.columnClassName,
+      editClassName: column.props.editColumnClassName,
+      invalidEditColumnClassName: column.props.invalidEditColumnClassName,
+      columnTitle: column.props.columnTitle,
+      width: column.props.width,
+      text: column.props.headerText || column.props.children,
+      sortFunc: column.props.sortFunc,
+      sortFuncExtraData: column.props.sortFuncExtraData,
+      export: column.props.export,
+      expandable: column.props.expandable,
+      attrs: column.props.tdAttr,
+      editAttrs: column.props.editTdAttr,
+      style: column.props.tdStyle
+    };
+
+    if (column.type.name !== TableHeaderColumn.name && React.isValidElement(column.props.children)) {
+      columnDescription = {
+        ...columnDescription,
+        ...this.getColumnDescription(React.Children.only(column.props.children))
+      };
+    }
+
+    return columnDescription;
   }
 
   reset() {
@@ -215,6 +234,9 @@ class BootstrapTable extends Component {
     let { replace } = nextProps;
     replace = replace || this.props.replace;
 
+    if (!nextProps.data) {
+      return;
+    }
     this.store.setData(nextProps.data.slice());
 
     if (!replace) {
@@ -323,19 +345,8 @@ class BootstrapTable extends Component {
 
   componentDidUpdate() {
     this._adjustTable();
-    this._attachCellEditFunc();
     if (this.props.options.afterTableComplete) {
       this.props.options.afterTableComplete();
-    }
-  }
-
-  _attachCellEditFunc() {
-    const { cellEdit } = this.props;
-    if (cellEdit) {
-      this.props.cellEdit.__onCompleteEdit__ = this.handleEditCell.bind(this);
-      if (cellEdit.mode !== Const.CELL_EDIT_NONE) {
-        this.props.selectRow.clickToSelect = false;
-      }
     }
   }
 
@@ -385,13 +396,17 @@ class BootstrapTable extends Component {
     if (typeof expandColumnOptions.expandColumnBeforeSelectColumn === 'undefined') {
       expandColumnOptions.expandColumnBeforeSelectColumn = true;
     }
-    const colGroups = Util.renderColGroup(columns, this.props.selectRow, expandColumnOptions);
+    const colGroups = Util.renderColGroup(columns, this.props.selectRow, expandColumnOptions, this.props.version);
     let sortIndicator = this.props.options.sortIndicator;
     if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
 
     const { paginationPosition = Const.PAGINATION_POS_BOTTOM } = this.props.options;
     const showPaginationOnTop = paginationPosition !== Const.PAGINATION_POS_BOTTOM;
     const showPaginationOnBottom = paginationPosition !== Const.PAGINATION_POS_TOP;
+    const selectRow = { ...this.props.selectRow };
+    if (this.props.cellEdit && this.props.cellEdit.mode !== Const.CELL_EDIT_NONE) {
+      selectRow.clickToSelect = false;
+    }
 
     const { toolbarPosition = Const.TOOLBAR_POS_BOTTOM } = this.props.options;
     const showToolbarOnTop = toolbarPosition !== Const.TOOLBAR_POS_BOTTOM;
@@ -409,6 +424,7 @@ class BootstrapTable extends Component {
             onMouseLeave={ this.handleMouseLeave }>
           <TableHeader
             ref='header'
+            version={ this.props.version }
             colGroups={ colGroups }
             headerContainerClass={ this.props.headerContainerClass }
             tableHeaderClass={ this.props.tableHeaderClass }
@@ -435,6 +451,7 @@ class BootstrapTable extends Component {
             tableBodyClass={ this.props.tableBodyClass }
             style={ { ...style, ...this.props.bodyStyle } }
             data={ this.state.data }
+            version={ this.props.version }
             expandComponent={ this.props.expandComponent }
             expandableRow={ this.props.expandableRow }
             expandRowBgColor={ this.props.options.expandRowBgColor }
@@ -443,12 +460,13 @@ class BootstrapTable extends Component {
             expandParentClass={ this.props.options.expandParentClass }
             columns={ columns }
             trClassName={ this.props.trClassName }
+            trStyle={ this.props.trStyle }
             striped={ this.props.striped }
             bordered={ this.props.bordered }
             hover={ this.props.hover }
             keyField={ this.store.getKeyField() }
             condensed={ this.props.condensed }
-            selectRow={ this.props.selectRow }
+            selectRow={ selectRow }
             expandColumnOptions={ this.props.expandColumnOptions }
             cellEdit={ this.props.cellEdit }
             selectedRowKeys={ this.state.selectedRowKeys }
@@ -466,11 +484,15 @@ class BootstrapTable extends Component {
             keyBoardNav={ this.props.keyBoardNav }
             onNavigateCell={ this.handleNavigateCell }
             x={ this.state.x }
-            y={ this.state.y } />
+            y={ this.state.y }
+            withoutTabIndex={ this.props.withoutTabIndex }
+            onEditCell={ this.handleEditCell } />
         </div>
         { tableFilter }
         { showPaginationOnBottom ? pagination : null }
+
         { showToolbarOnBottom ? toolBar : null }
+        <Alert stack={ { limit: 3 } } />
       </div>
     );
   }
@@ -668,7 +690,7 @@ class BootstrapTable extends Component {
   handleRowClick = (row, rowIndex, columnIndex) => {
     const { options, keyBoardNav } = this.props;
     if (options.onRowClick) {
-      options.onRowClick(row, columnIndex);
+      options.onRowClick(row, columnIndex, rowIndex);
     }
     if (keyBoardNav) {
       let { clickToNav } = typeof keyBoardNav === 'object' ? keyBoardNav : {};
@@ -764,13 +786,13 @@ class BootstrapTable extends Component {
     });
   }
 
-  handleSelectRow = (row, isSelected, e) => {
+  handleSelectRow = (row, isSelected, e, rowIndex) => {
     let result = true;
     let currSelected = this.store.getSelectedRowKeys();
     const rowKey = row[ this.store.getKeyField() ];
     const { selectRow } = this.props;
     if (selectRow.onSelect) {
-      result = selectRow.onSelect(row, isSelected, e);
+      result = selectRow.onSelect(row, isSelected, e, rowIndex);
     }
 
     if (typeof result === 'undefined' || result !== false) {
@@ -794,7 +816,7 @@ class BootstrapTable extends Component {
     }
   }
 
-  handleEditCell(newVal, rowIndex, colIndex) {
+  handleEditCell = (newVal, rowIndex, colIndex) => {
     const { beforeSaveCell } = this.props.cellEdit;
     const columns = this.getColumnsDescription(this.props);
     const fieldName = columns[colIndex].name;
@@ -954,7 +976,7 @@ class BootstrapTable extends Component {
 
   deleteRow(dropRowKeys) {
     const dropRow = this.store.getRowByKey(dropRowKeys);
-    const { onDeleteRow, afterDeleteRow } = this.props.options;
+    const { onDeleteRow, afterDeleteRow, pageStartIndex } = this.props.options;
 
     if (onDeleteRow) {
       onDeleteRow(dropRowKeys, dropRow);
@@ -970,11 +992,13 @@ class BootstrapTable extends Component {
     this.store.remove(dropRowKeys);  // remove selected Row
     let result;
     if (this.props.pagination) {
+      // debugger;
       const { sizePerPage } = this.state;
       const currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
       let { currPage } = this.state;
       if (currPage > currLastPage) currPage = currLastPage;
-      result = this.store.page(Util.getNormalizedPage(currPage), sizePerPage).get();
+      // console.log(Util.getNormalizedPage(currPage));
+      result = this.store.page(Util.getNormalizedPage(pageStartIndex, currPage), sizePerPage).get();
       this.setState(() => {
         return {
           data: result,
@@ -1051,7 +1075,7 @@ class BootstrapTable extends Component {
     let result = {};
 
     let { csvFileName } = this.props;
-    const { onExportToCSV, exportCSVSeparator } = this.props.options;
+    const { onExportToCSV, exportCSVSeparator, noAutoBOM, excludeCSVHeader } = this.props.options;
     if (onExportToCSV) {
       result = onExportToCSV();
     } else {
@@ -1079,7 +1103,7 @@ class BootstrapTable extends Component {
       csvFileName = csvFileName();
     }
 
-    exportCSVUtil(result, keys, csvFileName, separator);
+    exportCSVUtil(result, keys, csvFileName, separator, noAutoBOM, excludeCSVHeader);
   }
 
   handleSearch = searchText => {
@@ -1232,6 +1256,7 @@ class BootstrapTable extends Component {
         <div className={ `react-bs-table-tool-bar ${ print ? '' : 'hidden-print' }` }>
           <ToolBar
             ref='toolbar'
+            version={ this.props.version }
             defaultSearch={ this.props.options.defaultSearch }
             clearSearch={ this.props.options.clearSearch }
             searchPosition={ this.props.options.searchPosition }
@@ -1268,7 +1293,8 @@ class BootstrapTable extends Component {
             btnGroup={ this.props.options.btnGroup }
             toolBar={ this.props.options.toolBar }
             reset={ this.state.reset }
-            isValidKey={ this.store.isValidKey } />
+            isValidKey={ this.store.isValidKey }
+            insertFailIndicator={ this.props.options.insertFailIndicator || Const.INSERT_FAIL_INDICATOR } />
         </div>
       );
     } else {
@@ -1353,11 +1379,13 @@ class BootstrapTable extends Component {
       for (const i in bodyHeader) {
         if (bodyHeader.hasOwnProperty(i)) {
           const child = bodyHeader[i];
-          if (child.style.width) {
-            header[i].style.width = child.style.width;
-          }
-          if (child.style.minWidth) {
-            header[i].style.minWidth = child.style.minWidth;
+          if (child.style) {
+            if (child.style.width) {
+              header[i].style.width = child.style.width;
+            }
+            if (child.style.minWidth) {
+              header[i].style.minWidth = child.style.minWidth;
+            }
           }
         }
       }
@@ -1432,6 +1460,7 @@ BootstrapTable.propTypes = {
   height: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   maxHeight: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
   data: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
+  version: PropTypes.string,  // bootstrap version
   remote: PropTypes.oneOfType([ PropTypes.bool, PropTypes.func ]), // remote data, default is false
   replace: PropTypes.oneOfType([ PropTypes.bool, PropTypes.func ]),
   scrollTop: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
@@ -1441,6 +1470,7 @@ BootstrapTable.propTypes = {
   condensed: PropTypes.bool,
   pagination: PropTypes.bool,
   printable: PropTypes.bool,
+  withoutTabIndex: PropTypes.bool,
   keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
   searchPlaceholder: PropTypes.string,
   selectRow: PropTypes.shape({
@@ -1477,6 +1507,7 @@ BootstrapTable.propTypes = {
   strictSearch: PropTypes.bool,
   columnFilter: PropTypes.bool,
   trClassName: PropTypes.any,
+  trStyle: PropTypes.any,
   tableStyle: PropTypes.object,
   containerStyle: PropTypes.object,
   headerStyle: PropTypes.object,
@@ -1525,13 +1556,13 @@ BootstrapTable.propTypes = {
     onSortChange: PropTypes.func,
     onPageChange: PropTypes.func,
     onSizePerPageList: PropTypes.func,
-    onFilterChange: React.PropTypes.func,
-    onSearchChange: React.PropTypes.func,
-    onAddRow: React.PropTypes.func,
-    onExportToCSV: React.PropTypes.func,
-    onCellEdit: React.PropTypes.func,
+    onFilterChange: PropTypes.func,
+    onSearchChange: PropTypes.func,
+    onAddRow: PropTypes.func,
+    onExportToCSV: PropTypes.func,
+    onCellEdit: PropTypes.func,
     noDataText: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
-    withoutNoDataText: React.PropTypes.bool,
+    withoutNoDataText: PropTypes.bool,
     handleConfirmDeleteRow: PropTypes.func,
     prePage: PropTypes.any,
     nextPage: PropTypes.any,
@@ -1542,6 +1573,7 @@ BootstrapTable.propTypes = {
     firstPageTitle: PropTypes.string,
     lastPageTitle: PropTypes.string,
     searchDelayTime: PropTypes.number,
+    excludeCSVHeader: PropTypes.bool,
     exportCSVText: PropTypes.string,
     exportCSVSeparator: PropTypes.string,
     insertText: PropTypes.string,
@@ -1574,7 +1606,9 @@ BootstrapTable.propTypes = {
     expandBodyClass: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
     expandParentClass: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
     beforeShowError: PropTypes.func,
-    printToolBar: PropTypes.bool
+    printToolBar: PropTypes.bool,
+    insertFailIndicator: PropTypes.string,
+    noAutoBOM: PropTypes.bool
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1592,6 +1626,7 @@ BootstrapTable.propTypes = {
   })
 };
 BootstrapTable.defaultProps = {
+  version: '3',
   replace: false,
   scrollTop: undefined,
   expandComponent: undefined,
@@ -1609,6 +1644,7 @@ BootstrapTable.defaultProps = {
   condensed: false,
   pagination: false,
   printable: false,
+  withoutTabIndex: false,
   keyBoardNav: false,
   searchPlaceholder: undefined,
   selectRow: {
@@ -1641,6 +1677,7 @@ BootstrapTable.defaultProps = {
   multiColumnSort: 1,
   columnFilter: false,
   trClassName: '',
+  trStyle: undefined,
   tableStyle: undefined,
   containerStyle: undefined,
   headerStyle: undefined,
@@ -1695,6 +1732,7 @@ BootstrapTable.defaultProps = {
     lastPageTitle: Const.LAST_PAGE_TITLE,
     pageStartIndex: 1,
     searchDelayTime: undefined,
+    excludeCSVHeader: false,
     exportCSVText: Const.EXPORT_CSV_TEXT,
     exportCSVSeparator: Const.DEFAULT_CSV_SEPARATOR,
     insertText: Const.INSERT_BTN_TEXT,
@@ -1727,7 +1765,9 @@ BootstrapTable.defaultProps = {
     expandBodyClass: null,
     expandParentClass: null,
     beforeShowError: undefined,
-    printToolBar: true
+    printToolBar: true,
+    insertFailIndicator: Const.INSERT_FAIL_INDICATOR,
+    noAutoBOM: true
   },
   fetchInfo: {
     dataTotalSize: 0

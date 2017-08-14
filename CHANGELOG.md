@@ -1,3 +1,78 @@
+<a name="v4.0.1"></a>
+# [v4.0.1](https://github.com/AllenFang/react-bootstrap-table/compare/v4.0.0...v4.0.1) (2017-08-13)
+## Bug fixes
+* Fix wrong data population when drop rows in a table which enable pagination([87484cc](https://github.com/AllenFang/react-bootstrap-table/commit/87484cc7c3c7808b2de0bc5a12ce322abbb3ffad))
+
+<a name="v4.0.0"></a>
+# [v4.0.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.5.1...v4.0.0) (2017-08-06)
+## Bug fixes
+* Fix validation called twice when press tab to leave the cell editor([5532b98](https://github.com/AllenFang/react-bootstrap-table/commit/5532b9887fc94e23ae3e8d68a7b683db956a2e25))
+
+## Enhancement
+* Fixed hard coded warning when insert fails([28b3ea3](https://github.com/AllenFang/react-bootstrap-table/commit/28b3ea32ee44a3b94d04cb3512e996a576932ca4))
+	* Use `options.insertFailIndicator` to custom the error indicator.
+* Fixed 'Show All/Show selected only' is display in contrast([db1f8e7](https://github.com/AllenFang/react-bootstrap-table/commit/db1f8e71662633ddf21ac5be984131c20e84fcac))
+* Use `prop-types`
+* Use `editTdAttr` on `TableHeaderColumn` to custom the attributes on the column(`TD`) of cell editor([42e84b7](https://github.com/AllenFang/react-bootstrap-table/commit/42e84b7839e38cb5492a66c92da8beebdba67c6a))
+* Support dynamic options list for dropdown in cell editor([62b928a](https://github.com/AllenFang/react-bootstrap-table/commit/62b928a91cbe6e938147361f750e3ef4991c5006))
+	* `editable.options.values` on `TableHeaderColumn` can accept an array or function now.
+
+## Features
+* Support `bootstrap@4` and `bootstrap@3`, if you use 4, please add `version='4'` on `<BootstrapTable>`.
+
+<a name="v3.5.1"></a>
+# [v3.5.1](https://github.com/AllenFang/react-bootstrap-table/compare/v3.5.0...v3.5.1) (2017-08-02)
+## Bug fixes
+* Fix [#1518](https://github.com/AllenFang/react-bootstrap-table/issues/1518)([20284d2](https://github.com/AllenFang/react-bootstrap-table/commit/20284d2365f85c0180eb6c73d9253c6483a7597c))
+
+<a name="v3.5.0"></a>
+# [v3.5.0](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.6...v3.5.0) (2017-07-29)
+## Bug fixes
+* Fix [#1510](https://github.com/AllenFang/react-bootstrap-table/issues/1510)([a2eb599](https://github.com/AllenFang/react-bootstrap-table/commit/a2eb599da37620122752e608f37fe4d99f7494f2))
+
+## Enhancement
+* Pass `rowIndex` as fourth argument for `selectRow.onSelect`([e4a8d0b](https://github.com/AllenFang/react-bootstrap-table/commit/e4a8d0bd8bda223cc51911d0fe7b39a034924c4c))
+* [PR#1504](https://github.com/AllenFang/react-bootstrap-table/pull/1504)([60dab6f](https://github.com/AllenFang/react-bootstrap-table/commit/60dab6f7705a176a7e852b83bf2c67b5751ba6f9))
+
+<a name="v3.4.6"></a>
+# [v3.4.6](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.5...v3.4.6) (2017-07-16)
+## Bug fixes
+* Fix wrong cell edit if have multiple table but share same `cellEdit` props[8954de6](https://github.com/AllenFang/react-bootstrap-table/commit/8954de63c89bc9527f76d1023a5b931c3f14f175)
+
+## Enhancement
+* Allow to configure `td` style via `trStyle` on `BootstrapTable`([5999c48](https://github.com/AllenFang/react-bootstrap-table/commit/5999c48902de5348c7525a49bc370a42da4fce36))
+
+<a name="v3.4.5"></a>
+# [v3.4.5](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.4...v3.4.5) (2017-07-13)
+## Bug fixes
+* Fix [#1410](https://github.com/AllenFang/react-bootstrap-table/issues/1410) again([3f60275](https://github.com/AllenFang/react-bootstrap-table/commit/3f602755721529471ba5d5fa36ed2930d19dfbf5))
+
+## Enhancement
+* Pass `rowIndex` as third argument for `options.onRowClick`([4b5ba03](https://github.com/AllenFang/react-bootstrap-table/commit/4b5ba037437977b54a577084e0779f53e9b02785))
+
+## Features
+* Able to disable the `tabIndex` via `withoutTabIndex` on `BootstrapTable`([ce6f744](https://github.com/AllenFang/react-bootstrap-table/commit/ce6f744d3d7f101c800459a7d0608daed5dff74e))
+
+<a name="v3.4.4"></a>
+# [v3.4.4](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.3...v3.4.4) (2017-07-09)
+## Bug fixes
+* Pass row object as second argument for `editable.validator` when calling by insert row([5ede872](https://github.com/AllenFang/react-bootstrap-table/commit/5ede87270677c9d8fe37bdef2cccbf4a05f5748a))
+* Fix text filter is not updated when rerender([298e971](https://github.com/AllenFang/react-bootstrap-table/commit/298e971b5c5658d0baeb67163d279298751085ed))
+* Fix wrong colspan on a empty table when hide seleciton column([62ceb31](https://github.com/AllenFang/react-bootstrap-table/commit/62ceb313f6d523e02f5b49275b69b3b4e3326e7a))
+
+## Enhancement
+* return `false` will render default editor in insert model for the hook function of [customInsertEditor.getElement](http://allenfang.github.io/react-bootstrap-table/custom.html#insertmodalfield)([f2382b3](https://github.com/AllenFang/react-bootstrap-table/commit/f2382b36cc924e286ec271f92134673278458c3c))
+
+<a name="v3.4.3"></a>
+# [v3.4.3](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.2...v3.4.3) (2017-07-05)
+## Bug fixes
+* Fixed wrong colspan when table was empty and enable `expandColumnOptions.expandColumnVisible`([624764c](https://github.com/AllenFang/react-bootstrap-table/commit/624764c8ee03b10054f81b67b54da7280005e4c4))
+* Fix 'undefined is not an object' when running in a headless browser([a06cd6a](https://github.com/AllenFang/react-bootstrap-table/commit/a06cd6adb43c3bcf0cbea3cc8179c4d772453faa))
+
+## Enhancement
+* Able to disable BOM header for CSV via `options.noAutoBOM`([340dc8d](https://github.com/AllenFang/react-bootstrap-table/commit/340dc8d54f4ce06e9881a266b629072097d760e2))
+* Able to exclude header for CSV via `options.excludeCSVHeader`([16ba815](https://github.com/AllenFang/react-bootstrap-table/commit/16ba815f599080a078e9d30069206734f8dabf38))
+
 <a name="v3.4.2"></a>
 # [v3.4.2](https://github.com/AllenFang/react-bootstrap-table/compare/v3.4.1...v3.4.2) (2017-06-24)
 ## Bug fixes

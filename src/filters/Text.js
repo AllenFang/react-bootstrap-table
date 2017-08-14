@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Const from '../Const';
 
 class TextFilter extends Component {
@@ -6,6 +7,9 @@ class TextFilter extends Component {
     super(props);
     this.filter = this.filter.bind(this);
     this.timeout = null;
+    this.state = {
+      value: this.props.defaultValue || ''
+    };
   }
 
   filter(event) {
@@ -13,6 +17,7 @@ class TextFilter extends Component {
       clearTimeout(this.timeout);
     }
     const filterValue = event.target.value;
+    this.setState(() => { return { value: filterValue }; });
     this.timeout = setTimeout(() => {
       this.props.filterHandler(filterValue, Const.FILTER_TYPE.TEXT);
     }, this.props.delay);
@@ -20,12 +25,12 @@ class TextFilter extends Component {
 
   cleanFiltered() {
     const value = this.props.defaultValue ? this.props.defaultValue : '';
-    this.refs.inputText.value = value;
+    this.setState(() => { return { value }; });
     this.props.filterHandler(value, Const.FILTER_TYPE.TEXT);
   }
 
   applyFilter(filterText) {
-    this.refs.inputText.value = filterText;
+    this.setState(() => { return { value: filterText }; });
     this.props.filterHandler(filterText, Const.FILTER_TYPE.TEXT);
   }
 
@@ -36,12 +41,18 @@ class TextFilter extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.defaultValue !== this.props.defaultValue) {
+      this.applyFilter(nextProps.defaultValue || '');
+    }
+  }
+
   componentWillUnmount() {
     clearTimeout(this.timeout);
   }
 
   render() {
-    const { placeholder, columnName, defaultValue, style } = this.props;
+    const { placeholder, columnName, style } = this.props;
     return (
       <input ref='inputText'
         className='filter text-filter form-control'
@@ -49,7 +60,7 @@ class TextFilter extends Component {
         style={ style }
         onChange={ this.filter }
         placeholder={ placeholder || `Enter ${columnName}...` }
-        defaultValue={ defaultValue ? defaultValue : '' } />
+        value={ this.state.value } />
     );
   }
 }

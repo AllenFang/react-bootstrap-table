@@ -17,6 +17,7 @@ import DefaultCustomShowSelectButtonTable from './show-only-select-button/defaul
 import FullyCustomShowSelectButtonTable from './show-only-select-button/fully-custom-show-select-button';
 import DefaultCustomExportCSVButtonTable from './csv-button/default-custom-csv-button';
 import FullyCustomExportCSVButtonTable from './csv-button/fully-custom-csv-button';
+import CustomCSVOrTSVButtonTable from './csv-button/custom-csv-or-tsv-button';
 import DefaultCustomClearButtonTable from './search/default-custom-search-clear-button';
 import FullyCustomClearButtonTable from './search/fully-custom-search-clear-button';
 import DefaultCustomSearchFieldTable from './search/default-custom-search-field';
@@ -87,6 +88,10 @@ class Demo extends React.Component {
         <Panel header={ 'Fully Custom for Export CSV Button Demo' }>
           { renderLinks('custom/csv-button/fully-custom-csv-button.js') }
           <FullyCustomExportCSVButtonTable/>
+        </Panel>
+        <Panel header={ 'Custom CSV or TSV export button.' }>
+          { renderLinks('custom/csv-button/custom-csv-or-tsv-button.js') }
+          <CustomCSVOrTSVButtonTable />
         </Panel>
         <Panel header={ 'Default Custom for Show Only Select Button Demo' }>
           { renderLinks('custom/show-only-select-button/default-custom-show-select-button.js') }

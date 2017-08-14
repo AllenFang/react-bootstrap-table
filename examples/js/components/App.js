@@ -1,6 +1,8 @@
 /* eslint max-len: 0 */
 import React from 'react';
-import 'toastr/build/toastr.min.css';
+import PropTypes from 'prop-types';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/scale.css';
 import '../../../css/react-bootstrap-table.css';
 import {
   Grid,
@@ -11,7 +13,7 @@ import {
 class App extends React.Component {
 
   static propTypes = {
-    children: React.PropTypes.node
+    children: PropTypes.node
   };
 
   static defaultProps = {};

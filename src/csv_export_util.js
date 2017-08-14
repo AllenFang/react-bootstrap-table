@@ -9,7 +9,7 @@ if (Util.canUseDOM()) {
   var saveAs = filesaver.saveAs;
 }
 
-function toString(data, keys, separator) {
+function toString(data, keys, separator, excludeCSVHeader) {
   let dataString = '';
   if (data.length === 0) return dataString;
 
@@ -25,7 +25,8 @@ function toString(data, keys, separator) {
     }
   });
 
-  for (let i = 0; i <= rowCount; i++) {
+  const firstRow = excludeCSVHeader ? 1 : 0;
+  for (let i = firstRow; i <= rowCount; i++) {
     dataString += headCells.map(x => {
       if ((x.row + (x.rowSpan - 1)) === i) {
         return x.header;
@@ -57,12 +58,13 @@ function toString(data, keys, separator) {
   return dataString;
 }
 
-const exportCSV = function(data, keys, filename, separator) {
-  const dataString = toString(data, keys, separator);
+const exportCSV = function(data, keys, filename, separator, noAutoBOM, excludeCSVHeader) {
+  const dataString = toString(data, keys, separator, excludeCSVHeader);
   if (typeof window !== 'undefined') {
+    noAutoBOM = noAutoBOM === undefined ? true : noAutoBOM;
     saveAs(new Blob([ dataString ],
         { type: 'text/plain;charset=utf-8' }),
-        filename, true);
+        filename, noAutoBOM);
   }
 };
 

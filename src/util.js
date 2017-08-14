@@ -4,15 +4,26 @@ import Const from './Const';
 import classSet from 'classnames';
 
 export default {
-  renderReactSortCaret(order) {
-    const orderClass = classSet('order', {
-      'dropup': order === Const.SORT_ASC
-    });
-    return (
-      <span className={ orderClass }>
-        <span className='caret' style={ { margin: '10px 5px' } }></span>
-      </span>
-    );
+  renderReactSortCaret(order, isBootstrap4) {
+    let orderClass;
+    if (isBootstrap4) {
+      orderClass = classSet('fa', {
+        'fa-sort-asc': order === Const.SORT_ASC,
+        'fa-sort-desc': order === Const.SORT_DESC
+      });
+      return (
+        <span className={ orderClass } style={ { margin: '10px 5px' } }></span>
+      );
+    } else {
+      orderClass = classSet('order', {
+        'dropup': order === Const.SORT_ASC
+      });
+      return (
+        <span className={ orderClass }>
+          <span className='caret' style={ { margin: '10px 5px' } }></span>
+        </span>
+      );
+    }
   },
 
   isFunction(obj) {
@@ -63,15 +74,21 @@ export default {
     return pageStartIndex !== undefined ? pageStartIndex : Const.PAGE_START_INDEX;
   },
 
-  renderColGroup(columns, selectRow, expandColumnOptions = {}) {
+  isBootstrap4(version) {
+    return version === '4';
+  },
+
+  renderColGroup(columns, selectRow, expandColumnOptions = {}, version) {
     let selectRowHeader = null;
     let expandRowHeader = null;
+    const isBootstrap4 = this.isBootstrap4(version);
     const isSelectRowDefined = selectRow.mode === Const.ROW_SELECT_SINGLE ||
       selectRow.mode === Const.ROW_SELECT_MULTI;
+    const columnWidth = isBootstrap4 ? '38px' : '30px';
     if (isSelectRowDefined) {
       const style = {
-        width: selectRow.columnWidth || '30px',
-        minWidth: selectRow.columnWidth || '30px'
+        width: selectRow.columnWidth || columnWidth,
+        minWidth: selectRow.columnWidth || columnWidth
       };
       if (!selectRow.hideSelectColumn) {
         selectRowHeader = (<col key='select-col' style={ style }></col>);
@@ -79,8 +96,8 @@ export default {
     }
     if (expandColumnOptions.expandColumnVisible) {
       const style = {
-        width: expandColumnOptions.columnWidth || 30,
-        minWidth: expandColumnOptions.columnWidth || 30
+        width: expandColumnOptions.columnWidth || columnWidth,
+        minWidth: expandColumnOptions.columnWidth || columnWidth
       };
       expandRowHeader = (<col key='expand-col' style={ style }></col>);
     }
