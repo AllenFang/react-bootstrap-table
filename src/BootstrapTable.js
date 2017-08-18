@@ -408,7 +408,7 @@ class BootstrapTable extends Component {
       selectRow.clickToSelect = false;
     }
 
-    const { toolbarPosition = Const.TOOLBAR_POS_BOTTOM } = this.props.options;
+    const { toolbarPosition = Const.TOOLBAR_POS_TOP } = this.props.options;
     const showToolbarOnTop = toolbarPosition !== Const.TOOLBAR_POS_BOTTOM;
     const showToolbarOnBottom = toolbarPosition !== Const.TOOLBAR_POS_TOP;
 
