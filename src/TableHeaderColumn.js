@@ -258,7 +258,11 @@ TableHeaderColumn.propTypes = {
   columnClassName: PropTypes.any,
   editColumnClassName: PropTypes.any,
   invalidEditColumnClassName: PropTypes.any,
-  columnTitle: PropTypes.bool,
+  columnTitle: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.func,
+    PropTypes.string
+  ]),
   filterFormatted: PropTypes.bool,
   filterValue: PropTypes.func,
   sort: PropTypes.string,
