@@ -177,7 +177,8 @@ class TableBody extends Component {
         onSelectRow={ this.handleSelectRow }
         onExpandRow={ this.handleClickCell }
         unselectableRow={ disable }
-        style={ trStyle }>
+        style={ trStyle }
+        dbClickToEdit={ cellEdit.mode === Const.CELL_EDIT_DBCLICK } >
         { this.props.expandColumnOptions.expandColumnVisible &&
             this.props.expandColumnOptions.expandColumnBeforeSelectColumn &&
             expandedRowColumn }
