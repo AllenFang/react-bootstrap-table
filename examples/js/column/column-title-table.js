@@ -20,12 +20,17 @@ function addProducts(quantity) {
 addProducts(5);
 
 export default class ColumnAlignTable extends React.Component {
+
+  customTitle(cell, row) {
+    return `${row.name} for ${cell}`;
+  }
+
   render() {
     return (
       <BootstrapTable data={ products }>
-          <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
+          <TableHeaderColumn dataField='id' isKey={ true } columnTitle={ this.customTitle } >Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name' headerTitle={ false } columnTitle={ true }>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField='price' columnTitle={ true } headerText='Custom Title'>Product Price</TableHeaderColumn>
+          <TableHeaderColumn dataField='price' columnTitle='Hard code string' headerText='Custom Title'>Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
   }
