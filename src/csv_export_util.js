@@ -29,7 +29,7 @@ function toString(data, keys, separator, excludeCSVHeader) {
   for (let i = firstRow; i <= rowCount; i++) {
     dataString += headCells.map(x => {
       if ((x.row + (x.rowSpan - 1)) === i) {
-        return x.header;
+        return `"${x.header}"`;
       }
       if (x.row === i && x.rowSpan > 1) {
         return '';
