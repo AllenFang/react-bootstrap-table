@@ -1,3 +1,15 @@
+<a name="v4.0.2"></a>
+# [v4.0.2](https://github.com/AllenFang/react-bootstrap-table/compare/v4.0.1...v4.0.2) (2017-08-22)
+## Bug fixes
+* Fix the `expandable` broken on custom column when `expandBy` is `column`([1be402e](https://github.com/AllenFang/react-bootstrap-table/commit/1be402e3bba6723357ddd37dc0dd079fe931cd23))
+## Enhancement
+* Able to configure the position of `ToolBar`([29bbecc](https://github.com/AllenFang/react-bootstrap-table/commit/29bbecce03df68ca6bd5f65738a700abc2173e75))
+	* Configure the position via`options.toolbarPosition`, available value is `top`, `bottom` and `both`.
+* Custom the column title([cd93a3f](https://github.com/AllenFang/react-bootstrap-table/commit/cd93a3fc2c2b69c1de4d1eb592c0863091c423a6))
+	* Configure `columnTitle` on `TableHeaderColumn`, which accept a function and take `cell` and `row` as arguments
+	* Check [this](https://github.com/AllenFang/react-bootstrap-table/commit/fced9faa6f6ea60c3d7c34e977bb53f33c1dffc0) example
+* Add quotation marks to header cells on CSV file([55de1d6](https://github.com/AllenFang/react-bootstrap-table/pull/1556/commits/55de1d635db1d2c5e35033b258f546b83ffc153e))
+
 <a name="v4.0.1"></a>
 # [v4.0.1](https://github.com/AllenFang/react-bootstrap-table/compare/v4.0.0...v4.0.1) (2017-08-13)
 ## Bug fixes
