@@ -24,8 +24,8 @@ class SelectFilter extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const isPlaceholderSelected = (nextProps.defaultValue === undefined ||
-      !nextProps.options.hasOwnProperty(nextProps.defaultValue));
+    const currentSelectValue = this.refs.selectInput.value;
+    const isPlaceholderSelected = !currentSelectValue || currentSelectValue === '';
     this.setState(() => {
       return {
         isPlaceholderSelected
