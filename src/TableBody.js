@@ -91,6 +91,7 @@ class TableBody extends Component {
             );
         } else {
           // add by bluespring for className customize
+          let formattedValue;
           let columnChild = fieldValue && fieldValue.toString();
           let columnTitle = null;
           let tdClassName = column.className;
@@ -99,17 +100,22 @@ class TableBody extends Component {
           }
 
           if (typeof column.format !== 'undefined') {
-            const formattedValue = column.format(fieldValue, data, column.formatExtraData, r);
+            formattedValue = column.format(fieldValue, data, column.formatExtraData, r);
             if (!React.isValidElement(formattedValue)) {
               columnChild = (
                 <div dangerouslySetInnerHTML={ { __html: formattedValue } }></div>
               );
             } else {
               columnChild = formattedValue;
-              columnTitle = column.columnTitle && formattedValue ? formattedValue.toString() : null;
             }
-          } else {
-            columnTitle = column.columnTitle && fieldValue ? fieldValue.toString() : null;
+          }
+          if (Utils.isFunction(column.columnTitle)) {
+            columnTitle = column.columnTitle(fieldValue, data);
+          } else if (typeof column.columnTitle === 'string') {
+            columnTitle = column.columnTitle;
+          } else if (column.columnTitle) {
+            if (formattedValue) columnTitle = formattedValue.toString();
+            else if (fieldValue) columnTitle = fieldValue.toString();
           }
           return (
             <TableColumn key={ i }
@@ -171,7 +177,8 @@ class TableBody extends Component {
         onSelectRow={ this.handleSelectRow }
         onExpandRow={ this.handleClickCell }
         unselectableRow={ disable }
-        style={ trStyle }>
+        style={ trStyle }
+        dbClickToEdit={ cellEdit.mode === Const.CELL_EDIT_DBCLICK } >
         { this.props.expandColumnOptions.expandColumnVisible &&
             this.props.expandColumnOptions.expandColumnBeforeSelectColumn &&
             expandedRowColumn }

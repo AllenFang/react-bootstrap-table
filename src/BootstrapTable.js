@@ -399,6 +399,7 @@ class BootstrapTable extends Component {
     const colGroups = Util.renderColGroup(columns, this.props.selectRow, expandColumnOptions, this.props.version);
     let sortIndicator = this.props.options.sortIndicator;
     if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
+
     const { paginationPosition = Const.PAGINATION_POS_BOTTOM } = this.props.options;
     const showPaginationOnTop = paginationPosition !== Const.PAGINATION_POS_BOTTOM;
     const showPaginationOnBottom = paginationPosition !== Const.PAGINATION_POS_TOP;
@@ -407,10 +408,14 @@ class BootstrapTable extends Component {
       selectRow.clickToSelect = false;
     }
 
+    const { toolbarPosition = Const.TOOLBAR_POS_TOP } = this.props.options;
+    const showToolbarOnTop = toolbarPosition !== Const.TOOLBAR_POS_BOTTOM;
+    const showToolbarOnBottom = toolbarPosition !== Const.TOOLBAR_POS_TOP;
+
     return (
       <div className={ classSet('react-bs-table-container', this.props.className, this.props.containerClass) }
         style={ this.props.containerStyle }>
-        { toolBar }
+        { showToolbarOnTop ? toolBar : null }
         { showPaginationOnTop ? pagination : null }
         <div ref='table'
             className={ classSet('react-bs-table', { 'react-bs-table-bordered': this.props.bordered }, this.props.tableContainerClass) }
@@ -485,6 +490,8 @@ class BootstrapTable extends Component {
         </div>
         { tableFilter }
         { showPaginationOnBottom ? pagination : null }
+
+        { showToolbarOnBottom ? toolBar : null }
         <Alert stack={ { limit: 3 } } />
       </div>
     );
@@ -969,7 +976,7 @@ class BootstrapTable extends Component {
 
   deleteRow(dropRowKeys) {
     const dropRow = this.store.getRowByKey(dropRowKeys);
-    const { onDeleteRow, afterDeleteRow } = this.props.options;
+    const { onDeleteRow, afterDeleteRow, pageStartIndex } = this.props.options;
 
     if (onDeleteRow) {
       onDeleteRow(dropRowKeys, dropRow);
@@ -985,11 +992,13 @@ class BootstrapTable extends Component {
     this.store.remove(dropRowKeys);  // remove selected Row
     let result;
     if (this.props.pagination) {
+      // debugger;
       const { sizePerPage } = this.state;
       const currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
       let { currPage } = this.state;
       if (currPage > currLastPage) currPage = currLastPage;
-      result = this.store.page(Util.getNormalizedPage(currPage), sizePerPage).get();
+      // console.log(Util.getNormalizedPage(currPage));
+      result = this.store.page(Util.getNormalizedPage(pageStartIndex, currPage), sizePerPage).get();
       this.setState(() => {
         return {
           data: result,
@@ -1534,6 +1543,11 @@ BootstrapTable.propTypes = {
       Const.PAGINATION_POS_BOTTOM,
       Const.PAGINATION_POS_BOTH
     ]),
+    toolbarPosition: PropTypes.oneOf([
+      Const.TOOLBAR_POS_TOP,
+      Const.TOOLBAR_POS_BOTTOM,
+      Const.TOOLBAR_POS_BOTH
+    ]),
     hideSizePerPage: PropTypes.bool,
     hidePageListOnlyOnePage: PropTypes.bool,
     alwaysShowAllBtns: PropTypes.bool,
@@ -1698,6 +1712,7 @@ BootstrapTable.defaultProps = {
     sizePerPage: undefined,
     paginationSize: Const.PAGINATION_SIZE,
     paginationPosition: Const.PAGINATION_POS_BOTTOM,
+    toolbarPosition: Const.TOOLBAR_POS_TOP,
     hideSizePerPage: false,
     hidePageListOnlyOnePage: false,
     alwaysShowAllBtns: false,

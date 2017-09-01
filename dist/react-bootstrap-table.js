@@ -742,6 +742,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var colGroups = _util2.default.renderColGroup(columns, this.props.selectRow, expandColumnOptions, this.props.version);
 	      var sortIndicator = this.props.options.sortIndicator;
 	      if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
+
 	      var _props$options$pagina = this.props.options.paginationPosition,
 	          paginationPosition = _props$options$pagina === undefined ? _Const2.default.PAGINATION_POS_BOTTOM : _props$options$pagina;
 
@@ -752,11 +753,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        selectRow.clickToSelect = false;
 	      }
 
+	      var _props$options$toolba = this.props.options.toolbarPosition,
+	          toolbarPosition = _props$options$toolba === undefined ? _Const2.default.TOOLBAR_POS_TOP : _props$options$toolba;
+
+	      var showToolbarOnTop = toolbarPosition !== _Const2.default.TOOLBAR_POS_BOTTOM;
+	      var showToolbarOnBottom = toolbarPosition !== _Const2.default.TOOLBAR_POS_TOP;
+
 	      return _react2.default.createElement(
 	        'div',
 	        { className: (0, _classnames2.default)('react-bs-table-container', this.props.className, this.props.containerClass),
 	          style: this.props.containerStyle },
-	        toolBar,
+	        showToolbarOnTop ? toolBar : null,
 	        showPaginationOnTop ? pagination : null,
 	        _react2.default.createElement(
 	          'div',
@@ -835,6 +842,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        ),
 	        tableFilter,
 	        showPaginationOnBottom ? pagination : null,
+	        showToolbarOnBottom ? toolBar : null,
 	        _react2.default.createElement(_reactSAlert2.default, { stack: { limit: 3 } })
 	      );
 	    }
@@ -1407,7 +1415,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var dropRow = this.store.getRowByKey(dropRowKeys);
 	      var _props$options2 = this.props.options,
 	          onDeleteRow = _props$options2.onDeleteRow,
-	          afterDeleteRow = _props$options2.afterDeleteRow;
+	          afterDeleteRow = _props$options2.afterDeleteRow,
+	          pageStartIndex = _props$options2.pageStartIndex;
 
 
 	      if (onDeleteRow) {
@@ -1424,13 +1433,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.store.remove(dropRowKeys); // remove selected Row
 	      var result = void 0;
 	      if (this.props.pagination) {
+	        // debugger;
 	        var sizePerPage = this.state.sizePerPage;
 
 	        var currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
 	        var currPage = this.state.currPage;
 
 	        if (currPage > currLastPage) currPage = currLastPage;
-	        result = this.store.page(_util2.default.getNormalizedPage(currPage), sizePerPage).get();
+	        // console.log(Util.getNormalizedPage(currPage));
+	        result = this.store.page(_util2.default.getNormalizedPage(pageStartIndex, currPage), sizePerPage).get();
 	        this.setState(function () {
 	          return {
 	            data: result,
@@ -1993,6 +2004,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    sizePerPage: _propTypes2.default.number,
 	    paginationSize: _propTypes2.default.number,
 	    paginationPosition: _propTypes2.default.oneOf([_Const2.default.PAGINATION_POS_TOP, _Const2.default.PAGINATION_POS_BOTTOM, _Const2.default.PAGINATION_POS_BOTH]),
+	    toolbarPosition: _propTypes2.default.oneOf([_Const2.default.TOOLBAR_POS_TOP, _Const2.default.TOOLBAR_POS_BOTTOM, _Const2.default.TOOLBAR_POS_BOTH]),
 	    hideSizePerPage: _propTypes2.default.bool,
 	    hidePageListOnlyOnePage: _propTypes2.default.bool,
 	    alwaysShowAllBtns: _propTypes2.default.bool,
@@ -2157,6 +2169,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    sizePerPage: undefined,
 	    paginationSize: _Const2.default.PAGINATION_SIZE,
 	    paginationPosition: _Const2.default.PAGINATION_POS_BOTTOM,
+	    toolbarPosition: _Const2.default.TOOLBAR_POS_TOP,
 	    hideSizePerPage: false,
 	    hidePageListOnlyOnePage: false,
 	    alwaysShowAllBtns: false,
@@ -4411,6 +4424,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  PAGINATION_POS_TOP: 'top',
 	  PAGINATION_POS_BOTTOM: 'bottom',
 	  PAGINATION_POS_BOTH: 'both',
+	  TOOLBAR_POS_TOP: 'top',
+	  TOOLBAR_POS_BOTTOM: 'bottom',
+	  TOOLBAR_POS_BOTH: 'both',
 	  NO_DATA_TEXT: 'There is no data to display',
 	  SHOW_ONLY_SELECT: 'Show Selected Only',
 	  SHOW_ALL: 'Show All',
@@ -4816,7 +4832,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  columnClassName: _propTypes2.default.any,
 	  editColumnClassName: _propTypes2.default.any,
 	  invalidEditColumnClassName: _propTypes2.default.any,
-	  columnTitle: _propTypes2.default.bool,
+	  columnTitle: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.func, _propTypes2.default.string]),
 	  filterFormatted: _propTypes2.default.bool,
 	  filterValue: _propTypes2.default.func,
 	  sort: _propTypes2.default.string,
@@ -6676,6 +6692,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              customStyleWithNav: customEditAndNavStyle });
 	          } else {
 	            // add by bluespring for className customize
+	            var formattedValue = void 0;
 	            var columnChild = fieldValue && fieldValue.toString();
 	            var columnTitle = null;
 	            var tdClassName = column.className;
@@ -6684,15 +6701,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	            if (typeof column.format !== 'undefined') {
-	              var formattedValue = column.format(fieldValue, data, column.formatExtraData, r);
+	              formattedValue = column.format(fieldValue, data, column.formatExtraData, r);
 	              if (!_react2.default.isValidElement(formattedValue)) {
 	                columnChild = _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: formattedValue } });
 	              } else {
 	                columnChild = formattedValue;
-	                columnTitle = column.columnTitle && formattedValue ? formattedValue.toString() : null;
 	              }
-	            } else {
-	              columnTitle = column.columnTitle && fieldValue ? fieldValue.toString() : null;
+	            }
+	            if (_util2.default.isFunction(column.columnTitle)) {
+	              columnTitle = column.columnTitle(fieldValue, data);
+	            } else if (typeof column.columnTitle === 'string') {
+	              columnTitle = column.columnTitle;
+	            } else if (column.columnTitle) {
+	              if (formattedValue) columnTitle = formattedValue.toString();else if (fieldValue) columnTitle = fieldValue.toString();
 	            }
 	            return _react2.default.createElement(
 	              _TableColumn2.default,
@@ -6749,7 +6770,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onSelectRow: this.handleSelectRow,
 	            onExpandRow: this.handleClickCell,
 	            unselectableRow: disable,
-	            style: trStyle },
+	            style: trStyle,
+	            dbClickToEdit: cellEdit.mode === _Const2.default.CELL_EDIT_DBCLICK },
 	          this.props.expandColumnOptions.expandColumnVisible && this.props.expandColumnOptions.expandColumnBeforeSelectColumn && expandedRowColumn,
 	          selectRowColumn,
 	          this.props.expandColumnOptions.expandColumnVisible && !this.props.expandColumnOptions.expandColumnBeforeSelectColumn && expandedRowColumn,
@@ -7254,7 +7276,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          unselectableRow = _props.unselectableRow,
 	          isSelected = _props.isSelected,
 	          onSelectRow = _props.onSelectRow,
-	          onExpandRow = _props.onExpandRow;
+	          onExpandRow = _props.onExpandRow,
+	          dbClickToEdit = _props.dbClickToEdit;
 
 	      if (selectRow) {
 	        if (selectRow.clickToSelect && !unselectableRow) {
@@ -7273,7 +7296,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _this2.clickNum = 0;
 	          }, 200);
 	        } else {
-	          this.expandRow(rowIndex, cellIndex);
+	          if (dbClickToEdit) {
+	            this.expandRow(rowIndex, cellIndex);
+	          }
 	        }
 	      }
 	    }
@@ -14678,7 +14703,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var _loop = function _loop(i) {
 	    dataString += headCells.map(function (x) {
 	      if (x.row + (x.rowSpan - 1) === i) {
-	        return x.header;
+	        return '"' + x.header + '"';
 	      }
 	      if (x.row === i && x.rowSpan > 1) {
 	        return '';
