@@ -5650,8 +5650,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  _createClass(SelectFilter, [{
 	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
-	      var isPlaceholderSelected = nextProps.defaultValue === undefined || !nextProps.options.hasOwnProperty(nextProps.defaultValue);
+	    value: function componentWillReceiveProps() {
+	      var currentSelectValue = this.refs.selectInput.value;
+	      var isPlaceholderSelected = !currentSelectValue || currentSelectValue === '';
 	      this.setState(function () {
 	        return {
 	          isPlaceholderSelected: isPlaceholderSelected
@@ -6709,7 +6710,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              }
 	            }
 	            if (_util2.default.isFunction(column.columnTitle)) {
-	              columnTitle = column.columnTitle(fieldValue, data);
+	              columnTitle = column.columnTitle(fieldValue, data, r, i);
 	            } else if (typeof column.columnTitle === 'string') {
 	              columnTitle = column.columnTitle;
 	            } else if (column.columnTitle) {
