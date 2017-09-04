@@ -1,4 +1,5 @@
 /* eslint max-len: 0 */
+/* eslint no-unused-vars: 0 */
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
@@ -21,7 +22,7 @@ addProducts(5);
 
 export default class ColumnAlignTable extends React.Component {
 
-  customTitle(cell, row) {
+  customTitle(cell, row, rowIndex, colIndex) {
     return `${row.name} for ${cell}`;
   }
 

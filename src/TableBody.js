@@ -110,7 +110,7 @@ class TableBody extends Component {
             }
           }
           if (Utils.isFunction(column.columnTitle)) {
-            columnTitle = column.columnTitle(fieldValue, data);
+            columnTitle = column.columnTitle(fieldValue, data, r, i);
           } else if (typeof column.columnTitle === 'string') {
             columnTitle = column.columnTitle;
           } else if (column.columnTitle) {
