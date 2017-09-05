@@ -57,6 +57,18 @@ class BootstrapTable extends Component {
   }
 
   initTable(props) {
+    // If columns changed, clean removed columns that had filters
+    if (props.children !== this.props.children && this.filter) {
+      const nextDataFields = props.children.map(column => column.props.dataField);
+      this.props.children.forEach(column => {
+        const { dataField, filter } = column.props;
+        if (!nextDataFields.includes(dataField)) {
+          // Clear filter
+          this.filter.handleFilter(dataField, '', filter.type, filter);
+        }
+      });
+    }
+
     let { keyField } = props;
 
     const isKeyFieldDefined = typeof keyField === 'string' && keyField.length;
