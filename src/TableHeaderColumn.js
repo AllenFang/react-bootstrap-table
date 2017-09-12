@@ -107,6 +107,7 @@ class TableHeaderColumn extends Component {
   render() {
     let defaultCaret;
     let sortCaret;
+    let sortClass;
     const {
       headerText,
       dataAlign,
@@ -122,6 +123,7 @@ class TableHeaderColumn extends Component {
       className,
       isOnlyHead,
       version,
+      sortHeaderColumnClassName: customSortClass,
       thStyle: style
     } = this.props;
     const thStyle = {
@@ -140,9 +142,14 @@ class TableHeaderColumn extends Component {
       }
     }
 
+    if (sort) {
+      sortClass = Util.isFunction(customSortClass) ?
+        customSortClass(sort, dataField) : customSortClass;
+    }
     const classes = classSet(
       Util.isFunction(className) ? className() : className,
-      !isOnlyHead && dataSort ? 'sort-column' : '');
+      !isOnlyHead && dataSort ? 'sort-column' : '',
+      sortClass);
 
     const attr = {};
     if (headerTitle) {
@@ -255,6 +262,7 @@ TableHeaderColumn.propTypes = {
   width: PropTypes.string,
   sortFunc: PropTypes.func,
   sortFuncExtraData: PropTypes.any,
+  sortHeaderColumnClassName: PropTypes.any,
   columnClassName: PropTypes.any,
   editColumnClassName: PropTypes.any,
   invalidEditColumnClassName: PropTypes.any,
