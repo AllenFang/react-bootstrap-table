@@ -18262,6 +18262,10 @@ function addProducts(quantity) {
 
 addProducts(5);
 
+function headerColumnClassNameFormat() {
+  return 'th-string-example';
+}
+
 function columnClassNameFormat(fieldValue, row, rowIdx, colIdx) {
   // fieldValue is column value
   // row is whole row object
@@ -18292,7 +18296,7 @@ var TrClassStringTable = function (_React$Component) {
         ),
         _react2.default.createElement(
           _reactBootstrapTable.TableHeaderColumn,
-          { dataField: 'name' },
+          { dataField: 'name', className: headerColumnClassNameFormat },
           'Product Name'
         ),
         _react2.default.createElement(

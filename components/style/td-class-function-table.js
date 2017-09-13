@@ -20,6 +20,10 @@ function addProducts(quantity) {
 
 addProducts(5);
 
+function headerColumnClassNameFormat() {
+  return 'th-string-example';
+}
+
 function columnClassNameFormat(fieldValue, row, rowIdx, colIdx) {
   // fieldValue is column value
   // row is whole row object
@@ -33,7 +37,7 @@ export default class TrClassStringTable extends React.Component {
     return (
       <BootstrapTable data={ products }>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='name' className={ headerColumnClassNameFormat }>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price' columnClassName={ columnClassNameFormat }>Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
