@@ -62,7 +62,7 @@ const exportCSV = function(data, keys, filename, separator, noAutoBOM, excludeCS
   const dataString = toString(data, keys, separator, excludeCSVHeader);
   if (typeof window !== 'undefined') {
     noAutoBOM = noAutoBOM === undefined ? true : noAutoBOM;
-    saveAs(new Blob([ dataString ],
+    saveAs(new Blob([ '\ufeff', dataString ],
         { type: 'text/plain;charset=utf-8' }),
         filename, noAutoBOM);
   }
