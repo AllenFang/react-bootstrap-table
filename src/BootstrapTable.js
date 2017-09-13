@@ -216,6 +216,7 @@ class BootstrapTable extends Component {
   reset() {
     const { pageStartIndex } = this.props.options;
     this.store.clean();
+    this.refs.body.setState({ currEditCell: null });
     this.setState(() => {
       return {
         data: this.getTableData(),
