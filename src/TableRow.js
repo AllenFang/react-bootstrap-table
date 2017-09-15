@@ -13,7 +13,11 @@ class TableRow extends Component {
 
   rowClick = e => {
     const rowIndex = this.props.index + 1;
-    const cellIndex = e.target.cellIndex;
+    let cell = e.target;
+    while (cell.nodeName !== 'TD' && cell.parentNode) {
+      cell = cell.parentNode;
+    }
+    const cellIndex = cell.cellIndex;
     if (this.props.onRowClick) this.props.onRowClick(rowIndex, cellIndex);
     const {
       selectRow, unselectableRow, isSelected, onSelectRow, onExpandRow, dbClickToEdit
