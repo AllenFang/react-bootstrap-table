@@ -67,7 +67,7 @@ class BootstrapTable extends Component {
       }
       if (column.props.isKey) {
         if (keyField) {
-          throw new Error('Error. Multiple key column be detected in TableHeaderColumn.');
+          throw new Error('Error. Multiple key column detected in TableHeaderColumn.');
         }
         keyField = column.props.dataField;
       }
@@ -82,6 +82,7 @@ class BootstrapTable extends Component {
       }
     });
 
+    // if a column filter was created, add 'onFilterChange' listener
     if (this.filter) {
       this.filter.removeAllListeners('onFilterChange');
       this.filter.on('onFilterChange', (currentFilter) => {
