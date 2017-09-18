@@ -235,7 +235,7 @@ class BootstrapTable extends Component {
         currPage: Util.getFirstPage(pageStartIndex),
         expanding: [],
         sizePerPage: Const.SIZE_PER_PAGE_LIST[0],
-        selectedRowKeys: this.store.getSelectedRowKeys(),
+        selectedRowKeys: [],
         reset: true
       };
     });
