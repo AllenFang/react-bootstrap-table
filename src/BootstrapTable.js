@@ -1104,6 +1104,7 @@ class BootstrapTable extends Component {
         column.props.hidden === false)) {
         keys.push({
           field: column.props.dataField,
+          type: column.props.csvFieldType,
           format: column.props.csvFormat,
           extraData: column.props.csvFormatExtraData,
           header: column.props.csvHeader || column.props.dataField,

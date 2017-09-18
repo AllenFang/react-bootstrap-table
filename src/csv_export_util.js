@@ -3,6 +3,7 @@
 /* eslint no-var: 0 */
 /* eslint no-unused-vars: 0 */
 import Util from './util';
+import Const from './Const';
 
 if (Util.canUseDOM()) {
   const filesaver = require('./filesaver');
@@ -45,9 +46,10 @@ function toString(data, keys, separator, excludeCSVHeader) {
 
   data.map(function(row) {
     keys.map(function(col, i) {
-      const { field, format, extraData } = col;
-      const value = typeof format !== 'undefined' ? format(row[field], row, extraData) : row[field];
-      const cell = typeof value !== 'undefined' ? ('"' + value + '"') : '';
+      const { field, format, extraData, type } = col;
+      let value = typeof format !== 'undefined' ? format(row[field], row, extraData) : row[field];
+      value = type === Const.CSV_NUMBER_TYPE ? Number(value) : `"${value}"`;
+      const cell = typeof value !== 'undefined' ? value : '';
       dataString += cell;
       if (i + 1 < keys.length) dataString += separator;
     });

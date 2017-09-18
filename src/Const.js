@@ -59,7 +59,9 @@ const CONST_VAR = {
   REMOTE_SEARCH: 'search',
   REMOTE_EXPORT_CSV: 'exportCSV',
   INSERT_FAIL_INDICATOR: 'Validation errors, please check!',
-  DEFAULT_CSV_SEPARATOR: ','
+  DEFAULT_CSV_SEPARATOR: ',',
+  CSV_STRING_TYPE: 'string',
+  CSV_NUMBER_TYPE: 'number'
 };
 
 CONST_VAR.REMOTE = {};
