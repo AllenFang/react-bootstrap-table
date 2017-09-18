@@ -22,6 +22,19 @@ class TableHeaderColumn extends Component {
     if (nextProps.reset) {
       this.cleanFiltered();
     }
+
+    // If column not displaying the same dataField, reset the filter accordingly
+    if (nextProps.dataField !== this.props.dataField) {
+      const emitter = nextProps.filter.emitter || {};
+      const currentFilter = emitter.currentFilter || {};
+      const filter = currentFilter[nextProps.dataField];
+      const value = filter ? filter.value : '';
+
+      const { ref } = this.getFilters() || {};
+      if (this.refs[ref]) {
+        this.refs[ref].setState({ value });
+      }
+    }
   }
 
   handleColumnClick = () => {
