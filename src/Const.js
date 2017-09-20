@@ -62,7 +62,10 @@ const CONST_VAR = {
   INSERT_FAIL_INDICATOR: 'Validation errors, please check!',
   DEFAULT_CSV_SEPARATOR: ',',
   CSV_STRING_TYPE: 'string',
-  CSV_NUMBER_TYPE: 'number'
+  CSV_NUMBER_TYPE: 'number',
+  AUTO_COLLAPSE_WHEN_SORT: false,
+  AUTO_COLLAPSE_WHEN_SEARCH: false,
+  AUTO_COLLAPSE_WHEN_FILTER: false
 };
 
 CONST_VAR.REMOTE = {};

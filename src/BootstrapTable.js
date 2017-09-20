@@ -568,20 +568,30 @@ class BootstrapTable extends Component {
   }
 
   handleSort = (order, sortField) => {
-    if (this.props.options.onSortChange) {
-      this.props.options.onSortChange(sortField, order, this.props);
+    const { autoCollapse: { sort }, options } = this.props;
+    if (options.onSortChange) {
+      options.onSortChange(sortField, order, this.props);
     }
     this.store.setSortInfo(order, sortField);
     if (this.allowRemote(Const.REMOTE_SORT)) {
+      if (sort) {
+        this.setState(() => {
+          return {
+            expanding: []
+          };
+        });
+      }
       return;
     }
 
     const result = this.store.sort().get();
     this.setState(() => {
-      return {
+      const newState = {
         data: result,
         reset: false
       };
+      if (sort) newState.expanding = [];
+      return newState;
     });
   }
 
@@ -1039,17 +1049,20 @@ class BootstrapTable extends Component {
   }
 
   handleFilterData = filterObj => {
-    const { onFilterChange, pageStartIndex } = this.props.options;
+    const { autoCollapse: { filter }, options } = this.props;
+    const { onFilterChange, pageStartIndex } = options;
     if (onFilterChange) {
       const colInfos = this.store.getColInfos();
       onFilterChange(filterObj, colInfos);
     }
 
     this.setState(() => {
-      return {
+      const newState = {
         currPage: Util.getFirstPage(pageStartIndex),
         reset: false
       };
+      if (filter) newState.expanding = [];
+      return newState;
     });
 
     if (this.allowRemote(Const.REMOTE_FILTER)) {
@@ -1129,6 +1142,7 @@ class BootstrapTable extends Component {
     if (this.refs.toolbar) {
       this.refs.toolbar.setSearchInput(searchText);
     }
+    const { autoCollapse: { search } } = this.props;
     const { onSearchChange, pageStartIndex } = this.props.options;
     if (onSearchChange) {
       const colInfos = this.store.getColInfos();
@@ -1136,10 +1150,12 @@ class BootstrapTable extends Component {
     }
 
     this.setState(() => {
-      return {
+      const newState = {
         currPage: Util.getFirstPage(pageStartIndex),
         reset: false
       };
+      if (search) newState.expanding = [];
+      return newState;
     });
 
     if (this.allowRemote(Const.REMOTE_SEARCH)) {
@@ -1635,6 +1651,11 @@ BootstrapTable.propTypes = {
   ignoreSinglePage: PropTypes.bool,
   expandableRow: PropTypes.func,
   expandComponent: PropTypes.func,
+  autoCollapse: PropTypes.shape({
+    sort: PropTypes.bool,
+    filter: PropTypes.bool,
+    search: PropTypes.bool
+  }),
   expandColumnOptions: PropTypes.shape({
     columnWidth: PropTypes.oneOfType([ PropTypes.number, PropTypes.string ]),
     expandColumnVisible: PropTypes.bool,
@@ -1791,7 +1812,12 @@ BootstrapTable.defaultProps = {
   },
   exportCSV: false,
   csvFileName: 'spreadsheet.csv',
-  ignoreSinglePage: false
+  ignoreSinglePage: false,
+  autoCollapse: {
+    sort: Const.AUTO_COLLAPSE_WHEN_SORT,
+    filter: Const.AUTO_COLLAPSE_WHEN_FILTER,
+    search: Const.AUTO_COLLAPSE_WHEN_SEARCH
+  }
 };
 
 export default BootstrapTable;
