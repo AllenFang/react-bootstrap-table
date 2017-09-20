@@ -1,11 +1,11 @@
 {
   "name": "react-bootstrap-table-extras",
   "version": "1.0.0",
-  "description": "It's a react table for bootstrap",
+  "description": "Extension of react-bootstrap-table",
   "main": "./lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AllenFang/react-bootstrap-table.git"
+    "url": "git+https://github.com/RxNT/react-bootstrap-table.git"
   },
   "scripts": {
     "lint": "eslint src",
