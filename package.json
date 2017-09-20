@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-table-extras",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Extension of react-bootstrap-table",
   "main": "./lib/index.js",
   "repository": {
