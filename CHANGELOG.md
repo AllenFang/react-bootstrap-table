@@ -1,3 +1,24 @@
+<a name="v4.0.4"></a>
+# [v4.0.4](https://github.com/AllenFang/react-bootstrap-table/compare/v4.0.3...v4.0.4) (2017-09-15)
+## Bug fixes
+* Fix `BootstrapTable.reset` method doesn't clean the cell editing state([f3466be](https://github.com/AllenFang/react-bootstrap-table/commit/f3466befcf94f61b9ae01dbfc36fa47535290582))
+* Fix search result is reset when a rerender with only enable `remote.cellEdit`([8ba60d8](https://github.com/AllenFang/react-bootstrap-table/commit/8ba60d8509a215729371fa14ef70b451ea1d4a9f))
+* `columnClassName` get render on `colgroup` even if it is function([031a99d](https://github.com/AllenFang/react-bootstrap-table/commit/031a99d59267b1656774cbe06f79af2c0c533963))
+
+## Enhancement
+* Able to styling the header column when sorting([7960b3f](https://github.com/AllenFang/react-bootstrap-table/commit/7960b3fb5a3c79cf4635577d1333c8efc59b2ef3))
+	* Check [example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/sort/sort-style-table.js#L36-L37)
+* Trying to fixing encoding issue when opening CSV file with Excel([c05679c](https://github.com/AllenFang/react-bootstrap-table/commit/c05679c25ddfc817f40e8d5ab40b004c335a4103))
+
+<a name="v4.0.3"></a>
+# [v4.0.3](https://github.com/AllenFang/react-bootstrap-table/compare/v4.0.2...v4.0.3) (2017-09-04)
+## Bug fixes
+* placeholder-selected in filters/Select.js is not handled correctly([1bba1aa](https://github.com/AllenFang/react-bootstrap-table/commit/1bba1aaab4d2813f2a60430ec736608eb83bb480))
+
+## Enhancement
+* Setting environment to production([a7ff05c](https://github.com/AllenFang/react-bootstrap-table/commit/a7ff05cf3ae6a98663440fce711e981fafb95c3d))
+* Pass `rowIndex` and `columnIndex` as third and fourth arguments for `columnTitle` callback function([99f56a0](https://github.com/AllenFang/react-bootstrap-table/commit/99f56a0066ed9eb37b1a81bffd7423d6d904da88)) 
+
 <a name="v4.0.2"></a>
 # [v4.0.2](https://github.com/AllenFang/react-bootstrap-table/compare/v4.0.1...v4.0.2) (2017-08-22)
 ## Bug fixes

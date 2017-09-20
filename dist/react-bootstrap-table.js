@@ -542,6 +542,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var pageStartIndex = this.props.options.pageStartIndex;
 
 	      this.store.clean();
+	      this.refs.body.setState({ currEditCell: null });
 	      this.setState(function () {
 	        return {
 	          data: _this4.getTableData(),
@@ -581,17 +582,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        if (this.isRemoteDataSource()) {
+	          var newState = { sizePerPage: sizePerPage, reset: false, currPage: page };
 	          var data = nextProps.data.slice();
 	          if (nextProps.pagination && !this.allowRemote(_Const2.default.REMOTE_PAGE)) {
 	            data = this.store.page(page, sizePerPage).get();
 	          }
+
+	          if (this.store.isOnFilter) {
+	            if (this.store.searchText) this.handleSearch(this.store.searchText);
+	            if (this.store.filterObj) this.handleFilterData(this.store.filterObj);
+	            newState.currPage = _util2.default.getFirstPage(nextProps.options.pageStartIndex);
+	          } else {
+	            newState.data = data;
+	          }
 	          this.setState(function () {
-	            return {
-	              data: data,
-	              currPage: page,
-	              sizePerPage: sizePerPage,
-	              reset: false
-	            };
+	            return newState;
 	          });
 	        } else {
 	          // #125
@@ -4666,6 +4671,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function render() {
 	      var defaultCaret = void 0;
 	      var sortCaret = void 0;
+	      var sortClass = void 0;
 	      var _props2 = this.props,
 	          headerText = _props2.headerText,
 	          dataAlign = _props2.dataAlign,
@@ -4681,6 +4687,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          className = _props2.className,
 	          isOnlyHead = _props2.isOnlyHead,
 	          version = _props2.version,
+	          customSortClass = _props2.sortHeaderColumnClassName,
 	          style = _props2.thStyle;
 
 	      var thStyle = _extends({
@@ -4698,7 +4705,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      }
 
-	      var classes = (0, _classnames2.default)(_util2.default.isFunction(className) ? className() : className, !isOnlyHead && dataSort ? 'sort-column' : '');
+	      if (sort) {
+	        sortClass = _util2.default.isFunction(customSortClass) ? customSortClass(sort, dataField) : customSortClass;
+	      }
+	      var classes = (0, _classnames2.default)(_util2.default.isFunction(className) ? className() : className, !isOnlyHead && dataSort ? 'sort-column' : '', sortClass);
 
 	      var attr = {};
 	      if (headerTitle) {
@@ -4829,6 +4839,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  width: _propTypes2.default.string,
 	  sortFunc: _propTypes2.default.func,
 	  sortFuncExtraData: _propTypes2.default.any,
+	  sortHeaderColumnClassName: _propTypes2.default.any,
 	  columnClassName: _propTypes2.default.any,
 	  editColumnClassName: _propTypes2.default.any,
 	  invalidEditColumnClassName: _propTypes2.default.any,
@@ -5046,7 +5057,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        not eq offsetWidth in large column table **/
 	        style.minWidth = width;
 	      }
-	      return _react2.default.createElement('col', { style: style, key: i, className: column.className });
+	      return _react2.default.createElement('col', { style: style, key: i });
 	    });
 
 	    return _react2.default.createElement(
@@ -14744,7 +14755,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var dataString = toString(data, keys, separator, excludeCSVHeader);
 	  if (typeof window !== 'undefined') {
 	    noAutoBOM = noAutoBOM === undefined ? true : noAutoBOM;
-	    saveAs(new Blob([dataString], { type: 'text/plain;charset=utf-8' }), filename, noAutoBOM);
+	    saveAs(new Blob(['\uFEFF', dataString], { type: 'text/plain;charset=utf-8' }), filename, noAutoBOM);
 	  }
 	};
 

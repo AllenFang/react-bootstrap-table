@@ -216,6 +216,7 @@ class BootstrapTable extends Component {
   reset() {
     const { pageStartIndex } = this.props.options;
     this.store.clean();
+    this.refs.body.setState({ currEditCell: null });
     this.setState(() => {
       return {
         data: this.getTableData(),
@@ -252,18 +253,20 @@ class BootstrapTable extends Component {
       }
 
       if (this.isRemoteDataSource()) {
+        const newState = { sizePerPage, reset: false, currPage: page };
         let data = nextProps.data.slice();
         if (nextProps.pagination && !this.allowRemote(Const.REMOTE_PAGE)) {
           data = this.store.page(page, sizePerPage).get();
         }
-        this.setState(() => {
-          return {
-            data,
-            currPage: page,
-            sizePerPage,
-            reset: false
-          };
-        });
+
+        if (this.store.isOnFilter) {
+          if (this.store.searchText) this.handleSearch(this.store.searchText);
+          if (this.store.filterObj) this.handleFilterData(this.store.filterObj);
+          newState.currPage = Util.getFirstPage(nextProps.options.pageStartIndex);
+        } else {
+          newState.data = data;
+        }
+        this.setState(() => newState);
       } else {
         // #125
         // remove !options.page for #709
