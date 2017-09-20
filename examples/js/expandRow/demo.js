@@ -10,6 +10,7 @@ import ExpandWithCellEdit from './expand-row-with-cellEdit';
 import ExpandIndicator from './expand-indicator';
 import CustomExpandClassName from './custom-expand-class';
 import CustomExpandIndicator from './custom-expand-indicator';
+import AutoCollapse from './auto-collapse';
 import renderLinks from '../utils';
 
 import { Col, Panel } from 'react-bootstrap';
@@ -59,6 +60,10 @@ class Demo extends React.Component {
         <Panel header={ 'Expand Row with CellEdit' }>
           { renderLinks('expandRow/expand-row-with-cellEdit.js') }
           <ExpandWithCellEdit/>
+        </Panel>
+        <Panel header={ 'Auto Collapse Expanding Rows When Sort, Search or Flter' }>
+          { renderLinks('expandRow/auto-collapse.js') }
+          <AutoCollapse/>
         </Panel>
       </Col>
     );
