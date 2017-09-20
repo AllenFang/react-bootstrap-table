@@ -372,6 +372,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function initTable(props) {
 	      var _this2 = this;
 
+	      // If columns changed, clean removed columns that had filters
+	      if (props.children !== this.props.children && this.filter) {
+	        var nextDataFields = _react2.default.Children.map(props.children, function (column) {
+	          return column.props.dataField;
+	        });
+	        _react2.default.Children.forEach(this.props.children, function (column) {
+	          var _column$props = column.props,
+	              dataField = _column$props.dataField,
+	              filter = _column$props.filter;
+
+	          if (!nextDataFields.includes(dataField)) {
+	            // Clear filter
+	            _this2.filter.handleFilter(dataField, '', filter.type, filter);
+	          }
+	        });
+	      }
+
 	      var keyField = props.keyField;
 
 
@@ -383,7 +400,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        if (column.props.isKey) {
 	          if (keyField) {
-	            throw new Error('Error. Multiple key column be detected in TableHeaderColumn.');
+	            throw new Error('Error. Multiple key column detected in TableHeaderColumn.');
 	          }
 	          keyField = column.props.dataField;
 	        }
@@ -398,6 +415,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      });
 
+	      // if a column filter was created, add 'onFilterChange' listener
 	      if (this.filter) {
 	        this.filter.removeAllListeners('onFilterChange');
 	        this.filter.on('onFilterChange', function (currentFilter) {
@@ -549,7 +567,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          currPage: _util2.default.getFirstPage(pageStartIndex),
 	          expanding: [],
 	          sizePerPage: _Const2.default.SIZE_PER_PAGE_LIST[0],
-	          selectedRowKeys: _this4.store.getSelectedRowKeys(),
+	          selectedRowKeys: [],
 	          reset: true
 	        };
 	      });
@@ -912,20 +930,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleSort__REACT_HOT_LOADER__',
 	    value: function __handleSort__REACT_HOT_LOADER__(order, sortField) {
-	      if (this.props.options.onSortChange) {
-	        this.props.options.onSortChange(sortField, order, this.props);
+	      var _props2 = this.props,
+	          sort = _props2.autoCollapse.sort,
+	          options = _props2.options;
+
+	      if (options.onSortChange) {
+	        options.onSortChange(sortField, order, this.props);
 	      }
 	      this.store.setSortInfo(order, sortField);
 	      if (this.allowRemote(_Const2.default.REMOTE_SORT)) {
+	        if (sort) {
+	          this.setState(function () {
+	            return {
+	              expanding: []
+	            };
+	          });
+	        }
 	        return;
 	      }
 
 	      var result = this.store.sort().get();
 	      this.setState(function () {
-	        return {
+	        var newState = {
 	          data: result,
 	          reset: false
 	        };
+	        if (sort) newState.expanding = [];
+	        return newState;
 	      });
 	    }
 	  }, {
@@ -1077,9 +1108,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleRowClick__REACT_HOT_LOADER__',
 	    value: function __handleRowClick__REACT_HOT_LOADER__(row, rowIndex, columnIndex) {
-	      var _props2 = this.props,
-	          options = _props2.options,
-	          keyBoardNav = _props2.keyBoardNav;
+	      var _props3 = this.props,
+	          options = _props3.options,
+	          keyBoardNav = _props3.keyBoardNav;
 
 	      if (options.onRowClick) {
 	        options.onRowClick(row, columnIndex, rowIndex);
@@ -1472,9 +1503,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleFilterData__REACT_HOT_LOADER__',
 	    value: function __handleFilterData__REACT_HOT_LOADER__(filterObj) {
-	      var _props$options3 = this.props.options,
-	          onFilterChange = _props$options3.onFilterChange,
-	          pageStartIndex = _props$options3.pageStartIndex;
+	      var _props4 = this.props,
+	          filter = _props4.autoCollapse.filter,
+	          options = _props4.options;
+	      var onFilterChange = options.onFilterChange,
+	          pageStartIndex = options.pageStartIndex;
 
 	      if (onFilterChange) {
 	        var colInfos = this.store.getColInfos();
@@ -1482,10 +1515,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      this.setState(function () {
-	        return {
+	        var newState = {
 	          currPage: _util2.default.getFirstPage(pageStartIndex),
 	          reset: false
 	        };
+	        if (filter) newState.expanding = [];
+	        return newState;
 	      });
 
 	      if (this.allowRemote(_Const2.default.REMOTE_FILTER)) {
@@ -1528,11 +1563,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var result = {};
 
 	      var csvFileName = this.props.csvFileName;
-	      var _props$options4 = this.props.options,
-	          onExportToCSV = _props$options4.onExportToCSV,
-	          exportCSVSeparator = _props$options4.exportCSVSeparator,
-	          noAutoBOM = _props$options4.noAutoBOM,
-	          excludeCSVHeader = _props$options4.excludeCSVHeader;
+	      var _props$options3 = this.props.options,
+	          onExportToCSV = _props$options3.onExportToCSV,
+	          exportCSVSeparator = _props$options3.exportCSVSeparator,
+	          noAutoBOM = _props$options3.noAutoBOM,
+	          excludeCSVHeader = _props$options3.excludeCSVHeader;
 
 	      if (onExportToCSV) {
 	        result = onExportToCSV();
@@ -1547,6 +1582,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (column.props.export === true || typeof column.props.export === 'undefined' && column.props.hidden === false) {
 	          keys.push({
 	            field: column.props.dataField,
+	            type: column.props.csvFieldType,
 	            format: column.props.csvFormat,
 	            extraData: column.props.csvFormatExtraData,
 	            header: column.props.csvHeader || column.props.dataField,
@@ -1571,9 +1607,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (this.refs.toolbar) {
 	        this.refs.toolbar.setSearchInput(searchText);
 	      }
-	      var _props$options5 = this.props.options,
-	          onSearchChange = _props$options5.onSearchChange,
-	          pageStartIndex = _props$options5.pageStartIndex;
+	      var search = this.props.autoCollapse.search;
+	      var _props$options4 = this.props.options,
+	          onSearchChange = _props$options4.onSearchChange,
+	          pageStartIndex = _props$options4.pageStartIndex;
 
 	      if (onSearchChange) {
 	        var colInfos = this.store.getColInfos();
@@ -1581,10 +1618,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      this.setState(function () {
-	        return {
+	        var newState = {
 	          currPage: _util2.default.getFirstPage(pageStartIndex),
 	          reset: false
 	        };
+	        if (search) newState.expanding = [];
+	        return newState;
 	      });
 
 	      if (this.allowRemote(_Const2.default.REMOTE_SEARCH)) {
@@ -1671,14 +1710,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'renderToolBar',
 	    value: function renderToolBar() {
-	      var _props3 = this.props,
-	          exportCSV = _props3.exportCSV,
-	          selectRow = _props3.selectRow,
-	          insertRow = _props3.insertRow,
-	          deleteRow = _props3.deleteRow,
-	          search = _props3.search,
-	          children = _props3.children,
-	          keyField = _props3.keyField;
+	      var _props5 = this.props,
+	          exportCSV = _props5.exportCSV,
+	          selectRow = _props5.selectRow,
+	          insertRow = _props5.insertRow,
+	          deleteRow = _props5.deleteRow,
+	          search = _props5.search,
+	          children = _props5.children,
+	          keyField = _props5.keyField;
 
 	      var enableShowOnlySelected = selectRow && selectRow.showOnlySelected;
 	      var print = typeof this.props.options.printToolBar === 'undefined' ? true : this.props.options.printToolBar;
@@ -2080,6 +2119,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  ignoreSinglePage: _propTypes2.default.bool,
 	  expandableRow: _propTypes2.default.func,
 	  expandComponent: _propTypes2.default.func,
+	  autoCollapse: _propTypes2.default.shape({
+	    sort: _propTypes2.default.bool,
+	    filter: _propTypes2.default.bool,
+	    search: _propTypes2.default.bool
+	  }),
 	  expandColumnOptions: _propTypes2.default.shape({
 	    columnWidth: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
 	    expandColumnVisible: _propTypes2.default.bool,
@@ -2236,7 +2280,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  exportCSV: false,
 	  csvFileName: 'spreadsheet.csv',
-	  ignoreSinglePage: false
+	  ignoreSinglePage: false,
+	  autoCollapse: {
+	    sort: _Const2.default.AUTO_COLLAPSE_WHEN_SORT,
+	    filter: _Const2.default.AUTO_COLLAPSE_WHEN_FILTER,
+	    search: _Const2.default.AUTO_COLLAPSE_WHEN_SEARCH
+	  }
 	};
 
 	var _default = BootstrapTable;
@@ -4449,7 +4498,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    SELECT: 'SelectFilter',
 	    NUMBER: 'NumberFilter',
 	    DATE: 'DateFilter',
-	    CUSTOM: 'CustomFilter'
+	    CUSTOM: 'CustomFilter',
+	    ARRAY: 'ArrayFilter'
 	  },
 	  FILTER_COND_EQ: 'eq',
 	  FILTER_COND_LIKE: 'like',
@@ -4464,7 +4514,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  REMOTE_SEARCH: 'search',
 	  REMOTE_EXPORT_CSV: 'exportCSV',
 	  INSERT_FAIL_INDICATOR: 'Validation errors, please check!',
-	  DEFAULT_CSV_SEPARATOR: ','
+	  DEFAULT_CSV_SEPARATOR: ',',
+	  CSV_STRING_TYPE: 'string',
+	  CSV_NUMBER_TYPE: 'number',
+	  AUTO_COLLAPSE_WHEN_SORT: false,
+	  AUTO_COLLAPSE_WHEN_SEARCH: false,
+	  AUTO_COLLAPSE_WHEN_FILTER: false
 	};
 
 	CONST_VAR.REMOTE = {};
@@ -4578,6 +4633,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function componentWillReceiveProps(nextProps) {
 	      if (nextProps.reset) {
 	        this.cleanFiltered();
+	      }
+
+	      // If column not displaying the same dataField, reset the filter accordingly
+	      if (nextProps.dataField !== this.props.dataField) {
+	        var emitter = nextProps.filter.emitter || {};
+	        var currentFilter = emitter.currentFilter || {};
+	        var filter = currentFilter[nextProps.dataField];
+	        var value = filter ? filter.value : '';
+
+	        var _ref = this.getFilters() || {},
+	            ref = _ref.ref;
+
+	        if (this.refs[ref]) {
+	          this.refs[ref].setState({ value: value });
+	        }
 	      }
 	    }
 	  }, {
@@ -4830,6 +4900,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  dataFormat: _propTypes2.default.func,
 	  csvFormat: _propTypes2.default.func,
 	  csvHeader: _propTypes2.default.string,
+	  csvFieldType: _propTypes2.default.oneOf([_Const2.default.CSV_STRING_TYPE, _Const2.default.CSV_NUMBER_TYPE]),
 	  isKey: _propTypes2.default.bool,
 	  editable: _propTypes2.default.any,
 	  hidden: _propTypes2.default.bool,
@@ -4882,6 +4953,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  dataFormat: undefined,
 	  csvFormat: undefined,
 	  csvHeader: undefined,
+	  csvFieldType: _Const2.default.CSV_STRING_TYPE,
 	  isKey: false,
 	  editable: true,
 	  onSort: undefined,
@@ -14343,6 +14415,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 
+	    /**
+	     * Filter if targetVal is contained in filterVal.
+	     */
+
+	  }, {
+	    key: 'filterArray',
+	    value: function filterArray(targetVal, filterVal) {
+	      // case insensitive
+	      return filterVal.indexOf(targetVal) > -1;
+	    }
+
 	    /* General search function
 	     * It will search for the text if the input includes that text;
 	     */
@@ -14401,6 +14484,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                filterVal = filterObj[key].value;
 	                break;
 	              }
+	            case _Const2.default.FILTER_TYPE.ARRAY:
+	              {
+	                filterVal = filterObj[key].value;
+	                if (!Array.isArray(filterVal)) {
+	                  throw new Error('Value must be an Array');
+	                }
+	                break;
+	              }
 	            default:
 	              {
 	                filterVal = filterObj[key].value;
@@ -14447,6 +14538,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	              {
 	                var cond = filterObj[key].props ? filterObj[key].props.cond : _Const2.default.FILTER_COND_LIKE;
 	                valid = _this6.filterCustom(targetVal, filterVal, filterObj[key].value, cond);
+	                break;
+	              }
+	            case _Const2.default.FILTER_TYPE.ARRAY:
+	              {
+	                valid = _this6.filterArray(targetVal, filterVal);
 	                break;
 	              }
 	            default:
@@ -14683,16 +14779,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _util2 = _interopRequireDefault(_util);
 
+	var _Const = __webpack_require__(21);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	if (_util2.default.canUseDOM()) {
-	  var filesaver = __webpack_require__(72);
-	  var saveAs = filesaver.saveAs;
-	} /* eslint block-scoped-var: 0 */
+	/* eslint block-scoped-var: 0 */
 	/* eslint vars-on-top: 0 */
 	/* eslint no-var: 0 */
 	/* eslint no-unused-vars: 0 */
-
+	if (_util2.default.canUseDOM()) {
+	  var filesaver = __webpack_require__(72);
+	  var saveAs = filesaver.saveAs;
+	}
 
 	function toString(data, keys, separator, excludeCSVHeader) {
 	  var dataString = '';
@@ -14737,10 +14837,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    keys.map(function (col, i) {
 	      var field = col.field,
 	          format = col.format,
-	          extraData = col.extraData;
+	          extraData = col.extraData,
+	          type = col.type;
 
 	      var value = typeof format !== 'undefined' ? format(row[field], row, extraData) : row[field];
-	      var cell = typeof value !== 'undefined' ? '"' + value + '"' : '';
+	      value = type === _Const2.default.CSV_NUMBER_TYPE ? Number(value) : '"' + value + '"';
+	      var cell = typeof value !== 'undefined' ? value : '';
 	      dataString += cell;
 	      if (i + 1 < keys.length) dataString += separator;
 	    });
