@@ -14666,8 +14666,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	          if (sortFunc) {
 	            result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
 	          } else {
-	            var valueA = a[sortDetails.sortField] === null ? '' : a[sortDetails.sortField];
-	            var valueB = b[sortDetails.sortField] === null ? '' : b[sortDetails.sortField];
+
+		    if (a[sortDetails.sortField] === null || a[sortDetails.sortField] === undefined) {
+		      var valueA = '';
+		    } else {
+		      var valueA = a[sortDetails.sortField];
+		    }
+
+		    if (b[sortDetails.sortField] === null || b[sortDetails.sortField] === undefined) {
+		      var valueB = '';
+		    } else {
+		      var valueB = b[sortDetails.sortField];
+		    }
+
 	            if (isDesc) {
 	              if (typeof valueB === 'string') {
 	                result = valueB.localeCompare(valueA);
