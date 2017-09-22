@@ -14659,6 +14659,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      arr.sort(function (a, b) {
 	        var result = 0;
+	        var valueA = void 0;
+	        var valueB = void 0;
 
 	        for (var i = 0; i < _this8.sortList.length; i++) {
 	          var sortDetails = _this8.sortList[i];
@@ -14672,19 +14674,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	          if (sortFunc) {
 	            result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
 	          } else {
-
-		    if (a[sortDetails.sortField] === null || a[sortDetails.sortField] === undefined) {
-		      var valueA = '';
-		    } else {
-		      var valueA = a[sortDetails.sortField];
-		    }
-
-		    if (b[sortDetails.sortField] === null || b[sortDetails.sortField] === undefined) {
-		      var valueB = '';
-		    } else {
-		      var valueB = b[sortDetails.sortField];
-		    }
-
+	            if (a[sortDetails.sortField] === null || a[sortDetails.sortField] === undefined) {
+	              valueA = '';
+	            } else {
+	              valueA = a[sortDetails.sortField];
+	            }
+	            if (b[sortDetails.sortField] === null || b[sortDetails.sortField] === undefined) {
+	              valueB = '';
+	            } else {
+	              valueB = b[sortDetails.sortField];
+	            }
 	            if (isDesc) {
 	              if (typeof valueB === 'string') {
 	                result = valueB.localeCompare(valueA);
