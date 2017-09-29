@@ -24,7 +24,7 @@ class TableHeaderColumn extends Component {
     }
 
     // If column not displaying the same dataField, reset the filter accordingly
-    if (nextProps.dataField !== this.props.dataField) {
+    if (nextProps.filter && nextProps.dataField !== this.props.dataField) {
       const emitter = nextProps.filter.emitter || {};
       const currentFilter = emitter.currentFilter || {};
       const filter = currentFilter[nextProps.dataField];
