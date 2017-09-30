@@ -62,6 +62,8 @@ class TableEditColumn extends Component {
       }
       this.props.completeEdit(
           value, this.props.rowIndex, this.props.colIndex);
+    } else if (this.props.blurToEscape) {
+      this.props.completeEdit(null, this.props.rowIndex, this.props.colIndex);
     }
   }
 
@@ -266,6 +268,7 @@ TableEditColumn.propTypes = {
   rowIndex: PropTypes.number,
   colIndex: PropTypes.number,
   blurToSave: PropTypes.bool,
+  blurToEscape: PropTypes.bool,
   editable: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
   format: PropTypes.oneOfType([ PropTypes.bool, PropTypes.func ]),
   row: PropTypes.any,
