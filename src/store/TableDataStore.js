@@ -648,6 +648,7 @@ export class TableDataStore {
 
     arr.sort((a, b) => {
       let result = 0;
+      let valueA, valueB;
 
       for (let i = 0; i < this.sortList.length; i++) {
         const sortDetails = this.sortList[i];
@@ -658,8 +659,16 @@ export class TableDataStore {
         if (sortFunc) {
           result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
         } else {
-          const valueA = a[sortDetails.sortField] === null ? '' : a[sortDetails.sortField];
-          const valueB = b[sortDetails.sortField] === null ? '' : b[sortDetails.sortField];
+          if (a[sortDetails.sortField] === null || a[sortDetails.sortField] === undefined) {
+            valueA = '';
+          } else {
+            valueA = a[sortDetails.sortField];
+          }
+          if (b[sortDetails.sortField] === null || b[sortDetails.sortField] === undefined) {
+            valueB = '';
+          } else {
+            valueB = b[sortDetails.sortField];
+          }
           if (isDesc) {
             if (typeof valueB === 'string') {
               result = valueB.localeCompare(valueA);
