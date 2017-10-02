@@ -1010,8 +1010,10 @@ class BootstrapTable extends Component {
 
     this.store.setSelectedRowKey([]);  // clear selected row key
 
-    if (this.allowRemote(Const.REMOTE_DROP_ROW) && afterDeleteRow) {
-      afterDeleteRow(dropRowKeys, dropRow);
+    if (this.allowRemote(Const.REMOTE_DROP_ROW)) {
+      if (afterDeleteRow) {
+        afterDeleteRow(dropRowKeys, dropRow);
+      }
       return;
     }
 
