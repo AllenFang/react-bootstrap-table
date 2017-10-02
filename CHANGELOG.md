@@ -1,3 +1,13 @@
+<a name="v4.0.6"></a>
+# [v4.0.6](https://github.com/AllenFang/react-bootstrap-table/compare/v4.0.5...v4.0.6) (2017-09-30)
+## Bug fixes
+* Fixed TypeError: Cannot read property 'emitter' of undefined([55a7e09](https://github.com/AllenFang/react-bootstrap-table/commit/55a7e09b4d3052aa066c61572d747262136cd326))
+
+## Enhancement
+* Treat `undefined` same as `null` when sorting([5b58195](https://github.com/AllenFang/react-bootstrap-table/commit/5b5819504672453ee9531690f7afeb3b2414e245))
+## Features
+* Support `cellEdit.bulrToEscape`, default is `false`([88571ac](https://github.com/AllenFang/react-bootstrap-table/commit/88571acd1b2b0b58cb11ec1030c7823300444281))
+
 <a name="v4.0.5"></a>
 # [v4.0.5](https://github.com/AllenFang/react-bootstrap-table/compare/v4.0.4...v4.0.5) (2017-09-20)
 ## Bug fixes
