@@ -70,6 +70,9 @@ class App extends React.Component {
       text: 'KeyBoard Navigation',
       href: 'keyboard-nav'
     }, {
+      text: 'Footer',
+      href: 'footer'
+    }, {
       text: 'Other',
       href: 'others'
     }, {
