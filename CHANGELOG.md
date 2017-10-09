@@ -1,3 +1,29 @@
+<a name="v4.0.6"></a>
+# [v4.0.6](https://github.com/AllenFang/react-bootstrap-table/compare/v4.0.5...v4.0.6) (2017-09-30)
+## Bug fixes
+* Fixed TypeError: Cannot read property 'emitter' of undefined([55a7e09](https://github.com/AllenFang/react-bootstrap-table/commit/55a7e09b4d3052aa066c61572d747262136cd326))
+
+## Enhancement
+* Treat `undefined` same as `null` when sorting([5b58195](https://github.com/AllenFang/react-bootstrap-table/commit/5b5819504672453ee9531690f7afeb3b2414e245))
+## Features
+* Support `cellEdit.bulrToEscape`, default is `false`([88571ac](https://github.com/AllenFang/react-bootstrap-table/commit/88571acd1b2b0b58cb11ec1030c7823300444281))
+
+<a name="v4.0.5"></a>
+# [v4.0.5](https://github.com/AllenFang/react-bootstrap-table/compare/v4.0.4...v4.0.5) (2017-09-20)
+## Bug fixes
+* Fix [#787](https://github.com/AllenFang/react-bootstrap-table/issues/787)([84cc76c](https://github.com/AllenFang/react-bootstrap-table/commit/84cc76c7d92b4aa2eb3f1a3c8fddabd5b20f9647))
+
+## Enhancement
+* Support `ArrayFilter` but it's an internal filter, you **can not** configure on `filter.type` with `ArrayFilter`([5b32bfd](https://github.com/AllenFang/react-bootstrap-table/commit/5b32bfd92611e31ec5928d73f953fc8cedbab210))
+	* Please check [this](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column-filter/array-filter-programmatically.js) example.
+
+## Features
+* Support `csvFieldType` to assign the type of cell when exporting csv([d810c9c](https://github.com/AllenFang/react-bootstrap-table/commit/d810c9c51ab036c43eaa76a46617c493f4f430c6))
+	* [example](https://github.com/AllenFang/react-bootstrap-table/commit/27b1e75e95d2983d9d3d2a7cab7456904acb8aad)
+	* Available is `number` and `string`, default is `string`
+* Support auto collapse expanded rows when sort/filter/search([5ad7a75](https://github.com/AllenFang/react-bootstrap-table/commit/5ad7a751c5054a5ea803f5010727e65b61987288))
+	* Check [this](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/expandRow/auto-collapse.js) example
+
 <a name="v4.0.4"></a>
 # [v4.0.4](https://github.com/AllenFang/react-bootstrap-table/compare/v4.0.3...v4.0.4) (2017-09-15)
 ## Bug fixes

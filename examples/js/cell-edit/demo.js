@@ -4,6 +4,7 @@ import React from 'react';
 import ClickToEditTable from './click-to-edit-table';
 import DbClickToEditTable from './dbclick-to-edit-table';
 import BlurToSaveTable from './blur-to-save-table';
+import BlurToEscapeTable from './blur-to-escape-table';
 import CellEditHookTable from './cell-edit-hook-table';
 import NonEditableTable from './non-editable-table';
 import CustomCellEditTable from './custom-cell-edit-table';
@@ -37,6 +38,15 @@ class Demo extends React.Component {
             <div className='panel-body'>
               <h5>Source in /examples/js/cell-edit/blur-to-save-table.js</h5>
               <BlurToSaveTable />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Blur to Escape Editing Cell Example</div>
+            <div className='panel-body'>
+              <h5>Source in /examples/js/cell-edit/blur-to-escape-table.js</h5>
+              <BlurToEscapeTable />
             </div>
           </div>
         </div>

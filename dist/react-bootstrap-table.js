@@ -2055,6 +2055,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  cellEdit: _propTypes2.default.shape({
 	    mode: _propTypes2.default.string,
 	    blurToSave: _propTypes2.default.bool,
+	    blurToEscape: _propTypes2.default.bool,
 	    beforeSaveCell: _propTypes2.default.func,
 	    afterSaveCell: _propTypes2.default.func,
 	    nonEditableRows: _propTypes2.default.func
@@ -2223,6 +2224,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  cellEdit: {
 	    mode: _Const2.default.CELL_EDIT_NONE,
 	    blurToSave: false,
+	    blurToEscape: false,
 	    beforeSaveCell: undefined,
 	    afterSaveCell: undefined,
 	    nonEditableRows: undefined
@@ -4801,7 +4803,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      // If column not displaying the same dataField, reset the filter accordingly
-	      if (nextProps.dataField !== this.props.dataField) {
+	      if (nextProps.filter && nextProps.dataField !== this.props.dataField) {
 	        var emitter = nextProps.filter.emitter || {};
 	        var currentFilter = emitter.currentFilter || {};
 	        var filter = currentFilter[nextProps.dataField];
@@ -7080,6 +7082,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              format: column.format ? format : false,
 	              key: i,
 	              blurToSave: cellEdit.blurToSave,
+	              blurToEscape: cellEdit.blurToEscape,
 	              onTab: this.handleEditCell,
 	              rowIndex: r,
 	              colIndex: i,
@@ -8234,6 +8237,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          return false;
 	        }
 	        this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
+	      } else if (this.props.blurToEscape) {
+	        this.props.completeEdit(null, this.props.rowIndex, this.props.colIndex);
 	      }
 	    }
 	  }, {
@@ -8473,6 +8478,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  rowIndex: _propTypes2.default.number,
 	  colIndex: _propTypes2.default.number,
 	  blurToSave: _propTypes2.default.bool,
+	  blurToEscape: _propTypes2.default.bool,
 	  editable: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.object]),
 	  format: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.func]),
 	  row: _propTypes2.default.any,
@@ -8973,6 +8979,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        sizePerPage: sizePerPage,
 	        sizePerPageList: sizePerPageList,
 	        pageStartIndex: pageStartIndex,
+	        totalPages: this.totalPages,
 	        changePage: this.changePage,
 	        toggleDropDown: this.toggleDropDown,
 	        changeSizePerPage: this.changeSizePerPage,
@@ -14886,8 +14893,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          if (sortFunc) {
 	            result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
 	          } else {
-	            var valueA = a[sortDetails.sortField] === null ? '' : a[sortDetails.sortField];
-	            var valueB = b[sortDetails.sortField] === null ? '' : b[sortDetails.sortField];
+	            var valueA = a[sortDetails.sortField] == null ? '' : a[sortDetails.sortField];
+	            var valueB = b[sortDetails.sortField] == null ? '' : b[sortDetails.sortField];
+
 	            if (isDesc) {
 	              if (typeof valueB === 'string') {
 	                result = valueB.localeCompare(valueA);

@@ -78,6 +78,7 @@ class TableBody extends Component {
                 format={ column.format ? format : false }
                 key={ i }
                 blurToSave={ cellEdit.blurToSave }
+                blurToEscape={ cellEdit.blurToEscape }
                 onTab={ this.handleEditCell }
                 rowIndex={ r }
                 colIndex={ i }

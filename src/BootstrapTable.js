@@ -1567,6 +1567,7 @@ BootstrapTable.propTypes = {
   cellEdit: PropTypes.shape({
     mode: PropTypes.string,
     blurToSave: PropTypes.bool,
+    blurToEscape: PropTypes.bool,
     beforeSaveCell: PropTypes.func,
     afterSaveCell: PropTypes.func,
     nonEditableRows: PropTypes.func
@@ -1743,6 +1744,7 @@ BootstrapTable.defaultProps = {
   cellEdit: {
     mode: Const.CELL_EDIT_NONE,
     blurToSave: false,
+    blurToEscape: false,
     beforeSaveCell: undefined,
     afterSaveCell: undefined,
     nonEditableRows: undefined
