@@ -408,7 +408,6 @@ class BootstrapTable extends Component {
       height: this.props.height,
       maxHeight: this.props.maxHeight
     };
-    const { footerData, footerFormatterReturnData } = this.props.options;
 
     const columns = this.getColumnsDescription(this.props);
     const sortList = this.store.getSortInfo();
@@ -421,7 +420,7 @@ class BootstrapTable extends Component {
       expandColumnOptions.expandColumnBeforeSelectColumn = true;
     }
     const colGroups = Util.renderColGroup(columns, this.props.selectRow, expandColumnOptions, this.props.version);
-    const tableFooter = this.renderTableFooter(footerData, footerFormatterReturnData, columns, colGroups);
+    const tableFooter = this.renderTableFooter(this.props.footerData, this.state.data, columns, colGroups);
     let sortIndicator = this.props.options.sortIndicator;
     if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
 
@@ -512,7 +511,9 @@ class BootstrapTable extends Component {
             y={ this.state.y }
             withoutTabIndex={ this.props.withoutTabIndex }
             onEditCell={ this.handleEditCell } />
-            { tableFooter }
+            {
+              tableFooter
+            }
         </div>
         { tableFilter }
         { showPaginationOnBottom ? pagination : null }
