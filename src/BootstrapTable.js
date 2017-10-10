@@ -62,7 +62,7 @@ class BootstrapTable extends Component {
       const nextDataFields = React.Children.map(props.children, column => column.props.dataField);
       React.Children.forEach(this.props.children, column => {
         const { dataField, filter } = column.props;
-        if (!nextDataFields.includes(dataField)) {
+        if (filter && !nextDataFields.includes(dataField)) {
           // Clear filter
           this.filter.handleFilter(dataField, '', filter.type, filter);
         }
