@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classSet from 'classnames';
-import Const from './Const';
-import SelectRowHeaderColumn from './SelectRowHeaderColumn';
 
 class TableFooter extends Component {
 
   render() {
+    const { hideSelectColumn, expandColumnVisible } = this.props;
     const containerClasses = classSet('react-bs-container-footer', 'table-footer-wrapper');
     const tableClasses = classSet('table', 'table-hover', {
       'table-bordered': this.props.bordered,
       'table-condensed': this.props.condensed
     }, this.props.tableFooterClass);
-    let selectRowHeaderCol = null;
-    if (!this.props.hideSelectColumn) selectRowHeaderCol = this.renderSelectRowHeader();
     return (
       <div ref='container' className={ containerClasses } style={ this.props.style }>
         {
@@ -24,7 +21,8 @@ class TableFooter extends Component {
                   { React.cloneElement(this.props.colGroups) }
                   <tfoot>
                     <tr ref='footer'>
-                      { selectRowHeaderCol }
+                      { hideSelectColumn ? null : this.renderSelectionOrExpandCol() }
+                      { !expandColumnVisible ? null : this.renderSelectionOrExpandCol() }
                       {
                         this.props.columns.map((columnItem, colIndex) => {
                           if ( !columnItem.hidden ) {
@@ -70,18 +68,16 @@ class TableFooter extends Component {
       </div>
     );
   }
-  renderSelectRowHeader() {
-    if (this.props.rowSelectType === Const.ROW_SELECT_SINGLE) {
-      return (<SelectRowHeaderColumn />);
-    } else {
-      return null;
-    }
+
+  renderSelectionOrExpandCol() {
+    return (<th></th>);
   }
 }
 TableFooter.propTypes = {
   tableHeaderClass: PropTypes.string,
   style: PropTypes.object,
   hideSelectColumn: PropTypes.bool,
+  expandColumnVisible: PropTypes.bool,
   bordered: PropTypes.bool,
   condensed: PropTypes.bool,
   isFiltered: PropTypes.bool,

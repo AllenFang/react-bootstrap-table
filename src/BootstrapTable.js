@@ -1371,6 +1371,7 @@ class BootstrapTable extends Component {
           tableFooterClass={ this.props.tableFooterClass }
           style={ this.props.headerStyle }
           hideSelectColumn={ this.props.selectRow.hideSelectColumn }
+          expandColumnVisible={ this.props.expandColumnOptions.expandColumnVisible }
           bordered={ this.props.bordered }
           condensed={ this.props.condensed }
           isFiltered={ this.filter ? true : false }
