@@ -31,7 +31,7 @@ class TableBody extends Component {
 
     const noneditableRows = (cellEdit.nonEditableRows && cellEdit.nonEditableRows()) || [];
     const unselectable = this.props.selectRow.unselectable || [];
-    const isSelectRowDefined = this._isSelectRowDefined();
+    const isSelectRowDefined = Utils.isSelectRowDefined(this.props.selectRow.mode);
     const tableHeader = Utils.renderColGroup(this.props.columns,
         this.props.selectRow, this.props.expandColumnOptions, version);
     const inputType = this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
@@ -300,8 +300,8 @@ class TableBody extends Component {
   }
 
   handleRowClick = (rowIndex, cellIndex) => {
-    const { onRowClick } = this.props;
-    if (this._isSelectRowDefined()) cellIndex--;
+    const { onRowClick, selectRow } = this.props;
+    if (Utils.isSelectRowDefined(selectRow.mode)) cellIndex--;
     if (this._isExpandColumnVisible()) cellIndex--;
     onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex);
   }
@@ -341,13 +341,15 @@ class TableBody extends Component {
       expandBy,
       expandableRow,
       selectRow: {
+        mode,
         clickToExpand,
         hideSelectColumn
       },
       onlyOneExpanding
     } = this.props;
-    const selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
-    columnIndex = this._isSelectRowDefined() && !hideSelectColumn ? columnIndex - 1 : columnIndex;
+    const isSelectRowDefined = Utils.isSelectRowDefined(mode);
+    const selectRowAndExpand = isSelectRowDefined && !clickToExpand ? false : true;
+    columnIndex = isSelectRowDefined && !hideSelectColumn ? columnIndex - 1 : columnIndex;
     columnIndex = this._isExpandColumnVisible() ? columnIndex - 1 : columnIndex;
     if (expandableRow &&
       selectRowAndExpand &&
@@ -372,7 +374,7 @@ class TableBody extends Component {
 
   handleEditCell = (rowIndex, columnIndex, action, e) => {
     const { selectRow } = this.props;
-    const defineSelectRow = this._isSelectRowDefined();
+    const defineSelectRow = Utils.isSelectRowDefined(selectRow.mode);
     const expandColumnVisible = this._isExpandColumnVisible();
     if (defineSelectRow) {
       columnIndex--;
@@ -503,11 +505,6 @@ class TableBody extends Component {
         { content }
       </td>
     );
-  }
-
-  _isSelectRowDefined() {
-    return this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ||
-          this.props.selectRow.mode === Const.ROW_SELECT_MULTI;
   }
 
   _isExpandColumnVisible() {

@@ -78,12 +78,15 @@ export default {
     return version === '4';
   },
 
+  isSelectRowDefined(mode) {
+    return mode === Const.ROW_SELECT_SINGLE || mode === Const.ROW_SELECT_MULTI;
+  },
+
   renderColGroup(columns, selectRow, expandColumnOptions = {}, version) {
     let selectRowHeader = null;
     let expandRowHeader = null;
     const isBootstrap4 = this.isBootstrap4(version);
-    const isSelectRowDefined = selectRow.mode === Const.ROW_SELECT_SINGLE ||
-      selectRow.mode === Const.ROW_SELECT_MULTI;
+    const isSelectRowDefined = this.isSelectRowDefined(selectRow.mode);
     const columnWidth = isBootstrap4 ? '38px' : '30px';
     if (isSelectRowDefined) {
       const style = {
