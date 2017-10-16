@@ -1362,6 +1362,12 @@ class BootstrapTable extends Component {
 
   renderTableFooter(footerData, footerFormatterReturnData, columns, colGroups) {
     if (this.props.footer) {
+      let hideSelectColumn = true;
+      const { mode } = this.props.selectRow;
+      const isSelectRowDefined = Util.isSelectRowDefined(mode);
+      if (isSelectRowDefined) {
+        hideSelectColumn = this.props.selectRow.hideSelectColumn;
+      }
       return (
         <TableFooter
           ref='footer'
@@ -1370,7 +1376,7 @@ class BootstrapTable extends Component {
           footerFormatterReturnData={ footerFormatterReturnData }
           tableFooterClass={ this.props.tableFooterClass }
           style={ this.props.headerStyle }
-          hideSelectColumn={ this.props.selectRow.hideSelectColumn }
+          hideSelectColumn={ hideSelectColumn }
           expandColumnVisible={ this.props.expandColumnOptions.expandColumnVisible }
           bordered={ this.props.bordered }
           condensed={ this.props.condensed }
