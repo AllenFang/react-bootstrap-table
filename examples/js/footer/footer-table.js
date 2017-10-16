@@ -28,11 +28,11 @@ export default class FooterTable extends React.Component {
       [
         {
           label: 'Total',
-          target: 0
+          columnIndex: 0
         },
         {
           label: 'Total value',
-          target: 2,
+          columnIndex: 2,
           align: 'right',
           formatter: (tableData) => {
             let label = 0;

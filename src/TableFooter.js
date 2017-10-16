@@ -27,7 +27,7 @@ class TableFooter extends Component {
                         this.props.columns.map((columnItem, colIndex) => {
                           if ( !columnItem.hidden ) {
                             const footerObj = footerItem.filter((item) => {
-                              return item.target === colIndex;
+                              return item.columnIndex === colIndex;
                             });
                             let footerData;
                             let thAlignment = 'left';
