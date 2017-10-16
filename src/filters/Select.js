@@ -110,7 +110,7 @@ SelectFilter.propTypes = {
   filterHandler: PropTypes.func.isRequired,
   options: PropTypes.object.isRequired,
   placeholder: PropTypes.string,
-  columnName: PropTypes.string,
+  columnName: PropTypes.any,
   style: PropTypes.oneOfType([ PropTypes.object ])
 };
 

@@ -70,7 +70,7 @@ TextFilter.propTypes = {
   defaultValue: PropTypes.string,
   delay: PropTypes.number,
   placeholder: PropTypes.string,
-  columnName: PropTypes.string,
+  columnName: PropTypes.any,
   style: PropTypes.oneOfType([ PropTypes.object ])
 };
 
