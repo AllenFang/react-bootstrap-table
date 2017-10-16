@@ -52,8 +52,9 @@ export default class FooterTable extends React.Component {
         <BootstrapTable
           data={ products }
           footerData={ footerData }
-          showFooter
-          pagination>
+          footer
+          pagination
+          search>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>

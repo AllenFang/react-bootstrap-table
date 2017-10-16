@@ -345,7 +345,7 @@ class BootstrapTable extends Component {
     this._adjustTable();
     window.addEventListener('resize', this._adjustTable);
     this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader);
-    if (this.props.showFooter) {
+    if (this.props.footer) {
       this.refs.body.refs.container.addEventListener('scroll', this._scrollFooter);
     }
     if (this.props.scrollTop) {
@@ -357,7 +357,7 @@ class BootstrapTable extends Component {
     window.removeEventListener('resize', this._adjustTable);
     if (this.refs && this.refs.body && this.refs.body.refs) {
       this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader);
-      if (this.props.showFooter) {
+      if (this.props.footer) {
         this.refs.body.refs.container.removeEventListener('scroll', this._scrollFooter);
       }
     }
@@ -1361,7 +1361,7 @@ class BootstrapTable extends Component {
   }
 
   renderTableFooter(footerData, footerFormatterReturnData, columns, colGroups) {
-    if (this.props.showFooter) {
+    if (this.props.footer) {
       return (
         <TableFooter
           ref='footer'
@@ -1397,7 +1397,7 @@ class BootstrapTable extends Component {
   }
 
   _scrollFooter = (e) => {
-    if (this.props.showFooter) {
+    if (this.props.footer) {
       this.refs.footer.refs.container.scrollLeft = e.currentTarget.scrollLeft;
     }
   }
@@ -1705,7 +1705,7 @@ BootstrapTable.propTypes = {
     expandColumnComponent: PropTypes.func,
     expandColumnBeforeSelectColumn: PropTypes.bool
   }),
-  showFooter: PropTypes.bool
+  footer: PropTypes.bool
 };
 BootstrapTable.defaultProps = {
   version: '3',
@@ -1864,7 +1864,7 @@ BootstrapTable.defaultProps = {
     filter: Const.AUTO_COLLAPSE_WHEN_FILTER,
     search: Const.AUTO_COLLAPSE_WHEN_SEARCH
   },
-  showFooter: false
+  footer: false
 };
 
 export default BootstrapTable;
