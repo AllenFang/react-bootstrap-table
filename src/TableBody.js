@@ -100,8 +100,13 @@ class TableBody extends Component {
           let columnChild = fieldValue && fieldValue.toString();
           let columnTitle = null;
           let tdClassName = column.className;
+          let tdStyles = column.style;
           if (Utils.isFunction(column.className)) {
             tdClassName = column.className(fieldValue, data, r, i);
+          }
+
+          if (Utils.isFunction(column.style)) {
+            tdStyles = column.style(fieldValue, data, r, i);
           }
 
           if (typeof column.format !== 'undefined') {
@@ -124,6 +129,7 @@ class TableBody extends Component {
           }
           return (
             <TableColumn key={ i }
+              cIndex={ i }
               rIndex={ r }
               dataAlign={ column.align }
               className={ tdClassName }
@@ -134,7 +140,7 @@ class TableBody extends Component {
               width={ column.width }
               onClick={ this.handleClickCell }
               attrs={ column.attrs }
-              style={ column.style }
+              style={ tdStyles }
               tabIndex={ (tabIndex++) + '' }
               isFocus={ isFocusCell }
               keyBoardNav={ enableKeyBoardNav }

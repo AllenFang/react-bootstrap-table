@@ -310,7 +310,7 @@ TableHeaderColumn.propTypes = {
   expandable: PropTypes.bool,
   tdAttr: PropTypes.object,
   editTdAttr: PropTypes.object,
-  tdStyle: PropTypes.object,
+  tdStyle: PropTypes.oneOfType([ PropTypes.func, PropTypes.object ]),
   thStyle: PropTypes.object,
   keyValidator: PropTypes.bool,
   defaultASC: PropTypes.bool
