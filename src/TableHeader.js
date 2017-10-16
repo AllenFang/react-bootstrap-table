@@ -64,13 +64,13 @@ class TableHeader extends Component {
     rows[0].push( [
       this.props.expandColumnVisible &&
         this.props.expandColumnBeforeSelectColumn &&
-          <ExpandRowHeaderColumn rowCount={ rowCount + 1 }/>
+          <ExpandRowHeaderColumn key='expandCol' rowCount={ rowCount + 1 }/>
     ], [
       this.renderSelectRowHeader(rowCount + 1, rowKey++)
     ], [
       this.props.expandColumnVisible &&
         !this.props.expandColumnBeforeSelectColumn &&
-          <ExpandRowHeaderColumn rowCount={ rowCount + 1 }/>
+          <ExpandRowHeaderColumn key='expandCol' rowCount={ rowCount + 1 }/>
     ]);
 
     React.Children.forEach(this.props.children, (elm) => {
