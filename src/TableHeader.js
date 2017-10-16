@@ -5,6 +5,7 @@ import Const from './Const';
 import classSet from 'classnames';
 import SelectRowHeaderColumn from './SelectRowHeaderColumn';
 import ExpandRowHeaderColumn from './ExpandRowHeaderColumn';
+import Utils from './util';
 
 class Checkbox extends Component {
   componentDidMount() { this.update(this.props.checked); }
@@ -37,14 +38,20 @@ function getSortOrder(sortList, field, enableSort) {
 class TableHeader extends Component {
 
   render() {
+    const { sortIndicator, sortList, onSort, reset, version, condensed, bordered } = this.props;
     const containerClasses = classSet(
       'react-bs-container-header',
       'table-header-wrapper',
       this.props.headerContainerClass);
-    const tableClasses = classSet('table', 'table-hover', {
-      'table-bordered': this.props.bordered,
-      'table-condensed': this.props.condensed
-    }, this.props.tableHeaderClass);
+    const customTableClasses = {
+      'table-bordered': bordered
+    };
+    if (condensed) {
+      if (Utils.isBootstrap4(version)) customTableClasses['table-sm'] = true;
+      else customTableClasses['table-condensed'] = true;
+    }
+    const tableClasses = classSet(
+      'table', 'table-hover', customTableClasses, this.props.tableHeaderClass);
 
     const rowCount = Math.max(...React.Children.map(this.props.children, elm =>
       (elm && elm.props.row) ? Number(elm.props.row) : 0
@@ -65,7 +72,6 @@ class TableHeader extends Component {
         !this.props.expandColumnBeforeSelectColumn &&
           <ExpandRowHeaderColumn rowCount={ rowCount + 1 }/>
     ]);
-    const { sortIndicator, sortList, onSort, reset, version } = this.props;
 
     React.Children.forEach(this.props.children, (elm) => {
       if (elm === null || elm === undefined) {

@@ -18,12 +18,16 @@ class TableBody extends Component {
 
   render() {
     const { cellEdit, beforeShowError, x, y, keyBoardNav, trStyle, version } = this.props;
-    const tableClasses = classSet('table', {
+    const customTableClasses = {
       'table-striped': this.props.striped,
       'table-bordered': this.props.bordered,
-      'table-hover': this.props.hover,
-      'table-condensed': this.props.condensed
-    }, this.props.tableBodyClass);
+      'table-hover': this.props.hover
+    };
+    if (this.props.condensed) {
+      if (Utils.isBootstrap4(version)) customTableClasses['table-sm'] = true;
+      else customTableClasses['table-condensed'] = true;
+    }
+    const tableClasses = classSet('table', customTableClasses, this.props.tableBodyClass);
 
     const noneditableRows = (cellEdit.nonEditableRows && cellEdit.nonEditableRows()) || [];
     const unselectable = this.props.selectRow.unselectable || [];
