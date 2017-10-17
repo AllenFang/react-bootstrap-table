@@ -44,14 +44,24 @@ class BootstrapTable extends Component {
     this._adjustHeaderWidth = this._adjustHeaderWidth.bind(this);
     this._adjustHeight = this._adjustHeight.bind(this);
     this._adjustTable = this._adjustTable.bind(this);
+    this.toggleExpandAllChilds = this.toggleExpandAllChilds.bind(this);
+
+    let expandedKeys = [];
+    if (this.props.options.expandAllChilds !== null &&
+      this.props.options.expandAllChilds !== undefined && this.props.options.expandAllChilds) {
+      expandedKeys = this.store.getAllRowkey();
+    } else if (this.props.options.expanding !== undefined && this.props.options.expanding !== null) {
+      expandedKeys = this.props.options.expanding;
+    }
 
     this.state = {
       data: this.getTableData(),
       currPage: currPage,
-      expanding: this.props.options.expanding || [],
+      expanding: expandedKeys,
       sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
       selectedRowKeys: this.store.getSelectedRowKeys(),
       reset: false,
+      expandAllChilds: this.props.options.expandAllChilds,
       x: this.props.keyBoardNav ? 0 : -1,
       y: this.props.keyBoardNav ? 0 : -1
     };
@@ -467,6 +477,9 @@ class BootstrapTable extends Component {
             reset={ this.state.reset }
             expandColumnVisible={ expandColumnOptions.expandColumnVisible }
             expandColumnComponent={ expandColumnOptions.expandColumnComponent }
+            expandedColumnHeaderComponent={ expandColumnOptions.expandedColumnHeaderComponent }
+            expandAllChilds={ this.state.expandAllChilds }
+            toggleExpandAllChilds={ this.toggleExpandAllChilds }
             expandColumnBeforeSelectColumn={ expandColumnOptions.expandColumnBeforeSelectColumn }>
             { this.props.children }
           </TableHeader>
@@ -614,6 +627,28 @@ class BootstrapTable extends Component {
     this.setState(() => { return { expanding, reset: false }; }, () => {
       this._adjustHeaderWidth();
     });
+  }
+
+  toggleExpandAllChilds() {
+    const { expandAllChilds } = this.state;
+    const compScope = this;
+    if (expandAllChilds) {
+      this.setState(() => {
+        return {
+          expanding: [],
+          expandAllChilds: !expandAllChilds,
+          reset: false
+        };
+      });
+    } else {
+      this.setState(() => {
+        return {
+          expanding: compScope.store.getAllRowkey(),
+          expandAllChilds: !expandAllChilds,
+          reset: false
+        };
+      });
+    }
   }
 
   handlePaginationData = (page, sizePerPage) => {
@@ -1691,7 +1726,8 @@ BootstrapTable.propTypes = {
     beforeShowError: PropTypes.func,
     printToolBar: PropTypes.bool,
     insertFailIndicator: PropTypes.string,
-    noAutoBOM: PropTypes.bool
+    noAutoBOM: PropTypes.bool,
+    expandAllChilds: PropTypes.bool
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1710,6 +1746,7 @@ BootstrapTable.propTypes = {
     columnWidth: PropTypes.oneOfType([ PropTypes.number, PropTypes.string ]),
     expandColumnVisible: PropTypes.bool,
     expandColumnComponent: PropTypes.func,
+    expandedColumnHeaderComponent: PropTypes.func,
     expandColumnBeforeSelectColumn: PropTypes.bool
   }),
   footer: PropTypes.bool
@@ -1723,6 +1760,7 @@ BootstrapTable.defaultProps = {
   expandColumnOptions: {
     expandColumnVisible: false,
     expandColumnComponent: undefined,
+    expandedColumnHeaderComponent: undefined,
     expandColumnBeforeSelectColumn: true
   },
   height: '100%',
@@ -1858,7 +1896,8 @@ BootstrapTable.defaultProps = {
     beforeShowError: undefined,
     printToolBar: true,
     insertFailIndicator: Const.INSERT_FAIL_INDICATOR,
-    noAutoBOM: true
+    noAutoBOM: true,
+    expandAllChilds: false
   },
   fetchInfo: {
     dataTotalSize: 0
