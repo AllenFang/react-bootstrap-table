@@ -39,7 +39,8 @@ class TableHeader extends Component {
 
   render() {
     const { sortIndicator, sortList, onSort, reset, version, condensed, bordered,
-      expandedColumnHeaderComponent, expandAllChilds, toggleExpandAllChilds } = this.props;
+      expandedColumnHeaderComponent, expandAllChilds, toggleExpandAllChilds,
+      showExpandAllHeaderColumn } = this.props;
     const containerClasses = classSet(
       'react-bs-container-header',
       'table-header-wrapper',
@@ -68,7 +69,8 @@ class TableHeader extends Component {
           <ExpandRowHeaderColumn key='expandCol' rowCount={ rowCount + 1 }
             expandedColumnHeaderComponent={ expandedColumnHeaderComponent }
             expandAllChilds={ expandAllChilds }
-            toggleExpandAllChilds={ toggleExpandAllChilds }/>
+            toggleExpandAllChilds={ toggleExpandAllChilds }
+            showExpandAllHeaderColumn={ showExpandAllHeaderColumn }/>
     ], [
       this.renderSelectRowHeader(rowCount + 1, rowKey++)
     ], [
@@ -77,7 +79,8 @@ class TableHeader extends Component {
           <ExpandRowHeaderColumn key='expandCol' rowCount={ rowCount + 1 }
             expandedColumnHeaderComponent={ expandedColumnHeaderComponent }
             expandAllChilds={ expandAllChilds }
-            toggleExpandAllChilds={ toggleExpandAllChilds }/>
+            toggleExpandAllChilds={ toggleExpandAllChilds }
+            showExpandAllHeaderColumn={ showExpandAllHeaderColumn }/>
     ]);
 
     React.Children.forEach(this.props.children, (elm) => {
@@ -177,7 +180,8 @@ TableHeader.propTypes = {
   expandColumnBeforeSelectColumn: PropTypes.bool,
   version: PropTypes.string,
   expandAllChilds: PropTypes.bool,
-  toggleExpandAllChilds: PropTypes.func
+  toggleExpandAllChilds: PropTypes.func,
+  showExpandAllHeaderColumn: PropTypes.bool
 };
 
 export default TableHeader;

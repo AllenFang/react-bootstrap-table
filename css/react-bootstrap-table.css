@@ -261,7 +261,7 @@ td.react-bs-table-expand-cell {
     cursor: pointer;
 }
 
-th.react-bs-table-expand-cell {
+th.react-bs-table-expand-cell > div {
   cursor: pointer;
 }
 

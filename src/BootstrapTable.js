@@ -480,6 +480,7 @@ class BootstrapTable extends Component {
             expandedColumnHeaderComponent={ expandColumnOptions.expandedColumnHeaderComponent }
             expandAllChilds={ this.state.expandAllChilds }
             toggleExpandAllChilds={ this.toggleExpandAllChilds }
+            showExpandAllHeaderColumn={ this.props.options.showExpandAllHeaderColumn }
             expandColumnBeforeSelectColumn={ expandColumnOptions.expandColumnBeforeSelectColumn }>
             { this.props.children }
           </TableHeader>
@@ -1727,7 +1728,8 @@ BootstrapTable.propTypes = {
     printToolBar: PropTypes.bool,
     insertFailIndicator: PropTypes.string,
     noAutoBOM: PropTypes.bool,
-    expandAllChilds: PropTypes.bool
+    expandAllChilds: PropTypes.bool,
+    showExpandAllHeaderColumn: PropTypes.bool
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1897,7 +1899,8 @@ BootstrapTable.defaultProps = {
     printToolBar: true,
     insertFailIndicator: Const.INSERT_FAIL_INDICATOR,
     noAutoBOM: true,
-    expandAllChilds: false
+    expandAllChilds: false,
+    showExpandAllHeaderColumn: false
   },
   fetchInfo: {
     dataTotalSize: 0
