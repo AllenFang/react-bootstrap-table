@@ -1,3 +1,17 @@
+<a name="v4.1.0"></a>
+# [v4.1.0](https://github.com/AllenFang/react-bootstrap-table/compare/v4.0.6...v4.1.0) (2017-10-16)
+## Bug fixes
+* Fixed `options.afterDeleteRow` be called without checking existing([9f64cdf](https://github.com/AllenFang/react-bootstrap-table/commit/9f64cdfa9f8b868b9cdc60431562eeaecc3c3990))
+* Fixed `table-condensed` should be `table-sm` on bootstrap@4([137a6b2](https://github.com/AllenFang/react-bootstrap-table/commit/137a6b27c2c8f8755e27e6dd5e3145078e32a266))
+* Update React Peer Dependency([9032174](https://github.com/AllenFang/react-bootstrap-table/commit/903217488fbeba80832539c16d761eeb4fbe2df2))
+* Upgrade `react-modal` to `3.0.3` due to `react@16.0.0` issue([f2c0ee8](https://github.com/AllenFang/react-bootstrap-table/commit/f2c0ee828096c887158333fe1e0abc7e74dff3a1))
+* Fixed Cannot read property 'type' of undefined([9049073](https://github.com/AllenFang/react-bootstrap-table/commit/9049073009087d3621765cafcca30344ef280d46))
+* Fixed Failed prop type: Invalid prop columnName of type array supplied to TextFilter, expected string([c272b97](https://github.com/AllenFang/react-bootstrap-table/commit/c272b97d19b6a7a6bb20a189e4b0f328da5143f4))
+
+## Enhancement
+* The `tdStyle` prop now allow to accept a callback function([6acf5c1](https://github.com/AllenFang/react-bootstrap-table/commit/6acf5c139246f5ac32f3b82b5d89de8817c09a9b)) 
+	* [Example](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/column/column-style-table.js#L24)
+
 <a name="v4.0.6"></a>
 # [v4.0.6](https://github.com/AllenFang/react-bootstrap-table/compare/v4.0.5...v4.0.6) (2017-09-30)
 ## Bug fixes
