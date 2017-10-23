@@ -7,6 +7,7 @@ import TableColumn from './TableColumn';
 import TableEditColumn from './TableEditColumn';
 import classSet from 'classnames';
 import ExpandComponent from './ExpandComponent';
+import _get from 'lodash.get';
 
 class TableBody extends Component {
   constructor(props) {
@@ -55,7 +56,7 @@ class TableBody extends Component {
 
     let tableRows = this.props.data.map(function(data, r) {
       const tableColumns = this.props.columns.filter(_ => _ != null).map(function(column, i) {
-        const fieldValue = data[column.name];
+        const fieldValue = _get(data, column.name);
         const isFocusCell = r === y && i === x;
         if (column.name !== this.props.keyField && // Key field can't be edit
           column.editable && // column is editable? default is true, user can set it false
