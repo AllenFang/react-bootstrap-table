@@ -18,7 +18,7 @@ class PaginationList extends Component {
   componentWillReceiveProps() {
     const { keepSizePerPageState } = this.props;
     if (!keepSizePerPageState) {
-      this.setState(() => { return { open: false }; });
+      this.closeDropDown();
     }
   }
 
@@ -46,7 +46,7 @@ class PaginationList extends Component {
       page = parseInt(page, 10);
     }
 
-    if (keepSizePerPageState) { this.setState(() => { return { open: false }; }); }
+    if (keepSizePerPageState) { this.closeDropDown(); }
 
     if (page !== currPage) {
       this.props.changePage(page, sizePerPage);
@@ -66,13 +66,21 @@ class PaginationList extends Component {
       }
     }
 
-    this.setState(() => { return { open: false }; });
+    this.closeDropDown();
   }
 
   toggleDropDown = () => {
     this.setState(() => {
       return {
         open: !this.state.open
+      };
+    });
+  }
+
+  closeDropDown = () => {
+    this.setState(() => {
+      return {
+        open: false
       };
     });
   }
@@ -159,7 +167,8 @@ class PaginationList extends Component {
         currSizePerPage: String(sizePerPage),
         sizePerPageList,
         toggleDropDown: this.toggleDropDown,
-        changeSizePerPage: this.changeSizePerPage
+        changeSizePerPage: this.changeSizePerPage,
+        onBlur: this.closeDropDown
       });
       if (dropdown.type.name === SizePerPageDropDown.name) {
         dropdownProps = dropdown.props;
@@ -178,7 +187,7 @@ class PaginationList extends Component {
             <a role='menuitem'
               tabIndex='-1' href='#'
               data-page={ pageNum }
-              onClick={ e => {
+              onMouseDown={ e => {
                 e.preventDefault();
                 this.changeSizePerPage(pageNum);
               } }>{ pageText }</a>
@@ -192,6 +201,7 @@ class PaginationList extends Component {
           currSizePerPage={ String(sizePerPageText) }
           options={ sizePerPageOptions }
           onClick={ this.toggleDropDown }
+          onBlur={ this.closeDropDown }
           { ...dropdownProps }/>
       );
     }
