@@ -4,6 +4,7 @@
 /* eslint eqeqeq: 0 */
 /* eslint one-var: 0 */
 import Const from '../Const';
+import _get from 'lodash.get';
 
 export class TableDataStore {
 
@@ -658,8 +659,8 @@ export class TableDataStore {
         if (sortFunc) {
           result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
         } else {
-          const valueA = a[sortDetails.sortField] == null ? '' : a[sortDetails.sortField];
-          const valueB = b[sortDetails.sortField] == null ? '' : b[sortDetails.sortField];
+          const valueA = _get(a, sortDetails.sortField, '');
+          const valueB = _get(b, sortDetails.sortField, '');
 
           if (isDesc) {
             if (typeof valueB === 'string') {
