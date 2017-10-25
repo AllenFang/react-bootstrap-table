@@ -734,6 +734,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this.store.filterObj) this.handleFilterData(this.store.filterObj);
 	            newState.currPage = _util2.default.getFirstPage(nextProps.options.pageStartIndex);
 	          } else {
+	            data = this.store.sort().get();
 	            newState.data = data;
 	          }
 	          this.setState(function () {
@@ -8207,14 +8208,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleCellEdit__REACT_HOT_LOADER__',
 	    value: function __handleCellEdit__REACT_HOT_LOADER__(e) {
-	      if (this.props.cellEdit.mode === _Const2.default.CELL_EDIT_DBCLICK) {
-	        if (document.selection && document.selection.empty) {
-	          document.selection.empty();
-	        } else if (window.getSelection) {
-	          var sel = window.getSelection();
-	          sel.removeAllRanges();
+	      try {
+	        if (this.props.cellEdit.mode === _Const2.default.CELL_EDIT_DBCLICK) {
+	          if (document.selection && document.selection.empty) {
+	            document.selection.empty();
+	          } else if (window.getSelection) {
+	            var sel = window.getSelection();
+	            sel.removeAllRanges();
+	          }
 	        }
-	      }
+	      } catch (err) {} /* eslint no-empty: 0 */
 	      this.props.onEdit(this.props.rIndex + 1, e.currentTarget.cellIndex, e);
 	      if (this.props.cellEdit.mode !== _Const2.default.CELL_EDIT_DBCLICK) {
 	        this.props.onClick(this.props.rIndex + 1, e.currentTarget.cellIndex, e);
@@ -9149,6 +9152,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.__toggleDropDown__REACT_HOT_LOADER__.apply(_this, arguments);
 	    };
 
+	    _this.closeDropDown = function () {
+	      return _this.__closeDropDown__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
 	    _this.state = {
 	      open: _this.props.open
 	    };
@@ -9156,6 +9163,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  _createClass(PaginationList, [{
+	    key: '__closeDropDown__REACT_HOT_LOADER__',
+	    value: function __closeDropDown__REACT_HOT_LOADER__() {
+	      return this.__closeDropDown__REACT_HOT_LOADER__.apply(this, arguments);
+	    }
+	  }, {
 	    key: '__toggleDropDown__REACT_HOT_LOADER__',
 	    value: function __toggleDropDown__REACT_HOT_LOADER__() {
 	      return this.__toggleDropDown__REACT_HOT_LOADER__.apply(this, arguments);
@@ -9176,9 +9188,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var keepSizePerPageState = this.props.keepSizePerPageState;
 
 	      if (!keepSizePerPageState) {
-	        this.setState(function () {
-	          return { open: false };
-	        });
+	        this.closeDropDown();
 	      }
 	    }
 	  }, {
@@ -9208,9 +9218,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      if (keepSizePerPageState) {
-	        this.setState(function () {
-	          return { open: false };
-	        });
+	        this.closeDropDown();
 	      }
 
 	      if (page !== currPage) {
@@ -9233,9 +9241,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      }
 
-	      this.setState(function () {
-	        return { open: false };
-	      });
+	      this.closeDropDown();
 	    }
 	  }, {
 	    key: '__toggleDropDown__REACT_HOT_LOADER__',
@@ -9245,6 +9251,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.setState(function () {
 	        return {
 	          open: !_this2.state.open
+	        };
+	      });
+	    }
+	  }, {
+	    key: '__closeDropDown__REACT_HOT_LOADER__',
+	    value: function __closeDropDown__REACT_HOT_LOADER__() {
+	      this.setState(function () {
+	        return {
+	          open: false
 	        };
 	      });
 	    }
@@ -9340,7 +9355,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          currSizePerPage: String(sizePerPage),
 	          sizePerPageList: sizePerPageList,
 	          toggleDropDown: this.toggleDropDown,
-	          changeSizePerPage: this.changeSizePerPage
+	          changeSizePerPage: this.changeSizePerPage,
+	          onBlur: this.closeDropDown
 	        });
 	        if (dropdown.type.name === _SizePerPageDropDown2.default.name) {
 	          dropdownProps = dropdown.props;
@@ -9362,7 +9378,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              { role: 'menuitem',
 	                tabIndex: '-1', href: '#',
 	                'data-page': pageNum,
-	                onClick: function onClick(e) {
+	                onMouseDown: function onMouseDown(e) {
 	                  e.preventDefault();
 	                  _this3.changeSizePerPage(pageNum);
 	                } },
@@ -9375,7 +9391,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          hidden: hideSizePerPage,
 	          currSizePerPage: String(sizePerPageText),
 	          options: sizePerPageOptions,
-	          onClick: this.toggleDropDown
+	          onClick: this.toggleDropDown,
+	          onBlur: this.closeDropDown
 	        }, dropdownProps));
 	      }
 	      return dropdown;
@@ -9681,6 +9698,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          open = _props.open,
 	          hidden = _props.hidden,
 	          onClick = _props.onClick,
+	          onBlur = _props.onBlur,
 	          options = _props.options,
 	          className = _props.className,
 	          variation = _props.variation,
@@ -9700,7 +9718,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          { className: 'btn ' + btnContextual + ' dropdown-toggle',
 	            id: 'pageDropDown', 'data-toggle': 'dropdown',
 	            'aria-expanded': open,
-	            onClick: onClick },
+	            onClick: onClick,
+	            onBlur: onBlur },
 	          currSizePerPage,
 	          _react2.default.createElement(
 	            'span',
@@ -9729,7 +9748,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  options: _propTypes2.default.array,
 	  variation: _propTypes2.default.oneOf(['dropdown', 'dropup']),
 	  className: _propTypes2.default.string,
-	  onClick: _propTypes2.default.func
+	  onClick: _propTypes2.default.func,
+	  onBlur: _propTypes2.default.func
 	};
 	SizePerPageDropDown.defaultProps = {
 	  open: false,
