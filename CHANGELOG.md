@@ -1,3 +1,10 @@
+<a name="v4.1.1"></a>
+# [v4.1.1](https://github.com/AllenFang/react-bootstrap-table/compare/v4.1.0...v4.1.1) (2017-10-25)
+## Bug fixes
+* Fixed edit cell that has no data IE 11 fails with error code 800a025e([17be157](https://github.com/AllenFang/react-bootstrap-table/commit/17be157f45cf17244cd5bc5ed37be1e1372a2b3d))
+* Fixed sizePerPage drop down requires double click([9c0332a](https://github.com/AllenFang/react-bootstrap-table/commit/9c0332a8611671ce534467edaad0d76b575e8716))
+* Fixed `remote` is enable and a sorted table is reset when state update([5a70141](https://github.com/AllenFang/react-bootstrap-table/commit/5a70141e01f739cacdf89efd2ac6812f8aafdfd0))
+
 <a name="v4.1.0"></a>
 # [v4.1.0](https://github.com/AllenFang/react-bootstrap-table/compare/v4.0.6...v4.1.0) (2017-10-16)
 ## Bug fixes
