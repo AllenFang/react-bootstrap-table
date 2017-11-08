@@ -278,8 +278,10 @@ class BootstrapTable extends Component {
           if (this.store.filterObj) this.handleFilterData(this.store.filterObj);
           newState.currPage = Util.getFirstPage(nextProps.options.pageStartIndex);
         } else {
-          data = this.store.sort().get();
-          newState.data = data;
+          if (!this.allowRemote(Const.REMOTE_SORT)) {
+            data = this.store.sort().get();
+            newState.data = data;
+          }
         }
         this.setState(() => newState);
       } else {
