@@ -734,8 +734,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this.store.filterObj) this.handleFilterData(this.store.filterObj);
 	            newState.currPage = _util2.default.getFirstPage(nextProps.options.pageStartIndex);
 	          } else {
-	            data = this.store.sort().get();
-	            newState.data = data;
+	            if (!this.allowRemote(_Const2.default.REMOTE_SORT)) {
+	              data = this.store.sort().get();
+	              newState.data = data;
+	            }
 	          }
 	          this.setState(function () {
 	            return newState;
