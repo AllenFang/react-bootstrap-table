@@ -280,8 +280,8 @@ class BootstrapTable extends Component {
         } else {
           if (!this.allowRemote(Const.REMOTE_SORT)) {
             data = this.store.sort().get();
-            newState.data = data;
           }
+          newState.data = data;
         }
         this.setState(() => newState);
       } else {
