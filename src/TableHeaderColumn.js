@@ -22,6 +22,19 @@ class TableHeaderColumn extends Component {
     if (nextProps.reset) {
       this.cleanFiltered();
     }
+
+    // If column not displaying the same dataField, reset the filter accordingly
+    if (nextProps.filter && nextProps.dataField !== this.props.dataField) {
+      const emitter = nextProps.filter.emitter || {};
+      const currentFilter = emitter.currentFilter || {};
+      const filter = currentFilter[nextProps.dataField];
+      const value = filter ? filter.value : '';
+
+      const { ref } = this.getFilters() || {};
+      if (this.refs[ref]) {
+        this.refs[ref].setState({ value });
+      }
+    }
   }
 
   handleColumnClick = () => {
@@ -107,6 +120,7 @@ class TableHeaderColumn extends Component {
   render() {
     let defaultCaret;
     let sortCaret;
+    let sortClass;
     const {
       headerText,
       dataAlign,
@@ -122,6 +136,7 @@ class TableHeaderColumn extends Component {
       className,
       isOnlyHead,
       version,
+      sortHeaderColumnClassName: customSortClass,
       thStyle: style
     } = this.props;
     const thStyle = {
@@ -140,9 +155,14 @@ class TableHeaderColumn extends Component {
       }
     }
 
+    if (sort) {
+      sortClass = Util.isFunction(customSortClass) ?
+        customSortClass(sort, dataField) : customSortClass;
+    }
     const classes = classSet(
       Util.isFunction(className) ? className() : className,
-      !isOnlyHead && dataSort ? 'sort-column' : '');
+      !isOnlyHead && dataSort ? 'sort-column' : '',
+      sortClass);
 
     const attr = {};
     if (headerTitle) {
@@ -243,6 +263,7 @@ TableHeaderColumn.propTypes = {
   dataFormat: PropTypes.func,
   csvFormat: PropTypes.func,
   csvHeader: PropTypes.string,
+  csvFieldType: PropTypes.oneOf([ Const.CSV_STRING_TYPE, Const.CSV_NUMBER_TYPE ]),
   isKey: PropTypes.bool,
   editable: PropTypes.any,
   hidden: PropTypes.bool,
@@ -255,6 +276,7 @@ TableHeaderColumn.propTypes = {
   width: PropTypes.string,
   sortFunc: PropTypes.func,
   sortFuncExtraData: PropTypes.any,
+  sortHeaderColumnClassName: PropTypes.any,
   columnClassName: PropTypes.any,
   editColumnClassName: PropTypes.any,
   invalidEditColumnClassName: PropTypes.any,
@@ -288,7 +310,7 @@ TableHeaderColumn.propTypes = {
   expandable: PropTypes.bool,
   tdAttr: PropTypes.object,
   editTdAttr: PropTypes.object,
-  tdStyle: PropTypes.object,
+  tdStyle: PropTypes.oneOfType([ PropTypes.func, PropTypes.object ]),
   thStyle: PropTypes.object,
   keyValidator: PropTypes.bool,
   defaultASC: PropTypes.bool
@@ -302,6 +324,7 @@ TableHeaderColumn.defaultProps = {
   dataFormat: undefined,
   csvFormat: undefined,
   csvHeader: undefined,
+  csvFieldType: Const.CSV_STRING_TYPE,
   isKey: false,
   editable: true,
   onSort: undefined,

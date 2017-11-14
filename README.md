@@ -1,7 +1,7 @@
 # react-bootstrap-table
 
-## react-bootstrap-table will stop develop new feature and move to [react-bootstrap-table2](https://github.com/react-bootstrap-table/react-bootstrap-table2), but keep to fix critical bugs.
-## Feel free to let me know your idea on [here](https://github.com/react-bootstrap-table/react-bootstrap-table2/issues)
+### react-bootstrap-table will stop develop new feature and move to [react-bootstrap-table2](https://github.com/react-bootstrap-table/react-bootstrap-table2), but keep to fix critical bugs.
+### Feel free to let me know your idea on [here](https://github.com/react-bootstrap-table/react-bootstrap-table2/issues)
 
 [![Join the chat at https://gitter.im/AllenFang/react-bootstrap-table](https://badges.gitter.im/AllenFang/react-bootstrap-table.svg)](https://gitter.im/AllenFang/react-bootstrap-table?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -148,6 +148,8 @@ $ npm start # after start, open browser and go to http://localhost:3004
 Help this project to integrate a better examples demo, add travis & badge, code formatting, give a lot of suggestions and bugs report.   
 **[Whien](https://github.com/madeinfree)**  
 Implement a lots of awesome new feature and also fix some bugs and enhancements.   
+**[Parth Prajapati](https://github.com/prajapati-parth)**  
+Help to check issues and give great and useful instructions.   
 **[khinlatt](https://github.com/khinlatt)**  
 Contribute export csv, multi-search and bug fixing.  
 **[dana](https://github.com/dana2208)**  

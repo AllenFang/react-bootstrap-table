@@ -137,7 +137,7 @@ DateFilter.propTypes = {
       }
     }
   },
-  columnName: PropTypes.string
+  columnName: PropTypes.any
 };
 
 DateFilter.defaultProps = {

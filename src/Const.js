@@ -44,7 +44,8 @@ const CONST_VAR = {
     SELECT: 'SelectFilter',
     NUMBER: 'NumberFilter',
     DATE: 'DateFilter',
-    CUSTOM: 'CustomFilter'
+    CUSTOM: 'CustomFilter',
+    ARRAY: 'ArrayFilter'
   },
   FILTER_COND_EQ: 'eq',
   FILTER_COND_LIKE: 'like',
@@ -59,7 +60,12 @@ const CONST_VAR = {
   REMOTE_SEARCH: 'search',
   REMOTE_EXPORT_CSV: 'exportCSV',
   INSERT_FAIL_INDICATOR: 'Validation errors, please check!',
-  DEFAULT_CSV_SEPARATOR: ','
+  DEFAULT_CSV_SEPARATOR: ',',
+  CSV_STRING_TYPE: 'string',
+  CSV_NUMBER_TYPE: 'number',
+  AUTO_COLLAPSE_WHEN_SORT: false,
+  AUTO_COLLAPSE_WHEN_SEARCH: false,
+  AUTO_COLLAPSE_WHEN_FILTER: false
 };
 
 CONST_VAR.REMOTE = {};

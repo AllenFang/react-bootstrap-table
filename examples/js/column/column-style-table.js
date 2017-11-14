@@ -1,4 +1,5 @@
 /* eslint max-len: 0 */
+/* eslint no-unused-vars: 0 */
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
@@ -20,10 +21,14 @@ function addProducts(quantity) {
 addProducts(5);
 
 export default class ColumnStyleTable extends React.Component {
+  stylingID = (cell, row, ridx, cidx) => {
+    return { color: 'red' };
+  }
+
   render() {
     return (
       <BootstrapTable data={ products }>
-          <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
+          <TableHeaderColumn dataField='id' tdStyle={ this.stylingID } isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name' tdStyle={ { whiteSpace: 'normal' } }>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price' thStyle={ { 'fontWeight': 'lighter' } }>Product Price</TableHeaderColumn>
       </BootstrapTable>

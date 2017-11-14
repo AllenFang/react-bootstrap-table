@@ -18,16 +18,20 @@ class TableBody extends Component {
 
   render() {
     const { cellEdit, beforeShowError, x, y, keyBoardNav, trStyle, version } = this.props;
-    const tableClasses = classSet('table', {
+    const customTableClasses = {
       'table-striped': this.props.striped,
       'table-bordered': this.props.bordered,
-      'table-hover': this.props.hover,
-      'table-condensed': this.props.condensed
-    }, this.props.tableBodyClass);
+      'table-hover': this.props.hover
+    };
+    if (this.props.condensed) {
+      if (Utils.isBootstrap4(version)) customTableClasses['table-sm'] = true;
+      else customTableClasses['table-condensed'] = true;
+    }
+    const tableClasses = classSet('table', customTableClasses, this.props.tableBodyClass);
 
     const noneditableRows = (cellEdit.nonEditableRows && cellEdit.nonEditableRows()) || [];
     const unselectable = this.props.selectRow.unselectable || [];
-    const isSelectRowDefined = this._isSelectRowDefined();
+    const isSelectRowDefined = Utils.isSelectRowDefined(this.props.selectRow.mode);
     const tableHeader = Utils.renderColGroup(this.props.columns,
         this.props.selectRow, this.props.expandColumnOptions, version);
     const inputType = this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
@@ -78,6 +82,7 @@ class TableBody extends Component {
                 format={ column.format ? format : false }
                 key={ i }
                 blurToSave={ cellEdit.blurToSave }
+                blurToEscape={ cellEdit.blurToEscape }
                 onTab={ this.handleEditCell }
                 rowIndex={ r }
                 colIndex={ i }
@@ -95,8 +100,13 @@ class TableBody extends Component {
           let columnChild = fieldValue && fieldValue.toString();
           let columnTitle = null;
           let tdClassName = column.className;
+          let tdStyles = column.style;
           if (Utils.isFunction(column.className)) {
             tdClassName = column.className(fieldValue, data, r, i);
+          }
+
+          if (Utils.isFunction(column.style)) {
+            tdStyles = column.style(fieldValue, data, r, i);
           }
 
           if (typeof column.format !== 'undefined') {
@@ -110,7 +120,7 @@ class TableBody extends Component {
             }
           }
           if (Utils.isFunction(column.columnTitle)) {
-            columnTitle = column.columnTitle(fieldValue, data);
+            columnTitle = column.columnTitle(fieldValue, data, r, i);
           } else if (typeof column.columnTitle === 'string') {
             columnTitle = column.columnTitle;
           } else if (column.columnTitle) {
@@ -119,6 +129,7 @@ class TableBody extends Component {
           }
           return (
             <TableColumn key={ i }
+              cIndex={ i }
               rIndex={ r }
               dataAlign={ column.align }
               className={ tdClassName }
@@ -129,7 +140,7 @@ class TableBody extends Component {
               width={ column.width }
               onClick={ this.handleClickCell }
               attrs={ column.attrs }
-              style={ column.style }
+              style={ tdStyles }
               tabIndex={ (tabIndex++) + '' }
               isFocus={ isFocusCell }
               keyBoardNav={ enableKeyBoardNav }
@@ -289,8 +300,8 @@ class TableBody extends Component {
   }
 
   handleRowClick = (rowIndex, cellIndex) => {
-    const { onRowClick } = this.props;
-    if (this._isSelectRowDefined()) cellIndex--;
+    const { onRowClick, selectRow } = this.props;
+    if (Utils.isSelectRowDefined(selectRow.mode)) cellIndex--;
     if (this._isExpandColumnVisible()) cellIndex--;
     onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex);
   }
@@ -330,13 +341,15 @@ class TableBody extends Component {
       expandBy,
       expandableRow,
       selectRow: {
+        mode,
         clickToExpand,
         hideSelectColumn
       },
       onlyOneExpanding
     } = this.props;
-    const selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
-    columnIndex = this._isSelectRowDefined() && !hideSelectColumn ? columnIndex - 1 : columnIndex;
+    const isSelectRowDefined = Utils.isSelectRowDefined(mode);
+    const selectRowAndExpand = isSelectRowDefined && !clickToExpand ? false : true;
+    columnIndex = isSelectRowDefined && !hideSelectColumn ? columnIndex - 1 : columnIndex;
     columnIndex = this._isExpandColumnVisible() ? columnIndex - 1 : columnIndex;
     if (expandableRow &&
       selectRowAndExpand &&
@@ -361,7 +374,7 @@ class TableBody extends Component {
 
   handleEditCell = (rowIndex, columnIndex, action, e) => {
     const { selectRow } = this.props;
-    const defineSelectRow = this._isSelectRowDefined();
+    const defineSelectRow = Utils.isSelectRowDefined(selectRow.mode);
     const expandColumnVisible = this._isExpandColumnVisible();
     if (defineSelectRow) {
       columnIndex--;
@@ -492,11 +505,6 @@ class TableBody extends Component {
         { content }
       </td>
     );
-  }
-
-  _isSelectRowDefined() {
-    return this.props.selectRow.mode === Const.ROW_SELECT_SINGLE ||
-          this.props.selectRow.mode === Const.ROW_SELECT_MULTI;
   }
 
   _isExpandColumnVisible() {

@@ -9,6 +9,7 @@ class SizePerPageDropDown extends Component {
       open,
       hidden,
       onClick,
+      onBlur,
       options,
       className,
       variation,
@@ -25,7 +26,8 @@ class SizePerPageDropDown extends Component {
         <button className={ `btn ${btnContextual} dropdown-toggle` }
           id='pageDropDown' data-toggle='dropdown'
           aria-expanded={ open }
-          onClick={ onClick }>
+          onClick={ onClick }
+          onBlur={ onBlur }>
           { currSizePerPage }
           <span>
           { ' ' }
@@ -48,7 +50,8 @@ SizePerPageDropDown.propTypes = {
   options: PropTypes.array,
   variation: PropTypes.oneOf([ 'dropdown', 'dropup' ]),
   className: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  onBlur: PropTypes.func
 };
 SizePerPageDropDown.defaultProps = {
   open: false,

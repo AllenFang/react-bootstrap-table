@@ -1,7 +1,8 @@
 /* eslint max-len: 0 */
 /* eslint no-unused-vars: 0 */
 /* eslint no-alert: 0 */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';

@@ -188,7 +188,7 @@ NumberFilter.propTypes = {
     }
   },
   placeholder: PropTypes.string,
-  columnName: PropTypes.string,
+  columnName: PropTypes.any,
   withoutEmptyComparatorOption: PropTypes.bool,
   withoutEmptyNumberOption: PropTypes.bool
 };

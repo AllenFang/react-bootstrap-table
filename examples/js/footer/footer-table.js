@@ -1,8 +1,6 @@
 /* eslint max-len: 0 */
-/* eslint no-console: 0 */
 import React from 'react';
-import { BootstrapTable, TableHeaderColumn, SizePerPageDropDown } from 'react-bootstrap-table';
-
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 const products = [];
 
@@ -20,38 +18,43 @@ function addProducts(quantity) {
 
 addProducts(70);
 
-export default class CustomSizePerPageDropDown extends React.Component {
+export default class FooterTable extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  onToggleDropDown = (toggleDropDown) => {
-    // do your stuff here
-    console.log('toggle dropdown');
-    toggleDropDown();
-  }
-
-  renderSizePerPageDropDown = (props) => {
-    return (
-      <SizePerPageDropDown
-        open={ props.open }
-        className='my-size-per-page'
-        btnContextual='btn-warning'
-        variation='dropup'
-        onClick={ () => this.onToggleDropDown(props.toggleDropDown) }/>
-    );
-  }
-
   render() {
-    const options = {
-      sizePerPageDropDown: this.renderSizePerPageDropDown
-    };
+    const footerData = [
+      [
+        {
+          label: 'Total',
+          columnIndex: 0
+        },
+        {
+          label: 'Total value',
+          columnIndex: 2,
+          align: 'right',
+          formatter: (tableData) => {
+            let label = 0;
+            for (let i = 0, tableDataLen = tableData.length; i < tableDataLen; i++) {
+              label += tableData[i].price;
+            }
+            return (
+              <strong>{ label }</strong>
+            );
+          }
+        }
+      ]
+    ];
+
     return (
       <div>
         <BootstrapTable
           data={ products }
-          options={ options }
-          pagination>
+          footerData={ footerData }
+          footer
+          pagination
+          search>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>

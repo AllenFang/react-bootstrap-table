@@ -26,6 +26,7 @@ import ProgrammaticallyDateFilter from './date-filter-programmatically';
 import CustomFilter from './custom-filter';
 import AllFilter from './all-filters';
 import FloatFilter from './float-filter';
+import ArrayFilter from './array-filter-programmatically';
 
 class Demo extends React.Component {
   render() {
@@ -272,6 +273,15 @@ class Demo extends React.Component {
                     <div className='panel-body'>
                         <h5>Source in /examples/js/column-filter/filter-style.js</h5>
                         <FilterStyle />
+                    </div>
+                </div>
+            </div>
+            <div className='col-md-offset-1 col-md-8'>
+                <div className='panel panel-default'>
+                    <div className='panel-heading'>Set Array Filter Programmatically</div>
+                    <div className='panel-body'>
+                        <h5>Source in /examples/js/column-filter/array-filter-programmatically.js</h5>
+                        <ArrayFilter />
                     </div>
                 </div>
             </div>

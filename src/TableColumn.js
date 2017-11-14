@@ -68,14 +68,16 @@ class TableColumn extends Component {
   }
 
   handleCellEdit = e => {
-    if (this.props.cellEdit.mode === Const.CELL_EDIT_DBCLICK) {
-      if (document.selection && document.selection.empty) {
-        document.selection.empty();
-      } else if (window.getSelection) {
-        const sel = window.getSelection();
-        sel.removeAllRanges();
+    try {
+      if (this.props.cellEdit.mode === Const.CELL_EDIT_DBCLICK) {
+        if (document.selection && document.selection.empty) {
+          document.selection.empty();
+        } else if (window.getSelection) {
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+        }
       }
-    }
+    } catch (err) {} /* eslint no-empty: 0 */
     this.props.onEdit(
       this.props.rIndex + 1, e.currentTarget.cellIndex, e);
     if (this.props.cellEdit.mode !== Const.CELL_EDIT_DBCLICK) {
