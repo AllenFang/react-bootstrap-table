@@ -181,9 +181,11 @@ class TableHeaderColumn extends Component {
           colSpan={ this.props.colSpan }
           data-is-only-head={ this.props.isOnlyHead }
           { ...attr }>
-        { children }{ sortCaret }
-        <div onClick={ e => e.stopPropagation() }>
-          { this.props.filter && !isOnlyHead ? this.getFilters() : null }
+        <div className='header-content'>
+          { children }{ sortCaret }
+          <div onClick={ e => e.stopPropagation() }>
+            { this.props.filter && !isOnlyHead ? this.getFilters() : null }
+          </div>
         </div>
       </th>
     );
