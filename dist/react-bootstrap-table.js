@@ -143,15 +143,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.SearchField = _SearchField2.default;
 	exports.ButtonGroup = _ButtonGroup2.default;
 	exports.SizePerPageDropDown = _SizePerPageDropDown2.default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-	}();
-
-	;
 
 /***/ }),
 /* 1 */
@@ -247,97 +238,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var _this = _possibleConstructorReturn(this, (BootstrapTable.__proto__ || Object.getPrototypeOf(BootstrapTable)).call(this, props));
 
-	    _this.handleSort = function () {
-	      return _this.__handleSort__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handleExpandRow = function () {
-	      return _this.__handleExpandRow__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handlePaginationData = function () {
-	      return _this.__handlePaginationData__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handleMouseLeave = function () {
-	      return _this.__handleMouseLeave__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handleMouseEnter = function () {
-	      return _this.__handleMouseEnter__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handleRowMouseOut = function () {
-	      return _this.__handleRowMouseOut__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handleRowMouseOver = function () {
-	      return _this.__handleRowMouseOver__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handleNavigateCell = function () {
-	      return _this.__handleNavigateCell__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handleRowClick = function () {
-	      return _this.__handleRowClick__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handleRowDoubleClick = function () {
-	      return _this.__handleRowDoubleClick__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handleSelectAllRow = function () {
-	      return _this.__handleSelectAllRow__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handleShowOnlySelected = function () {
-	      return _this.__handleShowOnlySelected__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handleSelectRow = function () {
-	      return _this.__handleSelectRow__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handleEditCell = function () {
-	      return _this.__handleEditCell__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handleAddRow = function () {
-	      return _this.__handleAddRow__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.getPageByRowKey = function () {
-	      return _this.__getPageByRowKey__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handleDropRow = function () {
-	      return _this.__handleDropRow__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handleFilterData = function () {
-	      return _this.__handleFilterData__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handleExportCSV = function () {
-	      return _this.__handleExportCSV__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this.handleSearch = function () {
-	      return _this.__handleSearch__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this._scrollTop = function () {
-	      return _this.___scrollTop__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this._scrollHeader = function () {
-	      return _this.___scrollHeader__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
-
-	    _this._scrollFooter = function () {
-	      return _this.___scrollFooter__REACT_HOT_LOADER__.apply(_this, arguments);
-	    };
+	    _initialiseProps.call(_this);
 
 	    _this.isIE = false;
 	    if (_util2.default.canUseDOM()) {
@@ -376,121 +277,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  _createClass(BootstrapTable, [{
-	    key: '___scrollFooter__REACT_HOT_LOADER__',
-	    value: function ___scrollFooter__REACT_HOT_LOADER__() {
-	      return this.___scrollFooter__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '___scrollHeader__REACT_HOT_LOADER__',
-	    value: function ___scrollHeader__REACT_HOT_LOADER__() {
-	      return this.___scrollHeader__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '___scrollTop__REACT_HOT_LOADER__',
-	    value: function ___scrollTop__REACT_HOT_LOADER__() {
-	      return this.___scrollTop__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleSearch__REACT_HOT_LOADER__',
-	    value: function __handleSearch__REACT_HOT_LOADER__() {
-	      return this.__handleSearch__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleExportCSV__REACT_HOT_LOADER__',
-	    value: function __handleExportCSV__REACT_HOT_LOADER__() {
-	      return this.__handleExportCSV__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleFilterData__REACT_HOT_LOADER__',
-	    value: function __handleFilterData__REACT_HOT_LOADER__() {
-	      return this.__handleFilterData__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleDropRow__REACT_HOT_LOADER__',
-	    value: function __handleDropRow__REACT_HOT_LOADER__() {
-	      return this.__handleDropRow__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__getPageByRowKey__REACT_HOT_LOADER__',
-	    value: function __getPageByRowKey__REACT_HOT_LOADER__() {
-	      return this.__getPageByRowKey__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleAddRow__REACT_HOT_LOADER__',
-	    value: function __handleAddRow__REACT_HOT_LOADER__() {
-	      return this.__handleAddRow__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleEditCell__REACT_HOT_LOADER__',
-	    value: function __handleEditCell__REACT_HOT_LOADER__() {
-	      return this.__handleEditCell__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleSelectRow__REACT_HOT_LOADER__',
-	    value: function __handleSelectRow__REACT_HOT_LOADER__() {
-	      return this.__handleSelectRow__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleShowOnlySelected__REACT_HOT_LOADER__',
-	    value: function __handleShowOnlySelected__REACT_HOT_LOADER__() {
-	      return this.__handleShowOnlySelected__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleSelectAllRow__REACT_HOT_LOADER__',
-	    value: function __handleSelectAllRow__REACT_HOT_LOADER__() {
-	      return this.__handleSelectAllRow__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleRowDoubleClick__REACT_HOT_LOADER__',
-	    value: function __handleRowDoubleClick__REACT_HOT_LOADER__() {
-	      return this.__handleRowDoubleClick__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleRowClick__REACT_HOT_LOADER__',
-	    value: function __handleRowClick__REACT_HOT_LOADER__() {
-	      return this.__handleRowClick__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleNavigateCell__REACT_HOT_LOADER__',
-	    value: function __handleNavigateCell__REACT_HOT_LOADER__() {
-	      return this.__handleNavigateCell__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleRowMouseOver__REACT_HOT_LOADER__',
-	    value: function __handleRowMouseOver__REACT_HOT_LOADER__() {
-	      return this.__handleRowMouseOver__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleRowMouseOut__REACT_HOT_LOADER__',
-	    value: function __handleRowMouseOut__REACT_HOT_LOADER__() {
-	      return this.__handleRowMouseOut__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleMouseEnter__REACT_HOT_LOADER__',
-	    value: function __handleMouseEnter__REACT_HOT_LOADER__() {
-	      return this.__handleMouseEnter__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleMouseLeave__REACT_HOT_LOADER__',
-	    value: function __handleMouseLeave__REACT_HOT_LOADER__() {
-	      return this.__handleMouseLeave__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handlePaginationData__REACT_HOT_LOADER__',
-	    value: function __handlePaginationData__REACT_HOT_LOADER__() {
-	      return this.__handlePaginationData__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleExpandRow__REACT_HOT_LOADER__',
-	    value: function __handleExpandRow__REACT_HOT_LOADER__() {
-	      return this.__handleExpandRow__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleSort__REACT_HOT_LOADER__',
-	    value: function __handleSort__REACT_HOT_LOADER__() {
-	      return this.__handleSort__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
 	    key: 'initTable',
 	    value: function initTable(props) {
 	      var _this2 = this;
@@ -1062,382 +848,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	    }
 	  }, {
-	    key: '__handleSort__REACT_HOT_LOADER__',
-	    value: function __handleSort__REACT_HOT_LOADER__(order, sortField) {
-	      var _props2 = this.props,
-	          sort = _props2.autoCollapse.sort,
-	          options = _props2.options;
-
-	      if (options.onSortChange) {
-	        options.onSortChange(sortField, order, this.props);
-	      }
-	      this.store.setSortInfo(order, sortField);
-	      if (this.allowRemote(_Const2.default.REMOTE_SORT)) {
-	        if (sort) {
-	          this.setState(function () {
-	            return {
-	              expanding: []
-	            };
-	          });
-	        }
-	        return;
-	      }
-
-	      var result = this.store.sort().get();
-	      this.setState(function () {
-	        var newState = {
-	          data: result,
-	          reset: false
-	        };
-	        if (sort) newState.expanding = [];
-	        return newState;
-	      });
-	    }
-	  }, {
-	    key: '__handleExpandRow__REACT_HOT_LOADER__',
-	    value: function __handleExpandRow__REACT_HOT_LOADER__(expanding, rowKey, isRowExpanding) {
-	      var _this5 = this;
-
-	      var onExpand = this.props.options.onExpand;
-
-	      if (onExpand) {
-	        onExpand(rowKey, !isRowExpanding);
-	      }
-	      this.setState(function () {
-	        return { expanding: expanding, reset: false };
-	      }, function () {
-	        _this5._adjustHeaderWidth();
-	      });
-	    }
-	  }, {
-	    key: '__handlePaginationData__REACT_HOT_LOADER__',
-	    value: function __handlePaginationData__REACT_HOT_LOADER__(page, sizePerPage) {
-	      var _props$options = this.props.options,
-	          onPageChange = _props$options.onPageChange,
-	          pageStartIndex = _props$options.pageStartIndex;
-
-	      var emptyTable = this.store.isEmpty();
-	      if (onPageChange) {
-	        onPageChange(page, sizePerPage);
-	      }
-
-	      var state = {
-	        sizePerPage: sizePerPage,
-	        reset: false
-	      };
-	      if (!emptyTable) state.currPage = page;
-	      this.setState(function () {
-	        return state;
-	      });
-
-	      if (this.allowRemote(_Const2.default.REMOTE_PAGE) || emptyTable) {
-	        return;
-	      }
-
-	      var result = this.store.page(_util2.default.getNormalizedPage(pageStartIndex, page), sizePerPage).get();
-	      this.setState(function () {
-	        return { data: result, reset: false };
-	      });
-	    }
-	  }, {
-	    key: '__handleMouseLeave__REACT_HOT_LOADER__',
-	    value: function __handleMouseLeave__REACT_HOT_LOADER__() {
-	      if (this.props.options.onMouseLeave) {
-	        this.props.options.onMouseLeave();
-	      }
-	    }
-	  }, {
-	    key: '__handleMouseEnter__REACT_HOT_LOADER__',
-	    value: function __handleMouseEnter__REACT_HOT_LOADER__() {
-	      if (this.props.options.onMouseEnter) {
-	        this.props.options.onMouseEnter();
-	      }
-	    }
-	  }, {
-	    key: '__handleRowMouseOut__REACT_HOT_LOADER__',
-	    value: function __handleRowMouseOut__REACT_HOT_LOADER__(row, event) {
-	      if (this.props.options.onRowMouseOut) {
-	        this.props.options.onRowMouseOut(row, event);
-	      }
-	    }
-	  }, {
-	    key: '__handleRowMouseOver__REACT_HOT_LOADER__',
-	    value: function __handleRowMouseOver__REACT_HOT_LOADER__(row, event) {
-	      if (this.props.options.onRowMouseOver) {
-	        this.props.options.onRowMouseOver(row, event);
-	      }
-	    }
-	  }, {
-	    key: '__handleNavigateCell__REACT_HOT_LOADER__',
-	    value: function __handleNavigateCell__REACT_HOT_LOADER__(_ref4) {
-	      var offSetX = _ref4.x,
-	          offSetY = _ref4.y,
-	          lastEditCell = _ref4.lastEditCell;
-	      var pagination = this.props.pagination;
-	      var _state = this.state,
-	          x = _state.x,
-	          y = _state.y,
-	          currPage = _state.currPage;
-
-	      x += offSetX;
-	      y += offSetY;
-
-	      var columns = this.store.getColInfos();
-	      var visibleRowSize = this.state.data.length;
-	      var visibleColumnSize = Object.keys(columns).filter(function (k) {
-	        return !columns[k].hidden;
-	      }).length;
-
-	      if (y >= visibleRowSize) {
-	        currPage++;
-	        var lastPage = pagination ? this.refs.pagination.getLastPage() : -1;
-	        if (currPage <= lastPage) {
-	          this.handlePaginationData(currPage, this.state.sizePerPage);
-	        } else {
-	          return;
-	        }
-	        y = 0;
-	      } else if (y < 0) {
-	        currPage--;
-	        if (currPage > 0) {
-	          this.handlePaginationData(currPage, this.state.sizePerPage);
-	        } else {
-	          return;
-	        }
-	        y = visibleRowSize - 1;
-	      } else if (x >= visibleColumnSize) {
-	        if (y + 1 === visibleRowSize) {
-	          currPage++;
-	          var _lastPage = pagination ? this.refs.pagination.getLastPage() : -1;
-	          if (currPage <= _lastPage) {
-	            this.handlePaginationData(currPage, this.state.sizePerPage);
-	          } else {
-	            return;
-	          }
-	          y = 0;
-	        } else {
-	          y++;
-	        }
-	        x = lastEditCell ? 1 : 0;
-	      } else if (x < 0) {
-	        x = visibleColumnSize - 1;
-	        if (y === 0) {
-	          currPage--;
-	          if (currPage > 0) {
-	            this.handlePaginationData(currPage, this.state.sizePerPage);
-	          } else {
-	            return;
-	          }
-	          y = this.state.sizePerPage - 1;
-	        } else {
-	          y--;
-	        }
-	      }
-	      this.setState(function () {
-	        return {
-	          x: x, y: y, currPage: currPage, reset: false
-	        };
-	      });
-	    }
-	  }, {
-	    key: '__handleRowClick__REACT_HOT_LOADER__',
-	    value: function __handleRowClick__REACT_HOT_LOADER__(row, rowIndex, columnIndex) {
-	      var _props3 = this.props,
-	          options = _props3.options,
-	          keyBoardNav = _props3.keyBoardNav;
-
-	      if (options.onRowClick) {
-	        options.onRowClick(row, columnIndex, rowIndex);
-	      }
-	      if (keyBoardNav) {
-	        var _ref5 = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav : {},
-	            clickToNav = _ref5.clickToNav;
-
-	        clickToNav = clickToNav === false ? clickToNav : true;
-	        if (clickToNav) {
-	          this.setState(function () {
-	            return {
-	              x: columnIndex,
-	              y: rowIndex,
-	              reset: false
-	            };
-	          });
-	        }
-	      }
-	    }
-	  }, {
-	    key: '__handleRowDoubleClick__REACT_HOT_LOADER__',
-	    value: function __handleRowDoubleClick__REACT_HOT_LOADER__(row) {
-	      if (this.props.options.onRowDoubleClick) {
-	        this.props.options.onRowDoubleClick(row);
-	      }
-	    }
-	  }, {
-	    key: '__handleSelectAllRow__REACT_HOT_LOADER__',
-	    value: function __handleSelectAllRow__REACT_HOT_LOADER__(e) {
-	      var isSelected = e.currentTarget.checked;
-	      var keyField = this.store.getKeyField();
-	      var _props$selectRow2 = this.props.selectRow,
-	          onSelectAll = _props$selectRow2.onSelectAll,
-	          unselectable = _props$selectRow2.unselectable,
-	          selected = _props$selectRow2.selected,
-	          onlyUnselectVisible = _props$selectRow2.onlyUnselectVisible;
-
-	      var selectedRowKeys = onlyUnselectVisible ? this.state.selectedRowKeys : [];
-	      var result = true;
-	      var rows = this.store.get();
-
-	      // onlyUnselectVisible default is false, #1276
-	      if (!isSelected && !onlyUnselectVisible) {
-	        rows = this.store.getRowByKey(this.state.selectedRowKeys);
-	      }
-
-	      if (unselectable && unselectable.length > 0) {
-	        if (isSelected) {
-	          rows = rows.filter(function (r) {
-	            return unselectable.indexOf(r[keyField]) === -1 || selected && selected.indexOf(r[keyField]) !== -1;
-	          });
-	        } else {
-	          rows = rows.filter(function (r) {
-	            return unselectable.indexOf(r[keyField]) === -1;
-	          });
-	        }
-	      }
-
-	      if (onSelectAll) {
-	        result = this.props.selectRow.onSelectAll(isSelected, rows);
-	      }
-
-	      if (typeof result == 'undefined' || result !== false) {
-	        if (isSelected) {
-	          if (Array.isArray(result)) {
-	            selectedRowKeys = result;
-	          } else {
-	            var currentRowKeys = rows.map(function (r) {
-	              return r[keyField];
-	            });
-	            // onlyUnselectVisible default is false, #1276
-	            if (onlyUnselectVisible) {
-	              selectedRowKeys = selectedRowKeys.concat(currentRowKeys);
-	            } else {
-	              selectedRowKeys = currentRowKeys;
-	            }
-	          }
-	        } else {
-	          if (unselectable && selected) {
-	            selectedRowKeys = selected.filter(function (r) {
-	              return unselectable.indexOf(r) > -1;
-	            });
-	          } else if (onlyUnselectVisible) {
-	            var _currentRowKeys = rows.map(function (r) {
-	              return r[keyField];
-	            });
-	            selectedRowKeys = selectedRowKeys.filter(function (k) {
-	              return _currentRowKeys.indexOf(k) === -1;
-	            });
-	          }
-	        }
-
-	        this.store.setSelectedRowKey(selectedRowKeys);
-	        this.setState(function () {
-	          return { selectedRowKeys: selectedRowKeys, reset: false };
-	        });
-	      }
-	    }
-	  }, {
-	    key: '__handleShowOnlySelected__REACT_HOT_LOADER__',
-	    value: function __handleShowOnlySelected__REACT_HOT_LOADER__() {
-	      this.store.ignoreNonSelected();
-	      var pageStartIndex = this.props.options.pageStartIndex;
-
-	      var result = void 0;
-	      if (this.props.pagination) {
-	        result = this.store.page(_util2.default.getNormalizedPage(pageStartIndex), this.state.sizePerPage).get();
-	      } else {
-	        result = this.store.get();
-	      }
-	      this.setState(function () {
-	        return {
-	          data: result,
-	          reset: false,
-	          currPage: _util2.default.getFirstPage(pageStartIndex)
-	        };
-	      });
-	    }
-	  }, {
-	    key: '__handleSelectRow__REACT_HOT_LOADER__',
-	    value: function __handleSelectRow__REACT_HOT_LOADER__(row, isSelected, e, rowIndex) {
-	      var result = true;
-	      var currSelected = this.store.getSelectedRowKeys();
-	      var rowKey = row[this.store.getKeyField()];
-	      var selectRow = this.props.selectRow;
-
-	      if (selectRow.onSelect) {
-	        result = selectRow.onSelect(row, isSelected, e, rowIndex);
-	      }
-
-	      if (typeof result === 'undefined' || result !== false) {
-	        if (selectRow.mode === _Const2.default.ROW_SELECT_SINGLE) {
-	          currSelected = isSelected ? [rowKey] : [];
-	        } else {
-	          if (isSelected) {
-	            currSelected.push(rowKey);
-	          } else {
-	            currSelected = currSelected.filter(function (key) {
-	              return rowKey !== key;
-	            });
-	          }
-	        }
-
-	        this.store.setSelectedRowKey(currSelected);
-	        this.setState(function () {
-	          return {
-	            selectedRowKeys: currSelected,
-	            reset: false
-	          };
-	        });
-	      }
-	    }
-	  }, {
-	    key: '__handleEditCell__REACT_HOT_LOADER__',
-	    value: function __handleEditCell__REACT_HOT_LOADER__(newVal, rowIndex, colIndex) {
-	      var _this6 = this;
-
-	      var beforeSaveCell = this.props.cellEdit.beforeSaveCell;
-
-	      var columns = this.getColumnsDescription(this.props);
-	      var fieldName = columns[colIndex].name;
-
-	      var invalid = function invalid() {
-	        _this6.setState(function () {
-	          return {
-	            data: _this6.store.get(),
-	            reset: false
-	          };
-	        });
-	        return;
-	      };
-
-	      if (beforeSaveCell) {
-	        var beforeSaveCellCB = function beforeSaveCellCB(result) {
-	          _this6.refs.body.cancelEditCell();
-	          if (result || result === undefined) {
-	            _this6.editCell(newVal, rowIndex, colIndex);
-	          } else {
-	            invalid();
-	          }
-	        };
-	        var isValid = beforeSaveCell(this.state.data[rowIndex], fieldName, newVal, beforeSaveCellCB);
-	        if (isValid === false && typeof isValid !== 'undefined') {
-	          return invalid();
-	        } else if (isValid === _Const2.default.AWAIT_BEFORE_CELL_EDIT) {
-	          /* eslint consistent-return: 0 */
-	          return isValid;
-	        }
-	      }
-	      this.editCell(newVal, rowIndex, colIndex);
-	    }
-	  }, {
 	    key: 'editCell',
 	    value: function editCell(newVal, rowIndex, colIndex) {
 	      var onCellEdit = this.props.options.onCellEdit;
@@ -1479,57 +889,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this._handleAfterAddingRow(newObj, true);
 	    }
 	  }, {
-	    key: '__handleAddRow__REACT_HOT_LOADER__',
-	    value: function __handleAddRow__REACT_HOT_LOADER__(newObj) {
-	      var _this7 = this;
-
-	      var isAsync = false;
-	      var onAddRow = this.props.options.onAddRow;
-
-
-	      var afterHandleAddRow = function afterHandleAddRow(errMsg) {
-	        if (isAsync) {
-	          _this7.refs.toolbar.afterHandleSaveBtnClick(errMsg);
-	        } else {
-	          return errMsg;
-	        }
-	      };
-
-	      var afterAddRowCB = function afterAddRowCB(errMsg) {
-	        if (typeof errMsg !== 'undefined' && errMsg !== '') return afterHandleAddRow(errMsg);
-	        if (_this7.allowRemote(_Const2.default.REMOTE_INSERT_ROW)) {
-	          if (_this7.props.options.afterInsertRow) {
-	            _this7.props.options.afterInsertRow(newObj);
-	          }
-	          return afterHandleAddRow();
-	        }
-
-	        try {
-	          _this7.store.add(newObj);
-	        } catch (e) {
-	          return afterHandleAddRow(e.message);
-	        }
-	        _this7._handleAfterAddingRow(newObj, false);
-	        return afterHandleAddRow();
-	      };
-
-	      if (onAddRow) {
-	        var colInfos = this.store.getColInfos();
-	        var errMsg = onAddRow(newObj, colInfos, afterAddRowCB);
-
-	        if (errMsg !== '' && errMsg !== false) {
-	          return errMsg;
-	        } else if (typeof errMsg === 'undefined') {
-	          return afterAddRowCB();
-	        } else {
-	          isAsync = true;
-	          return !isAsync;
-	        }
-	      } else {
-	        return afterAddRowCB();
-	      }
-	    }
-	  }, {
 	    key: 'getSizePerPage',
 	    value: function getSizePerPage() {
 	      return this.state.sizePerPage;
@@ -1545,48 +904,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return this.store.getCurrentDisplayData();
 	    }
 	  }, {
-	    key: '__getPageByRowKey__REACT_HOT_LOADER__',
-	    value: function __getPageByRowKey__REACT_HOT_LOADER__(rowKey) {
-	      var sizePerPage = this.state.sizePerPage;
-
-	      var currentData = this.store.getCurrentDisplayData();
-	      var keyField = this.store.getKeyField();
-	      var result = currentData.findIndex(function (x) {
-	        return x[keyField] === rowKey;
-	      });
-	      if (result > -1) {
-	        return parseInt(result / sizePerPage, 10) + 1;
-	      } else {
-	        return result;
-	      }
-	    }
-	  }, {
-	    key: '__handleDropRow__REACT_HOT_LOADER__',
-	    value: function __handleDropRow__REACT_HOT_LOADER__(rowKeys) {
-	      var _this8 = this;
-
-	      var dropRowKeys = rowKeys ? rowKeys : this.store.getSelectedRowKeys();
-	      // add confirm before the delete action if that option is set.
-	      if (dropRowKeys && dropRowKeys.length > 0) {
-	        if (this.props.options.handleConfirmDeleteRow) {
-	          this.props.options.handleConfirmDeleteRow(function () {
-	            _this8.deleteRow(dropRowKeys);
-	          }, dropRowKeys);
-	        } else if (confirm('Are you sure you want to delete?')) {
-	          this.deleteRow(dropRowKeys);
-	        }
-	      }
-	    }
-	  }, {
 	    key: 'deleteRow',
 	    value: function deleteRow(dropRowKeys) {
-	      var _this9 = this;
+	      var _this5 = this;
 
 	      var dropRow = this.store.getRowByKey(dropRowKeys);
-	      var _props$options2 = this.props.options,
-	          onDeleteRow = _props$options2.onDeleteRow,
-	          afterDeleteRow = _props$options2.afterDeleteRow,
-	          pageStartIndex = _props$options2.pageStartIndex;
+	      var _props$options = this.props.options,
+	          onDeleteRow = _props$options.onDeleteRow,
+	          afterDeleteRow = _props$options.afterDeleteRow,
+	          pageStartIndex = _props$options.pageStartIndex;
 
 
 	      if (onDeleteRow) {
@@ -1617,7 +943,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.setState(function () {
 	          return {
 	            data: result,
-	            selectedRowKeys: _this9.store.getSelectedRowKeys(),
+	            selectedRowKeys: _this5.store.getSelectedRowKeys(),
 	            currPage: currPage,
 	            reset: false
 	          };
@@ -1628,172 +954,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	          return {
 	            data: result,
 	            reset: false,
-	            selectedRowKeys: _this9.store.getSelectedRowKeys()
+	            selectedRowKeys: _this5.store.getSelectedRowKeys()
 	          };
 	        });
 	      }
 	      if (afterDeleteRow) {
 	        afterDeleteRow(dropRowKeys, dropRow);
 	      }
-	    }
-	  }, {
-	    key: '__handleFilterData__REACT_HOT_LOADER__',
-	    value: function __handleFilterData__REACT_HOT_LOADER__(filterObj) {
-	      var _props4 = this.props,
-	          filter = _props4.autoCollapse.filter,
-	          options = _props4.options;
-	      var onFilterChange = options.onFilterChange,
-	          pageStartIndex = options.pageStartIndex;
-
-	      if (onFilterChange) {
-	        var colInfos = this.store.getColInfos();
-	        onFilterChange(filterObj, colInfos);
-	      }
-
-	      this.setState(function () {
-	        var newState = {
-	          currPage: _util2.default.getFirstPage(pageStartIndex),
-	          reset: false
-	        };
-	        if (filter) newState.expanding = [];
-	        return newState;
-	      });
-
-	      if (this.allowRemote(_Const2.default.REMOTE_FILTER)) {
-	        if (this.props.options.afterColumnFilter) {
-	          this.props.options.afterColumnFilter(filterObj, this.store.getDataIgnoringPagination());
-	        }
-	        return;
-	      }
-
-	      this.store.filter(filterObj);
-
-	      var sortList = this.store.getSortInfo();
-
-	      if (sortList.length > 0) {
-	        this.store.sort();
-	      }
-
-	      var result = void 0;
-
-	      if (this.props.pagination) {
-	        var sizePerPage = this.state.sizePerPage;
-
-	        result = this.store.page(_util2.default.getNormalizedPage(pageStartIndex), sizePerPage).get();
-	      } else {
-	        result = this.store.get();
-	      }
-	      if (this.props.options.afterColumnFilter) {
-	        this.props.options.afterColumnFilter(filterObj, this.store.getDataIgnoringPagination());
-	      }
-	      this.setState(function () {
-	        return {
-	          data: result,
-	          reset: false
-	        };
-	      });
-	    }
-	  }, {
-	    key: '__handleExportCSV__REACT_HOT_LOADER__',
-	    value: function __handleExportCSV__REACT_HOT_LOADER__() {
-	      var result = {};
-
-	      var csvFileName = this.props.csvFileName;
-	      var _props$options3 = this.props.options,
-	          onExportToCSV = _props$options3.onExportToCSV,
-	          exportCSVSeparator = _props$options3.exportCSVSeparator,
-	          noAutoBOM = _props$options3.noAutoBOM,
-	          excludeCSVHeader = _props$options3.excludeCSVHeader;
-
-	      if (onExportToCSV) {
-	        result = onExportToCSV();
-	      } else {
-	        result = this.store.getDataIgnoringPagination();
-	      }
-	      var separator = exportCSVSeparator || _Const2.default.DEFAULT_CSV_SEPARATOR;
-	      var keys = [];
-	      this.props.children.filter(function (_) {
-	        return _ != null;
-	      }).map(function (column) {
-	        if (column.props.export === true || typeof column.props.export === 'undefined' && column.props.hidden === false) {
-	          keys.push({
-	            field: column.props.dataField,
-	            type: column.props.csvFieldType,
-	            format: column.props.csvFormat,
-	            extraData: column.props.csvFormatExtraData,
-	            header: column.props.csvHeader || column.props.dataField,
-	            row: Number(column.props.row) || 0,
-	            rowSpan: Number(column.props.rowSpan) || 1,
-	            colSpan: Number(column.props.colSpan) || 1
-	          });
-	        }
-	      });
-
-	      if (_util2.default.isFunction(csvFileName)) {
-	        csvFileName = csvFileName();
-	      }
-
-	      (0, _csv_export_util2.default)(result, keys, csvFileName, separator, noAutoBOM, excludeCSVHeader);
-	    }
-	  }, {
-	    key: '__handleSearch__REACT_HOT_LOADER__',
-	    value: function __handleSearch__REACT_HOT_LOADER__(searchText) {
-	      // Set search field if this function being called outside
-	      // but it's not necessary if calling fron inside.
-	      if (this.refs.toolbar) {
-	        this.refs.toolbar.setSearchInput(searchText);
-	      }
-	      var search = this.props.autoCollapse.search;
-	      var _props$options4 = this.props.options,
-	          onSearchChange = _props$options4.onSearchChange,
-	          pageStartIndex = _props$options4.pageStartIndex;
-
-	      if (onSearchChange) {
-	        var colInfos = this.store.getColInfos();
-	        onSearchChange(searchText, colInfos, this.props.multiColumnSearch);
-	      }
-
-	      this.setState(function () {
-	        var newState = {
-	          currPage: _util2.default.getFirstPage(pageStartIndex),
-	          reset: false
-	        };
-	        if (search) newState.expanding = [];
-	        return newState;
-	      });
-
-	      if (this.allowRemote(_Const2.default.REMOTE_SEARCH)) {
-	        if (this.props.options.afterSearch) {
-	          this.props.options.afterSearch(searchText, this.store.getDataIgnoringPagination());
-	        }
-	        return;
-	      }
-
-	      this.store.search(searchText);
-
-	      var sortList = this.store.getSortInfo();
-
-	      if (sortList.length > 0) {
-	        this.store.sort();
-	      }
-
-	      var result = void 0;
-	      if (this.props.pagination) {
-	        var sizePerPage = this.state.sizePerPage;
-
-	        result = this.store.page(_util2.default.getNormalizedPage(pageStartIndex), sizePerPage).get();
-	      } else {
-	        result = this.store.get();
-	      }
-	      if (this.props.options.afterSearch) {
-	        this.props.options.afterSearch(searchText, this.store.getDataIgnoringPagination());
-	      }
-	      this.setState(function () {
-	        return {
-	          data: result,
-	          reset: false
-	        };
-	      });
 	    }
 	  }, {
 	    key: 'renderPagination',
@@ -1846,14 +1013,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'renderToolBar',
 	    value: function renderToolBar() {
-	      var _props5 = this.props,
-	          exportCSV = _props5.exportCSV,
-	          selectRow = _props5.selectRow,
-	          insertRow = _props5.insertRow,
-	          deleteRow = _props5.deleteRow,
-	          search = _props5.search,
-	          children = _props5.children,
-	          keyField = _props5.keyField;
+	      var _props2 = this.props,
+	          exportCSV = _props2.exportCSV,
+	          selectRow = _props2.selectRow,
+	          insertRow = _props2.insertRow,
+	          deleteRow = _props2.deleteRow,
+	          search = _props2.search,
+	          children = _props2.children,
+	          keyField = _props2.keyField;
 
 	      var enableShowOnlySelected = selectRow && selectRow.showOnlySelected;
 	      var print = typeof this.props.options.printToolBar === 'undefined' ? true : this.props.options.printToolBar;
@@ -1983,31 +1150,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        );
 	      }
 	      return null;
-	    }
-	  }, {
-	    key: '___scrollTop__REACT_HOT_LOADER__',
-	    value: function ___scrollTop__REACT_HOT_LOADER__() {
-	      var scrollTop = this.props.scrollTop;
-
-	      if (scrollTop === _Const2.default.SCROLL_TOP) {
-	        this.refs.body.refs.container.scrollTop = 0;
-	      } else if (scrollTop === _Const2.default.SCROLL_BOTTOM) {
-	        this.refs.body.refs.container.scrollTop = this.refs.body.refs.container.scrollHeight;
-	      } else if (typeof scrollTop === 'number' && !isNaN(scrollTop)) {
-	        this.refs.body.refs.container.scrollTop = scrollTop;
-	      }
-	    }
-	  }, {
-	    key: '___scrollHeader__REACT_HOT_LOADER__',
-	    value: function ___scrollHeader__REACT_HOT_LOADER__(e) {
-	      this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
-	    }
-	  }, {
-	    key: '___scrollFooter__REACT_HOT_LOADER__',
-	    value: function ___scrollFooter__REACT_HOT_LOADER__(e) {
-	      if (this.props.footer) {
-	        this.refs.footer.refs.container.scrollLeft = e.currentTarget.scrollLeft;
-	      }
 	    }
 	  }, {
 	    key: '_adjustTable',
@@ -2141,6 +1283,623 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return BootstrapTable;
 	}(_react.Component);
+
+	var _initialiseProps = function _initialiseProps() {
+	  var _this6 = this;
+
+	  this.handleSort = function (order, sortField) {
+	    var _props3 = _this6.props,
+	        sort = _props3.autoCollapse.sort,
+	        options = _props3.options;
+
+	    if (options.onSortChange) {
+	      options.onSortChange(sortField, order, _this6.props);
+	    }
+	    _this6.store.setSortInfo(order, sortField);
+	    if (_this6.allowRemote(_Const2.default.REMOTE_SORT)) {
+	      if (sort) {
+	        _this6.setState(function () {
+	          return {
+	            expanding: []
+	          };
+	        });
+	      }
+	      return;
+	    }
+
+	    var result = _this6.store.sort().get();
+	    _this6.setState(function () {
+	      var newState = {
+	        data: result,
+	        reset: false
+	      };
+	      if (sort) newState.expanding = [];
+	      return newState;
+	    });
+	  };
+
+	  this.handleExpandRow = function (expanding, rowKey, isRowExpanding) {
+	    var onExpand = _this6.props.options.onExpand;
+
+	    if (onExpand) {
+	      onExpand(rowKey, !isRowExpanding);
+	    }
+	    _this6.setState(function () {
+	      return { expanding: expanding, reset: false };
+	    }, function () {
+	      _this6._adjustHeaderWidth();
+	    });
+	  };
+
+	  this.handlePaginationData = function (page, sizePerPage) {
+	    var _props$options2 = _this6.props.options,
+	        onPageChange = _props$options2.onPageChange,
+	        pageStartIndex = _props$options2.pageStartIndex;
+
+	    var emptyTable = _this6.store.isEmpty();
+	    if (onPageChange) {
+	      onPageChange(page, sizePerPage);
+	    }
+
+	    var state = {
+	      sizePerPage: sizePerPage,
+	      reset: false
+	    };
+	    if (!emptyTable) state.currPage = page;
+	    _this6.setState(function () {
+	      return state;
+	    });
+
+	    if (_this6.allowRemote(_Const2.default.REMOTE_PAGE) || emptyTable) {
+	      return;
+	    }
+
+	    var result = _this6.store.page(_util2.default.getNormalizedPage(pageStartIndex, page), sizePerPage).get();
+	    _this6.setState(function () {
+	      return { data: result, reset: false };
+	    });
+	  };
+
+	  this.handleMouseLeave = function () {
+	    if (_this6.props.options.onMouseLeave) {
+	      _this6.props.options.onMouseLeave();
+	    }
+	  };
+
+	  this.handleMouseEnter = function () {
+	    if (_this6.props.options.onMouseEnter) {
+	      _this6.props.options.onMouseEnter();
+	    }
+	  };
+
+	  this.handleRowMouseOut = function (row, event) {
+	    if (_this6.props.options.onRowMouseOut) {
+	      _this6.props.options.onRowMouseOut(row, event);
+	    }
+	  };
+
+	  this.handleRowMouseOver = function (row, event) {
+	    if (_this6.props.options.onRowMouseOver) {
+	      _this6.props.options.onRowMouseOver(row, event);
+	    }
+	  };
+
+	  this.handleNavigateCell = function (_ref4) {
+	    var offSetX = _ref4.x,
+	        offSetY = _ref4.y,
+	        lastEditCell = _ref4.lastEditCell;
+	    var pagination = _this6.props.pagination;
+	    var _state = _this6.state,
+	        x = _state.x,
+	        y = _state.y,
+	        currPage = _state.currPage;
+
+	    x += offSetX;
+	    y += offSetY;
+
+	    var columns = _this6.store.getColInfos();
+	    var visibleRowSize = _this6.state.data.length;
+	    var visibleColumnSize = Object.keys(columns).filter(function (k) {
+	      return !columns[k].hidden;
+	    }).length;
+
+	    if (y >= visibleRowSize) {
+	      currPage++;
+	      var lastPage = pagination ? _this6.refs.pagination.getLastPage() : -1;
+	      if (currPage <= lastPage) {
+	        _this6.handlePaginationData(currPage, _this6.state.sizePerPage);
+	      } else {
+	        return;
+	      }
+	      y = 0;
+	    } else if (y < 0) {
+	      currPage--;
+	      if (currPage > 0) {
+	        _this6.handlePaginationData(currPage, _this6.state.sizePerPage);
+	      } else {
+	        return;
+	      }
+	      y = visibleRowSize - 1;
+	    } else if (x >= visibleColumnSize) {
+	      if (y + 1 === visibleRowSize) {
+	        currPage++;
+	        var _lastPage = pagination ? _this6.refs.pagination.getLastPage() : -1;
+	        if (currPage <= _lastPage) {
+	          _this6.handlePaginationData(currPage, _this6.state.sizePerPage);
+	        } else {
+	          return;
+	        }
+	        y = 0;
+	      } else {
+	        y++;
+	      }
+	      x = lastEditCell ? 1 : 0;
+	    } else if (x < 0) {
+	      x = visibleColumnSize - 1;
+	      if (y === 0) {
+	        currPage--;
+	        if (currPage > 0) {
+	          _this6.handlePaginationData(currPage, _this6.state.sizePerPage);
+	        } else {
+	          return;
+	        }
+	        y = _this6.state.sizePerPage - 1;
+	      } else {
+	        y--;
+	      }
+	    }
+	    _this6.setState(function () {
+	      return {
+	        x: x, y: y, currPage: currPage, reset: false
+	      };
+	    });
+	  };
+
+	  this.handleRowClick = function (row, rowIndex, columnIndex) {
+	    var _props4 = _this6.props,
+	        options = _props4.options,
+	        keyBoardNav = _props4.keyBoardNav;
+
+	    if (options.onRowClick) {
+	      options.onRowClick(row, columnIndex, rowIndex);
+	    }
+	    if (keyBoardNav) {
+	      var _ref5 = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav : {},
+	          clickToNav = _ref5.clickToNav;
+
+	      clickToNav = clickToNav === false ? clickToNav : true;
+	      if (clickToNav) {
+	        _this6.setState(function () {
+	          return {
+	            x: columnIndex,
+	            y: rowIndex,
+	            reset: false
+	          };
+	        });
+	      }
+	    }
+	  };
+
+	  this.handleRowDoubleClick = function (row) {
+	    if (_this6.props.options.onRowDoubleClick) {
+	      _this6.props.options.onRowDoubleClick(row);
+	    }
+	  };
+
+	  this.handleSelectAllRow = function (e) {
+	    var isSelected = e.currentTarget.checked;
+	    var keyField = _this6.store.getKeyField();
+	    var _props$selectRow2 = _this6.props.selectRow,
+	        onSelectAll = _props$selectRow2.onSelectAll,
+	        unselectable = _props$selectRow2.unselectable,
+	        selected = _props$selectRow2.selected,
+	        onlyUnselectVisible = _props$selectRow2.onlyUnselectVisible;
+
+	    var selectedRowKeys = onlyUnselectVisible ? _this6.state.selectedRowKeys : [];
+	    var result = true;
+	    var rows = _this6.store.get();
+
+	    // onlyUnselectVisible default is false, #1276
+	    if (!isSelected && !onlyUnselectVisible) {
+	      rows = _this6.store.getRowByKey(_this6.state.selectedRowKeys);
+	    }
+
+	    if (unselectable && unselectable.length > 0) {
+	      if (isSelected) {
+	        rows = rows.filter(function (r) {
+	          return unselectable.indexOf(r[keyField]) === -1 || selected && selected.indexOf(r[keyField]) !== -1;
+	        });
+	      } else {
+	        rows = rows.filter(function (r) {
+	          return unselectable.indexOf(r[keyField]) === -1;
+	        });
+	      }
+	    }
+
+	    if (onSelectAll) {
+	      result = _this6.props.selectRow.onSelectAll(isSelected, rows);
+	    }
+
+	    if (typeof result == 'undefined' || result !== false) {
+	      if (isSelected) {
+	        if (Array.isArray(result)) {
+	          selectedRowKeys = result;
+	        } else {
+	          var currentRowKeys = rows.map(function (r) {
+	            return r[keyField];
+	          });
+	          // onlyUnselectVisible default is false, #1276
+	          if (onlyUnselectVisible) {
+	            selectedRowKeys = selectedRowKeys.concat(currentRowKeys);
+	          } else {
+	            selectedRowKeys = currentRowKeys;
+	          }
+	        }
+	      } else {
+	        if (unselectable && selected) {
+	          selectedRowKeys = selected.filter(function (r) {
+	            return unselectable.indexOf(r) > -1;
+	          });
+	        } else if (onlyUnselectVisible) {
+	          var _currentRowKeys = rows.map(function (r) {
+	            return r[keyField];
+	          });
+	          selectedRowKeys = selectedRowKeys.filter(function (k) {
+	            return _currentRowKeys.indexOf(k) === -1;
+	          });
+	        }
+	      }
+
+	      _this6.store.setSelectedRowKey(selectedRowKeys);
+	      _this6.setState(function () {
+	        return { selectedRowKeys: selectedRowKeys, reset: false };
+	      });
+	    }
+	  };
+
+	  this.handleShowOnlySelected = function () {
+	    _this6.store.ignoreNonSelected();
+	    var pageStartIndex = _this6.props.options.pageStartIndex;
+
+	    var result = void 0;
+	    if (_this6.props.pagination) {
+	      result = _this6.store.page(_util2.default.getNormalizedPage(pageStartIndex), _this6.state.sizePerPage).get();
+	    } else {
+	      result = _this6.store.get();
+	    }
+	    _this6.setState(function () {
+	      return {
+	        data: result,
+	        reset: false,
+	        currPage: _util2.default.getFirstPage(pageStartIndex)
+	      };
+	    });
+	  };
+
+	  this.handleSelectRow = function (row, isSelected, e, rowIndex) {
+	    var result = true;
+	    var currSelected = _this6.store.getSelectedRowKeys();
+	    var rowKey = row[_this6.store.getKeyField()];
+	    var selectRow = _this6.props.selectRow;
+
+	    if (selectRow.onSelect) {
+	      result = selectRow.onSelect(row, isSelected, e, rowIndex);
+	    }
+
+	    if (typeof result === 'undefined' || result !== false) {
+	      if (selectRow.mode === _Const2.default.ROW_SELECT_SINGLE) {
+	        currSelected = isSelected ? [rowKey] : [];
+	      } else {
+	        if (isSelected) {
+	          currSelected.push(rowKey);
+	        } else {
+	          currSelected = currSelected.filter(function (key) {
+	            return rowKey !== key;
+	          });
+	        }
+	      }
+
+	      _this6.store.setSelectedRowKey(currSelected);
+	      _this6.setState(function () {
+	        return {
+	          selectedRowKeys: currSelected,
+	          reset: false
+	        };
+	      });
+	    }
+	  };
+
+	  this.handleEditCell = function (newVal, rowIndex, colIndex) {
+	    var beforeSaveCell = _this6.props.cellEdit.beforeSaveCell;
+
+	    var columns = _this6.getColumnsDescription(_this6.props);
+	    var fieldName = columns[colIndex].name;
+
+	    var invalid = function invalid() {
+	      _this6.setState(function () {
+	        return {
+	          data: _this6.store.get(),
+	          reset: false
+	        };
+	      });
+	      return;
+	    };
+
+	    if (beforeSaveCell) {
+	      var beforeSaveCellCB = function beforeSaveCellCB(result) {
+	        _this6.refs.body.cancelEditCell();
+	        if (result || result === undefined) {
+	          _this6.editCell(newVal, rowIndex, colIndex);
+	        } else {
+	          invalid();
+	        }
+	      };
+	      var isValid = beforeSaveCell(_this6.state.data[rowIndex], fieldName, newVal, beforeSaveCellCB);
+	      if (isValid === false && typeof isValid !== 'undefined') {
+	        return invalid();
+	      } else if (isValid === _Const2.default.AWAIT_BEFORE_CELL_EDIT) {
+	        /* eslint consistent-return: 0 */
+	        return isValid;
+	      }
+	    }
+	    _this6.editCell(newVal, rowIndex, colIndex);
+	  };
+
+	  this.handleAddRow = function (newObj) {
+	    var isAsync = false;
+	    var onAddRow = _this6.props.options.onAddRow;
+
+
+	    var afterHandleAddRow = function afterHandleAddRow(errMsg) {
+	      if (isAsync) {
+	        _this6.refs.toolbar.afterHandleSaveBtnClick(errMsg);
+	      } else {
+	        return errMsg;
+	      }
+	    };
+
+	    var afterAddRowCB = function afterAddRowCB(errMsg) {
+	      if (typeof errMsg !== 'undefined' && errMsg !== '') return afterHandleAddRow(errMsg);
+	      if (_this6.allowRemote(_Const2.default.REMOTE_INSERT_ROW)) {
+	        if (_this6.props.options.afterInsertRow) {
+	          _this6.props.options.afterInsertRow(newObj);
+	        }
+	        return afterHandleAddRow();
+	      }
+
+	      try {
+	        _this6.store.add(newObj);
+	      } catch (e) {
+	        return afterHandleAddRow(e.message);
+	      }
+	      _this6._handleAfterAddingRow(newObj, false);
+	      return afterHandleAddRow();
+	    };
+
+	    if (onAddRow) {
+	      var colInfos = _this6.store.getColInfos();
+	      var errMsg = onAddRow(newObj, colInfos, afterAddRowCB);
+
+	      if (errMsg !== '' && errMsg !== false) {
+	        return errMsg;
+	      } else if (typeof errMsg === 'undefined') {
+	        return afterAddRowCB();
+	      } else {
+	        isAsync = true;
+	        return !isAsync;
+	      }
+	    } else {
+	      return afterAddRowCB();
+	    }
+	  };
+
+	  this.getPageByRowKey = function (rowKey) {
+	    var sizePerPage = _this6.state.sizePerPage;
+
+	    var currentData = _this6.store.getCurrentDisplayData();
+	    var keyField = _this6.store.getKeyField();
+	    var result = currentData.findIndex(function (x) {
+	      return x[keyField] === rowKey;
+	    });
+	    if (result > -1) {
+	      return parseInt(result / sizePerPage, 10) + 1;
+	    } else {
+	      return result;
+	    }
+	  };
+
+	  this.handleDropRow = function (rowKeys) {
+	    var dropRowKeys = rowKeys ? rowKeys : _this6.store.getSelectedRowKeys();
+	    // add confirm before the delete action if that option is set.
+	    if (dropRowKeys && dropRowKeys.length > 0) {
+	      if (_this6.props.options.handleConfirmDeleteRow) {
+	        _this6.props.options.handleConfirmDeleteRow(function () {
+	          _this6.deleteRow(dropRowKeys);
+	        }, dropRowKeys);
+	      } else if (confirm('Are you sure you want to delete?')) {
+	        _this6.deleteRow(dropRowKeys);
+	      }
+	    }
+	  };
+
+	  this.handleFilterData = function (filterObj) {
+	    var _props5 = _this6.props,
+	        filter = _props5.autoCollapse.filter,
+	        options = _props5.options;
+	    var onFilterChange = options.onFilterChange,
+	        pageStartIndex = options.pageStartIndex;
+
+	    if (onFilterChange) {
+	      var colInfos = _this6.store.getColInfos();
+	      onFilterChange(filterObj, colInfos);
+	    }
+
+	    _this6.setState(function () {
+	      var newState = {
+	        currPage: _util2.default.getFirstPage(pageStartIndex),
+	        reset: false
+	      };
+	      if (filter) newState.expanding = [];
+	      return newState;
+	    });
+
+	    if (_this6.allowRemote(_Const2.default.REMOTE_FILTER)) {
+	      if (_this6.props.options.afterColumnFilter) {
+	        _this6.props.options.afterColumnFilter(filterObj, _this6.store.getDataIgnoringPagination());
+	      }
+	      return;
+	    }
+
+	    _this6.store.filter(filterObj);
+
+	    var sortList = _this6.store.getSortInfo();
+
+	    if (sortList.length > 0) {
+	      _this6.store.sort();
+	    }
+
+	    var result = void 0;
+
+	    if (_this6.props.pagination) {
+	      var sizePerPage = _this6.state.sizePerPage;
+
+	      result = _this6.store.page(_util2.default.getNormalizedPage(pageStartIndex), sizePerPage).get();
+	    } else {
+	      result = _this6.store.get();
+	    }
+	    if (_this6.props.options.afterColumnFilter) {
+	      _this6.props.options.afterColumnFilter(filterObj, _this6.store.getDataIgnoringPagination());
+	    }
+	    _this6.setState(function () {
+	      return {
+	        data: result,
+	        reset: false
+	      };
+	    });
+	  };
+
+	  this.handleExportCSV = function () {
+	    var result = {};
+
+	    var csvFileName = _this6.props.csvFileName;
+	    var _props$options3 = _this6.props.options,
+	        onExportToCSV = _props$options3.onExportToCSV,
+	        exportCSVSeparator = _props$options3.exportCSVSeparator,
+	        noAutoBOM = _props$options3.noAutoBOM,
+	        excludeCSVHeader = _props$options3.excludeCSVHeader;
+
+	    if (onExportToCSV) {
+	      result = onExportToCSV();
+	    } else {
+	      result = _this6.store.getDataIgnoringPagination();
+	    }
+	    var separator = exportCSVSeparator || _Const2.default.DEFAULT_CSV_SEPARATOR;
+	    var keys = [];
+	    _this6.props.children.filter(function (_) {
+	      return _ != null;
+	    }).map(function (column) {
+	      if (column.props.export === true || typeof column.props.export === 'undefined' && column.props.hidden === false) {
+	        keys.push({
+	          field: column.props.dataField,
+	          type: column.props.csvFieldType,
+	          format: column.props.csvFormat,
+	          extraData: column.props.csvFormatExtraData,
+	          header: column.props.csvHeader || column.props.dataField,
+	          row: Number(column.props.row) || 0,
+	          rowSpan: Number(column.props.rowSpan) || 1,
+	          colSpan: Number(column.props.colSpan) || 1
+	        });
+	      }
+	    });
+
+	    if (_util2.default.isFunction(csvFileName)) {
+	      csvFileName = csvFileName();
+	    }
+
+	    (0, _csv_export_util2.default)(result, keys, csvFileName, separator, noAutoBOM, excludeCSVHeader);
+	  };
+
+	  this.handleSearch = function (searchText) {
+	    // Set search field if this function being called outside
+	    // but it's not necessary if calling fron inside.
+	    if (_this6.refs.toolbar) {
+	      _this6.refs.toolbar.setSearchInput(searchText);
+	    }
+	    var search = _this6.props.autoCollapse.search;
+	    var _props$options4 = _this6.props.options,
+	        onSearchChange = _props$options4.onSearchChange,
+	        pageStartIndex = _props$options4.pageStartIndex;
+
+	    if (onSearchChange) {
+	      var colInfos = _this6.store.getColInfos();
+	      onSearchChange(searchText, colInfos, _this6.props.multiColumnSearch);
+	    }
+
+	    _this6.setState(function () {
+	      var newState = {
+	        currPage: _util2.default.getFirstPage(pageStartIndex),
+	        reset: false
+	      };
+	      if (search) newState.expanding = [];
+	      return newState;
+	    });
+
+	    if (_this6.allowRemote(_Const2.default.REMOTE_SEARCH)) {
+	      if (_this6.props.options.afterSearch) {
+	        _this6.props.options.afterSearch(searchText, _this6.store.getDataIgnoringPagination());
+	      }
+	      return;
+	    }
+
+	    _this6.store.search(searchText);
+
+	    var sortList = _this6.store.getSortInfo();
+
+	    if (sortList.length > 0) {
+	      _this6.store.sort();
+	    }
+
+	    var result = void 0;
+	    if (_this6.props.pagination) {
+	      var sizePerPage = _this6.state.sizePerPage;
+
+	      result = _this6.store.page(_util2.default.getNormalizedPage(pageStartIndex), sizePerPage).get();
+	    } else {
+	      result = _this6.store.get();
+	    }
+	    if (_this6.props.options.afterSearch) {
+	      _this6.props.options.afterSearch(searchText, _this6.store.getDataIgnoringPagination());
+	    }
+	    _this6.setState(function () {
+	      return {
+	        data: result,
+	        reset: false
+	      };
+	    });
+	  };
+
+	  this._scrollTop = function () {
+	    var scrollTop = _this6.props.scrollTop;
+
+	    if (scrollTop === _Const2.default.SCROLL_TOP) {
+	      _this6.refs.body.refs.container.scrollTop = 0;
+	    } else if (scrollTop === _Const2.default.SCROLL_BOTTOM) {
+	      _this6.refs.body.refs.container.scrollTop = _this6.refs.body.refs.container.scrollHeight;
+	    } else if (typeof scrollTop === 'number' && !isNaN(scrollTop)) {
+	      _this6.refs.body.refs.container.scrollTop = scrollTop;
+	    }
+	  };
+
+	  this._scrollHeader = function (e) {
+	    _this6.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
+	  };
+
+	  this._scrollFooter = function (e) {
+	    if (_this6.props.footer) {
+	      _this6.refs.footer.refs.container.scrollLeft = e.currentTarget.scrollLeft;
+	    }
+	  };
+	};
 
 	BootstrapTable.propTypes = {
 	  keyField: _propTypes2.default.string,
@@ -2468,21 +2227,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  footer: false
 	};
 
-	var _default = BootstrapTable;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(BootstrapTable, 'BootstrapTable', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/BootstrapTable.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/BootstrapTable.js');
-	}();
-
-	;
+		exports.default = BootstrapTable;
 
 /***/ }),
 /* 2 */
@@ -3825,11 +3570,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	    }
 
+	    var _extends = Object.assign || function (target) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            var source = arguments[i];
+
+	            for (var key in source) {
+	                if (Object.prototype.hasOwnProperty.call(source, key)) {
+	                    target[key] = source[key];
+	                }
+	            }
+	        }
+
+	        return target;
+	    };
+
 	    var insertFunc = function insertFunc(msg, data, condition) {
 	        var id = _sAlertTools2.default.randomId();
 	        _sAlertStore2.default.dispatch({
 	            type: 'INSERT',
-	            data: Object.assign({}, data, {
+	            data: _extends({}, data, {
 	                id: id,
 	                condition: condition,
 	                message: msg
@@ -3866,54 +3625,70 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var storeStateBottom = void 0;
 
 	                var addToStoreRight = function addToStoreRight() {
-	                    var length = void 0;
-	                    storeStateRight = (0, _sAlertDataPrep2.default)('right') || [];
-	                    length = storeStateRight.length;
-	                    if (_this2.props.stack && _this2.props.stack.limit && length > _this2.props.stack.limit) {
-	                        var id = storeStateRight[0].id;
-	                        _sAlertStore2.default.dispatch({ type: 'REMOVE', data: { id: id } });
-	                        storeStateRight = (0, _sAlertDataPrep2.default)('right') || [];
-	                    }
-	                    _this2.setState({ dataRight: storeStateRight });
+	                    requestAnimationFrame(function () {
+	                        return requestAnimationFrame(function () {
+	                            var length = void 0;
+	                            storeStateRight = (0, _sAlertDataPrep2.default)('right') || [];
+	                            length = storeStateRight.length;
+	                            if (_this2.props.stack && _this2.props.stack.limit && length > _this2.props.stack.limit) {
+	                                var id = storeStateRight[0].id;
+	                                _sAlertStore2.default.dispatch({ type: 'REMOVE', data: { id: id } });
+	                                storeStateRight = (0, _sAlertDataPrep2.default)('right') || [];
+	                            }
+	                            _this2.setState({ dataRight: storeStateRight });
+	                        });
+	                    });
 	                };
 	                this.unsubStoreRight = _sAlertStore2.default.subscribe(addToStoreRight);
 
 	                var addToStoreLeft = function addToStoreLeft() {
-	                    var length = void 0;
-	                    storeStateLeft = (0, _sAlertDataPrep2.default)('left') || [];
-	                    length = storeStateLeft.length;
-	                    if (_this2.props.stack && _this2.props.stack.limit && length > _this2.props.stack.limit) {
-	                        var id = storeStateLeft[0].id;
-	                        _sAlertStore2.default.dispatch({ type: 'REMOVE', data: { id: id } });
-	                        storeStateLeft = (0, _sAlertDataPrep2.default)('left') || [];
-	                    }
-	                    _this2.setState({ dataLeft: storeStateLeft });
+	                    requestAnimationFrame(function () {
+	                        return requestAnimationFrame(function () {
+	                            var length = void 0;
+	                            storeStateLeft = (0, _sAlertDataPrep2.default)('left') || [];
+	                            length = storeStateLeft.length;
+	                            if (_this2.props.stack && _this2.props.stack.limit && length > _this2.props.stack.limit) {
+	                                var id = storeStateLeft[0].id;
+	                                _sAlertStore2.default.dispatch({ type: 'REMOVE', data: { id: id } });
+	                                storeStateLeft = (0, _sAlertDataPrep2.default)('left') || [];
+	                            }
+	                            _this2.setState({ dataLeft: storeStateLeft });
+	                        });
+	                    });
 	                };
 	                this.unsubStoreLeft = _sAlertStore2.default.subscribe(addToStoreLeft);
 
 	                var addToStoreTop = function addToStoreTop() {
-	                    var length = void 0;
-	                    storeStateTop = (0, _sAlertDataPrep2.default)('full-top') || [];
-	                    length = storeStateTop.length;
-	                    if (_this2.props.stack && _this2.props.stack.limit && length > _this2.props.stack.limit) {
-	                        var id = storeStateTop[0].id;
-	                        _sAlertStore2.default.dispatch({ type: 'REMOVE', data: { id: id } });
-	                        storeStateTop = (0, _sAlertDataPrep2.default)('full-top') || [];
-	                    }
-	                    _this2.setState({ dataTop: storeStateTop });
+	                    requestAnimationFrame(function () {
+	                        return requestAnimationFrame(function () {
+	                            var length = void 0;
+	                            storeStateTop = (0, _sAlertDataPrep2.default)('full-top') || [];
+	                            length = storeStateTop.length;
+	                            if (_this2.props.stack && _this2.props.stack.limit && length > _this2.props.stack.limit) {
+	                                var id = storeStateTop[0].id;
+	                                _sAlertStore2.default.dispatch({ type: 'REMOVE', data: { id: id } });
+	                                storeStateTop = (0, _sAlertDataPrep2.default)('full-top') || [];
+	                            }
+	                            _this2.setState({ dataTop: storeStateTop });
+	                        });
+	                    });
 	                };
 	                this.unsubStoreTop = _sAlertStore2.default.subscribe(addToStoreTop);
 
 	                var addToStoreBottom = function addToStoreBottom() {
-	                    var length = void 0;
-	                    storeStateBottom = (0, _sAlertDataPrep2.default)('full-bottom') || [];
-	                    length = storeStateBottom.length;
-	                    if (_this2.props.stack && _this2.props.stack.limit && length > _this2.props.stack.limit) {
-	                        var id = storeStateBottom[0].id;
-	                        _sAlertStore2.default.dispatch({ type: 'REMOVE', data: { id: id } });
-	                        storeStateBottom = (0, _sAlertDataPrep2.default)('full-bottom') || [];
-	                    }
-	                    _this2.setState({ dataBottom: storeStateBottom });
+	                    requestAnimationFrame(function () {
+	                        return requestAnimationFrame(function () {
+	                            var length = void 0;
+	                            storeStateBottom = (0, _sAlertDataPrep2.default)('full-bottom') || [];
+	                            length = storeStateBottom.length;
+	                            if (_this2.props.stack && _this2.props.stack.limit && length > _this2.props.stack.limit) {
+	                                var id = storeStateBottom[0].id;
+	                                _sAlertStore2.default.dispatch({ type: 'REMOVE', data: { id: id } });
+	                                storeStateBottom = (0, _sAlertDataPrep2.default)('full-bottom') || [];
+	                            }
+	                            _this2.setState({ dataBottom: storeStateBottom });
+	                        });
+	                    });
 	                };
 	                this.unsubStoreBottom = _sAlertStore2.default.subscribe(addToStoreBottom);
 
@@ -4604,6 +4379,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        };
 	    }
 
+	    var _extends = Object.assign || function (target) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            var source = arguments[i];
+
+	            for (var key in source) {
+	                if (Object.prototype.hasOwnProperty.call(source, key)) {
+	                    target[key] = source[key];
+	                }
+	            }
+	        }
+
+	        return target;
+	    };
+
 	    var getAlertData = function getAlertData(sAlertPosition) {
 	        var positionTop = 0;
 	        var positionBottom = 0;
@@ -4717,13 +4506,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (sAlertPosition === 'right') {
 	                    style = style + 'right: ' + (aStack.spacing || parseInt(sAlertComputedStyle.right)) + 'px;';
 	                }
-	                alerts = Object.assign({}, alert, { boxPosition: style });
+	                alerts = _extends({}, alert, { boxPosition: style });
 	                _reactDom2.default.unmountComponentAtNode(docElement);
 	                docElement.parentNode.removeChild(docElement);
 	            } else if (aOffset && positionTypeTop) {
-	                alerts = Object.assign({}, alert, { boxPosition: 'top: ' + parseInt(aOffset) + 'px;' });
+	                alerts = _extends({}, alert, { boxPosition: 'top: ' + parseInt(aOffset) + 'px;' });
 	            } else if (aOffset && positionTypeBottom) {
-	                alerts = Object.assign({}, alert, { boxPosition: 'bottom: ' + parseInt(aOffset) + 'px;' });
+	                alerts = _extends({}, alert, { boxPosition: 'bottom: ' + parseInt(aOffset) + 'px;' });
 	            } else {
 	                alerts = alert;
 	            }
@@ -4823,21 +4612,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	CONST_VAR.REMOTE[CONST_VAR.REMOTE_SEARCH] = false;
 	CONST_VAR.REMOTE[CONST_VAR.REMOTE_EXPORT_CSV] = false;
 
-	var _default = CONST_VAR;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(CONST_VAR, 'CONST_VAR', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/Const.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/Const.js');
-	}();
-
-	;
+	exports.default = CONST_VAR;
 
 /***/ }),
 /* 23 */
@@ -4912,7 +4687,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this = _possibleConstructorReturn(this, (TableHeaderColumn.__proto__ || Object.getPrototypeOf(TableHeaderColumn)).call(this, props));
 
 	    _this.handleColumnClick = function () {
-	      return _this.__handleColumnClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	      if (_this.props.isOnlyHead || !_this.props.dataSort) return;
+	      var order = _this.props.sort;
+
+	      if (!order && _this.props.defaultASC) order = _Const2.default.SORT_ASC;else order = _this.props.sort === _Const2.default.SORT_DESC ? _Const2.default.SORT_ASC : _Const2.default.SORT_DESC;
+	      _this.props.onSort(order, _this.props.dataField);
 	    };
 
 	    _this.handleFilter = _this.handleFilter.bind(_this);
@@ -4920,11 +4699,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  _createClass(TableHeaderColumn, [{
-	    key: '__handleColumnClick__REACT_HOT_LOADER__',
-	    value: function __handleColumnClick__REACT_HOT_LOADER__() {
-	      return this.__handleColumnClick__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
 	      if (nextProps.reset) {
@@ -4945,15 +4719,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          this.refs[ref].setState({ value: value });
 	        }
 	      }
-	    }
-	  }, {
-	    key: '__handleColumnClick__REACT_HOT_LOADER__',
-	    value: function __handleColumnClick__REACT_HOT_LOADER__() {
-	      if (this.props.isOnlyHead || !this.props.dataSort) return;
-	      var order = this.props.sort;
-
-	      if (!order && this.props.defaultASC) order = _Const2.default.SORT_ASC;else order = this.props.sort === _Const2.default.SORT_DESC ? _Const2.default.SORT_ASC : _Const2.default.SORT_DESC;
-	      this.props.onSort(order, this.props.dataField);
 	    }
 	  }, {
 	    key: 'handleFilter',
@@ -5279,23 +5044,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  defaultASC: false
 	};
 
-	var _default = TableHeaderColumn;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(TableHeaderColumn, 'TableHeaderColumn', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableHeaderColumn.js');
-
-	  __REACT_HOT_LOADER__.register(filterTypeArray, 'filterTypeArray', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableHeaderColumn.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableHeaderColumn.js');
-	}();
-
-	;
+		exports.default = TableHeaderColumn;
 
 /***/ }),
 /* 24 */
@@ -5321,7 +5070,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _default = {
+	exports.default = {
 	  renderReactSortCaret: function renderReactSortCaret(order, isBootstrap4) {
 	    var orderClass = void 0;
 	    if (isBootstrap4) {
@@ -5440,20 +5189,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      theader
 	    );
 	  }
-	}; /* eslint react/display-name: 0 */
-
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/util.js');
-	}();
-
-	;
+		}; /* eslint react/display-name: 0 */
 
 /***/ }),
 /* 25 */
@@ -5663,25 +5399,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 
-	var _default = DateFilter;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(legalComparators, 'legalComparators', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Date.js');
-
-	  __REACT_HOT_LOADER__.register(dateParser, 'dateParser', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Date.js');
-
-	  __REACT_HOT_LOADER__.register(DateFilter, 'DateFilter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Date.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Date.js');
-	}();
-
-	;
+		exports.default = DateFilter;
 
 /***/ }),
 /* 26 */
@@ -5818,21 +5536,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  delay: _Const2.default.FILTER_DELAY
 	};
 
-	var _default = TextFilter;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(TextFilter, 'TextFilter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Text.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Text.js');
-	}();
-
-	;
+		exports.default = TextFilter;
 
 /***/ }),
 /* 27 */
@@ -5953,21 +5657,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  delay: _Const2.default.FILTER_DELAY
 	};
 
-	var _default = RegexFilter;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(RegexFilter, 'RegexFilter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Regex.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Regex.js');
-	}();
-
-	;
+		exports.default = RegexFilter;
 
 /***/ }),
 /* 28 */
@@ -6151,23 +5841,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  style: _propTypes2.default.oneOfType([_propTypes2.default.object])
 	};
 
-	var _default = SelectFilter;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(optionsEquals, 'optionsEquals', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Select.js');
-
-	  __REACT_HOT_LOADER__.register(SelectFilter, 'SelectFilter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Select.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Select.js');
-	}();
-
-	;
+		exports.default = SelectFilter;
 
 /***/ }),
 /* 29 */
@@ -6432,23 +6106,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 
-	var _default = NumberFilter;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(legalComparators, 'legalComparators', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Number.js');
-
-	  __REACT_HOT_LOADER__.register(NumberFilter, 'NumberFilter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Number.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Number.js');
-	}();
-
-	;
+		exports.default = NumberFilter;
 
 /***/ }),
 /* 30 */
@@ -6568,18 +6226,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, (_ref = TableHeader.__proto__ || Object.getPrototypeOf(TableHeader)).call.apply(_ref, [this].concat(args))), _this2), _this2.getHeaderColGrouop = function () {
-	      var _this3;
-
-	      return (_this3 = _this2).__getHeaderColGrouop__REACT_HOT_LOADER__.apply(_this3, arguments);
+	      return _this2.refs.headerGrp.childNodes;
 	    }, _temp), _possibleConstructorReturn(_this2, _ret);
 	  }
 
 	  _createClass(TableHeader, [{
-	    key: '__getHeaderColGrouop__REACT_HOT_LOADER__',
-	    value: function __getHeaderColGrouop__REACT_HOT_LOADER__() {
-	      return this.__getHeaderColGrouop__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props,
@@ -6656,11 +6307,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      );
 	    }
 	  }, {
-	    key: '__getHeaderColGrouop__REACT_HOT_LOADER__',
-	    value: function __getHeaderColGrouop__REACT_HOT_LOADER__() {
-	      return this.refs.headerGrp.childNodes;
-	    }
-	  }, {
 	    key: 'renderSelectRowHeader',
 	    value: function renderSelectRowHeader(rowCount, rowKey) {
 	      if (this.props.hideSelectColumn) {
@@ -6716,25 +6362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  version: _propTypes2.default.string
 	};
 
-	var _default = TableHeader;
-	exports.default = _default;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(Checkbox, 'Checkbox', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableHeader.js');
-
-	  __REACT_HOT_LOADER__.register(getSortOrder, 'getSortOrder', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableHeader.js');
-
-	  __REACT_HOT_LOADER__.register(TableHeader, 'TableHeader', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableHeader.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableHeader.js');
-	}();
-
-	;
+		exports.default = TableHeader;
 
 /***/ }),
 /* 31 */
@@ -6792,21 +6420,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  children: _propTypes2.default.node,
 	  rowCount: _propTypes2.default.number
 	};
-	var _default = SelectRowHeaderColumn;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(SelectRowHeaderColumn, 'SelectRowHeaderColumn', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/SelectRowHeaderColumn.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/SelectRowHeaderColumn.js');
-	}();
-
-	;
+		exports.default = SelectRowHeaderColumn;
 
 /***/ }),
 /* 32 */
@@ -6865,21 +6479,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  children: _propTypes2.default.node,
 	  rowCount: _propTypes2.default.number
 	};
-	var _default = ExpandRowHeaderColumn;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(ExpandRowHeaderColumn, 'ExpandRowHeaderColumn', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/ExpandRowHeaderColumn.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/ExpandRowHeaderColumn.js');
-	}();
-
-	;
+		exports.default = ExpandRowHeaderColumn;
 
 /***/ }),
 /* 33 */
@@ -7012,21 +6612,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  sortIndicator: _propTypes2.default.bool
 	};
 
-	var _default = TableFooter;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(TableFooter, 'TableFooter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableFooter.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableFooter.js');
-	}();
-
-	;
+		exports.default = TableFooter;
 
 /***/ }),
 /* 34 */
@@ -7038,9 +6624,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -7096,60 +6682,240 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var _this = _possibleConstructorReturn(this, (TableBody.__proto__ || Object.getPrototypeOf(TableBody)).call(this, props));
 
-	    _this.handleCellKeyDown = function () {
-	      return _this.__handleCellKeyDown__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleCellKeyDown = function (e, lastEditCell) {
+	      e.preventDefault();
+	      var _this$props = _this.props,
+	          keyBoardNav = _this$props.keyBoardNav,
+	          onNavigateCell = _this$props.onNavigateCell,
+	          cellEdit = _this$props.cellEdit;
+
+	      var offset = void 0;
+	      if (e.keyCode === 37) {
+	        offset = { x: -1, y: 0 };
+	      } else if (e.keyCode === 38) {
+	        offset = { x: 0, y: -1 };
+	      } else if (e.keyCode === 39 || e.keyCode === 9) {
+	        offset = { x: 1, y: 0 };
+	        if (e.keyCode === 9 && lastEditCell) {
+	          offset = _extends({}, offset, {
+	            lastEditCell: lastEditCell
+	          });
+	        }
+	      } else if (e.keyCode === 40) {
+	        offset = { x: 0, y: 1 };
+	      } else if (e.keyCode === 13) {
+	        var enterToEdit = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.enterToEdit : false;
+	        var enterToExpand = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.enterToExpand : false;
+
+	        if (cellEdit && enterToEdit) {
+	          _this.handleEditCell(e.target.parentElement.rowIndex + 1, e.currentTarget.cellIndex, '', e);
+	        }
+
+	        if (enterToExpand) {
+	          _this.handleClickCell(_this.props.y + 1, _this.props.x);
+	        }
+	      }
+	      if (offset && keyBoardNav) {
+	        onNavigateCell(offset);
+	      }
 	    };
 
-	    _this.handleRowMouseOut = function () {
-	      return _this.__handleRowMouseOut__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleRowMouseOut = function (rowIndex, event) {
+	      var targetRow = _this.props.data[rowIndex];
+	      _this.props.onRowMouseOut(targetRow, event);
 	    };
 
-	    _this.handleRowMouseOver = function () {
-	      return _this.__handleRowMouseOver__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleRowMouseOver = function (rowIndex, event) {
+	      var targetRow = _this.props.data[rowIndex];
+	      _this.props.onRowMouseOver(targetRow, event);
 	    };
 
-	    _this.handleRowClick = function () {
-	      return _this.__handleRowClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleRowClick = function (rowIndex, cellIndex) {
+	      var _this$props2 = _this.props,
+	          onRowClick = _this$props2.onRowClick,
+	          selectRow = _this$props2.selectRow;
+
+	      if (_util2.default.isSelectRowDefined(selectRow.mode)) cellIndex--;
+	      if (_this._isExpandColumnVisible()) cellIndex--;
+	      onRowClick(_this.props.data[rowIndex - 1], rowIndex - 1, cellIndex);
 	    };
 
-	    _this.handleRowDoubleClick = function () {
-	      return _this.__handleRowDoubleClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleRowDoubleClick = function (rowIndex) {
+	      var onRowDoubleClick = _this.props.onRowDoubleClick;
+
+	      var targetRow = _this.props.data[rowIndex];
+	      onRowDoubleClick(targetRow);
 	    };
 
-	    _this.handleSelectRow = function () {
-	      return _this.__handleSelectRow__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleSelectRow = function (rowIndex, isSelected, e) {
+	      var selectedRow = void 0;
+	      var _this$props3 = _this.props,
+	          data = _this$props3.data,
+	          onSelectRow = _this$props3.onSelectRow;
+
+	      data.forEach(function (row, i) {
+	        if (i === rowIndex - 1) {
+	          selectedRow = row;
+	          return false;
+	        }
+	      });
+	      onSelectRow(selectedRow, isSelected, e, rowIndex - 1);
 	    };
 
-	    _this.handleSelectRowColumChange = function () {
-	      return _this.__handleSelectRowColumChange__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleSelectRowColumChange = function (e, rowIndex) {
+	      if (!_this.props.selectRow.clickToSelect || !_this.props.selectRow.clickToSelectAndEditCell) {
+	        _this.handleSelectRow(rowIndex + 1, e.currentTarget.checked, e);
+	      }
 	    };
 
-	    _this.handleClickCell = function () {
-	      return _this.__handleClickCell__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleClickCell = function (rowIndex) {
+	      var columnIndex = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -1;
+	      var _this$props4 = _this.props,
+	          columns = _this$props4.columns,
+	          keyField = _this$props4.keyField,
+	          expandBy = _this$props4.expandBy,
+	          expandableRow = _this$props4.expandableRow,
+	          _this$props4$selectRo = _this$props4.selectRow,
+	          mode = _this$props4$selectRo.mode,
+	          clickToExpand = _this$props4$selectRo.clickToExpand,
+	          hideSelectColumn = _this$props4$selectRo.hideSelectColumn,
+	          onlyOneExpanding = _this$props4.onlyOneExpanding;
+
+	      var isSelectRowDefined = _util2.default.isSelectRowDefined(mode);
+	      var selectRowAndExpand = isSelectRowDefined && !clickToExpand ? false : true;
+	      columnIndex = isSelectRowDefined && !hideSelectColumn ? columnIndex - 1 : columnIndex;
+	      columnIndex = _this._isExpandColumnVisible() ? columnIndex - 1 : columnIndex;
+	      if (expandableRow && selectRowAndExpand && (expandBy === _Const2.default.EXPAND_BY_ROW ||
+	      /* Below will allow expanding trigger by clicking on selection column
+	      if configure as expanding by column */
+	      expandBy === _Const2.default.EXPAND_BY_COL && columnIndex < 0 || expandBy === _Const2.default.EXPAND_BY_COL && columns[columnIndex].expandable)) {
+	        var expanding = _this.props.expanding;
+	        var rowKey = _this.props.data[rowIndex - 1][keyField];
+	        var isRowExpanding = expanding.indexOf(rowKey) > -1;
+
+	        if (isRowExpanding) {
+	          // collapse
+	          expanding = expanding.filter(function (k) {
+	            return k !== rowKey;
+	          });
+	        } else {
+	          // expand
+	          if (onlyOneExpanding) expanding = [rowKey];else expanding.push(rowKey);
+	        }
+	        _this.props.onExpand(expanding, rowKey, isRowExpanding);
+	      }
 	    };
 
-	    _this.handleEditCell = function () {
-	      return _this.__handleEditCell__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleEditCell = function (rowIndex, columnIndex, action, e) {
+	      var selectRow = _this.props.selectRow;
+
+	      var defineSelectRow = _util2.default.isSelectRowDefined(selectRow.mode);
+	      var expandColumnVisible = _this._isExpandColumnVisible();
+	      if (defineSelectRow) {
+	        columnIndex--;
+	        if (selectRow.hideSelectColumn) columnIndex++;
+	      }
+	      if (expandColumnVisible) {
+	        columnIndex--;
+	      }
+	      rowIndex--;
+
+	      if (action === 'tab') {
+	        if (defineSelectRow && !selectRow.hideSelectColumn) columnIndex++;
+	        if (expandColumnVisible) columnIndex++;
+	        _this.handleCompleteEditCell(e.target.value, rowIndex, columnIndex - 1);
+	        if (columnIndex >= _this.props.columns.length) {
+	          _this.handleCellKeyDown(e, true);
+	        } else {
+	          _this.handleCellKeyDown(e);
+	        }
+
+	        var _this$nextEditableCel = _this.nextEditableCell(rowIndex, columnIndex),
+	            nextRIndex = _this$nextEditableCel.nextRIndex,
+	            nextCIndex = _this$nextEditableCel.nextCIndex;
+
+	        rowIndex = nextRIndex;
+	        columnIndex = nextCIndex;
+	      }
+
+	      var stateObj = {
+	        currEditCell: {
+	          rid: rowIndex,
+	          cid: columnIndex
+	        }
+	      };
+
+	      if (_this.props.selectRow.clickToSelectAndEditCell && _this.props.cellEdit.mode !== _Const2.default.CELL_EDIT_DBCLICK) {
+	        var selected = _this.props.selectedRowKeys.indexOf(_this.props.data[rowIndex][_this.props.keyField]) !== -1;
+	        _this.handleSelectRow(rowIndex + 1, !selected, e);
+	      }
+	      _this.setState(function () {
+	        return stateObj;
+	      });
 	    };
 
-	    _this.nextEditableCell = function () {
-	      return _this.__nextEditableCell__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.nextEditableCell = function (rIndex, cIndex) {
+	      var keyField = _this.props.keyField;
+
+	      var nextRIndex = rIndex;
+	      var nextCIndex = cIndex;
+	      var row = void 0;
+	      var column = void 0;
+	      do {
+	        if (nextCIndex >= _this.props.columns.length) {
+	          nextRIndex++;
+	          nextCIndex = 0;
+	        }
+	        row = _this.props.data[nextRIndex];
+	        column = _this.props.columns[nextCIndex];
+	        if (!row) break;
+	        var editable = column.editable;
+	        if (_util2.default.isFunction(column.editable)) {
+	          editable = column.editable(column, row, nextRIndex, nextCIndex);
+	        }
+	        if (editable && editable.readOnly !== true && !column.hidden && keyField !== column.name) {
+	          break;
+	        } else {
+	          nextCIndex++;
+	        }
+	      } while (row);
+	      return { nextRIndex: nextRIndex, nextCIndex: nextCIndex };
 	    };
 
-	    _this.handleCompleteEditCell = function () {
-	      return _this.__handleCompleteEditCell__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleCompleteEditCell = function (newVal, rowIndex, columnIndex) {
+	      if (newVal !== null) {
+	        var result = _this.props.onEditCell(newVal, rowIndex, columnIndex);
+	        if (result !== _Const2.default.AWAIT_BEFORE_CELL_EDIT) {
+	          _this.setState(function () {
+	            return { currEditCell: null };
+	          });
+	        }
+	      } else {
+	        _this.setState(function () {
+	          return { currEditCell: null };
+	        });
+	      }
 	    };
 
 	    _this.cancelEditCell = function () {
-	      return _this.__cancelEditCell__REACT_HOT_LOADER__.apply(_this, arguments);
+	      _this.setState(function () {
+	        return { currEditCell: null };
+	      });
 	    };
 
-	    _this.handleClickonSelectColumn = function () {
-	      return _this.__handleClickonSelectColumn__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleClickonSelectColumn = function (e, isSelect, rowIndex, row) {
+	      e.stopPropagation();
+	      if (e.target.tagName === 'TD' && (_this.props.selectRow.clickToSelect || _this.props.selectRow.clickToSelectAndEditCell)) {
+	        var unselectable = _this.props.selectRow.unselectable || [];
+	        if (unselectable.indexOf(row[_this.props.keyField]) === -1) {
+	          _this.handleSelectRow(rowIndex + 1, isSelect, e);
+	          _this.handleClickCell(rowIndex + 1);
+	        }
+	      }
 	    };
 
 	    _this.getHeaderColGrouop = function () {
-	      return _this.__getHeaderColGrouop__REACT_HOT_LOADER__.apply(_this, arguments);
+	      return _this.refs.header.childNodes;
 	    };
 
 	    _this.state = {
@@ -7159,76 +6925,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  _createClass(TableBody, [{
-	    key: '__getHeaderColGrouop__REACT_HOT_LOADER__',
-	    value: function __getHeaderColGrouop__REACT_HOT_LOADER__() {
-	      return this.__getHeaderColGrouop__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleClickonSelectColumn__REACT_HOT_LOADER__',
-	    value: function __handleClickonSelectColumn__REACT_HOT_LOADER__() {
-	      return this.__handleClickonSelectColumn__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__cancelEditCell__REACT_HOT_LOADER__',
-	    value: function __cancelEditCell__REACT_HOT_LOADER__() {
-	      return this.__cancelEditCell__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleCompleteEditCell__REACT_HOT_LOADER__',
-	    value: function __handleCompleteEditCell__REACT_HOT_LOADER__() {
-	      return this.__handleCompleteEditCell__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__nextEditableCell__REACT_HOT_LOADER__',
-	    value: function __nextEditableCell__REACT_HOT_LOADER__() {
-	      return this.__nextEditableCell__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleEditCell__REACT_HOT_LOADER__',
-	    value: function __handleEditCell__REACT_HOT_LOADER__() {
-	      return this.__handleEditCell__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleClickCell__REACT_HOT_LOADER__',
-	    value: function __handleClickCell__REACT_HOT_LOADER__() {
-	      return this.__handleClickCell__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleSelectRowColumChange__REACT_HOT_LOADER__',
-	    value: function __handleSelectRowColumChange__REACT_HOT_LOADER__() {
-	      return this.__handleSelectRowColumChange__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleSelectRow__REACT_HOT_LOADER__',
-	    value: function __handleSelectRow__REACT_HOT_LOADER__() {
-	      return this.__handleSelectRow__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleRowDoubleClick__REACT_HOT_LOADER__',
-	    value: function __handleRowDoubleClick__REACT_HOT_LOADER__() {
-	      return this.__handleRowDoubleClick__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleRowClick__REACT_HOT_LOADER__',
-	    value: function __handleRowClick__REACT_HOT_LOADER__() {
-	      return this.__handleRowClick__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleRowMouseOver__REACT_HOT_LOADER__',
-	    value: function __handleRowMouseOver__REACT_HOT_LOADER__() {
-	      return this.__handleRowMouseOver__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleRowMouseOut__REACT_HOT_LOADER__',
-	    value: function __handleRowMouseOut__REACT_HOT_LOADER__() {
-	      return this.__handleRowMouseOut__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleCellKeyDown__REACT_HOT_LOADER__',
-	    value: function __handleCellKeyDown__REACT_HOT_LOADER__() {
-	      return this.__handleCellKeyDown__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props,
@@ -7455,251 +7151,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      );
 	    }
 	  }, {
-	    key: '__handleCellKeyDown__REACT_HOT_LOADER__',
-	    value: function __handleCellKeyDown__REACT_HOT_LOADER__(e, lastEditCell) {
-	      e.preventDefault();
-	      var _props2 = this.props,
-	          keyBoardNav = _props2.keyBoardNav,
-	          onNavigateCell = _props2.onNavigateCell,
-	          cellEdit = _props2.cellEdit;
-
-	      var offset = void 0;
-	      if (e.keyCode === 37) {
-	        offset = { x: -1, y: 0 };
-	      } else if (e.keyCode === 38) {
-	        offset = { x: 0, y: -1 };
-	      } else if (e.keyCode === 39 || e.keyCode === 9) {
-	        offset = { x: 1, y: 0 };
-	        if (e.keyCode === 9 && lastEditCell) {
-	          offset = _extends({}, offset, {
-	            lastEditCell: lastEditCell
-	          });
-	        }
-	      } else if (e.keyCode === 40) {
-	        offset = { x: 0, y: 1 };
-	      } else if (e.keyCode === 13) {
-	        var enterToEdit = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.enterToEdit : false;
-	        var enterToExpand = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.enterToExpand : false;
-
-	        if (cellEdit && enterToEdit) {
-	          this.handleEditCell(e.target.parentElement.rowIndex + 1, e.currentTarget.cellIndex, '', e);
-	        }
-
-	        if (enterToExpand) {
-	          this.handleClickCell(this.props.y + 1, this.props.x);
-	        }
-	      }
-	      if (offset && keyBoardNav) {
-	        onNavigateCell(offset);
-	      }
-	    }
-	  }, {
-	    key: '__handleRowMouseOut__REACT_HOT_LOADER__',
-	    value: function __handleRowMouseOut__REACT_HOT_LOADER__(rowIndex, event) {
-	      var targetRow = this.props.data[rowIndex];
-	      this.props.onRowMouseOut(targetRow, event);
-	    }
-	  }, {
-	    key: '__handleRowMouseOver__REACT_HOT_LOADER__',
-	    value: function __handleRowMouseOver__REACT_HOT_LOADER__(rowIndex, event) {
-	      var targetRow = this.props.data[rowIndex];
-	      this.props.onRowMouseOver(targetRow, event);
-	    }
-	  }, {
-	    key: '__handleRowClick__REACT_HOT_LOADER__',
-	    value: function __handleRowClick__REACT_HOT_LOADER__(rowIndex, cellIndex) {
-	      var _props3 = this.props,
-	          onRowClick = _props3.onRowClick,
-	          selectRow = _props3.selectRow;
-
-	      if (_util2.default.isSelectRowDefined(selectRow.mode)) cellIndex--;
-	      if (this._isExpandColumnVisible()) cellIndex--;
-	      onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex);
-	    }
-	  }, {
-	    key: '__handleRowDoubleClick__REACT_HOT_LOADER__',
-	    value: function __handleRowDoubleClick__REACT_HOT_LOADER__(rowIndex) {
-	      var onRowDoubleClick = this.props.onRowDoubleClick;
-
-	      var targetRow = this.props.data[rowIndex];
-	      onRowDoubleClick(targetRow);
-	    }
-	  }, {
-	    key: '__handleSelectRow__REACT_HOT_LOADER__',
-	    value: function __handleSelectRow__REACT_HOT_LOADER__(rowIndex, isSelected, e) {
-	      var selectedRow = void 0;
-	      var _props4 = this.props,
-	          data = _props4.data,
-	          onSelectRow = _props4.onSelectRow;
-
-	      data.forEach(function (row, i) {
-	        if (i === rowIndex - 1) {
-	          selectedRow = row;
-	          return false;
-	        }
-	      });
-	      onSelectRow(selectedRow, isSelected, e, rowIndex - 1);
-	    }
-	  }, {
-	    key: '__handleSelectRowColumChange__REACT_HOT_LOADER__',
-	    value: function __handleSelectRowColumChange__REACT_HOT_LOADER__(e, rowIndex) {
-	      if (!this.props.selectRow.clickToSelect || !this.props.selectRow.clickToSelectAndEditCell) {
-	        this.handleSelectRow(rowIndex + 1, e.currentTarget.checked, e);
-	      }
-	    }
-	  }, {
-	    key: '__handleClickCell__REACT_HOT_LOADER__',
-	    value: function __handleClickCell__REACT_HOT_LOADER__(rowIndex) {
-	      var columnIndex = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -1;
-	      var _props5 = this.props,
-	          columns = _props5.columns,
-	          keyField = _props5.keyField,
-	          expandBy = _props5.expandBy,
-	          expandableRow = _props5.expandableRow,
-	          _props5$selectRow = _props5.selectRow,
-	          mode = _props5$selectRow.mode,
-	          clickToExpand = _props5$selectRow.clickToExpand,
-	          hideSelectColumn = _props5$selectRow.hideSelectColumn,
-	          onlyOneExpanding = _props5.onlyOneExpanding;
-
-	      var isSelectRowDefined = _util2.default.isSelectRowDefined(mode);
-	      var selectRowAndExpand = isSelectRowDefined && !clickToExpand ? false : true;
-	      columnIndex = isSelectRowDefined && !hideSelectColumn ? columnIndex - 1 : columnIndex;
-	      columnIndex = this._isExpandColumnVisible() ? columnIndex - 1 : columnIndex;
-	      if (expandableRow && selectRowAndExpand && (expandBy === _Const2.default.EXPAND_BY_ROW ||
-	      /* Below will allow expanding trigger by clicking on selection column
-	      if configure as expanding by column */
-	      expandBy === _Const2.default.EXPAND_BY_COL && columnIndex < 0 || expandBy === _Const2.default.EXPAND_BY_COL && columns[columnIndex].expandable)) {
-	        var expanding = this.props.expanding;
-	        var rowKey = this.props.data[rowIndex - 1][keyField];
-	        var isRowExpanding = expanding.indexOf(rowKey) > -1;
-
-	        if (isRowExpanding) {
-	          // collapse
-	          expanding = expanding.filter(function (k) {
-	            return k !== rowKey;
-	          });
-	        } else {
-	          // expand
-	          if (onlyOneExpanding) expanding = [rowKey];else expanding.push(rowKey);
-	        }
-	        this.props.onExpand(expanding, rowKey, isRowExpanding);
-	      }
-	    }
-	  }, {
-	    key: '__handleEditCell__REACT_HOT_LOADER__',
-	    value: function __handleEditCell__REACT_HOT_LOADER__(rowIndex, columnIndex, action, e) {
-	      var selectRow = this.props.selectRow;
-
-	      var defineSelectRow = _util2.default.isSelectRowDefined(selectRow.mode);
-	      var expandColumnVisible = this._isExpandColumnVisible();
-	      if (defineSelectRow) {
-	        columnIndex--;
-	        if (selectRow.hideSelectColumn) columnIndex++;
-	      }
-	      if (expandColumnVisible) {
-	        columnIndex--;
-	      }
-	      rowIndex--;
-
-	      if (action === 'tab') {
-	        if (defineSelectRow && !selectRow.hideSelectColumn) columnIndex++;
-	        if (expandColumnVisible) columnIndex++;
-	        this.handleCompleteEditCell(e.target.value, rowIndex, columnIndex - 1);
-	        if (columnIndex >= this.props.columns.length) {
-	          this.handleCellKeyDown(e, true);
-	        } else {
-	          this.handleCellKeyDown(e);
-	        }
-
-	        var _nextEditableCell = this.nextEditableCell(rowIndex, columnIndex),
-	            nextRIndex = _nextEditableCell.nextRIndex,
-	            nextCIndex = _nextEditableCell.nextCIndex;
-
-	        rowIndex = nextRIndex;
-	        columnIndex = nextCIndex;
-	      }
-
-	      var stateObj = {
-	        currEditCell: {
-	          rid: rowIndex,
-	          cid: columnIndex
-	        }
-	      };
-
-	      if (this.props.selectRow.clickToSelectAndEditCell && this.props.cellEdit.mode !== _Const2.default.CELL_EDIT_DBCLICK) {
-	        var selected = this.props.selectedRowKeys.indexOf(this.props.data[rowIndex][this.props.keyField]) !== -1;
-	        this.handleSelectRow(rowIndex + 1, !selected, e);
-	      }
-	      this.setState(function () {
-	        return stateObj;
-	      });
-	    }
-	  }, {
-	    key: '__nextEditableCell__REACT_HOT_LOADER__',
-	    value: function __nextEditableCell__REACT_HOT_LOADER__(rIndex, cIndex) {
-	      var keyField = this.props.keyField;
-
-	      var nextRIndex = rIndex;
-	      var nextCIndex = cIndex;
-	      var row = void 0;
-	      var column = void 0;
-	      do {
-	        if (nextCIndex >= this.props.columns.length) {
-	          nextRIndex++;
-	          nextCIndex = 0;
-	        }
-	        row = this.props.data[nextRIndex];
-	        column = this.props.columns[nextCIndex];
-	        if (!row) break;
-	        var editable = column.editable;
-	        if (_util2.default.isFunction(column.editable)) {
-	          editable = column.editable(column, row, nextRIndex, nextCIndex);
-	        }
-	        if (editable && editable.readOnly !== true && !column.hidden && keyField !== column.name) {
-	          break;
-	        } else {
-	          nextCIndex++;
-	        }
-	      } while (row);
-	      return { nextRIndex: nextRIndex, nextCIndex: nextCIndex };
-	    }
-	  }, {
-	    key: '__handleCompleteEditCell__REACT_HOT_LOADER__',
-	    value: function __handleCompleteEditCell__REACT_HOT_LOADER__(newVal, rowIndex, columnIndex) {
-	      if (newVal !== null) {
-	        var result = this.props.onEditCell(newVal, rowIndex, columnIndex);
-	        if (result !== _Const2.default.AWAIT_BEFORE_CELL_EDIT) {
-	          this.setState(function () {
-	            return { currEditCell: null };
-	          });
-	        }
-	      } else {
-	        this.setState(function () {
-	          return { currEditCell: null };
-	        });
-	      }
-	    }
-	  }, {
-	    key: '__cancelEditCell__REACT_HOT_LOADER__',
-	    value: function __cancelEditCell__REACT_HOT_LOADER__() {
-	      this.setState(function () {
-	        return { currEditCell: null };
-	      });
-	    }
-	  }, {
-	    key: '__handleClickonSelectColumn__REACT_HOT_LOADER__',
-	    value: function __handleClickonSelectColumn__REACT_HOT_LOADER__(e, isSelect, rowIndex, row) {
-	      e.stopPropagation();
-	      if (e.target.tagName === 'TD' && (this.props.selectRow.clickToSelect || this.props.selectRow.clickToSelectAndEditCell)) {
-	        var unselectable = this.props.selectRow.unselectable || [];
-	        if (unselectable.indexOf(row[this.props.keyField]) === -1) {
-	          this.handleSelectRow(rowIndex + 1, isSelect, e);
-	          this.handleClickCell(rowIndex + 1);
-	        }
-	      }
-	    }
-	  }, {
 	    key: 'renderSelectRowColumn',
 	    value: function renderSelectRowColumn(selected, inputType, disabled) {
 	      var CustomComponent = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
@@ -7755,11 +7206,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function _isExpandColumnVisible() {
 	      return this.props.expandColumnOptions.expandColumnVisible;
 	    }
-	  }, {
-	    key: '__getHeaderColGrouop__REACT_HOT_LOADER__',
-	    value: function __getHeaderColGrouop__REACT_HOT_LOADER__() {
-	      return this.refs.header.childNodes;
-	    }
 	  }]);
 
 	  return TableBody;
@@ -7799,21 +7245,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onNavigateCell: _propTypes2.default.func,
 	  withoutTabIndex: _propTypes2.default.bool
 	};
-	var _default = TableBody;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(TableBody, 'TableBody', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableBody.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableBody.js');
-	}();
-
-	;
+		exports.default = TableBody;
 
 /***/ }),
 /* 35 */
@@ -7862,24 +7294,72 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var _this = _possibleConstructorReturn(this, (TableRow.__proto__ || Object.getPrototypeOf(TableRow)).call(this, props));
 
-	    _this.rowClick = function () {
-	      return _this.__rowClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.rowClick = function (e) {
+	      var rowIndex = _this.props.index + 1;
+	      var cellIndex = e.target.cellIndex;
+	      if (_this.props.onRowClick) _this.props.onRowClick(rowIndex, cellIndex);
+	      var _this$props = _this.props,
+	          selectRow = _this$props.selectRow,
+	          unselectableRow = _this$props.unselectableRow,
+	          isSelected = _this$props.isSelected,
+	          onSelectRow = _this$props.onSelectRow,
+	          onExpandRow = _this$props.onExpandRow,
+	          dbClickToEdit = _this$props.dbClickToEdit;
+
+	      if (selectRow) {
+	        if (selectRow.clickToSelect && !unselectableRow) {
+	          onSelectRow(rowIndex, !isSelected, e);
+	        } else if (selectRow.clickToSelectAndEditCell && !unselectableRow) {
+	          _this.clickNum++;
+	          /** if clickToSelectAndEditCell is enabled,
+	           *  there should be a delay to prevent a selection changed when
+	           *  user dblick to edit cell on same row but different cell
+	          **/
+	          setTimeout(function () {
+	            if (_this.clickNum === 1) {
+	              onSelectRow(rowIndex, !isSelected, e);
+	              onExpandRow(rowIndex, cellIndex);
+	            }
+	            _this.clickNum = 0;
+	          }, 200);
+	        } else {
+	          if (dbClickToEdit) {
+	            _this.expandRow(rowIndex, cellIndex);
+	          }
+	        }
+	      }
 	    };
 
-	    _this.expandRow = function () {
-	      return _this.__expandRow__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.expandRow = function (rowIndex, cellIndex) {
+	      _this.clickNum++;
+	      setTimeout(function () {
+	        if (_this.clickNum === 1) {
+	          _this.props.onExpandRow(rowIndex, cellIndex);
+	        }
+	        _this.clickNum = 0;
+	      }, 200);
 	    };
 
-	    _this.rowDoubleClick = function () {
-	      return _this.__rowDoubleClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.rowDoubleClick = function (e) {
+	      if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT' && e.target.tagName !== 'TEXTAREA') {
+	        if (_this.props.onRowDoubleClick) {
+	          _this.props.onRowDoubleClick(_this.props.index);
+	        }
+	      }
 	    };
 
-	    _this.rowMouseOut = function () {
-	      return _this.__rowMouseOut__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.rowMouseOut = function (e) {
+	      var rowIndex = _this.props.index;
+	      if (_this.props.onRowMouseOut) {
+	        _this.props.onRowMouseOut(rowIndex, e);
+	      }
 	    };
 
-	    _this.rowMouseOver = function () {
-	      return _this.__rowMouseOver__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.rowMouseOver = function (e) {
+	      var rowIndex = _this.props.index;
+	      if (_this.props.onRowMouseOver) {
+	        _this.props.onRowMouseOver(rowIndex, e);
+	      }
 	    };
 
 	    _this.clickNum = 0;
@@ -7887,117 +7367,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  _createClass(TableRow, [{
-	    key: '__rowMouseOver__REACT_HOT_LOADER__',
-	    value: function __rowMouseOver__REACT_HOT_LOADER__() {
-	      return this.__rowMouseOver__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__rowMouseOut__REACT_HOT_LOADER__',
-	    value: function __rowMouseOut__REACT_HOT_LOADER__() {
-	      return this.__rowMouseOut__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__rowDoubleClick__REACT_HOT_LOADER__',
-	    value: function __rowDoubleClick__REACT_HOT_LOADER__() {
-	      return this.__rowDoubleClick__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__expandRow__REACT_HOT_LOADER__',
-	    value: function __expandRow__REACT_HOT_LOADER__() {
-	      return this.__expandRow__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__rowClick__REACT_HOT_LOADER__',
-	    value: function __rowClick__REACT_HOT_LOADER__() {
-	      return this.__rowClick__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__rowClick__REACT_HOT_LOADER__',
-	    value: function __rowClick__REACT_HOT_LOADER__(e) {
-	      var _this2 = this;
-
-	      var rowIndex = this.props.index + 1;
-	      var cellIndex = e.target.cellIndex;
-	      if (this.props.onRowClick) this.props.onRowClick(rowIndex, cellIndex);
-	      var _props = this.props,
-	          selectRow = _props.selectRow,
-	          unselectableRow = _props.unselectableRow,
-	          isSelected = _props.isSelected,
-	          onSelectRow = _props.onSelectRow,
-	          onExpandRow = _props.onExpandRow,
-	          dbClickToEdit = _props.dbClickToEdit;
-
-	      if (selectRow) {
-	        if (selectRow.clickToSelect && !unselectableRow) {
-	          onSelectRow(rowIndex, !isSelected, e);
-	        } else if (selectRow.clickToSelectAndEditCell && !unselectableRow) {
-	          this.clickNum++;
-	          /** if clickToSelectAndEditCell is enabled,
-	           *  there should be a delay to prevent a selection changed when
-	           *  user dblick to edit cell on same row but different cell
-	          **/
-	          setTimeout(function () {
-	            if (_this2.clickNum === 1) {
-	              onSelectRow(rowIndex, !isSelected, e);
-	              onExpandRow(rowIndex, cellIndex);
-	            }
-	            _this2.clickNum = 0;
-	          }, 200);
-	        } else {
-	          if (dbClickToEdit) {
-	            this.expandRow(rowIndex, cellIndex);
-	          }
-	        }
-	      }
-	    }
-	  }, {
-	    key: '__expandRow__REACT_HOT_LOADER__',
-	    value: function __expandRow__REACT_HOT_LOADER__(rowIndex, cellIndex) {
-	      var _this3 = this;
-
-	      this.clickNum++;
-	      setTimeout(function () {
-	        if (_this3.clickNum === 1) {
-	          _this3.props.onExpandRow(rowIndex, cellIndex);
-	        }
-	        _this3.clickNum = 0;
-	      }, 200);
-	    }
-	  }, {
-	    key: '__rowDoubleClick__REACT_HOT_LOADER__',
-	    value: function __rowDoubleClick__REACT_HOT_LOADER__(e) {
-	      if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT' && e.target.tagName !== 'TEXTAREA') {
-	        if (this.props.onRowDoubleClick) {
-	          this.props.onRowDoubleClick(this.props.index);
-	        }
-	      }
-	    }
-	  }, {
-	    key: '__rowMouseOut__REACT_HOT_LOADER__',
-	    value: function __rowMouseOut__REACT_HOT_LOADER__(e) {
-	      var rowIndex = this.props.index;
-	      if (this.props.onRowMouseOut) {
-	        this.props.onRowMouseOut(rowIndex, e);
-	      }
-	    }
-	  }, {
-	    key: '__rowMouseOver__REACT_HOT_LOADER__',
-	    value: function __rowMouseOver__REACT_HOT_LOADER__(e) {
-	      var rowIndex = this.props.index;
-	      if (this.props.onRowMouseOver) {
-	        this.props.onRowMouseOver(rowIndex, e);
-	      }
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      this.clickNum = 0;
-	      var _props2 = this.props,
-	          selectRow = _props2.selectRow,
-	          row = _props2.row,
-	          isSelected = _props2.isSelected,
-	          className = _props2.className,
-	          index = _props2.index;
+	      var _props = this.props,
+	          selectRow = _props.selectRow,
+	          row = _props.row,
+	          isSelected = _props.isSelected,
+	          className = _props.className,
+	          index = _props.index;
 	      var style = this.props.style;
 
 	      var backgroundColor = null;
@@ -8056,21 +7434,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onRowClick: undefined,
 	  onRowDoubleClick: undefined
 	};
-	var _default = TableRow;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(TableRow, 'TableRow', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableRow.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableRow.js');
-	}();
-
-	;
+		exports.default = TableRow;
 
 /***/ }),
 /* 36 */
@@ -8124,16 +7488,37 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var _this = _possibleConstructorReturn(this, (TableColumn.__proto__ || Object.getPrototypeOf(TableColumn)).call(this, props));
 
-	    _this.handleCellEdit = function () {
-	      return _this.__handleCellEdit__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleCellEdit = function (e) {
+	      try {
+	        if (_this.props.cellEdit.mode === _Const2.default.CELL_EDIT_DBCLICK) {
+	          if (document.selection && document.selection.empty) {
+	            document.selection.empty();
+	          } else if (window.getSelection) {
+	            var sel = window.getSelection();
+	            sel.removeAllRanges();
+	          }
+	        }
+	      } catch (err) {} /* eslint no-empty: 0 */
+	      _this.props.onEdit(_this.props.rIndex + 1, e.currentTarget.cellIndex, e);
+	      if (_this.props.cellEdit.mode !== _Const2.default.CELL_EDIT_DBCLICK) {
+	        _this.props.onClick(_this.props.rIndex + 1, e.currentTarget.cellIndex, e);
+	      }
 	    };
 
-	    _this.handleCellClick = function () {
-	      return _this.__handleCellClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleCellClick = function (e) {
+	      var _this$props = _this.props,
+	          onClick = _this$props.onClick,
+	          rIndex = _this$props.rIndex;
+
+	      if (onClick) {
+	        onClick(rIndex + 1, e.currentTarget.cellIndex, e);
+	      }
 	    };
 
-	    _this.handleKeyDown = function () {
-	      return _this.__handleKeyDown__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleKeyDown = function (e) {
+	      if (_this.props.keyBoardNav) {
+	        _this.props.onKeyDown(e);
+	      }
 	    };
 
 	    return _this;
@@ -8142,21 +7527,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	  _createClass(TableColumn, [{
-	    key: '__handleKeyDown__REACT_HOT_LOADER__',
-	    value: function __handleKeyDown__REACT_HOT_LOADER__() {
-	      return this.__handleKeyDown__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleCellClick__REACT_HOT_LOADER__',
-	    value: function __handleCellClick__REACT_HOT_LOADER__() {
-	      return this.__handleCellClick__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleCellEdit__REACT_HOT_LOADER__',
-	    value: function __handleCellEdit__REACT_HOT_LOADER__() {
-	      return this.__handleCellEdit__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
 	    key: 'shouldComponentUpdate',
 	    value: function shouldComponentUpdate(nextProps, nextState) {
 	      var children = this.props.children;
@@ -8208,58 +7578,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  }, {
-	    key: '__handleCellEdit__REACT_HOT_LOADER__',
-	    value: function __handleCellEdit__REACT_HOT_LOADER__(e) {
-	      try {
-	        if (this.props.cellEdit.mode === _Const2.default.CELL_EDIT_DBCLICK) {
-	          if (document.selection && document.selection.empty) {
-	            document.selection.empty();
-	          } else if (window.getSelection) {
-	            var sel = window.getSelection();
-	            sel.removeAllRanges();
-	          }
-	        }
-	      } catch (err) {} /* eslint no-empty: 0 */
-	      this.props.onEdit(this.props.rIndex + 1, e.currentTarget.cellIndex, e);
-	      if (this.props.cellEdit.mode !== _Const2.default.CELL_EDIT_DBCLICK) {
-	        this.props.onClick(this.props.rIndex + 1, e.currentTarget.cellIndex, e);
-	      }
-	    }
-	  }, {
-	    key: '__handleCellClick__REACT_HOT_LOADER__',
-	    value: function __handleCellClick__REACT_HOT_LOADER__(e) {
-	      var _props = this.props,
-	          onClick = _props.onClick,
-	          rIndex = _props.rIndex;
-
-	      if (onClick) {
-	        onClick(rIndex + 1, e.currentTarget.cellIndex, e);
-	      }
-	    }
-	  }, {
-	    key: '__handleKeyDown__REACT_HOT_LOADER__',
-	    value: function __handleKeyDown__REACT_HOT_LOADER__(e) {
-	      if (this.props.keyBoardNav) {
-	        this.props.onKeyDown(e);
-	      }
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props2 = this.props,
-	          children = _props2.children,
-	          columnTitle = _props2.columnTitle,
-	          dataAlign = _props2.dataAlign,
-	          hidden = _props2.hidden,
-	          cellEdit = _props2.cellEdit,
-	          attrs = _props2.attrs,
-	          style = _props2.style,
-	          isFocus = _props2.isFocus,
-	          keyBoardNav = _props2.keyBoardNav,
-	          tabIndex = _props2.tabIndex,
-	          customNavStyle = _props2.customNavStyle,
-	          withoutTabIndex = _props2.withoutTabIndex,
-	          row = _props2.row;
+	      var _props = this.props,
+	          children = _props.children,
+	          columnTitle = _props.columnTitle,
+	          dataAlign = _props.dataAlign,
+	          hidden = _props.hidden,
+	          cellEdit = _props.cellEdit,
+	          attrs = _props.attrs,
+	          style = _props.style,
+	          isFocus = _props.isFocus,
+	          keyBoardNav = _props.keyBoardNav,
+	          tabIndex = _props.tabIndex,
+	          customNavStyle = _props.customNavStyle,
+	          withoutTabIndex = _props.withoutTabIndex,
+	          row = _props.row;
 	      var className = this.props.className;
 
 
@@ -8336,21 +7670,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  isFocus: false,
 	  keyBoardNav: false
 	};
-	var _default = TableColumn;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(TableColumn, 'TableColumn', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableColumn.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableColumn.js');
-	}();
-
-	;
+		exports.default = TableColumn;
 
 /***/ }),
 /* 37 */
@@ -8410,36 +7730,98 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var _this = _possibleConstructorReturn(this, (TableEditColumn.__proto__ || Object.getPrototypeOf(TableEditColumn)).call(this, props));
 
-	    _this.handleKeyPress = function () {
-	      return _this.__handleKeyPress__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleKeyPress = function (e) {
+	      if (e.keyCode === 13 || e.keyCode === 9) {
+	        // Pressed ENTER or TAB
+	        var value = e.currentTarget.type === 'checkbox' ? _this._getCheckBoxValue(e) : e.currentTarget.value;
+
+	        if (e.keyCode === 9 && _this.props.blurToSave || !_this.validator(value)) {
+	          return;
+	        }
+
+	        if (e.keyCode === 13) {
+	          _this.props.completeEdit(value, _this.props.rowIndex, _this.props.colIndex);
+	        } else {
+	          _this.props.onTab(_this.props.rowIndex + 1, _this.props.colIndex + 1, 'tab', e);
+	          e.preventDefault();
+	        }
+	      } else if (e.keyCode === 27) {
+	        _this.props.completeEdit(null, _this.props.rowIndex, _this.props.colIndex);
+	      } else if (e.type === 'click' && !_this.props.blurToSave) {
+	        // textarea click save button
+	        var _value = e.target.parentElement.firstChild.value;
+	        if (!_this.validator(_value)) {
+	          return;
+	        }
+	        _this.props.completeEdit(_value, _this.props.rowIndex, _this.props.colIndex);
+	      }
 	    };
 
-	    _this.handleBlur = function () {
-	      return _this.__handleBlur__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleBlur = function (e) {
+	      e.stopPropagation();
+	      if (_this.props.blurToSave) {
+	        var value = e.currentTarget.type === 'checkbox' ? _this._getCheckBoxValue(e) : e.currentTarget.value;
+	        if (!_this.validator(value)) {
+	          return false;
+	        }
+	        _this.props.completeEdit(value, _this.props.rowIndex, _this.props.colIndex);
+	      } else if (_this.props.blurToEscape) {
+	        _this.props.completeEdit(null, _this.props.rowIndex, _this.props.colIndex);
+	      }
 	    };
 
-	    _this.handleCustomUpdate = function () {
-	      return _this.__handleCustomUpdate__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleCustomUpdate = function (value) {
+	      if (!_this.validator(value)) {
+	        return;
+	      }
+	      _this.props.completeEdit(value, _this.props.rowIndex, _this.props.colIndex);
 	    };
 
-	    _this.notifyToastr = function () {
-	      return _this.__notifyToastr__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.notifyToastr = function (type, message, title) {
+	      var toastr = true;
+	      var beforeShowError = _this.props.beforeShowError;
+
+	      if (beforeShowError) {
+	        toastr = beforeShowError(type, message, title);
+	      }
+	      if (toastr) {
+	        (0, _Notification.notice)(type, message, title);
+	      }
 	    };
 
-	    _this.handleClick = function () {
-	      return _this.__handleClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleClick = function (e) {
+	      if (e.target.tagName !== 'TD') {
+	        e.stopPropagation();
+	      }
 	    };
 
-	    _this.getInputRef = function () {
-	      return _this.__getInputRef__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.getInputRef = function (userRef) {
+	      return function (ref) {
+	        _this.inputRef = ref;
+	        if (_util2.default.isFunction(userRef)) {
+	          userRef(ref);
+	        } else if (typeof userRef === 'string') {
+	          throw new Error('Ref must be a function');
+	        }
+	      };
 	    };
 
-	    _this.getHandleKeyPress = function () {
-	      return _this.__getHandleKeyPress__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.getHandleKeyPress = function (customHandler) {
+	      return function (e) {
+	        _this.handleKeyPress(e);
+	        if (_util2.default.isFunction(customHandler)) {
+	          customHandler(e);
+	        }
+	      };
 	    };
 
-	    _this.getHandleBlur = function () {
-	      return _this.__getHandleBlur__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.getHandleBlur = function (customHandler) {
+	      return function (e) {
+	        _this.handleBlur(e);
+	        if (_util2.default.isFunction(customHandler)) {
+	          customHandler(e);
+	        }
+	      };
 	    };
 
 	    _this.timeouteClear = 0;
@@ -8457,106 +7839,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  _createClass(TableEditColumn, [{
-	    key: '__getHandleBlur__REACT_HOT_LOADER__',
-	    value: function __getHandleBlur__REACT_HOT_LOADER__() {
-	      return this.__getHandleBlur__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__getHandleKeyPress__REACT_HOT_LOADER__',
-	    value: function __getHandleKeyPress__REACT_HOT_LOADER__() {
-	      return this.__getHandleKeyPress__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__getInputRef__REACT_HOT_LOADER__',
-	    value: function __getInputRef__REACT_HOT_LOADER__() {
-	      return this.__getInputRef__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleClick__REACT_HOT_LOADER__',
-	    value: function __handleClick__REACT_HOT_LOADER__() {
-	      return this.__handleClick__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__notifyToastr__REACT_HOT_LOADER__',
-	    value: function __notifyToastr__REACT_HOT_LOADER__() {
-	      return this.__notifyToastr__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleCustomUpdate__REACT_HOT_LOADER__',
-	    value: function __handleCustomUpdate__REACT_HOT_LOADER__() {
-	      return this.__handleCustomUpdate__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleBlur__REACT_HOT_LOADER__',
-	    value: function __handleBlur__REACT_HOT_LOADER__() {
-	      return this.__handleBlur__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleKeyPress__REACT_HOT_LOADER__',
-	    value: function __handleKeyPress__REACT_HOT_LOADER__() {
-	      return this.__handleKeyPress__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
 	    key: 'valueShortCircuit',
 	    value: function valueShortCircuit(value) {
 	      return value === null || typeof value === 'undefined' ? '' : value;
 	    }
 	  }, {
-	    key: '__handleKeyPress__REACT_HOT_LOADER__',
-	    value: function __handleKeyPress__REACT_HOT_LOADER__(e) {
-	      if (e.keyCode === 13 || e.keyCode === 9) {
-	        // Pressed ENTER or TAB
-	        var value = e.currentTarget.type === 'checkbox' ? this._getCheckBoxValue(e) : e.currentTarget.value;
-
-	        if (e.keyCode === 9 && this.props.blurToSave || !this.validator(value)) {
-	          return;
-	        }
-
-	        if (e.keyCode === 13) {
-	          this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
-	        } else {
-	          this.props.onTab(this.props.rowIndex + 1, this.props.colIndex + 1, 'tab', e);
-	          e.preventDefault();
-	        }
-	      } else if (e.keyCode === 27) {
-	        this.props.completeEdit(null, this.props.rowIndex, this.props.colIndex);
-	      } else if (e.type === 'click' && !this.props.blurToSave) {
-	        // textarea click save button
-	        var _value = e.target.parentElement.firstChild.value;
-	        if (!this.validator(_value)) {
-	          return;
-	        }
-	        this.props.completeEdit(_value, this.props.rowIndex, this.props.colIndex);
-	      }
-	    }
-	  }, {
-	    key: '__handleBlur__REACT_HOT_LOADER__',
-	    value: function __handleBlur__REACT_HOT_LOADER__(e) {
-	      e.stopPropagation();
-	      if (this.props.blurToSave) {
-	        var value = e.currentTarget.type === 'checkbox' ? this._getCheckBoxValue(e) : e.currentTarget.value;
-	        if (!this.validator(value)) {
-	          return false;
-	        }
-	        this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
-	      } else if (this.props.blurToEscape) {
-	        this.props.completeEdit(null, this.props.rowIndex, this.props.colIndex);
-	      }
-	    }
-	  }, {
-	    key: '__handleCustomUpdate__REACT_HOT_LOADER__',
+	    key: 'validator',
 
 
 	    // modified by iuculanop
 	    // BEGIN
-	    value: function __handleCustomUpdate__REACT_HOT_LOADER__(value) {
-	      if (!this.validator(value)) {
-	        return;
-	      }
-	      this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
-	    }
-	  }, {
-	    key: 'validator',
 	    value: function validator(value) {
 	      var ts = this;
 	      var valid = true;
@@ -8590,19 +7882,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    // END
 
-	  }, {
-	    key: '__notifyToastr__REACT_HOT_LOADER__',
-	    value: function __notifyToastr__REACT_HOT_LOADER__(type, message, title) {
-	      var toastr = true;
-	      var beforeShowError = this.props.beforeShowError;
-
-	      if (beforeShowError) {
-	        toastr = beforeShowError(type, message, title);
-	      }
-	      if (toastr) {
-	        (0, _Notification.notice)(type, message, title);
-	      }
-	    }
 	  }, {
 	    key: 'clearTimeout',
 	    value: function (_clearTimeout) {
@@ -8653,51 +7932,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (this.inputRef && _util2.default.isFunction(this.inputRef.focus)) {
 	        this.inputRef.focus();
 	      }
-	    }
-	  }, {
-	    key: '__handleClick__REACT_HOT_LOADER__',
-	    value: function __handleClick__REACT_HOT_LOADER__(e) {
-	      if (e.target.tagName !== 'TD') {
-	        e.stopPropagation();
-	      }
-	    }
-	  }, {
-	    key: '__getInputRef__REACT_HOT_LOADER__',
-	    value: function __getInputRef__REACT_HOT_LOADER__(userRef) {
-	      var _this2 = this;
-
-	      return function (ref) {
-	        _this2.inputRef = ref;
-	        if (_util2.default.isFunction(userRef)) {
-	          userRef(ref);
-	        } else if (typeof userRef === 'string') {
-	          throw new Error('Ref must be a function');
-	        }
-	      };
-	    }
-	  }, {
-	    key: '__getHandleKeyPress__REACT_HOT_LOADER__',
-	    value: function __getHandleKeyPress__REACT_HOT_LOADER__(customHandler) {
-	      var _this3 = this;
-
-	      return function (e) {
-	        _this3.handleKeyPress(e);
-	        if (_util2.default.isFunction(customHandler)) {
-	          customHandler(e);
-	        }
-	      };
-	    }
-	  }, {
-	    key: '__getHandleBlur__REACT_HOT_LOADER__',
-	    value: function __getHandleBlur__REACT_HOT_LOADER__(customHandler) {
-	      var _this4 = this;
-
-	      return function (e) {
-	        _this4.handleBlur(e);
-	        if (_util2.default.isFunction(customHandler)) {
-	          customHandler(e);
-	        }
-	      };
 	    }
 	  }, {
 	    key: 'render',
@@ -8792,21 +8026,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  customStyleWithNav: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.object])
 	};
 
-	var _default = TableEditColumn;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(TableEditColumn, 'TableEditColumn', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableEditColumn.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableEditColumn.js');
-	}();
-
-	;
+		exports.default = TableEditColumn;
 
 /***/ }),
 /* 38 */
@@ -8942,21 +8162,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    className: (editorClass || '') + ' form-control editor edit-text' }));
 	};
 
-	var _default = editor;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(editor, 'editor', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/Editor.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/Editor.js');
-	}();
-
-	;
+	exports.default = editor;
 
 /***/ }),
 /* 39 */
@@ -8989,17 +8195,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	exports.notice = notice;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(notice, 'notice', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/Notification.js');
-	}();
-
-	;
 
 /***/ }),
 /* 40 */
@@ -9068,21 +8263,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return ExpandComponent;
 	}(_react.Component);
 
-	var _default = ExpandComponent;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(ExpandComponent, 'ExpandComponent', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/ExpandComponent.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/ExpandComponent.js');
-	}();
-
-	;
+		exports.default = ExpandComponent;
 
 /***/ }),
 /* 41 */
@@ -9142,20 +8323,70 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var _this = _possibleConstructorReturn(this, (PaginationList.__proto__ || Object.getPrototypeOf(PaginationList)).call(this, props));
 
-	    _this.changePage = function () {
-	      return _this.__changePage__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.changePage = function (page) {
+	      var _this$props = _this.props,
+	          pageStartIndex = _this$props.pageStartIndex,
+	          prePage = _this$props.prePage,
+	          currPage = _this$props.currPage,
+	          nextPage = _this$props.nextPage,
+	          lastPage = _this$props.lastPage,
+	          firstPage = _this$props.firstPage,
+	          sizePerPage = _this$props.sizePerPage,
+	          keepSizePerPageState = _this$props.keepSizePerPageState;
+
+
+	      if (page === prePage) {
+	        page = currPage - 1 < pageStartIndex ? pageStartIndex : currPage - 1;
+	      } else if (page === nextPage) {
+	        page = currPage + 1 > _this.lastPage ? _this.lastPage : currPage + 1;
+	      } else if (page === lastPage) {
+	        page = _this.lastPage;
+	      } else if (page === firstPage) {
+	        page = pageStartIndex;
+	      } else {
+	        page = parseInt(page, 10);
+	      }
+
+	      if (keepSizePerPageState) {
+	        _this.closeDropDown();
+	      }
+
+	      if (page !== currPage) {
+	        _this.props.changePage(page, sizePerPage);
+	      }
 	    };
 
-	    _this.changeSizePerPage = function () {
-	      return _this.__changeSizePerPage__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.changeSizePerPage = function (pageNum) {
+	      var selectSize = typeof pageNum === 'string' ? parseInt(pageNum, 10) : pageNum;
+	      var currPage = _this.props.currPage;
+
+	      if (selectSize !== _this.props.sizePerPage) {
+	        _this.totalPages = Math.ceil(_this.props.dataSize / selectSize);
+	        _this.lastPage = _this.props.pageStartIndex + _this.totalPages - 1;
+	        if (currPage > _this.lastPage) currPage = _this.lastPage;
+	        _this.props.changePage(currPage, selectSize);
+	        if (_this.props.onSizePerPageList) {
+	          _this.props.onSizePerPageList(selectSize);
+	        }
+	      }
+
+	      _this.closeDropDown();
 	    };
 
 	    _this.toggleDropDown = function () {
-	      return _this.__toggleDropDown__REACT_HOT_LOADER__.apply(_this, arguments);
+	      _this.setState(function () {
+	        return {
+	          open: !_this.state.open
+	        };
+	      });
 	    };
 
 	    _this.closeDropDown = function () {
-	      return _this.__closeDropDown__REACT_HOT_LOADER__.apply(_this, arguments);
+	      _this.setState(function () {
+	        return {
+	          open: false
+	        };
+	      });
 	    };
 
 	    _this.state = {
@@ -9165,26 +8396,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  _createClass(PaginationList, [{
-	    key: '__closeDropDown__REACT_HOT_LOADER__',
-	    value: function __closeDropDown__REACT_HOT_LOADER__() {
-	      return this.__closeDropDown__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__toggleDropDown__REACT_HOT_LOADER__',
-	    value: function __toggleDropDown__REACT_HOT_LOADER__() {
-	      return this.__toggleDropDown__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__changeSizePerPage__REACT_HOT_LOADER__',
-	    value: function __changeSizePerPage__REACT_HOT_LOADER__() {
-	      return this.__changeSizePerPage__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__changePage__REACT_HOT_LOADER__',
-	    value: function __changePage__REACT_HOT_LOADER__() {
-	      return this.__changePage__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps() {
 	      var keepSizePerPageState = this.props.keepSizePerPageState;
@@ -9194,89 +8405,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  }, {
-	    key: '__changePage__REACT_HOT_LOADER__',
-	    value: function __changePage__REACT_HOT_LOADER__(page) {
-	      var _props = this.props,
-	          pageStartIndex = _props.pageStartIndex,
-	          prePage = _props.prePage,
-	          currPage = _props.currPage,
-	          nextPage = _props.nextPage,
-	          lastPage = _props.lastPage,
-	          firstPage = _props.firstPage,
-	          sizePerPage = _props.sizePerPage,
-	          keepSizePerPageState = _props.keepSizePerPageState;
-
-
-	      if (page === prePage) {
-	        page = currPage - 1 < pageStartIndex ? pageStartIndex : currPage - 1;
-	      } else if (page === nextPage) {
-	        page = currPage + 1 > this.lastPage ? this.lastPage : currPage + 1;
-	      } else if (page === lastPage) {
-	        page = this.lastPage;
-	      } else if (page === firstPage) {
-	        page = pageStartIndex;
-	      } else {
-	        page = parseInt(page, 10);
-	      }
-
-	      if (keepSizePerPageState) {
-	        this.closeDropDown();
-	      }
-
-	      if (page !== currPage) {
-	        this.props.changePage(page, sizePerPage);
-	      }
-	    }
-	  }, {
-	    key: '__changeSizePerPage__REACT_HOT_LOADER__',
-	    value: function __changeSizePerPage__REACT_HOT_LOADER__(pageNum) {
-	      var selectSize = typeof pageNum === 'string' ? parseInt(pageNum, 10) : pageNum;
-	      var currPage = this.props.currPage;
-
-	      if (selectSize !== this.props.sizePerPage) {
-	        this.totalPages = Math.ceil(this.props.dataSize / selectSize);
-	        this.lastPage = this.props.pageStartIndex + this.totalPages - 1;
-	        if (currPage > this.lastPage) currPage = this.lastPage;
-	        this.props.changePage(currPage, selectSize);
-	        if (this.props.onSizePerPageList) {
-	          this.props.onSizePerPageList(selectSize);
-	        }
-	      }
-
-	      this.closeDropDown();
-	    }
-	  }, {
-	    key: '__toggleDropDown__REACT_HOT_LOADER__',
-	    value: function __toggleDropDown__REACT_HOT_LOADER__() {
-	      var _this2 = this;
-
-	      this.setState(function () {
-	        return {
-	          open: !_this2.state.open
-	        };
-	      });
-	    }
-	  }, {
-	    key: '__closeDropDown__REACT_HOT_LOADER__',
-	    value: function __closeDropDown__REACT_HOT_LOADER__() {
-	      this.setState(function () {
-	        return {
-	          open: false
-	        };
-	      });
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props2 = this.props,
-	          currPage = _props2.currPage,
-	          dataSize = _props2.dataSize,
-	          sizePerPage = _props2.sizePerPage,
-	          sizePerPageList = _props2.sizePerPageList,
-	          paginationShowsTotal = _props2.paginationShowsTotal,
-	          pageStartIndex = _props2.pageStartIndex,
-	          paginationPanel = _props2.paginationPanel,
-	          hidePageListOnlyOnePage = _props2.hidePageListOnlyOnePage;
+	      var _props = this.props,
+	          currPage = _props.currPage,
+	          dataSize = _props.dataSize,
+	          sizePerPage = _props.sizePerPage,
+	          sizePerPageList = _props.sizePerPageList,
+	          paginationShowsTotal = _props.paginationShowsTotal,
+	          pageStartIndex = _props.pageStartIndex,
+	          paginationPanel = _props.paginationPanel,
+	          hidePageListOnlyOnePage = _props.hidePageListOnlyOnePage;
 
 	      this.totalPages = Math.ceil(dataSize / sizePerPage);
 	      this.lastPage = this.props.pageStartIndex + this.totalPages - 1;
@@ -9339,16 +8478,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'makeDropDown',
 	    value: function makeDropDown() {
-	      var _this3 = this;
+	      var _this2 = this;
 
 	      var dropdown = void 0;
 	      var dropdownProps = void 0;
 	      var sizePerPageText = '';
-	      var _props3 = this.props,
-	          sizePerPageDropDown = _props3.sizePerPageDropDown,
-	          hideSizePerPage = _props3.hideSizePerPage,
-	          sizePerPage = _props3.sizePerPage,
-	          sizePerPageList = _props3.sizePerPageList;
+	      var _props2 = this.props,
+	          sizePerPageDropDown = _props2.sizePerPageDropDown,
+	          hideSizePerPage = _props2.hideSizePerPage,
+	          sizePerPage = _props2.sizePerPage,
+	          sizePerPageList = _props2.sizePerPageList;
 
 	      if (sizePerPageDropDown) {
 	        dropdown = sizePerPageDropDown({
@@ -9382,7 +8521,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                'data-page': pageNum,
 	                onMouseDown: function onMouseDown(e) {
 	                  e.preventDefault();
-	                  _this3.changeSizePerPage(pageNum);
+	                  _this2.changeSizePerPage(pageNum);
 	                } },
 	              pageText
 	            )
@@ -9402,7 +8541,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'makePage',
 	    value: function makePage() {
-	      var _this4 = this;
+	      var _this3 = this;
 
 	      var isCustomPagingPanel = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
@@ -9418,7 +8557,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var currPage = _ref2.currPage,
 	            nextPage = _ref2.nextPage,
 	            lastPage = _ref2.lastPage;
-	        return currPage === _this4.lastPage && (page === nextPage || page === lastPage);
+	        return currPage === _this3.lastPage && (page === nextPage || page === lastPage);
 	      };
 	      var pageBtns = pages.filter(function (page) {
 	        if (this.props.alwaysShowAllBtns) {
@@ -9531,21 +8670,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  pageStartIndex: _Const2.default.PAGE_START_INDEX
 	};
 
-	var _default = PaginationList;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(PaginationList, 'PaginationList', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/pagination/PaginationList.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/pagination/PaginationList.js');
-	}();
-
-	;
+		exports.default = PaginationList;
 
 /***/ }),
 /* 42 */
@@ -9587,25 +8712,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var _this = _possibleConstructorReturn(this, (PageButton.__proto__ || Object.getPrototypeOf(PageButton)).call(this, props));
 
-	    _this.pageBtnClick = function () {
-	      return _this.__pageBtnClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.pageBtnClick = function (e) {
+	      e.preventDefault();
+	      _this.props.changePage(e.currentTarget.textContent);
 	    };
 
 	    return _this;
 	  }
 
 	  _createClass(PageButton, [{
-	    key: '__pageBtnClick__REACT_HOT_LOADER__',
-	    value: function __pageBtnClick__REACT_HOT_LOADER__() {
-	      return this.__pageBtnClick__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__pageBtnClick__REACT_HOT_LOADER__',
-	    value: function __pageBtnClick__REACT_HOT_LOADER__(e) {
-	      e.preventDefault();
-	      this.props.changePage(e.currentTarget.textContent);
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var classes = (0, _classnames2.default)({
@@ -9638,21 +8753,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  children: _propTypes2.default.node
 	};
 
-	var _default = PageButton;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(PageButton, 'PageButton', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/pagination/PageButton.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/pagination/PageButton.js');
-	}();
-
-	;
+		exports.default = PageButton;
 
 /***/ }),
 /* 43 */
@@ -9761,23 +8862,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  className: ''
 	};
 
-	var _default = SizePerPageDropDown;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(sizePerPageDefaultClass, 'sizePerPageDefaultClass', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/pagination/SizePerPageDropDown.js');
-
-	  __REACT_HOT_LOADER__.register(SizePerPageDropDown, 'SizePerPageDropDown', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/pagination/SizePerPageDropDown.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/pagination/SizePerPageDropDown.js');
-	}();
-
-	;
+		exports.default = SizePerPageDropDown;
 
 /***/ }),
 /* 44 */
@@ -9858,52 +8943,119 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _inherits(ToolBar, _Component);
 
 	  function ToolBar(props) {
+	    var _arguments = arguments;
+
 	    _classCallCheck(this, ToolBar);
 
 	    var _this = _possibleConstructorReturn(this, (ToolBar.__proto__ || Object.getPrototypeOf(ToolBar)).call(this, props));
 
 	    _this.displayCommonMessage = function () {
-	      return _this.__displayCommonMessage__REACT_HOT_LOADER__.apply(_this, arguments);
+	      (0, _Notification.notice)('error', _this.props.insertFailIndicator, '');
 	    };
 
-	    _this.handleSaveBtnClick = function () {
-	      return _this.__handleSaveBtnClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleSaveBtnClick = function (newRow) {
+	      if (!_this.validateNewRow(newRow)) {
+	        // validation fail
+	        return;
+	      }
+	      var msg = _this.props.onAddRow(newRow);
+	      if (msg !== false) {
+	        _this.afterHandleSaveBtnClick(msg);
+	      }
 	    };
 
-	    _this.afterHandleSaveBtnClick = function () {
-	      return _this.__afterHandleSaveBtnClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.afterHandleSaveBtnClick = function (msg) {
+	      if (msg) {
+	        (0, _Notification.notice)('error', msg, '');
+	        _this.clearTimeout();
+	        // shake form and hack prevent modal hide
+	        _this.setState(function () {
+	          return {
+	            shakeEditor: true,
+	            validateState: 'this is hack for prevent bootstrap modal hide'
+	          };
+	        });
+	        // clear animate class
+	        _this.timeouteClear = setTimeout(function () {
+	          _this.setState(function () {
+	            return { shakeEditor: false };
+	          });
+	        }, 300);
+	      } else {
+	        // reset state and hide modal hide
+	        _this.setState(function () {
+	          return {
+	            validateState: null,
+	            shakeEditor: false,
+	            isInsertModalOpen: false
+	          };
+	        });
+	      }
 	    };
 
 	    _this.handleModalClose = function () {
-	      return _this.__handleModalClose__REACT_HOT_LOADER__.apply(_this, arguments);
+	      _this.setState(function () {
+	        return { isInsertModalOpen: false };
+	      });
 	    };
 
 	    _this.handleModalOpen = function () {
-	      return _this.__handleModalOpen__REACT_HOT_LOADER__.apply(_this, arguments);
+	      _this.setState(function () {
+	        return { isInsertModalOpen: true };
+	      });
 	    };
 
 	    _this.handleShowOnlyToggle = function () {
-	      return _this.__handleShowOnlyToggle__REACT_HOT_LOADER__.apply(_this, arguments);
+	      _this.setState(function () {
+	        return {
+	          showSelected: !_this.state.showSelected
+	        };
+	      });
+	      _this.props.onShowOnlySelected();
 	    };
 
 	    _this.handleDropRowBtnClick = function () {
-	      return _this.__handleDropRowBtnClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	      _this.props.onDropRow();
 	    };
 
-	    _this.handleDebounce = function () {
-	      return _this.__handleDebounce__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleDebounce = function (func, wait, immediate) {
+	      var timeout = void 0;
+
+	      return function () {
+	        var later = function later() {
+	          timeout = null;
+
+	          if (!immediate) {
+	            func.apply(_this, _arguments);
+	          }
+	        };
+
+	        var callNow = immediate && !timeout;
+
+	        clearTimeout(timeout);
+
+	        timeout = setTimeout(later, wait || 0);
+
+	        if (callNow) {
+	          func.appy(_this, _arguments);
+	        }
+	      };
 	    };
 
-	    _this.handleKeyUp = function () {
-	      return _this.__handleKeyUp__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleKeyUp = function (event) {
+	      event.persist();
+	      _this.debounceCallback(event);
 	    };
 
 	    _this.handleExportCSV = function () {
-	      return _this.__handleExportCSV__REACT_HOT_LOADER__.apply(_this, arguments);
+	      _this.props.onExportCSV();
 	    };
 
 	    _this.handleClearBtnClick = function () {
-	      return _this.__handleClearBtnClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	      var seachInput = _this.refs.seachInput;
+
+	      seachInput && seachInput.setValue('');
+	      _this.props.onSearch('');
 	    };
 
 	    _this.timeouteClear = 0;
@@ -9918,93 +9070,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  _createClass(ToolBar, [{
-	    key: '__handleClearBtnClick__REACT_HOT_LOADER__',
-	    value: function __handleClearBtnClick__REACT_HOT_LOADER__() {
-	      return this.__handleClearBtnClick__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleExportCSV__REACT_HOT_LOADER__',
-	    value: function __handleExportCSV__REACT_HOT_LOADER__() {
-	      return this.__handleExportCSV__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleKeyUp__REACT_HOT_LOADER__',
-	    value: function __handleKeyUp__REACT_HOT_LOADER__() {
-	      return this.__handleKeyUp__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleDebounce__REACT_HOT_LOADER__',
-	    value: function __handleDebounce__REACT_HOT_LOADER__(func, wait, immediate) {
-	      var _this2 = this,
-	          _arguments = arguments;
-
-	      var timeout = void 0;
-
-	      return function () {
-	        var later = function later() {
-	          timeout = null;
-
-	          if (!immediate) {
-	            func.apply(_this2, _arguments);
-	          }
-	        };
-
-	        var callNow = immediate && !timeout;
-
-	        clearTimeout(timeout);
-
-	        timeout = setTimeout(later, wait || 0);
-
-	        if (callNow) {
-	          func.appy(_this2, _arguments);
-	        }
-	      };
-	    }
-	  }, {
-	    key: '__handleDropRowBtnClick__REACT_HOT_LOADER__',
-	    value: function __handleDropRowBtnClick__REACT_HOT_LOADER__() {
-	      return this.__handleDropRowBtnClick__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleShowOnlyToggle__REACT_HOT_LOADER__',
-	    value: function __handleShowOnlyToggle__REACT_HOT_LOADER__() {
-	      return this.__handleShowOnlyToggle__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleModalOpen__REACT_HOT_LOADER__',
-	    value: function __handleModalOpen__REACT_HOT_LOADER__() {
-	      return this.__handleModalOpen__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleModalClose__REACT_HOT_LOADER__',
-	    value: function __handleModalClose__REACT_HOT_LOADER__() {
-	      return this.__handleModalClose__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__afterHandleSaveBtnClick__REACT_HOT_LOADER__',
-	    value: function __afterHandleSaveBtnClick__REACT_HOT_LOADER__() {
-	      return this.__afterHandleSaveBtnClick__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleSaveBtnClick__REACT_HOT_LOADER__',
-	    value: function __handleSaveBtnClick__REACT_HOT_LOADER__() {
-	      return this.__handleSaveBtnClick__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__displayCommonMessage__REACT_HOT_LOADER__',
-	    value: function __displayCommonMessage__REACT_HOT_LOADER__() {
-	      return this.__displayCommonMessage__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      var _this3 = this;
+	      var _this2 = this;
 
 	      var delay = this.props.searchDelayTime ? this.props.searchDelayTime : 0;
 	      this.debounceCallback = this.handleDebounce(function () {
-	        var seachInput = _this3.refs.seachInput;
+	        var seachInput = _this2.refs.seachInput;
 
-	        seachInput && _this3.props.onSearch(seachInput.getValue());
+	        seachInput && _this2.props.onSearch(seachInput.getValue());
 	      }, delay);
 	    }
 	  }, {
@@ -10047,14 +9121,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    })
 	  }, {
-	    key: '__displayCommonMessage__REACT_HOT_LOADER__',
-	    value: function __displayCommonMessage__REACT_HOT_LOADER__() {
-	      (0, _Notification.notice)('error', this.props.insertFailIndicator, '');
-	    }
-	  }, {
 	    key: 'validateNewRow',
 	    value: function validateNewRow(newRow) {
-	      var _this4 = this;
+	      var _this3 = this;
 
 	      var validateState = {};
 	      var isValid = true;
@@ -10064,9 +9133,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.props.columns.forEach(function (column) {
 	        if (column.isKey && column.keyValidator) {
 	          // key validator for checking exist key
-	          tempMsg = _this4.props.isValidKey(newRow[column.field]);
+	          tempMsg = _this3.props.isValidKey(newRow[column.field]);
 	          if (tempMsg) {
-	            _this4.displayCommonMessage();
+	            _this3.displayCommonMessage();
 	            isValid = false;
 	            validateState[column.field] = tempMsg;
 	          }
@@ -10075,7 +9144,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          tempMsg = column.editable.validator(newRow[column.field], newRow);
 	          responseType = typeof tempMsg === 'undefined' ? 'undefined' : _typeof(tempMsg);
 	          if (responseType !== 'object' && tempMsg !== true) {
-	            _this4.displayCommonMessage();
+	            _this3.displayCommonMessage();
 	            isValid = false;
 	            validateState[column.field] = tempMsg;
 	          } else if (responseType === 'object' && tempMsg.isValid !== true) {
@@ -10095,7 +9164,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          return { validateState: validateState, shakeEditor: true };
 	        });
 	        this.timeouteClear = setTimeout(function () {
-	          _this4.setState(function () {
+	          _this3.setState(function () {
 	            return { shakeEditor: false };
 	          });
 	        }, 300);
@@ -10103,103 +9172,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  }, {
-	    key: '__handleSaveBtnClick__REACT_HOT_LOADER__',
-	    value: function __handleSaveBtnClick__REACT_HOT_LOADER__(newRow) {
-	      if (!this.validateNewRow(newRow)) {
-	        // validation fail
-	        return;
-	      }
-	      var msg = this.props.onAddRow(newRow);
-	      if (msg !== false) {
-	        this.afterHandleSaveBtnClick(msg);
-	      }
-	    }
-	  }, {
-	    key: '__afterHandleSaveBtnClick__REACT_HOT_LOADER__',
-	    value: function __afterHandleSaveBtnClick__REACT_HOT_LOADER__(msg) {
-	      var _this5 = this;
-
-	      if (msg) {
-	        (0, _Notification.notice)('error', msg, '');
-	        this.clearTimeout();
-	        // shake form and hack prevent modal hide
-	        this.setState(function () {
-	          return {
-	            shakeEditor: true,
-	            validateState: 'this is hack for prevent bootstrap modal hide'
-	          };
-	        });
-	        // clear animate class
-	        this.timeouteClear = setTimeout(function () {
-	          _this5.setState(function () {
-	            return { shakeEditor: false };
-	          });
-	        }, 300);
-	      } else {
-	        // reset state and hide modal hide
-	        this.setState(function () {
-	          return {
-	            validateState: null,
-	            shakeEditor: false,
-	            isInsertModalOpen: false
-	          };
-	        });
-	      }
-	    }
-	  }, {
-	    key: '__handleModalClose__REACT_HOT_LOADER__',
-	    value: function __handleModalClose__REACT_HOT_LOADER__() {
-	      this.setState(function () {
-	        return { isInsertModalOpen: false };
-	      });
-	    }
-	  }, {
-	    key: '__handleModalOpen__REACT_HOT_LOADER__',
-	    value: function __handleModalOpen__REACT_HOT_LOADER__() {
-	      this.setState(function () {
-	        return { isInsertModalOpen: true };
-	      });
-	    }
-	  }, {
-	    key: '__handleShowOnlyToggle__REACT_HOT_LOADER__',
-	    value: function __handleShowOnlyToggle__REACT_HOT_LOADER__() {
-	      var _this6 = this;
-
-	      this.setState(function () {
-	        return {
-	          showSelected: !_this6.state.showSelected
-	        };
-	      });
-	      this.props.onShowOnlySelected();
-	    }
-	  }, {
-	    key: '__handleDropRowBtnClick__REACT_HOT_LOADER__',
-	    value: function __handleDropRowBtnClick__REACT_HOT_LOADER__() {
-	      this.props.onDropRow();
-	    }
-	  }, {
 	    key: 'handleCloseBtn',
 	    value: function handleCloseBtn() {
 	      this.refs.warning.style.display = 'none';
-	    }
-	  }, {
-	    key: '__handleKeyUp__REACT_HOT_LOADER__',
-	    value: function __handleKeyUp__REACT_HOT_LOADER__(event) {
-	      event.persist();
-	      this.debounceCallback(event);
-	    }
-	  }, {
-	    key: '__handleExportCSV__REACT_HOT_LOADER__',
-	    value: function __handleExportCSV__REACT_HOT_LOADER__() {
-	      this.props.onExportCSV();
-	    }
-	  }, {
-	    key: '__handleClearBtnClick__REACT_HOT_LOADER__',
-	    value: function __handleClearBtnClick__REACT_HOT_LOADER__() {
-	      var seachInput = this.refs.seachInput;
-
-	      seachInput && seachInput.setValue('');
-	      this.props.onSearch('');
 	    }
 	  }, {
 	    key: 'render',
@@ -10489,21 +9464,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  closeText: _Const2.default.CLOSE_BTN_TEXT
 	};
 
-	var _default = ToolBar;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(ToolBar, 'ToolBar', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ToolBar.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ToolBar.js');
-	}();
-
-	;
+		exports.default = ToolBar;
 
 /***/ }),
 /* 45 */
@@ -10709,15 +9670,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }),
 	  portalClassName: _propTypes2.default.string,
 	  bodyOpenClassName: _propTypes2.default.string,
-	  className: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.object]),
-	  overlayClassName: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.object]),
+	  className: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.shape({
+	    base: _propTypes2.default.string.isRequired,
+	    afterOpen: _propTypes2.default.string.isRequired,
+	    beforeClose: _propTypes2.default.string.isRequired
+	  })]),
+	  overlayClassName: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.shape({
+	    base: _propTypes2.default.string.isRequired,
+	    afterOpen: _propTypes2.default.string.isRequired,
+	    beforeClose: _propTypes2.default.string.isRequired
+	  })]),
 	  appElement: _propTypes2.default.instanceOf(_safeHTMLElement2.default),
 	  onAfterOpen: _propTypes2.default.func,
 	  onRequestClose: _propTypes2.default.func,
 	  closeTimeoutMS: _propTypes2.default.number,
 	  ariaHideApp: _propTypes2.default.bool,
-	  shouldFocusAfter: _propTypes2.default.bool,
+	  shouldFocusAfterRender: _propTypes2.default.bool,
 	  shouldCloseOnOverlayClick: _propTypes2.default.bool,
+	  shouldReturnFocusAfterClose: _propTypes2.default.bool,
 	  parentSelector: _propTypes2.default.func,
 	  aria: _propTypes2.default.object,
 	  role: _propTypes2.default.string,
@@ -10733,6 +9703,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  shouldFocusAfterRender: true,
 	  shouldCloseOnEsc: true,
 	  shouldCloseOnOverlayClick: true,
+	  shouldReturnFocusAfterClose: true,
 	  parentSelector: function parentSelector() {
 	    return document.body;
 	  }
@@ -10851,8 +9822,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    _this.afterClose = function () {
-	      focusManager.returnFocus();
-	      focusManager.teardownScopedFocus();
+	      // Remove body class
+	      bodyClassList.remove(_this.props.bodyOpenClassName);
+
+	      if (_this.props.shouldFocusAfterRender) {
+	        if (_this.props.shouldReturnFocusAfterClose) {
+	          focusManager.returnFocus();
+	          focusManager.teardownScopedFocus();
+	        } else {
+	          focusManager.popWithoutFocus();
+	        }
+	      }
 	    };
 
 	    _this.open = function () {
@@ -10861,8 +9841,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        clearTimeout(_this.closeTimer);
 	        _this.setState({ beforeClose: false });
 	      } else {
-	        focusManager.setupScopedFocus(_this.node);
-	        focusManager.markForFocusLater();
+	        if (_this.props.shouldFocusAfterRender) {
+	          focusManager.setupScopedFocus(_this.node);
+	          focusManager.markForFocusLater();
+	        }
+
 	        _this.setState({ isOpen: true }, function () {
 	          _this.setState({ afterOpen: true });
 
@@ -11038,6 +10021,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "componentWillUnmount",
 	    value: function componentWillUnmount() {
+	      // Remove body class
+	      bodyClassList.remove(this.props.bodyOpenClassName);
 	      this.beforeClose();
 	      clearTimeout(this.closeTimer);
 	    }
@@ -11061,12 +10046,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function beforeClose() {
 	      var _props2 = this.props,
 	          appElement = _props2.appElement,
-	          ariaHideApp = _props2.ariaHideApp,
-	          bodyOpenClassName = _props2.bodyOpenClassName;
-	      // Remove class if no more modals are open
-
-	      bodyClassList.remove(bodyOpenClassName);
+	          ariaHideApp = _props2.ariaHideApp;
 	      // Reset aria-hidden attribute if all modals have been removed
+
 	      if (ariaHideApp && refCount.totalCount() < 1) {
 	        ariaAppHider.show(appElement);
 	      }
@@ -11144,6 +10126,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  closeTimeoutMS: _propTypes2.default.number,
 	  shouldFocusAfterRender: _propTypes2.default.bool,
 	  shouldCloseOnOverlayClick: _propTypes2.default.bool,
+	  shouldReturnFocusAfterClose: _propTypes2.default.bool,
 	  role: _propTypes2.default.string,
 	  contentLabel: _propTypes2.default.string,
 	  aria: _propTypes2.default.object,
@@ -11167,6 +10150,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.handleFocus = handleFocus;
 	exports.markForFocusLater = markForFocusLater;
 	exports.returnFocus = returnFocus;
+	exports.popWithoutFocus = popWithoutFocus;
 	exports.setupScopedFocus = setupScopedFocus;
 	exports.teardownScopedFocus = teardownScopedFocus;
 
@@ -11221,6 +10205,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	}
 	/* eslint-enable no-console */
+
+	function popWithoutFocus() {
+	  focusLaterElements.length > 0 && focusLaterElements.pop();
+	}
 
 	function setupScopedFocus(element) {
 	  modalElement = element;
@@ -11321,18 +10309,64 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function scopeTab(node, event) {
 	  var tabbable = (0, _tabbable2.default)(node);
+
 	  if (!tabbable.length) {
+	    // Do nothing, since there are no elements that can receive focus.
 	    event.preventDefault();
 	    return;
 	  }
-	  var finalTabbable = tabbable[event.shiftKey ? 0 : tabbable.length - 1];
-	  var leavingFinalTabbable = finalTabbable === document.activeElement ||
-	  // handle immediate shift+tab after opening with mouse
-	  node === document.activeElement;
-	  if (!leavingFinalTabbable) return;
+
+	  var shiftKey = event.shiftKey;
+	  var head = tabbable[0];
+	  var tail = tabbable[tabbable.length - 1];
+
+	  // proceed with default browser behavior
+	  if (node === document.activeElement) {
+	    return;
+	  }
+
+	  var target;
+	  if (tail === document.activeElement && !shiftKey) {
+	    target = head;
+	  }
+
+	  if (head === document.activeElement && shiftKey) {
+	    target = tail;
+	  }
+
+	  if (target) {
+	    event.preventDefault();
+	    target.focus();
+	    return;
+	  }
+
+	  // Safari radio issue.
+	  //
+	  // Safari does not move the focus to the radio button,
+	  // so we need to force it to really walk through all elements.
+	  //
+	  // This is very error prune, since we are trying to guess
+	  // if it is a safari browser from the first occurence between
+	  // chrome or safari.
+	  //
+	  // The chrome user agent contains the first ocurrence
+	  // as the 'chrome/version' and later the 'safari/version'.
+	  var checkSafari = /(\bChrome\b|\bSafari\b)\//.exec(navigator.userAgent);
+	  var isSafariDesktop = checkSafari != null && checkSafari[1] != "Chrome" && /\biPod\b|\biPad\b/g.exec(navigator.userAgent) == null;
+
+	  // If we are not in safari desktop, let the browser control
+	  // the focus
+	  if (!isSafariDesktop) return;
+
+	  var x = tabbable.indexOf(document.activeElement);
+
+	  if (x > -1) {
+	    x += shiftKey ? -1 : 1;
+	  }
+
 	  event.preventDefault();
-	  var target = tabbable[event.shiftKey ? tabbable.length - 1 : 0];
-	  target.focus();
+
+	  tabbable[x].focus();
 	}
 	module.exports = exports["default"];
 
@@ -11612,28 +10646,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = InsertModal.__proto__ || Object.getPrototypeOf(InsertModal)).call.apply(_ref, [this].concat(args))), _this), _this.handleSave = function () {
-	      var _this2;
-
-	      return (_this2 = _this).__handleSave__REACT_HOT_LOADER__.apply(_this2, arguments);
+	      var bodyRefs = _this.refs.body;
+	      if (bodyRefs.getFieldValue) {
+	        _this.props.onSave(bodyRefs.getFieldValue());
+	      } else {
+	        console.error('Custom InsertModalBody should implement getFieldValue function\n        and should return an object presented as the new row that user input.');
+	      }
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
 
 	  _createClass(InsertModal, [{
-	    key: '__handleSave__REACT_HOT_LOADER__',
-	    value: function __handleSave__REACT_HOT_LOADER__() {
-	      return this.__handleSave__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleSave__REACT_HOT_LOADER__',
-	    value: function __handleSave__REACT_HOT_LOADER__() {
-	      var bodyRefs = this.refs.body;
-	      if (bodyRefs.getFieldValue) {
-	        this.props.onSave(bodyRefs.getFieldValue());
-	      } else {
-	        console.error('Custom InsertModalBody should implement getFieldValue function\n        and should return an object presented as the new row that user input.');
-	      }
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props,
@@ -11715,8 +10737,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return InsertModal;
 	}(_react.Component);
 
-	var _default = InsertModal;
-	exports.default = _default;
+	exports.default = InsertModal;
 
 	InsertModal.propTypes = {
 	  version: _propTypes2.default.string.isRequired,
@@ -11730,22 +10751,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onSave: _propTypes2.default.func
 	};
 
-	InsertModal.defaultProps = {};
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(defaultModalClassName, 'defaultModalClassName', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModal.js');
-
-	  __REACT_HOT_LOADER__.register(InsertModal, 'InsertModal', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModal.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModal.js');
-	}();
-
-	;
+		InsertModal.defaultProps = {};
 
 /***/ }),
 /* 57 */
@@ -11793,34 +10799,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	      args[_key] = arguments[_key];
 	    }
 
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = InsertModalHeader.__proto__ || Object.getPrototypeOf(InsertModalHeader)).call.apply(_ref, [this].concat(args))), _this), _this.handleCloseBtnClick = function () {
-	      var _this2;
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = InsertModalHeader.__proto__ || Object.getPrototypeOf(InsertModalHeader)).call.apply(_ref, [this].concat(args))), _this), _this.handleCloseBtnClick = function (e) {
+	      var _this$props = _this.props,
+	          onModalClose = _this$props.onModalClose,
+	          beforeClose = _this$props.beforeClose;
 
-	      return (_this2 = _this).__handleCloseBtnClick__REACT_HOT_LOADER__.apply(_this2, arguments);
+	      beforeClose && beforeClose(e);
+	      onModalClose();
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
 
 	  _createClass(InsertModalHeader, [{
-	    key: '__handleCloseBtnClick__REACT_HOT_LOADER__',
-	    value: function __handleCloseBtnClick__REACT_HOT_LOADER__() {
-	      return this.__handleCloseBtnClick__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleCloseBtnClick__REACT_HOT_LOADER__',
-	    value: function __handleCloseBtnClick__REACT_HOT_LOADER__(e) {
-	      var _props = this.props,
-	          onModalClose = _props.onModalClose,
-	          beforeClose = _props.beforeClose;
-
-	      beforeClose && beforeClose(e);
-	      onModalClose();
-	    }
-	  }, {
 	    key: 'renderContent',
 	    value: function renderContent(closeBtn) {
-	      var _props2 = this.props,
-	          version = _props2.version,
-	          titleText = _props2.title;
+	      var _props = this.props,
+	          version = _props.version,
+	          titleText = _props.title;
 
 	      var title = _react2.default.createElement(
 	        'h4',
@@ -11841,10 +10835,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props3 = this.props,
-	          hideClose = _props3.hideClose,
-	          className = _props3.className,
-	          children = _props3.children;
+	      var _props2 = this.props,
+	          hideClose = _props2.hideClose,
+	          className = _props2.className,
+	          children = _props2.children;
 
 
 	      var closeBtn = hideClose ? null : _react2.default.createElement(
@@ -11893,21 +10887,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  beforeClose: undefined
 	};
 
-	var _default = InsertModalHeader;
-	exports.default = _default;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(InsertModalHeader, 'InsertModalHeader', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModalHeader.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModalHeader.js');
-	}();
-
-	;
+		exports.default = InsertModalHeader;
 
 /***/ }),
 /* 58 */
@@ -11955,59 +10935,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	      args[_key] = arguments[_key];
 	    }
 
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = InsertModalFooter.__proto__ || Object.getPrototypeOf(InsertModalFooter)).call.apply(_ref, [this].concat(args))), _this), _this.handleCloseBtnClick = function () {
-	      var _this2;
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = InsertModalFooter.__proto__ || Object.getPrototypeOf(InsertModalFooter)).call.apply(_ref, [this].concat(args))), _this), _this.handleCloseBtnClick = function (e) {
+	      var _this$props = _this.props,
+	          beforeClose = _this$props.beforeClose,
+	          onModalClose = _this$props.onModalClose;
 
-	      return (_this2 = _this).__handleCloseBtnClick__REACT_HOT_LOADER__.apply(_this2, arguments);
-	    }, _this.handleSaveBtnClick = function () {
-	      var _this3;
+	      beforeClose && beforeClose(e);
+	      onModalClose();
+	    }, _this.handleSaveBtnClick = function (e) {
+	      var _this$props2 = _this.props,
+	          beforeSave = _this$props2.beforeSave,
+	          onSave = _this$props2.onSave;
 
-	      return (_this3 = _this).__handleSaveBtnClick__REACT_HOT_LOADER__.apply(_this3, arguments);
+	      beforeSave && beforeSave(e);
+	      onSave();
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
 
 	  _createClass(InsertModalFooter, [{
-	    key: '__handleSaveBtnClick__REACT_HOT_LOADER__',
-	    value: function __handleSaveBtnClick__REACT_HOT_LOADER__() {
-	      return this.__handleSaveBtnClick__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleCloseBtnClick__REACT_HOT_LOADER__',
-	    value: function __handleCloseBtnClick__REACT_HOT_LOADER__() {
-	      return this.__handleCloseBtnClick__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleCloseBtnClick__REACT_HOT_LOADER__',
-	    value: function __handleCloseBtnClick__REACT_HOT_LOADER__(e) {
-	      var _props = this.props,
-	          beforeClose = _props.beforeClose,
-	          onModalClose = _props.onModalClose;
-
-	      beforeClose && beforeClose(e);
-	      onModalClose();
-	    }
-	  }, {
-	    key: '__handleSaveBtnClick__REACT_HOT_LOADER__',
-	    value: function __handleSaveBtnClick__REACT_HOT_LOADER__(e) {
-	      var _props2 = this.props,
-	          beforeSave = _props2.beforeSave,
-	          onSave = _props2.onSave;
-
-	      beforeSave && beforeSave(e);
-	      onSave();
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props3 = this.props,
-	          className = _props3.className,
-	          saveBtnText = _props3.saveBtnText,
-	          closeBtnText = _props3.closeBtnText,
-	          closeBtnContextual = _props3.closeBtnContextual,
-	          saveBtnContextual = _props3.saveBtnContextual,
-	          closeBtnClass = _props3.closeBtnClass,
-	          saveBtnClass = _props3.saveBtnClass,
-	          children = _props3.children;
+	      var _props = this.props,
+	          className = _props.className,
+	          saveBtnText = _props.saveBtnText,
+	          closeBtnText = _props.closeBtnText,
+	          closeBtnContextual = _props.closeBtnContextual,
+	          saveBtnContextual = _props.saveBtnContextual,
+	          closeBtnClass = _props.closeBtnClass,
+	          saveBtnClass = _props.saveBtnClass,
+	          children = _props.children;
 
 
 	      var content = children || [_react2.default.createElement(
@@ -12064,21 +11020,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  beforeSave: undefined
 	};
 
-	var _default = InsertModalFooter;
-	exports.default = _default;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(InsertModalFooter, 'InsertModalFooter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModalFooter.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModalFooter.js');
-	}();
-
-	;
+		exports.default = InsertModalFooter;
 
 /***/ }),
 /* 59 */
@@ -12229,21 +11171,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  ignoreEditable: false
 	};
 
-	var _default = InsertModalBody;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(InsertModalBody, 'InsertModalBody', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModalBody.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModalBody.js');
-	}();
-
-	;
+		exports.default = InsertModalBody;
 
 /***/ }),
 /* 60 */
@@ -12340,23 +11268,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  btnGlyphicon: 'glyphicon-plus fa-plus'
 	};
 
-	var _default = InsertButton;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(insertBtnDefaultClass, 'insertBtnDefaultClass', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertButton.js');
-
-	  __REACT_HOT_LOADER__.register(InsertButton, 'InsertButton', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertButton.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertButton.js');
-	}();
-
-	;
+		exports.default = InsertButton;
 
 /***/ }),
 /* 61 */
@@ -12453,23 +11365,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  btnGlyphicon: 'glyphicon-trash fa-trash'
 	};
 
-	var _default = DeleteButton;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(deleteBtnDefaultClass, 'deleteBtnDefaultClass', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/DeleteButton.js');
-
-	  __REACT_HOT_LOADER__.register(DeleteButton, 'DeleteButton', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/DeleteButton.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/DeleteButton.js');
-	}();
-
-	;
+		exports.default = DeleteButton;
 
 /***/ }),
 /* 62 */
@@ -12566,23 +11462,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  btnGlyphicon: 'glyphicon-export fa-download'
 	};
 
-	var _default = ExportCSVButton;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(exportCsvBtnDefaultClass, 'exportCsvBtnDefaultClass', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ExportCSVButton.js');
-
-	  __REACT_HOT_LOADER__.register(ExportCSVButton, 'ExportCSVButton', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ExportCSVButton.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ExportCSVButton.js');
-	}();
-
-	;
+		exports.default = ExportCSVButton;
 
 /***/ }),
 /* 63 */
@@ -12682,23 +11562,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onClick: undefined
 	};
 
-	var _default = ShowSelectedOnlyButton;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(showSelectedOnlyBtnDefaultClass, 'showSelectedOnlyBtnDefaultClass', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ShowSelectedOnlyButton.js');
-
-	  __REACT_HOT_LOADER__.register(ShowSelectedOnlyButton, 'ShowSelectedOnlyButton', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ShowSelectedOnlyButton.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ShowSelectedOnlyButton.js');
-	}();
-
-	;
+		exports.default = ShowSelectedOnlyButton;
 
 /***/ }),
 /* 64 */
@@ -12792,21 +11656,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onKeyUp: undefined
 	};
 
-	var _default = SearchField;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(SearchField, 'SearchField', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/SearchField.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/SearchField.js');
-	}();
-
-	;
+		exports.default = SearchField;
 
 /***/ }),
 /* 65 */
@@ -12895,23 +11745,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onClick: undefined
 	};
 
-	var _default = ClearSearchButton;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(clearBtnDefaultClass, 'clearBtnDefaultClass', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ClearSearchButton.js');
-
-	  __REACT_HOT_LOADER__.register(ClearSearchButton, 'ClearSearchButton', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ClearSearchButton.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ClearSearchButton.js');
-	}();
-
-	;
+		exports.default = ClearSearchButton;
 
 /***/ }),
 /* 66 */
@@ -12957,8 +11791,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var _this = _possibleConstructorReturn(this, (TableFilter.__proto__ || Object.getPrototypeOf(TableFilter)).call(this, props));
 
-	    _this.handleKeyUp = function () {
-	      return _this.__handleKeyUp__REACT_HOT_LOADER__.apply(_this, arguments);
+	    _this.handleKeyUp = function (e) {
+	      var _e$currentTarget = e.currentTarget,
+	          value = _e$currentTarget.value,
+	          name = _e$currentTarget.name;
+
+	      if (value.trim() === '') {
+	        delete _this.filterObj[name];
+	      } else {
+	        _this.filterObj[name] = value;
+	      }
+	      _this.props.onFilter(_this.filterObj);
 	    };
 
 	    _this.filterObj = {};
@@ -12966,25 +11809,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  _createClass(TableFilter, [{
-	    key: '__handleKeyUp__REACT_HOT_LOADER__',
-	    value: function __handleKeyUp__REACT_HOT_LOADER__() {
-	      return this.__handleKeyUp__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
-	    key: '__handleKeyUp__REACT_HOT_LOADER__',
-	    value: function __handleKeyUp__REACT_HOT_LOADER__(e) {
-	      var _e$currentTarget = e.currentTarget,
-	          value = _e$currentTarget.value,
-	          name = _e$currentTarget.name;
-
-	      if (value.trim() === '') {
-	        delete this.filterObj[name];
-	      } else {
-	        this.filterObj[name] = value;
-	      }
-	      this.props.onFilter(this.filterObj);
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props,
@@ -13058,21 +11882,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  rowSelectType: _propTypes2.default.string,
 	  onFilter: _propTypes2.default.func
 	};
-	var _default = TableFilter;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(TableFilter, 'TableFilter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableFilter.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableFilter.js');
-	}();
-
-	;
+		exports.default = TableFilter;
 
 /***/ }),
 /* 67 */
@@ -13108,8 +11918,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _classCallCheck(this, TableDataStore);
 
-	    this.isValidKey = function () {
-	      return _this.__isValidKey__REACT_HOT_LOADER__.apply(_this, arguments);
+	    this.isValidKey = function (key) {
+	      if (key === null || key === undefined || key.toString() === '') {
+	        return _this.keyField + ' can\'t be empty value.';
+	      }
+	      var currentDisplayData = _this.getCurrentDisplayData();
+	      var exist = currentDisplayData.find(function (row) {
+	        return row[_this.keyField].toString() === key.toString();
+	      });
+	      if (exist) return _this.keyField + ' ' + key + ' already exists';
 	    };
 
 	    this.data = data;
@@ -13124,11 +11941,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  _createClass(TableDataStore, [{
-	    key: '__isValidKey__REACT_HOT_LOADER__',
-	    value: function __isValidKey__REACT_HOT_LOADER__() {
-	      return this.__isValidKey__REACT_HOT_LOADER__.apply(this, arguments);
-	    }
-	  }, {
 	    key: 'setProps',
 	    value: function setProps(props) {
 	      this.keyField = props.keyField;
@@ -13381,32 +12193,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this._refresh(false);
 	    }
 	  }, {
-	    key: '__isValidKey__REACT_HOT_LOADER__',
-	    value: function __isValidKey__REACT_HOT_LOADER__(key) {
-	      var _this4 = this;
-
-	      if (key === null || key === undefined || key.toString() === '') {
-	        return this.keyField + ' can\'t be empty value.';
-	      }
-	      var currentDisplayData = this.getCurrentDisplayData();
-	      var exist = currentDisplayData.find(function (row) {
-	        return row[_this4.keyField].toString() === key.toString();
-	      });
-	      if (exist) return this.keyField + ' ' + key + ' already exists';
-	    }
-	  }, {
 	    key: 'remove',
 	    value: function remove(rowKey) {
-	      var _this5 = this;
+	      var _this4 = this;
 
 	      var currentDisplayData = this.getCurrentDisplayData();
 	      var result = currentDisplayData.filter(function (row) {
-	        return rowKey.indexOf(row[_this5.keyField]) === -1;
+	        return rowKey.indexOf(row[_this4.keyField]) === -1;
 	      });
 
 	      if (this.isOnFilter) {
 	        this.data = this.data.filter(function (row) {
-	          return rowKey.indexOf(row[_this5.keyField]) === -1;
+	          return rowKey.indexOf(row[_this4.keyField]) === -1;
 	        });
 	        this.filteredData = result;
 	      } else {
@@ -13633,7 +12431,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_filter',
 	    value: function _filter(source) {
-	      var _this6 = this;
+	      var _this5 = this;
 
 	      var filterObj = this.filterObj;
 	      this.filteredData = source.filter(function (row, r) {
@@ -13688,11 +12486,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	              filterFormatted = void 0,
 	              formatExtraData = void 0,
 	              filterValue = void 0;
-	          if (_this6.colInfos[key]) {
-	            format = _this6.colInfos[key].format;
-	            filterFormatted = _this6.colInfos[key].filterFormatted;
-	            formatExtraData = _this6.colInfos[key].formatExtraData;
-	            filterValue = _this6.colInfos[key].filterValue;
+	          if (_this5.colInfos[key]) {
+	            format = _this5.colInfos[key].format;
+	            filterFormatted = _this5.colInfos[key].filterFormatted;
+	            formatExtraData = _this5.colInfos[key].formatExtraData;
+	            filterValue = _this5.colInfos[key].filterValue;
 	            if (filterFormatted && format) {
 	              targetVal = format(row[key], row, formatExtraData, r);
 	            } else if (filterValue) {
@@ -13703,28 +12501,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	          switch (filterObj[key].type) {
 	            case _Const2.default.FILTER_TYPE.NUMBER:
 	              {
-	                valid = _this6.filterNumber(targetVal, filterVal, filterObj[key].value.comparator);
+	                valid = _this5.filterNumber(targetVal, filterVal, filterObj[key].value.comparator);
 	                break;
 	              }
 	            case _Const2.default.FILTER_TYPE.DATE:
 	              {
-	                valid = _this6.filterDate(targetVal, filterVal, filterObj[key].value.comparator);
+	                valid = _this5.filterDate(targetVal, filterVal, filterObj[key].value.comparator);
 	                break;
 	              }
 	            case _Const2.default.FILTER_TYPE.REGEX:
 	              {
-	                valid = _this6.filterRegex(targetVal, filterVal);
+	                valid = _this5.filterRegex(targetVal, filterVal);
 	                break;
 	              }
 	            case _Const2.default.FILTER_TYPE.CUSTOM:
 	              {
 	                var cond = filterObj[key].props ? filterObj[key].props.cond : _Const2.default.FILTER_COND_LIKE;
-	                valid = _this6.filterCustom(targetVal, filterVal, filterObj[key].value, cond);
+	                valid = _this5.filterCustom(targetVal, filterVal, filterObj[key].value, cond);
 	                break;
 	              }
 	            case _Const2.default.FILTER_TYPE.ARRAY:
 	              {
-	                valid = _this6.filterArray(targetVal, filterVal);
+	                valid = _this5.filterArray(targetVal, filterVal);
 	                break;
 	              }
 	            default:
@@ -13733,7 +12531,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                  filterVal = format(filterVal, row, formatExtraData, r);
 	                }
 	                var _cond = filterObj[key].props ? filterObj[key].props.cond : _Const2.default.FILTER_COND_LIKE;
-	                valid = _this6.filterText(targetVal, filterVal, _cond);
+	                valid = _this5.filterText(targetVal, filterVal, _cond);
 	                break;
 	              }
 	          }
@@ -13761,7 +12559,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_search',
 	    value: function _search(source) {
-	      var _this7 = this;
+	      var _this6 = this;
 
 	      var searchTextArray = void 0;
 	      if (this.multiColumnSearch || !this.strictSearch) {
@@ -13783,7 +12581,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // http://jsperf.com/for-vs-foreach/66
 	        for (var i = 0, keysLength = keys.length; i < keysLength; i++) {
 	          var key = keys[i];
-	          var colInfo = _this7.colInfos[key];
+	          var colInfo = _this6.colInfos[key];
 	          if (colInfo && colInfo.searchable) {
 	            var format = colInfo.format,
 	                filterFormatted = colInfo.filterFormatted,
@@ -13812,7 +12610,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                  }
 	                  // match found: but there are more search terms to check for
 	                  searchTerms.splice(j, 1);
-	                } else if (!_this7.multiColumnSearch) {
+	                } else if (!_this6.multiColumnSearch) {
 	                  // one of the search terms was not found in this column
 	                  break;
 	                }
@@ -13827,7 +12625,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_sort',
 	    value: function _sort(arr) {
-	      var _this8 = this;
+	      var _this7 = this;
 
 	      if (this.sortList.length === 0 || typeof this.sortList[0] === 'undefined') {
 	        return arr;
@@ -13836,11 +12634,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      arr.sort(function (a, b) {
 	        var result = 0;
 
-	        for (var i = 0; i < _this8.sortList.length; i++) {
-	          var sortDetails = _this8.sortList[i];
+	        for (var i = 0; i < _this7.sortList.length; i++) {
+	          var sortDetails = _this7.sortList[i];
 	          var isDesc = sortDetails.order.toLowerCase() === _Const2.default.SORT_DESC;
 
-	          var _colInfos$sortDetails = _this8.colInfos[sortDetails.sortField],
+	          var _colInfos$sortDetails = _this7.colInfos[sortDetails.sortField],
 	              sortFunc = _colInfos$sortDetails.sortFunc,
 	              sortFuncExtraData = _colInfos$sortDetails.sortFuncExtraData;
 
@@ -13924,10 +12722,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'getAllRowkey',
 	    value: function getAllRowkey() {
-	      var _this9 = this;
+	      var _this8 = this;
 
 	      return this.data.map(function (row) {
-	        return row[_this9.keyField];
+	        return row[_this8.keyField];
 	      });
 	    }
 	  }]);
@@ -13936,17 +12734,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 	exports.TableDataStore = TableDataStore;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(TableDataStore, 'TableDataStore', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/store/TableDataStore.js');
-	}();
-
-	;
 
 /***/ }),
 /* 68 */
@@ -14044,25 +12831,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 
-	var _default = exportCSV;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(saveAs, 'saveAs', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/csv_export_util.js');
-
-	  __REACT_HOT_LOADER__.register(toString, 'toString', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/csv_export_util.js');
-
-	  __REACT_HOT_LOADER__.register(exportCSV, 'exportCSV', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/csv_export_util.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/csv_export_util.js');
-	}();
-
-	;
+	exports.default = exportCSV;
 
 /***/ }),
 /* 69 */
@@ -14250,17 +13019,6 @@ return /******/ (function(modules) { // webpackBootstrap
 			return saveAs;
 		}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	}
-	;
-
-	var _temp = function () {
-		if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-			return;
-		}
-
-		__REACT_HOT_LOADER__.register(saveAs, "saveAs", "/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filesaver.js");
-	}();
-
-	;
 
 /***/ }),
 /* 70 */
@@ -14354,18 +13112,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return Filter;
 	}(_events.EventEmitter);
 
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(Filter, 'Filter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/Filter.js');
-	}();
-
-	;
-
 /***/ }),
 /* 73 */
 /***/ (function(module, exports) {
@@ -14429,12 +13175,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      er = arguments[1];
 	      if (er instanceof Error) {
 	        throw er; // Unhandled 'error' event
-	      } else {
-	        // At least give some kind of context to the user
-	        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
-	        err.context = er;
-	        throw err;
 	      }
+	      throw TypeError('Uncaught, unspecified "error" event.');
 	    }
 	  }
 
@@ -14457,11 +13199,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        break;
 	      // slower
 	      default:
-	        args = Array.prototype.slice.call(arguments, 1);
+	        len = arguments.length;
+	        args = new Array(len - 1);
+	        for (i = 1; i < len; i++)
+	          args[i - 1] = arguments[i];
 	        handler.apply(this, args);
 	    }
 	  } else if (isObject(handler)) {
-	    args = Array.prototype.slice.call(arguments, 1);
+	    len = arguments.length;
+	    args = new Array(len - 1);
+	    for (i = 1; i < len; i++)
+	      args[i - 1] = arguments[i];
+
 	    listeners = handler.slice();
 	    len = listeners.length;
 	    for (i = 0; i < len; i++)
@@ -14499,6 +13248,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  // Check for listener leak
 	  if (isObject(this._events[type]) && !this._events[type].warned) {
+	    var m;
 	    if (!isUndefined(this._maxListeners)) {
 	      m = this._maxListeners;
 	    } else {
@@ -14620,7 +13370,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  if (isFunction(listeners)) {
 	    this.removeListener(type, listeners);
-	  } else if (listeners) {
+	  } else {
 	    // LIFO order
 	    while (listeners.length)
 	      this.removeListener(type, listeners[listeners.length - 1]);
@@ -14641,20 +13391,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return ret;
 	};
 
-	EventEmitter.prototype.listenerCount = function(type) {
-	  if (this._events) {
-	    var evlistener = this._events[type];
-
-	    if (isFunction(evlistener))
-	      return 1;
-	    else if (evlistener)
-	      return evlistener.length;
-	  }
-	  return 0;
-	};
-
 	EventEmitter.listenerCount = function(emitter, type) {
-	  return emitter.listenerCount(type);
+	  var ret;
+	  if (!emitter._events || !emitter._events[type])
+	    ret = 0;
+	  else if (isFunction(emitter._events[type]))
+	    ret = 1;
+	  else
+	    ret = emitter._events[type].length;
+	  return ret;
 	};
 
 	function isFunction(arg) {
@@ -14744,21 +13489,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  className: ''
 	};
 
-	var _default = ButtonGroup;
-	exports.default = _default;
-	;
-
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-
-	  __REACT_HOT_LOADER__.register(ButtonGroup, 'ButtonGroup', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ButtonGroup.js');
-
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ButtonGroup.js');
-	}();
-
-	;
+		exports.default = ButtonGroup;
 
 /***/ })
 /******/ ])
