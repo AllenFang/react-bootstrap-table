@@ -14,7 +14,7 @@
 // - That's it! Now when you npm publish you'll have a version available on npmcdn as well
 
 var path = require('path');
-var webpack = require('webpack');
+//var webpack = require('webpack');
 
 module.exports = {
   entry: {
@@ -43,15 +43,29 @@ module.exports = {
     }
   }],
   module: {
-    preLoaders: [{
-      test: /\.js$/,
-      exclude: [/node_modules/, path.resolve(__dirname, './src/filesaver.js')],
-      loader: 'eslint'
-    }],
     loaders: [{
-      test: /\.js$/,
+      test: /\.es6\.js$/,
       exclude: /node_modules/,
-      loaders: ['babel']
+      loader: 'babel-loader',
+      query: {
+          presets: ['react', 'env', 'stage-0'],
+          plugins: ['transform-object-assign',
+              'transform-es2015-arrow-functions',
+              'transform-class-properties',
+              'transform-object-entries'],
+      },
+    },
+    {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
+            presets: ['react', 'env', 'stage-0'],
+            plugins: ['transform-object-assign',
+                'transform-es2015-arrow-functions',
+                'transform-class-properties',
+                'transform-object-entries'],
+        },
     }]
   }
 };
