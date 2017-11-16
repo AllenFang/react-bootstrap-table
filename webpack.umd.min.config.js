@@ -6,7 +6,6 @@ var umdConfig = require('./webpack.umd.config');
 process.env.NODE_ENV = 'production';
 
 umdConfig.output.filename = '[name].min.js';
-umdConfig.devtool = null;
 umdConfig.plugins = [
   new webpack.optimize.OccurrenceOrderPlugin(),
   new webpack.optimize.UglifyJsPlugin()
