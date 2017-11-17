@@ -165,7 +165,7 @@ class TableBody extends Component {
       );
       const haveExpandContent = this.props.expandableRow && this.props.expandableRow(data);
       const isExpanding = haveExpandContent && this.props.expanding.indexOf(key) > -1;
-
+      const { hideRowOnExpand } = this.props;
       // add by bluespring for className customize
       let trClassName = this.props.trClassName;
       if (Utils.isFunction(this.props.trClassName)) {
@@ -189,6 +189,7 @@ class TableBody extends Component {
         onExpandRow={ this.handleClickCell }
         unselectableRow={ disable }
         style={ trStyle }
+        hidden={isExpanding && hideRowOnExpand}
         dbClickToEdit={ cellEdit.mode === Const.CELL_EDIT_DBCLICK } >
         { this.props.expandColumnOptions.expandColumnVisible &&
             this.props.expandColumnOptions.expandColumnBeforeSelectColumn &&
@@ -547,6 +548,7 @@ TableBody.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
   onNavigateCell: PropTypes.func,
-  withoutTabIndex: PropTypes.bool
+  withoutTabIndex: PropTypes.bool,
+  hideRowOnExpand: PropTypes.bool,
 };
 export default TableBody;

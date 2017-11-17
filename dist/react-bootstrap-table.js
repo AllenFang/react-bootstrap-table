@@ -3768,6 +3768,8 @@ var BootstrapTable = function (_Component) {
 
       var showToolbarOnTop = toolbarPosition !== _Const2.default.TOOLBAR_POS_BOTTOM;
       var showToolbarOnBottom = toolbarPosition !== _Const2.default.TOOLBAR_POS_TOP;
+      var _props$options$hideRo = this.props.options.hideRowOnExpand,
+          hideRowOnExpand = _props$options$hideRo === undefined ? false : _props$options$hideRo;
 
       return _react2.default.createElement(
         'div',
@@ -3848,6 +3850,7 @@ var BootstrapTable = function (_Component) {
             x: this.state.x,
             y: this.state.y,
             withoutTabIndex: this.props.withoutTabIndex,
+            hideRowOnExpand: hideRowOnExpand,
             onEditCell: this.handleEditCell }),
           tableFooter
         ),
@@ -5112,7 +5115,8 @@ BootstrapTable.propTypes = {
     beforeShowError: _propTypes2.default.func,
     printToolBar: _propTypes2.default.bool,
     insertFailIndicator: _propTypes2.default.string,
-    noAutoBOM: _propTypes2.default.bool
+    noAutoBOM: _propTypes2.default.bool,
+    hideRowOnExpand: _propTypes2.default.bool
   }),
   fetchInfo: _propTypes2.default.shape({
     dataTotalSize: _propTypes2.default.number
@@ -5279,7 +5283,8 @@ BootstrapTable.defaultProps = {
     beforeShowError: undefined,
     printToolBar: true,
     insertFailIndicator: _Const2.default.INSERT_FAIL_INDICATOR,
-    noAutoBOM: true
+    noAutoBOM: true,
+    hideRowOnExpand: false
   },
   fetchInfo: {
     dataTotalSize: 0
@@ -8610,8 +8615,9 @@ var TableBody = function (_Component) {
         var expandedRowColumn = this.renderExpandRowColumn(this.props.expandableRow && this.props.expandableRow(data), this.props.expanding.indexOf(key) > -1, ExpandColumnCustomComponent, r);
         var haveExpandContent = this.props.expandableRow && this.props.expandableRow(data);
         var isExpanding = haveExpandContent && this.props.expanding.indexOf(key) > -1;
-
+        var hideRowOnExpand = this.props.hideRowOnExpand;
         // add by bluespring for className customize
+
         var trClassName = this.props.trClassName;
         if (_util2.default.isFunction(this.props.trClassName)) {
           trClassName = this.props.trClassName(data, r);
@@ -8634,6 +8640,7 @@ var TableBody = function (_Component) {
             onExpandRow: this.handleClickCell,
             unselectableRow: disable,
             style: trStyle,
+            hidden: isExpanding && hideRowOnExpand,
             dbClickToEdit: cellEdit.mode === _Const2.default.CELL_EDIT_DBCLICK },
           this.props.expandColumnOptions.expandColumnVisible && this.props.expandColumnOptions.expandColumnBeforeSelectColumn && expandedRowColumn,
           selectRowColumn,
@@ -8786,7 +8793,8 @@ TableBody.propTypes = {
   x: _propTypes2.default.number,
   y: _propTypes2.default.number,
   onNavigateCell: _propTypes2.default.func,
-  withoutTabIndex: _propTypes2.default.bool
+  withoutTabIndex: _propTypes2.default.bool,
+  hideRowOnExpand: _propTypes2.default.bool
 };
 exports.default = TableBody;
 
@@ -8951,6 +8959,7 @@ var TableRow = function (_Component) {
           onMouseOver: this.rowMouseOver,
           onMouseOut: this.rowMouseOut,
           onClick: this.rowClick,
+          hidden: this.props.hidden,
           onDoubleClick: this.rowDoubleClick }),
         this.props.children
       );
@@ -8972,11 +8981,13 @@ TableRow.propTypes = {
   onExpandRow: _propTypes2.default.func,
   onRowMouseOut: _propTypes2.default.func,
   onRowMouseOver: _propTypes2.default.func,
-  unselectableRow: _propTypes2.default.bool
+  unselectableRow: _propTypes2.default.bool,
+  hidden: _propTypes2.default.bool
 };
 TableRow.defaultProps = {
   onRowClick: undefined,
-  onRowDoubleClick: undefined
+  onRowDoubleClick: undefined,
+  hidden: false
 };
 exports.default = TableRow;
 
