@@ -736,6 +736,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	          } else {
 	            if (!this.allowRemote(_Const2.default.REMOTE_SORT)) {
 	              data = this.store.sort().get();
+	            } else {
+	              var currentOptions = this.props.options;
+
+	              var sortName = options.sortName;
+	              var sortOrder = options.sortOrder;
+	              if (currentOptions.sortName !== sortName || currentOptions.sortOrder !== sortOrder) {
+	                this.store.setSortInfo(sortOrder, options.sortName);
+	              }
 	            }
 	            newState.data = data;
 	          }
@@ -750,9 +758,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	          var sortList = this.store.getSortInfo();
 	          var sortField = options.sortName;
-	          var sortOrder = options.sortOrder;
-	          if (sortField && sortOrder) {
-	            this.store.setSortInfo(sortOrder, sortField);
+	          var _sortOrder = options.sortOrder;
+	          if (sortField && _sortOrder) {
+	            this.store.setSortInfo(_sortOrder, sortField);
 	            this.store.sort();
 	          } else if (sortList.length > 0) {
 	            this.store.sort();
@@ -1427,7 +1435,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            invalid();
 	          }
 	        };
-	        var isValid = beforeSaveCell(this.state.data[rowIndex], fieldName, newVal, beforeSaveCellCB);
+	        var props = { rowIndex: rowIndex, colIndex: colIndex };
+	        var isValid = beforeSaveCell(this.state.data[rowIndex], fieldName, newVal, beforeSaveCellCB, props);
 	        if (isValid === false && typeof isValid !== 'undefined') {
 	          return invalid();
 	        } else if (isValid === _Const2.default.AWAIT_BEFORE_CELL_EDIT) {
@@ -1445,13 +1454,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var columns = this.getColumnsDescription(this.props);
 	      var fieldName = columns[colIndex].name;
+	      var props = { rowIndex: rowIndex, colIndex: colIndex };
 	      if (onCellEdit) {
 	        newVal = onCellEdit(this.state.data[rowIndex], fieldName, newVal);
 	      }
 
 	      if (this.allowRemote(_Const2.default.REMOTE_CELL_EDIT)) {
 	        if (afterSaveCell) {
-	          afterSaveCell(this.state.data[rowIndex], fieldName, newVal);
+	          afterSaveCell(this.state.data[rowIndex], fieldName, newVal, props);
 	        }
 	        return;
 	      }
@@ -1465,7 +1475,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 
 	      if (afterSaveCell) {
-	        afterSaveCell(this.state.data[rowIndex], fieldName, newVal);
+	        afterSaveCell(this.state.data[rowIndex], fieldName, newVal, props);
 	      }
 	    }
 	  }, {
@@ -7461,7 +7471,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props2 = this.props,
 	          keyBoardNav = _props2.keyBoardNav,
 	          onNavigateCell = _props2.onNavigateCell,
-	          cellEdit = _props2.cellEdit;
+	          cellEdit = _props2.cellEdit,
+	          selectedRowKeys = _props2.selectedRowKeys;
 
 	      var offset = void 0;
 	      if (e.keyCode === 37) {
@@ -7478,15 +7489,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } else if (e.keyCode === 40) {
 	        offset = { x: 0, y: 1 };
 	      } else if (e.keyCode === 13) {
+	        var rowIndex = e.target.parentElement.rowIndex + 1;
 	        var enterToEdit = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.enterToEdit : false;
 	        var enterToExpand = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.enterToExpand : false;
+	        var enterToSelect = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.enterToSelect : false;
 
 	        if (cellEdit && enterToEdit) {
-	          this.handleEditCell(e.target.parentElement.rowIndex + 1, e.currentTarget.cellIndex, '', e);
+	          this.handleEditCell(rowIndex, e.currentTarget.cellIndex, '', e);
 	        }
 
 	        if (enterToExpand) {
 	          this.handleClickCell(this.props.y + 1, this.props.x);
+	        }
+
+	        if (enterToSelect) {
+	          var isSelected = selectedRowKeys.indexOf(this.props.data[rowIndex - 1][this.props.keyField]) !== -1;
+	          this.handleSelectRow(rowIndex, !isSelected, e);
 	        }
 	      }
 	      if (offset && keyBoardNav) {
