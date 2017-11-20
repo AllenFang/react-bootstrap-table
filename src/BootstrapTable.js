@@ -290,6 +290,13 @@ class BootstrapTable extends Component {
           }
           newState.data = data;
         }
+
+        const { options: currentOptions } = this.props;
+        const sortName = options.sortName;
+        const sortOrder = options.sortOrder;
+        if (this.allowRemote(Const.REMOTE_SORT) && (currentOptions.sortName !== sortName || currentOptions.sortOrder !== sortOrder)) {
+          this.store.setSortInfo(sortOrder, options.sortName);
+        }
         this.setState(() => newState);
       } else {
         // #125
