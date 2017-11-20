@@ -280,16 +280,15 @@ class BootstrapTable extends Component {
         } else {
           if (!this.allowRemote(Const.REMOTE_SORT)) {
             data = this.store.sort().get();
+          } else {
+            const { options: currentOptions } = this.props;
+            const sortName = options.sortName;
+            const sortOrder = options.sortOrder;
+            if (currentOptions.sortName !== sortName || currentOptions.sortOrder !== sortOrder) {
+              this.store.setSortInfo(sortOrder, options.sortName);
+            }
           }
           newState.data = data;
-        }
-
-        const { options: currentOptions } = this.props;
-        const sortName = options.sortName;
-        const sortOrder = options.sortOrder;
-        if (this.allowRemote(Const.REMOTE_SORT) &&
-          (currentOptions.sortName !== sortName || currentOptions.sortOrder !== sortOrder)) {
-          this.store.setSortInfo(sortOrder, options.sortName);
         }
         this.setState(() => newState);
       } else {
