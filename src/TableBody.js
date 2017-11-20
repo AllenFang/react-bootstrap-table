@@ -252,7 +252,7 @@ class TableBody extends Component {
 
   handleCellKeyDown = (e, lastEditCell) => {
     e.preventDefault();
-    const { keyBoardNav, onNavigateCell, cellEdit } = this.props;
+    const { keyBoardNav, onNavigateCell, cellEdit, selectedRowKeys } = this.props;
     let offset;
     if (e.keyCode === 37) {
       offset = { x: -1, y: 0 };
@@ -269,20 +269,29 @@ class TableBody extends Component {
     } else if (e.keyCode === 40) {
       offset = { x: 0, y: 1 };
     } else if (e.keyCode === 13) {
+      const rowIndex = e.target.parentElement.rowIndex + 1;
       const enterToEdit = typeof keyBoardNav === 'object' ?
         keyBoardNav.enterToEdit :
         false;
       const enterToExpand = typeof keyBoardNav === 'object' ?
         keyBoardNav.enterToExpand :
         false;
+      const enterToSelect = typeof keyBoardNav === 'object' ?
+        keyBoardNav.enterToSelect :
+        false;
 
       if (cellEdit && enterToEdit) {
-        this.handleEditCell(e.target.parentElement.rowIndex + 1,
-          e.currentTarget.cellIndex, '', e);
+        this.handleEditCell(rowIndex, e.currentTarget.cellIndex, '', e);
       }
 
       if (enterToExpand) {
         this.handleClickCell(this.props.y + 1, this.props.x);
+      }
+
+      if (enterToSelect) {
+        const isSelected = selectedRowKeys.indexOf(
+          this.props.data[rowIndex - 1][this.props.keyField]) !== -1;
+        this.handleSelectRow(rowIndex, !isSelected, e);
       }
     }
     if (offset && keyBoardNav) {
