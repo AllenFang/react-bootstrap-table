@@ -1,5 +1,18 @@
+<a name="v4.1.5"></a>
+# [v4.1.5](https://github.com/AllenFang/react-bootstrap-table/compare/v4.1.3...v4.1.5) (2017-11-20)
+## Bug fixes
+* Fixed the sort status doesn't updated internally when remote sort enable([06b3560](https://github.com/AllenFang/react-bootstrap-table/commit/06b356021e3364d0048f8aba8e934e07bb7a02fc))
+
+## Enhancements
+* `beforeSaveCell` and `afterSaveCell` will pass additional information on last one argument([db634db](https://github.com/AllenFang/react-bootstrap-table/commit/db634db0573995427b743cf3919b7b2f5824b1de))
+
+## Features
+* Support press ENTER to select row when enable keyboard navigation([b52e065](https://github.com/AllenFang/react-bootstrap-table/commit/b52e065397221d50a5a824ea6def990bb49e352c))
+	* Check [this](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/keyboard-nav/enter-to-select-row-with-nav-table.js) example
+
 <a name="v4.1.2"></a>
 <a name="v4.1.3"></a>
+<a name="v4.1.4"></a>
 # [v4.1.1](https://github.com/AllenFang/react-bootstrap-table/compare/v4.1.1...v4.1.3) (2017-11-11)
 ## Bug fixes
 * Fixed data get sorted locally even with remote sorting([509e31a](https://github.com/AllenFang/react-bootstrap-table/commit/509e31ae3dee1c3cfc5024dcec15f0e14001f7e0),[0d57d95](https://github.com/AllenFang/react-bootstrap-table/commit/0d57d957f35d65b80dbace55036c0d4d61064f9f))
