@@ -30,23 +30,23 @@ class TableRow extends Component {
         setTimeout(() => {
           if (this.clickNum === 1) {
             onSelectRow(rowIndex, !isSelected, e);
-            onExpandRow(rowIndex, cellIndex);
+            onExpandRow(e, rowIndex, cellIndex);
           }
           this.clickNum = 0;
         }, 200);
       } else {
         if (dbClickToEdit) {
-          this.expandRow(rowIndex, cellIndex);
+          this.expandRow(e, rowIndex, cellIndex);
         }
       }
     }
   }
 
-  expandRow = (rowIndex, cellIndex) => {
+  expandRow = (event, rowIndex, cellIndex) => {
     this.clickNum++;
     setTimeout(() => {
       if (this.clickNum === 1) {
-        this.props.onExpandRow(rowIndex, cellIndex);
+        this.props.onExpandRow(event, rowIndex, cellIndex);
       }
       this.clickNum = 0;
     }, 200);

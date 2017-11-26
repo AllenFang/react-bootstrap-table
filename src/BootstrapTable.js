@@ -616,10 +616,10 @@ class BootstrapTable extends Component {
     });
   }
 
-  handleExpandRow = (expanding, rowKey, isRowExpanding) => {
+  handleExpandRow = (expanding, rowKey, isRowExpanding, event) => {
     const { onExpand } = this.props.options;
     if (onExpand) {
-      onExpand(rowKey, !isRowExpanding);
+      onExpand(rowKey, !isRowExpanding, event);
     }
     this.setState(() => { return { expanding, reset: false }; }, () => {
       this._adjustHeaderWidth();

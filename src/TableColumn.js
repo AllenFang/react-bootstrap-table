@@ -81,14 +81,14 @@ class TableColumn extends Component {
     this.props.onEdit(
       this.props.rIndex + 1, e.currentTarget.cellIndex, e);
     if (this.props.cellEdit.mode !== Const.CELL_EDIT_DBCLICK) {
-      this.props.onClick(this.props.rIndex + 1, e.currentTarget.cellIndex, e);
+      this.props.onClick(e, this.props.rIndex + 1, e.currentTarget.cellIndex);
     }
   }
 
   handleCellClick = e => {
     const { onClick, rIndex } = this.props;
     if (onClick) {
-      onClick(rIndex + 1, e.currentTarget.cellIndex, e);
+      onClick(e, rIndex + 1, e.currentTarget.cellIndex);
     }
   }
 
