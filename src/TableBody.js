@@ -173,8 +173,8 @@ class TableBody extends Component {
       }
       if (isExpanding && this.props.expandParentClass) {
         trClassName += Utils.isFunction(this.props.expandParentClass) ?
-          this.props.expandParentClass(data, r) :
-          this.props.expandParentClass;
+          ` ${this.props.expandParentClass(data, r)}` :
+          ` ${this.props.expandParentClass}`;
       }
       const result = [ <TableRow isSelected={ selected } key={ key } className={ trClassName }
         index={ r }
