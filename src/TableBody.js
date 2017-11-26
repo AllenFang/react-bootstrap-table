@@ -308,17 +308,17 @@ class TableBody extends Component {
     this.props.onRowMouseOver(targetRow, event);
   }
 
-  handleRowClick = (rowIndex, cellIndex) => {
+  handleRowClick = (rowIndex, cellIndex, event) => {
     const { onRowClick, selectRow } = this.props;
     if (Utils.isSelectRowDefined(selectRow.mode)) cellIndex--;
     if (this._isExpandColumnVisible()) cellIndex--;
-    onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex);
+    onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex, event);
   }
 
-  handleRowDoubleClick = rowIndex => {
+  handleRowDoubleClick = (rowIndex, event) => {
     const { onRowDoubleClick } = this.props;
     const targetRow = this.props.data[rowIndex];
-    onRowDoubleClick(targetRow);
+    onRowDoubleClick(targetRow, event);
   }
 
   handleSelectRow = (rowIndex, isSelected, e) => {
