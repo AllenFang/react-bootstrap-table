@@ -173,8 +173,8 @@ class TableBody extends Component {
       }
       if (isExpanding && this.props.expandParentClass) {
         trClassName += Utils.isFunction(this.props.expandParentClass) ?
-          this.props.expandParentClass(data, r) :
-          this.props.expandParentClass;
+          ` ${this.props.expandParentClass(data, r)}` :
+          ` ${this.props.expandParentClass}`;
       }
       const result = [ <TableRow isSelected={ selected } key={ key } className={ trClassName }
         index={ r }
@@ -284,7 +284,7 @@ class TableBody extends Component {
       }
 
       if (enterToExpand) {
-        this.handleClickCell(this.props.y + 1, this.props.x);
+        this.handleClickCell(e, this.props.y + 1, this.props.x);
       }
 
       if (enterToSelect) {
@@ -308,17 +308,17 @@ class TableBody extends Component {
     this.props.onRowMouseOver(targetRow, event);
   }
 
-  handleRowClick = (rowIndex, cellIndex) => {
+  handleRowClick = (rowIndex, cellIndex, event) => {
     const { onRowClick, selectRow } = this.props;
     if (Utils.isSelectRowDefined(selectRow.mode)) cellIndex--;
     if (this._isExpandColumnVisible()) cellIndex--;
-    onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex);
+    onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex, event);
   }
 
-  handleRowDoubleClick = rowIndex => {
+  handleRowDoubleClick = (rowIndex, event) => {
     const { onRowDoubleClick } = this.props;
     const targetRow = this.props.data[rowIndex];
-    onRowDoubleClick(targetRow);
+    onRowDoubleClick(targetRow, event);
   }
 
   handleSelectRow = (rowIndex, isSelected, e) => {
@@ -343,7 +343,7 @@ class TableBody extends Component {
     }
   }
 
-  handleClickCell = (rowIndex, columnIndex = -1) => {
+  handleClickCell = (event, rowIndex, columnIndex = -1) => {
     const {
       columns,
       keyField,
@@ -377,7 +377,7 @@ class TableBody extends Component {
         if (onlyOneExpanding) expanding = [ rowKey ];
         else expanding.push(rowKey);
       }
-      this.props.onExpand(expanding, rowKey, isRowExpanding);
+      this.props.onExpand(expanding, rowKey, isRowExpanding, event);
     }
   }
 
@@ -474,7 +474,7 @@ class TableBody extends Component {
       const unselectable = this.props.selectRow.unselectable || [];
       if (unselectable.indexOf(row[this.props.keyField]) === -1) {
         this.handleSelectRow(rowIndex + 1, isSelect, e);
-        this.handleClickCell(rowIndex + 1);
+        this.handleClickCell(e, rowIndex + 1);
       }
     }
   }
@@ -510,7 +510,7 @@ class TableBody extends Component {
     return (
       <td
         className='react-bs-table-expand-cell'
-        onClick={ () => this.handleClickCell(rowIndex + 1) }>
+        onClick={ e => this.handleClickCell(e, rowIndex + 1) }>
         { content }
       </td>
     );
