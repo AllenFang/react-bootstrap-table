@@ -616,10 +616,10 @@ class BootstrapTable extends Component {
     });
   }
 
-  handleExpandRow = (expanding, rowKey, isRowExpanding) => {
+  handleExpandRow = (expanding, rowKey, isRowExpanding, event) => {
     const { onExpand } = this.props.options;
     if (onExpand) {
-      onExpand(rowKey, !isRowExpanding);
+      onExpand(rowKey, !isRowExpanding, event);
     }
     this.setState(() => { return { expanding, reset: false }; }, () => {
       this._adjustHeaderWidth();
@@ -734,10 +734,10 @@ class BootstrapTable extends Component {
     });
   }
 
-  handleRowClick = (row, rowIndex, columnIndex) => {
+  handleRowClick = (row, rowIndex, columnIndex, event) => {
     const { options, keyBoardNav } = this.props;
     if (options.onRowClick) {
-      options.onRowClick(row, columnIndex, rowIndex);
+      options.onRowClick(row, columnIndex, rowIndex, event);
     }
     if (keyBoardNav) {
       let { clickToNav } = typeof keyBoardNav === 'object' ? keyBoardNav : {};
@@ -754,9 +754,9 @@ class BootstrapTable extends Component {
     }
   }
 
-  handleRowDoubleClick = row => {
+  handleRowDoubleClick = (row, event) => {
     if (this.props.options.onRowDoubleClick) {
-      this.props.options.onRowDoubleClick(row);
+      this.props.options.onRowDoubleClick(row, event);
     }
   }
 

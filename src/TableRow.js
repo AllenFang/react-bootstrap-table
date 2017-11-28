@@ -14,7 +14,7 @@ class TableRow extends Component {
   rowClick = e => {
     const rowIndex = this.props.index + 1;
     const cellIndex = e.target.cellIndex;
-    if (this.props.onRowClick) this.props.onRowClick(rowIndex, cellIndex);
+    if (this.props.onRowClick) this.props.onRowClick(rowIndex, cellIndex, e);
     const {
       selectRow, unselectableRow, isSelected, onSelectRow, onExpandRow, dbClickToEdit
     } = this.props;
@@ -30,23 +30,23 @@ class TableRow extends Component {
         setTimeout(() => {
           if (this.clickNum === 1) {
             onSelectRow(rowIndex, !isSelected, e);
-            onExpandRow(rowIndex, cellIndex);
+            onExpandRow(e, rowIndex, cellIndex);
           }
           this.clickNum = 0;
         }, 200);
       } else {
         if (dbClickToEdit) {
-          this.expandRow(rowIndex, cellIndex);
+          this.expandRow(e, rowIndex, cellIndex);
         }
       }
     }
   }
 
-  expandRow = (rowIndex, cellIndex) => {
+  expandRow = (event, rowIndex, cellIndex) => {
     this.clickNum++;
     setTimeout(() => {
       if (this.clickNum === 1) {
-        this.props.onExpandRow(rowIndex, cellIndex);
+        this.props.onExpandRow(event, rowIndex, cellIndex);
       }
       this.clickNum = 0;
     }, 200);
@@ -57,7 +57,7 @@ class TableRow extends Component {
         e.target.tagName !== 'SELECT' &&
         e.target.tagName !== 'TEXTAREA') {
       if (this.props.onRowDoubleClick) {
-        this.props.onRowDoubleClick(this.props.index);
+        this.props.onRowDoubleClick(this.props.index, e);
       }
     }
   }
