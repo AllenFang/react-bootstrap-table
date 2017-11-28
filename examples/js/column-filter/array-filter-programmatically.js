@@ -30,7 +30,7 @@ export default class ProgrammaticallyArrayFilter extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={ this.handleBtnClick } className='btn btn-default'>Click to apply text filter</button>
+        <button onClick={ this.handleBtnClick } className='btn btn-default'>Click to apply array filter</button>
         <BootstrapTable ref='table' data={ products }>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name' filter={ { type: 'TextFilter', delay: 1000 } }>Product Name</TableHeaderColumn>

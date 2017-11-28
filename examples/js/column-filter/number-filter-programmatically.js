@@ -29,7 +29,7 @@ export default class ProgrammaticallyNumberFilter extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={ this.handleBtnClick } className='btn btn-default'>Click to apply select filter</button>
+        <button onClick={ this.handleBtnClick } className='btn btn-default'>Click to apply number filter</button>
         <BootstrapTable data={ products }>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
