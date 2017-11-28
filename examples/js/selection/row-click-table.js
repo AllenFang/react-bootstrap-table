@@ -1,5 +1,6 @@
 /* eslint max-len: 0 */
 /* eslint no-alert: 0 */
+/* eslint no-console: 0 */
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
@@ -21,11 +22,13 @@ function addProducts(quantity) {
 addProducts(50);
 
 const options = {
-  onRowClick: function(row, columnIndex, rowIndex) {
+  onRowClick: function(row, columnIndex, rowIndex, e) {
     alert(`You click row id: ${row.id}, column index: ${columnIndex}, row index: ${rowIndex}`);
+    console.log(e);
   },
-  onRowDoubleClick: function(row) {
+  onRowDoubleClick: function(row, e) {
     alert(`You double click row id: ${row.id}`);
+    console.log(e);
   }
 };
 
