@@ -167,6 +167,8 @@
                 <li><a href="#expandColumnOptions" class="prop">expandColumnOptions</a></li>
                 <li><a href="#multiColumnSort" class="prop">multiColumnSort</a></li>
                 <li><a href="#keyBoardNav" class="prop">keyBoardNav</a></li>
+                <li><a href="#fetchInfo" class="prop">fetchInfo</a></li>
+                <li><a href="#dataTotalSize" class="sub-prop prop">dataTotalSize</a></li>
                 <li><a href="#selectRow" class="prop">selectRow</a></li>
                 <li><a href="#select-mode" class="sub-prop prop">mode</a></li>
                 <li><a href="#clickToSelect" class="sub-prop prop">clickToSelect</a></li>
@@ -436,6 +438,7 @@ const data = [ ... ];
 &lt;/BootstrapTable&gt;
 </code>
 </pre>
+                            To use remote <code>pagination</code> properly you need to pass <a href='#fetchInfo'>fetchInfo</a> property.<br/>
                             You can check <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/remote/remote-alternative.js#L9' target='_blank'>this</a> example a whole example,
                             and also these all are the useful <a target="_blank" href="https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/remote">examples</a> to learn how to programming with <code>remote</code> mode.
                           </span>
@@ -1101,6 +1104,70 @@ render() {
                         </br>
                         <strong>Note: checking <a href="https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js/keyboard-nav" target="_blank">more examples</a> for keyboard navigation</strong>
                       </span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane active" id="fetchInfo">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                          <h1><a href='#fetchInfo'>fetchInfo : Object</a></h1>
+                          <span>
+                          <code>react-bootstrap-table</code> support the remote pagination feature, when you enable this feature,
+                          <code>react-bootstrap-table</code> will check fetchInfo to generate pagination.
+                          <code>fetchInfo</code> accept an object which have the following props:
+                          <ul>
+                            <li><a class="internal-anchor" href='#dataTotalSize'>dataTotalSize</a></li>
+                          </ul>
+                        </span>
+<pre>
+<code class="javascript">render() {
+  const fetchInfo = {
+    dataTotalSize: 100 // or checkbox
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      remote={ true }
+      pagination={ true }
+      fetchInfo={ fetchInfo }&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane active" id="dataTotalSize">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                          <h1><a href='#dataTotalSize'>fetchInfo: dataTotalSize : Number</a></h1>
+                          <span>
+                          You can assign total size of remote stored data.
+                          </br></br>
+                          </span>
+<pre>
+<code class="javascript">render() {
+  const fetchInfo = {
+    dataTotalSize: 100
+  };
+  return(
+    &lt;BootstrapTable
+      data={ data }
+      remote={ true }
+      pagination={ true }
+      fetchInfo={ fetchInfo}&gt;
+      //...
+    &lt;/BootstrapTable&gt;
+  );
+}
+</code>
+</pre>
                       </div>
                   </div>
               </div>
