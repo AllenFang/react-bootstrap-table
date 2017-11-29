@@ -683,7 +683,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var pageStartIndex = this.props.options.pageStartIndex;
 
 	      this.store.clean();
-	      this.refs.body.setState({ currEditCell: null });
+	      this.body.setState({ currEditCell: null });
 	      this.setState(function () {
 	        return {
 	          data: _this4.getTableData(),
@@ -814,9 +814,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function componentDidMount() {
 	      this._adjustTable();
 	      window.addEventListener('resize', this._adjustTable);
-	      this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader);
+	      this.body.container.addEventListener('scroll', this._scrollHeader);
 	      if (this.props.footer) {
-	        this.refs.body.refs.container.addEventListener('scroll', this._scrollFooter);
+	        this.body.container.addEventListener('scroll', this._scrollFooter);
 	      }
 	      if (this.props.scrollTop) {
 	        this._scrollTop();
@@ -826,10 +826,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      window.removeEventListener('resize', this._adjustTable);
-	      if (this.refs && this.refs.body && this.refs.body.refs) {
-	        this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader);
+	      if (this.body && this.body.container) {
+	        this.body.container.removeEventListener('scroll', this._scrollHeader);
 	        if (this.props.footer) {
-	          this.refs.body.refs.container.removeEventListener('scroll', this._scrollFooter);
+	          this.body.container.removeEventListener('scroll', this._scrollFooter);
 	        }
 	      }
 	      if (this.filter) {
@@ -887,6 +887,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this5 = this;
+
 	      var style = {
 	        height: this.props.height,
 	        maxHeight: this.props.maxHeight
@@ -931,7 +933,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        showPaginationOnTop ? pagination : null,
 	        _react2.default.createElement(
 	          'div',
-	          { ref: 'table',
+	          { ref: function ref(node) {
+	              return _this5.table = node;
+	            },
 	            className: (0, _classnames2.default)('react-bs-table', { 'react-bs-table-bordered': this.props.bordered }, this.props.tableContainerClass),
 	            style: _extends({}, style, this.props.tableStyle),
 	            onMouseEnter: this.handleMouseEnter,
@@ -939,7 +943,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _react2.default.createElement(
 	            _TableHeader2.default,
 	            {
-	              ref: 'header',
+	              ref: function ref(node) {
+	                return _this5.header = node;
+	              },
 	              version: this.props.version,
 	              colGroups: colGroups,
 	              headerContainerClass: this.props.headerContainerClass,
@@ -962,7 +968,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	              expandColumnBeforeSelectColumn: expandColumnOptions.expandColumnBeforeSelectColumn },
 	            this.props.children
 	          ),
-	          _react2.default.createElement(_TableBody2.default, { ref: 'body',
+	          _react2.default.createElement(_TableBody2.default, {
+	            ref: function ref(node) {
+	              return _this5.body = node;
+	            },
 	            bodyContainerClass: this.props.bodyContainerClass,
 	            tableBodyClass: this.props.tableBodyClass,
 	            style: _extends({}, style, this.props.bodyStyle),
@@ -1008,7 +1017,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        tableFilter,
 	        showPaginationOnBottom ? pagination : null,
 	        showToolbarOnBottom ? toolBar : null,
-	        _react2.default.createElement(_reactSAlert2.default, { stack: { limit: 3 } })
+	        this.props.renderAlert ? _react2.default.createElement(_reactSAlert2.default, { stack: { limit: 3 } }) : null
 	      );
 	    }
 	  }, {
@@ -1103,18 +1112,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: '__handleExpandRow__REACT_HOT_LOADER__',
-	    value: function __handleExpandRow__REACT_HOT_LOADER__(expanding, rowKey, isRowExpanding) {
-	      var _this5 = this;
+	    value: function __handleExpandRow__REACT_HOT_LOADER__(expanding, rowKey, isRowExpanding, event) {
+	      var _this6 = this;
 
 	      var onExpand = this.props.options.onExpand;
 
 	      if (onExpand) {
-	        onExpand(rowKey, !isRowExpanding);
+	        onExpand(rowKey, !isRowExpanding, event);
 	      }
 	      this.setState(function () {
 	        return { expanding: expanding, reset: false };
 	      }, function () {
-	        _this5._adjustHeaderWidth();
+	        _this6._adjustHeaderWidth();
 	      });
 	    }
 	  }, {
@@ -1198,7 +1207,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if (y >= visibleRowSize) {
 	        currPage++;
-	        var lastPage = pagination ? this.refs.pagination.getLastPage() : -1;
+	        var lastPage = pagination ? this.pagination.getLastPage() : -1;
 	        if (currPage <= lastPage) {
 	          this.handlePaginationData(currPage, this.state.sizePerPage);
 	        } else {
@@ -1216,7 +1225,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } else if (x >= visibleColumnSize) {
 	        if (y + 1 === visibleRowSize) {
 	          currPage++;
-	          var _lastPage = pagination ? this.refs.pagination.getLastPage() : -1;
+	          var _lastPage = pagination ? this.pagination.getLastPage() : -1;
 	          if (currPage <= _lastPage) {
 	            this.handlePaginationData(currPage, this.state.sizePerPage);
 	          } else {
@@ -1249,13 +1258,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: '__handleRowClick__REACT_HOT_LOADER__',
-	    value: function __handleRowClick__REACT_HOT_LOADER__(row, rowIndex, columnIndex) {
+	    value: function __handleRowClick__REACT_HOT_LOADER__(row, rowIndex, columnIndex, event) {
 	      var _props3 = this.props,
 	          options = _props3.options,
 	          keyBoardNav = _props3.keyBoardNav;
 
 	      if (options.onRowClick) {
-	        options.onRowClick(row, columnIndex, rowIndex);
+	        options.onRowClick(row, columnIndex, rowIndex, event);
 	      }
 	      if (keyBoardNav) {
 	        var _ref5 = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav : {},
@@ -1275,9 +1284,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: '__handleRowDoubleClick__REACT_HOT_LOADER__',
-	    value: function __handleRowDoubleClick__REACT_HOT_LOADER__(row) {
+	    value: function __handleRowDoubleClick__REACT_HOT_LOADER__(row, event) {
 	      if (this.props.options.onRowDoubleClick) {
-	        this.props.options.onRowDoubleClick(row);
+	        this.props.options.onRowDoubleClick(row, event);
 	      }
 	    }
 	  }, {
@@ -1409,7 +1418,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleEditCell__REACT_HOT_LOADER__',
 	    value: function __handleEditCell__REACT_HOT_LOADER__(newVal, rowIndex, colIndex) {
-	      var _this6 = this;
+	      var _this7 = this;
 
 	      var beforeSaveCell = this.props.cellEdit.beforeSaveCell;
 
@@ -1417,9 +1426,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var fieldName = columns[colIndex].name;
 
 	      var invalid = function invalid() {
-	        _this6.setState(function () {
+	        _this7.setState(function () {
 	          return {
-	            data: _this6.store.get(),
+	            data: _this7.store.get(),
 	            reset: false
 	          };
 	        });
@@ -1428,9 +1437,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if (beforeSaveCell) {
 	        var beforeSaveCellCB = function beforeSaveCellCB(result) {
-	          _this6.refs.body.cancelEditCell();
+	          _this7.body.cancelEditCell();
 	          if (result || result === undefined) {
-	            _this6.editCell(newVal, rowIndex, colIndex);
+	            _this7.editCell(newVal, rowIndex, colIndex);
 	          } else {
 	            invalid();
 	          }
@@ -1491,7 +1500,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleAddRow__REACT_HOT_LOADER__',
 	    value: function __handleAddRow__REACT_HOT_LOADER__(newObj) {
-	      var _this7 = this;
+	      var _this8 = this;
 
 	      var isAsync = false;
 	      var onAddRow = this.props.options.onAddRow;
@@ -1499,7 +1508,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var afterHandleAddRow = function afterHandleAddRow(errMsg) {
 	        if (isAsync) {
-	          _this7.refs.toolbar.afterHandleSaveBtnClick(errMsg);
+	          _this8.toolbar.afterHandleSaveBtnClick(errMsg);
 	        } else {
 	          return errMsg;
 	        }
@@ -1507,19 +1516,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var afterAddRowCB = function afterAddRowCB(errMsg) {
 	        if (typeof errMsg !== 'undefined' && errMsg !== '') return afterHandleAddRow(errMsg);
-	        if (_this7.allowRemote(_Const2.default.REMOTE_INSERT_ROW)) {
-	          if (_this7.props.options.afterInsertRow) {
-	            _this7.props.options.afterInsertRow(newObj);
+	        if (_this8.allowRemote(_Const2.default.REMOTE_INSERT_ROW)) {
+	          if (_this8.props.options.afterInsertRow) {
+	            _this8.props.options.afterInsertRow(newObj);
 	          }
 	          return afterHandleAddRow();
 	        }
 
 	        try {
-	          _this7.store.add(newObj);
+	          _this8.store.add(newObj);
 	        } catch (e) {
 	          return afterHandleAddRow(e.message);
 	        }
-	        _this7._handleAfterAddingRow(newObj, false);
+	        _this8._handleAfterAddingRow(newObj, false);
 	        return afterHandleAddRow();
 	      };
 
@@ -1573,14 +1582,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleDropRow__REACT_HOT_LOADER__',
 	    value: function __handleDropRow__REACT_HOT_LOADER__(rowKeys) {
-	      var _this8 = this;
+	      var _this9 = this;
 
 	      var dropRowKeys = rowKeys ? rowKeys : this.store.getSelectedRowKeys();
 	      // add confirm before the delete action if that option is set.
 	      if (dropRowKeys && dropRowKeys.length > 0) {
 	        if (this.props.options.handleConfirmDeleteRow) {
 	          this.props.options.handleConfirmDeleteRow(function () {
-	            _this8.deleteRow(dropRowKeys);
+	            _this9.deleteRow(dropRowKeys);
 	          }, dropRowKeys);
 	        } else if (confirm('Are you sure you want to delete?')) {
 	          this.deleteRow(dropRowKeys);
@@ -1590,7 +1599,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'deleteRow',
 	    value: function deleteRow(dropRowKeys) {
-	      var _this9 = this;
+	      var _this10 = this;
 
 	      var dropRow = this.store.getRowByKey(dropRowKeys);
 	      var _props$options2 = this.props.options,
@@ -1627,7 +1636,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.setState(function () {
 	          return {
 	            data: result,
-	            selectedRowKeys: _this9.store.getSelectedRowKeys(),
+	            selectedRowKeys: _this10.store.getSelectedRowKeys(),
 	            currPage: currPage,
 	            reset: false
 	          };
@@ -1638,7 +1647,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          return {
 	            data: result,
 	            reset: false,
-	            selectedRowKeys: _this9.store.getSelectedRowKeys()
+	            selectedRowKeys: _this10.store.getSelectedRowKeys()
 	          };
 	        });
 	      }
@@ -1750,8 +1759,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function __handleSearch__REACT_HOT_LOADER__(searchText) {
 	      // Set search field if this function being called outside
 	      // but it's not necessary if calling fron inside.
-	      if (this.refs.toolbar) {
-	        this.refs.toolbar.setSearchInput(searchText);
+	      if (this.toolbar) {
+	        this.toolbar.setSearchInput(searchText);
 	      }
 	      var search = this.props.autoCollapse.search;
 	      var _props$options4 = this.props.options,
@@ -1808,6 +1817,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'renderPagination',
 	    value: function renderPagination() {
+	      var _this11 = this;
+
 	      if (this.props.pagination) {
 	        var dataSize = void 0;
 	        if (this.allowRemote(_Const2.default.REMOTE_PAGE)) {
@@ -1823,7 +1834,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          'div',
 	          { className: 'react-bs-table-pagination' },
 	          _react2.default.createElement(_PaginationList2.default, {
-	            ref: 'pagination',
+	            ref: function ref(node) {
+	              return _this11.pagination = node;
+	            },
 	            withFirstAndLast: withFirstAndLast,
 	            alwaysShowAllBtns: options.alwaysShowAllBtns,
 	            currPage: this.state.currPage,
@@ -1856,6 +1869,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'renderToolBar',
 	    value: function renderToolBar() {
+	      var _this12 = this;
+
 	      var _props5 = this.props,
 	          exportCSV = _props5.exportCSV,
 	          selectRow = _props5.selectRow,
@@ -1907,7 +1922,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          'div',
 	          { className: 'react-bs-table-tool-bar ' + (print ? '' : 'hidden-print') },
 	          _react2.default.createElement(_ToolBar2.default, {
-	            ref: 'toolbar',
+	            ref: function ref(node) {
+	              return _this12.toolbar = node;
+	            },
 	            version: this.props.version,
 	            defaultSearch: this.props.options.defaultSearch,
 	            clearSearch: this.props.options.clearSearch,
@@ -1966,6 +1983,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'renderTableFooter',
 	    value: function renderTableFooter(footerData, footerFormatterReturnData, columns, colGroups) {
+	      var _this13 = this;
+
 	      if (this.props.footer) {
 	        var hideSelectColumn = true;
 	        var mode = this.props.selectRow.mode;
@@ -1977,7 +1996,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return _react2.default.createElement(
 	          _TableFooter2.default,
 	          {
-	            ref: 'footer',
+	            ref: function ref(node) {
+	              return _this13.footer = node;
+	            },
 	            columns: columns,
 	            colGroups: colGroups,
 	            footerFormatterReturnData: footerFormatterReturnData,
@@ -2000,23 +2021,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var scrollTop = this.props.scrollTop;
 
 	      if (scrollTop === _Const2.default.SCROLL_TOP) {
-	        this.refs.body.refs.container.scrollTop = 0;
+	        this.body.container.scrollTop = 0;
 	      } else if (scrollTop === _Const2.default.SCROLL_BOTTOM) {
-	        this.refs.body.refs.container.scrollTop = this.refs.body.refs.container.scrollHeight;
+	        this.body.container.scrollTop = this.body.container.scrollHeight;
 	      } else if (typeof scrollTop === 'number' && !isNaN(scrollTop)) {
-	        this.refs.body.refs.container.scrollTop = scrollTop;
+	        this.body.container.scrollTop = scrollTop;
 	      }
 	    }
 	  }, {
 	    key: '___scrollHeader__REACT_HOT_LOADER__',
 	    value: function ___scrollHeader__REACT_HOT_LOADER__(e) {
-	      this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
+	      this.header.container.scrollLeft = e.currentTarget.scrollLeft;
 	    }
 	  }, {
 	    key: '___scrollFooter__REACT_HOT_LOADER__',
 	    value: function ___scrollFooter__REACT_HOT_LOADER__(e) {
 	      if (this.props.footer) {
-	        this.refs.footer.refs.container.scrollLeft = e.currentTarget.scrollLeft;
+	        this.footer.container.scrollLeft = e.currentTarget.scrollLeft;
 	      }
 	    }
 	  }, {
@@ -2030,9 +2051,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_adjustHeaderWidth',
 	    value: function _adjustHeaderWidth() {
-	      var header = this.refs.header.getHeaderColGrouop();
-	      var tbody = this.refs.body.refs.tbody;
-	      var bodyHeader = this.refs.body.getHeaderColGrouop();
+	      var header = this.header.getHeaderColGrouop();
+	      var tbody = this.body.tbody;
+	      var bodyHeader = this.body.getHeaderColGrouop();
 	      var firstRow = tbody.childNodes[0];
 	      var isScroll = tbody.parentNode.getBoundingClientRect().height > tbody.parentNode.parentNode.getBoundingClientRect().height;
 
@@ -2092,12 +2113,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var maxHeight = this.props.maxHeight;
 
 	      if (typeof height === 'number' && !isNaN(height) || height.indexOf('%') === -1) {
-	        this.refs.body.refs.container.style.height = parseFloat(height, 10) - this.refs.header.refs.container.offsetHeight + 'px';
+	        this.body.container.style.height = parseFloat(height, 10) - this.header.container.offsetHeight + 'px';
 	      }
 	      if (maxHeight) {
 	        maxHeight = typeof maxHeight === 'number' ? maxHeight : parseInt(maxHeight.replace('px', ''), 10);
 
-	        this.refs.body.refs.container.style.maxHeight = maxHeight - this.refs.header.refs.container.offsetHeight + 'px';
+	        this.body.container.style.maxHeight = maxHeight - this.header.container.offsetHeight + 'px';
 	      }
 	    }
 	  }, {
@@ -2300,6 +2321,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  fetchInfo: _propTypes2.default.shape({
 	    dataTotalSize: _propTypes2.default.number
 	  }),
+	  renderAlert: _propTypes2.default.bool,
 	  exportCSV: _propTypes2.default.bool,
 	  csvFileName: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.func]),
 	  ignoreSinglePage: _propTypes2.default.bool,
@@ -2467,6 +2489,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  fetchInfo: {
 	    dataTotalSize: 0
 	  },
+	  renderAlert: true,
 	  exportCSV: false,
 	  csvFileName: 'spreadsheet.csv',
 	  ignoreSinglePage: false,
@@ -3835,11 +3858,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	    }
 
+	    var _extends = Object.assign || function (target) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            var source = arguments[i];
+
+	            for (var key in source) {
+	                if (Object.prototype.hasOwnProperty.call(source, key)) {
+	                    target[key] = source[key];
+	                }
+	            }
+	        }
+
+	        return target;
+	    };
+
 	    var insertFunc = function insertFunc(msg, data, condition) {
 	        var id = _sAlertTools2.default.randomId();
 	        _sAlertStore2.default.dispatch({
 	            type: 'INSERT',
-	            data: Object.assign({}, data, {
+	            data: _extends({}, data, {
 	                id: id,
 	                condition: condition,
 	                message: msg
@@ -3876,54 +3913,70 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var storeStateBottom = void 0;
 
 	                var addToStoreRight = function addToStoreRight() {
-	                    var length = void 0;
-	                    storeStateRight = (0, _sAlertDataPrep2.default)('right') || [];
-	                    length = storeStateRight.length;
-	                    if (_this2.props.stack && _this2.props.stack.limit && length > _this2.props.stack.limit) {
-	                        var id = storeStateRight[0].id;
-	                        _sAlertStore2.default.dispatch({ type: 'REMOVE', data: { id: id } });
-	                        storeStateRight = (0, _sAlertDataPrep2.default)('right') || [];
-	                    }
-	                    _this2.setState({ dataRight: storeStateRight });
+	                    requestAnimationFrame(function () {
+	                        return requestAnimationFrame(function () {
+	                            var length = void 0;
+	                            storeStateRight = (0, _sAlertDataPrep2.default)('right') || [];
+	                            length = storeStateRight.length;
+	                            if (_this2.props.stack && _this2.props.stack.limit && length > _this2.props.stack.limit) {
+	                                var id = storeStateRight[0].id;
+	                                _sAlertStore2.default.dispatch({ type: 'REMOVE', data: { id: id } });
+	                                storeStateRight = (0, _sAlertDataPrep2.default)('right') || [];
+	                            }
+	                            _this2.setState({ dataRight: storeStateRight });
+	                        });
+	                    });
 	                };
 	                this.unsubStoreRight = _sAlertStore2.default.subscribe(addToStoreRight);
 
 	                var addToStoreLeft = function addToStoreLeft() {
-	                    var length = void 0;
-	                    storeStateLeft = (0, _sAlertDataPrep2.default)('left') || [];
-	                    length = storeStateLeft.length;
-	                    if (_this2.props.stack && _this2.props.stack.limit && length > _this2.props.stack.limit) {
-	                        var id = storeStateLeft[0].id;
-	                        _sAlertStore2.default.dispatch({ type: 'REMOVE', data: { id: id } });
-	                        storeStateLeft = (0, _sAlertDataPrep2.default)('left') || [];
-	                    }
-	                    _this2.setState({ dataLeft: storeStateLeft });
+	                    requestAnimationFrame(function () {
+	                        return requestAnimationFrame(function () {
+	                            var length = void 0;
+	                            storeStateLeft = (0, _sAlertDataPrep2.default)('left') || [];
+	                            length = storeStateLeft.length;
+	                            if (_this2.props.stack && _this2.props.stack.limit && length > _this2.props.stack.limit) {
+	                                var id = storeStateLeft[0].id;
+	                                _sAlertStore2.default.dispatch({ type: 'REMOVE', data: { id: id } });
+	                                storeStateLeft = (0, _sAlertDataPrep2.default)('left') || [];
+	                            }
+	                            _this2.setState({ dataLeft: storeStateLeft });
+	                        });
+	                    });
 	                };
 	                this.unsubStoreLeft = _sAlertStore2.default.subscribe(addToStoreLeft);
 
 	                var addToStoreTop = function addToStoreTop() {
-	                    var length = void 0;
-	                    storeStateTop = (0, _sAlertDataPrep2.default)('full-top') || [];
-	                    length = storeStateTop.length;
-	                    if (_this2.props.stack && _this2.props.stack.limit && length > _this2.props.stack.limit) {
-	                        var id = storeStateTop[0].id;
-	                        _sAlertStore2.default.dispatch({ type: 'REMOVE', data: { id: id } });
-	                        storeStateTop = (0, _sAlertDataPrep2.default)('full-top') || [];
-	                    }
-	                    _this2.setState({ dataTop: storeStateTop });
+	                    requestAnimationFrame(function () {
+	                        return requestAnimationFrame(function () {
+	                            var length = void 0;
+	                            storeStateTop = (0, _sAlertDataPrep2.default)('full-top') || [];
+	                            length = storeStateTop.length;
+	                            if (_this2.props.stack && _this2.props.stack.limit && length > _this2.props.stack.limit) {
+	                                var id = storeStateTop[0].id;
+	                                _sAlertStore2.default.dispatch({ type: 'REMOVE', data: { id: id } });
+	                                storeStateTop = (0, _sAlertDataPrep2.default)('full-top') || [];
+	                            }
+	                            _this2.setState({ dataTop: storeStateTop });
+	                        });
+	                    });
 	                };
 	                this.unsubStoreTop = _sAlertStore2.default.subscribe(addToStoreTop);
 
 	                var addToStoreBottom = function addToStoreBottom() {
-	                    var length = void 0;
-	                    storeStateBottom = (0, _sAlertDataPrep2.default)('full-bottom') || [];
-	                    length = storeStateBottom.length;
-	                    if (_this2.props.stack && _this2.props.stack.limit && length > _this2.props.stack.limit) {
-	                        var id = storeStateBottom[0].id;
-	                        _sAlertStore2.default.dispatch({ type: 'REMOVE', data: { id: id } });
-	                        storeStateBottom = (0, _sAlertDataPrep2.default)('full-bottom') || [];
-	                    }
-	                    _this2.setState({ dataBottom: storeStateBottom });
+	                    requestAnimationFrame(function () {
+	                        return requestAnimationFrame(function () {
+	                            var length = void 0;
+	                            storeStateBottom = (0, _sAlertDataPrep2.default)('full-bottom') || [];
+	                            length = storeStateBottom.length;
+	                            if (_this2.props.stack && _this2.props.stack.limit && length > _this2.props.stack.limit) {
+	                                var id = storeStateBottom[0].id;
+	                                _sAlertStore2.default.dispatch({ type: 'REMOVE', data: { id: id } });
+	                                storeStateBottom = (0, _sAlertDataPrep2.default)('full-bottom') || [];
+	                            }
+	                            _this2.setState({ dataBottom: storeStateBottom });
+	                        });
+	                    });
 	                };
 	                this.unsubStoreBottom = _sAlertStore2.default.subscribe(addToStoreBottom);
 
@@ -4614,6 +4667,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        };
 	    }
 
+	    var _extends = Object.assign || function (target) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            var source = arguments[i];
+
+	            for (var key in source) {
+	                if (Object.prototype.hasOwnProperty.call(source, key)) {
+	                    target[key] = source[key];
+	                }
+	            }
+	        }
+
+	        return target;
+	    };
+
 	    var getAlertData = function getAlertData(sAlertPosition) {
 	        var positionTop = 0;
 	        var positionBottom = 0;
@@ -4727,13 +4794,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (sAlertPosition === 'right') {
 	                    style = style + 'right: ' + (aStack.spacing || parseInt(sAlertComputedStyle.right)) + 'px;';
 	                }
-	                alerts = Object.assign({}, alert, { boxPosition: style });
+	                alerts = _extends({}, alert, { boxPosition: style });
 	                _reactDom2.default.unmountComponentAtNode(docElement);
 	                docElement.parentNode.removeChild(docElement);
 	            } else if (aOffset && positionTypeTop) {
-	                alerts = Object.assign({}, alert, { boxPosition: 'top: ' + parseInt(aOffset) + 'px;' });
+	                alerts = _extends({}, alert, { boxPosition: 'top: ' + parseInt(aOffset) + 'px;' });
 	            } else if (aOffset && positionTypeBottom) {
-	                alerts = Object.assign({}, alert, { boxPosition: 'bottom: ' + parseInt(aOffset) + 'px;' });
+	                alerts = _extends({}, alert, { boxPosition: 'bottom: ' + parseInt(aOffset) + 'px;' });
 	            } else {
 	                alerts = alert;
 	            }
@@ -4975,6 +5042,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'getFilters',
 	    value: function getFilters() {
+	      var _this2 = this;
+
 	      var _props = this.props,
 	          headerText = _props.headerText,
 	          children = _props.children;
@@ -4982,41 +5051,53 @@ return /******/ (function(modules) { // webpackBootstrap
 	      switch (this.props.filter.type) {
 	        case _Const2.default.FILTER_TYPE.TEXT:
 	          {
-	            return _react2.default.createElement(_Text2.default, _extends({ ref: 'textFilter' }, this.props.filter, {
+	            return _react2.default.createElement(_Text2.default, _extends({ ref: function ref(n) {
+	                return _this2.textFilter = n;
+	              } }, this.props.filter, {
 	              columnName: headerText || children, filterHandler: this.handleFilter }));
 	          }
 	        case _Const2.default.FILTER_TYPE.REGEX:
 	          {
-	            return _react2.default.createElement(_Regex2.default, _extends({ ref: 'regexFilter' }, this.props.filter, {
+	            return _react2.default.createElement(_Regex2.default, _extends({ ref: function ref(n) {
+	                return _this2.regexFilter = n;
+	              } }, this.props.filter, {
 	              columnName: headerText || children, filterHandler: this.handleFilter }));
 	          }
 	        case _Const2.default.FILTER_TYPE.SELECT:
 	          {
-	            return _react2.default.createElement(_Select2.default, _extends({ ref: 'selectFilter' }, this.props.filter, {
+	            return _react2.default.createElement(_Select2.default, _extends({ ref: function ref(n) {
+	                return _this2.selectFilter = n;
+	              } }, this.props.filter, {
 	              columnName: headerText || children, filterHandler: this.handleFilter }));
 	          }
 	        case _Const2.default.FILTER_TYPE.NUMBER:
 	          {
-	            return _react2.default.createElement(_Number2.default, _extends({ ref: 'numberFilter' }, this.props.filter, {
+	            return _react2.default.createElement(_Number2.default, _extends({ ref: function ref(n) {
+	                return _this2.numberFilter = n;
+	              } }, this.props.filter, {
 	              columnName: headerText || children, filterHandler: this.handleFilter }));
 	          }
 	        case _Const2.default.FILTER_TYPE.DATE:
 	          {
-	            return _react2.default.createElement(_Date2.default, _extends({ ref: 'dateFilter' }, this.props.filter, {
+	            return _react2.default.createElement(_Date2.default, _extends({ ref: function ref(n) {
+	                return _this2.dateFilter = n;
+	              } }, this.props.filter, {
 	              columnName: headerText || children, filterHandler: this.handleFilter }));
 	          }
 	        case _Const2.default.FILTER_TYPE.CUSTOM:
 	          {
 	            var elm = this.props.filter.getElement(this.handleFilter, this.props.filter.customFilterParameters);
 
-	            return _react2.default.cloneElement(elm, { ref: 'customFilter' });
+	            return _react2.default.cloneElement(elm, { ref: function ref(n) {
+	                return _this2.customFilter = n;
+	              } });
 	          }
 	      }
 	    }
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this.refs['header-col'].setAttribute('data-field', this.props.dataField);
+	      this.headerCol.setAttribute('data-field', this.props.dataField);
 	    }
 	  }, {
 	    key: 'renderDefaultCaret',
@@ -5045,6 +5126,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+
 	      var defaultCaret = void 0;
 	      var sortCaret = void 0;
 	      var sortClass = void 0;
@@ -5096,7 +5179,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      return _react2.default.createElement(
 	        'th',
-	        _extends({ ref: 'header-col',
+	        _extends({ ref: function ref(node) {
+	            return _this3.headerCol = node;
+	          },
 	          className: classes,
 	          style: thStyle,
 	          onClick: this.handleColumnClick,
@@ -5123,32 +5208,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	      switch (this.props.filter.type) {
 	        case _Const2.default.FILTER_TYPE.TEXT:
 	          {
-	            this.refs.textFilter.cleanFiltered();
+	            this.textFilter.cleanFiltered();
 	            break;
 	          }
 	        case _Const2.default.FILTER_TYPE.REGEX:
 	          {
-	            this.refs.regexFilter.cleanFiltered();
+	            this.regexFilter.cleanFiltered();
 	            break;
 	          }
 	        case _Const2.default.FILTER_TYPE.SELECT:
 	          {
-	            this.refs.selectFilter.cleanFiltered();
+	            this.selectFilter.cleanFiltered();
 	            break;
 	          }
 	        case _Const2.default.FILTER_TYPE.NUMBER:
 	          {
-	            this.refs.numberFilter.cleanFiltered();
+	            this.numberFilter.cleanFiltered();
 	            break;
 	          }
 	        case _Const2.default.FILTER_TYPE.DATE:
 	          {
-	            this.refs.dateFilter.cleanFiltered();
+	            this.dateFilter.cleanFiltered();
 	            break;
 	          }
 	        case _Const2.default.FILTER_TYPE.CUSTOM:
 	          {
-	            this.refs.customFilter.cleanFiltered();
+	            this.customFilter.cleanFiltered();
 	            break;
 	          }
 	      }
@@ -5160,27 +5245,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	      switch (this.props.filter.type) {
 	        case _Const2.default.FILTER_TYPE.TEXT:
 	          {
-	            this.refs.textFilter.applyFilter(val);
+	            this.textFilter.applyFilter(val);
 	            break;
 	          }
 	        case _Const2.default.FILTER_TYPE.REGEX:
 	          {
-	            this.refs.regexFilter.applyFilter(val);
+	            this.regexFilter.applyFilter(val);
 	            break;
 	          }
 	        case _Const2.default.FILTER_TYPE.SELECT:
 	          {
-	            this.refs.selectFilter.applyFilter(val);
+	            this.selectFilter.applyFilter(val);
 	            break;
 	          }
 	        case _Const2.default.FILTER_TYPE.NUMBER:
 	          {
-	            this.refs.numberFilter.applyFilter(val);
+	            this.numberFilter.applyFilter(val);
 	            break;
 	          }
 	        case _Const2.default.FILTER_TYPE.DATE:
 	          {
-	            this.refs.dateFilter.applyFilter(val);
+	            this.dateFilter.applyFilter(val);
 	            break;
 	          }
 	      }
@@ -5534,7 +5619,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'onChangeComparator',
 	    value: function onChangeComparator(event) {
-	      var date = this.refs.inputDate.value;
+	      var date = this.inputDate.value;
 	      var comparator = event.target.value;
 	      if (date === '') {
 	        return;
@@ -5559,7 +5644,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'filter',
 	    value: function filter(event) {
-	      var comparator = this.refs.dateFilterComparator.value;
+	      var comparator = this.dateFilterComparator.value;
 	      var dateValue = event.target.value;
 	      if (dateValue) {
 	        this.props.filterHandler({ date: new Date(dateValue), comparator: comparator }, _Const2.default.FILTER_TYPE.DATE);
@@ -5575,8 +5660,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.setState(function () {
 	        return { isPlaceholderSelected: value === '' };
 	      });
-	      this.refs.dateFilterComparator.value = comparator;
-	      this.refs.inputDate.value = value;
+	      this.dateFilterComparator.value = comparator;
+	      this.inputDate.value = value;
 	      this.props.filterHandler({ date: new Date(value), comparator: comparator }, _Const2.default.FILTER_TYPE.DATE);
 	    }
 	  }, {
@@ -5588,15 +5673,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.setState(function () {
 	        return { isPlaceholderSelected: date === '' };
 	      });
-	      this.refs.dateFilterComparator.value = comparator;
-	      this.refs.inputDate.value = dateParser(date);
+	      this.dateFilterComparator.value = comparator;
+	      this.inputDate.value = dateParser(date);
 	      this.props.filterHandler({ date: date, comparator: comparator }, _Const2.default.FILTER_TYPE.DATE);
 	    }
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var comparator = this.refs.dateFilterComparator.value;
-	      var dateValue = this.refs.inputDate.value;
+	      var comparator = this.dateFilterComparator.value;
+	      var dateValue = this.inputDate.value;
 	      if (comparator && dateValue) {
 	        this.props.filterHandler({ date: new Date(dateValue), comparator: comparator }, _Const2.default.FILTER_TYPE.DATE);
 	      }
@@ -5604,6 +5689,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
 	      var _props = this.props,
 	          defaultValue = _props.defaultValue,
 	          _props$style = _props.style,
@@ -5615,14 +5702,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        { className: 'filter date-filter' },
 	        _react2.default.createElement(
 	          'select',
-	          { ref: 'dateFilterComparator',
+	          { ref: function ref(n) {
+	              return _this2.dateFilterComparator = n;
+	            },
 	            style: comparator,
 	            className: 'date-filter-comparator form-control',
 	            onChange: this.onChangeComparator,
 	            defaultValue: defaultValue ? defaultValue.comparator : '' },
 	          this.getComparatorOptions()
 	        ),
-	        _react2.default.createElement('input', { ref: 'inputDate',
+	        _react2.default.createElement('input', { ref: function ref(n) {
+	            return _this2.inputDate = n;
+	          },
 	          className: 'filter date-filter-input form-control',
 	          style: date,
 	          type: 'date',
@@ -5777,7 +5868,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var defaultValue = this.refs.inputText.value;
+	      var defaultValue = this.inputText.value;
 	      if (defaultValue) {
 	        this.props.filterHandler(defaultValue, _Const2.default.FILTER_TYPE.TEXT);
 	      }
@@ -5797,12 +5888,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+
 	      var _props = this.props,
 	          placeholder = _props.placeholder,
 	          columnName = _props.columnName,
 	          style = _props.style;
 
-	      return _react2.default.createElement('input', { ref: 'inputText',
+	      return _react2.default.createElement('input', { ref: function ref(n) {
+	          return _this3.inputText = n;
+	        },
 	        className: 'filter text-filter form-control',
 	        type: 'text',
 	        style: style,
@@ -5906,19 +6001,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'cleanFiltered',
 	    value: function cleanFiltered() {
 	      var value = this.props.defaultValue ? this.props.defaultValue : '';
-	      this.refs.inputText.value = value;
+	      this.inputText.value = value;
 	      this.props.filterHandler(value, _Const2.default.FILTER_TYPE.TEXT);
 	    }
 	  }, {
 	    key: 'applyFilter',
 	    value: function applyFilter(filterRegx) {
-	      this.refs.inputText.value = filterRegx;
+	      this.inputText.value = filterRegx;
 	      this.props.filterHandler(filterRegx, _Const2.default.FILTER_TYPE.REGEX);
 	    }
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var value = this.refs.inputText.value;
+	      var value = this.inputText.value;
 	      if (value) {
 	        this.props.filterHandler(value, _Const2.default.FILTER_TYPE.REGEX);
 	      }
@@ -5931,13 +6026,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+
 	      var _props = this.props,
 	          defaultValue = _props.defaultValue,
 	          placeholder = _props.placeholder,
 	          columnName = _props.columnName,
 	          style = _props.style;
 
-	      return _react2.default.createElement('input', { ref: 'inputText',
+	      return _react2.default.createElement('input', { ref: function ref(n) {
+	          return _this3.inputText = n;
+	        },
 	        className: 'filter text-filter form-control',
 	        type: 'text',
 	        style: style,
@@ -6043,7 +6142,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(SelectFilter, [{
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps() {
-	      var currentSelectValue = this.refs.selectInput.value;
+	      var currentSelectValue = this.selectInput.value;
 	      var isPlaceholderSelected = !currentSelectValue || currentSelectValue === '';
 	      this.setState(function () {
 	        return {
@@ -6061,7 +6160,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        needFilter = true;
 	      }
 	      if (needFilter) {
-	        var value = this.refs.selectInput.value;
+	        var value = this.selectInput.value;
 	        if (value) {
 	          this.props.filterHandler(value, _Const2.default.FILTER_TYPE.SELECT);
 	        }
@@ -6084,7 +6183,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.setState(function () {
 	        return { isPlaceholderSelected: value === '' };
 	      });
-	      this.refs.selectInput.value = value;
+	      this.selectInput.value = value;
 	      this.props.filterHandler(value, _Const2.default.FILTER_TYPE.SELECT);
 	    }
 	  }, {
@@ -6094,7 +6193,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.setState(function () {
 	        return { isPlaceholderSelected: filterOption === '' };
 	      });
-	      this.refs.selectInput.value = filterOption;
+	      this.selectInput.value = filterOption;
 	      this.props.filterHandler(filterOption, _Const2.default.FILTER_TYPE.SELECT);
 	    }
 	  }, {
@@ -6128,7 +6227,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var value = this.refs.selectInput.value;
+	      var value = this.selectInput.value;
 	      if (value) {
 	        this.props.filterHandler(value, _Const2.default.FILTER_TYPE.SELECT);
 	      }
@@ -6136,11 +6235,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
 	      var selectClass = (0, _classnames2.default)('filter', 'select-filter', 'form-control', { 'placeholder-selected': this.state.isPlaceholderSelected });
 
 	      return _react2.default.createElement(
 	        'select',
-	        { ref: 'selectInput',
+	        { ref: function ref(n) {
+	            return _this2.selectInput = n;
+	          },
 	          style: this.props.style,
 	          className: selectClass,
 	          onChange: this.filter,
@@ -6241,7 +6344,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function onChangeNumber(event) {
 	      var _this2 = this;
 
-	      var comparator = this.refs.numberFilterComparator.value;
+	      var comparator = this.numberFilterComparator.value;
 	      if (comparator === '') {
 	        return;
 	      }
@@ -6256,7 +6359,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'onChangeNumberSet',
 	    value: function onChangeNumberSet(event) {
-	      var comparator = this.refs.numberFilterComparator.value;
+	      var comparator = this.numberFilterComparator.value;
 	      var value = event.target.value;
 
 	      this.setState(function () {
@@ -6270,7 +6373,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'onChangeComparator',
 	    value: function onChangeComparator(event) {
-	      var value = this.refs.numberFilter.value;
+	      var value = this.numberFilter.value;
 	      var comparator = event.target.value;
 	      if (value === '') {
 	        return;
@@ -6285,8 +6388,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.setState(function () {
 	        return { isPlaceholderSelected: value === '' };
 	      });
-	      this.refs.numberFilterComparator.value = comparator;
-	      this.refs.numberFilter.value = value;
+	      this.numberFilterComparator.value = comparator;
+	      this.numberFilter.value = value;
 	      this.props.filterHandler({ number: value, comparator: comparator }, _Const2.default.FILTER_TYPE.NUMBER);
 	    }
 	  }, {
@@ -6298,8 +6401,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.setState(function () {
 	        return { isPlaceholderSelected: number === '' };
 	      });
-	      this.refs.numberFilterComparator.value = comparator;
-	      this.refs.numberFilter.value = number;
+	      this.numberFilterComparator.value = comparator;
+	      this.numberFilter.value = number;
 	      this.props.filterHandler({ number: number, comparator: comparator }, _Const2.default.FILTER_TYPE.NUMBER);
 	    }
 	  }, {
@@ -6347,8 +6450,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var comparator = this.refs.numberFilterComparator.value;
-	      var number = this.refs.numberFilter.value;
+	      var comparator = this.numberFilterComparator.value;
+	      var number = this.numberFilter.value;
 	      if (comparator && number) {
 	        this.props.filterHandler({ number: number, comparator: comparator }, _Const2.default.FILTER_TYPE.NUMBER);
 	      }
@@ -6361,6 +6464,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+
 	      var selectClass = (0, _classnames2.default)('select-filter', 'number-filter-input', 'form-control', { 'placeholder-selected': this.state.isPlaceholderSelected });
 
 	      return _react2.default.createElement(
@@ -6368,7 +6473,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        { className: 'filter number-filter' },
 	        _react2.default.createElement(
 	          'select',
-	          { ref: 'numberFilterComparator',
+	          { ref: function ref(n) {
+	              return _this3.numberFilterComparator = n;
+	            },
 	            style: this.props.style.comparator,
 	            className: 'number-filter-comparator form-control',
 	            onChange: this.onChangeComparator,
@@ -6377,12 +6484,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        ),
 	        this.props.options ? _react2.default.createElement(
 	          'select',
-	          { ref: 'numberFilter',
+	          { ref: function ref(n) {
+	              return _this3.numberFilter = n;
+	            },
 	            className: selectClass,
 	            onChange: this.onChangeNumberSet,
 	            defaultValue: this.props.defaultValue ? this.props.defaultValue.number : '' },
 	          this.getNumberOptions()
-	        ) : _react2.default.createElement('input', { ref: 'numberFilter',
+	        ) : _react2.default.createElement('input', { ref: function ref(n) {
+	            return _this3.numberFilter = n;
+	          },
 	          type: 'number',
 	          style: this.props.style.number,
 	          className: 'number-filter-input form-control',
@@ -6592,6 +6703,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this4 = this;
+
 	      var _props = this.props,
 	          sortIndicator = _props.sortIndicator,
 	          sortList = _props.sortList,
@@ -6652,14 +6765,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return _react2.default.createElement(
 	        'div',
-	        { ref: 'container', className: containerClasses, style: this.props.style },
+	        {
+	          ref: function ref(node) {
+	            return _this4.container = node;
+	          },
+	          className: containerClasses,
+	          style: this.props.style },
 	        _react2.default.createElement(
 	          'table',
 	          { className: tableClasses },
-	          _react2.default.cloneElement(this.props.colGroups, { ref: 'headerGrp' }),
+	          _react2.default.cloneElement(this.props.colGroups, { ref: function ref(node) {
+	              return _this4.headerGrp = node;
+	            } }),
 	          _react2.default.createElement(
 	            'thead',
-	            { ref: 'header' },
+	            { ref: function ref(node) {
+	                return _this4.header = node;
+	              } },
 	            trs
 	          )
 	        )
@@ -6668,7 +6790,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__getHeaderColGrouop__REACT_HOT_LOADER__',
 	    value: function __getHeaderColGrouop__REACT_HOT_LOADER__() {
-	      return this.refs.headerGrp.childNodes;
+	      return this.headerGrp.childNodes;
 	    }
 	  }, {
 	    key: 'renderSelectRowHeader',
@@ -6948,7 +7070,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }, this.props.tableFooterClass);
 	      return _react2.default.createElement(
 	        'div',
-	        { ref: 'container', className: containerClasses, style: this.props.style },
+	        {
+	          ref: function ref(node) {
+	            return _this2.container = node;
+	          },
+	          className: containerClasses,
+	          style: this.props.style },
 	        this.props.children.map(function (footerItem, footerItemIndex) {
 	          return _react2.default.createElement(
 	            'span',
@@ -6962,7 +7089,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                null,
 	                _react2.default.createElement(
 	                  'tr',
-	                  { ref: 'footer' },
+	                  { ref: function ref(node) {
+	                      return _this2.footer = node;
+	                    } },
 	                  hideSelectColumn ? null : _this2.renderSelectionOrExpandCol(),
 	                  !expandColumnVisible ? null : _this2.renderSelectionOrExpandCol(),
 	                  _this2.props.columns.map(function (columnItem, colIndex) {
@@ -7241,6 +7370,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
 	      var _props = this.props,
 	          cellEdit = _props.cellEdit,
 	          beforeShowError = _props.beforeShowError,
@@ -7388,7 +7519,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          trClassName = this.props.trClassName(data, r);
 	        }
 	        if (isExpanding && this.props.expandParentClass) {
-	          trClassName += _util2.default.isFunction(this.props.expandParentClass) ? this.props.expandParentClass(data, r) : this.props.expandParentClass;
+	          trClassName += _util2.default.isFunction(this.props.expandParentClass) ? ' ' + this.props.expandParentClass(data, r) : ' ' + this.props.expandParentClass;
 	        }
 	        var result = [_react2.default.createElement(
 	          _TableRow2.default,
@@ -7449,16 +7580,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return _react2.default.createElement(
 	        'div',
-	        { ref: 'container',
+	        {
+	          ref: function ref(node) {
+	            return _this2.container = node;
+	          },
 	          className: (0, _classnames2.default)('react-bs-container-body', this.props.bodyContainerClass),
 	          style: this.props.style },
 	        _react2.default.createElement(
 	          'table',
 	          { className: tableClasses },
-	          _react2.default.cloneElement(tableHeader, { ref: 'header' }),
+	          _react2.default.cloneElement(tableHeader, { ref: function ref(node) {
+	              return _this2.header = node;
+	            } }),
 	          _react2.default.createElement(
 	            'tbody',
-	            { ref: 'tbody' },
+	            { ref: function ref(node) {
+	                return _this2.tbody = node;
+	              } },
 	            tableRows
 	          )
 	        )
@@ -7499,7 +7637,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        if (enterToExpand) {
-	          this.handleClickCell(this.props.y + 1, this.props.x);
+	          this.handleClickCell(e, this.props.y + 1, this.props.x);
 	        }
 
 	        if (enterToSelect) {
@@ -7525,22 +7663,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: '__handleRowClick__REACT_HOT_LOADER__',
-	    value: function __handleRowClick__REACT_HOT_LOADER__(rowIndex, cellIndex) {
+	    value: function __handleRowClick__REACT_HOT_LOADER__(rowIndex, cellIndex, event) {
 	      var _props3 = this.props,
 	          onRowClick = _props3.onRowClick,
 	          selectRow = _props3.selectRow;
 
 	      if (_util2.default.isSelectRowDefined(selectRow.mode)) cellIndex--;
 	      if (this._isExpandColumnVisible()) cellIndex--;
-	      onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex);
+	      onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex, event);
 	    }
 	  }, {
 	    key: '__handleRowDoubleClick__REACT_HOT_LOADER__',
-	    value: function __handleRowDoubleClick__REACT_HOT_LOADER__(rowIndex) {
+	    value: function __handleRowDoubleClick__REACT_HOT_LOADER__(rowIndex, event) {
 	      var onRowDoubleClick = this.props.onRowDoubleClick;
 
 	      var targetRow = this.props.data[rowIndex];
-	      onRowDoubleClick(targetRow);
+	      onRowDoubleClick(targetRow, event);
 	    }
 	  }, {
 	    key: '__handleSelectRow__REACT_HOT_LOADER__',
@@ -7567,8 +7705,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: '__handleClickCell__REACT_HOT_LOADER__',
-	    value: function __handleClickCell__REACT_HOT_LOADER__(rowIndex) {
-	      var columnIndex = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -1;
+	    value: function __handleClickCell__REACT_HOT_LOADER__(event, rowIndex) {
+	      var columnIndex = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -1;
 	      var _props5 = this.props,
 	          columns = _props5.columns,
 	          keyField = _props5.keyField,
@@ -7601,7 +7739,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          // expand
 	          if (onlyOneExpanding) expanding = [rowKey];else expanding.push(rowKey);
 	        }
-	        this.props.onExpand(expanding, rowKey, isRowExpanding);
+	        this.props.onExpand(expanding, rowKey, isRowExpanding, event);
 	      }
 	    }
 	  }, {
@@ -7713,7 +7851,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var unselectable = this.props.selectRow.unselectable || [];
 	        if (unselectable.indexOf(row[this.props.keyField]) === -1) {
 	          this.handleSelectRow(rowIndex + 1, isSelect, e);
-	          this.handleClickCell(rowIndex + 1);
+	          this.handleClickCell(e, rowIndex + 1);
 	        }
 	      }
 	    }
@@ -7722,7 +7860,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function renderSelectRowColumn(selected, inputType, disabled) {
 	      var CustomComponent = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
 
-	      var _this2 = this;
+	      var _this3 = this;
 
 	      var rowIndex = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
 	      var row = arguments[5];
@@ -7730,22 +7868,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _react2.default.createElement(
 	        'td',
 	        { onClick: function onClick(e) {
-	            _this2.handleClickonSelectColumn(e, !selected, rowIndex, row);
+	            _this3.handleClickonSelectColumn(e, !selected, rowIndex, row);
 	          }, style: { textAlign: 'center' } },
 	        CustomComponent ? _react2.default.createElement(CustomComponent, { type: inputType, checked: selected, disabled: disabled,
 	          rowIndex: rowIndex,
 	          onChange: function onChange(e) {
-	            return _this2.handleSelectRowColumChange(e, rowIndex);
+	            return _this3.handleSelectRowColumChange(e, rowIndex);
 	          } }) : _react2.default.createElement('input', { type: inputType, checked: selected, disabled: disabled,
 	          onChange: function onChange(e) {
-	            return _this2.handleSelectRowColumChange(e, rowIndex);
+	            return _this3.handleSelectRowColumChange(e, rowIndex);
 	          } })
 	      );
 	    }
 	  }, {
 	    key: 'renderExpandRowColumn',
 	    value: function renderExpandRowColumn(isExpandableRow, isExpanded, CustomComponent) {
-	      var _this3 = this;
+	      var _this4 = this;
 
 	      var rowIndex = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
 
@@ -7762,8 +7900,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'td',
 	        {
 	          className: 'react-bs-table-expand-cell',
-	          onClick: function onClick() {
-	            return _this3.handleClickCell(rowIndex + 1);
+	          onClick: function onClick(e) {
+	            return _this4.handleClickCell(e, rowIndex + 1);
 	          } },
 	        content
 	      );
@@ -7776,7 +7914,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__getHeaderColGrouop__REACT_HOT_LOADER__',
 	    value: function __getHeaderColGrouop__REACT_HOT_LOADER__() {
-	      return this.refs.header.childNodes;
+	      return this.header.childNodes;
 	    }
 	  }]);
 
@@ -7936,7 +8074,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var rowIndex = this.props.index + 1;
 	      var cellIndex = e.target.cellIndex;
-	      if (this.props.onRowClick) this.props.onRowClick(rowIndex, cellIndex);
+	      if (this.props.onRowClick) this.props.onRowClick(rowIndex, cellIndex, e);
 	      var _props = this.props,
 	          selectRow = _props.selectRow,
 	          unselectableRow = _props.unselectableRow,
@@ -7957,26 +8095,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	          setTimeout(function () {
 	            if (_this2.clickNum === 1) {
 	              onSelectRow(rowIndex, !isSelected, e);
-	              onExpandRow(rowIndex, cellIndex);
+	              onExpandRow(e, rowIndex, cellIndex);
 	            }
 	            _this2.clickNum = 0;
 	          }, 200);
 	        } else {
 	          if (dbClickToEdit) {
-	            this.expandRow(rowIndex, cellIndex);
+	            this.expandRow(e, rowIndex, cellIndex);
 	          }
 	        }
 	      }
 	    }
 	  }, {
 	    key: '__expandRow__REACT_HOT_LOADER__',
-	    value: function __expandRow__REACT_HOT_LOADER__(rowIndex, cellIndex) {
+	    value: function __expandRow__REACT_HOT_LOADER__(event, rowIndex, cellIndex) {
 	      var _this3 = this;
 
 	      this.clickNum++;
 	      setTimeout(function () {
 	        if (_this3.clickNum === 1) {
-	          _this3.props.onExpandRow(rowIndex, cellIndex);
+	          _this3.props.onExpandRow(event, rowIndex, cellIndex);
 	        }
 	        _this3.clickNum = 0;
 	      }, 200);
@@ -7986,7 +8124,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function __rowDoubleClick__REACT_HOT_LOADER__(e) {
 	      if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT' && e.target.tagName !== 'TEXTAREA') {
 	        if (this.props.onRowDoubleClick) {
-	          this.props.onRowDoubleClick(this.props.index);
+	          this.props.onRowDoubleClick(this.props.index, e);
 	        }
 	      }
 	    }
@@ -8240,7 +8378,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } catch (err) {} /* eslint no-empty: 0 */
 	      this.props.onEdit(this.props.rIndex + 1, e.currentTarget.cellIndex, e);
 	      if (this.props.cellEdit.mode !== _Const2.default.CELL_EDIT_DBCLICK) {
-	        this.props.onClick(this.props.rIndex + 1, e.currentTarget.cellIndex, e);
+	        this.props.onClick(e, this.props.rIndex + 1, e.currentTarget.cellIndex);
 	      }
 	    }
 	  }, {
@@ -8251,7 +8389,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          rIndex = _props.rIndex;
 
 	      if (onClick) {
-	        onClick(rIndex + 1, e.currentTarget.cellIndex, e);
+	        onClick(e, rIndex + 1, e.currentTarget.cellIndex);
 	      }
 	    }
 	  }, {
@@ -8772,8 +8910,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return _react2.default.createElement(
 	        'td',
-	        _extends({ ref: 'td'
-	        }, attrs, {
+	        _extends({}, attrs, {
 	          style: style,
 	          className: className,
 	          onClick: this.handleClick }),
@@ -10020,9 +10157,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var delay = this.props.searchDelayTime ? this.props.searchDelayTime : 0;
 	      this.debounceCallback = this.handleDebounce(function () {
-	        var seachInput = _this3.refs.seachInput;
-
-	        seachInput && _this3.props.onSearch(seachInput.getValue());
+	        _this3.seachInput && _this3.props.onSearch(_this3.seachInput.getValue());
 	      }, delay);
 	    }
 	  }, {
@@ -10040,10 +10175,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'setSearchInput',
 	    value: function setSearchInput(text) {
-	      var seachInput = this.refs.seachInput;
-
-	      if (seachInput && seachInput.value !== text) {
-	        seachInput.value = text;
+	      if (this.seachInput && this.seachInput.value !== text) {
+	        this.seachInput.value = text;
 	      }
 	    }
 	  }, {
@@ -10196,11 +10329,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.props.onDropRow();
 	    }
 	  }, {
-	    key: 'handleCloseBtn',
-	    value: function handleCloseBtn() {
-	      this.refs.warning.style.display = 'none';
-	    }
-	  }, {
 	    key: '__handleKeyUp__REACT_HOT_LOADER__',
 	    value: function __handleKeyUp__REACT_HOT_LOADER__(event) {
 	      event.persist();
@@ -10214,9 +10342,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleClearBtnClick__REACT_HOT_LOADER__',
 	    value: function __handleClearBtnClick__REACT_HOT_LOADER__() {
-	      var seachInput = this.refs.seachInput;
-
-	      seachInput && seachInput.setValue('');
+	      this.seachInput && this.seachInput.setValue('');
 	      this.props.onSearch('');
 	    }
 	  }, {
@@ -10335,6 +10461,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'renderSearchPanel',
 	    value: function renderSearchPanel() {
+	      var _this7 = this;
+
 	      if (this.props.enableSearch) {
 	        var classNames = 'form-group form-group-sm react-bs-table-search-form';
 	        var clearBtn = null;
@@ -10357,16 +10485,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	          });
 	          if (searchField.type.name === _SearchField2.default.name) {
 	            searchField = _react2.default.cloneElement(searchField, {
-	              ref: 'seachInput',
+	              ref: function ref(node) {
+	                return _this7.seachInput = node;
+	              },
 	              onKeyUp: this.handleKeyUp
 	            });
 	          } else {
 	            searchField = _react2.default.cloneElement(searchField, {
-	              ref: 'seachInput'
+	              ref: function ref(node) {
+	                return _this7.seachInput = node;
+	              }
 	            });
 	          }
 	        } else {
-	          searchField = _react2.default.createElement(_SearchField2.default, { ref: 'seachInput',
+	          searchField = _react2.default.createElement(_SearchField2.default, { ref: function ref(node) {
+	              return _this7.seachInput = node;
+	            },
 	            defaultValue: this.props.defaultSearch,
 	            placeholder: this.props.searchPlaceholder,
 	            onKeyUp: this.handleKeyUp });
@@ -11644,9 +11778,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '__handleSave__REACT_HOT_LOADER__',
 	    value: function __handleSave__REACT_HOT_LOADER__() {
-	      var bodyRefs = this.refs.body;
-	      if (bodyRefs.getFieldValue) {
-	        this.props.onSave(bodyRefs.getFieldValue());
+	      if (this.body.getFieldValue) {
+	        this.props.onSave(this.body.getFieldValue());
 	      } else {
 	        console.error('Custom InsertModalBody should implement getFieldValue function\n        and should return an object presented as the new row that user input.');
 	      }
@@ -11654,6 +11787,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+
 	      var _props = this.props,
 	          headerComponent = _props.headerComponent,
 	          footerComponent = _props.footerComponent,
@@ -11673,7 +11808,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      footerComponent = footerComponent && footerComponent(onModalClose, this.handleSave);
 
 	      if (bodyComponent) {
-	        bodyComponent = _react2.default.cloneElement(bodyComponent, { ref: 'body' });
+	        bodyComponent = _react2.default.cloneElement(bodyComponent, { ref: function ref(node) {
+	            return _this3.body = node;
+	          } });
 	      }
 
 	      if (headerComponent && headerComponent.type.name === _InsertModalHeader2.default.name) {
@@ -11721,7 +11858,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          version: this.props.version,
 	          className: 'react-bs-table-inser-modal-header',
 	          onModalClose: onModalClose }),
-	        bodyComponent || _react2.default.createElement(_InsertModalBody2.default, _extends({ ref: 'body' }, bodyAttr)),
+	        bodyComponent || _react2.default.createElement(_InsertModalBody2.default, _extends({ ref: function ref(node) {
+	            return _this3.body = node;
+	          } }, bodyAttr)),
 	        footerComponent || _react2.default.createElement(_InsertModalFooter2.default, {
 	          className: 'react-bs-table-inser-modal-footer',
 	          onModalClose: onModalClose,
@@ -12887,7 +13026,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      );
 	      return _react2.default.createElement(
 	        'button',
-	        _extends({ ref: 'btn',
+	        _extends({
 	          className: 'btn ' + btnContextual + ' ' + className + ' ' + clearBtnDefaultClass,
 	          type: 'button',
 	          onClick: onClick
@@ -13601,10 +13740,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'filterText',
-	    value: function filterText(targetVal, filterVal) {
+	    value: function filterText() {
+	      var targetVal = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+	      var filterVal = arguments[1];
 	      var cond = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _Const2.default.FILTER_COND_LIKE;
 
-	      targetVal = targetVal.toString();
+	      targetVal = targetVal === null ? '' : targetVal.toString();
 	      filterVal = filterVal.toString();
 	      if (cond === _Const2.default.FILTER_COND_EQ) {
 	        return targetVal === filterVal;
