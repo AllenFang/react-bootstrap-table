@@ -102,6 +102,8 @@ The UMD build is also available on [npmcdn](https://npmcdn.com):
 ### c.Import CSS
 Finally, you need to import the css file to your app:
 ```html
+<!-- we still need bootstrap css -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="./dist/react-bootstrap-table.min.css">
 ```
 The CSS files you can find in the css folder.
