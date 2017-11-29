@@ -530,7 +530,7 @@ class BootstrapTable extends Component {
         { showPaginationOnBottom ? pagination : null }
 
         { showToolbarOnBottom ? toolBar : null }
-        <Alert stack={ { limit: 3 } } />
+        { this.props.renderAlert ? <Alert stack={ { limit: 3 } } /> : null }
       </div>
     );
   }
@@ -1709,6 +1709,7 @@ BootstrapTable.propTypes = {
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
   }),
+  renderAlert: PropTypes.bool,
   exportCSV: PropTypes.bool,
   csvFileName: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
   ignoreSinglePage: PropTypes.bool,
@@ -1876,6 +1877,7 @@ BootstrapTable.defaultProps = {
   fetchInfo: {
     dataTotalSize: 0
   },
+  renderAlert: true,
   exportCSV: false,
   csvFileName: 'spreadsheet.csv',
   ignoreSinglePage: false,
