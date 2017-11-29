@@ -21,17 +21,17 @@ class RegexFilter extends Component {
 
   cleanFiltered() {
     const value = this.props.defaultValue ? this.props.defaultValue : '';
-    this.refs.inputText.value = value;
+    this.inputText.value = value;
     this.props.filterHandler(value, Const.FILTER_TYPE.TEXT);
   }
 
   applyFilter(filterRegx) {
-    this.refs.inputText.value = filterRegx;
+    this.inputText.value = filterRegx;
     this.props.filterHandler(filterRegx, Const.FILTER_TYPE.REGEX);
   }
 
   componentDidMount() {
-    const value = this.refs.inputText.value;
+    const value = this.inputText.value;
     if (value) {
       this.props.filterHandler(value, Const.FILTER_TYPE.REGEX);
     }
@@ -44,7 +44,7 @@ class RegexFilter extends Component {
   render() {
     const { defaultValue, placeholder, columnName, style } = this.props;
     return (
-      <input ref='inputText'
+      <input ref={ n => this.inputText = n }
           className='filter text-filter form-control'
           type='text'
           style={ style }

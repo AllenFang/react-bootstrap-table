@@ -17,7 +17,7 @@ class ClearSearchButton extends Component {
     const content = children ||
       (<span>{ btnText }</span>);
     return (
-      <button ref='btn'
+      <button
         className={ `btn ${btnContextual} ${className} ${clearBtnDefaultClass}` }
         type='button'
         onClick={ onClick }

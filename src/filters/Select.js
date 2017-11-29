@@ -24,7 +24,7 @@ class SelectFilter extends Component {
   }
 
   componentWillReceiveProps() {
-    const currentSelectValue = this.refs.selectInput.value;
+    const currentSelectValue = this.selectInput.value;
     const isPlaceholderSelected = !currentSelectValue || currentSelectValue === '';
     this.setState(() => {
       return {
@@ -41,7 +41,7 @@ class SelectFilter extends Component {
       needFilter = true;
     }
     if (needFilter) {
-      const value = this.refs.selectInput.value;
+      const value = this.selectInput.value;
       if (value) {
         this.props.filterHandler(value, Const.FILTER_TYPE.SELECT);
       }
@@ -57,14 +57,14 @@ class SelectFilter extends Component {
   cleanFiltered() {
     const value = (this.props.defaultValue !== undefined) ? this.props.defaultValue : '';
     this.setState(() => { return { isPlaceholderSelected: (value === '') }; });
-    this.refs.selectInput.value = value;
+    this.selectInput.value = value;
     this.props.filterHandler(value, Const.FILTER_TYPE.SELECT);
   }
 
   applyFilter(filterOption) {
     filterOption = filterOption + '';
     this.setState(() => { return { isPlaceholderSelected: (filterOption === '') }; });
-    this.refs.selectInput.value = filterOption;
+    this.selectInput.value = filterOption;
     this.props.filterHandler(filterOption, Const.FILTER_TYPE.SELECT);
   }
 
@@ -84,7 +84,7 @@ class SelectFilter extends Component {
   }
 
   componentDidMount() {
-    const value = this.refs.selectInput.value;
+    const value = this.selectInput.value;
     if (value) {
       this.props.filterHandler(value, Const.FILTER_TYPE.SELECT);
     }
@@ -95,7 +95,7 @@ class SelectFilter extends Component {
               { 'placeholder-selected': this.state.isPlaceholderSelected });
 
     return (
-      <select ref='selectInput'
+      <select ref={ n => this.selectInput = n }
           style={ this.props.style }
           className={ selectClass }
           onChange={ this.filter }

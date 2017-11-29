@@ -12,7 +12,10 @@ class TableFooter extends Component {
       'table-condensed': this.props.condensed
     }, this.props.tableFooterClass);
     return (
-      <div ref='container' className={ containerClasses } style={ this.props.style }>
+      <div
+        ref={ node => this.container = node }
+        className={ containerClasses }
+        style={ this.props.style } >
         {
           this.props.children.map((footerItem, footerItemIndex) => {
             return (
@@ -20,7 +23,7 @@ class TableFooter extends Component {
                 <table className={ tableClasses }>
                   { React.cloneElement(this.props.colGroups) }
                   <tfoot>
-                    <tr ref='footer'>
+                    <tr ref={ node => this.footer = node }>
                       { hideSelectColumn ? null : this.renderSelectionOrExpandCol() }
                       { !expandColumnVisible ? null : this.renderSelectionOrExpandCol() }
                       {

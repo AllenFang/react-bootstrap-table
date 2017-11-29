@@ -35,7 +35,7 @@ class TextFilter extends Component {
   }
 
   componentDidMount() {
-    const defaultValue = this.refs.inputText.value;
+    const defaultValue = this.inputText.value;
     if (defaultValue) {
       this.props.filterHandler(defaultValue, Const.FILTER_TYPE.TEXT);
     }
@@ -54,7 +54,7 @@ class TextFilter extends Component {
   render() {
     const { placeholder, columnName, style } = this.props;
     return (
-      <input ref='inputText'
+      <input ref={ n => this.inputText = n }
         className='filter text-filter form-control'
         type='text'
         style={ style }

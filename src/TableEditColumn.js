@@ -245,7 +245,7 @@ class TableEditColumn extends Component {
     }
 
     return (
-      <td ref='td'
+      <td
         { ...attrs }
         style={ style }
         className={ className }

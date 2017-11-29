@@ -22,7 +22,7 @@ class NumberFilter extends Component {
   }
 
   onChangeNumber(event) {
-    const comparator = this.refs.numberFilterComparator.value;
+    const comparator = this.numberFilterComparator.value;
     if (comparator === '') {
       return;
     }
@@ -36,7 +36,7 @@ class NumberFilter extends Component {
   }
 
   onChangeNumberSet(event) {
-    const comparator = this.refs.numberFilterComparator.value;
+    const comparator = this.numberFilterComparator.value;
     const { value } = event.target;
     this.setState(() => { return { isPlaceholderSelected: (value === '') }; });
     if (comparator === '') {
@@ -46,7 +46,7 @@ class NumberFilter extends Component {
   }
 
   onChangeComparator(event) {
-    const value = this.refs.numberFilter.value;
+    const value = this.numberFilter.value;
     const comparator = event.target.value;
     if (value === '') {
       return;
@@ -58,16 +58,16 @@ class NumberFilter extends Component {
     const value = (this.props.defaultValue) ? this.props.defaultValue.number : '';
     const comparator = (this.props.defaultValue) ? this.props.defaultValue.comparator : '';
     this.setState(() => { return { isPlaceholderSelected: (value === '') }; });
-    this.refs.numberFilterComparator.value = comparator;
-    this.refs.numberFilter.value = value;
+    this.numberFilterComparator.value = comparator;
+    this.numberFilter.value = value;
     this.props.filterHandler({ number: value, comparator }, Const.FILTER_TYPE.NUMBER);
   }
 
   applyFilter(filterObj) {
     const { number, comparator } = filterObj;
     this.setState(() => { return { isPlaceholderSelected: (number === '') }; });
-    this.refs.numberFilterComparator.value = comparator;
-    this.refs.numberFilter.value = number;
+    this.numberFilterComparator.value = comparator;
+    this.numberFilter.value = number;
     this.props.filterHandler({ number, comparator }, Const.FILTER_TYPE.NUMBER);
   }
 
@@ -104,8 +104,8 @@ class NumberFilter extends Component {
   }
 
   componentDidMount() {
-    const comparator = this.refs.numberFilterComparator.value;
-    const number = this.refs.numberFilter.value;
+    const comparator = this.numberFilterComparator.value;
+    const number = this.numberFilter.value;
     if (comparator && number) {
       this.props.filterHandler({ number, comparator }, Const.FILTER_TYPE.NUMBER);
     }
@@ -122,7 +122,7 @@ class NumberFilter extends Component {
 
     return (
       <div className='filter number-filter'>
-        <select ref='numberFilterComparator'
+        <select ref={ n => this.numberFilterComparator = n }
                 style={ this.props.style.comparator }
                 className='number-filter-comparator form-control'
                 onChange={ this.onChangeComparator }
@@ -133,7 +133,7 @@ class NumberFilter extends Component {
         </select>
         {
           (this.props.options) ?
-            <select ref='numberFilter'
+            <select ref={ n => this.numberFilter = n }
               className={ selectClass }
               onChange={ this.onChangeNumberSet }
               defaultValue={
@@ -141,7 +141,7 @@ class NumberFilter extends Component {
               }>
               { this.getNumberOptions() }
             </select> :
-            <input ref='numberFilter'
+            <input ref={ n => this.numberFilter = n }
                    type='number'
                    style={ this.props.style.number }
                    className='number-filter-input form-control'

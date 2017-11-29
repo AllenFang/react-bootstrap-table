@@ -236,12 +236,13 @@ class TableBody extends Component {
     }
 
     return (
-      <div ref='container'
+      <div
+        ref={ node => this.container = node }
         className={ classSet('react-bs-container-body', this.props.bodyContainerClass) }
         style={ this.props.style }>
         <table className={ tableClasses }>
-          { React.cloneElement(tableHeader, { ref: 'header' }) }
-          <tbody ref='tbody'>
+          { React.cloneElement(tableHeader, { ref: node => this.header = node }) }
+          <tbody ref={ node => this.tbody = node }>
             { tableRows }
           </tbody>
         </table>
@@ -521,7 +522,7 @@ class TableBody extends Component {
   }
 
   getHeaderColGrouop = () => {
-    return this.refs.header.childNodes;
+    return this.header.childNodes;
   }
 }
 TableBody.propTypes = {

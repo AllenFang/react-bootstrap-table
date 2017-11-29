@@ -230,7 +230,7 @@ class BootstrapTable extends Component {
   reset() {
     const { pageStartIndex } = this.props.options;
     this.store.clean();
-    this.refs.body.setState({ currEditCell: null });
+    this.body.setState({ currEditCell: null });
     this.setState(() => {
       return {
         data: this.getTableData(),
@@ -354,9 +354,9 @@ class BootstrapTable extends Component {
   componentDidMount() {
     this._adjustTable();
     window.addEventListener('resize', this._adjustTable);
-    this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader);
+    this.body.container.addEventListener('scroll', this._scrollHeader);
     if (this.props.footer) {
-      this.refs.body.refs.container.addEventListener('scroll', this._scrollFooter);
+      this.body.container.addEventListener('scroll', this._scrollFooter);
     }
     if (this.props.scrollTop) {
       this._scrollTop();
@@ -365,10 +365,10 @@ class BootstrapTable extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this._adjustTable);
-    if (this.refs && this.refs.body && this.refs.body.refs) {
-      this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader);
+    if (this.body && this.body.container) {
+      this.body.container.removeEventListener('scroll', this._scrollHeader);
       if (this.props.footer) {
-        this.refs.body.refs.container.removeEventListener('scroll', this._scrollFooter);
+        this.body.container.removeEventListener('scroll', this._scrollFooter);
       }
     }
     if (this.filter) {
@@ -451,13 +451,13 @@ class BootstrapTable extends Component {
         style={ this.props.containerStyle }>
         { showToolbarOnTop ? toolBar : null }
         { showPaginationOnTop ? pagination : null }
-        <div ref='table'
+        <div ref={ node => this.table = node }
             className={ classSet('react-bs-table', { 'react-bs-table-bordered': this.props.bordered }, this.props.tableContainerClass) }
             style={ { ...style, ...this.props.tableStyle } }
             onMouseEnter={ this.handleMouseEnter }
             onMouseLeave={ this.handleMouseLeave }>
           <TableHeader
-            ref='header'
+            ref={ node => this.header = node }
             version={ this.props.version }
             colGroups={ colGroups }
             headerContainerClass={ this.props.headerContainerClass }
@@ -480,7 +480,8 @@ class BootstrapTable extends Component {
             expandColumnBeforeSelectColumn={ expandColumnOptions.expandColumnBeforeSelectColumn }>
             { this.props.children }
           </TableHeader>
-          <TableBody ref='body'
+          <TableBody
+          ref={ node => this.body = node }
             bodyContainerClass={ this.props.bodyContainerClass }
             tableBodyClass={ this.props.tableBodyClass }
             style={ { ...style, ...this.props.bodyStyle } }
@@ -684,7 +685,7 @@ class BootstrapTable extends Component {
 
     if (y >= visibleRowSize) {
       currPage++;
-      const lastPage = pagination ? this.refs.pagination.getLastPage() : -1;
+      const lastPage = pagination ? this.pagination.getLastPage() : -1;
       if (currPage <= lastPage) {
         this.handlePaginationData(currPage, this.state.sizePerPage);
       } else {
@@ -702,7 +703,7 @@ class BootstrapTable extends Component {
     } else if (x >= visibleColumnSize) {
       if ((y + 1) === visibleRowSize) {
         currPage++;
-        const lastPage = pagination ? this.refs.pagination.getLastPage() : -1;
+        const lastPage = pagination ? this.pagination.getLastPage() : -1;
         if (currPage <= lastPage) {
           this.handlePaginationData(currPage, this.state.sizePerPage);
         } else {
@@ -880,7 +881,7 @@ class BootstrapTable extends Component {
 
     if (beforeSaveCell) {
       const beforeSaveCellCB = result => {
-        this.refs.body.cancelEditCell();
+        this.body.cancelEditCell();
         if (result || result === undefined) {
           this.editCell(newVal, rowIndex, colIndex);
         } else {
@@ -944,7 +945,7 @@ class BootstrapTable extends Component {
 
     const afterHandleAddRow = errMsg => {
       if (isAsync) {
-        this.refs.toolbar.afterHandleSaveBtnClick(errMsg);
+        this.toolbar.afterHandleSaveBtnClick(errMsg);
       } else {
         return errMsg;
       }
@@ -1164,8 +1165,8 @@ class BootstrapTable extends Component {
   handleSearch = searchText => {
     // Set search field if this function being called outside
     // but it's not necessary if calling fron inside.
-    if (this.refs.toolbar) {
-      this.refs.toolbar.setSearchInput(searchText);
+    if (this.toolbar) {
+      this.toolbar.setSearchInput(searchText);
     }
     const { autoCollapse: { search } } = this.props;
     const { onSearchChange, pageStartIndex } = this.props.options;
@@ -1233,7 +1234,7 @@ class BootstrapTable extends Component {
       return (
         <div className='react-bs-table-pagination'>
           <PaginationList
-            ref='pagination'
+            ref={ node => this.pagination = node }
             withFirstAndLast={ withFirstAndLast }
             alwaysShowAllBtns={ options.alwaysShowAllBtns }
             currPage={ this.state.currPage }
@@ -1313,7 +1314,7 @@ class BootstrapTable extends Component {
       return (
         <div className={ `react-bs-table-tool-bar ${ print ? '' : 'hidden-print' }` }>
           <ToolBar
-            ref='toolbar'
+            ref={ node => this.toolbar = node }
             version={ this.props.version }
             defaultSearch={ this.props.options.defaultSearch }
             clearSearch={ this.props.options.clearSearch }
@@ -1382,7 +1383,7 @@ class BootstrapTable extends Component {
       }
       return (
         <TableFooter
-          ref='footer'
+          ref={ node => this.footer = node }
           columns={ columns }
           colGroups={ colGroups }
           footerFormatterReturnData={ footerFormatterReturnData }
@@ -1404,20 +1405,20 @@ class BootstrapTable extends Component {
   _scrollTop = () => {
     const { scrollTop } = this.props;
     if (scrollTop === Const.SCROLL_TOP) {
-      this.refs.body.refs.container.scrollTop = 0;
+      this.body.container.scrollTop = 0;
     } else if (scrollTop === Const.SCROLL_BOTTOM) {
-      this.refs.body.refs.container.scrollTop = this.refs.body.refs.container.scrollHeight;
+      this.body.container.scrollTop = this.body.container.scrollHeight;
     } else if (typeof scrollTop === 'number' && !isNaN(scrollTop)) {
-      this.refs.body.refs.container.scrollTop = scrollTop;
+      this.body.container.scrollTop = scrollTop;
     }
   }
   _scrollHeader = (e) => {
-    this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
+    this.header.container.scrollLeft = e.currentTarget.scrollLeft;
   }
 
   _scrollFooter = (e) => {
     if (this.props.footer) {
-      this.refs.footer.refs.container.scrollLeft = e.currentTarget.scrollLeft;
+      this.footer.container.scrollLeft = e.currentTarget.scrollLeft;
     }
   }
 
@@ -1429,9 +1430,9 @@ class BootstrapTable extends Component {
   }
 
   _adjustHeaderWidth() {
-    const header = this.refs.header.getHeaderColGrouop();
-    const tbody = this.refs.body.refs.tbody;
-    const bodyHeader = this.refs.body.getHeaderColGrouop();
+    const header = this.header.getHeaderColGrouop();
+    const tbody = this.body.tbody;
+    const bodyHeader = this.body.getHeaderColGrouop();
     const firstRow = tbody.childNodes[0];
     const isScroll = tbody.parentNode.getBoundingClientRect().height >
       tbody.parentNode.parentNode.getBoundingClientRect().height;
@@ -1490,16 +1491,16 @@ class BootstrapTable extends Component {
     const { height } = this.props;
     let { maxHeight } = this.props;
     if ((typeof height === 'number' && !isNaN(height)) || height.indexOf('%') === -1) {
-      this.refs.body.refs.container.style.height =
-        parseFloat(height, 10) - this.refs.header.refs.container.offsetHeight + 'px';
+      this.body.container.style.height =
+        parseFloat(height, 10) - this.header.container.offsetHeight + 'px';
     }
     if (maxHeight) {
       maxHeight = typeof maxHeight === 'number' ?
         maxHeight :
         parseInt(maxHeight.replace('px', ''), 10);
 
-      this.refs.body.refs.container.style.maxHeight =
-        maxHeight - this.refs.header.refs.container.offsetHeight + 'px';
+      this.body.container.style.maxHeight =
+        maxHeight - this.header.container.offsetHeight + 'px';
     }
   }
 

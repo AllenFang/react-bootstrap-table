@@ -34,8 +34,7 @@ class ToolBar extends Component {
   componentWillMount() {
     const delay = this.props.searchDelayTime ? this.props.searchDelayTime : 0;
     this.debounceCallback = this.handleDebounce(() => {
-      const { seachInput } = this.refs;
-      seachInput && this.props.onSearch(seachInput.getValue());
+      this.seachInput && this.props.onSearch(this.seachInput.getValue());
     },
       delay
     );
@@ -52,9 +51,8 @@ class ToolBar extends Component {
   }
 
   setSearchInput(text) {
-    const { seachInput } = this.refs;
-    if (seachInput && seachInput.value !== text) {
-      seachInput.value = text;
+    if (this.seachInput && this.seachInput.value !== text) {
+      this.seachInput.value = text;
     }
   }
 
@@ -172,10 +170,6 @@ class ToolBar extends Component {
     this.props.onDropRow();
   }
 
-  handleCloseBtn() {
-    this.refs.warning.style.display = 'none';
-  }
-
   handleDebounce = (func, wait, immediate) => {
     let timeout;
 
@@ -210,8 +204,7 @@ class ToolBar extends Component {
   }
 
   handleClearBtnClick = () => {
-    const { seachInput } = this.refs;
-    seachInput && seachInput.setValue('');
+    this.seachInput && this.seachInput.setValue('');
     this.props.onSearch('');
   }
 
@@ -361,17 +354,17 @@ class ToolBar extends Component {
         });
         if (searchField.type.name === SearchField.name) {
           searchField = React.cloneElement(searchField, {
-            ref: 'seachInput',
+            ref: node => this.seachInput = node,
             onKeyUp: this.handleKeyUp
           });
         } else {
           searchField = React.cloneElement(searchField, {
-            ref: 'seachInput'
+            ref: node => this.seachInput = node
           });
         }
       } else {
         searchField = (
-          <SearchField ref='seachInput'
+          <SearchField ref={ node => this.seachInput = node }
             defaultValue={ this.props.defaultSearch }
             placeholder={ this.props.searchPlaceholder }
             onKeyUp={ this.handleKeyUp }/>

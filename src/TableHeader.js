@@ -105,10 +105,13 @@ class TableHeader extends Component {
     });
 
     return (
-      <div ref='container' className={ containerClasses } style={ this.props.style }>
+      <div
+        ref={ node => this.container = node }
+        className={ containerClasses }
+        style={ this.props.style }>
         <table className={ tableClasses }>
-          { React.cloneElement(this.props.colGroups, { ref: 'headerGrp' }) }
-          <thead ref='header'>
+          { React.cloneElement(this.props.colGroups, { ref: node => this.headerGrp = node }) }
+          <thead ref={ node => this.header = node }>
             { trs }
           </thead>
         </table>
@@ -117,7 +120,7 @@ class TableHeader extends Component {
   }
 
   getHeaderColGrouop = () => {
-    return this.refs.headerGrp.childNodes;
+    return this.headerGrp.childNodes;
   }
 
   renderSelectRowHeader(rowCount, rowKey) {
