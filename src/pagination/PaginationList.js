@@ -223,7 +223,7 @@ class PaginationList extends Component {
           false :
           true;
       }, this)
-      .map(function(page) {
+      .map(function(page, index) {
         const isActive = page === this.props.currPage;
         const isDisabled = (isStart(page, this.props) || isEnd(page, this.props)) ?
           true :
@@ -241,7 +241,7 @@ class PaginationList extends Component {
         }
 
         return (
-          <PageButton key={ page }
+          <PageButton key={ index }
             title={ title }
             changePage={ this.changePage }
             active={ isActive }
@@ -313,7 +313,10 @@ PaginationList.propTypes = {
   paginationShowsTotal: PropTypes.oneOfType([ PropTypes.bool, PropTypes.func ]),
   paginationSize: PropTypes.number,
   onSizePerPageList: PropTypes.func,
-  prePage: PropTypes.string,
+  prePage: PropTypes.any,
+  nextPage: PropTypes.any,
+  firstPage: PropTypes.any,
+  lastPage: PropTypes.any,
   pageStartIndex: PropTypes.number,
   hideSizePerPage: PropTypes.bool,
   alwaysShowAllBtns: PropTypes.bool,
