@@ -1,3 +1,15 @@
+<a name="v4.2.0"></a>
+# [v4.2.0](https://github.com/AllenFang/react-bootstrap-table/compare/v4.1.5...v4.2.0) (2017-12-04)
+## Bug fixes
+* Fix bug about text filter for null value([a9eb1d0](https://github.com/AllenFang/react-bootstrap-table/commit/a9eb1d010ab75efe4abd84a5e23f09114f8d8b7b))
+* Fix `expandParentClass` option concat classNames([64915a0](https://github.com/AllenFang/react-bootstrap-table/pull/1777/commits/64915a0efc535c98eba60137746fc65f72f86ec6))
+
+## Enhancements
+* No String ref([7c18851](https://github.com/AllenFang/react-bootstrap-table/commit/7c188513f73788e0556e2023b13f38de51a69288))
+* Support `renderAlert` to specified if render the `react-s-alert`([ed57ab4](https://github.com/AllenFang/react-bootstrap-table/commit/ed57ab40c29cc326f0c5abff6763ef667b5498d8))
+	* Please check [#1771](https://github.com/AllenFang/react-bootstrap-table/issues/1771)
+* The event object will be pass at least argument for `options.onExpand`, `options.onRowClick` and `options.onRowDoubleClick`([64915a0](https://github.com/AllenFang/react-bootstrap-table/commit/64915a0efc535c98eba60137746fc65f72f86ec6))
+
 <a name="v4.1.5"></a>
 # [v4.1.5](https://github.com/AllenFang/react-bootstrap-table/compare/v4.1.3...v4.1.5) (2017-11-20)
 ## Bug fixes
