@@ -14284,10 +14284,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 70 */
 /***/ (function(module, exports) {
 
+	module.exports = function() { throw new Error("define cannot be used indirect"); };
+
 
 /***/ }),
 /* 71 */
 /***/ (function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
 
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
