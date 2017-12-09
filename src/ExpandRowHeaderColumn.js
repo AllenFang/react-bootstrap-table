@@ -15,21 +15,25 @@ class ExpandRowHeaderColumn extends Component {
   render() {
     const {
       expandedColumnHeaderComponent,
-      expandAllChilds,
-      showExpandAllHeaderColumn
+      noAnyExpand,
+      expandAll
     } = this.props;
-    const expandedHeaderComponent = (expandAllChilds ? '(-)' : '(+)' );
+    const expandedHeaderComponent = noAnyExpand ?
+      <span className='fa fa-plus glyphicon glyphicon-plus'></span> :
+      <span className='fa fa-minus glyphicon glyphicon-minus'></span>;
     const ExpandedColumnHeaderComponent = expandedColumnHeaderComponent;
 
     return (
       <th rowSpan={ this.props.rowCount } style={ { textAlign: 'center' } }
         className='react-bs-table-expand-cell'
         data-is-only-head={ false }>
-        { showExpandAllHeaderColumn && <div onClick={ this.toggleExpandAllChilds }>
+        {
+          expandAll ? <div onClick={ this.toggleExpandAllChilds }>
           { expandedColumnHeaderComponent ?
             <ExpandedColumnHeaderComponent
-              expandAllChilds={ this.props.expandAllChilds } /> : expandedHeaderComponent }
-        </div> }
+              anyExpand={ !noAnyExpand } /> : expandedHeaderComponent }
+          </div> : null
+        }
       </th>
     );
   }
@@ -37,8 +41,8 @@ class ExpandRowHeaderColumn extends Component {
 ExpandRowHeaderColumn.propTypes = {
   expandedColumnHeaderComponent: PropTypes.func,
   rowCount: PropTypes.number,
-  expandAllChilds: PropTypes.bool,
-  toggleExpandAllChilds: PropTypes.func,
-  showExpandAllHeaderColumn: PropTypes.bool
+  noAnyExpand: PropTypes.bool,
+  expandAll: PropTypes.bool,
+  toggleExpandAllChilds: PropTypes.func
 };
 export default ExpandRowHeaderColumn;

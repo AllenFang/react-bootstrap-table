@@ -61,7 +61,6 @@ class BootstrapTable extends Component {
       sizePerPage: this.props.options.sizePerPage || Const.SIZE_PER_PAGE_LIST[0],
       selectedRowKeys: this.store.getSelectedRowKeys(),
       reset: false,
-      expandAllChilds: this.props.options.expandAllChilds,
       x: this.props.keyBoardNav ? 0 : -1,
       y: this.props.keyBoardNav ? 0 : -1
     };
@@ -488,9 +487,9 @@ class BootstrapTable extends Component {
             expandColumnVisible={ expandColumnOptions.expandColumnVisible }
             expandColumnComponent={ expandColumnOptions.expandColumnComponent }
             expandedColumnHeaderComponent={ expandColumnOptions.expandedColumnHeaderComponent }
-            expandAllChilds={ this.state.expandAllChilds }
+            noAnyExpand={ this.state.expanding.length === 0 }
+            expandAll={ this.props.options.expandAll }
             toggleExpandAllChilds={ this.toggleExpandAllChilds }
-            showExpandAllHeaderColumn={ this.props.options.showExpandAllHeaderColumn }
             expandColumnBeforeSelectColumn={ expandColumnOptions.expandColumnBeforeSelectColumn }>
             { this.props.children }
           </TableHeader>
@@ -642,21 +641,18 @@ class BootstrapTable extends Component {
   }
 
   toggleExpandAllChilds() {
-    const { expandAllChilds } = this.state;
-    const compScope = this;
-    if (expandAllChilds) {
+    const { expanding } = this.state;
+    if (expanding.length > 0) {
       this.setState(() => {
         return {
           expanding: [],
-          expandAllChilds: !expandAllChilds,
           reset: false
         };
       });
     } else {
       this.setState(() => {
         return {
-          expanding: compScope.store.getAllRowkey(),
-          expandAllChilds: !expandAllChilds,
+          expanding: this.store.getAllRowkey(),
           reset: false
         };
       });
@@ -1741,8 +1737,7 @@ BootstrapTable.propTypes = {
     printToolBar: PropTypes.bool,
     insertFailIndicator: PropTypes.string,
     noAutoBOM: PropTypes.bool,
-    expandAllChilds: PropTypes.bool,
-    showExpandAllHeaderColumn: PropTypes.bool
+    expandAll: PropTypes.bool
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1913,8 +1908,7 @@ BootstrapTable.defaultProps = {
     printToolBar: true,
     insertFailIndicator: Const.INSERT_FAIL_INDICATOR,
     noAutoBOM: true,
-    expandAllChilds: false,
-    showExpandAllHeaderColumn: false
+    expandAll: false
   },
   fetchInfo: {
     dataTotalSize: 0
