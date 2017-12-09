@@ -38,7 +38,9 @@ function getSortOrder(sortList, field, enableSort) {
 class TableHeader extends Component {
 
   render() {
-    const { sortIndicator, sortList, onSort, reset, version, condensed, bordered } = this.props;
+    const { sortIndicator, sortList, onSort, reset, version, condensed, bordered,
+      expandedColumnHeaderComponent, expandAllChilds, toggleExpandAllChilds,
+      showExpandAllHeaderColumn } = this.props;
     const containerClasses = classSet(
       'react-bs-container-header',
       'table-header-wrapper',
@@ -64,13 +66,21 @@ class TableHeader extends Component {
     rows[0].push( [
       this.props.expandColumnVisible &&
         this.props.expandColumnBeforeSelectColumn &&
-          <ExpandRowHeaderColumn key='expandCol' rowCount={ rowCount + 1 }/>
+          <ExpandRowHeaderColumn key='expandCol' rowCount={ rowCount + 1 }
+            expandedColumnHeaderComponent={ expandedColumnHeaderComponent }
+            expandAllChilds={ expandAllChilds }
+            toggleExpandAllChilds={ toggleExpandAllChilds }
+            showExpandAllHeaderColumn={ showExpandAllHeaderColumn }/>
     ], [
       this.renderSelectRowHeader(rowCount + 1, rowKey++)
     ], [
       this.props.expandColumnVisible &&
         !this.props.expandColumnBeforeSelectColumn &&
-          <ExpandRowHeaderColumn key='expandCol' rowCount={ rowCount + 1 }/>
+          <ExpandRowHeaderColumn key='expandCol' rowCount={ rowCount + 1 }
+            expandedColumnHeaderComponent={ expandedColumnHeaderComponent }
+            expandAllChilds={ expandAllChilds }
+            toggleExpandAllChilds={ toggleExpandAllChilds }
+            showExpandAllHeaderColumn={ showExpandAllHeaderColumn }/>
     ]);
 
     React.Children.forEach(this.props.children, (elm) => {
@@ -169,8 +179,12 @@ TableHeader.propTypes = {
   reset: PropTypes.bool,
   expandColumnVisible: PropTypes.bool,
   expandColumnComponent: PropTypes.func,
+  expandedColumnHeaderComponent: PropTypes.func,
   expandColumnBeforeSelectColumn: PropTypes.bool,
-  version: PropTypes.string
+  version: PropTypes.string,
+  expandAllChilds: PropTypes.bool,
+  toggleExpandAllChilds: PropTypes.func,
+  showExpandAllHeaderColumn: PropTypes.bool
 };
 
 export default TableHeader;

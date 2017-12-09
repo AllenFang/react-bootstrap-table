@@ -81,9 +81,20 @@ export default class ExpandRow extends React.Component {
     );
   }
 
+  expandedColumnHeaderComponent({ expandAllChilds }) {
+    const content = (expandAllChilds ? '(-)' : '(+)' );
+    return (
+      <div>
+        { content }
+      </div>
+    );
+  }
+
   render() {
     const options = {
-      expandRowBgColor: 'rgb(242, 255, 163)'
+      expandRowBgColor: 'rgb(242, 255, 163)',
+      expandAllChilds: false,
+      showExpandAllHeaderColumn: true
     };
     return (
       <BootstrapTable data={ products }
@@ -93,7 +104,8 @@ export default class ExpandRow extends React.Component {
         expandColumnOptions={ {
           expandColumnVisible: true,
           expandColumnComponent: this.expandColumnComponent,
-          columnWidth: 50
+          columnWidth: 50,
+          expandedColumnHeaderComponent: this.expandedColumnHeaderComponent
         } }
         search>
         <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
