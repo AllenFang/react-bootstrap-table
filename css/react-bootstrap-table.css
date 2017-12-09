@@ -261,6 +261,11 @@ td.react-bs-table-expand-cell {
     cursor: pointer;
 }
 
+th.react-bs-table-expand-cell > div {
+  cursor: pointer;
+}
+
+
 @keyframes shake {
   from, to {
     transform: translate3d(0, 0, 0);

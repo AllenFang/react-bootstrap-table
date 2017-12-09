@@ -70,7 +70,8 @@ export default class ExpandRow extends React.Component {
 
   render() {
     const options = {
-      expandRowBgColor: 'rgb(242, 255, 163)'
+      expandRowBgColor: 'rgb(242, 255, 163)',
+      expandAll: true
     };
     return (
       <BootstrapTable data={ products }
