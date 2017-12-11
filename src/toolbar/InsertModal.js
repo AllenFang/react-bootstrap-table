@@ -12,9 +12,8 @@ const defaultModalClassName = 'react-bs-table-insert-modal';
 export default class InsertModal extends Component {
 
   handleSave = () => {
-    const bodyRefs = this.refs.body;
-    if (bodyRefs.getFieldValue) {
-      this.props.onSave(bodyRefs.getFieldValue());
+    if (this.body.getFieldValue) {
+      this.props.onSave(this.body.getFieldValue());
     } else {
       console.error(`Custom InsertModalBody should implement getFieldValue function
         and should return an object presented as the new row that user input.`);
@@ -38,7 +37,7 @@ export default class InsertModal extends Component {
     footerComponent = footerComponent && footerComponent(onModalClose, this.handleSave);
 
     if (bodyComponent) {
-      bodyComponent = React.cloneElement(bodyComponent, { ref: 'body' });
+      bodyComponent = React.cloneElement(bodyComponent, { ref: node => this.body = node });
     }
 
     if (headerComponent && headerComponent.type.name === InsertModalHeader.name) {
@@ -80,7 +79,7 @@ export default class InsertModal extends Component {
         }
         {
           bodyComponent ||
-          (<InsertModalBody ref='body' { ...bodyAttr }/>)
+          (<InsertModalBody ref={ node => this.body = node } { ...bodyAttr }/>)
         }
         {
           footerComponent ||

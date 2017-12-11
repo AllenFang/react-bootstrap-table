@@ -174,8 +174,8 @@ class TableBody extends Component {
       }
       if (isExpanding && this.props.expandParentClass) {
         trClassName += Utils.isFunction(this.props.expandParentClass) ?
-          this.props.expandParentClass(data, r) :
-          this.props.expandParentClass;
+          ` ${this.props.expandParentClass(data, r)}` :
+          ` ${this.props.expandParentClass}`;
       }
       const result = [ <TableRow isSelected={ selected } key={ key } className={ trClassName }
         index={ r }
@@ -237,12 +237,13 @@ class TableBody extends Component {
     }
 
     return (
-      <div ref='container'
+      <div
+        ref={ node => this.container = node }
         className={ classSet('react-bs-container-body', this.props.bodyContainerClass) }
         style={ this.props.style }>
         <table className={ tableClasses }>
-          { React.cloneElement(tableHeader, { ref: 'header' }) }
-          <tbody ref='tbody'>
+          { React.cloneElement(tableHeader, { ref: node => this.header = node }) }
+          <tbody ref={ node => this.tbody = node }>
             { tableRows }
           </tbody>
         </table>
@@ -252,7 +253,7 @@ class TableBody extends Component {
 
   handleCellKeyDown = (e, lastEditCell) => {
     e.preventDefault();
-    const { keyBoardNav, onNavigateCell, cellEdit } = this.props;
+    const { keyBoardNav, onNavigateCell, cellEdit, selectedRowKeys } = this.props;
     let offset;
     if (e.keyCode === 37) {
       offset = { x: -1, y: 0 };
@@ -269,20 +270,29 @@ class TableBody extends Component {
     } else if (e.keyCode === 40) {
       offset = { x: 0, y: 1 };
     } else if (e.keyCode === 13) {
+      const rowIndex = e.target.parentElement.rowIndex + 1;
       const enterToEdit = typeof keyBoardNav === 'object' ?
         keyBoardNav.enterToEdit :
         false;
       const enterToExpand = typeof keyBoardNav === 'object' ?
         keyBoardNav.enterToExpand :
         false;
+      const enterToSelect = typeof keyBoardNav === 'object' ?
+        keyBoardNav.enterToSelect :
+        false;
 
       if (cellEdit && enterToEdit) {
-        this.handleEditCell(e.target.parentElement.rowIndex + 1,
-          e.currentTarget.cellIndex, '', e);
+        this.handleEditCell(rowIndex, e.currentTarget.cellIndex, '', e);
       }
 
       if (enterToExpand) {
-        this.handleClickCell(this.props.y + 1, this.props.x);
+        this.handleClickCell(e, this.props.y + 1, this.props.x);
+      }
+
+      if (enterToSelect) {
+        const isSelected = selectedRowKeys.indexOf(
+          this.props.data[rowIndex - 1][this.props.keyField]) !== -1;
+        this.handleSelectRow(rowIndex, !isSelected, e);
       }
     }
     if (offset && keyBoardNav) {
@@ -300,17 +310,17 @@ class TableBody extends Component {
     this.props.onRowMouseOver(targetRow, event);
   }
 
-  handleRowClick = (rowIndex, cellIndex) => {
+  handleRowClick = (rowIndex, cellIndex, event) => {
     const { onRowClick, selectRow } = this.props;
     if (Utils.isSelectRowDefined(selectRow.mode)) cellIndex--;
     if (this._isExpandColumnVisible()) cellIndex--;
-    onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex);
+    onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex, event);
   }
 
-  handleRowDoubleClick = rowIndex => {
+  handleRowDoubleClick = (rowIndex, event) => {
     const { onRowDoubleClick } = this.props;
     const targetRow = this.props.data[rowIndex];
-    onRowDoubleClick(targetRow);
+    onRowDoubleClick(targetRow, event);
   }
 
   handleSelectRow = (rowIndex, isSelected, e) => {
@@ -335,7 +345,7 @@ class TableBody extends Component {
     }
   }
 
-  handleClickCell = (rowIndex, columnIndex = -1) => {
+  handleClickCell = (event, rowIndex, columnIndex = -1) => {
     const {
       columns,
       keyField,
@@ -369,7 +379,7 @@ class TableBody extends Component {
         if (onlyOneExpanding) expanding = [ rowKey ];
         else expanding.push(rowKey);
       }
-      this.props.onExpand(expanding, rowKey, isRowExpanding);
+      this.props.onExpand(expanding, rowKey, isRowExpanding, event);
     }
   }
 
@@ -466,7 +476,7 @@ class TableBody extends Component {
       const unselectable = this.props.selectRow.unselectable || [];
       if (unselectable.indexOf(row[this.props.keyField]) === -1) {
         this.handleSelectRow(rowIndex + 1, isSelect, e);
-        this.handleClickCell(rowIndex + 1);
+        this.handleClickCell(e, rowIndex + 1);
       }
     }
   }
@@ -502,7 +512,7 @@ class TableBody extends Component {
     return (
       <td
         className='react-bs-table-expand-cell'
-        onClick={ () => this.handleClickCell(rowIndex + 1) }>
+        onClick={ e => this.handleClickCell(e, rowIndex + 1) }>
         { content }
       </td>
     );
@@ -513,7 +523,7 @@ class TableBody extends Component {
   }
 
   getHeaderColGrouop = () => {
-    return this.refs.header.childNodes;
+    return this.header.childNodes;
   }
 }
 TableBody.propTypes = {

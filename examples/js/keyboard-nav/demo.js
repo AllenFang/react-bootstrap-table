@@ -8,6 +8,7 @@ import DisableClickToNavTable from './disable-click-to-nav-table';
 import NavWithCellEditTable from './nav-with-cell-edit-table';
 import CustomStyleNavWithCellEditTable from './custom-style-nav-with-cell-edit-table';
 import EnterToEditWithNavTable from './enter-to-edit-with-nav-table';
+import EnterToSelectRowWithNavTable from './enter-to-select-row-with-nav-table';
 import NavWithExpandingTable from './nav-with-expand-table';
 import EnterToExpandWithNavTable from './enter-to-expand-row-with-nav-table';
 
@@ -70,6 +71,14 @@ class Demo extends React.Component {
             Use <code>keyBoardNav.enterToEdit</code> to trigger the navigating cell as editing<br/>
           </span>
           <EnterToEditWithNavTable />
+        </Panel>
+        <Panel header={ 'Enter to select row with Keyboard Navigation Example' }>
+          { renderLinks('keyboard-nav/enter-to-select-row-with-nav-table') }
+          <span>
+            <code>keyBoardNav</code> accept a bool or object value<br/>
+            Use <code>keyBoardNav.enterToSelect</code> to trigger row selection<br/>
+          </span>
+          <EnterToSelectRowWithNavTable />
         </Panel>
         <Panel header={ 'Expand with Keyboard Navigation Example' }>
           { renderLinks('keyboard-nav/nav-with-expand-table.js') }

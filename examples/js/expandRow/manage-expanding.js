@@ -59,12 +59,13 @@ export default class ExpandRow extends React.Component {
     return true;
   }
 
-  handleExpand(rowKey, isExpand) {
+  handleExpand(rowKey, isExpand, e) {
     if (isExpand) {
       console.log(`row: ${rowKey} is ready to expand`);
     } else {
       console.log(`row: ${rowKey} is ready to collapse`);
     }
+    console.log(e);
   }
 
   expandComponent(row) {

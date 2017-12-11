@@ -1,3 +1,34 @@
+<a name="v4.2.0"></a>
+# [v4.2.0](https://github.com/AllenFang/react-bootstrap-table/compare/v4.1.5...v4.2.0) (2017-12-04)
+## Bug fixes
+* Fix bug about text filter for null value([a9eb1d0](https://github.com/AllenFang/react-bootstrap-table/commit/a9eb1d010ab75efe4abd84a5e23f09114f8d8b7b))
+* Fix `expandParentClass` option concat classNames([64915a0](https://github.com/AllenFang/react-bootstrap-table/pull/1777/commits/64915a0efc535c98eba60137746fc65f72f86ec6))
+
+## Enhancements
+* No String ref([7c18851](https://github.com/AllenFang/react-bootstrap-table/commit/7c188513f73788e0556e2023b13f38de51a69288))
+* Support `renderAlert` to specified if render the `react-s-alert`([ed57ab4](https://github.com/AllenFang/react-bootstrap-table/commit/ed57ab40c29cc326f0c5abff6763ef667b5498d8))
+	* Please check [#1771](https://github.com/AllenFang/react-bootstrap-table/issues/1771)
+* The event object will be pass at least argument for `options.onExpand`, `options.onRowClick` and `options.onRowDoubleClick`([64915a0](https://github.com/AllenFang/react-bootstrap-table/commit/64915a0efc535c98eba60137746fc65f72f86ec6))
+
+<a name="v4.1.5"></a>
+# [v4.1.5](https://github.com/AllenFang/react-bootstrap-table/compare/v4.1.3...v4.1.5) (2017-11-20)
+## Bug fixes
+* Fixed the sort status doesn't updated internally when remote sort enable([06b3560](https://github.com/AllenFang/react-bootstrap-table/commit/06b356021e3364d0048f8aba8e934e07bb7a02fc))
+
+## Enhancements
+* `beforeSaveCell` and `afterSaveCell` will pass additional information on last one argument([db634db](https://github.com/AllenFang/react-bootstrap-table/commit/db634db0573995427b743cf3919b7b2f5824b1de))
+
+## Features
+* Support press ENTER to select row when enable keyboard navigation([b52e065](https://github.com/AllenFang/react-bootstrap-table/commit/b52e065397221d50a5a824ea6def990bb49e352c))
+	* Check [this](https://github.com/AllenFang/react-bootstrap-table/blob/master/examples/js/keyboard-nav/enter-to-select-row-with-nav-table.js) example
+
+<a name="v4.1.2"></a>
+<a name="v4.1.3"></a>
+<a name="v4.1.4"></a>
+# [v4.1.1](https://github.com/AllenFang/react-bootstrap-table/compare/v4.1.1...v4.1.3) (2017-11-11)
+## Bug fixes
+* Fixed data get sorted locally even with remote sorting([509e31a](https://github.com/AllenFang/react-bootstrap-table/commit/509e31ae3dee1c3cfc5024dcec15f0e14001f7e0),[0d57d95](https://github.com/AllenFang/react-bootstrap-table/commit/0d57d957f35d65b80dbace55036c0d4d61064f9f))
+
 <a name="v4.1.1"></a>
 # [v4.1.1](https://github.com/AllenFang/react-bootstrap-table/compare/v4.1.0...v4.1.1) (2017-10-25)
 ## Bug fixes
