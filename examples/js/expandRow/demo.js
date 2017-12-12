@@ -11,6 +11,7 @@ import ExpandIndicator from './expand-indicator';
 import CustomExpandClassName from './custom-expand-class';
 import CustomExpandIndicator from './custom-expand-indicator';
 import AutoCollapse from './auto-collapse';
+import HideRowWhenExpanding from './hide-row-when-expanding';
 import renderLinks from '../utils';
 
 import { Col, Panel } from 'react-bootstrap';
@@ -64,6 +65,10 @@ class Demo extends React.Component {
         <Panel header={ 'Auto Collapse Expanding Rows When Sort, Search or Flter' }>
           { renderLinks('expandRow/auto-collapse.js') }
           <AutoCollapse/>
+        </Panel>
+        <Panel header={ 'Hide Row When Expanding' }>
+          { renderLinks('expandRow/hide-row-when-expanding.js') }
+          <HideRowWhenExpanding/>
         </Panel>
       </Col>
     );
