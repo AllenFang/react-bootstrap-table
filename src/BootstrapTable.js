@@ -534,7 +534,7 @@ class BootstrapTable extends Component {
             x={ this.state.x }
             y={ this.state.y }
             withoutTabIndex={ this.props.withoutTabIndex }
-            hideRowOnExpand={hideRowOnExpand}
+            hideRowOnExpand={ hideRowOnExpand }
             onEditCell={ this.handleEditCell } />
             {
               tableFooter

@@ -189,7 +189,7 @@ class TableBody extends Component {
         onExpandRow={ this.handleClickCell }
         unselectableRow={ disable }
         style={ trStyle }
-        hidden={isExpanding && hideRowOnExpand}
+        hidden={ isExpanding && hideRowOnExpand }
         dbClickToEdit={ cellEdit.mode === Const.CELL_EDIT_DBCLICK } >
         { this.props.expandColumnOptions.expandColumnVisible &&
             this.props.expandColumnOptions.expandColumnBeforeSelectColumn &&
@@ -559,6 +559,6 @@ TableBody.propTypes = {
   y: PropTypes.number,
   onNavigateCell: PropTypes.func,
   withoutTabIndex: PropTypes.bool,
-  hideRowOnExpand: PropTypes.bool,
+  hideRowOnExpand: PropTypes.bool
 };
 export default TableBody;
