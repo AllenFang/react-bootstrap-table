@@ -454,7 +454,7 @@ class BootstrapTable extends Component {
     const { toolbarPosition = Const.TOOLBAR_POS_TOP } = this.props.options;
     const showToolbarOnTop = toolbarPosition !== Const.TOOLBAR_POS_BOTTOM;
     const showToolbarOnBottom = toolbarPosition !== Const.TOOLBAR_POS_TOP;
-
+    const { hideRowOnExpand = false } = this.props.options;
     return (
       <div className={ classSet('react-bs-table-container', this.props.className, this.props.containerClass) }
         style={ this.props.containerStyle }>
@@ -534,6 +534,7 @@ class BootstrapTable extends Component {
             x={ this.state.x }
             y={ this.state.y }
             withoutTabIndex={ this.props.withoutTabIndex }
+            hideRowOnExpand={ hideRowOnExpand }
             onEditCell={ this.handleEditCell } />
             {
               tableFooter
@@ -1737,7 +1738,8 @@ BootstrapTable.propTypes = {
     printToolBar: PropTypes.bool,
     insertFailIndicator: PropTypes.string,
     noAutoBOM: PropTypes.bool,
-    expandAll: PropTypes.bool
+    expandAll: PropTypes.bool,
+    hideRowOnExpand: PropTypes.bool
   }),
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
@@ -1908,7 +1910,8 @@ BootstrapTable.defaultProps = {
     printToolBar: true,
     insertFailIndicator: Const.INSERT_FAIL_INDICATOR,
     noAutoBOM: true,
-    expandAll: false
+    expandAll: false,
+    hideRowOnExpand: false
   },
   fetchInfo: {
     dataTotalSize: 0

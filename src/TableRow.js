@@ -78,7 +78,7 @@ class TableRow extends Component {
 
   render() {
     this.clickNum = 0;
-    const { selectRow, row, isSelected, className, index } = this.props;
+    const { selectRow, row, isSelected, className, index, hidden } = this.props;
     let { style } = this.props;
     let backgroundColor = null;
     let selectRowClass = null;
@@ -110,6 +110,7 @@ class TableRow extends Component {
           onMouseOver={ this.rowMouseOver }
           onMouseOut={ this.rowMouseOut }
           onClick={ this.rowClick }
+          hidden={ hidden }
           onDoubleClick={ this.rowDoubleClick }>{ this.props.children }</tr>
     );
   }
@@ -126,10 +127,12 @@ TableRow.propTypes = {
   onExpandRow: PropTypes.func,
   onRowMouseOut: PropTypes.func,
   onRowMouseOver: PropTypes.func,
-  unselectableRow: PropTypes.bool
+  unselectableRow: PropTypes.bool,
+  hidden: PropTypes.bool
 };
 TableRow.defaultProps = {
   onRowClick: undefined,
-  onRowDoubleClick: undefined
+  onRowDoubleClick: undefined,
+  hidden: false
 };
 export default TableRow;
