@@ -245,15 +245,20 @@ class PaginationList extends Component {
           true :
           false;
         let title = page + '';
+        let pageNumber = page;
 
         if (page === this.props.nextPage) {
           title = this.props.nextPageTitle;
+          pageNumber = this.props.currPage + 1;
         } else if (page === this.props.prePage) {
           title = this.props.prePageTitle;
+          pageNumber = this.props.currPage - 1;
         } else if (page === this.props.firstPage) {
           title = this.props.firstPageTitle;
+          pageNumber = this.props.pageStartIndex;
         } else if (page === this.props.lastPage) {
           title = this.props.lastPageTitle;
+          pageNumber = this.getLastPage();
         }
 
         return (
@@ -261,7 +266,8 @@ class PaginationList extends Component {
             title={ title }
             changePage={ this.changePage }
             active={ isActive }
-            disable={ isDisabled }>
+            disable={ isDisabled }
+            pageNumber={ pageNumber }>
             { page }
           </PageButton>
         );
