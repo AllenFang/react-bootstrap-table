@@ -1268,6 +1268,7 @@ class BootstrapTable extends Component {
         <div className='react-bs-table-pagination'>
           <PaginationList
             ref={ node => this.pagination = node }
+            version={ this.props.version }
             withFirstAndLast={ withFirstAndLast }
             alwaysShowAllBtns={ options.alwaysShowAllBtns }
             currPage={ this.state.currPage }

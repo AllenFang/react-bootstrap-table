@@ -178,21 +178,36 @@ class PaginationList extends Component {
     }
 
     if (dropdownProps || !dropdown) {
+      const isBootstrap4 = Util.isBootstrap4(this.props.version);
       const sizePerPageOptions = sizePerPageList.map((_sizePerPage) => {
         const pageText = _sizePerPage.text || _sizePerPage;
         const pageNum = _sizePerPage.value || _sizePerPage;
         if (sizePerPage === pageNum) sizePerPageText = pageText;
-        return (
-          <li key={ pageText } role='presentation' className='dropdown-item'>
-            <a role='menuitem'
-              tabIndex='-1' href='#'
-              data-page={ pageNum }
+        if (isBootstrap4) {
+          return (
+            <a
+              href='#'
+              tabIndex='-1'
+              key={ pageText }
+              className='dropdown-item'
               onMouseDown={ e => {
                 e.preventDefault();
                 this.changeSizePerPage(pageNum);
               } }>{ pageText }</a>
-          </li>
-        );
+          );
+        } else {
+          return (
+            <li key={ pageText } role='presentation' className='dropdown-item'>
+              <a role='menuitem'
+                tabIndex='-1' href='#'
+                data-page={ pageNum }
+                onMouseDown={ e => {
+                  e.preventDefault();
+                  this.changeSizePerPage(pageNum);
+                } }>{ pageText }</a>
+            </li>
+          );
+        }
       });
       dropdown = (
         <SizePerPageDropDown
@@ -202,6 +217,7 @@ class PaginationList extends Component {
           options={ sizePerPageOptions }
           onClick={ this.toggleDropDown }
           onBlur={ this.closeDropDown }
+          isBootstrap4={ isBootstrap4 }
           { ...dropdownProps }/>
       );
     }
