@@ -30,7 +30,7 @@ class TableHeaderColumn extends Component {
       const filter = currentFilter[nextProps.dataField];
       const value = filter ? filter.value : '';
 
-      const { ref } = this.getFilters() || {};
+      const { ref } = this.getFilters(nextProps) || {};
       if (this.refs[ref]) {
         this.refs[ref].setState({ value });
       }
@@ -50,42 +50,42 @@ class TableHeaderColumn extends Component {
     filter.emitter.handleFilter(this.props.dataField, value, type, filter);
   }
 
-  getFilters() {
-    const { headerText, children } = this.props;
-    switch (this.props.filter.type) {
+  getFilters(props = this.props) {
+    const { headerText, children } = props;
+    switch (props.filter.type) {
     case Const.FILTER_TYPE.TEXT: {
       return (
-        <TextFilter ref={ n => this.textFilter = n } { ...this.props.filter }
+        <TextFilter ref={ n => this.textFilter = n } { ...props.filter }
           columnName={ headerText || children } filterHandler={ this.handleFilter } />
       );
     }
     case Const.FILTER_TYPE.REGEX: {
       return (
-        <RegexFilter ref={ n => this.regexFilter = n } { ...this.props.filter }
+        <RegexFilter ref={ n => this.regexFilter = n } { ...props.filter }
           columnName={ headerText || children } filterHandler={ this.handleFilter } />
       );
     }
     case Const.FILTER_TYPE.SELECT: {
       return (
-        <SelectFilter ref={ n => this.selectFilter = n } { ...this.props.filter }
+        <SelectFilter ref={ n => this.selectFilter = n } { ...props.filter }
           columnName={ headerText || children } filterHandler={ this.handleFilter } />
       );
     }
     case Const.FILTER_TYPE.NUMBER: {
       return (
-        <NumberFilter ref={ n => this.numberFilter = n } { ...this.props.filter }
+        <NumberFilter ref={ n => this.numberFilter = n } { ...props.filter }
           columnName={ headerText || children } filterHandler={ this.handleFilter } />
       );
     }
     case Const.FILTER_TYPE.DATE: {
       return (
-        <DateFilter ref={ n => this.dateFilter = n } { ...this.props.filter }
+        <DateFilter ref={ n => this.dateFilter = n } { ...props.filter }
           columnName={ headerText || children } filterHandler={ this.handleFilter } />
       );
     }
     case Const.FILTER_TYPE.CUSTOM: {
-      const elm = this.props.filter.getElement(this.handleFilter,
-          this.props.filter.customFilterParameters);
+      const elm = props.filter.getElement(this.handleFilter,
+          props.filter.customFilterParameters);
 
       return React.cloneElement(elm, { ref: n => this.customFilter = n });
     }
