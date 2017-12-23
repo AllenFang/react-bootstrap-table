@@ -1875,6 +1875,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            ref: function ref(node) {
 	              return _this12.pagination = node;
 	            },
+	            version: this.props.version,
 	            withFirstAndLast: withFirstAndLast,
 	            alwaysShowAllBtns: options.alwaysShowAllBtns,
 	            currPage: this.state.currPage,
@@ -5059,7 +5060,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var filter = currentFilter[nextProps.dataField];
 	        var value = filter ? filter.value : '';
 
-	        var _ref = this.getFilters() || {},
+	        var _ref = this.getFilters(nextProps) || {},
 	            ref = _ref.ref;
 
 	        if (this.refs[ref]) {
@@ -5088,49 +5089,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function getFilters() {
 	      var _this2 = this;
 
-	      var _props = this.props,
-	          headerText = _props.headerText,
-	          children = _props.children;
+	      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
+	      var headerText = props.headerText,
+	          children = props.children;
 
-	      switch (this.props.filter.type) {
+	      switch (props.filter.type) {
 	        case _Const2.default.FILTER_TYPE.TEXT:
 	          {
 	            return _react2.default.createElement(_Text2.default, _extends({ ref: function ref(n) {
 	                return _this2.textFilter = n;
-	              } }, this.props.filter, {
+	              } }, props.filter, {
 	              columnName: headerText || children, filterHandler: this.handleFilter }));
 	          }
 	        case _Const2.default.FILTER_TYPE.REGEX:
 	          {
 	            return _react2.default.createElement(_Regex2.default, _extends({ ref: function ref(n) {
 	                return _this2.regexFilter = n;
-	              } }, this.props.filter, {
+	              } }, props.filter, {
 	              columnName: headerText || children, filterHandler: this.handleFilter }));
 	          }
 	        case _Const2.default.FILTER_TYPE.SELECT:
 	          {
 	            return _react2.default.createElement(_Select2.default, _extends({ ref: function ref(n) {
 	                return _this2.selectFilter = n;
-	              } }, this.props.filter, {
+	              } }, props.filter, {
 	              columnName: headerText || children, filterHandler: this.handleFilter }));
 	          }
 	        case _Const2.default.FILTER_TYPE.NUMBER:
 	          {
 	            return _react2.default.createElement(_Number2.default, _extends({ ref: function ref(n) {
 	                return _this2.numberFilter = n;
-	              } }, this.props.filter, {
+	              } }, props.filter, {
 	              columnName: headerText || children, filterHandler: this.handleFilter }));
 	          }
 	        case _Const2.default.FILTER_TYPE.DATE:
 	          {
 	            return _react2.default.createElement(_Date2.default, _extends({ ref: function ref(n) {
 	                return _this2.dateFilter = n;
-	              } }, this.props.filter, {
+	              } }, props.filter, {
 	              columnName: headerText || children, filterHandler: this.handleFilter }));
 	          }
 	        case _Const2.default.FILTER_TYPE.CUSTOM:
 	          {
-	            var elm = this.props.filter.getElement(this.handleFilter, this.props.filter.customFilterParameters);
+	            var elm = props.filter.getElement(this.handleFilter, props.filter.customFilterParameters);
 
 	            return _react2.default.cloneElement(elm, { ref: function ref(n) {
 	                return _this2.customFilter = n;
@@ -5175,23 +5176,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var defaultCaret = void 0;
 	      var sortCaret = void 0;
 	      var sortClass = void 0;
-	      var _props2 = this.props,
-	          headerText = _props2.headerText,
-	          dataAlign = _props2.dataAlign,
-	          dataField = _props2.dataField,
-	          headerAlign = _props2.headerAlign,
-	          headerTitle = _props2.headerTitle,
-	          hidden = _props2.hidden,
-	          sort = _props2.sort,
-	          dataSort = _props2.dataSort,
-	          sortIndicator = _props2.sortIndicator,
-	          children = _props2.children,
-	          caretRender = _props2.caretRender,
-	          className = _props2.className,
-	          isOnlyHead = _props2.isOnlyHead,
-	          version = _props2.version,
-	          customSortClass = _props2.sortHeaderColumnClassName,
-	          style = _props2.thStyle;
+	      var _props = this.props,
+	          headerText = _props.headerText,
+	          dataAlign = _props.dataAlign,
+	          dataField = _props.dataField,
+	          headerAlign = _props.headerAlign,
+	          headerTitle = _props.headerTitle,
+	          hidden = _props.hidden,
+	          sort = _props.sort,
+	          dataSort = _props.dataSort,
+	          sortIndicator = _props.sortIndicator,
+	          children = _props.children,
+	          caretRender = _props.caretRender,
+	          className = _props.className,
+	          isOnlyHead = _props.isOnlyHead,
+	          version = _props.version,
+	          customSortClass = _props.sortHeaderColumnClassName,
+	          style = _props.thStyle;
 
 	      var thStyle = _extends({
 	        textAlign: headerAlign || dataAlign,
@@ -9614,25 +9615,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      if (dropdownProps || !dropdown) {
+	        var isBootstrap4 = _util2.default.isBootstrap4(this.props.version);
 	        var sizePerPageOptions = sizePerPageList.map(function (_sizePerPage) {
 	          var pageText = _sizePerPage.text || _sizePerPage;
 	          var pageNum = _sizePerPage.value || _sizePerPage;
 	          if (sizePerPage === pageNum) sizePerPageText = pageText;
-	          return _react2.default.createElement(
-	            'li',
-	            { key: pageText, role: 'presentation', className: 'dropdown-item' },
-	            _react2.default.createElement(
+	          if (isBootstrap4) {
+	            return _react2.default.createElement(
 	              'a',
-	              { role: 'menuitem',
-	                tabIndex: '-1', href: '#',
-	                'data-page': pageNum,
+	              {
+	                href: '#',
+	                tabIndex: '-1',
+	                key: pageText,
+	                className: 'dropdown-item',
 	                onMouseDown: function onMouseDown(e) {
 	                  e.preventDefault();
 	                  _this3.changeSizePerPage(pageNum);
 	                } },
 	              pageText
-	            )
-	          );
+	            );
+	          } else {
+	            return _react2.default.createElement(
+	              'li',
+	              { key: pageText, role: 'presentation', className: 'dropdown-item' },
+	              _react2.default.createElement(
+	                'a',
+	                { role: 'menuitem',
+	                  tabIndex: '-1', href: '#',
+	                  'data-page': pageNum,
+	                  onMouseDown: function onMouseDown(e) {
+	                    e.preventDefault();
+	                    _this3.changeSizePerPage(pageNum);
+	                  } },
+	                pageText
+	              )
+	            );
+	          }
 	        });
 	        dropdown = _react2.default.createElement(_SizePerPageDropDown2.default, _extends({
 	          open: this.state.open,
@@ -9640,7 +9658,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          currSizePerPage: String(sizePerPageText),
 	          options: sizePerPageOptions,
 	          onClick: this.toggleDropDown,
-	          onBlur: this.closeDropDown
+	          onBlur: this.closeDropDown,
+	          isBootstrap4: isBootstrap4
 	        }, dropdownProps));
 	      }
 	      return dropdown;
@@ -9675,15 +9694,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var isActive = page === this.props.currPage;
 	        var isDisabled = isStart(page, this.props) || isEnd(page, this.props) ? true : false;
 	        var title = page + '';
+	        var pageNumber = page;
 
 	        if (page === this.props.nextPage) {
 	          title = this.props.nextPageTitle;
+	          pageNumber = this.props.currPage + 1;
 	        } else if (page === this.props.prePage) {
 	          title = this.props.prePageTitle;
+	          pageNumber = this.props.currPage - 1;
 	        } else if (page === this.props.firstPage) {
 	          title = this.props.firstPageTitle;
+	          pageNumber = this.props.pageStartIndex;
 	        } else if (page === this.props.lastPage) {
 	          title = this.props.lastPageTitle;
+	          pageNumber = this.getLastPage();
 	        }
 
 	        return _react2.default.createElement(
@@ -9692,7 +9716,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            title: title,
 	            changePage: this.changePage,
 	            active: isActive,
-	            disable: isDisabled },
+	            disable: isDisabled,
+	            pageNumber: pageNumber },
 	          page
 	        );
 	      }, this);
@@ -9852,7 +9877,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: '__pageBtnClick__REACT_HOT_LOADER__',
 	    value: function __pageBtnClick__REACT_HOT_LOADER__(e) {
 	      e.preventDefault();
-	      this.props.changePage(e.currentTarget.textContent);
+	      this.props.changePage(this.props.pageNumber);
 	    }
 	  }, {
 	    key: 'render',
@@ -9884,7 +9909,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  active: _propTypes2.default.bool,
 	  disable: _propTypes2.default.bool,
 	  hidden: _propTypes2.default.bool,
-	  children: _propTypes2.default.node
+	  children: _propTypes2.default.node,
+	  pageNumber: _propTypes2.default.number
 	};
 
 	var _default = PageButton;
@@ -9954,21 +9980,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	          className = _props.className,
 	          variation = _props.variation,
 	          btnContextual = _props.btnContextual,
+	          isBootstrap4 = _props.isBootstrap4,
 	          currSizePerPage = _props.currSizePerPage;
 
 
+	      if (hidden) return null;
+
 	      var openClass = open ? 'open show' : '';
-	      var dropDownStyle = { visibility: hidden ? 'hidden' : 'visible' };
+
+	      var renderOptions = function renderOptions() {
+	        var attrs = {
+	          className: 'dropdown-menu ' + openClass,
+	          role: 'menu',
+	          'aria-labelledby': 'pageDropDown'
+	        };
+	        var type = isBootstrap4 ? 'div' : 'ul';
+
+	        return _react2.default.createElement(type, attrs, options);
+	      };
 
 	      return _react2.default.createElement(
 	        'span',
-	        { style: dropDownStyle,
+	        {
 	          className: variation + ' ' + openClass + ' ' + className + ' ' + sizePerPageDefaultClass },
 	        _react2.default.createElement(
 	          'button',
 	          { className: 'btn ' + btnContextual + ' dropdown-toggle',
 	            id: 'pageDropDown', 'data-toggle': 'dropdown',
 	            'aria-expanded': open,
+	            'aria-haspopup': !open,
 	            onClick: onClick,
 	            onBlur: onBlur },
 	          currSizePerPage,
@@ -9979,11 +10019,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _react2.default.createElement('span', { className: 'caret' })
 	          )
 	        ),
-	        _react2.default.createElement(
-	          'ul',
-	          { className: 'dropdown-menu', role: 'menu', 'aria-labelledby': 'pageDropDown' },
-	          options
-	        )
+	        renderOptions()
 	      );
 	    }
 	  }]);
