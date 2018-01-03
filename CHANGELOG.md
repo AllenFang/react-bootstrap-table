@@ -1,3 +1,12 @@
+<a name="v4.3.1"></a>
+# [v4.3.1](https://github.com/AllenFang/react-bootstrap-table/compare/v4.3.0...v4.3.1) (2017-12-23)
+## Bug fixes
+* Fixed sizePerPage dropdown broken on `bootstrap@4.0.0-beta.2`([8b28c4b](https://github.com/AllenFang/react-bootstrap-table/commit/8b28c4bb26dbdc04eb11d1d53aad5612c34aa474))
+* Fixed Cannot read property 'type' of null Error in `TableHeaderColumns` when having dynamic columns([1741487](https://github.com/AllenFang/react-bootstrap-table/commit/1741487197d168a1b3cfba53637c1ce39f034233))
+
+## Enhancement
+* if `options.hideSizePerPage` is true, will not render dropdown anymore instead of hidden([ea89bf8](https://github.com/AllenFang/react-bootstrap-table/commit/ea89bf846185cd2f0dcb66f5813ede5531fec17a))
+
 <a name="v4.3.0"></a>
 # [v4.3.0](https://github.com/AllenFang/react-bootstrap-table/compare/v4.2.0...v4.3.0) (2017-12-12)
 ## Bug fixes
