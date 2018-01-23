@@ -1,7 +1,6 @@
 # react-bootstrap-table
 
-### react-bootstrap-table will stop develop new feature and move to [react-bootstrap-table2](https://github.com/react-bootstrap-table/react-bootstrap-table2), but keep to fix critical bugs.
-### Feel free to let me know your idea on [here](https://github.com/react-bootstrap-table/react-bootstrap-table2/issues)
+## [`react-bootstrap-table2`](https://github.com/react-bootstrap-table/react-bootstrap-table2) already released, this project will stop development after 2018Q2
 
 [![Join the chat at https://gitter.im/AllenFang/react-bootstrap-table](https://badges.gitter.im/AllenFang/react-bootstrap-table.svg)](https://gitter.im/AllenFang/react-bootstrap-table?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
