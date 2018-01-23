@@ -4,6 +4,8 @@
 /* eslint eqeqeq: 0 */
 /* eslint one-var: 0 */
 import Const from '../Const';
+import _get from 'lodash.get';
+import _set from 'lodash.set';
 
 export class TableDataStore {
 
@@ -193,10 +195,10 @@ export class TableDataStore {
     const currentDisplayData = this.getCurrentDisplayData();
     let rowKeyCache;
     if (!this.enablePagination) {
-      currentDisplayData[rowIndex][fieldName] = newVal;
+      _set(currentDisplayData[rowIndex], fieldName, newVal);
       rowKeyCache = currentDisplayData[rowIndex][this.keyField];
     } else {
-      currentDisplayData[this.pageObj.start + rowIndex][fieldName] = newVal;
+      _set(currentDisplayData[this.pageObj.start + rowIndex], fieldName, newVal);
       rowKeyCache = currentDisplayData[this.pageObj.start + rowIndex][this.keyField];
     }
     if (this.isOnFilter) {
@@ -470,8 +472,8 @@ export class TableDataStore {
       let valid = true;
       let filterVal;
       for (const key in filterObj) {
-        let targetVal = row[key];
-        if (targetVal === null || targetVal === undefined) {
+        let targetVal = _get(row, key, '');
+        if (targetVal === null) {
           targetVal = '';
         }
 
@@ -519,9 +521,9 @@ export class TableDataStore {
           formatExtraData = this.colInfos[key].formatExtraData;
           filterValue = this.colInfos[key].filterValue;
           if (filterFormatted && format) {
-            targetVal = format(row[key], row, formatExtraData, r);
+            targetVal = format(targetVal, row, formatExtraData, r);
           } else if (filterValue) {
-            targetVal = filterValue(row[key], row);
+            targetVal = filterValue(targetVal, row);
           }
         }
 
@@ -606,13 +608,11 @@ export class TableDataStore {
             filterValue,
             formatExtraData
           } = colInfo;
-          let targetVal;
+          let targetVal = _get(row, key);
           if (filterFormatted && format) {
-            targetVal = format(row[key], row, formatExtraData, r);
+            targetVal = format(targetVal, row, formatExtraData, r);
           } else if (filterValue) {
-            targetVal = filterValue(row[key], row);
-          } else {
-            targetVal = row[key];
+            targetVal = filterValue(targetVal, row);
           }
           if (targetVal !== null && typeof targetVal !== 'undefined') {
             targetVal = targetVal.toString().toLowerCase();
@@ -658,8 +658,8 @@ export class TableDataStore {
         if (sortFunc) {
           result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
         } else {
-          const valueA = a[sortDetails.sortField] == null ? '' : a[sortDetails.sortField];
-          const valueB = b[sortDetails.sortField] == null ? '' : b[sortDetails.sortField];
+          const valueA = _get(a, sortDetails.sortField, '');
+          const valueB = _get(b, sortDetails.sortField, '');
 
           if (isDesc) {
             if (typeof valueB === 'string') {
