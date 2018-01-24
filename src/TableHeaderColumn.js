@@ -117,6 +117,10 @@ class TableHeaderColumn extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.handleFilter();
+  }
+
   render() {
     let defaultCaret;
     let sortCaret;
