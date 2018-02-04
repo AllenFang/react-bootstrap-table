@@ -17,15 +17,15 @@ function addProducts(quantity) {
   }
 }
 
-addProducts(5);
+addProducts(50);
 
 export default class BasicTable extends React.Component {
   render() {
     return (
-      <BootstrapTable data={ products }>
-          <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
+      <BootstrapTable data={ products } height='500px'>
+          <TableHeaderColumn dataField='id' isKey={ true } width='10%'>Product ID</TableHeaderColumn>
+          <TableHeaderColumn dataField='name' width='65%'>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='price' width='25%'>Product Price</TableHeaderColumn>
       </BootstrapTable>
     );
   }
