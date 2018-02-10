@@ -709,12 +709,22 @@ class BootstrapTable extends Component {
   handleNavigateCell = ({ x: offSetX, y: offSetY, lastEditCell }) => {
     const { pagination } = this.props;
     let { x, y, currPage } = this.state;
-    x += offSetX;
-    y += offSetY;
 
     const columns = this.store.getColInfos();
+    const visibleColumnIndices = Object.keys(columns).map((k, index) => columns[k].hidden ? -1 : index).filter(k => k !== -1);
+
+    if (visibleColumnIndices.indexOf(x) === 0 && offSetX < 0) {
+      x = -1;
+    } else if ((visibleColumnIndices.indexOf(x) === (visibleColumnIndices.length - 1) && offSetX >= 1)) {
+      x = Object.keys(columns).length;
+    } else {
+      x = visibleColumnIndices[visibleColumnIndices.indexOf(x) + offSetX];
+    }
+    y += offSetY;
+
     const visibleRowSize = this.state.data.length;
     const visibleColumnSize = Object.keys(columns).filter(k => !columns[k].hidden).length;
+    const hiddenColumnSize = Object.keys(columns).filter(k => columns[k].hidden).length;
 
     if (y >= visibleRowSize) {
       currPage++;
@@ -733,7 +743,7 @@ class BootstrapTable extends Component {
         return;
       }
       y = visibleRowSize - 1;
-    } else if (x >= visibleColumnSize) {
+    } else if (x - hiddenColumnSize >= visibleColumnSize) {
       if ((y + 1) === visibleRowSize) {
         currPage++;
         const lastPage = pagination ? this.pagination.getLastPage() : -1;
@@ -746,9 +756,9 @@ class BootstrapTable extends Component {
       } else {
         y++;
       }
-      x = lastEditCell ? 1 : 0;
+      x = lastEditCell ? visibleColumnIndices[1] : visibleColumnIndices[0];
     } else if (x < 0) {
-      x = visibleColumnSize - 1;
+      x = visibleColumnIndices[visibleColumnIndices.length - 1];
       if (y === 0) {
         currPage--;
         if (currPage > 0) {
