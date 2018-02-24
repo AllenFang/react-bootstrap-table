@@ -704,7 +704,7 @@ export class TableDataStore {
     } else {
       const result = [];
       for (let i = this.pageObj.start; i <= this.pageObj.end; i++) {
-        result.push(_data[i]);
+        if (!!_data[i]) result.push(_data[i]);
         if (i + 1 === _data.length) break;
       }
       return result;
