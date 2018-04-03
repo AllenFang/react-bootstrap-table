@@ -462,80 +462,80 @@ class BootstrapTable extends Component {
         { showPaginationOnTop ? pagination : null }
         <div ref={ node => this.table = node }
             className={ classSet('react-bs-table', { 'react-bs-table-bordered': this.props.bordered }, this.props.tableContainerClass) }
-            style={ { ...style, ...this.props.tableStyle } }
             onMouseEnter={ this.handleMouseEnter }
-            onMouseLeave={ this.handleMouseLeave }>
+            onMouseLeave={ this.handleMouseLeave }
+            style={ { ...style, ...this.props.tableStyle } } >
           <TableHeader
-            ref={ node => this.header = node }
-            version={ this.props.version }
-            colGroups={ colGroups }
-            headerContainerClass={ this.props.headerContainerClass }
-            tableHeaderClass={ this.props.tableHeaderClass }
-            style={ this.props.headerStyle }
-            rowSelectType={ this.props.selectRow.mode }
-            customComponent={ this.props.selectRow.customComponent }
-            hideSelectColumn={ this.props.selectRow.hideSelectColumn }
-            sortList={ sortList }
-            sortIndicator={ sortIndicator }
-            onSort={ this.handleSort }
-            onSelectAllRow={ this.handleSelectAllRow }
             bordered={ this.props.bordered }
+            colGroups={ colGroups }
             condensed={ this.props.condensed }
+            customComponent={ this.props.selectRow.customComponent }
+            expandAll={ this.props.options.expandAll }
+            expandColumnBeforeSelectColumn={ expandColumnOptions.expandColumnBeforeSelectColumn }
+            expandColumnComponent={ expandColumnOptions.expandColumnComponent }
+            expandColumnVisible={ expandColumnOptions.expandColumnVisible }
+            expandedColumnHeaderComponent={ expandColumnOptions.expandedColumnHeaderComponent }
+            headerContainerClass={ this.props.headerContainerClass }
+            hideSelectColumn={ this.props.selectRow.hideSelectColumn }
             isFiltered={ this.filter ? true : false }
             isSelectAll={ isSelectAll }
-            reset={ this.state.reset }
-            expandColumnVisible={ expandColumnOptions.expandColumnVisible }
-            expandColumnComponent={ expandColumnOptions.expandColumnComponent }
-            expandedColumnHeaderComponent={ expandColumnOptions.expandedColumnHeaderComponent }
             noAnyExpand={ this.state.expanding.length === 0 }
-            expandAll={ this.props.options.expandAll }
+            onSelectAllRow={ this.handleSelectAllRow }
+            onSort={ this.handleSort }
+            ref={ node => this.header = node }
+            reset={ this.state.reset }
+            rowSelectType={ this.props.selectRow.mode }
+            sortIndicator={ sortIndicator }
+            sortList={ sortList }
+            style={ this.props.headerStyle }
+            tableHeaderClass={ this.props.tableHeaderClass }
             toggleExpandAllChilds={ this.toggleExpandAllChilds }
-            expandColumnBeforeSelectColumn={ expandColumnOptions.expandColumnBeforeSelectColumn }>
+            version={ this.props.version } >
             { this.props.children }
           </TableHeader>
           <TableBody
-          ref={ node => this.body = node }
+            beforeShowError={ this.props.options.beforeShowError }
             bodyContainerClass={ this.props.bodyContainerClass }
-            tableBodyClass={ this.props.tableBodyClass }
-            style={ { ...style, ...this.props.bodyStyle } }
-            data={ this.state.data }
-            version={ this.props.version }
-            expandComponent={ this.props.expandComponent }
-            expandableRow={ this.props.expandableRow }
-            expandRowBgColor={ this.props.options.expandRowBgColor }
-            expandBy={ this.props.options.expandBy || Const.EXPAND_BY_ROW }
-            expandBodyClass={ this.props.options.expandBodyClass }
-            expandParentClass={ this.props.options.expandParentClass }
-            columns={ columns }
-            trClassName={ this.props.trClassName }
-            trStyle={ this.props.trStyle }
-            striped={ this.props.striped }
             bordered={ this.props.bordered }
-            hover={ this.props.hover }
-            keyField={ this.store.getKeyField() }
-            condensed={ this.props.condensed }
-            selectRow={ selectRow }
-            expandColumnOptions={ this.props.expandColumnOptions }
             cellEdit={ this.props.cellEdit }
-            selectedRowKeys={ this.state.selectedRowKeys }
-            onRowClick={ this.handleRowClick }
-            onRowDoubleClick={ this.handleRowDoubleClick }
-            onRowMouseOver={ this.handleRowMouseOver }
-            onRowMouseOut={ this.handleRowMouseOut }
-            onSelectRow={ this.handleSelectRow }
-            noDataText={ this.props.options.noDataText }
-            withoutNoDataText={ this.props.options.withoutNoDataText }
+            columns={ columns }
+            condensed={ this.props.condensed }
+            data={ this.state.data }
+            expandableRow={ this.props.expandableRow }
+            expandBodyClass={ this.props.options.expandBodyClass }
+            expandBy={ this.props.options.expandBy || Const.EXPAND_BY_ROW }
+            expandColumnOptions={ this.props.expandColumnOptions }
+            expandComponent={ this.props.expandComponent }
             expanding={ this.state.expanding }
+            expandParentClass={ this.props.options.expandParentClass }
+            expandRowBgColor={ this.props.options.expandRowBgColor }
+            hideRowOnExpand={ hideRowOnExpand }
+            hover={ this.props.hover }
+            keyBoardNav={ this.props.keyBoardNav }
+            keyField={ this.store.getKeyField() }
+            noDataText={ this.props.options.noDataText }
+            onEditCell={ this.handleEditCell }
             onExpand={ this.handleExpandRow }
             onlyOneExpanding={ this.props.options.onlyOneExpanding }
-            beforeShowError={ this.props.options.beforeShowError }
-            keyBoardNav={ this.props.keyBoardNav }
             onNavigateCell={ this.handleNavigateCell }
-            x={ this.state.x }
-            y={ this.state.y }
+            onRowClick={ this.handleRowClick }
+            onRowDoubleClick={ this.handleRowDoubleClick }
+            onRowMouseOut={ this.handleRowMouseOut }
+            onRowMouseOver={ this.handleRowMouseOver }
+            onSelectRow={ this.handleSelectRow }
+            ref={ node => this.body = node }
+            selectedRowKeys={ this.state.selectedRowKeys }
+            selectRow={ selectRow }
+            striped={ this.props.striped }
+            style={ { ...style, ...this.props.bodyStyle } }
+            tableBodyClass={ this.props.tableBodyClass }
+            trClassName={ this.props.trClassName }
+            trStyle={ this.props.trStyle }
+            version={ this.props.version }
+            withoutNoDataText={ this.props.options.withoutNoDataText }
             withoutTabIndex={ this.props.withoutTabIndex }
-            hideRowOnExpand={ hideRowOnExpand }
-            onEditCell={ this.handleEditCell } />
+            x={ this.state.x }
+            y={ this.state.y } />
             {
               tableFooter
             }
