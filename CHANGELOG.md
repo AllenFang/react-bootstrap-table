@@ -7,6 +7,7 @@
 ## Enhancement
 * if `options.hideSizePerPage` is true, will not render dropdown anymore instead of hidden([ea89bf8](https://github.com/AllenFang/react-bootstrap-table/commit/ea89bf846185cd2f0dcb66f5813ede5531fec17a))
 
+
 <a name="v4.3.0"></a>
 # [v4.3.0](https://github.com/AllenFang/react-bootstrap-table/compare/v4.2.0...v4.3.0) (2017-12-12)
 ## Bug fixes
