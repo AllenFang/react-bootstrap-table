@@ -355,6 +355,16 @@ class BootstrapTable extends Component {
           };
         });
       }
+
+      if (selectRow && selectRow.mode !== 'none' && this.state.y !== 0) {
+        // If user switched to select row, reset the focus to the first cell
+        this.setState(() => {
+          return {
+            y: 0,
+            x: 0
+          };
+        });
+      }
     } else {
       this.reset();
     }

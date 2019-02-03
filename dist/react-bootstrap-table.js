@@ -813,6 +813,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            };
 	          });
 	        }
+
+	        if (selectRow && selectRow.mode !== 'none' && this.state.y !== 0) {
+	          // If user switched to select row, reset the focus to the first cell
+	          this.setState(function () {
+	            return {
+	              y: 0,
+	              x: 0
+	            };
+	          });
+	        }
 	      } else {
 	        this.reset();
 	      }
