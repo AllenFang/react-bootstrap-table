@@ -8352,7 +8352,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var dom = _reactDom2.default.findDOMNode(this);
-	      if (this.props.isFocus) {
+	      if (this.props.isFocus && this.props.keyBoardNav) {
 	        dom.focus();
 	      } else {
 	        dom.blur();
@@ -8362,7 +8362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate() {
 	      var dom = _reactDom2.default.findDOMNode(this);
-	      if (this.props.isFocus) {
+	      if (this.props.isFocus && this.props.keyBoardNav) {
 	        dom.focus();
 	      } else {
 	        dom.blur();
