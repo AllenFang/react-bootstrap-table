@@ -115,6 +115,10 @@ export default {
         not eq offsetWidth in large column table **/
         style.minWidth = width;
       }
+      if (column.minWidth) {
+        const minWidth = !isNaN(column.minWidth) ? column.minWidth + 'px' : column.minWidth;
+        style.minWidth = minWidth;
+      }
       return (<col style={ style } key={ i }></col>);
     });
 

@@ -274,6 +274,7 @@ TableHeaderColumn.propTypes = {
     PropTypes.func
   ]),
   width: PropTypes.string,
+  minWidth: PropTypes.string,
   sortFunc: PropTypes.func,
   sortFuncExtraData: PropTypes.any,
   sortHeaderColumnClassName: PropTypes.any,
@@ -334,6 +335,7 @@ TableHeaderColumn.defaultProps = {
   className: '',
   columnTitle: false,
   width: null,
+  minWidth: null,
   sortFunc: undefined,
   columnClassName: '',
   editColumnClassName: '',

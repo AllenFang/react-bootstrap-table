@@ -6,6 +6,7 @@ import HoverStripedTable from './hover-striped-table';
 import BorderlessTable from './borderless-table';
 import ScrollTable from './scroll-table';
 import LargeColumnTable from './large-column-table';
+import ColumnMinWidthTable from './column-min-width-table';
 import NoDataTable from './no-data-table';
 
 import renderLinks from '../utils';
@@ -56,6 +57,10 @@ class Demo extends React.Component {
           </span>
           <ScrollTable/>
         </Panel>
+        <Panel header={ 'Table Column Min Width Example' }>
+          { renderLinks('basic/column-min-width-table.js') }
+          <ColumnMinWidthTable />
+      </Panel>
       </Col>
     );
   }

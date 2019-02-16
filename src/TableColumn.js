@@ -13,6 +13,7 @@ class TableColumn extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const { children } = this.props;
     let shouldUpdated = this.props.width !== nextProps.width
+      || this.props.minWidth !== nextProps.minWidth
       || this.props.className !== nextProps.className
       || this.props.hidden !== nextProps.hidden
       || this.props.dataAlign !== nextProps.dataAlign

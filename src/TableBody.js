@@ -138,6 +138,7 @@ class TableBody extends Component {
               hidden={ column.hidden }
               onEdit={ this.handleEditCell }
               width={ column.width }
+              minWidth={ column.minWidth }
               onClick={ this.handleClickCell }
               attrs={ column.attrs }
               style={ tdStyles }

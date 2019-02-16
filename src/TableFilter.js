@@ -39,10 +39,11 @@ class TableFilter extends Component {
     }
 
     const filterField = columns.map(function(column) {
-      const { hidden, width, name } = column;
+      const { hidden, width, name, minWidth } = column;
       const thStyle = {
         display: hidden ? 'none' : null,
-        width
+        width,
+        minWidth
       };
       return (
         <th key={ name } style={ thStyle }>

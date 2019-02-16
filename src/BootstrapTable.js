@@ -216,6 +216,7 @@ class BootstrapTable extends Component {
       invalidEditColumnClassName: column.props.invalidEditColumnClassName,
       columnTitle: column.props.columnTitle,
       width: column.props.width,
+      minWidth: column.props.minWidth,
       text: column.props.headerText || column.props.children,
       sortFunc: column.props.sortFunc,
       sortFuncExtraData: column.props.sortFuncExtraData,
@@ -1473,12 +1474,25 @@ class BootstrapTable extends Component {
 
     const scrollBarWidth = isScroll ? Util.getScrollBarWidth() : 0;
     if (firstRow && this.store.getDataNum()) {
-      if (isScroll || this.isVerticalScroll !== isScroll) {
+      const hasUndersized = Array.prototype.slice.call(header).reduce((all, col, i) => {
+        if (all) return all;
+        if (!col.style.minWidth) return false;
+        const cell = firstRow.childNodes[i];
+        const computed = window.getComputedStyle(cell);
+        const computedWidth = parseFloat(computed.width.replace('px', ''));
+        const minWidth = parseFloat(col.style.minWidth.replace('px', ''));
+        if (computedWidth > 0 && computedWidth < minWidth) {
+          return true;
+        }
+        return false;
+      }, false);
+      if (hasUndersized || isScroll || this.isVerticalScroll !== isScroll) {
         const cells = firstRow.childNodes;
         for (let i = 0; i < cells.length; i++) {
           const cell = cells[i];
           const computedStyle = window.getComputedStyle(cell);
-          let width = parseFloat(computedStyle.width.replace('px', ''));
+          const minWidth = parseFloat((bodyHeader[i].style.minWidth || '0').replace('px', '')) || 0;
+          let width = Math.max(minWidth, parseFloat(computedStyle.width.replace('px', '')));
           if (this.isIE) {
             const paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
             const paddingRightWidth = parseFloat(computedStyle.paddingRight.replace('px', ''));
@@ -1512,7 +1526,7 @@ class BootstrapTable extends Component {
               header[i].style.width = child.style.width;
             }
             if (child.style.minWidth) {
-              header[i].style.minWidth = child.style.minWidth;
+              header[i].style.minWidth = child.style.minWidth || header[i].style.minWidth;
             }
           }
         }
