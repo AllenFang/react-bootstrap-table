@@ -366,6 +366,8 @@ class BootstrapTable extends Component {
     this.body.container.addEventListener('scroll', this._scrollHeader);
     if (this.props.footer) {
       this.body.container.addEventListener('scroll', this._scrollFooter);
+      this.footer.container.addEventListener('scroll', this._scrollHeader);
+      this.footer.container.addEventListener('scroll', this._scrollBody);
     }
     if (this.props.scrollTop) {
       this._scrollTop();
@@ -378,6 +380,8 @@ class BootstrapTable extends Component {
       this.body.container.removeEventListener('scroll', this._scrollHeader);
       if (this.props.footer) {
         this.body.container.removeEventListener('scroll', this._scrollFooter);
+        this.footer.container.removeEventListener('scroll', this._scrollHeader);
+        this.footer.container.removeEventListener('scroll', this._scrollBody);
       }
     }
     if (this.filter) {
@@ -1446,8 +1450,13 @@ class BootstrapTable extends Component {
       this.body.container.scrollTop = scrollTop;
     }
   }
+
   _scrollHeader = (e) => {
     this.header.container.scrollLeft = e.currentTarget.scrollLeft;
+  }
+
+  _scrollBody = (e) => {
+    this.body.container.scrollLeft = e.currentTarget.scrollLeft;
   }
 
   _scrollFooter = (e) => {
