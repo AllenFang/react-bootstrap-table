@@ -67,7 +67,11 @@ const exportCSV = function(data, keys, filename, separator, noAutoBOM, excludeCS
     saveAs(new Blob([ '\ufeff', dataString ],
         { type: 'text/plain;charset=utf-8' }),
         filename, noAutoBOM);
-  }
+  } else {
+      dataString = toString(["Column Names",
+      "No data to display"], keys, separator, excludeCSVHeader);
+      saveAs(new Blob(['\uFEFF', dataString], { type: 'text/plain;charset=utf-8' }), filename, noAutoBOM);
+    }
 };
 
 export default exportCSV;
