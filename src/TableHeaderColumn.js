@@ -18,7 +18,9 @@ class TableHeaderColumn extends Component {
     this.handleFilter = this.handleFilter.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  /* eslint-disable */
+  UNSAFE_componentWillReceiveProps(nextProps) {
+  /* eslint-enable */
     if (nextProps.reset) {
       this.cleanFiltered();
     }

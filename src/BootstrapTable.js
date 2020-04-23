@@ -252,7 +252,9 @@ class BootstrapTable extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  /* eslint-disable */
+  UNSAFE_componentWillReceiveProps(nextProps) {
+  /* eslint-enable */
     this.initTable(nextProps);
     const { options, selectRow } = nextProps;
     let { replace } = nextProps;
