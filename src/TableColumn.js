@@ -51,7 +51,7 @@ class TableColumn extends Component {
 
   componentDidMount() {
     const dom = ReactDOM.findDOMNode(this);
-    if (this.props.isFocus) {
+    if (this.props.isFocus && this.props.keyBoardNav) {
       dom.focus();
     } else {
       dom.blur();
@@ -60,7 +60,7 @@ class TableColumn extends Component {
 
   componentDidUpdate() {
     const dom = ReactDOM.findDOMNode(this);
-    if (this.props.isFocus) {
+    if (this.props.isFocus && this.props.keyBoardNav) {
       dom.focus();
     } else {
       dom.blur();

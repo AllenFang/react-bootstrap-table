@@ -9,7 +9,9 @@ import Utils from './util';
 
 class Checkbox extends Component {
   componentDidMount() { this.update(this.props.checked); }
-  componentWillReceiveProps(props) { this.update(props.checked); }
+  /* eslint-disable */
+  UNSAFE_componentWillReceiveProps(props) { this.update(props.checked); }
+  /* eslint-enable */
   update(checked) {
     ReactDOM.findDOMNode(this).indeterminate = checked === 'indeterminate';
   }

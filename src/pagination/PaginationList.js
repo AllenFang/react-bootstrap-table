@@ -15,7 +15,9 @@ class PaginationList extends Component {
     };
   }
 
-  componentWillReceiveProps() {
+  /* eslint-disable */
+  UNSAFE_componentWillReceiveProps() {
+  /* eslint-enable */
     const { keepSizePerPageState } = this.props;
     if (!keepSizePerPageState) {
       this.closeDropDown();

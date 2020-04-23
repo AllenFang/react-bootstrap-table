@@ -31,7 +31,9 @@ class ToolBar extends Component {
     };
   }
 
-  componentWillMount() {
+  /* eslint-disable */
+  UNSAFE_componentWillMount() {
+  /* eslint-enable */
     const delay = this.props.searchDelayTime ? this.props.searchDelayTime : 0;
     this.debounceCallback = this.handleDebounce(() => {
       this.seachInput && this.props.onSearch(this.seachInput.getValue());
@@ -40,7 +42,9 @@ class ToolBar extends Component {
     );
   }
 
-  componentWillReceiveProps(nextProps) {
+  /* eslint-disable */
+  UNSAFE_componentWillReceiveProps(nextProps) {
+  /* eslint-enable */
     if (nextProps.reset) {
       this.setSearchInput('');
     }
