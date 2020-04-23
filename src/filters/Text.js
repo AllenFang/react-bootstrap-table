@@ -41,7 +41,9 @@ class TextFilter extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  /* eslint-disable */
+  UNSAFE_componentWillReceiveProps(nextProps) {
+  /* eslint-enable */
     if (nextProps.defaultValue !== this.props.defaultValue) {
       this.applyFilter(nextProps.defaultValue || '');
     }

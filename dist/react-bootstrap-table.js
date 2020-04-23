@@ -6115,9 +6115,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.props.filterHandler(defaultValue, _Const2.default.FILTER_TYPE.TEXT);
 	      }
 	    }
+
+	    /* eslint-disable */
+
 	  }, {
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
+	    key: 'UNSAFE_componentWillReceiveProps',
+	    value: function UNSAFE_componentWillReceiveProps(nextProps) {
+	      /* eslint-enable */
 	      if (nextProps.defaultValue !== this.props.defaultValue) {
 	        this.applyFilter(nextProps.defaultValue || '');
 	      }
@@ -6381,9 +6385,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return _this;
 	  }
 
+	  /* eslint-disable */
+
+
 	  _createClass(SelectFilter, [{
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps() {
+	    key: 'UNSAFE_componentWillReceiveProps',
+	    value: function UNSAFE_componentWillReceiveProps() {
+	      /* eslint-enable */
 	      var currentSelectValue = this.selectInput.value;
 	      var isPlaceholderSelected = !currentSelectValue || currentSelectValue === '';
 	      this.setState(function () {
@@ -9182,8 +9190,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      fieldValue = fieldValue === 0 ? '0' : fieldValue;
 	      var cellEditor = void 0;
 	      if (customEditor) {
-	        // Delete ref as it is not needed for custom editors
-	        delete attr.ref;
 	        var customEditorProps = _extends({
 	          row: row
 	        }, attr, {
@@ -9614,6 +9620,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return _this;
 	  }
 
+	  /* eslint-disable */
+
+
 	  _createClass(PaginationList, [{
 	    key: '__closeDropDown__REACT_HOT_LOADER__',
 	    value: function __closeDropDown__REACT_HOT_LOADER__() {
@@ -9635,8 +9644,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return this.__changePage__REACT_HOT_LOADER__.apply(this, arguments);
 	    }
 	  }, {
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps() {
+	    key: 'UNSAFE_componentWillReceiveProps',
+	    value: function UNSAFE_componentWillReceiveProps() {
+	      /* eslint-enable */
 	      var keepSizePerPageState = this.props.keepSizePerPageState;
 
 	      if (!keepSizePerPageState) {
@@ -10405,6 +10415,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return _this;
 	  }
 
+	  /* eslint-disable */
+
+
 	  _createClass(ToolBar, [{
 	    key: '__handleClearBtnClick__REACT_HOT_LOADER__',
 	    value: function __handleClearBtnClick__REACT_HOT_LOADER__() {
@@ -10484,18 +10497,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return this.__displayCommonMessage__REACT_HOT_LOADER__.apply(this, arguments);
 	    }
 	  }, {
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
+	    key: 'UNSAFE_componentWillMount',
+	    value: function UNSAFE_componentWillMount() {
 	      var _this3 = this;
 
+	      /* eslint-enable */
 	      var delay = this.props.searchDelayTime ? this.props.searchDelayTime : 0;
 	      this.debounceCallback = this.handleDebounce(function () {
 	        _this3.seachInput && _this3.props.onSearch(_this3.seachInput.getValue());
 	      }, delay);
 	    }
+
+	    /* eslint-disable */
+
 	  }, {
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
+	    key: 'UNSAFE_componentWillReceiveProps',
+	    value: function UNSAFE_componentWillReceiveProps(nextProps) {
+	      /* eslint-enable */
 	      if (nextProps.reset) {
 	        this.setSearchInput('');
 	      }

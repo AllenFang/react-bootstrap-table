@@ -219,8 +219,6 @@ class TableEditColumn extends Component {
     fieldValue = fieldValue === 0 ? '0' : fieldValue;
     let cellEditor;
     if (customEditor) {
-      // Delete ref as it is not needed for custom editors
-      delete attr.ref;
       const customEditorProps = {
         row,
         ...attr,
