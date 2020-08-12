@@ -5,7 +5,7 @@
   "main": "./lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AllenFang/react-bootstrap-table.git"
+    "url": "https://github.com/nurhanna/react-bootstrap-table.git"
   },
   "scripts": {
     "lint": "eslint src",
