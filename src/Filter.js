@@ -27,6 +27,7 @@ export class Filter extends EventEmitter {
       if (hasValue) {
         this.currentFilter[dataField] = { value: value, type: filterType, props };
       } else {
+        if(value && value.key) dataField = value.key;
         delete this.currentFilter[dataField];
       }
     } else if (!value || value.trim() === '') {
